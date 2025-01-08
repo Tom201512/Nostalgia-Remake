@@ -8,12 +8,11 @@ using ReelSpinGame_State.PayoutState;
 public class MainGameFlow : MonoBehaviour
 {
     delegate void EventHandler();
-    // 全てのプレゼンターをまとめる。
-
     // var
 
     // 現在のゲーム状態
     private StateManager stateManager;
+
 
     // ゲーム状態
 
@@ -29,6 +28,8 @@ public class MainGameFlow : MonoBehaviour
     // メダル払い出し
     private PayoutState payoutState;
 
+
+    // func
     void Awake()
     {
         insertState = new InsertState();

@@ -1,4 +1,3 @@
-using ReelSpinGame_Interface;
 using ReelSpinGame_Subject;
 using UnityEngine;
 
@@ -6,26 +5,34 @@ namespace ReelSpinGame_Observing
 {
     public class Observing
     {
-        private ISubject subjectToObserve;
+        private readonly Subject subjectToObserve;
 
-        public Observing(ISubject _subject)
+        public Observing(Subject _subject)
         {
             this.subjectToObserve = _subject;
-            subjectToObserve.ThingHappened += OnThingHappened;
+            subjectToObserve.ThingHappenedA += OnThingHappenedA;
+            subjectToObserve.ThingHappenedB += OnThingHappenedB;
         }
 
         ~Observing()
         {
             if (subjectToObserve != null)
             {
-                subjectToObserve.ThingHappened -= OnThingHappened;
+                subjectToObserve.ThingHappenedA -= OnThingHappenedA;
+                subjectToObserve.ThingHappenedB -= OnThingHappenedB;
             }
         }
 
-        private void OnThingHappened()
+        private void OnThingHappenedA()
         {
-            // イベントに応答するロジックはここに置く
-            Debug.Log("Observer responds");
+            // Aイベントに応答するロジックはここに置く
+            Debug.Log("Observer responds A");
+        }
+
+        private void OnThingHappenedB()
+        {
+            // Bイベントに応答するロジックはここに置く
+            Debug.Log("Observer responds B");
         }
     }
 }

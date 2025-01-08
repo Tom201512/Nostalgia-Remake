@@ -9,14 +9,4 @@ namespace ReelSpinGame_Interface
         void StateUpdate();
         void StateEnd();
     }
-
-    // イベント情報を持つ
-    public interface ISubject
-    {
-        // イベント
-        public event Action ThingHappened;
-
-        // 何かをする
-        public void DoThing();
-    }
 }

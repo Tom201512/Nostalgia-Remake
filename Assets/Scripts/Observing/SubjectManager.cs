@@ -1,22 +1,21 @@
-using UnityEngine;
-using System;
-using System.Timers;
 using ReelSpinGame_Observing;
 using ReelSpinGame_Subject;
+using UnityEngine;
 
 public class SubjectManager : MonoBehaviour
 {
-    private Subject _subject;
-    private Observing _observing;
+    private Subject subject;
+    private Observing observing;
 
     private void Awake()
     {
-        _subject = new Subject();
-        _observing = new Observing(_subject);
+        subject = new Subject();
+        observing = new Observing(subject);
     }
 
     private void Start()
     {
-        _subject.DoThing();
+        subject.DoThingA();
+        subject.DoThingB();
     }
 }

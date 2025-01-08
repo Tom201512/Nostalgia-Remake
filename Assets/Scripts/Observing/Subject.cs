@@ -3,13 +3,19 @@ using System;
 
 namespace ReelSpinGame_Subject
 {
-    public class Subject : ISubject
+    public class Subject
     {
-        public event Action ThingHappened;
+        public event Action ThingHappenedA;
+        public event Action ThingHappenedB;
 
-        public void DoThing()
+        public void DoThingA()
         {
-            ThingHappened?.Invoke();
+            ThingHappenedA?.Invoke();
+        }
+
+        public void DoThingB()
+        {
+            ThingHappenedB?.Invoke();
         }
     }
 }
