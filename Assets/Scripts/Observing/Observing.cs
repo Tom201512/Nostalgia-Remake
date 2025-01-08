@@ -1,3 +1,4 @@
+using ReelSpinGame_Interface;
 using ReelSpinGame_Subject;
 using UnityEngine;
 
@@ -5,9 +6,9 @@ namespace ReelSpinGame_Observing
 {
     public class Observing
     {
-        private Subject subjectToObserve;
+        private ISubject subjectToObserve;
 
-        public Observing(Subject _subject)
+        public Observing(ISubject _subject)
         {
             this.subjectToObserve = _subject;
             subjectToObserve.ThingHappened += OnThingHappened;
