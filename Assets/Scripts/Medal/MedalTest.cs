@@ -9,10 +9,10 @@ public class MedalTest : MonoBehaviour
 
     private MedalManager medalManager;
 
-
     // ƒCƒxƒ“ƒg
-    public event Action<int> betMedal;
-    public event Action betMax;
+    public event Action<int> BetMedal;
+    public event Action BetMax;
+    public event Action<int> StartPayout;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,8 +30,13 @@ public class MedalTest : MonoBehaviour
     {
         if(OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {
+            BetMax?.Invoke();
+        }
+
+        if (OriginalInput.CheckOneKeyInput(KeyCode.P))
+        {
             //medalManager.BetMedals(MedalManager.MAX_BET);
-            betMax?.Invoke();
+            StartPayout?.Invoke(15);
         }
     }
 }

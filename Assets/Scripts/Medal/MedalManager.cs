@@ -1,6 +1,5 @@
-using ReelSpinGame_Interface;
-using ReelSpinGame_Observing;
 using System;
+using System.Timers;
 using UnityEngine;
 
 namespace ReelSpinGame_Medal
@@ -16,8 +15,8 @@ namespace ReelSpinGame_Medal
         // 最大ベット枚数
         public const int MAX_BET = 3;
 
-        // メダル更新のフレーム数
-        public const float MEDAL_UPDATETIME = 0.12f;
+        // メダル更新の間隔(ミリ秒)
+        public const int MEDAL_UPDATETIME = 120;
 
         // 最大払い出し
         public const int MAX_PAYOUT = 15;
@@ -37,6 +36,9 @@ namespace ReelSpinGame_Medal
         // 最高ベット枚数
         public int MaxBetAmounts { get; private set; }
 
+        // 処理用タイマー
+        Timer updateTimer;
+
 
         // イベント用
         private MedalTest medalTest;
@@ -52,8 +54,13 @@ namespace ReelSpinGame_Medal
             this.medalTest = _medalTest;
 
             // イベントを受ける
-            this.medalTest.betMedal += BetMedals;
-            this.medalTest.betMax += BetMaxMedals;
+            this.medalTest.BetMedal += BetMedals;
+            this.medalTest.BetMax += BetMaxMedals;
+            this.medalTest.StartPayout += StartPayout;
+
+
+            // 処理用タイマー作成
+            updateTimer = new Timer(MEDAL_UPDATETIME);
         }
 
         // func
@@ -76,6 +83,36 @@ namespace ReelSpinGame_Medal
             else
             {
                 Debug.Log("Already reached Max Bet:" + MaxBetAmounts);
+            }
+        }
+
+        private void StartPayout(int amounts)
+        {
+            // 払い出しをしていないかチェック
+            if(!updateTimer.Enabled)
+            {
+                PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MAX_PAYOUT);
+                updateTimer.Elapsed += PayoutMedal;
+                updateTimer.Start();
+            }
+            else
+            {
+                Debug.Log("Payout is enabled");
+            }
+        }
+
+
+        // 払い出し処理
+        private void PayoutMedal(object sender, ElapsedEventArgs e)
+        {
+            PayoutAmounts -= 1;
+            Debug.Log("Payout Medal by 1");
+
+            // 全て払い出したら処理終了
+            if(PayoutAmounts == 0) 
+            { 
+                updateTimer.Stop();
+                updateTimer.Elapsed -= PayoutMedal;
             }
         }
     }

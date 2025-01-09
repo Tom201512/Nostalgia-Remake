@@ -15,7 +15,6 @@ namespace ReelSpinGame_Rules
         //Medal
         public const int MAX_CREDITS = 50;
         public const int MAX_BET = 3;
-        public const float MEDAL_UPDATETIME = 0.12f;
         public const int MAX_PAYOUT = 15;
 
         //Symbols
