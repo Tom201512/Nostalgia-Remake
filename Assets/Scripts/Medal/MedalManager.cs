@@ -22,7 +22,7 @@ namespace ReelSpinGame_Medal
         public const int MAX_PAYOUT = 15;
 
 
-        // val
+        // var
 
         // クレジット枚数
         public int Credits { get; private set; }
