@@ -27,8 +27,11 @@ namespace ReelSpinGame_Medal
         // クレジット枚数
         public int Credits { get; private set; }
 
+        // 残りベット枚数
+        private int remainingBet;
+
         // ベット枚数
-        public int BetAmounts { get; private set; }
+        public int CurrentBet { get; private set; }
 
         // 払い出し枚数
         public int PayoutAmounts { get; private set; }
@@ -47,45 +50,97 @@ namespace ReelSpinGame_Medal
         public MedalManager(int _credits, int _currentMaxBet, MedalTest _medalTest)
         {
             this.Credits = _credits;
-            BetAmounts = 0;
+            CurrentBet = 0;
             PayoutAmounts = 0;
             this.MaxBetAmounts = _currentMaxBet;
 
             this.medalTest = _medalTest;
 
             // イベントを受ける
-            this.medalTest.BetMedal += BetMedals;
-            this.medalTest.BetMax += BetMaxMedals;
+            this.medalTest.BetMedal += StartBet;
             this.medalTest.StartPayout += StartPayout;
-
 
             // 処理用タイマー作成
             updateTimer = new Timer(MEDAL_UPDATETIME);
         }
 
+        ~MedalManager()
+        {
+            updateTimer.Stop();
+            updateTimer.Elapsed -= InsertMedal;
+            updateTimer.Elapsed -= PayoutMedal;
+        }
+
+
         // func
 
-        // ベット処理
-        private void BetMedals(int amounts)
+        // ベット処理開始
+        private void StartBet(int amounts)
         {
-            BetAmounts = Math.Clamp(BetAmounts + amounts, 0, MAX_BET);
-            Debug.Log("Bet finished Current Bet:" + BetAmounts);
-        }
-
-        private void BetMaxMedals()
-        {
-            if(BetAmounts < MAX_BET)
+            // 処理ををしていないかチェック
+            if (!updateTimer.Enabled)
             {
-                BetAmounts = MAX_BET;
-                Debug.Log("Bet finished Current Bet:" + BetAmounts);
-            }
+                // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
 
+                if(amounts != CurrentBet && amounts <= MaxBetAmounts)
+                {
+                    remainingBet = Math.Clamp(SetRemaining(amounts), 0, MAX_BET);
+
+                    // もし現在のベットより少ない枚数ならリセット
+                    if(amounts < CurrentBet)
+                    {
+                       ResetMedal();
+                    }
+
+                    Debug.Log("Bet Received:" + remainingBet);
+
+                    updateTimer.Elapsed += InsertMedal;
+                    updateTimer.Start();
+                }
+                else
+                {
+                    if(amounts > MaxBetAmounts)
+                    {
+                        Debug.Log("The MAX Bet is now :" + MaxBetAmounts);
+                    }
+                    else
+                    {
+                        Debug.Log("You already Bet:" + amounts);
+                    }
+                }
+            }
             else
             {
-                Debug.Log("Already reached Max Bet:" + MaxBetAmounts);
+                Debug.Log("Insert is enabled");
             }
         }
 
+        // メダルリセット
+        private void ResetMedal()
+        {
+            CurrentBet = 0;
+            Debug.Log("Reset Bet");
+        }
+
+        // 
+        private int SetRemaining(int amount)
+        {
+            // 現在のベット枚数よりも多く賭けると差分だけ掛ける
+            // (2BETから1BETはリセットして調整)
+
+            // 多い場合(1枚以上ベットされていること)
+            if(amount > CurrentBet && CurrentBet > 0)
+            {
+                Debug.Log("You bet more than current bet");
+                return amount - CurrentBet;
+            }
+
+            // 少ない場合
+            // 0枚ならそのまま
+            return amount;
+        }
+
+        // 払い出し開始
         private void StartPayout(int amounts)
         {
             // 払い出しをしていないかチェック
@@ -102,6 +157,26 @@ namespace ReelSpinGame_Medal
         }
 
 
+        // コルーチン用
+
+        // 投入処理
+        private void InsertMedal(object sender, ElapsedEventArgs e)
+        {
+            remainingBet -= 1;
+            Debug.Log("Bet Medal by 1");
+            CurrentBet += 1;
+
+            // 全て払い出したら処理終了
+            if (remainingBet <= 0)
+            {
+                updateTimer.Stop();
+                updateTimer.Elapsed -= InsertMedal;
+
+                Debug.Log("Bet Finished");
+                Debug.Log("CurrentBet:" + CurrentBet);
+            }
+        }
+
         // 払い出し処理
         private void PayoutMedal(object sender, ElapsedEventArgs e)
         {
@@ -113,6 +188,8 @@ namespace ReelSpinGame_Medal
             { 
                 updateTimer.Stop();
                 updateTimer.Elapsed -= PayoutMedal;
+
+                Debug.Log("Payout Finished");
             }
         }
     }

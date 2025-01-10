@@ -11,7 +11,6 @@ public class MedalTest : MonoBehaviour
 
     // ƒCƒxƒ“ƒg
     public event Action<int> BetMedal;
-    public event Action BetMax;
     public event Action<int> StartPayout;
 
     // Start is called before the first frame update
@@ -28,9 +27,24 @@ public class MedalTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // MAX BET
         if(OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {
-            BetMax?.Invoke();
+            BetMedal?.Invoke(3);
+        }
+
+        // BET2
+        if (OriginalInput.CheckOneKeyInput(KeyCode.Alpha2))
+        {
+            BetMedal?.Invoke(2);
+        }
+
+
+        // BET1
+        if (OriginalInput.CheckOneKeyInput(KeyCode.Alpha1))
+        {
+            BetMedal?.Invoke(1);
         }
 
         if (OriginalInput.CheckOneKeyInput(KeyCode.P))
