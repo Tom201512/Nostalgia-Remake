@@ -16,7 +16,7 @@ public class FlagLotsTest : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        flagLots = new FlagLots(this);
+        flagLots = new FlagLots(this, 6);
     }
 
     void Start()
