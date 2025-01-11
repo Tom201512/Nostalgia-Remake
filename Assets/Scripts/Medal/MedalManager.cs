@@ -39,6 +39,7 @@ namespace ReelSpinGame_Medal
         // 最高ベット枚数
         public int MaxBetAmounts { get; private set; }
 
+
         // 処理用タイマー
         Timer updateTimer;
 

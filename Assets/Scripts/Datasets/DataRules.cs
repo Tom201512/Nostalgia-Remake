@@ -17,12 +17,6 @@ namespace ReelSpinGame_Rules
         public const int MAX_BET = 3;
         public const int MAX_PAYOUT = 15;
 
-        //Symbols
-        public const int MAX_SYMBOL_ID = 10;
-
-        //symbolID identifers(You can name IDs to make it clean what symbol it is.)
-        public enum SYMBOL_ID { RED_SEVEN, BLUE_SEVEN, BAR ,CHERRY, MELON, BELL, REPLAY, SYMBOL_7, SYMBOL_8, SYMBOL_9 , ANY};
-
         //Reels
         public const int MAX_REEL_AMOUNTS = 3;
         public const int MAX_REEL_ARRAY = 21;
@@ -34,12 +28,6 @@ namespace ReelSpinGame_Rules
         public enum REEL_COLUMN_ID { REEL_LEFT, REEL_MIDDLE, REEL_RIGHT};
         public enum REEL_POS_OFFSET { LOWER_3RD = -2, LOWER_2ND, LOWER, CENTER, UPPER , UPPER_2ND, UPPER_3RD}
         public const int REEL_POS_MAXCOUNT = 7;
-
-        //Flag
-        public enum FLAG_ID { FLAG_NONE, FLAG_BIG, FLAG_REG, FLAG_CHERRY2, FLAG_CHERRY4, FLAG_MELON, FLAG_BELL, FLAG_REPLAY, FLAG_JAC}
-        public const int MAX_RANDOM = 6;
-        public const int MAX_FLAG = 65536;
-        public enum FLAG_LOT_MODE { LOT_NORMAL, LOT_BIGBONUS, LOT_JACGAME};
 
         //BonusType
         public enum BONUS_TYPE {NO_BONUS, BIG_BONUS, REG_BONUS, SIN_BONUS}
