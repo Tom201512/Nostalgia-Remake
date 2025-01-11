@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using ReelSpinGame_Lots.FlagProb;
+using UnityEngine;
 
 namespace ReelSpinGame_Lots.Flag
 {
@@ -17,11 +15,10 @@ namespace ReelSpinGame_Lots.Flag
         // enum
 
         // フラグID
-        public enum FLAG_ID { FLAG_NONE, FLAG_BIG, FLAG_REG, FLAG_CHERRY2, FLAG_CHERRY4, FLAG_MELON, FLAG_BELL, FLAG_REPLAY, FLAG_JAC }
+        public enum FLAG_ID { FLAG_NONE, FLAG_BIG, FLAG_REG, FLAG_CHERRY2, FLAG_CHERRY4, FLAG_MELON, FLAG_BELL, FLAG_REPLAY_JACIN, FLAG_JAC }
 
         // フラグテーブル
         public enum FLAG_LOT_MODE { LOT_NORMAL_A, LOT_NORMAL_B, LOT_BIGBONUS, LOT_JACGAME };
-
 
         // var
 
@@ -34,10 +31,27 @@ namespace ReelSpinGame_Lots.Flag
         // 参照するテーブルID
         private FLAG_LOT_MODE currentTable = FLAG_LOT_MODE.LOT_NORMAL_A;
 
-        //テーブル内数値
+        // テーブル内数値
         private float[] flagLotsTableA;
         private float[] flagLotsTableB;
         private float[] flagLotsTableBIG;
+
+        // 抽選順番(最終的に当選したフラグを参照するのに使う)
+        private FLAG_ID[] lotResultNormal = new FLAG_ID[] {FLAG_ID.FLAG_BIG,
+            FLAG_ID.FLAG_REG,
+            FLAG_ID.FLAG_CHERRY2,
+            FLAG_ID.FLAG_CHERRY4,
+            FLAG_ID.FLAG_MELON,
+            FLAG_ID.FLAG_BELL,
+            FLAG_ID.FLAG_REPLAY_JACIN};
+
+        // BIG CHANCE中
+        private FLAG_ID[] lotResultBig = new FLAG_ID[] {FLAG_ID.FLAG_CHERRY2,
+            FLAG_ID.FLAG_CHERRY4,
+            FLAG_ID.FLAG_MELON,
+            FLAG_ID.FLAG_BELL,
+            FLAG_ID.FLAG_REPLAY_JACIN};
+
 
 
         // コンストラクタ
@@ -47,10 +61,58 @@ namespace ReelSpinGame_Lots.Flag
 
             // 設定値をもとにテーブル作成
             this.lotsSetting = lotsSetting;
+
+            Debug.Log("Lots Setting set by :" + lotsSetting);
+
+            MakeTables();
         }
 
-        
+
         // func
+
+        private void MakeTables()
+        {
+            flagLotsTableA = new float[] { FlagLotsProb.BigProbability[lotsSetting - 1],
+                    FlagLotsProb.RegProbability[lotsSetting- 1],
+                    FlagLotsProb.CHERRY2_PROB,
+                    FlagLotsProb.CHERRY4_PROB_A,
+                    FlagLotsProb.MELON_PROB_A,
+                    FlagLotsProb.BELL_PROB_A,
+                    FlagLotsProb.REPLAY_PROB};
+
+            flagLotsTableB = new float[] { FlagLotsProb.BigProbability[lotsSetting - 1],
+                    FlagLotsProb.RegProbability[lotsSetting- 1],
+                    FlagLotsProb.CHERRY2_PROB,
+                    FlagLotsProb.CHERRY4_PROB_B,
+                    FlagLotsProb.MELON_PROB_B,
+                    FlagLotsProb.BELL_PROB_B,
+                    FlagLotsProb.REPLAY_PROB};
+
+            flagLotsTableBIG = new float[] {
+                    FlagLotsProb.BIG_CHERRY_PROB,
+                    FlagLotsProb.BIG_CHERRY_PROB,
+                    FlagLotsProb.BIG_MELON_PROB,
+                    FlagLotsProb.BigBellProbability[lotsSetting - 1],
+                    FlagLotsProb.BIG_JACIN_PROB};
+
+            Debug.Log("NormalA Table:");
+            for(int i = 0; i < lotResultNormal.Length; i++)
+            {
+                Debug.Log(lotResultNormal[i].ToString() + ":" + flagLotsTableA[i]);
+            }
+
+            Debug.Log("NormalB Table:");
+            for (int i = 0; i < lotResultNormal.Length; i++)
+            {
+                Debug.Log(lotResultNormal[i].ToString() + ":" + flagLotsTableB[i]);
+            }
+
+            Debug.Log("BIG Table:");
+            for (int i = 0; i < lotResultBig.Length; i++)
+            {
+                Debug.Log(lotResultBig[i].ToString() + ":" + flagLotsTableBIG[i]);
+            }
+        }
 
         public void GetFlagLots()
         {
@@ -59,7 +121,27 @@ namespace ReelSpinGame_Lots.Flag
             Debug.Log("You get:" + flag);
 
             // 現在の参照テーブルをもとに抽選
-            currentFlag = LotsFlags(flag);
+
+            switch(currentTable)
+            {
+                case FLAG_LOT_MODE.LOT_NORMAL_A:
+                case FLAG_LOT_MODE.LOT_NORMAL_B:
+                    currentFlag = LotsFlags(flag);
+                    break;
+
+                case FLAG_LOT_MODE.LOT_BIGBONUS:
+                    currentFlag = BigChanceLots(flag);
+                    break;
+
+                case FLAG_LOT_MODE.LOT_JACGAME:
+                    currentFlag = BonusGameLots(flag);
+                    break;
+
+                default:
+                    Debug.LogError("No table found");
+                    break;
+
+            }
             Debug.Log("Flag:" + currentFlag);
         }
 
@@ -68,25 +150,57 @@ namespace ReelSpinGame_Lots.Flag
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
             int flagCheckNum = 0;
 
-            
-            // BIG抽選
-            flagCheckNum = Mathf.FloorToInt((float)MAX_FLAG_LOTS / FlagLotsProb.BigProbability[0]);
-            if(_flag < flagCheckNum)
+            // 小役カウンタが高確率なら
+            if(currentTable == FLAG_LOT_MODE.LOT_NORMAL_B)
             {
-                Debug.Log("BIG hits");
-                return FLAG_ID.FLAG_BIG;
+                for (int i = 0; i < lotResultNormal.Length; i++)
+                {
+                    //各役ごとに抽選
+                    flagCheckNum += Mathf.FloorToInt((float)MAX_FLAG_LOTS / flagLotsTableB[i]);
+
+                    if (_flag < flagCheckNum)
+                    {
+                        return lotResultNormal[i];
+                    }
+                }
             }
 
-            // REG抽選
-            flagCheckNum += Mathf.FloorToInt((float)MAX_FLAG_LOTS / FlagLotsProb.RegProbability[0]);
-            if (_flag < flagCheckNum)
+            // 小役カウンタが低確率なら
+            else
             {
-                Debug.Log("REG hits");
-                return FLAG_ID.FLAG_REG;
+                for (int i = 0; i < lotResultNormal.Length; i++)
+                {
+                    //各役ごとに抽選
+                    flagCheckNum += Mathf.FloorToInt((float)MAX_FLAG_LOTS / flagLotsTableB[i]);
+
+                    if (_flag < flagCheckNum)
+                    {
+                        return lotResultNormal[i];
+                    }
+                }
             }
 
-            //ここから2枚チェリーなど抽選
+            // 何も当たらなければ　はずれ　を返す
+            return FLAG_ID.FLAG_NONE;
+        }
 
+        private FLAG_ID BigChanceLots(int _flag)
+        {
+            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
+            int flagCheckNum = 0;
+
+            for (int i = 0; i < lotResultBig.Length; i++)
+            {
+                //各役ごとに抽選
+                flagCheckNum += Mathf.FloorToInt((float)MAX_FLAG_LOTS / flagLotsTableBIG[i]);
+
+                if (_flag < flagCheckNum)
+                {
+                    return lotResultBig[i];
+                }
+            }
+
+            // 何も当たらなければ　はずれ　を返す
             return FLAG_ID.FLAG_NONE;
         }
 
@@ -102,6 +216,7 @@ namespace ReelSpinGame_Lots.Flag
                 return FLAG_ID.FLAG_NONE;
             }
 
+            // 何も当たらなければ　JAC役　を返す
             return FLAG_ID.FLAG_JAC;
         }
     }
