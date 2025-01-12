@@ -8,52 +8,52 @@ namespace ReelSpinGame_Lots.FlagProb
         // ボーナス確率
 
         // BIG CHANCE
-        public const float BIG_PROB_ST1 = 294.0f;
-        public const float BIG_PROB_ST2 = 285.0f;
-        public const float BIG_PROB_ST3 = 274.0f;
-        public const float BIG_PROB_ST4 = 254.0f;
-        public const float BIG_PROB_ST5 = 244.0f;
-        public const float BIG_PROB_ST6 = 240.0f;
+        public const float BigProbST1 = 294.0f;
+        public const float BigProbST2 = 285.0f;
+        public const float BigProbST3 = 274.0f;
+        public const float BigProbST4 = 254.0f;
+        public const float BigProbST5 = 244.0f;
+        public const float BigProbST6 = 240.0f;
 
         // BONUS GAME
-        public const float REG_PROB_ST1 = 480.0f;
-        public const float REG_PROB_ST2 = 471.0f;
-        public const float REG_PROB_ST3 = 420.0f;
-        public const float REG_PROB_ST4 = 415.0f;
-        public const float REG_PROB_ST5 = 285.0f;
-        public const float REG_PROB_ST6 = 260.0f;
+        public const float RegProbST1 = 480.0f;
+        public const float RegProbST2 = 471.0f;
+        public const float RegProbST3 = 420.0f;
+        public const float RegProbST4 = 415.0f;
+        public const float RegProbST5 = 285.0f;
+        public const float RegProbST6 = 260.0f;
 
         // 通常低確率時のフラグ
-        public const float CHERRY4_PROB_A = 256.6f;
-        public const float MELON_PROB_A = 78.5f;
-        public const float BELL_PROB_A = 72.5f;
+        public const float Cherry4ProbA = 256.6f;
+        public const float MelonProbA = 78.5f;
+        public const float BellProbA = 72.5f;
 
         // 通常高確率時のフラグ
-        public const float CHERRY4_PROB_B = 256.6f;
-        public const float MELON_PROB_B = 78.5f;
-        public const float BELL_PROB_B = 72.5f;
+        public const float Cherry4ProbB = 16.8f;
+        public const float MelonProbB = 25.5f;
+        public const float BellProbB = 6.7f;
 
         // それ以外の通常時(変動なし)
-        public const float CHERRY2_PROB = 4.8f;
-        public const float REPLAY_PROB = 7.1f;
+        public const float Cherry2Prob = 4.8f;
+        public const float ReplayJACinProb = 7.1f;
 
 
         // BIG CHANCE中のフラグ
 
         // チェリー(2枚/4枚)
-        public const float BIG_CHERRY_PROB = 512.0f;
+        public const float CherryProbInBig = 512.0f;
 
-        public const float BIG_MELON_PROB = 4.8f;
-        public const float BIG_JACIN_PROB = 3.2f;
+        public const float MelonProbInBig = 4.8f;
+        public const float JACinProbInBig = 3.2f;
 
         // BIG中ベル確率
 
-        public const float BIG_BELL_PROB_ST1 = 3.86f;
-        public const float BIG_BELL_PROB_ST2 = 3.76f;
-        public const float BIG_BELL_PROB_ST3 = 3.66f;
-        public const float BIG_BELL_PROB_ST4 = 3.55f;
-        public const float BIG_BELL_PROB_ST5 = 3.54f;
-        public const float BIG_BELL_PROB_ST6 = 3.48f;
+        public const float BellProbInBigST1 = 3.86f;
+        public const float BellProbInBigST2 = 3.76f;
+        public const float BellProbInBigST3 = 3.66f;
+        public const float BellProbInBigST4 = 3.55f;
+        public const float BellProbInBigST5 = 3.54f;
+        public const float BellProbInBigST6 = 3.48f;
 
         // BONUS GAME中のはずれ確率
         public const float JAC_NONE_PROB = 256.0f;
@@ -64,12 +64,12 @@ namespace ReelSpinGame_Lots.FlagProb
             = new ReadOnlyCollection<float>(
                 new[]
                 {
-                    BIG_PROB_ST1,
-                    BIG_PROB_ST2,
-                    BIG_PROB_ST3,
-                    BIG_PROB_ST4,
-                    BIG_PROB_ST5,
-                    BIG_PROB_ST6
+                    BigProbST1,
+                    BigProbST2,
+                    BigProbST3,
+                    BigProbST4,
+                    BigProbST5,
+                    BigProbST6
                 });
 
         // REG確率
@@ -77,12 +77,12 @@ namespace ReelSpinGame_Lots.FlagProb
             = new ReadOnlyCollection<float>(
                 new[]
                 {
-                    REG_PROB_ST1,
-                    REG_PROB_ST2,
-                    REG_PROB_ST3,
-                    REG_PROB_ST4,
-                    REG_PROB_ST5,
-                    REG_PROB_ST6
+                    RegProbST1,
+                    RegProbST2,
+                    RegProbST3,
+                    RegProbST4,
+                    RegProbST5,
+                    RegProbST6
                 });
 
         // BIG CHANCE中ベル確率
@@ -90,12 +90,12 @@ namespace ReelSpinGame_Lots.FlagProb
             = new ReadOnlyCollection<float>(
                 new[]
                 {
-                    BIG_BELL_PROB_ST1,
-                    BIG_BELL_PROB_ST2,
-                    BIG_BELL_PROB_ST3,
-                    BIG_BELL_PROB_ST4,
-                    BIG_BELL_PROB_ST5,
-                    BIG_BELL_PROB_ST6
+                    BellProbInBigST1,
+                    BellProbInBigST2,
+                    BellProbInBigST3,
+                    BellProbInBigST4,
+                    BellProbInBigST5,
+                    BellProbInBigST6
                 });
     }
 }

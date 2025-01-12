@@ -10,16 +10,16 @@ namespace ReelSpinGame_Medal
         // const
 
         // 最大クレジット枚数
-        public const int MAX_CREDITS = 50;
+        public const int MaxCredit = 50;
 
         // 最大ベット枚数
-        public const int MAX_BET = 3;
+        public const int MaxBet = 3;
 
         // メダル更新の間隔(ミリ秒)
-        public const int MEDAL_UPDATETIME = 120;
+        public const int MedalUpdateTime = 120;
 
         // 最大払い出し
-        public const int MAX_PAYOUT = 15;
+        public const int MaxPayout = 15;
 
 
         // var
@@ -62,7 +62,7 @@ namespace ReelSpinGame_Medal
             this.medalTest.StartPayout += StartPayout;
 
             // 処理用タイマー作成
-            updateTimer = new Timer(MEDAL_UPDATETIME);
+            updateTimer = new Timer(MedalUpdateTime);
         }
 
         ~MedalManager()
@@ -85,7 +85,7 @@ namespace ReelSpinGame_Medal
 
                 if(amounts != CurrentBet && amounts <= MaxBetAmounts)
                 {
-                    remainingBet = Math.Clamp(SetRemaining(amounts), 0, MAX_BET);
+                    remainingBet = Math.Clamp(SetRemaining(amounts), 0, MaxBet);
 
                     // もし現在のベットより少ない枚数ならリセット
                     if(amounts < CurrentBet)
@@ -147,7 +147,7 @@ namespace ReelSpinGame_Medal
             // 払い出しをしていないかチェック
             if(!updateTimer.Enabled)
             {
-                PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MAX_PAYOUT);
+                PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MaxPayout);
                 updateTimer.Elapsed += PayoutMedal;
                 updateTimer.Start();
             }
