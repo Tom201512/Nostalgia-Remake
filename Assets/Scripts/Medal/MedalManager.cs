@@ -44,22 +44,12 @@ namespace ReelSpinGame_Medal
         Timer updateTimer;
 
 
-        // イベント用
-        private MedalTest medalTest;
-
-
-        public MedalManager(int _credits, int _currentMaxBet, MedalTest _medalTest)
+        public MedalManager(int _credits, int _currentMaxBet)
         {
             this.Credits = _credits;
             CurrentBet = 0;
             PayoutAmounts = 0;
             this.MaxBetAmounts = _currentMaxBet;
-
-            this.medalTest = _medalTest;
-
-            // イベントを受ける
-            this.medalTest.BetMedal += StartBet;
-            this.medalTest.StartPayout += StartPayout;
 
             // 処理用タイマー作成
             updateTimer = new Timer(MedalUpdateTime);
@@ -76,7 +66,7 @@ namespace ReelSpinGame_Medal
         // func
 
         // ベット処理開始
-        private void StartBet(int amounts)
+        public void StartBet(int amounts)
         {
             // 処理ををしていないかチェック
             if (!updateTimer.Enabled)
@@ -142,7 +132,7 @@ namespace ReelSpinGame_Medal
         }
 
         // 払い出し開始
-        private void StartPayout(int amounts)
+        public void StartPayout(int amounts)
         {
             // 払い出しをしていないかチェック
             if(!updateTimer.Enabled)

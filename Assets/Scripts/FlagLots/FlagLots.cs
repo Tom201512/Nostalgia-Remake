@@ -12,17 +12,6 @@ namespace ReelSpinGame_Lots.Flag
         // 最大フラグ数
         const int MaxFlagLots = 16384;
 
-        //小役カウンタ増加値
-        //const int CounterIncrease = 256;
-
-        //小役カウンタ減少値
-        //const int CounterDecrease1to4 = 100;
-
-        //const int CounterDecrease5 = 104;
-
-        //const int CounterDecrease6 = 1808;
-
-
         // enum
 
         // フラグID
@@ -31,25 +20,18 @@ namespace ReelSpinGame_Lots.Flag
         // フラグテーブル
         public enum FlagLotMode { NormalA, NormalB, BigBonus, JacGame };
 
-        // var
 
-        // 台設定
-        private int lotsSetting;
-
-        // 現在フラグ
-        private FlagId currentFlag = FlagId.FlagNone;
+        // 現在フラグ(プロパティ)
+        public FlagId CurrentFlag { get; private set; } = FlagId.FlagNone;
 
         // 参照するテーブルID
-        private FlagLotMode currentTable = FlagLotMode.NormalB;
-
-
-        // 小役カウンタ
-        private int flagCounter = 0;
+        public FlagLotMode CurrentTable { get; private set; } = FlagLotMode.NormalA;
 
         // テーブル内数値
         private float[] flagLotsTableA;
         private float[] flagLotsTableB;
         private float[] flagLotsTableBIG;
+
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] {FlagId.FlagBig,
@@ -67,37 +49,32 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagBell,
             FlagId.FlagReplayJACin};
 
+
         // コンストラクタ
-        public FlagLots(FlagLotsTest flagLotsTest, int lotsSetting, int flagCounter)
+        public FlagLots(int settingNum)
         {
-            flagLotsTest.DrawLots += GetFlagLots;
-
             // 設定値をもとにテーブル作成
-            this.lotsSetting = lotsSetting;
+            Debug.Log("Lots Setting set by :" + settingNum);
 
-            Debug.Log("Lots Setting set by :" + lotsSetting);
-
-            MakeTables();
-
-            this.flagCounter = flagCounter;
+            MakeTables(settingNum);
         }
 
 
         // func
 
         // テーブル作成(初期化時)
-        private void MakeTables()
+        private void MakeTables(int settingNum)
         {
-            flagLotsTableA = new float[] { FlagLotsProb.BigProbability[lotsSetting - 1],
-                    FlagLotsProb.RegProbability[lotsSetting- 1],
+            flagLotsTableA = new float[] { FlagLotsProb.BigProbability[settingNum - 1],
+                    FlagLotsProb.RegProbability[settingNum- 1],
                     FlagLotsProb.Cherry2Prob,
                     FlagLotsProb.Cherry4ProbA,
                     FlagLotsProb.MelonProbA,
                     FlagLotsProb.BellProbA,
                     FlagLotsProb.ReplayJACinProb};
 
-            flagLotsTableB = new float[] { FlagLotsProb.BigProbability[lotsSetting - 1],
-                    FlagLotsProb.RegProbability[lotsSetting- 1],
+            flagLotsTableB = new float[] { FlagLotsProb.BigProbability[settingNum - 1],
+                    FlagLotsProb.RegProbability[settingNum- 1],
                     FlagLotsProb.Cherry2Prob,
                     FlagLotsProb.Cherry4ProbB,
                     FlagLotsProb.MelonProbB,
@@ -108,7 +85,7 @@ namespace ReelSpinGame_Lots.Flag
                     FlagLotsProb.CherryProbInBig,
                     FlagLotsProb.CherryProbInBig,
                     FlagLotsProb.MelonProbInBig,
-                    FlagLotsProb.BigBellProbability[lotsSetting - 1],
+                    FlagLotsProb.BigBellProbability[settingNum - 1],
                     FlagLotsProb.JACinProbInBig};
 
             Debug.Log("NormalA Table:");
@@ -130,27 +107,29 @@ namespace ReelSpinGame_Lots.Flag
             }
         }
 
+        public void ChangeTable(FlagLotMode mode) => CurrentTable = mode;
+
         // フラグ抽選の開始
         public void GetFlagLots()
         {
             // 現在の参照テーブルをもとに抽選
 
-            switch(currentTable)
+            switch(CurrentTable)
             {
                 case FlagLotMode.NormalA:
-                    currentFlag = CheckResultByTable(flagLotsTableA, lotResultNormal);
+                    CurrentFlag = CheckResultByTable(flagLotsTableA, lotResultNormal);
                     break;
 
                 case FlagLotMode.NormalB:
-                    currentFlag = CheckResultByTable(flagLotsTableB, lotResultNormal);
+                    CurrentFlag = CheckResultByTable(flagLotsTableB, lotResultNormal);
                     break;
 
                 case FlagLotMode.BigBonus:
-                    currentFlag = CheckResultByTable(flagLotsTableBIG, lotResultBig);
+                    CurrentFlag = CheckResultByTable(flagLotsTableBIG, lotResultBig);
                     break;
 
                 case FlagLotMode.JacGame:
-                    currentFlag = BonusGameLots();
+                    CurrentFlag = BonusGameLots();
                     break;
 
                 default:
@@ -158,7 +137,7 @@ namespace ReelSpinGame_Lots.Flag
                     break;
 
             }
-            Debug.Log("Flag:" + currentFlag);
+            Debug.Log("Flag:" + CurrentFlag);
         }
 
         // BONUS GAME中の抽選
