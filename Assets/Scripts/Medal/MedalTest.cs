@@ -1,6 +1,5 @@
 using ReelSpinGame_Medal;
 using ReelSpinGame_Util.OriginalInputs;
-using System;
 using UnityEngine;
 
 public class MedalTest : MonoBehaviour

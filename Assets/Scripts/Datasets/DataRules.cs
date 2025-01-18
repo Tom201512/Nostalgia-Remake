@@ -20,9 +20,6 @@ namespace ReelSpinGame_Rules
         //Reels
         public const int MAX_REEL_AMOUNTS = 3;
         public const int MAX_REEL_ARRAY = 21;
-        public const float ROTATE_RPM = 79.7f;
-        public const float REEL_WEIGHT = 25.5f; //kg
-        public const float REEL_RADIUS = 12.75f; //cm
         public const int MAX_REEL_DELAY = 4;
 
         public enum REEL_COLUMN_ID { REEL_LEFT, REEL_MIDDLE, REEL_RIGHT};
@@ -50,13 +47,7 @@ namespace ReelSpinGame_Rules
     //Util
     public static class OriginalMathmatics
     {
-        public static float ReturnAngularVelocity(float rpsValue)
-        {
-            //Radian
-            float radian = rpsValue * 2.0f * MathF.PI;
-            //ConvertRadian to angle per seconds
-            return radian * 180.0f / MathF.PI;
-        }
+
 
         //Use when you check Reel condition
         public static int ConvertToArrayBit(int data)
@@ -64,11 +55,6 @@ namespace ReelSpinGame_Rules
             //Do not convert if data is 0
             if (data == 0) { return 0; }
             return (int)Math.Pow(2, data);
-        }
-
-        public static float ReturnReelAccerateSpeed(float rpsValue)
-        {
-            return DataRules.REEL_RADIUS / 100f * ReturnAngularVelocity(rpsValue) / 1000.0f;
         }
     }
 }
