@@ -1,11 +1,13 @@
 ﻿using System.Collections;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels
 {
     public class ReelManager
     {
-        // リール処理のテスト用
+        // リールマネージャー
 
         // 目指す目標
 
@@ -17,20 +19,26 @@ namespace ReelSpinGame_Reels
 
         // マネージャーが持つもの
 
-        // 各リールの配列
-        // 
+        // 各リールのデータ(3つ)
+        // 全リールへのコントロール
 
         // const 
+        public const int MaxReels = 3;
 
+        public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
 
         // var
 
         // リール
-
+        private ReelData[] reels;
 
         public ReelManager() 
         {
-            
+            reels = new ReelData[MaxReels];
+
+            reels[(int)ReelID.ReelLeft] = new ReelData(0, ReelSpinGame_Reels.Array.ReelArray.LeftReelArray.ToArray());
+            reels[(int)ReelID.ReelMiddle] = new ReelData(1, ReelSpinGame_Reels.Array.ReelArray.MiddleReelArray.ToArray());
+            reels[(int)ReelID.ReelRight] = new ReelData(2, ReelSpinGame_Reels.Array.ReelArray.RightReelArray.ToArray());
         }
 
 

@@ -18,8 +18,8 @@ namespace ReelSpinGame_Rules
         public const int MAX_PAYOUT = 15;
 
         //Reels
-        public const int MAX_REEL_AMOUNTS = 3;
-        public const int MAX_REEL_ARRAY = 21;
+
+
         public const int MAX_REEL_DELAY = 4;
 
         public enum REEL_COLUMN_ID { REEL_LEFT, REEL_MIDDLE, REEL_RIGHT};

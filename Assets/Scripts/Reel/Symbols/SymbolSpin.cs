@@ -48,7 +48,7 @@ public class SymbolSpin : MonoBehaviour
         //UpdateSymbolsObjects(reelData);
         //Debug.Log("StartDone");
 
-        StartReel(1.0f);
+        //StartReel(1.0f);
     }
 
     void FixedUpdate()
