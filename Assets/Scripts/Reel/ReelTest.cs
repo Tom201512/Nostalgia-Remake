@@ -6,15 +6,12 @@ using UnityEngine;
 public class ReelTest : MonoBehaviour
 {
     // リール処理のテスト用
-
-    // var
-    [SerializeField] private SymbolSpin[] symbolSpins;
-    private ReelManager manager;
+    [SerializeField] private ReelManager manager;
 
     // Use this for initialization
     void Start()
     {
-        manager = new ReelManager();
+
     }
 
     // Update is called once per frame
@@ -22,4 +19,4 @@ public class ReelTest : MonoBehaviour
     {
 
     }
-}
+} 
