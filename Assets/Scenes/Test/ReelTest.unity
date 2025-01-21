@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5787d13652097f4498666a1bc1bb1ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbolSpins:
+  reelObjects:
   - {fileID: 141395006}
   - {fileID: 1988532655}
   - {fileID: 1701692655}
@@ -530,14 +530,6 @@ PrefabInstance:
     - target: {fileID: 582631020889352479, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: RightReel
-      objectReference: {fileID: 0}
-    - target: {fileID: 582631020889352479, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5789618763781190668, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-      propertyPath: reelID
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -987,14 +979,6 @@ PrefabInstance:
     - target: {fileID: 582631020889352479, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: MiddleReel
-      objectReference: {fileID: 0}
-    - target: {fileID: 582631020889352479, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5789618763781190668, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-      propertyPath: reelID
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,12 +1,12 @@
-﻿using ReelSpinGame_Reels.Array;
-using System.Collections;
+﻿using System.Collections.ObjectModel;
 using UnityEngine;
+using ReelSpinGame_Reels.ReelArray;
 
 namespace ReelSpinGame_Reels
 {
     public class ReelData
     {
-        // リールのデータ *MonoBehaviourを持つ
+        // リールのデータ *
 
         // 目指す目標
 
@@ -25,21 +25,33 @@ namespace ReelSpinGame_Reels
 
         // const 
 
+        // リール位置識別用
+        public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
+
+
         // var
 
-        // リールの状態
+        // 停止中か
+        public bool IsStopping { get; private set; }
 
-        private bool isStopping;
-        private ReelArray.ReelSymbols[] array;
+        // 現在の下段リール位置
+        public int CurrentLower { get; private set; }
 
 
-        public ReelData(int test, ReelArray.ReelSymbols[] arrayData) 
+        // リール配列
+        public ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> Array { get; private set; }
+
+
+        public ReelData(int test, ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> arrayData) 
         {
-            isStopping = false;
-            array = arrayData;
+            IsStopping = false;
+            CurrentLower = 0;
+
+            Array = arrayData;
+
             Debug.Log("ReelGenerated:" +  test);
 
-            for(int i = 0; i < arrayData.Length; i++)
+            for(int i = 0; i < arrayData.Count; i++)
             {
                 Debug.Log("No." + i + " Symbol:" + arrayData[i]);
             }
@@ -48,6 +60,32 @@ namespace ReelSpinGame_Reels
 
         // func
 
-        
+        private void ChangeReelPos(float rotateSpeed)
+        {
+           // CurrentLower = GetReelPos(ReelPosID.Lower) + Mathf.Sign(rotateSpeed);
+        }
+
+
+        // 指定したリールの位置番号を返す
+        public int GetReelPos(ReelPosID posID)
+        {
+            // オーバーフロー対策
+
+            if (CurrentLower + (int)posID < 0) 
+            {
+                Debug.Log(ReelArray.ReelArray.MaxReelArray + CurrentLower + (int)posID);
+                return ReelArray.ReelArray.MaxReelArray + CurrentLower + (int)posID; 
+            }
+
+            else if (CurrentLower + (int)posID > ReelArray.ReelArray.MaxReelArray - 1) 
+            {
+                Debug.Log(CurrentLower + (int)posID - ReelArray.ReelArray.MaxReelArray);
+                return CurrentLower + (int)posID - ReelArray.ReelArray.MaxReelArray; 
+            }
+
+            // オーバーフローがないならそのまま返す
+            Debug.Log(CurrentLower + (int)posID - ReelArray.ReelArray.MaxReelArray);
+            return CurrentLower + (int)posID;
+        }
     }
 }

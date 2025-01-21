@@ -34,20 +34,26 @@ namespace ReelSpinGame_Lots.Flag
 
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
-        private FlagId[] lotResultNormal = new FlagId[] {FlagId.FlagBig,
+        private FlagId[] lotResultNormal = new FlagId[] 
+        {
+            FlagId.FlagBig,
             FlagId.FlagReg,
             FlagId.FlagCherry2,
             FlagId.FlagCherry4,
             FlagId.FlagMelon,
             FlagId.FlagBell,
-            FlagId.FlagReplayJACin};
+            FlagId.FlagReplayJACin
+        };
 
         // BIG CHANCE中
-        private FlagId[] lotResultBig = new FlagId[] {FlagId.FlagCherry2,
+        private FlagId[] lotResultBig = new FlagId[] 
+        {
+            FlagId.FlagCherry2,
             FlagId.FlagCherry4,
             FlagId.FlagMelon,
             FlagId.FlagBell,
-            FlagId.FlagReplayJACin};
+            FlagId.FlagReplayJACin
+        };
 
 
         // コンストラクタ
@@ -65,31 +71,39 @@ namespace ReelSpinGame_Lots.Flag
         // テーブル作成(初期化時)
         private void MakeTables(int settingNum)
         {
-            flagLotsTableA = new float[] { FlagLotsProb.BigProbability[settingNum - 1],
-                    FlagLotsProb.RegProbability[settingNum- 1],
-                    FlagLotsProb.Cherry2Prob,
-                    FlagLotsProb.Cherry4ProbA,
-                    FlagLotsProb.MelonProbA,
-                    FlagLotsProb.BellProbA,
-                    FlagLotsProb.ReplayJACinProb};
+            flagLotsTableA = new float[]
+            {
+                FlagLotsProb.BigProbability[settingNum - 1],
+                FlagLotsProb.RegProbability[settingNum- 1],
+                FlagLotsProb.Cherry2Prob,
+                FlagLotsProb.Cherry4ProbA,
+                FlagLotsProb.MelonProbA,
+                FlagLotsProb.BellProbA,
+                FlagLotsProb.ReplayJACinProb
+            };
 
-            flagLotsTableB = new float[] { FlagLotsProb.BigProbability[settingNum - 1],
-                    FlagLotsProb.RegProbability[settingNum- 1],
-                    FlagLotsProb.Cherry2Prob,
-                    FlagLotsProb.Cherry4ProbB,
-                    FlagLotsProb.MelonProbB,
-                    FlagLotsProb.BellProbB,
-                    FlagLotsProb.ReplayJACinProb};
+            flagLotsTableB = new float[] 
+            {
+                FlagLotsProb.BigProbability[settingNum - 1],
+                FlagLotsProb.RegProbability[settingNum- 1],
+                FlagLotsProb.Cherry2Prob,
+                FlagLotsProb.Cherry4ProbB,
+                FlagLotsProb.MelonProbB,
+                FlagLotsProb.BellProbB,
+                FlagLotsProb.ReplayJACinProb
+            };
 
-            flagLotsTableBIG = new float[] {
-                    FlagLotsProb.CherryProbInBig,
-                    FlagLotsProb.CherryProbInBig,
-                    FlagLotsProb.MelonProbInBig,
-                    FlagLotsProb.BigBellProbability[settingNum - 1],
-                    FlagLotsProb.JACinProbInBig};
+            flagLotsTableBIG = new float[] 
+            {
+                FlagLotsProb.CherryProbInBig,
+                FlagLotsProb.CherryProbInBig,
+                FlagLotsProb.MelonProbInBig,
+                FlagLotsProb.BigBellProbability[settingNum - 1],
+                FlagLotsProb.JACinProbInBig
+            };
 
             Debug.Log("NormalA Table:");
-            for(int i = 0; i < lotResultNormal.Length; i++)
+            for (int i = 0; i < lotResultNormal.Length; i++)
             {
                 Debug.Log(lotResultNormal[i].ToString() + ":" + flagLotsTableA[i]);
             }
@@ -114,7 +128,7 @@ namespace ReelSpinGame_Lots.Flag
         {
             // 現在の参照テーブルをもとに抽選
 
-            switch(CurrentTable)
+            switch (CurrentTable)
             {
                 case FlagLotMode.NormalA:
                     CurrentFlag = CheckResultByTable(flagLotsTableA, lotResultNormal);

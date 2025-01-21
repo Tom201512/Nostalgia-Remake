@@ -1,7 +1,4 @@
-﻿using ReelSpinGame_Reels;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ReelTest : MonoBehaviour
 {
@@ -11,7 +8,7 @@ public class ReelTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        //manager.StartReels();
     }
 
     // Update is called once per frame

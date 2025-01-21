@@ -1,9 +1,11 @@
+using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.ReelArray;
 using System;
 using UnityEngine;
 
-public class SymbolSpin : MonoBehaviour
+public class ReelObject : MonoBehaviour
 {
-    // リールの図柄部分回転
+    // リールオブジェクト
 
     // const
 
@@ -21,34 +23,33 @@ public class SymbolSpin : MonoBehaviour
 
 
     // var
+
+    // 現在の回転速度
     private float rotateSpeed = 0.0f;
+
+    // 最高速度
     private float maxSpeed = 0.0f;
 
-    /*[SerializeField] REEL_COLUMN_ID reelID;
+    //[SerializeField] REEL_COLUMN_ID reelID;
     private SymbolChange[] symbolsObj;
 
-    //Get ReelData from presenter
-    private ReelData reelData;
-;*/
+    // リール情報を持つ
+    public ReelData ReelData { get; private set; }
 
     bool isSpinning = false;
 
     void Awake()
     {
-        //ReelPresenter rP = GameObject.Find("Presenter").GetComponent<ReelPresenter>();
-        //reelData = rP.ReelDatas[(int)reelID];
-        //if (reelData == null) { throw new Exception("No Presenter found!"); }
-        //symbolsObj = GetComponentsInChildren<SymbolChange>();
-
-        //Debug.Log("AwakeDone");
+        symbolsObj = GetComponentsInChildren<SymbolChange>();
+        Debug.Log("ReelSpin AwakeDone");
     }
 
     private void Start()
     {
-        //UpdateSymbolsObjects(reelData);
-        //Debug.Log("StartDone");
+        UpdateSymbolsObjects();
+        Debug.Log("StartDone");
 
-        //StartReel(1.0f);
+        StartReel(1.0f);
     }
 
     void FixedUpdate()
@@ -60,29 +61,34 @@ public class SymbolSpin : MonoBehaviour
         }
     }
 
+    // リールデータを渡す
+    public void SetReelData(ReelData reelData) => ReelData = reelData;
+
+    //　リール始動
     public void StartReel(float maxSpeed)
     {
         isSpinning = true;
         this.maxSpeed = maxSpeed;
     }
 
+    // 速度加速
     void AccerateReelSpeed()
     {
         Math.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), 
             -1 * maxSpeed, maxSpeed);
     }
 
+    // リール回転
     void RotateReel()
     {
-        //rotate the reel
         transform.Rotate((ReturnAngularVelocity(RotateRPS)) * Time.deltaTime * rotateSpeed * Vector3.left);
-        //if LowerReelSymbol out bounds(if x angle is 17.174 or 342.826, depends on rotateSpeed is positive or not)
+
+        // 一定角度に達したら図柄の更新(17.174 or 342.826)
         if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && rotateSpeed > 0) ||
             (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && rotateSpeed < 0))
         {
             //ChangeSymbols
-            //reelData.ChangeNextSymbol();
-            //UpdateSymbolsObjects(reelData);
+            UpdateSymbolsObjects();
 
             Debug.Log("Changed Symbol");
 
@@ -99,15 +105,18 @@ public class SymbolSpin : MonoBehaviour
         }
     }
 
-    /*private void UpdateSymbolsObjects(ReelData reel)
+    //図柄の更新
+    private void UpdateSymbolsObjects()
     {
+        // 現在のリール下段を基準として位置を更新する。
         foreach(SymbolChange symbol in symbolsObj)
         {
-            symbol.ChangeSymbol(reelData.ReturnReelSymbol((int)symbol.Position));
+            symbol.ChangeSymbol(ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
+            Debug.Log("Changed Symbol:" + ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
         }
-    }*/
+    }
 
-
+    // 回転率計算
     private float ReturnAngularVelocity(float rpsValue)
     {
         //Radian
@@ -116,6 +125,7 @@ public class SymbolSpin : MonoBehaviour
         return radian * 180.0f / MathF.PI;
     }
 
+    // 加速度を返す
     private float ReturnReelAccerateSpeed(float rpsValue)
     {
         return ReelRadius / 100f * ReturnAngularVelocity(rpsValue) / 1000.0f;

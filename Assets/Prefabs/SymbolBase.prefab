@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -179,6 +179,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: 1
 --- !u!1 &2922360376558271568
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -307,6 +308,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: 2
 --- !u!1 &3154831787201927143
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -435,6 +437,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: 0
 --- !u!1 &4757995467152548435
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -563,6 +566,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: 4
 --- !u!1 &6008243228970633874
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -691,6 +695,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: -1
 --- !u!1 &7542297707965959537
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -819,6 +824,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: -2
 --- !u!1 &7607913021338899547
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826f2124737d59c478b1ff5da81c8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbols:
+  symbolMaterials:
   - {fileID: 2100000, guid: cdc88fdcadecbee4d87ceee3bbe8f249, type: 2}
   - {fileID: 2100000, guid: b8312088aaeb8004b9ad99fa5e4cb807, type: 2}
   - {fileID: 2100000, guid: 6e25af2ca7a34c945afaf84b967a61b4, type: 2}
@@ -947,3 +953,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b80d2f657d00f4446b94af0cd67dcaab, type: 2}
   - {fileID: 2100000, guid: 7d6035b9eebc1b147b77259fcca325ec, type: 2}
   currentSymbol: 0
+  posID: 3

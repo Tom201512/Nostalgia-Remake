@@ -23,7 +23,6 @@ namespace ReelSpinGame_Rules
         public const int MAX_REEL_DELAY = 4;
 
         public enum REEL_COLUMN_ID { REEL_LEFT, REEL_MIDDLE, REEL_RIGHT};
-        public enum REEL_POS_OFFSET { LOWER_3RD = -2, LOWER_2ND, LOWER, CENTER, UPPER , UPPER_2ND, UPPER_3RD}
         public const int REEL_POS_MAXCOUNT = 7;
 
         //BonusType

@@ -1,8 +1,9 @@
 ﻿using ReelSpinGame_Reels;
-using System.Collections;
-using System.Linq;
-using Unity.VisualScripting;
+using ReelSpinGame_Reels.ReelArray;
+using System;
+using System.Collections.ObjectModel;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelArray.ReelArray;
 
 public class ReelManager : MonoBehaviour
 {
@@ -19,28 +20,53 @@ public class ReelManager : MonoBehaviour
     // マネージャーが持つもの
 
     // 各リールのデータ(3つ)
+    // 各リールのMonoBehaviour
     // 全リールへのコントロール
 
     // const 
-    public const int MaxReels = 3;
+    //public const int MaxReels = 3;
 
     public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
 
-    [SerializeField] private SymbolSpin[] symbolSpins;
-
     // var
 
-    // リール
-    private ReelData[] reels;
+    [SerializeField] private ReelObject[] reelObjects;
 
+    private ReadOnlyCollection<ReadOnlyCollection<ReelSymbols>> array;
+            
     void Awake()
     {
-        reels = new ReelData[MaxReels];
+        Debug.Log(ReelArray.LeftArray[0]);
 
-        reels[(int)ReelID.ReelLeft] = new ReelData(0, ReelSpinGame_Reels.Array.ReelArray.LeftReelArray.ToArray());
-        reels[(int)ReelID.ReelMiddle] = new ReelData(1, ReelSpinGame_Reels.Array.ReelArray.MiddleReelArray.ToArray());
-        reels[(int)ReelID.ReelRight] = new ReelData(2, ReelSpinGame_Reels.Array.ReelArray.RightReelArray.ToArray());
+        array = new ReadOnlyCollection<ReadOnlyCollection<ReelSymbols>>(
+            new[]
+            {
+                ReelArray.LeftArray,
+                ReelArray.MiddleArray,
+                ReelArray.RightArray,
+            });
+
+        for(int i = 0; i < reelObjects.Length; i++)
+        {
+            reelObjects[i].SetReelData(new ReelData((int)ReelID.ReelLeft, array[i]));
+        }
+
+        //Debug.Log(reelObjects[(int)ReelID.ReelLeft].ReelData.Array);
     }
 
     // func
+
+    public void StartReels()
+    {
+        // リールが回っていなければ回転
+        for(int i = 0; i < reelObjects.Length; i++)
+        {
+            reelObjects[i].StartReel(1.0f);
+        }
+    }
+
+    public void StopSelectedReel(ReelID reelID)
+    {
+        // リール停止
+    }
 }
