@@ -68,10 +68,12 @@ public class ReelObject : MonoBehaviour
     {
         if(maxSpeed != 0)
         {
+            //止まっていないときは加速
             if (rotateSpeed <= maxSpeed) 
             { 
                 SpeedUpReel(); 
             }
+
             RotateReel();
         }
     }
@@ -108,8 +110,15 @@ public class ReelObject : MonoBehaviour
     // 速度減速
     void SpeedDownReel()
     {
-        Math.Clamp(rotateSpeed -= ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed),
-            -1 * maxSpeed, maxSpeed);
+        Debug.Log("Slowing");
+        Math.Clamp(rotateSpeed -= ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed) * 15.0f,
+            0, maxSpeed);
+
+        if(rotateSpeed <= 0)
+        {
+            Debug.Log("Reached 0");
+
+        }
     }
 
     // リール回転
@@ -118,8 +127,8 @@ public class ReelObject : MonoBehaviour
         transform.Rotate((ReturnAngularVelocity(RotateRPS)) * Time.deltaTime * rotateSpeed * Vector3.left);
 
         // 一定角度に達したら図柄の更新(17.174 or 342.826)
-        if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && rotateSpeed > 0) ||
-            (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && rotateSpeed < 0))
+        if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && Math.Sign(rotateSpeed) == -1 ||
+            (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && Math.Sign(rotateSpeed) == 1)))
         {
             // 図柄位置変更
             ReelData.ChangeReelPos(rotateSpeed);
@@ -133,12 +142,11 @@ public class ReelObject : MonoBehaviour
             // 停止する場合は
             if (IsStopping && delayToStop == 0)
             {
-                IsStopping = false;
-
                 // 再度リールの角度を調整して停止させる
                 transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));
                 rotateSpeed = 0;
                 maxSpeed = 0;
+                IsStopping = false;
             }
 
             // 停止するがディレイ(スベリ)があれば数値を減らす(次の図柄更新で止める)

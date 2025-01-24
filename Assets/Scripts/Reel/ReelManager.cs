@@ -91,7 +91,7 @@ public class ReelManager : MonoBehaviour
 
         if(!reelObjects[(int)reelID].IsStopping)
         {
-            reelObjects[(int)reelID].StopReel(4);
+            reelObjects[(int)reelID].StopReel(0);
             stopReelCount += 1;
 
             // 全リールが停止されていればまた回せるようにする
