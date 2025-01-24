@@ -10,37 +10,64 @@ public class ReelTest : MonoBehaviour
 
     [SerializeField] private ReelManager manager;
 
-    // Use this for initialization
-    void Start()
-    {
+    // 入力があったか
+    bool hasInput;
 
+    // Use this for initialization
+    void Awake()
+    {
+        hasInput = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // リール回転
-        if (OriginalInput.CheckOneKeyInput(KeyCode.UpArrow))
+        // 何も入力が入っていなければ実行
+
+        if(!hasInput)
         {
-            manager.StartReels();
+            // リール回転
+            if (OriginalInput.CheckOneKeyInput(KeyCode.UpArrow))
+            {
+                manager.StartReels();
+            }
+
+            // 左停止
+            if (OriginalInput.CheckOneKeyInput(keyToStopLeft))
+            {
+                manager.StopSelectedReel(ReelManager.ReelID.ReelLeft);
+            }
+
+            // 中停止
+            if (OriginalInput.CheckOneKeyInput(keyToStopMiddle))
+            {
+                manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle);
+            }
+
+            // 右停止
+            if (OriginalInput.CheckOneKeyInput(keyToStopRight))
+            {
+                manager.StopSelectedReel(ReelManager.ReelID.ReelRight);
+            }
+            // 入力がないかチェック
+            if (Input.anyKey)
+            {
+                hasInput = true;
+            }
         }
 
-        // 左停止
-        if(OriginalInput.CheckOneKeyInput(keyToStopLeft))
+        else if (hasInput)
         {
-            manager.StopSelectedReel(ReelManager.ReelID.ReelLeft);
-        }
+            if(!Input.anyKey)
+            {
+                Debug.Log("Input end");
+                hasInput = false;
+            }
+            else
+            {
+                Debug.Log("You still have inputs");
+            }
 
-        // 中停止
-        if (OriginalInput.CheckOneKeyInput(keyToStopMiddle))
-        {
-            manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle);
-        }
-
-        // 右停止
-        if (OriginalInput.CheckOneKeyInput(keyToStopRight))
-        {
-            manager.StopSelectedReel(ReelManager.ReelID.ReelRight);
         }
     }
 } 

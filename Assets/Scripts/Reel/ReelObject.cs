@@ -107,20 +107,6 @@ public class ReelObject : MonoBehaviour
             -1 * maxSpeed, maxSpeed);
     }
 
-    // ë¨ìxå∏ë¨
-    void SpeedDownReel()
-    {
-        Debug.Log("Slowing");
-        Math.Clamp(rotateSpeed -= ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed) * 15.0f,
-            0, maxSpeed);
-
-        if(rotateSpeed <= 0)
-        {
-            Debug.Log("Reached 0");
-
-        }
-    }
-
     // ÉäÅ[ÉãâÒì]
     void RotateReel()
     {
