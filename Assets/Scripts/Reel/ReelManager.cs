@@ -1,8 +1,6 @@
 ﻿using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.ReelArray;
-using System;
 using System.Collections.ObjectModel;
-using Unity.VisualScripting;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelArray.ReelArray;
 
@@ -38,13 +36,15 @@ public class ReelManager : MonoBehaviour
     // 動作中か
     private bool isWorking;
 
-
+    // 停止したリール数
+    private int stopReelCount;
 
     private ReadOnlyCollection<ReadOnlyCollection<ReelSymbols>> array;
             
     void Awake()
     {
         isWorking = false;
+        stopReelCount = 0;
         Debug.Log(ReelArray.LeftArray[0]);
 
         array = new ReadOnlyCollection<ReadOnlyCollection<ReelSymbols>>(
@@ -91,7 +91,16 @@ public class ReelManager : MonoBehaviour
 
         if(!reelObjects[(int)reelID].IsStopping)
         {
-            reelObjects[(int)reelID].StopReel(0);
+            reelObjects[(int)reelID].StopReel(4);
+            stopReelCount += 1;
+
+            // 全リールが停止されていればまた回せるようにする
+            if (stopReelCount == reelObjects.Length)
+            {
+                isWorking = false;
+                stopReelCount = 0;
+                Debug.Log("All Reels are stopped");
+            }
         }
         else
         {
