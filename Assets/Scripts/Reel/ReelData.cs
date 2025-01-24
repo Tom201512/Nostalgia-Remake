@@ -60,32 +60,35 @@ namespace ReelSpinGame_Reels
 
         // func
 
-        private void ChangeReelPos(float rotateSpeed)
+        // リール位置変更
+        public void ChangeReelPos(float rotateSpeed)
         {
-           // CurrentLower = GetReelPos(ReelPosID.Lower) + Mathf.Sign(rotateSpeed);
+            // 回転速度の符号に合わせて位置を変更
+           CurrentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
+            Debug.Log("Changed Reel to :" + CurrentLower);
         }
 
 
         // 指定したリールの位置番号を返す
-        public int GetReelPos(ReelPosID posID)
-        {
-            // オーバーフロー対策
+        public int GetReelPos(ReelPosID posID) => OffsetReel((int)posID);
 
-            if (CurrentLower + (int)posID < 0) 
+        private int OffsetReel(int offset)
+        {
+            if (CurrentLower + offset < 0)
             {
-                Debug.Log(ReelArray.ReelArray.MaxReelArray + CurrentLower + (int)posID);
-                return ReelArray.ReelArray.MaxReelArray + CurrentLower + (int)posID; 
+                Debug.Log("Lower than 0 Reel:" + ReelArray.ReelArray.MaxReelArray + CurrentLower + offset);
+                return ReelArray.ReelArray.MaxReelArray + CurrentLower + offset;
             }
 
-            else if (CurrentLower + (int)posID > ReelArray.ReelArray.MaxReelArray - 1) 
+            else if (CurrentLower + offset > ReelArray.ReelArray.MaxReelArray - 1)
             {
-                Debug.Log(CurrentLower + (int)posID - ReelArray.ReelArray.MaxReelArray);
-                return CurrentLower + (int)posID - ReelArray.ReelArray.MaxReelArray; 
+                Debug.Log("Higher than" + ReelArray.ReelArray.MaxReelArray + " Reel:" + (CurrentLower + offset - ReelArray.ReelArray.MaxReelArray));
+                return CurrentLower + offset - ReelArray.ReelArray.MaxReelArray;
             }
 
             // オーバーフローがないならそのまま返す
-            Debug.Log(CurrentLower + (int)posID - ReelArray.ReelArray.MaxReelArray);
-            return CurrentLower + (int)posID;
+            Debug.Log("No Overflow" + (CurrentLower + offset - ReelArray.ReelArray.MaxReelArray));
+            return CurrentLower + offset;
         }
     }
 }

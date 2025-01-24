@@ -87,7 +87,7 @@ public class ReelObject : MonoBehaviour
         if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && rotateSpeed > 0) ||
             (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && rotateSpeed < 0))
         {
-            //ChangeSymbols
+            ReelData.ChangeReelPos(rotateSpeed);
             UpdateSymbolsObjects();
 
             Debug.Log("Changed Symbol");
