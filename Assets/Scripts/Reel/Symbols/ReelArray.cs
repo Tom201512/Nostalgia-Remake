@@ -39,7 +39,7 @@ namespace ReelSpinGame_Reels.ReelArray
             ReelSymbols.Melon,
             ReelSymbols.Bell,
             ReelSymbols.BAR,
-            ReelSymbols.Replay,
+            ReelSymbols.Cherry,
             ReelSymbols.RedSeven,
         });
 

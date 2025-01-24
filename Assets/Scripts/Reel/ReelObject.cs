@@ -21,25 +21,37 @@ public class ReelObject : MonoBehaviour
     // リール半径(cm)
     public const float ReelRadius = 12.75f;
 
+    // 最高ディレイ(スベリコマ数 4)
+    public const int MaxDelay = 4;
+
 
     // var
 
     // 現在の回転速度
-    private float rotateSpeed = 0.0f;
+    private float rotateSpeed;
 
     // 最高速度
-    private float maxSpeed = 0.0f;
+    private float maxSpeed;
+
+    // 停止するのに必要なディレイ(スベリ)
+    private int delayToStop;
 
     //[SerializeField] REEL_COLUMN_ID reelID;
     private SymbolChange[] symbolsObj;
 
+
+    // 止まる予定か
+    public bool IsStopping { get; private set; }
+
     // リール情報を持つ
     public ReelData ReelData { get; private set; }
 
-    bool isSpinning = false;
-
     void Awake()
     {
+        rotateSpeed = 0.0f;
+        maxSpeed = 0.0f;
+        delayToStop = 0;
+        IsStopping = false;
         symbolsObj = GetComponentsInChildren<SymbolChange>();
         Debug.Log("ReelSpin AwakeDone");
     }
@@ -49,14 +61,17 @@ public class ReelObject : MonoBehaviour
         UpdateSymbolsObjects();
         Debug.Log("StartDone");
 
-        StartReel(1.0f);
+        //StartReel(1.0f);
     }
 
     void FixedUpdate()
     {
-        if(isSpinning)
+        if(maxSpeed != 0)
         {
-            if (rotateSpeed <= maxSpeed) { AccerateReelSpeed(); }
+            if (rotateSpeed <= maxSpeed) 
+            { 
+                SpeedUpReel(); 
+            }
             RotateReel();
         }
     }
@@ -67,14 +82,33 @@ public class ReelObject : MonoBehaviour
     //　リール始動
     public void StartReel(float maxSpeed)
     {
-        isSpinning = true;
         this.maxSpeed = maxSpeed;
     }
 
+    // リール停止
+    public void StopReel(int delay)
+    {
+        if(delay < 0 || delay > MaxDelay)
+        {
+            throw new Exception("Invalid Delay. Must be within 0~4");
+        }
+
+        Debug.Log("Received Stop Delay:" + delay);
+        delayToStop = delay;
+        IsStopping = true;
+    }
+
     // 速度加速
-    void AccerateReelSpeed()
+    void SpeedUpReel()
     {
         Math.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), 
+            -1 * maxSpeed, maxSpeed);
+    }
+
+    // 速度減速
+    void SpeedDownReel()
+    {
+        Math.Clamp(rotateSpeed -= ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed),
             -1 * maxSpeed, maxSpeed);
     }
 
@@ -87,21 +121,31 @@ public class ReelObject : MonoBehaviour
         if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && rotateSpeed > 0) ||
             (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && rotateSpeed < 0))
         {
+            // 図柄位置変更
             ReelData.ChangeReelPos(rotateSpeed);
             UpdateSymbolsObjects();
 
             Debug.Log("Changed Symbol");
 
+            // 変更角度分だけ回転を戻す。
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
 
-            /*if (reelData.WillStop && reelData.CurrentDelay == 0)
+            // 停止する場合は
+            if (IsStopping && delayToStop == 0)
             {
-                reelData.ChangeSpinState(false);
-                //Recalculate the rotation
+                IsStopping = false;
+
+                // 再度リールの角度を調整して停止させる
                 transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));
                 rotateSpeed = 0;
+                maxSpeed = 0;
             }
-            else if (reelData.WillStop){reelData.DecrementDelay(); }*/
+
+            // 停止するがディレイ(スベリ)があれば数値を減らす(次の図柄更新で止める)
+            else if (IsStopping)
+            {
+                delayToStop -= 1;
+            }
         }
     }
 

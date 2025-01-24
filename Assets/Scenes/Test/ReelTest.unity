@@ -662,6 +662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c162c9ab1b5e4094093d9a75c42aac5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyToStopLeft: 276
+  keyToStopMiddle: 274
+  keyToStopRight: 275
   manager: {fileID: 286284038}
 --- !u!4 &1051583531
 Transform:

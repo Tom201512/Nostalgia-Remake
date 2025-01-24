@@ -31,25 +31,27 @@ namespace ReelSpinGame_Reels
 
         // var
 
-        // 停止中か
-        public bool IsStopping { get; private set; }
-
         // 現在の下段リール位置
-        public int CurrentLower { get; private set; }
+        private int currentLower;
 
 
         // リール配列
         public ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> Array { get; private set; }
 
 
-        public ReelData(int test, ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> arrayData) 
+        public ReelData(int lowerPos, ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> arrayData) 
         {
-            IsStopping = false;
-            CurrentLower = 0;
+            // もし位置が0~20でなければ例外を出す
+            if(lowerPos < 0 ||  lowerPos > ReelArray.ReelArray.MaxReelArray - 1)
+            {
+                throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (ReelArray.ReelArray.MaxReelArray - 1));
+            }
+
+            currentLower = lowerPos;
 
             Array = arrayData;
 
-            Debug.Log("ReelGenerated:" +  test);
+            Debug.Log("ReelGenerated Position at:" + lowerPos);
 
             for(int i = 0; i < arrayData.Count; i++)
             {
@@ -64,8 +66,8 @@ namespace ReelSpinGame_Reels
         public void ChangeReelPos(float rotateSpeed)
         {
             // 回転速度の符号に合わせて位置を変更
-           CurrentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
-            Debug.Log("Changed Reel to :" + CurrentLower);
+           currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
+            Debug.Log("Changed Reel to :" + currentLower);
         }
 
 
@@ -74,21 +76,21 @@ namespace ReelSpinGame_Reels
 
         private int OffsetReel(int offset)
         {
-            if (CurrentLower + offset < 0)
+            if (currentLower + offset < 0)
             {
-                Debug.Log("Lower than 0 Reel:" + ReelArray.ReelArray.MaxReelArray + CurrentLower + offset);
-                return ReelArray.ReelArray.MaxReelArray + CurrentLower + offset;
+                Debug.Log("Lower than 0 Reel:" + ReelArray.ReelArray.MaxReelArray + currentLower + offset);
+                return ReelArray.ReelArray.MaxReelArray + currentLower + offset;
             }
 
-            else if (CurrentLower + offset > ReelArray.ReelArray.MaxReelArray - 1)
+            else if (currentLower + offset > ReelArray.ReelArray.MaxReelArray - 1)
             {
-                Debug.Log("Higher than" + ReelArray.ReelArray.MaxReelArray + " Reel:" + (CurrentLower + offset - ReelArray.ReelArray.MaxReelArray));
-                return CurrentLower + offset - ReelArray.ReelArray.MaxReelArray;
+                Debug.Log("Higher than" + ReelArray.ReelArray.MaxReelArray + " Reel:" + (currentLower + offset - ReelArray.ReelArray.MaxReelArray));
+                return currentLower + offset - ReelArray.ReelArray.MaxReelArray;
             }
 
             // オーバーフローがないならそのまま返す
-            Debug.Log("No Overflow" + (CurrentLower + offset - ReelArray.ReelArray.MaxReelArray));
-            return CurrentLower + offset;
+            Debug.Log("No Overflow" + (currentLower + offset - ReelArray.ReelArray.MaxReelArray));
+            return currentLower + offset;
         }
     }
 }
