@@ -9,4 +9,16 @@ namespace ReelSpinGame_Interface
         void StateUpdate();
         void StateEnd();
     }
+
+    // ファイル読み込み機能を持つインターフェース
+    public interface IFileRead
+    {
+        void ReadFile(string path);
+    }
+
+    // ファイル読み込み機能を持つインターフェース
+    public interface IFileWrite
+    {
+        void WriteFile();
+    }
 }

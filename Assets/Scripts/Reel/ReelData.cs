@@ -1,6 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
-using ReelSpinGame_Reels.ReelArray;
 
 namespace ReelSpinGame_Reels
 {
@@ -14,7 +15,9 @@ namespace ReelSpinGame_Reels
         // 2:図柄の実装
         // 3:リールの停止
         // 4:スベリ実装
-        // 5:テーブル機能搭載
+        // 5:配当チェック
+        // 6:テーブル機能搭載
+
 
         // 各リールデータが持つもの
 
@@ -24,6 +27,16 @@ namespace ReelSpinGame_Reels
         // 制御条件テーブル
 
         // const 
+
+        // リール配列
+
+        // リール配列要素数
+        public const int MaxReelArray = 21;
+
+        // 図柄
+
+        public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
+
 
         // リール位置識別用
         public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
@@ -36,26 +49,35 @@ namespace ReelSpinGame_Reels
 
 
         // リール配列
-        public ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> Array { get; private set; }
+        public byte[] ReelArray { get; private set; }
 
 
-        public ReelData(int lowerPos, ReadOnlyCollection<ReelArray.ReelArray.ReelSymbols> arrayData) 
+        public ReelData(int lowerPos, string arrayData) 
         {
             // もし位置が0~20でなければ例外を出す
-            if(lowerPos < 0 ||  lowerPos > ReelArray.ReelArray.MaxReelArray - 1)
+            if(lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
             {
-                throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (ReelArray.ReelArray.MaxReelArray - 1));
+                throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (MaxReelArray - 1));
             }
 
             currentLower = lowerPos;
 
-            Array = arrayData;
+            // データ読み込み
+            string[] values = arrayData.Split(',');
+
+            ReelArray = Array.ConvertAll(values, byte.Parse);
+
+            foreach (byte value in ReelArray)
+            {
+                // リールのIDを読み込む
+                Debug.Log(value + "Symbol:" + ReturnSymbol(value));
+            }
 
             Debug.Log("ReelGenerated Position at:" + lowerPos);
 
-            for(int i = 0; i < arrayData.Count; i++)
+            for(int i = 0; i < ReelArray.Length; i++)
             {
-                Debug.Log("No." + i + " Symbol:" + arrayData[i]);
+                Debug.Log("No." + i + " Symbol:" + ReturnSymbol(ReelArray[i]));
             }
         }
 
@@ -67,29 +89,37 @@ namespace ReelSpinGame_Reels
         {
             // 回転速度の符号に合わせて位置を変更
            currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
-            Debug.Log("Changed Reel to :" + currentLower);
+           //Debug.Log("Changed Reel to :" + currentLower);
         }
 
 
         // 指定したリールの位置番号を返す
         public int GetReelPos(ReelPosID posID) => OffsetReel((int)posID);
 
+        // 数字を図柄へ変更
+        public ReelSymbols ReturnSymbol(byte index) =>
+                        (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), index);
+
+
+        // 指定したリールの図柄を返す
+        public ReelSymbols GetReelSymbol(ReelPosID posID) => ReturnSymbol(ReelArray[OffsetReel((int)posID)]);
+
         private int OffsetReel(int offset)
         {
             if (currentLower + offset < 0)
             {
-                Debug.Log("Lower than 0 Reel:" + ReelArray.ReelArray.MaxReelArray + currentLower + offset);
-                return ReelArray.ReelArray.MaxReelArray + currentLower + offset;
+                //Debug.Log("Lower than 0 Reel:" + MaxReelArray + currentLower + offset);
+                return MaxReelArray + currentLower + offset;
             }
 
-            else if (currentLower + offset > ReelArray.ReelArray.MaxReelArray - 1)
+            else if (currentLower + offset > MaxReelArray - 1)
             {
-                Debug.Log("Higher than" + ReelArray.ReelArray.MaxReelArray + " Reel:" + (currentLower + offset - ReelArray.ReelArray.MaxReelArray));
-                return currentLower + offset - ReelArray.ReelArray.MaxReelArray;
+                //Debug.Log("Higher than" + MaxReelArray + " Reel:" + (currentLower + offset - MaxReelArray));
+                return currentLower + offset - MaxReelArray;
             }
 
             // オーバーフローがないならそのまま返す
-            Debug.Log("No Overflow" + (currentLower + offset - ReelArray.ReelArray.MaxReelArray));
+            //Debug.Log("No Overflow" + (currentLower + offset - MaxReelArray));
             return currentLower + offset;
         }
     }

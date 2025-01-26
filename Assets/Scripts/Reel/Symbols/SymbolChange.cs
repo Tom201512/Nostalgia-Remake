@@ -1,6 +1,5 @@
 using UnityEngine;
 using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.ReelArray;
 
 public class SymbolChange : MonoBehaviour
 {
@@ -10,7 +9,7 @@ public class SymbolChange : MonoBehaviour
 
     // ê}ïøÇÃï\é¶óp
     [SerializeField] private Material[] symbolMaterials;
-    [SerializeField] private ReelArray.ReelSymbols currentSymbol = ReelArray.ReelSymbols.RedSeven;
+    [SerializeField] private ReelData.ReelSymbols currentSymbol = ReelData.ReelSymbols.RedSeven;
 
     // ï\é¶ïîï™
     private MeshRenderer mesh;
@@ -24,7 +23,7 @@ public class SymbolChange : MonoBehaviour
         mesh.material = symbolMaterials[(int)currentSymbol];
     }
 
-    public void ChangeSymbol(ReelArray.ReelSymbols symbolID)
+    public void ChangeSymbol(ReelData.ReelSymbols symbolID)
     {
         mesh.material = symbolMaterials[(int)symbolID];
     }

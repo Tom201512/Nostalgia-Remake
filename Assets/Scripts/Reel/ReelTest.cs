@@ -60,12 +60,12 @@ public class ReelTest : MonoBehaviour
         {
             if(!Input.anyKey)
             {
-                Debug.Log("Input end");
+                //Debug.Log("Input end");
                 hasInput = false;
             }
             else
             {
-                Debug.Log("You still have inputs");
+                //Debug.Log("You still have inputs");
             }
 
         }

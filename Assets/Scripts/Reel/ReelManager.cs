@@ -1,10 +1,9 @@
 ﻿using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.ReelArray;
-using System.Collections.ObjectModel;
+using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelArray.ReelArray;
+using ReelSpinGame_Interface;
 
-public class ReelManager : MonoBehaviour
+public class ReelManager : MonoBehaviour, IFileRead
 {
     // リールマネージャー
 
@@ -23,7 +22,6 @@ public class ReelManager : MonoBehaviour
     // 全リールへのコントロール
 
     // const 
-    //public const int MaxReels = 3;
 
     public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
 
@@ -32,6 +30,7 @@ public class ReelManager : MonoBehaviour
 
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
+    [SerializeField] private string arrayPath;
 
     // 動作中か
     private bool isWorking;
@@ -39,25 +38,18 @@ public class ReelManager : MonoBehaviour
     // 停止したリール数
     private int stopReelCount;
 
-    private ReadOnlyCollection<ReadOnlyCollection<ReelSymbols>> array;
             
     void Awake()
     {
         isWorking = false;
         stopReelCount = 0;
-        Debug.Log(ReelArray.LeftArray[0]);
 
-        array = new ReadOnlyCollection<ReadOnlyCollection<ReelSymbols>>(
-            new[]
-            {
-                ReelArray.LeftArray,
-                ReelArray.MiddleArray,
-                ReelArray.RightArray,
-            });
+        StreamReader f = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
 
-        for(int i = 0; i < reelObjects.Length; i++)
+        for (int i = 0; i < reelObjects.Length; i++)
         {
-            reelObjects[i].SetReelData(new ReelData(19, array[i]));
+            
+            reelObjects[i].SetReelData(new ReelData(19, f.ReadLine()));
         }
 
         Debug.Log("ReelManager awaken");
@@ -100,11 +92,33 @@ public class ReelManager : MonoBehaviour
                 isWorking = false;
                 stopReelCount = 0;
                 Debug.Log("All Reels are stopped");
+                
+                CheckPayout();
             }
         }
         else
         {
             Debug.Log("Failed to stop the " + reelID.ToString());
         }
+    }
+
+    public void CheckPayout()
+    {
+        for(int i = 0; i < reelObjects.Length; i++)
+        {
+            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Upper));
+            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Upper));
+
+            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Center));
+            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Center));
+
+            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Lower));
+            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Lower));
+        }
+    }
+
+    public void ReadFile(string path)
+    {
+
     }
 }

@@ -1,5 +1,4 @@
 using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.ReelArray;
 using System;
 using UnityEngine;
 
@@ -120,7 +119,7 @@ public class ReelObject : MonoBehaviour
             ReelData.ChangeReelPos(rotateSpeed);
             UpdateSymbolsObjects();
 
-            Debug.Log("Changed Symbol");
+            //Debug.Log("Changed Symbol");
 
             // 変更角度分だけ回転を戻す。
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
@@ -149,8 +148,8 @@ public class ReelObject : MonoBehaviour
         // 現在のリール下段を基準として位置を更新する。
         foreach(SymbolChange symbol in symbolsObj)
         {
-            symbol.ChangeSymbol(ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
-            Debug.Log("Changed Symbol:" + ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
+            symbol.ChangeSymbol(ReelData.GetReelSymbol(symbol.GetPosID()));
+            //Debug.Log("Changed Symbol:" + ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
         }
     }
 
