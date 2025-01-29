@@ -32,6 +32,12 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private ReelObject[] reelObjects;
     [SerializeField] private string arrayPath;
 
+    // 払い出しチェック用
+    [SerializeField] private string normalPayoutData;
+    [SerializeField] private string bigPayoutData;
+    [SerializeField] private string jacPayoutData;
+    [SerializeField] private string payoutLineData;
+
     // 動作中か
     private bool isWorking;
 
