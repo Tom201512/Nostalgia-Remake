@@ -1,4 +1,4 @@
-using ReelSpinGame_Lots.FlagProb;
+using System;
 using UnityEngine;
 
 namespace ReelSpinGame_Lots.Flag
@@ -11,6 +11,14 @@ namespace ReelSpinGame_Lots.Flag
 
         // 最大フラグ数
         const int MaxFlagLots = 16384;
+
+        // ファイル読み込み用
+
+        // 低確率、高確率時のテーブル列数
+        const int MaxColumnForNormal = 7;
+
+        // BIG中
+        const int MAxColumnForBIG = 5;
 
         // enum
 
@@ -31,6 +39,9 @@ namespace ReelSpinGame_Lots.Flag
         private float[] flagLotsTableA;
         private float[] flagLotsTableB;
         private float[] flagLotsTableBIG;
+
+        // JAC GAME中はずれ
+        private float jacNoneProb;
 
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
@@ -57,50 +68,30 @@ namespace ReelSpinGame_Lots.Flag
 
 
         // コンストラクタ
-        public FlagLots(int settingNum)
+        public FlagLots(int settingNum, string tableAData, 
+            string tableBData, string tableBIGData, int jacNoneProb)//, FileStream tableB, FileStream tableBIG, int jacNoneProb)
         {
             // 設定値をもとにテーブル作成
             Debug.Log("Lots Setting set by :" + settingNum);
 
-            MakeTables(settingNum);
-        }
+            // データ読み込み
 
+            // 設定値ごとにシーク位置を決める
 
-        // func
+            // テーブルA
 
-        // テーブル作成(初期化時)
-        private void MakeTables(int settingNum)
-        {
-            flagLotsTableA = new float[]
-            {
-                FlagLotsProb.BigProbability[settingNum - 1],
-                FlagLotsProb.RegProbability[settingNum- 1],
-                FlagLotsProb.Cherry2Prob,
-                FlagLotsProb.Cherry4ProbA,
-                FlagLotsProb.MelonProbA,
-                FlagLotsProb.BellProbA,
-                FlagLotsProb.ReplayJACinProb
-            };
+            // データ読み込み
+            string[] valueA = tableAData.Split(',');
+            string[] valueB = tableAData.Split(',');
+            string[] valueBIG = tableAData.Split(',');
 
-            flagLotsTableB = new float[] 
-            {
-                FlagLotsProb.BigProbability[settingNum - 1],
-                FlagLotsProb.RegProbability[settingNum- 1],
-                FlagLotsProb.Cherry2Prob,
-                FlagLotsProb.Cherry4ProbB,
-                FlagLotsProb.MelonProbB,
-                FlagLotsProb.BellProbB,
-                FlagLotsProb.ReplayJACinProb
-            };
+            flagLotsTableA = Array.ConvertAll(valueA, float.Parse);
 
-            flagLotsTableBIG = new float[] 
-            {
-                FlagLotsProb.CherryProbInBig,
-                FlagLotsProb.CherryProbInBig,
-                FlagLotsProb.MelonProbInBig,
-                FlagLotsProb.BigBellProbability[settingNum - 1],
-                FlagLotsProb.JACinProbInBig
-            };
+            flagLotsTableB = Array.ConvertAll(valueB, float.Parse);
+
+            flagLotsTableBIG = Array.ConvertAll(valueBIG, float.Parse);
+
+            this.jacNoneProb = jacNoneProb;
 
             Debug.Log("NormalA Table:");
             for (int i = 0; i < lotResultNormal.Length; i++)
@@ -119,7 +110,12 @@ namespace ReelSpinGame_Lots.Flag
             {
                 Debug.Log(lotResultBig[i].ToString() + ":" + flagLotsTableBIG[i]);
             }
+
+            Debug.Log("JAC None Probability:" + this.jacNoneProb);
         }
+
+
+        // func
 
         public void ChangeTable(FlagLotMode mode) => CurrentTable = mode;
 
@@ -161,11 +157,11 @@ namespace ReelSpinGame_Lots.Flag
             int flag = UnityEngine.Random.Range(0, MaxFlagLots - 1);
             Debug.Log("You get:" + flag);
 
-            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
+            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選。端数切捨て)
             int flagCheckNum = 0;
 
             // はずれ抽選
-            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / FlagLotsProb.JAC_NONE_PROB);
+            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / jacNoneProb);
             if (flag < flagCheckNum)
             {
                 return FlagId.FlagNone;

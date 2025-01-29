@@ -1,9 +1,9 @@
 ﻿using ReelSpinGame_Reels;
+using System;
 using System.IO;
 using UnityEngine;
-using ReelSpinGame_Interface;
 
-public class ReelManager : MonoBehaviour, IFileRead
+public class ReelManager : MonoBehaviour
 {
     // リールマネージャー
 
@@ -44,15 +44,24 @@ public class ReelManager : MonoBehaviour, IFileRead
         isWorking = false;
         stopReelCount = 0;
 
-        StreamReader f = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
-
-        for (int i = 0; i < reelObjects.Length; i++)
+        try
         {
-            
-            reelObjects[i].SetReelData(new ReelData(19, f.ReadLine()));
-        }
+            StreamReader f = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
 
-        Debug.Log("ReelManager awaken");
+            for (int i = 0; i < reelObjects.Length; i++)
+            {
+
+                reelObjects[i].SetReelData(new ReelData(19, f.ReadLine()));
+            }
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            Debug.Log("ReelManager awaken");
+        }
     }
 
     // func
@@ -115,10 +124,5 @@ public class ReelManager : MonoBehaviour, IFileRead
             Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Lower));
             Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Lower));
         }
-    }
-
-    public void ReadFile(string path)
-    {
-
     }
 }

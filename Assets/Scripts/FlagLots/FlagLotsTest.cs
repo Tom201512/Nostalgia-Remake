@@ -1,9 +1,9 @@
-using ReelSpinGame_Medal;
-using ReelSpinGame_Util.OriginalInputs;
-using System;
-using UnityEngine;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Lots.FlagCounter;
+using ReelSpinGame_Util.OriginalInputs;
+using System;
+using System.IO;
+using UnityEngine;
 
 public class FlagLotsTest : MonoBehaviour
 {
@@ -11,11 +11,64 @@ public class FlagLotsTest : MonoBehaviour
     private FlagLots flagLots;
     private FlagCounter flagCounter;
 
+    // フラグテーブル
+
+    // 設定値
+    [SerializeField] private int setting;
+
+    // 低確率時
+    [SerializeField] private string flagTableAPath;
+
+    // 高確率時
+    [SerializeField] private string flagTableBPath;
+
+    // BIG中テーブル
+    [SerializeField] private string flagTableBIGPath;
+
+    // JACはずれ確率
+    [SerializeField] private int jacNoneProb;
+
     // Start is called before the first frame update
     void Awake()
     {
-        flagLots = new FlagLots(6);
-        flagCounter = new FlagCounter(0);
+        // 例外処理
+        if (setting < 0 && setting > 6) { throw new System.Exception("Invalid jacNoneProb, must be higher that 0"); }
+        // 0ならランダムを選ぶ
+        else if (setting == 0)
+        {
+            setting = UnityEngine.Random.Range(1, 6);
+        }
+
+        Debug.Log("Setting:" + setting);
+
+        if (jacNoneProb < 0) { throw new System.Exception("Invalid jacNoneProb, must be higher that 0"); }
+
+        try
+        {
+            StreamReader tableA = new StreamReader(flagTableAPath);
+            StreamReader tableB = new StreamReader(flagTableBPath);
+            StreamReader tableBIG = new StreamReader(flagTableBIGPath);
+
+            // 設定値をもとにデータを得る(設定値の列まで読み込む)
+            for (int i = 0; i < setting - 1; i++)
+            {
+                tableA.ReadLine();
+                tableB.ReadLine();
+                tableBIG.ReadLine();
+            }
+
+
+            flagLots = new FlagLots(setting, tableA.ReadLine(),
+                tableB.ReadLine(), tableBIG.ReadLine(), jacNoneProb);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            flagCounter = new FlagCounter(0);
+        }
     }
 
     // Update is called once per frame
@@ -76,6 +129,11 @@ public class FlagLotsTest : MonoBehaviour
             flagLots.ChangeTable(FlagLots.FlagLotMode.NormalB);
             Debug.Log("Table chagned to:" + FlagLots.FlagLotMode.NormalB.ToString());
         }
+    }
+
+    private void ReadFile(string path)
+    {
+
     }
 }
 

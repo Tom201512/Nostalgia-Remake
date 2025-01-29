@@ -166,6 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c95769363f54d3409b97e3fa1edda6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setting: 0
+  flagTableAPath: Assets/Scripts/FlagLots/Tables/FlagTableA.csv
+  flagTableBPath: Assets/Scripts/FlagLots/Tables/FlagTableB.csv
+  flagTableBIGPath: Assets/Scripts/FlagLots/Tables/FlagTableBIG.csv
+  jacNoneProb: 256
 --- !u!1 &1063794096
 GameObject:
   m_ObjectHideFlags: 0
