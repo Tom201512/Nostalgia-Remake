@@ -14,17 +14,21 @@ public class SymbolChecker
 
     class PayoutLineData
     {
-        const int LengthOfLinePattern = 3;
-        const int MaxReadBetCondition = LengthOfLinePattern + 1;
-
         public sbyte[] PayoutLine { get; private set; }
-        private byte betCondition;
+        public byte BetCondition { get; private set; }
 
         public PayoutLineData(sbyte[] buffer)
         {
-            PayoutLine = new sbyte[LengthOfLinePattern];
+            // 最後の行以外は払い出しラインのデータなので、配列にする
+            PayoutLine = new sbyte[buffer.Length - 1]; 
+            Array.Copy(buffer, PayoutLine, buffer.Length - 1);
 
-            Array.Copy(buffer, PayoutLine, LengthOfLinePattern);
+            // 最後の行からデータを読み込む
+            if (buffer[buffer.Length - 1] <= 0)
+            {
+                throw new Exception("Invalid Data at BetCondition, It must be within 1-3");
+            }
+            this.BetCondition = (byte)buffer[buffer.Length - 1];
         }
     }
 
@@ -36,19 +40,23 @@ public class SymbolChecker
 
         while(!payoutLineData.EndOfStream)
         {
-            string[] buffer = payoutLineData.ReadLine().Split(',');
-            sbyte[] byteBuffer = Array.ConvertAll(buffer, sbyte.Parse);
+            sbyte[] byteBuffer = Array.ConvertAll(payoutLineData.ReadLine().Split(','), sbyte.Parse);
 
             payoutLineDatas.Add(new PayoutLineData(byteBuffer));
         }
 
+        // デバッグ用
         foreach (PayoutLineData data in payoutLineDatas)
         {
+            string line = "";
             foreach (sbyte b in data.PayoutLine)
             {
-                Debug.Log(b);
+                line += b.ToString();
             }
+            Debug.Log(line + "," + data.BetCondition);
         }
+
+        Debug.Log("PayoutLine Data loaded");
     }
 
     // func
