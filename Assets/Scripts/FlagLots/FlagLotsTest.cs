@@ -57,9 +57,7 @@ public class FlagLotsTest : MonoBehaviour
                 tableBIG.ReadLine();
             }
 
-
-            flagLots = new FlagLots(setting, tableA.ReadLine(),
-                tableB.ReadLine(), tableBIG.ReadLine(), jacNoneProb);
+            flagLots = new FlagLots(setting, tableA, tableB, tableBIG, jacNoneProb);
         }
         catch (Exception e)
         {

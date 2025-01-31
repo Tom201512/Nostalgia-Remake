@@ -1,7 +1,7 @@
 ﻿using ReelSpinGame_Reels;
+using UnityEngine;
 using System;
 using System.IO;
-using UnityEngine;
 
 public class ReelManager : MonoBehaviour
 {
@@ -37,6 +37,7 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private string bigPayoutData;
     [SerializeField] private string jacPayoutData;
     [SerializeField] private string payoutLineData;
+    private SymbolChecker symbolChecker;
 
     // 動作中か
     private bool isWorking;
@@ -52,13 +53,20 @@ public class ReelManager : MonoBehaviour
 
         try
         {
-            StreamReader f = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
+            StreamReader arrayData = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
 
             for (int i = 0; i < reelObjects.Length; i++)
             {
-
-                reelObjects[i].SetReelData(new ReelData(19, f.ReadLine()));
+                reelObjects[i].SetReelData(new ReelData(19, arrayData));
             }
+
+            Debug.Log("Array load done");
+
+            StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
+            //StreamReader normalPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
+            //StreamReader bigPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
+
+            symbolChecker = new SymbolChecker(payoutLines);
         }
         catch(Exception e)
         {

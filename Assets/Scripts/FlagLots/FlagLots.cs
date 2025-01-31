@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace ReelSpinGame_Lots.Flag
@@ -68,8 +69,8 @@ namespace ReelSpinGame_Lots.Flag
 
 
         // コンストラクタ
-        public FlagLots(int settingNum, string tableAData, 
-            string tableBData, string tableBIGData, int jacNoneProb)//, FileStream tableB, FileStream tableBIG, int jacNoneProb)
+        public FlagLots(int settingNum, StreamReader tableAData,
+            StreamReader tableBData, StreamReader tableBIGData, int jacNoneProb)//, FileStream tableB, FileStream tableBIG, int jacNoneProb)
         {
             // 設定値をもとにテーブル作成
             Debug.Log("Lots Setting set by :" + settingNum);
@@ -81,9 +82,9 @@ namespace ReelSpinGame_Lots.Flag
             // テーブルA
 
             // データ読み込み
-            string[] valueA = tableAData.Split(',');
-            string[] valueB = tableAData.Split(',');
-            string[] valueBIG = tableAData.Split(',');
+            string[] valueA = tableAData.ReadLine().Split(',');
+            string[] valueB = tableBData.ReadLine().Split(',');
+            string[] valueBIG = tableBIGData.ReadLine().Split(',');
 
             flagLotsTableA = Array.ConvertAll(valueA, float.Parse);
 

@@ -7,4 +7,10 @@
         void StateUpdate();
         void StateEnd();
     }
+
+    public interface ISave
+    {
+        void SaveFile();
+        void LoadSave();
+    }
 }

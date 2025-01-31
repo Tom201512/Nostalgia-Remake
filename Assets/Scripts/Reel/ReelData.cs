@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels
@@ -50,7 +51,7 @@ namespace ReelSpinGame_Reels
         public byte[] ReelArray { get; private set; }
 
 
-        public ReelData(int lowerPos, string arrayData) 
+        public ReelData(int lowerPos, StreamReader arrayData) 
         {
             // もし位置が0~20でなければ例外を出す
             if(lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
@@ -61,7 +62,7 @@ namespace ReelSpinGame_Reels
             currentLower = lowerPos;
 
             // データ読み込み
-            string[] values = arrayData.Split(',');
+            string[] values = arrayData.ReadLine().Split(',');
 
             ReelArray = Array.ConvertAll(values, byte.Parse);
 
