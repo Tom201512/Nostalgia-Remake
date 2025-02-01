@@ -62,6 +62,11 @@ public class ReelTest : MonoBehaviour
             {
                 //Debug.Log("Input end");
                 hasInput = false;
+
+                if(manager.IsFinished && !manager.HasFinishedCheck)
+                {
+                    manager.StartCheckPayout(3);
+                }
             }
             else
             {

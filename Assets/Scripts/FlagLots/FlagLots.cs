@@ -19,7 +19,7 @@ namespace ReelSpinGame_Lots.Flag
         const int MaxColumnForNormal = 7;
 
         // BIG中
-        const int MAxColumnForBIG = 5;
+        const int MaxColumnForBIG = 5;
 
         // enum
 
@@ -29,6 +29,8 @@ namespace ReelSpinGame_Lots.Flag
         // フラグテーブル
         public enum FlagLotMode { NormalA, NormalB, BigBonus, JacGame };
 
+
+        // var
 
         // 現在フラグ(プロパティ)
         public FlagId CurrentFlag { get; private set; } = FlagId.FlagNone;
@@ -70,7 +72,7 @@ namespace ReelSpinGame_Lots.Flag
 
         // コンストラクタ
         public FlagLots(int settingNum, StreamReader tableAData,
-            StreamReader tableBData, StreamReader tableBIGData, int jacNoneProb)//, FileStream tableB, FileStream tableBIG, int jacNoneProb)
+            StreamReader tableBData, StreamReader tableBIGData, int jacNoneProb)
         {
             // 設定値をもとにテーブル作成
             Debug.Log("Lots Setting set by :" + settingNum);
@@ -79,19 +81,17 @@ namespace ReelSpinGame_Lots.Flag
 
             // 設定値ごとにシーク位置を決める
 
-            // テーブルA
-
             // データ読み込み
             string[] valueA = tableAData.ReadLine().Split(',');
             string[] valueB = tableBData.ReadLine().Split(',');
             string[] valueBIG = tableBIGData.ReadLine().Split(',');
 
+            // 読み込んだテーブルをfloat配列に変換
             flagLotsTableA = Array.ConvertAll(valueA, float.Parse);
-
             flagLotsTableB = Array.ConvertAll(valueB, float.Parse);
-
             flagLotsTableBIG = Array.ConvertAll(valueBIG, float.Parse);
 
+            // JACはずれの設定
             this.jacNoneProb = jacNoneProb;
 
             Debug.Log("NormalA Table:");
@@ -118,6 +118,7 @@ namespace ReelSpinGame_Lots.Flag
 
         // func
 
+        // テーブル変更
         public void ChangeTable(FlagLotMode mode) => CurrentTable = mode;
 
         // フラグ抽選の開始
@@ -154,7 +155,7 @@ namespace ReelSpinGame_Lots.Flag
         // BONUS GAME中の抽選
         private FlagId BonusGameLots()
         {
-            // 16384フラグを得る
+            // 16384フラグを得る(0~16383)
             int flag = UnityEngine.Random.Range(0, MaxFlagLots - 1);
             Debug.Log("You get:" + flag);
 
@@ -168,7 +169,7 @@ namespace ReelSpinGame_Lots.Flag
                 return FlagId.FlagNone;
             }
 
-            // 何も当たらなければ　JAC役　を返す
+            // 何も当たらなければ"JAC役"を返す
             return FlagId.FlagJAC;
         }
 
@@ -192,6 +193,7 @@ namespace ReelSpinGame_Lots.Flag
                 }
             }
 
+            // 何も当たらなければ"はずれ"を返す
             return FlagId.FlagNone;
         }
     }

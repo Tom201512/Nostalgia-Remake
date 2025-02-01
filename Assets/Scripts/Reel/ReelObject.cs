@@ -148,7 +148,7 @@ public class ReelObject : MonoBehaviour
         // 現在のリール下段を基準として位置を更新する。
         foreach(SymbolChange symbol in symbolsObj)
         {
-            symbol.ChangeSymbol(ReelData.GetReelSymbol(symbol.GetPosID()));
+            symbol.ChangeSymbol(ReelData.GetReelSymbol((sbyte)symbol.GetPosID()));
             //Debug.Log("Changed Symbol:" + ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
         }
     }

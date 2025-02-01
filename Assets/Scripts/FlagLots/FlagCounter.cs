@@ -6,7 +6,6 @@ namespace ReelSpinGame_Lots.FlagCounter
     {
         // 小役カウンタ
 
-
         // const
 
         //小役カウンタ減少値
@@ -15,8 +14,10 @@ namespace ReelSpinGame_Lots.FlagCounter
         //小役カウンタ増加値
         const int CounterIncreaseDefault = 100;
 
+        // 設定5時
         const int CounterIncrease5 = 104;
 
+        // 設定6時
         const int CounterIncrease6 = 108;
 
 
@@ -24,6 +25,7 @@ namespace ReelSpinGame_Lots.FlagCounter
 
         // 小役カウンタ
         public int Counter { get; private set; }
+
 
         // コンストラクタ
         public FlagCounter(int Counter)
@@ -35,7 +37,6 @@ namespace ReelSpinGame_Lots.FlagCounter
         // func
 
         // 小役カウンタの増加
-
         public void IncreaseCounter(int payoutAmounts)
         {
             Counter += CounterDecrease * payoutAmounts;

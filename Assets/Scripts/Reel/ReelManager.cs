@@ -28,6 +28,15 @@ public class ReelManager : MonoBehaviour
 
     // var
 
+    // 動作中か
+    public bool IsWorking { get; private set; }
+
+    // 動作完了したか
+    public bool IsFinished {  get; private set; }
+
+    // 払い出し完了したか
+    public bool HasFinishedCheck { get; private set; }
+
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
     [SerializeField] private string arrayPath;
@@ -39,22 +48,25 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private string payoutLineData;
     private SymbolChecker symbolChecker;
 
-    // 動作中か
-    private bool isWorking;
-
     // 停止したリール数
     private int stopReelCount;
 
-            
+    
+    // 初期化
     void Awake()
     {
-        isWorking = false;
+        IsFinished = false;
+        IsWorking = false;
+        HasFinishedCheck = false;
+
         stopReelCount = 0;
 
         try
         {
+            // リール配列の読み込み
             StreamReader arrayData = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
 
+            // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
             {
                 reelObjects[i].SetReelData(new ReelData(19, arrayData));
@@ -62,6 +74,7 @@ public class ReelManager : MonoBehaviour
 
             Debug.Log("Array load done");
 
+            // 払い出しラインの読み込み
             StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
             //StreamReader normalPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
             //StreamReader bigPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
@@ -80,43 +93,47 @@ public class ReelManager : MonoBehaviour
 
     // func
 
+    // リール始動
     public void StartReels()
     {
         // リールが回っていなければ回転
-
-        if(!isWorking)
+        if (!IsWorking)
         {
+            IsFinished = false;
+            HasFinishedCheck = false;
+
             for (int i = 0; i < reelObjects.Length; i++)
             {
                 reelObjects[i].StartReel(1.0f);
             }
 
-            isWorking = true;
+            IsWorking = true;
             Debug.Log("Reel start");
         }
 
         else { Debug.Log("Reel is working now"); }
     }
 
+    // 各リール停止
     public void StopSelectedReel(ReelID reelID)
     {
-        // リール停止
-
         // ここでディレイ(スベリコマ)を得て転送
 
+        // リールが止まっていなければ停止
         if(!reelObjects[(int)reelID].IsStopping)
         {
             reelObjects[(int)reelID].StopReel(0);
+
+            // 押したリールの数をカウント
             stopReelCount += 1;
 
             // 全リールが停止されていればまた回せるようにする
             if (stopReelCount == reelObjects.Length)
             {
-                isWorking = false;
+                IsWorking = false;
+                IsFinished = true;
                 stopReelCount = 0;
                 Debug.Log("All Reels are stopped");
-                
-                CheckPayout();
             }
         }
         else
@@ -125,18 +142,17 @@ public class ReelManager : MonoBehaviour
         }
     }
 
-    public void CheckPayout()
+    // 払い出し確認
+    public void StartCheckPayout(int betAmounts)
     {
-        for(int i = 0; i < reelObjects.Length; i++)
+        if (!IsWorking)
         {
-            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Upper));
-            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Upper));
-
-            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Center));
-            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Center));
-
-            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelPos(ReelData.ReelPosID.Lower));
-            Debug.Log(reelObjects[i].name + reelObjects[i].ReelData.GetReelSymbol(ReelData.ReelPosID.Lower));
+            symbolChecker.CheckPayout(reelObjects, betAmounts);
+            HasFinishedCheck = true;
+        }
+        else
+        {
+            Debug.Log("Failed to check payout because reels are spinning");
         }
     }
 }

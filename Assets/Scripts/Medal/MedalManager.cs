@@ -27,9 +27,6 @@ namespace ReelSpinGame_Medal
         // クレジット枚数
         public int Credits { get; private set; }
 
-        // 残りベット枚数
-        private int remainingBet;
-
         // ベット枚数
         public int CurrentBet { get; private set; }
 
@@ -39,11 +36,14 @@ namespace ReelSpinGame_Medal
         // 最高ベット枚数
         public int MaxBetAmounts { get; private set; }
 
+        // 残りベット枚数
+        private int remainingBet;
 
         // 処理用タイマー
-        Timer updateTimer;
+        private Timer updateTimer;
 
 
+        // コンストラクタ
         public MedalManager(int _credits, int _currentMaxBet)
         {
             this.Credits = _credits;
@@ -55,8 +55,10 @@ namespace ReelSpinGame_Medal
             updateTimer = new Timer(MedalUpdateTime);
         }
 
+        // デストラクタ
         ~MedalManager()
         {
+            // Timerのストップ
             updateTimer.Stop();
             updateTimer.Elapsed -= InsertMedal;
             updateTimer.Elapsed -= PayoutMedal;
@@ -106,6 +108,22 @@ namespace ReelSpinGame_Medal
             }
         }
 
+        // 払い出し開始
+        public void StartPayout(int amounts)
+        {
+            // 払い出しをしていないかチェック
+            if (!updateTimer.Enabled)
+            {
+                PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MaxPayout);
+                updateTimer.Elapsed += PayoutMedal;
+                updateTimer.Start();
+            }
+            else
+            {
+                Debug.Log("Payout is enabled");
+            }
+        }
+
         // メダルリセット
         private void ResetMedal()
         {
@@ -129,22 +147,6 @@ namespace ReelSpinGame_Medal
             // 少ない場合
             // 0枚ならそのまま
             return amount;
-        }
-
-        // 払い出し開始
-        public void StartPayout(int amounts)
-        {
-            // 払い出しをしていないかチェック
-            if(!updateTimer.Enabled)
-            {
-                PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MaxPayout);
-                updateTimer.Elapsed += PayoutMedal;
-                updateTimer.Start();
-            }
-            else
-            {
-                Debug.Log("Payout is enabled");
-            }
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels
@@ -43,14 +44,13 @@ namespace ReelSpinGame_Reels
 
         // var
 
-        // 現在の下段リール位置
-        private int currentLower;
-
-
         // リール配列
         public byte[] ReelArray { get; private set; }
 
+        // 現在の下段リール位置
+        private int currentLower;
 
+        // コンストラクタ
         public ReelData(int lowerPos, StreamReader arrayData) 
         {
             // もし位置が0~20でなければ例外を出す
@@ -83,26 +83,20 @@ namespace ReelSpinGame_Reels
 
         // func
 
-        // リール位置変更
-        public void ChangeReelPos(float rotateSpeed)
-        {
-            // 回転速度の符号に合わせて位置を変更
-           currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
-           //Debug.Log("Changed Reel to :" + currentLower);
-        }
-
-
         // 指定したリールの位置番号を返す
-        public int GetReelPos(ReelPosID posID) => OffsetReel((int)posID);
+        public int GetReelPos(sbyte posID) => OffsetReel((int)posID);
 
-        // 数字を図柄へ変更
-        public ReelSymbols ReturnSymbol(byte index) =>
-                        (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), index);
+        // sbyte型から位置指定
+        public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
+
+        // リール位置変更 (回転速度の符号に合わせて変更)
+        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
+
+        // リール配列の番号を図柄へ変更
+        private ReelSymbols ReturnSymbol(byte reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
 
 
-        // 指定したリールの図柄を返す
-        public ReelSymbols GetReelSymbol(ReelPosID posID) => ReturnSymbol(ReelArray[OffsetReel((int)posID)]);
-
+        //オーバーフロー対策
         private int OffsetReel(int offset)
         {
             if (currentLower + offset < 0)
