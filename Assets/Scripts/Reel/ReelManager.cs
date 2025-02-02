@@ -23,9 +23,9 @@ public class ReelManager : MonoBehaviour
 
     // const 
 
+    // リール数
+    public const int ReelAmounts = 3; 
     public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
-
-
     // var
 
     // 動作中か
@@ -75,15 +75,12 @@ public class ReelManager : MonoBehaviour
             Debug.Log("Array load done");
 
             // 払い出しラインの読み込み
+            StreamReader normalPayout = new StreamReader(normalPayoutData) ?? throw new System.Exception("NormalPayoutData file is missing");
             StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
             //StreamReader normalPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
             //StreamReader bigPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
 
-            symbolChecker = new SymbolChecker(payoutLines);
-        }
-        catch(Exception e)
-        {
-            throw e;
+            symbolChecker = new SymbolChecker(normalPayout, payoutLines);
         }
         finally
         {
