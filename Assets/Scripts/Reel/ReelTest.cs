@@ -10,6 +10,8 @@ public class ReelTest : MonoBehaviour
 
     [SerializeField] private ReelManager manager;
 
+    // イベント用テスト
+
     // 入力があったか
     bool hasInput;
 
@@ -66,6 +68,7 @@ public class ReelTest : MonoBehaviour
                 if(manager.IsFinished && !manager.HasFinishedCheck)
                 {
                     manager.StartCheckPayout(3);
+                    Debug.Log("Payouts result" + manager.LastPayoutResult.Payouts);
                 }
             }
             else
@@ -74,5 +77,10 @@ public class ReelTest : MonoBehaviour
             }
 
         }
+    }
+
+    void ShowPayouts()
+    {
+
     }
 } 

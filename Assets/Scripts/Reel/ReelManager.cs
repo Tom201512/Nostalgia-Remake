@@ -1,7 +1,6 @@
 ﻿using ReelSpinGame_Reels;
-using UnityEngine;
-using System;
 using System.IO;
+using UnityEngine;
 
 public class ReelManager : MonoBehaviour
 {
@@ -46,7 +45,23 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private string bigPayoutData;
     [SerializeField] private string jacPayoutData;
     [SerializeField] private string payoutLineData;
+
     private SymbolChecker symbolChecker;
+
+    // 払い出し結果
+    public class PayoutResultBuffer
+    {
+        public int Payouts { get; private set; }
+        public int BonusID { get; private set; }
+        public bool IsReplayOrJAC { get; private set; }
+
+        public PayoutResultBuffer(int payouts)
+        {
+            this.Payouts = payouts;
+        }
+    }
+
+    public PayoutResultBuffer LastPayoutResult {  get; private set; } 
 
     // 停止したリール数
     private int stopReelCount;
@@ -58,8 +73,9 @@ public class ReelManager : MonoBehaviour
         IsFinished = false;
         IsWorking = false;
         HasFinishedCheck = false;
-
         stopReelCount = 0;
+
+        LastPayoutResult = new PayoutResultBuffer(0);
 
         try
         {
@@ -144,7 +160,7 @@ public class ReelManager : MonoBehaviour
     {
         if (!IsWorking)
         {
-            symbolChecker.CheckPayout(reelObjects, betAmounts);
+            LastPayoutResult = symbolChecker.CheckPayoutLines(reelObjects, betAmounts);
             HasFinishedCheck = true;
         }
         else

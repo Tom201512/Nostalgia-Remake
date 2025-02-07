@@ -9,14 +9,14 @@ public class SymbolChecker
 {
     // 図柄の判定用
 
+    // var
+
     // 払い出しラインのデータ
     class PayoutLineData
     {
         // const
         // バッファからデータを読み込む位置
         public enum ReadPos { BetCondition = 0, PayoutLineStart}
-
-        // var
 
         // 有効に必要なベット枚数
         public byte BetCondition { get; private set; }
@@ -64,7 +64,9 @@ public class SymbolChecker
         public byte BonusType { get; private set; }
 
         // リプレイか(またはJAC-IN)
-        public byte IsReplay { get; private set; }
+        public byte IsReplayAndJac { get; private set; }
+
+        // コンストラクタ
 
         public PayoutResultData(byte[] buffer)
         {
@@ -88,7 +90,7 @@ public class SymbolChecker
             BonusType = buffer[(int)ReadPos.Bonus];
 
             // リプレイか
-            IsReplay = buffer[(int)ReadPos.IsReplay];
+            IsReplayAndJac = buffer[(int)ReadPos.IsReplay];
         }
         
         // func
@@ -106,7 +108,7 @@ public class SymbolChecker
             debugData += symbols + ",";
             debugData += Payouts + ",";
             debugData += BonusType + ",";
-            debugData += IsReplay + ",";
+            debugData += IsReplayAndJac + ",";
 
             Debug.Log(debugData);
         }
@@ -121,8 +123,10 @@ public class SymbolChecker
     private List<PayoutResultData> normalPayoutDatas;
 
     // 小役ゲーム中
+    private List<PayoutResultData> bigPayoutDatas;
 
     // JACゲーム中
+    private List<PayoutResultData> jacPayoutDatas;
 
 
     // コンストラクタ
@@ -131,6 +135,8 @@ public class SymbolChecker
         // 払い出し構成の読み込み
 
         normalPayoutDatas = new List<PayoutResultData>();
+        bigPayoutDatas = new List<PayoutResultData>();
+        jacPayoutDatas = new List<PayoutResultData>();
 
         // データ読み込み
         while (!normalPayoutData.EndOfStream)
@@ -167,14 +173,19 @@ public class SymbolChecker
             Debug.Log(line + "," + data.BetCondition);
         }
         Debug.Log("PayoutLine Data loaded");
+
+        // イベント受け取り用読み込み
     }
 
     // func
 
     // ライン判定
-    public int CheckPayout(ReelObject[] reelObjects, int betAmount)
+    public ReelManager.PayoutResultBuffer CheckPayoutLines(ReelObject[] reelObjects, int betAmount)
     {
-        int finalPayoutResult = 0;
+        byte finalPayouts = 0;
+        byte bonusID = 0;
+        byte replayStatus = 0;
+
         // 各ラインから払い出しのチェックをする
         foreach (PayoutLineData lineData in payoutLineDatas)
         {
@@ -208,32 +219,42 @@ public class SymbolChecker
                 // ボーナスは非当選でもストックされる
 
                 // デバッグ用
-                finalPayoutResult += CheckPayoutLines(lineResult);
+
+                int foundIndex = CheckPayoutLines(lineResult, normalPayoutDatas);
+
+                // データを追加(払い出しだけ当たった分追加する)
+                // 当たったデータがあれば記録(-1以外)
+                if(foundIndex != -1)
+                {
+                    finalPayouts += normalPayoutDatas[foundIndex].Payouts;
+                    bonusID = normalPayoutDatas[foundIndex].BonusType;
+                    replayStatus = normalPayoutDatas[foundIndex].IsReplayAndJac;
+                }
             }
         }
-        // 最終的な払い出し枚数を返す
+        // 最終的な払い出し枚数をイベントに送る
 
-        Debug.Log("payout:" + finalPayoutResult);
-        return finalPayoutResult;
+        Debug.Log("payout:" + finalPayouts);
+        Debug.Log("Bonus:" + bonusID);
+        Debug.Log("IsReplay:" + replayStatus);
+
+        return new ReelManager.PayoutResultBuffer(finalPayouts);
     }
 
-    // 図柄の判定
-    private int CheckPayoutLines(List<ReelSymbols> lineResult)
+    // 図柄の判定(配列を返す)
+    private int CheckPayoutLines(List<ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
     {
-        // 払い出し枚数(最大15枚まで)
-        int payoutAmounts = 0;
-
         // 全て同じ図柄が揃っていたらHITを返す
         // ANY(10番)は無視
 
-        foreach (PayoutResultData resultData in normalPayoutDatas)
+        for (int i = 0; i < payoutResult.Count; i++)
         {
             int sameSymbolCount = 0;
-            for (int i = 0; i < resultData.Combinations.Length; i++)
+            for (int j = 0; j < payoutResult[i].Combinations.Length; j++)
             {
                 // 図柄が合っているかチェック(ANYなら次の図柄へ)
-                if (resultData.Combinations[i] == PayoutResultData.AnySymbol ||
-                    (byte)lineResult[i] == resultData.Combinations[i])
+                if (payoutResult[i].Combinations[j] == PayoutResultData.AnySymbol ||
+                    (byte)lineResult[j] == payoutResult[i].Combinations[j])
                 {
                     sameSymbolCount += 1;
                 }
@@ -243,15 +264,14 @@ public class SymbolChecker
 
             if(sameSymbolCount == ReelManager.ReelAmounts)
             {
-                Debug.Log("HIT!:" + resultData.Payouts + "Bonus:"
-                 + resultData.BonusType + "Replay:" + resultData.IsReplay);
+                Debug.Log("HIT!:" + normalPayoutDatas[i].Payouts + "Bonus:"
+                 + normalPayoutDatas[i].BonusType + "Replay:" + normalPayoutDatas[i].IsReplayAndJac);
 
-                //ここに当選したボーナス、リプレイを反映する
+                // 配列番号を送る
 
-                return resultData.Payouts;
+                return i;
             }
         }
-
-        return 0;
+        return -1;
     }
 }
