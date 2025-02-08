@@ -1,4 +1,5 @@
 ﻿using ReelSpinGame_Reels;
+using static ReelSpinGame_Reels.ReelData;
 using System.IO;
 using UnityEngine;
 
@@ -17,13 +18,13 @@ public class ReelManager : MonoBehaviour
 
     // var
 
-    // 動作中か
+    // リールが動作中か
     public bool IsWorking { get; private set; }
 
     // 動作完了したか
     public bool IsFinished {  get; private set; }
 
-    // 払い出し完了したか
+    // 判定完了したか
     public bool HasFinishedCheck { get; private set; }
 
     // リールのオブジェクト
@@ -39,7 +40,7 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private string payoutLineData;
 
     // 図柄判定
-    private SymbolChecker symbolChecker;
+    private PayoutChecker payoutChecker;
 
     // 払い出し結果
     public class PayoutResultBuffer
@@ -94,7 +95,7 @@ public class ReelManager : MonoBehaviour
             // 払い出しラインの読み込み
             StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
 
-            symbolChecker = new SymbolChecker(normalPayout, bigPayout, jacPayout, payoutLines, SymbolChecker.PayoutCheckMode.PayoutNormal);
+            payoutChecker = new PayoutChecker(normalPayout, bigPayout, jacPayout, payoutLines, PayoutChecker.PayoutCheckMode.PayoutNormal);
         }
         finally
         {
@@ -158,7 +159,7 @@ public class ReelManager : MonoBehaviour
     {
         if (!IsWorking)
         {
-            LastPayoutResult = symbolChecker.CheckPayoutLines(reelObjects, betAmounts);
+            LastPayoutResult = payoutChecker.CheckPayoutLines(reelObjects, betAmounts);
             HasFinishedCheck = true;
         }
         else
@@ -168,5 +169,5 @@ public class ReelManager : MonoBehaviour
     }
 
     // 払い出しモード変更
-    public void ChangePayoutMode(SymbolChecker.PayoutCheckMode checkMode) => symbolChecker.ChangePayoutMode(checkMode);
+    public void ChangePayoutMode(PayoutChecker.PayoutCheckMode checkMode) => payoutChecker.ChangePayoutMode(checkMode);
 }

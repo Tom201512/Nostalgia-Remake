@@ -4,8 +4,11 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Build;
+using static ReelSpinGame_Bonus.BonusManager;
+using static ReelSpinGame_Lots.Flag.FlagLots;
 
-public class SymbolChecker
+public class PayoutChecker
 {
     // 図柄の判定用
 
@@ -55,7 +58,6 @@ public class SymbolChecker
         // ANYの判定用ID
         public const int AnySymbol = 7;
 
-
         // var
 
         // フラグID
@@ -70,38 +72,18 @@ public class SymbolChecker
         public byte BonusType { get; private set; }
 
         // リプレイか(またはJAC-IN)
-        public byte IsReplayAndJac { get; private set; }
+        public bool hasReplayOrJAC { get; private set; }
 
 
         // コンストラクタ
-        public PayoutResultData(byte[] buffer)
+        public PayoutResultData(byte flagID, byte[] combinations, byte payout,
+            byte bonusType, bool hasReplayOrJAC)
         {
-            // フラグID
-            FlagID = buffer[(int)ReadPos.FlagID];
-
-            // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
-            Combinations = new byte[ReelManager.ReelAmounts];
-
-            // デバッグ用
-            string combinationBuffer = "";
-
-            // 読み込み
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
-            {
-                Combinations[i] = buffer[i + (int)ReadPos.CombinationsStart];
-                combinationBuffer += Combinations[i];
-            }
-
-            // 払い出し枚数
-            Payouts = buffer[(int)ReadPos.Payout];
-            // 当選するボーナス
-            BonusType = buffer[(int)ReadPos.Bonus];
-            // リプレイか
-            IsReplayAndJac = buffer[(int)ReadPos.IsReplay];
-
-            //デバッグ用
-            Debug.Log("Combination:" + combinationBuffer + "Payouts:" + Payouts +
-                "Bonus:" + BonusType + "HasReplay:" + IsReplayAndJac);
+            this.FlagID = flagID;
+            this.Combinations = combinations;   
+            this.Payouts = payout;
+            this.BonusType = bonusType;
+            this.hasReplayOrJAC = hasReplayOrJAC;
         }
         
         // func
@@ -119,7 +101,7 @@ public class SymbolChecker
             debugData += symbols + ",";
             debugData += Payouts + ",";
             debugData += BonusType + ",";
-            debugData += IsReplayAndJac + ",";
+            debugData += hasReplayOrJAC + ",";
 
             Debug.Log(debugData);
         }
@@ -144,7 +126,7 @@ public class SymbolChecker
     public PayoutCheckMode CheckMode { get; private set; }
 
     // コンストラクタ
-    public SymbolChecker(StreamReader normalPayout, StreamReader bigPayout, StreamReader jacPayout, 
+    public PayoutChecker(StreamReader normalPayout, StreamReader bigPayout, StreamReader jacPayout, 
         StreamReader payoutLineData, PayoutCheckMode payoutMode)
     {
         // 判定モード読み込み
@@ -159,22 +141,19 @@ public class SymbolChecker
         // 通常時
         while (!normalPayout.EndOfStream)
         {
-            byte[] byteBuffer = Array.ConvertAll(normalPayout.ReadLine().Split(','), byte.Parse);
-            normalPayoutDatas.Add(new PayoutResultData(byteBuffer));
+            normalPayoutDatas.Add(LoadPayoutResult(normalPayout));
         }
 
         // BIG小役ゲーム中
         while (!bigPayout.EndOfStream)
         {
-            byte[] byteBuffer = Array.ConvertAll(bigPayout.ReadLine().Split(','), byte.Parse);
-            bigPayoutDatas.Add(new PayoutResultData(byteBuffer));
+            bigPayoutDatas.Add(LoadPayoutResult(bigPayout));
         }
 
         // JACゲーム中
         while (!jacPayout.EndOfStream)
         {
-            byte[] byteBuffer = Array.ConvertAll(jacPayout.ReadLine().Split(','), byte.Parse);
-            jacPayoutDatas.Add(new PayoutResultData(byteBuffer));
+            jacPayoutDatas.Add(LoadPayoutResult(jacPayout));
         }
 
 
@@ -234,7 +213,7 @@ public class SymbolChecker
     {
         byte finalPayouts = 0;
         byte bonusID = 0;
-        byte replayStatus = 0;
+        bool replayStatus = false;
 
         // 各ラインから払い出しのチェックをする
         foreach (PayoutLineData lineData in payoutLineDatas)
@@ -283,9 +262,9 @@ public class SymbolChecker
                     }
 
                     // リプレイでなければ当たった時に変更
-                    if(replayStatus == 0)
+                    if(replayStatus == false)
                     {
-                        replayStatus = GetPayoutResultData(CheckMode)[foundIndex].IsReplayAndJac;
+                        replayStatus = GetPayoutResultData(CheckMode)[foundIndex].hasReplayOrJAC;
                     }
                 }
             }
@@ -296,7 +275,37 @@ public class SymbolChecker
         Debug.Log("Bonus:" + bonusID);
         Debug.Log("IsReplay:" + replayStatus);
 
-        return new ReelManager.PayoutResultBuffer(finalPayouts, bonusID, replayStatus == 1);
+        return new ReelManager.PayoutResultBuffer(finalPayouts, bonusID, replayStatus);
+    }
+
+    private PayoutResultData LoadPayoutResult(StreamReader streamPayout)
+    {
+        // ストリームからデータを得る
+        byte[] byteBuffer = Array.ConvertAll(streamPayout.ReadLine().Split(','), byte.Parse);
+
+        // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
+        byte[] combinations = new byte[ReelManager.ReelAmounts];
+
+        // デバッグ用
+        string combinationBuffer = "";
+
+        // 読み込み
+        for (int i = 0; i < ReelManager.ReelAmounts; i++)
+        {
+            combinations[i] = byteBuffer[i + (int)PayoutResultData.ReadPos.CombinationsStart];
+            combinationBuffer += combinations[i];
+        }
+
+        PayoutResultData finalResult =  new PayoutResultData(byteBuffer[(int)PayoutResultData.ReadPos.FlagID], combinations,
+            byteBuffer[(int)PayoutResultData.ReadPos.Payout], byteBuffer[(int)PayoutResultData.ReadPos.Bonus],
+            byteBuffer[(int)PayoutResultData.ReadPos.IsReplay] == 1);
+
+
+        //デバッグ用
+        Debug.Log("Combination:" + combinationBuffer + "Payouts:" + finalResult.Payouts +
+            "Bonus:" + finalResult.BonusType + "HasReplay:" + finalResult.hasReplayOrJAC);
+
+        return finalResult;
     }
 
     // 図柄の判定(配列を返す)
@@ -328,7 +337,7 @@ public class SymbolChecker
             if(sameSymbolCount == ReelManager.ReelAmounts)
             {
                 Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:"
-                 + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].IsReplayAndJac);
+                 + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].hasReplayOrJAC);
 
                 // 配列番号を送る
 
