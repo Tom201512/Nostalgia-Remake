@@ -6,25 +6,15 @@ public class ReelManager : MonoBehaviour
 {
     // リールマネージャー
 
-    // 目指す目標
-
-    // 1:リールの回転
-    // 2:図柄の実装
-    // 3:リールの停止
-    // 4:スベリ実装
-    // 5:テーブル機能搭載
-
-    // マネージャーが持つもの
-
-    // 各リールのデータ(3つ)
-    // 各リールのMonoBehaviour
-    // 全リールへのコントロール
-
     // const 
 
     // リール数
     public const int ReelAmounts = 3; 
+
+    // リール識別用ID
     public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
+
+
     // var
 
     // 動作中か
@@ -38,14 +28,17 @@ public class ReelManager : MonoBehaviour
 
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
+
+    // リール配列のファイル
     [SerializeField] private string arrayPath;
 
-    // 払い出しチェック用
+    // 払い出し表のデータ
     [SerializeField] private string normalPayoutData;
     [SerializeField] private string bigPayoutData;
     [SerializeField] private string jacPayoutData;
     [SerializeField] private string payoutLineData;
 
+    // 図柄判定
     private SymbolChecker symbolChecker;
 
     // 払い出し結果
@@ -55,12 +48,15 @@ public class ReelManager : MonoBehaviour
         public int BonusID { get; private set; }
         public bool IsReplayOrJAC { get; private set; }
 
-        public PayoutResultBuffer(int payouts)
+        public PayoutResultBuffer(int payouts, int BonusID, bool IsReplayOrJac)
         {
             this.Payouts = payouts;
+            this.BonusID = BonusID;
+            this.IsReplayOrJAC = IsReplayOrJac;
         }
     }
 
+    // 最後に行われた払い出しの結果
     public PayoutResultBuffer LastPayoutResult {  get; private set; } 
 
     // 停止したリール数
@@ -70,12 +66,12 @@ public class ReelManager : MonoBehaviour
     // 初期化
     void Awake()
     {
-        IsFinished = false;
+        IsFinished = true;
         IsWorking = false;
-        HasFinishedCheck = false;
+        HasFinishedCheck = true;
         stopReelCount = 0;
 
-        LastPayoutResult = new PayoutResultBuffer(0);
+        LastPayoutResult = new PayoutResultBuffer(0,0,false);
 
         try
         {
@@ -90,13 +86,15 @@ public class ReelManager : MonoBehaviour
 
             Debug.Log("Array load done");
 
-            // 払い出しラインの読み込み
-            StreamReader normalPayout = new StreamReader(normalPayoutData) ?? throw new System.Exception("NormalPayoutData file is missing");
-            StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
-            //StreamReader normalPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
-            //StreamReader bigPayoutList = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
+            // 払い出しデータの読み込み
+            StreamReader normalPayout = new StreamReader(normalPayoutData) ?? throw new System.Exception("NormalPayoutData file is missing"); 
+            StreamReader bigPayout = new StreamReader(bigPayoutData) ?? throw new System.Exception("BigPayoutData file is missing");
+            StreamReader jacPayout = new StreamReader(jacPayoutData) ?? throw new System.Exception("JacPayoutData file is missing");
 
-            symbolChecker = new SymbolChecker(normalPayout, payoutLines);
+            // 払い出しラインの読み込み
+            StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
+
+            symbolChecker = new SymbolChecker(normalPayout, bigPayout, jacPayout, payoutLines, SymbolChecker.PayoutCheckMode.PayoutNormal);
         }
         finally
         {
@@ -133,7 +131,7 @@ public class ReelManager : MonoBehaviour
         // ここでディレイ(スベリコマ)を得て転送
 
         // リールが止まっていなければ停止
-        if(!reelObjects[(int)reelID].IsStopping)
+        if(!reelObjects[(int)reelID].HasStopped)
         {
             reelObjects[(int)reelID].StopReel(0);
 
@@ -168,4 +166,7 @@ public class ReelManager : MonoBehaviour
             Debug.Log("Failed to check payout because reels are spinning");
         }
     }
+
+    // 払い出しモード変更
+    public void ChangePayoutMode(SymbolChecker.PayoutCheckMode checkMode) => symbolChecker.ChangePayoutMode(checkMode);
 }

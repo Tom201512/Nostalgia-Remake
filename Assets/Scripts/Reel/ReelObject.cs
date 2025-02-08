@@ -42,6 +42,9 @@ public class ReelObject : MonoBehaviour
     // 止まる予定か
     public bool IsStopping { get; private set; }
 
+    // 停止したか
+    public bool HasStopped { get; private set; }
+
     // リール情報を持つ
     public ReelData ReelData { get; private set; }
 
@@ -51,6 +54,7 @@ public class ReelObject : MonoBehaviour
         maxSpeed = 0.0f;
         delayToStop = 0;
         IsStopping = false;
+        HasStopped = true;
         symbolsObj = GetComponentsInChildren<SymbolChange>();
         Debug.Log("ReelSpin AwakeDone");
     }
@@ -84,6 +88,7 @@ public class ReelObject : MonoBehaviour
     public void StartReel(float maxSpeed)
     {
         this.maxSpeed = maxSpeed;
+        HasStopped = false;
     }
 
     // リール停止
@@ -132,6 +137,7 @@ public class ReelObject : MonoBehaviour
                 rotateSpeed = 0;
                 maxSpeed = 0;
                 IsStopping = false;
+                HasStopped = true;
             }
 
             // 停止するがディレイ(スベリ)があれば数値を減らす(次の図柄更新で止める)

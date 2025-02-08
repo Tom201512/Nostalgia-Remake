@@ -173,6 +173,7 @@ namespace ReelSpinGame_Lots.Flag
             return FlagId.FlagJAC;
         }
 
+        // テーブルからフラグ判定
         private FlagId CheckResultByTable(float[] lotsTable, FlagId[] lotResult)
         {
             // 16384フラグを得る

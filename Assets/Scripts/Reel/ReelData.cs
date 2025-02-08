@@ -6,36 +6,16 @@ namespace ReelSpinGame_Reels
 {
     public class ReelData
     {
-        // リールのデータ *
+        // リールのデータ
 
-        // 目指す目標
-
-        // 1:リールの回転
-        // 2:図柄の実装
-        // 3:リールの停止
-        // 4:スベリ実装
-        // 5:配当チェック
-        // 6:テーブル機能搭載
-
-
-        // 各リールデータが持つもの
-
-        // リールの現在位置(下段), スベリ数, 停止するか
-        // そのリールの配列
-        // リール制御テーブル
-        // 制御条件テーブル
 
         // const 
-
-        // リール配列
 
         // リール配列要素数
         public const int MaxReelArray = 21;
 
         // 図柄
-
         public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
-
 
         // リール位置識別用
         public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
@@ -90,6 +70,7 @@ namespace ReelSpinGame_Reels
 
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
+
 
         // リール配列の番号を図柄へ変更
         private ReelSymbols ReturnSymbol(byte reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);

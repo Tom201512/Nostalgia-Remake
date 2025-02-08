@@ -186,8 +186,8 @@ MonoBehaviour:
   - {fileID: 1701692655}
   arrayPath: Assets/Scripts/Reel/ArrayData.csv
   normalPayoutData: Assets/Scripts/Reel/NormalPayoutData.csv
-  bigPayoutData: 
-  jacPayoutData: 
+  bigPayoutData: Assets/Scripts/Reel/BigPayoutData.csv
+  jacPayoutData: Assets/Scripts/Reel/JACPayout.csv
   payoutLineData: Assets/Scripts/Reel/PayoutLine.csv
 --- !u!1 &367746610
 GameObject:
