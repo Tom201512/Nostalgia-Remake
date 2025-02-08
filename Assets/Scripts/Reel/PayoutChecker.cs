@@ -31,19 +31,10 @@ public class PayoutChecker
         public sbyte[] PayoutLine { get; private set; }
 
         //コンストラクタ
-        public PayoutLineData(sbyte[] buffer)
+        public PayoutLineData(byte betCondition, sbyte[] lines)
         {
-            // ベット条件の読み込み
-            this.BetCondition = (byte)buffer[(int)ReadPos.BetCondition];
-
-            // 払い出しラインの読み込み
-            // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
-            PayoutLine = new sbyte[ReelManager.ReelAmounts];
-
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
-            {
-                PayoutLine[i] = buffer[i + (int)ReadPos.PayoutLineStart];
-            }
+            this.BetCondition = betCondition;
+            this.PayoutLine = lines;
         }
     }
 
@@ -84,26 +75,6 @@ public class PayoutChecker
             this.Payouts = payout;
             this.BonusType = bonusType;
             this.hasReplayOrJAC = hasReplayOrJAC;
-        }
-        
-        // func
-        public void ShowDebugData()
-        {
-            string debugData = "";
-
-            string symbols = "";
-            foreach (byte b in Combinations)
-            {
-                symbols += b.ToString();
-            }
-
-            debugData += FlagID + ",";
-            debugData += symbols + ",";
-            debugData += Payouts + ",";
-            debugData += BonusType + ",";
-            debugData += hasReplayOrJAC + ",";
-
-            Debug.Log(debugData);
         }
     }
 
@@ -156,24 +127,6 @@ public class PayoutChecker
             jacPayoutDatas.Add(LoadPayoutResult(jacPayout));
         }
 
-
-        // デバッグ用
-        foreach (PayoutResultData data in normalPayoutDatas)
-        {
-            data.ShowDebugData();
-        }
-        Debug.Log("NormalPayoutData loaded");
-
-        foreach (PayoutResultData data in bigPayoutDatas)
-        {
-            data.ShowDebugData();
-        }
-        Debug.Log("BigPayoutData loaded");
-
-        foreach (PayoutResultData data in jacPayoutDatas)
-        {
-            data.ShowDebugData();
-        }
         Debug.Log("JacPayoutData loaded");
 
 
@@ -183,8 +136,7 @@ public class PayoutChecker
         // データ読み込み
         while(!payoutLineData.EndOfStream)
         {
-            sbyte[] byteBuffer = Array.ConvertAll(payoutLineData.ReadLine().Split(','), sbyte.Parse);
-            payoutLineDatas.Add(new PayoutLineData(byteBuffer));
+            payoutLineDatas.Add(LoadPayoutLines(payoutLineData));
         }
 
         // デバッグ用
@@ -278,6 +230,34 @@ public class PayoutChecker
         return new ReelManager.PayoutResultBuffer(finalPayouts, bonusID, replayStatus);
     }
 
+    // 払い出しラインのデータ読み込み
+    private PayoutLineData LoadPayoutLines(StreamReader streamLines)
+    {
+        // ストリームからデータを得る
+        sbyte[] byteBuffer = Array.ConvertAll(streamLines.ReadLine().Split(','), sbyte.Parse);
+
+        // 払い出しラインのデータ
+        sbyte[] lineData = new sbyte[ReelManager.ReelAmounts];
+
+        // デバッグ用
+        string combinationBuffer = "";
+
+        // 読み込み
+        for (int i = 0; i < ReelManager.ReelAmounts; i++)
+        {
+            lineData[i] = byteBuffer[i + (int)PayoutLineData.ReadPos.PayoutLineStart];
+            combinationBuffer += lineData[i];
+        }
+
+        PayoutLineData finalResult = new PayoutLineData((byte)byteBuffer[(int)PayoutLineData.ReadPos.BetCondition], lineData);
+
+        //デバッグ用
+        Debug.Log("Condition:" + finalResult.BetCondition + "Lines" + combinationBuffer);
+
+        return finalResult;
+    }
+
+    // 払い出し結果のデータ読み込み
     private PayoutResultData LoadPayoutResult(StreamReader streamPayout)
     {
         // ストリームからデータを得る
