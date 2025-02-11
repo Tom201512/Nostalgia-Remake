@@ -65,7 +65,7 @@ namespace ReelSpinGame_Reels
         // 指定したリールの位置番号を返す
         public int GetReelPos(sbyte posID) => OffsetReel((int)posID);
 
-        // sbyte型から位置指定
+        // リールの位置から図柄を返す
         public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
 
         // リール位置変更 (回転速度の符号に合わせて変更)
