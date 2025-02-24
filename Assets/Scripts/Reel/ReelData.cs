@@ -9,45 +9,39 @@ namespace ReelSpinGame_Reels
         // リールのデータ
 
         // const 
-
         // リール配列要素数
         public const int MaxReelArray = 21;
 
         // 図柄
         public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
-
         // リール位置識別用
         public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
 
-
         // var
-
         // リール配列
         public byte[] ReelArray { get; private set; }
-
         // 現在の下段リール位置
         private int currentLower;
 
         // コンストラクタ
         public ReelData(int lowerPos, StreamReader arrayData) 
         {
+            // 位置設定
             // もし位置が0~20でなければ例外を出す
             if(lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
             {
                 throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (MaxReelArray - 1));
             }
-
             currentLower = lowerPos;
 
             // データ読み込み
             string[] values = arrayData.ReadLine().Split(',');
-
+            // 配列に変換
             ReelArray = Array.ConvertAll(values, byte.Parse);
-
+            
             foreach (byte value in ReelArray)
             {
-                // リールのIDを読み込む
-                Debug.Log(value + "Symbol:" + ReturnSymbol(value));
+                //Debug.Log(value + "Symbol:" + ReturnSymbol(value));
             }
 
             Debug.Log("ReelGenerated Position at:" + lowerPos);
@@ -58,21 +52,17 @@ namespace ReelSpinGame_Reels
             }
         }
 
-
         // func
-
-        // 指定したリールの位置番号を返す
-        public int GetReelPos(sbyte posID) => OffsetReel(posID);
-
-        // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
-
-        // リール位置変更 (回転速度の符号に合わせて変更)
-        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
-
 
         // リール配列の番号を図柄へ変更
         private ReelSymbols ReturnSymbol(byte reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+
+        // 指定したリールの位置番号を返す
+        public int GetReelPos(sbyte posID) => OffsetReel(posID);
+        // リールの位置から図柄を返す
+        public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
+        // リール位置変更 (回転速度の符号に合わせて変更)
+        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
 
         // リール位置をオーバーフローしない数値で返す
         private int OffsetReel(int offset)
@@ -86,7 +76,6 @@ namespace ReelSpinGame_Reels
             {
                 return currentLower + offset - MaxReelArray;
             }
-
             // オーバーフローがないならそのまま返す
             return currentLower + offset;
         }

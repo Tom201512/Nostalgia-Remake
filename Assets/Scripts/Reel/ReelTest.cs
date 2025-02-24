@@ -13,21 +13,17 @@ public class ReelTest : MonoBehaviour
     [SerializeField] private ReelManager manager;
 
     // イベント用テスト
-
     // 入力があったか
     bool hasInput;
 
-    // Use this for initialization
     void Awake()
     {
         hasInput = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // 何も入力が入っていなければ実行
-
         if(!hasInput)
         {
             // リール回転
@@ -36,44 +32,46 @@ public class ReelTest : MonoBehaviour
             {
                 manager.StartReels();
             }
-
             // 左停止
             if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.IsWorking)
             {
                 manager.StopSelectedReel(ReelManager.ReelID.ReelLeft);
             }
-
             // 中停止
             if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.IsWorking)
             {
                 manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle);
             }
-
             // 右停止
             if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.IsWorking)
             {
                 manager.StopSelectedReel(ReelManager.ReelID.ReelRight);
             }
+
             // 入力がないかチェック
             if (Input.anyKey)
             {
                 hasInput = true;
+                //Debug.Log("Input true");
+            }
+            // 入力がなくすべてのリールが止まっていたら払い出し処理をする
+            else if(manager.IsFinished && !manager.HasFinishedCheck)
+            {
+                Debug.Log("Start Payout Check");
+                manager.StartCheckPayout(3);
+                Debug.Log("Payouts result" + manager.LastPayoutResult.Payouts);
+                Debug.Log("Bonus:" + manager.LastPayoutResult.BonusID + "ReplayOrJac" + manager.LastPayoutResult.IsReplayOrJAC);
             }
         }
 
+        // 入力がある場合は離れたときの制御を行う
         else if (hasInput)
         {
+            //Debug.Log("Input still");
             if(!Input.anyKey)
             {
-                //Debug.Log("Input end");
+                //Debug.Log("input end");
                 hasInput = false;
-
-                if(manager.IsFinished && !manager.HasFinishedCheck)
-                {
-                    manager.StartCheckPayout(3);
-                    Debug.Log("Payouts result" + manager.LastPayoutResult.Payouts);
-                    Debug.Log("Bonus:" + manager.LastPayoutResult.BonusID + "ReplayOrJac" + manager.LastPayoutResult.IsReplayOrJAC);
-                }
             }
         }
     }

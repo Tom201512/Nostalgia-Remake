@@ -10,42 +10,32 @@ public class ReelObject : MonoBehaviour
 
     // 図柄変更時の角度 (360度を21分割)
     const float ChangeAngle = 360.0f / 21.0f;
-
     // 回転速度 (Rotate Per Second)
     public const float RotateRPS = 79.7f / 60.0f;
-
     // リール重さ(kg)
     public const float ReelWeight = 25.5f;
-
     // リール半径(cm)
     public const float ReelRadius = 12.75f;
-
     // 最高ディレイ(スベリコマ数 4)
     public const int MaxDelay = 4;
 
-
     // var
-
     // 現在の回転速度
     private float rotateSpeed;
-
     // 最高速度
     private float maxSpeed;
-
     // 停止するのに必要なディレイ(スベリ)
     private int delayToStop;
 
-    // 止まる予定か
-    public bool IsStopping { get; private set; }
-
-    // 停止したか
-    public bool HasStopped { get; private set; }
-
-    // リール情報を持つ
-    public ReelData ReelData { get; private set; }
     // リール内の図柄
     private SymbolChange[] symbolsObj;
 
+    // 止まる予定か
+    public bool IsStopping { get; private set; }
+    // 停止したか
+    public bool HasStopped { get; private set; }
+    // リール情報
+    public ReelData ReelData { get; private set; }
 
     // 初期化
     private void Awake()
@@ -79,18 +69,13 @@ public class ReelObject : MonoBehaviour
         }
     }
 
-
     // func
-
     // リールデータを渡す
     public void SetReelData(ReelData reelData) => ReelData = reelData;
-
     // 指定位置からリール位置を渡す
     public int GetReelPos(ReelData.ReelPosID posID) => ReelData.GetReelPos((sbyte)posID);
-
     // 指定位置からリール図柄を渡す
     public ReelData.ReelSymbols GetReelSymbol(ReelData.ReelPosID posID) => ReelData.GetReelSymbol((sbyte)posID);
-
 
     //　リール始動
     public void StartReel(float maxSpeed)
@@ -144,6 +129,8 @@ public class ReelObject : MonoBehaviour
                 maxSpeed = 0;
                 IsStopping = false;
                 HasStopped = true;
+
+                Debug.Log("Stopped");
             }
 
             // 停止するがディレイ(スベリ)があれば数値を減らす(次の図柄更新で止める)

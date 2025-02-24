@@ -6,7 +6,6 @@ public class SymbolChange : MonoBehaviour
     // const
     
     // var
-
     // }•¿‚Ì•\Ž¦—p
     [SerializeField] private Material[] symbolMaterials;
     [SerializeField] private ReelData.ReelSymbols currentSymbol = ReelData.ReelSymbols.RedSeven;
@@ -23,10 +22,12 @@ public class SymbolChange : MonoBehaviour
         mesh.material = symbolMaterials[(int)currentSymbol];
     }
 
+    // }•¿•ÏX
     public void ChangeSymbol(ReelData.ReelSymbols symbolID)
     {
         mesh.material = symbolMaterials[(int)symbolID];
     }
 
+    // ˆÊ’uID‚ð•Ô‚·
     public ReelData.ReelPosID GetPosID() => posID;
 }

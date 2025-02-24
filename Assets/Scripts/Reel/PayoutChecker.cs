@@ -78,21 +78,31 @@ public class PayoutChecker
         }
     }
 
+    // 払い出し結果
+    public class PayoutResultBuffer
+    {
+        public int Payouts { get; private set; }
+        public int BonusID { get; private set; }
+        public bool IsReplayOrJAC { get; private set; }
+
+        public PayoutResultBuffer(int payouts, int BonusID, bool IsReplayOrJac)
+        {
+            this.Payouts = payouts;
+            this.BonusID = BonusID;
+            this.IsReplayOrJAC = IsReplayOrJac;
+        }
+    }
+
     // 各払い出しラインのデータ
     private List<PayoutLineData> payoutLineDatas;
 
-
     // 各種払い出し構成のテーブル
-
     // 通常時
     private List<PayoutResultData> normalPayoutDatas;
-
     // 小役ゲーム中
     private List<PayoutResultData> bigPayoutDatas;
-
     // JACゲーム中
     private List<PayoutResultData> jacPayoutDatas;
-
     // 選択中のテーブル
     public PayoutCheckMode CheckMode { get; private set; }
 
@@ -129,7 +139,6 @@ public class PayoutChecker
 
         Debug.Log("JacPayoutData loaded");
 
-
         // 払い出しラインの読み込み
         payoutLineDatas = new List<PayoutLineData>();
 
@@ -150,18 +159,15 @@ public class PayoutChecker
             Debug.Log(line + "," + data.BetCondition);
         }
         Debug.Log("PayoutLine Data loaded");
-
-        // イベント受け取り用読み込み
     }
 
     // func
 
     //判定モード変更
-
-    public void ChangePayoutMode(PayoutCheckMode checkMode) => this.CheckMode = checkMode;
+    public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => this.CheckMode = checkMode;
 
     // ライン判定
-    public ReelManager.PayoutResultBuffer CheckPayoutLines(ReelObject[] reelObjects, int betAmount)
+    public PayoutResultBuffer CheckPayoutLines(ReelObject[] reelObjects, int betAmount)
     {
         byte finalPayouts = 0;
         byte bonusID = 0;
@@ -198,13 +204,13 @@ public class PayoutChecker
 
                 // 図柄構成リストと見比べて該当するものがあれば当選。払い出し、ボーナス、リプレイ処理もする。
                 // ボーナスは非当選でもストックされる
-
                 int foundIndex = CheckPayoutLines(lineResult, GetPayoutResultData(CheckMode));
 
                 // データを追加(払い出しだけ当たった分追加する)
                 // 当たったデータがあれば記録(-1以外)
                 if(foundIndex != -1)
                 {
+                    // 払い出しは常にカウント(15枚を超えても切り捨てられる)
                     finalPayouts += GetPayoutResultData(CheckMode)[foundIndex].Payouts;
 
                     // ボーナス未成立なら当たった時に変更
@@ -212,7 +218,6 @@ public class PayoutChecker
                     {
                         bonusID = GetPayoutResultData(CheckMode)[foundIndex].BonusType;
                     }
-
                     // リプレイでなければ当たった時に変更
                     if(replayStatus == false)
                     {
@@ -227,7 +232,7 @@ public class PayoutChecker
         Debug.Log("Bonus:" + bonusID);
         Debug.Log("IsReplay:" + replayStatus);
 
-        return new ReelManager.PayoutResultBuffer(finalPayouts, bonusID, replayStatus);
+        return new PayoutResultBuffer(finalPayouts, bonusID, replayStatus);
     }
 
     // 払い出しラインのデータ読み込み
@@ -235,10 +240,8 @@ public class PayoutChecker
     {
         // ストリームからデータを得る
         sbyte[] byteBuffer = Array.ConvertAll(streamLines.ReadLine().Split(','), sbyte.Parse);
-
         // 払い出しラインのデータ
         sbyte[] lineData = new sbyte[ReelManager.ReelAmounts];
-
         // デバッグ用
         string combinationBuffer = "";
 
@@ -262,10 +265,8 @@ public class PayoutChecker
     {
         // ストリームからデータを得る
         byte[] byteBuffer = Array.ConvertAll(streamPayout.ReadLine().Split(','), byte.Parse);
-
         // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
         byte[] combinations = new byte[ReelManager.ReelAmounts];
-
         // デバッグ用
         string combinationBuffer = "";
 
@@ -276,6 +277,7 @@ public class PayoutChecker
             combinationBuffer += combinations[i];
         }
 
+        // データ作成
         PayoutResultData finalResult =  new PayoutResultData(byteBuffer[(int)PayoutResultData.ReadPos.FlagID], combinations,
             byteBuffer[(int)PayoutResultData.ReadPos.Payout], byteBuffer[(int)PayoutResultData.ReadPos.Bonus],
             byteBuffer[(int)PayoutResultData.ReadPos.IsReplay] == 1);
@@ -294,17 +296,21 @@ public class PayoutChecker
         // 全て同じ図柄が揃っていたらHITを返す
         // ANY(10番)は無視
 
+        // 見つかったデータの位置
         int indexNum = 0;
+        
+        // 払い出し結果の判定
         foreach (PayoutResultData data in payoutResult)
         {
             // 同じ図柄をカウントする
             int sameSymbolCount = 0;
 
+            // 図柄のチェック
             for (int i = 0; i < data.Combinations.Length; i++)
             {
-                // 図柄が合っているかチェック(ANYなら次の図柄へ)
                 Debug.Log(lineResult[i] + "," + data.Combinations[i]);
 
+                // 図柄が合っているかチェック(ANYなら次の図柄へ)
                 if (data.Combinations[i] == PayoutResultData.AnySymbol ||
                     (byte)lineResult[i] == data.Combinations[i])
                 {
@@ -314,19 +320,19 @@ public class PayoutChecker
 
             Debug.Log(sameSymbolCount);
 
+            // 同じ図柄(ANY含め)がリールの数と合えば当選とみなす
             if(sameSymbolCount == ReelManager.ReelAmounts)
             {
                 Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:"
                  + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].hasReplayOrJAC);
 
                 // 配列番号を送る
-
                 return indexNum;
             }
-
             // なかった場合は次の番号へ
             indexNum += 1;
         }
+        // 見つからない場合は-1を返す(はずれとなる)
         return -1;
     }
 
