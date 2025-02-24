@@ -26,7 +26,7 @@ public class MedalTest : MonoBehaviour
         // MAX BET
         if(OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {
-            medalManager.StartBet(3);
+            medalManager.StartMAXBet();
         }
 
         // BET2
@@ -35,17 +35,17 @@ public class MedalTest : MonoBehaviour
             medalManager.StartBet(2);
         }
 
-
         // BET1
         if (OriginalInput.CheckOneKeyInput(KeyCode.Alpha1))
         {
             medalManager?.StartBet(1);
         }
 
+        // PayoutTEST
         if (OriginalInput.CheckOneKeyInput(KeyCode.P))
         {
-            //medalManager.BetMedals(MedalManager.MAX_BET);
-            medalManager?.StartPayout(15);
+            //medalManager?.StartPayout(15);
+            medalManager?.ChangeMaxBet(1);
         }
     }
 }

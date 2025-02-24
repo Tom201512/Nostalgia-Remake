@@ -35,10 +35,6 @@ public class ReelObject : MonoBehaviour
     // 停止するのに必要なディレイ(スベリ)
     private int delayToStop;
 
-    //[SerializeField] REEL_COLUMN_ID reelID;
-    private SymbolChange[] symbolsObj;
-
-
     // 止まる予定か
     public bool IsStopping { get; private set; }
 
@@ -47,8 +43,12 @@ public class ReelObject : MonoBehaviour
 
     // リール情報を持つ
     public ReelData ReelData { get; private set; }
+    // リール内の図柄
+    private SymbolChange[] symbolsObj;
 
-    void Awake()
+
+    // 初期化
+    private void Awake()
     {
         rotateSpeed = 0.0f;
         maxSpeed = 0.0f;
@@ -63,11 +63,10 @@ public class ReelObject : MonoBehaviour
     {
         UpdateSymbolsObjects();
         Debug.Log("StartDone");
-
-        //StartReel(1.0f);
     }
 
-    void FixedUpdate()
+    // 実行中(60FPSでの更新)
+    private void FixedUpdate()
     {
         if(maxSpeed != 0)
         {
@@ -76,13 +75,22 @@ public class ReelObject : MonoBehaviour
             { 
                 SpeedUpReel(); 
             }
-
             RotateReel();
         }
     }
 
+
+    // func
+
     // リールデータを渡す
     public void SetReelData(ReelData reelData) => ReelData = reelData;
+
+    // 指定位置からリール位置を渡す
+    public int GetReelPos(ReelData.ReelPosID posID) => ReelData.GetReelPos((sbyte)posID);
+
+    // 指定位置からリール図柄を渡す
+    public ReelData.ReelSymbols GetReelSymbol(ReelData.ReelPosID posID) => ReelData.GetReelSymbol((sbyte)posID);
+
 
     //　リール始動
     public void StartReel(float maxSpeed)
@@ -105,14 +113,14 @@ public class ReelObject : MonoBehaviour
     }
 
     // 速度加速
-    void SpeedUpReel()
+    private void SpeedUpReel()
     {
         Math.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), 
             -1 * maxSpeed, maxSpeed);
     }
 
     // リール回転
-    void RotateReel()
+    private void RotateReel()
     {
         transform.Rotate((ReturnAngularVelocity(RotateRPS)) * Time.deltaTime * rotateSpeed * Vector3.left);
 
@@ -123,8 +131,6 @@ public class ReelObject : MonoBehaviour
             // 図柄位置変更
             ReelData.ChangeReelPos(rotateSpeed);
             UpdateSymbolsObjects();
-
-            //Debug.Log("Changed Symbol");
 
             // 変更角度分だけ回転を戻す。
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
@@ -155,16 +161,16 @@ public class ReelObject : MonoBehaviour
         foreach(SymbolChange symbol in symbolsObj)
         {
             symbol.ChangeSymbol(ReelData.GetReelSymbol((sbyte)symbol.GetPosID()));
-            //Debug.Log("Changed Symbol:" + ReelData.Array[ReelData.GetReelPos(symbol.GetPosID())]);
         }
     }
 
     // 回転率計算
     private float ReturnAngularVelocity(float rpsValue)
     {
-        //Radian
+        // ラジアンを求める
         float radian = rpsValue * 2.0f * MathF.PI;
-        //ConvertRadian to angle per seconds
+
+        // ラジアンから毎秒動かす角度を計算
         return radian * 180.0f / MathF.PI;
     }
 

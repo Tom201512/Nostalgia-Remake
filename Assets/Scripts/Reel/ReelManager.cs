@@ -18,7 +18,7 @@ public class ReelManager : MonoBehaviour
 
     // var
 
-    // リールが動作中か
+    // 全リールが動作中か
     public bool IsWorking { get; private set; }
 
     // 動作完了したか
@@ -26,6 +26,7 @@ public class ReelManager : MonoBehaviour
 
     // 判定完了したか
     public bool HasFinishedCheck { get; private set; }
+    
 
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
@@ -59,10 +60,6 @@ public class ReelManager : MonoBehaviour
 
     // 最後に行われた払い出しの結果
     public PayoutResultBuffer LastPayoutResult {  get; private set; } 
-
-    // 停止したリール数
-    private int stopReelCount;
-
     
     // 初期化
     void Awake()
@@ -70,7 +67,6 @@ public class ReelManager : MonoBehaviour
         IsFinished = true;
         IsWorking = false;
         HasFinishedCheck = true;
-        stopReelCount = 0;
 
         LastPayoutResult = new PayoutResultBuffer(0,0,false);
 
@@ -136,17 +132,14 @@ public class ReelManager : MonoBehaviour
         {
             reelObjects[(int)reelID].StopReel(0);
 
-            // 押したリールの数をカウント
-            stopReelCount += 1;
-
             // 全リールが停止されていればまた回せるようにする
-            if (stopReelCount == reelObjects.Length)
+            if(CheckAllReelStopped())
             {
                 IsWorking = false;
                 IsFinished = true;
-                stopReelCount = 0;
                 Debug.Log("All Reels are stopped");
             }
+
         }
         else
         {
@@ -170,4 +163,18 @@ public class ReelManager : MonoBehaviour
 
     // 払い出しモード変更
     public void ChangePayoutMode(PayoutChecker.PayoutCheckMode checkMode) => payoutChecker.ChangePayoutMode(checkMode);
+
+    private bool CheckAllReelStopped()
+    {
+        foreach (ReelObject obj in reelObjects)
+        {
+            // 止まっていないリールがまだあれば
+            if (!obj.HasStopped)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

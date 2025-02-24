@@ -8,40 +8,29 @@ namespace ReelSpinGame_Medal
     public class MedalManager
     {
         // const
-
         // 最大クレジット枚数
         public const int MaxCredit = 50;
-
         // 最大ベット枚数
         public const int MaxBet = 3;
-
         // メダル更新の間隔(ミリ秒)
         public const int MedalUpdateTime = 120;
-
         // 最大払い出し
         public const int MaxPayout = 15;
 
-
         // var
-
-        // クレジット枚数
-        public int Credits { get; private set; }
-
-        // ベット枚数
-        public int CurrentBet { get; private set; }
-
-        // 払い出し枚数
-        public int PayoutAmounts { get; private set; }
-
-        // 最高ベット枚数
-        public int MaxBetAmounts { get; private set; }
-
         // 残りベット枚数
         private int remainingBet;
-
         // 処理用タイマー
         private Timer updateTimer;
 
+        // クレジット枚数
+        public int Credits { get; private set; }
+        // ベット枚数
+        public int CurrentBet { get; private set; }
+        // 払い出し枚数
+        public int PayoutAmounts { get; private set; }
+        // 最高ベット枚数
+        public int MaxBetAmounts { get; private set; }
 
         // コンストラクタ
         public MedalManager(int _credits, int _currentMaxBet)
@@ -67,6 +56,20 @@ namespace ReelSpinGame_Medal
 
         // func
 
+        // MAXベット枚数変更
+        public void ChangeMaxBet(int maxBet)
+        {
+            Debug.Log("Change MAXBET:" + maxBet);
+            MaxBetAmounts = maxBet;
+        }
+
+        // MAX_BET用の処理
+        public void StartMAXBet()
+        {
+            Debug.Log("Received MAX_BET");
+            StartBet(MaxBetAmounts);
+        }
+
         // ベット処理開始
         public void StartBet(int amounts)
         {
@@ -74,7 +77,6 @@ namespace ReelSpinGame_Medal
             if (!updateTimer.Enabled)
             {
                 // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
-
                 if(amounts != CurrentBet && amounts <= MaxBetAmounts)
                 {
                     remainingBet = Math.Clamp(SetRemaining(amounts), 0, MaxBet);
@@ -131,7 +133,7 @@ namespace ReelSpinGame_Medal
             Debug.Log("Reset Bet");
         }
 
-        // 
+        // 残りベット枚数を設定
         private int SetRemaining(int amount)
         {
             // 現在のベット枚数よりも多く賭けると差分だけ掛ける

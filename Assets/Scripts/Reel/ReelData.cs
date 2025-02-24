@@ -8,7 +8,6 @@ namespace ReelSpinGame_Reels
     {
         // リールのデータ
 
-
         // const 
 
         // リール配列要素数
@@ -63,36 +62,32 @@ namespace ReelSpinGame_Reels
         // func
 
         // 指定したリールの位置番号を返す
-        public int GetReelPos(sbyte posID) => OffsetReel((int)posID);
+        public int GetReelPos(sbyte posID) => OffsetReel(posID);
 
         // リールの位置から図柄を返す
         public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
 
         // リール位置変更 (回転速度の符号に合わせて変更)
-        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
+        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
 
 
         // リール配列の番号を図柄へ変更
         private ReelSymbols ReturnSymbol(byte reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
 
-
-        //オーバーフロー対策
+        // リール位置をオーバーフローしない数値で返す
         private int OffsetReel(int offset)
         {
             if (currentLower + offset < 0)
             {
-                //Debug.Log("Lower than 0 Reel:" + MaxReelArray + currentLower + offset);
                 return MaxReelArray + currentLower + offset;
             }
 
             else if (currentLower + offset > MaxReelArray - 1)
             {
-                //Debug.Log("Higher than" + MaxReelArray + " Reel:" + (currentLower + offset - MaxReelArray));
                 return currentLower + offset - MaxReelArray;
             }
 
             // オーバーフローがないならそのまま返す
-            //Debug.Log("No Overflow" + (currentLower + offset - MaxReelArray));
             return currentLower + offset;
         }
     }
