@@ -8,7 +8,6 @@ public class MedalTest : MonoBehaviour
 
     private MedalManager medalManager;
 
-    // Start is called before the first frame update
     void Awake()
     {
         medalManager = new MedalManager(0, MedalManager.MaxBet);
@@ -19,7 +18,6 @@ public class MedalTest : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 

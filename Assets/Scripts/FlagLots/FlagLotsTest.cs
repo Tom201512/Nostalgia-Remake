@@ -12,23 +12,17 @@ public class FlagLotsTest : MonoBehaviour
     private FlagCounter flagCounter;
 
     // フラグテーブル
-
     // 設定値
     [SerializeField] private int setting;
-
     // 低確率時
     [SerializeField] private string flagTableAPath;
-
     // 高確率時
     [SerializeField] private string flagTableBPath;
-
     // BIG中テーブル
     [SerializeField] private string flagTableBIGPath;
-
     // JACはずれ確率
     [SerializeField] private int jacNoneProb;
 
-    // Start is called before the first frame update
     void Awake()
     {
         // 例外処理
@@ -41,22 +35,19 @@ public class FlagLotsTest : MonoBehaviour
 
         Debug.Log("Setting:" + setting);
 
-        if (jacNoneProb < 0) { throw new System.Exception("Invalid jacNoneProb, must be higher that 0"); }
+        if (jacNoneProb < 0) 
+        { 
+            throw new System.Exception("Invalid jacNoneProb, must be higher that 0");
+        }
 
+        // ファイル読み込み
         try
         {
             StreamReader tableA = new StreamReader(flagTableAPath);
             StreamReader tableB = new StreamReader(flagTableBPath);
             StreamReader tableBIG = new StreamReader(flagTableBIGPath);
-
-            // 設定値をもとにデータを得る(設定値の列まで読み込む)
-            for (int i = 0; i < setting - 1; i++)
-            {
-                tableA.ReadLine();
-                tableB.ReadLine();
-                tableBIG.ReadLine();
-            }
-
+            
+            // 設定値の部分になったら読み込む
             flagLots = new FlagLots(setting, tableA, tableB, tableBIG, jacNoneProb);
         }
         catch (Exception e)
@@ -65,53 +56,54 @@ public class FlagLotsTest : MonoBehaviour
         }
         finally
         {
+            // カウンタ作成
             flagCounter = new FlagCounter(0);
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        // DrawLots
+        // フラグ抽選
         if (OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {
             flagLots?.GetFlagLots();
 
-            // 小役ならカウンタを増やし、はずれは減らす
-
-            if(flagLots.CurrentFlag == FlagLots.FlagId.FlagBell)
+            // 小役ならカウンタを増やし、はずれは減らす(通常時のみ)
+            if(flagLots.CurrentTable == FlagLots.FlagLotMode.NormalA ||
+                flagLots.CurrentTable == FlagLots.FlagLotMode.NormalB)
             {
-                flagCounter?.IncreaseCounter(10);
+                IncreaseFlagCounter();
+                ChangeNormalTable();
             }
+        }
 
-            if (flagLots.CurrentFlag == FlagLots.FlagId.FlagMelon)
-            {
-                flagCounter?.IncreaseCounter(15);
-            }
+        // フラグ変更 (通常時)
+        if (OriginalInput.CheckOneKeyInput(KeyCode.A))
+        {
+            flagLots.ChangeTable(FlagLots.FlagLotMode.NormalA);
+        }
 
-            if (flagLots.CurrentFlag == FlagLots.FlagId.FlagCherry2)
-            {
-                flagCounter?.IncreaseCounter(2);
-            }
+        // フラグ変更 (BIG小役ゲーム時)
+        if (OriginalInput.CheckOneKeyInput(KeyCode.B))
+        {
+            flagLots.ChangeTable(FlagLots.FlagLotMode.BigBonus);
+        }
 
-            if (flagLots.CurrentFlag == FlagLots.FlagId.FlagCherry4)
-            {
-                flagCounter?.IncreaseCounter(4);
-            }
+        // フラグ変更 (JACゲーム時)
+        if (OriginalInput.CheckOneKeyInput(KeyCode.C))
+        {
+            flagLots.ChangeTable(FlagLots.FlagLotMode.JacGame);
+        }
 
-            if(flagLots.CurrentFlag == FlagLots.FlagId.FlagNone)
-            {
-                flagCounter?.DecreaseCounter(6,3);
-            }
-
-            ChangeNormalTable();
+        // 小役カウンターリセット
+        if (OriginalInput.CheckOneKeyInput(KeyCode.R))
+        {
+            flagCounter.ResetCounter();
         }
     }
 
     private void ChangeNormalTable()
     {
-
         // カウンタが0以上の場合は低確率
         if (flagLots.CurrentTable == FlagLots.FlagLotMode.NormalB &&
             flagCounter.Counter >= 0)
@@ -129,9 +121,32 @@ public class FlagLotsTest : MonoBehaviour
         }
     }
 
-    private void ReadFile(string path)
+    private void IncreaseFlagCounter()
     {
+        if (flagLots.CurrentFlag == FlagLots.FlagId.FlagBell)
+        {
+            flagCounter?.IncreaseCounter(10);
+        }
 
+        if (flagLots.CurrentFlag == FlagLots.FlagId.FlagMelon)
+        {
+            flagCounter?.IncreaseCounter(15);
+        }
+
+        if (flagLots.CurrentFlag == FlagLots.FlagId.FlagCherry2)
+        {
+            flagCounter?.IncreaseCounter(2);
+        }
+
+        if (flagLots.CurrentFlag == FlagLots.FlagId.FlagCherry4)
+        {
+            flagCounter?.IncreaseCounter(4);
+        }
+
+        if (flagLots.CurrentFlag == FlagLots.FlagId.FlagNone)
+        {
+            flagCounter?.DecreaseCounter(6, 3);
+        }
     }
 }
 
