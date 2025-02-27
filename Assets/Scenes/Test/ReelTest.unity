@@ -185,10 +185,16 @@ MonoBehaviour:
   - {fileID: 1988532655}
   - {fileID: 1701692655}
   arrayPath: Assets/Scripts/Reel/ArrayData.csv
-  normalPayoutData: Assets/Scripts/Reel/NormalPayoutData.csv
-  bigPayoutData: Assets/Scripts/Reel/BigPayoutData.csv
-  jacPayoutData: Assets/Scripts/Reel/JACPayout.csv
-  payoutLineData: Assets/Scripts/Reel/PayoutLine.csv
+  reelConditionLData: Assets/Scripts/Reel/Conditions/ReelLConditions.csv
+  reelConditionMData: Assets/Scripts/Reel/Conditions/ReelMConditions.csv
+  reelConditionRData: Assets/Scripts/Reel/Conditions/ReelRConditions.csv
+  reelTableLData: Assets/Scripts/Reel/ReelTables/ReelLTable.csv
+  reelTableMData: Assets/Scripts/Reel/ReelTables/ReelMTable.csv
+  reelTableRData: Assets/Scripts/Reel/ReelTables/ReelRTable.csv
+  normalPayoutData: Assets/Scripts/Reel/Payouts/NormalPayoutData.csv
+  bigPayoutData: Assets/Scripts/Reel/Payouts/BigPayoutData.csv
+  jacPayoutData: Assets/Scripts/Reel/Payouts/JACPayout.csv
+  payoutLineData: Assets/Scripts/Reel/Payouts/PayoutLine.csv
 --- !u!1 &367746610
 GameObject:
   m_ObjectHideFlags: 0

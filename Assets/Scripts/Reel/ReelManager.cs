@@ -3,6 +3,7 @@ using static ReelSpinGame_Reels.ReelData;
 using System.IO;
 using UnityEngine;
 using static PayoutChecker;
+using static ReelTableManager;
 
 public class ReelManager : MonoBehaviour
 {
@@ -26,6 +27,18 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private ReelObject[] reelObjects;
     // リール配列のファイル
     [SerializeField] private string arrayPath;
+
+    // 条件テーブル
+    [SerializeField] private string reelConditionLData;
+    [SerializeField] private string reelConditionMData;
+    [SerializeField] private string reelConditionRData;
+    // リール制御テーブル
+    [SerializeField] private string reelTableLData;
+    [SerializeField] private string reelTableMData;
+    [SerializeField] private string reelTableRData;
+
+    // 制御マネージャー
+    public ReelTableManager ReelTableManager { get; private set; }
 
     // 払い出し表のデータ
     [SerializeField] private string normalPayoutData;
@@ -61,6 +74,21 @@ public class ReelManager : MonoBehaviour
 
             Debug.Log("Array load done");
 
+            // リール制御読み込み
+            StreamReader reelConditionL = new StreamReader(reelConditionLData) ?? throw new System.Exception("ReelConditionfile L is missing");
+            StreamReader reelConditionM = new StreamReader(reelConditionMData) ?? throw new System.Exception("ReelConditionfile M is missing");
+            StreamReader reelConditionR = new StreamReader(reelConditionRData) ?? throw new System.Exception("ReelConditionfile R is missing");
+            // リール条件
+
+            // リール制御テーブル
+
+            StreamReader reelTableL = new StreamReader(reelTableLData) ?? throw new System.Exception("ReelTable L file is missing");
+            StreamReader reelTableM = new StreamReader(reelTableMData) ?? throw new System.Exception("ReelTable M file is missing");
+            StreamReader reelTableR = new StreamReader(reelTableRData) ?? throw new System.Exception("ReelTable R file is missing");
+
+            ReelTableManager = new ReelTableManager(reelConditionL, reelConditionM, reelConditionR,
+                reelTableL, reelTableM, reelTableR);
+
             // 払い出しラインの読み込み
             StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
 
@@ -70,6 +98,8 @@ public class ReelManager : MonoBehaviour
             StreamReader jacPayout = new StreamReader(jacPayoutData) ?? throw new System.Exception("JacPayoutData file is missing");
 
             payoutChecker = new PayoutChecker(normalPayout, bigPayout, jacPayout, payoutLines, PayoutChecker.PayoutCheckMode.PayoutNormal);
+
+            Debug.Log("Condition Data load done");
         }
         finally
         {
