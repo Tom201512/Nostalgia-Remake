@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ReelSpinGame_Rules;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -34,7 +36,7 @@ namespace ReelSpinGame_Reels
             }
             currentLower = lowerPos;
 
-            // データ読み込み
+            // 配列読み込み
             string[] values = arrayData.ReadLine().Split(',');
             // 配列に変換
             ReelArray = Array.ConvertAll(values, byte.Parse);

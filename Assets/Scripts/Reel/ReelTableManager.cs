@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Lots.Flag.FlagLots;
 
 public class ReelTableManager
 {
@@ -26,7 +27,7 @@ public class ReelTableManager
 
         // enum
         // 条件のシリアライズ
-        public enum Conditions { C_FLAG, C_FIRST, C_BONUS, C_BET, C_RANDOM }
+        public enum ConditionID { Flag, FirstPush, Bonus, Bet, Random }
 
         // var
         // テーブル使用条件はint型データで格納し、1バイト(8bit)ごとにデータを分ける
@@ -45,8 +46,6 @@ public class ReelTableManager
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;
 
-            Debug.Log(values.Length);
-
             // 読み込み開始(要素番号をもとにデータを読み込む
             foreach (string value in values)
             {
@@ -59,26 +58,52 @@ public class ReelTableManager
 
                 // 第一リール停止
                 else if (indexNum < FirstReelPosMaxRead)
-                { 
+                {
                     FirstReelPosition += OriginalMathmatics.ConvertToArrayBit(Convert.ToInt32(value));
                 }
 
                 // テーブルID読み込み
                 else if (indexNum < ReelTableIDMaxRead)
                 {
-                    ReelTableNumber = Convert.ToByte(value); 
+                    ReelTableNumber = Convert.ToByte(value);
                 }
 
                 // 最後の一行は読まない(テーブル名)
                 else
                 {
-                    break; 
+                    break;
                 }
                 indexNum++;
             }
 
-            Debug.Log("Condition:" + MainConditions + "FirstReel:" + FirstReelPosition + "ReelTableNum" + ReelTableNumber);
+            // デバッグ用
+            string ConditionDebug = "";
+
+            for(int i = 0; i < 5; i++)
+            {
+                ConditionDebug += GetConditionData(i).ToString() + ",";
+            }
+            Debug.Log("Condition:" + MainConditions + "Details:" + ConditionDebug + "FirstReel:" + FirstReelPosition + "ReelTableNum" + ReelTableNumber);
         }
+
+        // func
+        // 各条件をintにする
+        public static int ConvertConditionData(int flagID, int firstPush, int bonus, int bet, int random)
+        {
+            // 16進数のデータへ変更
+            int conditions = 0;
+            // 配列にする
+            int[] conditionArray = { flagID, firstPush, bonus, bet, random };
+
+            for (int i = 0; i < (int)ConditionID.Random; i++)
+            {
+                conditions |= conditionArray[i] << ConditionBitOffset * i;
+            }
+            return conditions;
+        }
+
+        // 各条件の数値を返す
+        public int GetConditionData(int conditionID) => ((MainConditions >> ConditionBitOffset * conditionID) & 0xF);
     }
 
     // リール制御テーブル
@@ -99,16 +124,16 @@ public class ReelTableManager
             foreach (string value in values)
             {
                 // リールデータを読み込む
-                if (indexNum < ReelData.MaxReelArray) 
-                { 
+                if (indexNum < ReelData.MaxReelArray)
+                {
                     TableData[indexNum] = Convert.ToByte(value);
                     debugBuffer += TableData[indexNum];
                 }
 
                 // 最後の一行は読まない(テーブル名)
-                else 
-                { 
-                    break; 
+                else
+                {
+                    break;
                 }
                 indexNum++;
             }
@@ -118,41 +143,81 @@ public class ReelTableManager
     }
 
     // var
-    public List<ReelConditionsData> ReelConditionL { get; private set; }
-    public List<ReelConditionsData> ReelConditionM { get; private set; }
-    public List<ReelConditionsData> ReelConditionR { get; private set; }
-
-    public List<ReelTableData> ReelTableL { get; private set; }
-    public List<ReelTableData> ReelTableM { get; private set; }
-    public List<ReelTableData> ReelTableR { get; private set; }
+    private List<List<ReelConditionsData>> reelConditions;
+    private List<List<ReelTableData>> reelDelayTables;
 
     // コンストラクタ
-    public ReelTableManager(StreamReader conditionL, StreamReader conditionM, StreamReader conditionR,
-        StreamReader reelTableL, StreamReader reelTableM, StreamReader reelTableR)
+    public ReelTableManager(List<StreamReader> conditions, List<StreamReader> tables)
     {
         // リスト作成
-        ReelConditionL = new List<ReelConditionsData>();
-        ReelConditionM = new List<ReelConditionsData>();
-        ReelConditionR = new List<ReelConditionsData>();
+        reelConditions = new List<List<ReelConditionsData>>();
+        reelDelayTables = new List<List<ReelTableData>>();
 
-        ReelTableL = new List<ReelTableData>();
-        ReelTableM = new List<ReelTableData>();
-        ReelTableR = new List<ReelTableData>();
-
-        // 条件読み込み
-        while (!conditionL.EndOfStream)
+        // リール条件とテーブルの数が合うかチェック
+        if (conditions.Count != tables.Count)
         {
-            ReelConditionL.Add(new ReelConditionsData(conditionL));
+            throw new Exception("Condition counts and table counts doesn't match");
+        }
+        
+        // 条件の読み込み
+        for(int i = 0; i < conditions.Count; i++)
+        {
+            // 条件読み込み
+            reelConditions.Add(new List<ReelConditionsData>());
+
+            while (!conditions[i].EndOfStream)
+            {
+                reelConditions[i].Add(new ReelConditionsData(conditions[i]));
+            }
+
+            Debug.Log("Condition:" + i + "Read done");
         }
 
         Debug.Log("ReelConditions reading done");
 
-        // テーブル読み込み
-        while (!reelTableL.EndOfStream)
+        for (int i = 0; i < tables.Count; i++)
         {
-            ReelTableL.Add(new ReelTableData(reelTableL));
+            // 条件読み込み
+            reelDelayTables.Add(new List<ReelTableData>());
+
+            while (!tables[i].EndOfStream)
+            {
+                reelDelayTables[i].Add(new ReelTableData(tables[i]));
+            }
+
+            Debug.Log("Condition:" + i + "Read done");
         }
 
         Debug.Log("ReelTable reading done");
+    }
+
+    // func
+    // 指定したリールのディレイ(スベリ)を返す
+    public byte GetDelayFromTable(ReelManager.ReelID reelID, int flagID, int firstPush,
+        int bonus, int bet, int random, int firstPushPos)
+    {
+        int condition = ReelConditionsData.ConvertConditionData(flagID, firstPush, bonus, bet, random);
+        int[] orderToCheck = {flagID, firstPush, bonus, bet, random };
+        // メイン条件が合っているか判定
+
+        foreach (ReelConditionsData data in reelConditions[(int)reelID])
+        {
+            for (int i = 0; i < orderToCheck.Length; i++)
+            {
+                // フラグID以外の条件は0ならパス
+                if (i == (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0)
+                {
+                    continue;
+                }
+                else if (orderToCheck[i] != data.GetConditionData(i))
+                {
+                    break;
+                }
+            }
+
+            Debug.Log("All conditions are met");
+            // 次は第一停止のリール停止位置を見る
+        }
+        return 0;
     }
 }

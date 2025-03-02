@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Reels;
-using static ReelSpinGame_Reels.ReelData;
+using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using static PayoutChecker;
 using static ReelTableManager;
@@ -29,16 +30,9 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private string arrayPath;
 
     // 条件テーブル
-    [SerializeField] private string reelConditionLData;
-    [SerializeField] private string reelConditionMData;
-    [SerializeField] private string reelConditionRData;
+    [SerializeField] private string[] reelConditionDatas;
     // リール制御テーブル
-    [SerializeField] private string reelTableLData;
-    [SerializeField] private string reelTableMData;
-    [SerializeField] private string reelTableRData;
-
-    // 制御マネージャー
-    public ReelTableManager ReelTableManager { get; private set; }
+    [SerializeField] private string[] delayTableDatas;
 
     // 払い出し表のデータ
     [SerializeField] private string normalPayoutData;
@@ -49,12 +43,22 @@ public class ReelManager : MonoBehaviour
     // 図柄判定
     private PayoutChecker payoutChecker;
 
+    // リール制御
+    private ReelTableManager reelTableManager;
+
     // 最後に当たった結果
     public PayoutResultBuffer LastPayoutResult { get; private set; }
 
     // 初期化
     void Awake()
     {
+        // リール条件とテーブルの数が一致するか確認する
+        if(reelConditionDatas.Length != ReelAmounts ||
+            delayTableDatas.Length != ReelAmounts)
+        {
+            throw new System.Exception("Either data of conditions and tables doesn't match the amount of reels");
+        }
+
         IsFinished = true;
         IsWorking = false;
         HasFinishedCheck = true;
@@ -72,22 +76,7 @@ public class ReelManager : MonoBehaviour
                 reelObjects[i].SetReelData(new ReelData(19, arrayData));
             }
 
-            Debug.Log("Array load done");
-
-            // リール制御読み込み
-            StreamReader reelConditionL = new StreamReader(reelConditionLData) ?? throw new System.Exception("ReelConditionfile L is missing");
-            StreamReader reelConditionM = new StreamReader(reelConditionMData) ?? throw new System.Exception("ReelConditionfile M is missing");
-            StreamReader reelConditionR = new StreamReader(reelConditionRData) ?? throw new System.Exception("ReelConditionfile R is missing");
-            // リール条件
-
-            // リール制御テーブル
-
-            StreamReader reelTableL = new StreamReader(reelTableLData) ?? throw new System.Exception("ReelTable L file is missing");
-            StreamReader reelTableM = new StreamReader(reelTableMData) ?? throw new System.Exception("ReelTable M file is missing");
-            StreamReader reelTableR = new StreamReader(reelTableRData) ?? throw new System.Exception("ReelTable R file is missing");
-
-            ReelTableManager = new ReelTableManager(reelConditionL, reelConditionM, reelConditionR,
-                reelTableL, reelTableM, reelTableR);
+            Debug.Log("ReelData load done");
 
             // 払い出しラインの読み込み
             StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
@@ -99,7 +88,21 @@ public class ReelManager : MonoBehaviour
 
             payoutChecker = new PayoutChecker(normalPayout, bigPayout, jacPayout, payoutLines, PayoutChecker.PayoutCheckMode.PayoutNormal);
 
-            Debug.Log("Condition Data load done");
+            Debug.Log("Array load done");
+
+            // リール制御読み込み
+
+            List<StreamReader> conditions = new List<StreamReader>();
+            List<StreamReader> tables = new List<StreamReader>();
+
+            for (int i = 0; i < ReelAmounts; i++)
+            {
+                conditions.Add(new StreamReader(reelConditionDatas[i]) ?? throw new System.Exception("Condition file at" + i + "is missing"));
+                tables.Add(new StreamReader(delayTableDatas[i]) ?? throw new System.Exception("ReelTable L file t" + i + "is missing"));
+            }
+
+            ReelTableManager reelTableManager = new ReelTableManager(conditions, tables);
+            Debug.Log("ReelData load done");
         }
         finally
         {
@@ -143,10 +146,13 @@ public class ReelManager : MonoBehaviour
     public void StopSelectedReel(ReelID reelID)
     {
         // ここでディレイ(スベリコマ)を得て転送
+        int delay = reelTableManager.GetDelayFromTable(reelID, 0, 0, 0, 3, 0, 
+            reelObjects[(int)reelID].GetReelPos(ReelData.ReelPosID.Lower));
+
         // リールが止まっていなければ停止
-        if(!reelObjects[(int)reelID].HasStopped)
+        if (!reelObjects[(int)reelID].HasStopped)
         {
-            reelObjects[(int)reelID].StopReel(0);
+            reelObjects[(int)reelID].StopReel(delay);
         }
         else
         {

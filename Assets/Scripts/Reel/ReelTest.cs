@@ -23,6 +23,9 @@ public class ReelTest : MonoBehaviour
 
     void Update()
     {
+        // 将来的にゲームマネージャーがリール制御のために
+        // ベット枚数やフラグなどの条件をリールマネージャーへ渡してさらに各リールを止める
+
         // 何も入力が入っていなければ実行
         if(!hasInput)
         {

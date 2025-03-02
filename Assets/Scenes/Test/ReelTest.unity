@@ -185,12 +185,14 @@ MonoBehaviour:
   - {fileID: 1988532655}
   - {fileID: 1701692655}
   arrayPath: Assets/Scripts/Reel/ArrayData.csv
-  reelConditionLData: Assets/Scripts/Reel/Conditions/ReelLConditions.csv
-  reelConditionMData: Assets/Scripts/Reel/Conditions/ReelMConditions.csv
-  reelConditionRData: Assets/Scripts/Reel/Conditions/ReelRConditions.csv
-  reelTableLData: Assets/Scripts/Reel/ReelTables/ReelLTable.csv
-  reelTableMData: Assets/Scripts/Reel/ReelTables/ReelMTable.csv
-  reelTableRData: Assets/Scripts/Reel/ReelTables/ReelRTable.csv
+  reelConditionDatas:
+  - Assets/Scripts/Reel/Conditions/ReelLConditions.csv
+  - Assets/Scripts/Reel/Conditions/ReelMConditions.csv
+  - Assets/Scripts/Reel/Conditions/ReelRConditions.csv
+  delayTableDatas:
+  - Assets/Scripts/Reel/ReelTables/ReelLTable.csv
+  - Assets/Scripts/Reel/ReelTables/ReelMTable.csv
+  - Assets/Scripts/Reel/ReelTables/ReelRTable.csv
   normalPayoutData: Assets/Scripts/Reel/Payouts/NormalPayoutData.csv
   bigPayoutData: Assets/Scripts/Reel/Payouts/BigPayoutData.csv
   jacPayoutData: Assets/Scripts/Reel/Payouts/JACPayout.csv
