@@ -308,8 +308,6 @@ public class PayoutChecker
             // 図柄のチェック
             for (int i = 0; i < data.Combinations.Length; i++)
             {
-                Debug.Log(lineResult[i] + "," + data.Combinations[i]);
-
                 // 図柄が合っているかチェック(ANYなら次の図柄へ)
                 if (data.Combinations[i] == PayoutResultData.AnySymbol ||
                     (byte)lineResult[i] == data.Combinations[i])

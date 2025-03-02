@@ -3,7 +3,9 @@ using ReelSpinGame_Rules;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
+using static ReelManager;
 using static ReelSpinGame_Lots.Flag.FlagLots;
 
 public class ReelTableManager
@@ -170,7 +172,7 @@ public class ReelTableManager
                 reelConditions[i].Add(new ReelConditionsData(conditions[i]));
             }
 
-            Debug.Log("Condition:" + i + "Read done");
+            Debug.Log("Condition:" + i + "Read done" + reelConditions[i].Count);
         }
 
         Debug.Log("ReelConditions reading done");
@@ -185,39 +187,75 @@ public class ReelTableManager
                 reelDelayTables[i].Add(new ReelTableData(tables[i]));
             }
 
-            Debug.Log("Condition:" + i + "Read done");
+            Debug.Log("DelayTable:" + i + "Read done" + reelDelayTables[i].Count);
         }
 
         Debug.Log("ReelTable reading done");
     }
 
     // func
-    // 指定したリールのディレイ(スベリ)を返す
-    public byte GetDelayFromTable(ReelManager.ReelID reelID, int flagID, int firstPush,
-        int bonus, int bet, int random, int firstPushPos)
+
+    // 条件から使用するテーブル番号を探す
+    public int FindTableToUse(ReelManager.ReelID reelID, int flagID, int firstPush, int bonus, int bet, int random, int firstPushPos)
     {
         int condition = ReelConditionsData.ConvertConditionData(flagID, firstPush, bonus, bet, random);
-        int[] orderToCheck = {flagID, firstPush, bonus, bet, random };
-        // メイン条件が合っているか判定
+        int[] orderToCheck = { flagID, firstPush, bonus, bet, random };
+
+        // 使用するテーブル配列の番号(-1はエラー)
+        int foundTable = -1;
+        // 検索中のテーブル
+        int currentIndex = 0;
 
         foreach (ReelConditionsData data in reelConditions[(int)reelID])
         {
+            Debug.Log("Search:" + currentIndex);
+
+            // 条件が合っているか
+            bool conditionMet = true;
+
             for (int i = 0; i < orderToCheck.Length; i++)
             {
                 // フラグID以外の条件は0ならパス
-                if (i == (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0)
+                if (i != (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0)
                 {
                     continue;
                 }
                 else if (orderToCheck[i] != data.GetConditionData(i))
                 {
-                    break;
+                    conditionMet = false;
                 }
             }
 
-            Debug.Log("All conditions are met");
-            // 次は第一停止のリール停止位置を見る
+            // 条件が合っていれば
+            if(conditionMet)
+            {
+                Debug.Log("All conditions are met");
+
+                // 次は第一停止のリール停止位置を見る
+                // 停止位置条件が0なら無視
+                if (data.FirstReelPosition != 0 || ((byte)firstPushPos & data.FirstReelPosition) == 0)
+                {
+                    if (data.FirstReelPosition != 0)
+                    {
+                        Debug.Log("No condition");
+                    }
+                    // ここまできたらテーブル発見。すぐに更新する
+                    Debug.Log("Found:" + currentIndex);
+                    foundTable = data.ReelTableNumber;
+                }
+            }
+            currentIndex += 1;
         }
-        return 0;
+        Debug.Log("Final Found:" + foundTable);
+
+        return foundTable;
+    }
+
+
+    // 指定したリールのディレイ(スベリ)を返す
+    public byte GetDelayFromTable(ReelManager.ReelID reelID, int pushedPos, int tableIndex)
+    {
+        Debug.Log("Delay:" + reelDelayTables[(int)reelID][tableIndex].TableData[pushedPos]);
+        return reelDelayTables[(int)reelID][tableIndex].TableData[pushedPos];
     }
 }

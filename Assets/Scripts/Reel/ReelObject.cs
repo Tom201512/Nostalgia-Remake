@@ -1,5 +1,6 @@
 using ReelSpinGame_Reels;
 using System;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class ReelObject : MonoBehaviour
@@ -76,6 +77,8 @@ public class ReelObject : MonoBehaviour
     public int GetReelPos(ReelData.ReelPosID posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す
     public ReelData.ReelSymbols GetReelSymbol(ReelData.ReelPosID posID) => ReelData.GetReelSymbol((sbyte)posID);
+    // 停止位置を返す
+    public int GetStoppedPos() => ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
 
     //　リール始動
     public void StartReel(float maxSpeed)

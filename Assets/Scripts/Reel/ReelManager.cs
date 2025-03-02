@@ -23,6 +23,12 @@ public class ReelManager : MonoBehaviour
     public bool IsFinished {  get; private set; }
     // 判定完了したか
     public bool HasFinishedCheck { get; private set; }
+    // 第一停止をしたか
+    private bool isFirstReelPushed;
+    // 最初に止めたリール番号
+    private ReelID firstPushReel;
+    // 停止位置
+    private int firstPushPos;
     
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
@@ -63,6 +69,10 @@ public class ReelManager : MonoBehaviour
         IsWorking = false;
         HasFinishedCheck = true;
 
+        isFirstReelPushed = false;
+        firstPushReel = ReelID.ReelLeft;
+        firstPushPos = 0;
+
         LastPayoutResult = new PayoutResultBuffer(0, 0, false);
 
         try
@@ -100,8 +110,8 @@ public class ReelManager : MonoBehaviour
                 conditions.Add(new StreamReader(reelConditionDatas[i]) ?? throw new System.Exception("Condition file at" + i + "is missing"));
                 tables.Add(new StreamReader(delayTableDatas[i]) ?? throw new System.Exception("ReelTable L file t" + i + "is missing"));
             }
+            reelTableManager = new ReelTableManager(conditions, tables);
 
-            ReelTableManager reelTableManager = new ReelTableManager(conditions, tables);
             Debug.Log("ReelData load done");
         }
         finally
@@ -122,7 +132,6 @@ public class ReelManager : MonoBehaviour
     }
 
     // func
-
     // リール始動
     public void StartReels()
     {
@@ -132,6 +141,7 @@ public class ReelManager : MonoBehaviour
             IsFinished = false;
             HasFinishedCheck = false;
             IsWorking = true;
+            isFirstReelPushed = false;
 
             for (int i = 0; i < reelObjects.Length; i++)
             {
@@ -145,13 +155,30 @@ public class ReelManager : MonoBehaviour
     // 各リール停止
     public void StopSelectedReel(ReelID reelID)
     {
-        // ここでディレイ(スベリコマ)を得て転送
-        int delay = reelTableManager.GetDelayFromTable(reelID, 0, 0, 0, 3, 0, 
-            reelObjects[(int)reelID].GetReelPos(ReelData.ReelPosID.Lower));
+        // 押した位置
+        int pushedPos = reelObjects[(int)reelID].GetStoppedPos();
+        Debug.Log("Stopped:" + pushedPos);
 
-        // リールが止まっていなければ停止
+        // 第一停止なら押したところの停止位置を得る
+        if (!isFirstReelPushed)
+        {
+            isFirstReelPushed = true;
+            firstPushReel = reelID;
+            firstPushPos = pushedPos;
+
+            Debug.Log("FirstPush:" + reelID);
+            Debug.Log(reelConditionDatas.Length);
+        }
+
+        // ここでディレイ(スベリコマ)を得て転送
+        // 条件をチェック
+        int tableIndex = reelTableManager.FindTableToUse(reelID, 0, (int)firstPushReel, 0, 3, 0, firstPushPos);
+
+        // 先ほど得たディレイ分リール停止を遅らせる
         if (!reelObjects[(int)reelID].HasStopped)
         {
+            int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
+            Debug.Log("Stop:" + reelID + "Delay:" + delay);
             reelObjects[(int)reelID].StopReel(delay);
         }
         else
