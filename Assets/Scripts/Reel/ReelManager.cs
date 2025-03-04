@@ -52,6 +52,11 @@ public class ReelManager : MonoBehaviour
     // リール制御
     private ReelTableManager reelTableManager;
 
+    // 最後に止めた位置
+    public List<int> LastPos { get; private set; }
+    // 最後に止まった出目
+    public List<List<ReelData.ReelSymbols>> LastSymbols { get; private set; }
+
     // 最後に当たった結果
     public PayoutResultBuffer LastPayoutResult { get; private set; }
 
@@ -73,8 +78,8 @@ public class ReelManager : MonoBehaviour
         firstPushReel = ReelID.ReelLeft;
         firstPushPos = 0;
 
-        LastPayoutResult = new PayoutResultBuffer(0, 0, false);
-
+        LastPos = new List<int>();
+        LastSymbols = new List<List<ReelData.ReelSymbols>>();
         try
         {
             // リール配列の読み込み
@@ -128,6 +133,9 @@ public class ReelManager : MonoBehaviour
             IsWorking = false;
             IsFinished = true;
             Debug.Log("All Reels are stopped");
+
+            // リール停止位置記録
+            GenerateLastStopped();
         }
     }
 
@@ -192,7 +200,7 @@ public class ReelManager : MonoBehaviour
     {
         if (!IsWorking)
         {
-            LastPayoutResult = payoutChecker.CheckPayoutLines(reelObjects, betAmounts);
+            LastPayoutResult = payoutChecker.CheckPayoutLines(betAmounts, LastSymbols);
             HasFinishedCheck = true;
         }
         else
@@ -213,5 +221,46 @@ public class ReelManager : MonoBehaviour
             }
         }
         return true;
+    }
+
+    // 最後に止めた結果を作る
+    private void GenerateLastStopped()
+    {
+        // 初期化
+        LastPos.Clear();
+        LastSymbols.Clear();
+
+        string posBuffer = "";
+
+        // リール図柄を作成する
+        for(int i = 0; i < reelObjects.Length; i++)
+        {
+            LastPos.Add(reelObjects[i].GetReelPos((int)ReelData.ReelPosID.Lower));
+            posBuffer += LastPos[i];
+
+            Debug.Log("Position:" + LastPos[i]);
+
+            // データ作成
+            LastSymbols.Add(new List<ReelData.ReelSymbols>());
+
+            // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
+            for (int j = (int)ReelData.ReelPosID.Lower3rd; j < (int)ReelData.ReelPosID.Upper3rd; j++)
+            {
+                LastSymbols[i].Add(reelObjects[i].ReelData.GetReelSymbol(j));
+                Debug.Log("Symbol:" + reelObjects[i].ReelData.GetReelSymbol(j));
+            }
+        }
+        Debug.Log("Final ReelPosition" + posBuffer);
+
+        // 各リールごとに表示(デバッグ)
+        foreach(List<ReelData.ReelSymbols> reelResult in LastSymbols)
+        {
+            Debug.Log("Reel:");
+            for(int i = 0; i < reelResult.Count; i++)
+            {
+                Debug.Log(reelResult[i]);
+            }
+        }
+
     }
 }

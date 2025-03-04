@@ -57,12 +57,12 @@ namespace ReelSpinGame_Reels
         // func
 
         // リール配列の番号を図柄へ変更
-        private ReelSymbols ReturnSymbol(byte reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+        private ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
 
         // 指定したリールの位置番号を返す
-        public int GetReelPos(sbyte posID) => OffsetReel(posID);
+        public int GetReelPos(int posID) => OffsetReel(posID);
         // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
+        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
 

@@ -85,11 +85,11 @@ public class PayoutChecker
         public int BonusID { get; private set; }
         public bool IsReplayOrJAC { get; private set; }
 
-        public PayoutResultBuffer(int payouts, int BonusID, bool IsReplayOrJac)
+        public PayoutResultBuffer(int payouts, int bonusID, bool isReplayOrJac)
         {
-            this.Payouts = payouts;
-            this.BonusID = BonusID;
-            this.IsReplayOrJAC = IsReplayOrJac;
+            Payouts = payouts;
+            BonusID = bonusID;
+            IsReplayOrJAC = isReplayOrJac;
         }
     }
 
@@ -167,40 +167,38 @@ public class PayoutChecker
     public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => this.CheckMode = checkMode;
 
     // ライン判定
-    public PayoutResultBuffer CheckPayoutLines(ReelObject[] reelObjects, int betAmount)
+    public PayoutResultBuffer CheckPayoutLines(int betAmount, List<List<ReelData.ReelSymbols>> lastSymbols)
     {
-        byte finalPayouts = 0;
-        byte bonusID = 0;
+        // 最終的な払い出し結果
+        int finalPayouts = 0;
+        int bonusID = 0;
         bool replayStatus = false;
 
-        // 各ラインから払い出しのチェックをする
+        // すること
+        // 1:指定された払い出しラインごとにデータを格納する(ベット条件を満たしている必要がある)
+        // 2:配当表の図柄が揃っているかを確認する
+        // 3:揃っていれば払い出し、ボーナス、またはリプレイの状態を変化させる
+
+        // 指定したラインごとにデータを得る
         foreach (PayoutLineData lineData in payoutLineDatas)
         {
+            // 指定ラインの結果を保管
+            List<ReelSymbols> lineResult = new List<ReelSymbols>();
+
             // ベット枚数の条件を満たしているかチェック
             if (betAmount >= lineData.BetCondition)
             {
-                // 結果をリストにまとめる
-                List<ReelSymbols> lineResult = new List<ReelData.ReelSymbols>();
-
-                // 各リールの払い出しをチェック
-                for(int i = 0; i < reelObjects.Length; i++)
+                // 各リールから指定ラインの位置を得る(枠下2段目を基準に)
+                int reelIndex = 0;
+                foreach (List<ReelSymbols> reelResult in lastSymbols)
                 {
-                    lineResult.Add(reelObjects[i].ReelData.GetReelSymbol(lineData.PayoutLine[i]));
-                }
+                    // マイナス数値を配列番号に変換
+                    int lineIndex = lineData.PayoutLine[reelIndex] + (int)ReelPosID.Lower3rd * -1;
 
-                // デバッグ用
-                string lineBuffer = "";
-                foreach(byte b in lineData.PayoutLine)
-                {
-                    lineBuffer += b.ToString();
+                    Debug.Log("Symbol:" + reelResult[lineIndex]);
+                   lineResult.Add(reelResult[lineIndex]);
+                    reelIndex += 1;
                 }
-
-                string resultBuffer = "";
-                foreach (ReelSymbols symbol in lineResult)
-                {
-                    resultBuffer += symbol.ToString();
-                }
-                Debug.Log(lineBuffer + "," + resultBuffer);
 
                 // 図柄構成リストと見比べて該当するものがあれば当選。払い出し、ボーナス、リプレイ処理もする。
                 // ボーナスは非当選でもストックされる
@@ -208,22 +206,28 @@ public class PayoutChecker
 
                 // データを追加(払い出しだけ当たった分追加する)
                 // 当たったデータがあれば記録(-1以外)
-                if(foundIndex != -1)
+                if (foundIndex != -1)
                 {
                     // 払い出しは常にカウント(15枚を超えても切り捨てられる)
                     finalPayouts += GetPayoutResultData(CheckMode)[foundIndex].Payouts;
 
                     // ボーナス未成立なら当たった時に変更
-                    if(bonusID == 0)
+                    if (bonusID == 0)
                     {
                         bonusID = GetPayoutResultData(CheckMode)[foundIndex].BonusType;
                     }
                     // リプレイでなければ当たった時に変更
-                    if(replayStatus == false)
+                    if (replayStatus == false)
                     {
                         replayStatus = GetPayoutResultData(CheckMode)[foundIndex].hasReplayOrJAC;
                     }
                 }
+            }
+            
+            // 条件を満たさない場合は終了
+            else
+            {
+                break;
             }
         }
         // 最終的な払い出し枚数をイベントに送る
