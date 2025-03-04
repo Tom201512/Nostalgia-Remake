@@ -1,12 +1,9 @@
 using ReelSpinGame_Reels;
-using static ReelSpinGame_Reels.ReelData;
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-using UnityEditor.Build;
-using static ReelSpinGame_Bonus.BonusManager;
-using static ReelSpinGame_Lots.Flag.FlagLots;
+using static ReelSpinGame_Reels.ReelData;
 
 public class PayoutChecker
 {
@@ -91,7 +88,14 @@ public class PayoutChecker
             BonusID = bonusID;
             IsReplayOrJAC = isReplayOrJac;
         }
+
+        public void SetPayout(int payouts) => Payouts = payouts;
+        public void SetBonusID(int bonusID) => BonusID = bonusID;
+        public void SetReplayStatus(bool isReplayOrJac) => IsReplayOrJAC = isReplayOrJac;
     }
+
+    // 最後に当たった結果
+    public PayoutResultBuffer LastPayoutResult { get; private set; }
 
     // 各払い出しラインのデータ
     private List<PayoutLineData> payoutLineDatas;
@@ -117,6 +121,9 @@ public class PayoutChecker
         normalPayoutDatas = new List<PayoutResultData>();
         bigPayoutDatas = new List<PayoutResultData>();
         jacPayoutDatas = new List<PayoutResultData>();
+
+        // 最後に判定した時の結果
+        LastPayoutResult = new PayoutResultBuffer(0, 0, false);
 
         // データ読み込み
         // 通常時
@@ -167,7 +174,7 @@ public class PayoutChecker
     public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => this.CheckMode = checkMode;
 
     // ライン判定
-    public PayoutResultBuffer CheckPayoutLines(int betAmount, List<List<ReelData.ReelSymbols>> lastSymbols)
+    public void CheckPayoutLines(int betAmount, List<List<ReelData.ReelSymbols>> lastSymbols)
     {
         // 最終的な払い出し結果
         int finalPayouts = 0;
@@ -236,7 +243,9 @@ public class PayoutChecker
         Debug.Log("Bonus:" + bonusID);
         Debug.Log("IsReplay:" + replayStatus);
 
-        return new PayoutResultBuffer(finalPayouts, bonusID, replayStatus);
+        LastPayoutResult.SetPayout(finalPayouts);
+        LastPayoutResult.SetBonusID(bonusID);
+        LastPayoutResult.SetReplayStatus(replayStatus);
     }
 
     // 払い出しラインのデータ読み込み

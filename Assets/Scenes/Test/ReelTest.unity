@@ -193,10 +193,6 @@ MonoBehaviour:
   - Assets/Scripts/Reel/ReelTables/ReelLTable.csv
   - Assets/Scripts/Reel/ReelTables/ReelMTable.csv
   - Assets/Scripts/Reel/ReelTables/ReelRTable.csv
-  normalPayoutData: Assets/Scripts/Reel/Payouts/NormalPayoutData.csv
-  bigPayoutData: Assets/Scripts/Reel/Payouts/BigPayoutData.csv
-  jacPayoutData: Assets/Scripts/Reel/Payouts/JACPayout.csv
-  payoutLineData: Assets/Scripts/Reel/Payouts/PayoutLine.csv
 --- !u!1 &367746610
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +674,10 @@ MonoBehaviour:
   keyToStopLeft: 276
   keyToStopMiddle: 274
   keyToStopRight: 275
+  normalPayoutData: Assets/Scripts/Medal/Payouts/NormalPayoutData.csv
+  bigPayoutData: Assets/Scripts/Medal/Payouts/BigPayoutData.csv
+  jacPayoutData: Assets/Scripts/Medal/Payouts/JACPayout.csv
+  payoutLineData: Assets/Scripts/Medal/Payouts/PayoutLine.csv
   manager: {fileID: 286284038}
 --- !u!4 &1051583531
 Transform:

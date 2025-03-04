@@ -39,16 +39,6 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private string[] reelConditionDatas;
     // リール制御テーブル
     [SerializeField] private string[] delayTableDatas;
-
-    // 払い出し表のデータ
-    [SerializeField] private string normalPayoutData;
-    [SerializeField] private string bigPayoutData;
-    [SerializeField] private string jacPayoutData;
-    [SerializeField] private string payoutLineData;
-
-    // 図柄判定
-    private PayoutChecker payoutChecker;
-
     // リール制御
     private ReelTableManager reelTableManager;
 
@@ -56,9 +46,6 @@ public class ReelManager : MonoBehaviour
     public List<int> LastPos { get; private set; }
     // 最後に止まった出目
     public List<List<ReelData.ReelSymbols>> LastSymbols { get; private set; }
-
-    // 最後に当たった結果
-    public PayoutResultBuffer LastPayoutResult { get; private set; }
 
     // 初期化
     void Awake()
@@ -92,16 +79,6 @@ public class ReelManager : MonoBehaviour
             }
 
             Debug.Log("ReelData load done");
-
-            // 払い出しラインの読み込み
-            StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
-
-            // 払い出しデータの読み込み
-            StreamReader normalPayout = new StreamReader(normalPayoutData) ?? throw new System.Exception("NormalPayoutData file is missing"); 
-            StreamReader bigPayout = new StreamReader(bigPayoutData) ?? throw new System.Exception("BigPayoutData file is missing");
-            StreamReader jacPayout = new StreamReader(jacPayoutData) ?? throw new System.Exception("JacPayoutData file is missing");
-
-            payoutChecker = new PayoutChecker(normalPayout, bigPayout, jacPayout, payoutLines, PayoutChecker.PayoutCheckMode.PayoutNormal);
 
             Debug.Log("Array load done");
 
@@ -140,6 +117,10 @@ public class ReelManager : MonoBehaviour
     }
 
     // func
+
+    // 判定終了状態を変更
+    public void SetHasFinishedCheck(bool hasChecked) => HasFinishedCheck = hasChecked;
+
     // リール始動
     public void StartReels()
     {
@@ -192,20 +173,6 @@ public class ReelManager : MonoBehaviour
         else
         {
             Debug.Log("Failed to stop the " + reelID.ToString());
-        }
-    }
-
-    // 払い出し確認
-    public void StartCheckPayout(int betAmounts)
-    {
-        if (!IsWorking)
-        {
-            LastPayoutResult = payoutChecker.CheckPayoutLines(betAmounts, LastSymbols);
-            HasFinishedCheck = true;
-        }
-        else
-        {
-            Debug.Log("Failed to check payout because reels are spinning");
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Bonus;
 using ReelSpinGame_Util.OriginalInputs;
 using System;
+using System.IO;
 using UnityEngine;
 
 public class ReelTest : MonoBehaviour
@@ -10,7 +11,15 @@ public class ReelTest : MonoBehaviour
     [SerializeField] private KeyCode keyToStopMiddle;
     [SerializeField] private KeyCode keyToStopRight;
 
+    // 払い出し表のデータ
+    [SerializeField] private string normalPayoutData;
+    [SerializeField] private string bigPayoutData;
+    [SerializeField] private string jacPayoutData;
+    [SerializeField] private string payoutLineData;
+
     [SerializeField] private ReelManager manager;
+
+    private PayoutChecker payoutChecker;
 
     // イベント用テスト
     // 入力があったか
@@ -19,6 +28,16 @@ public class ReelTest : MonoBehaviour
     void Awake()
     {
         hasInput = false;
+
+        // 払い出しラインの読み込み
+        StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
+
+        // 払い出しデータの読み込み
+        StreamReader normalPayout = new StreamReader(normalPayoutData) ?? throw new System.Exception("NormalPayoutData file is missing");
+        StreamReader bigPayout = new StreamReader(bigPayoutData) ?? throw new System.Exception("BigPayoutData file is missing");
+        StreamReader jacPayout = new StreamReader(jacPayoutData) ?? throw new System.Exception("JacPayoutData file is missing");
+
+        payoutChecker = new PayoutChecker(normalPayout, bigPayout, jacPayout, payoutLines, PayoutChecker.PayoutCheckMode.PayoutNormal);
     }
 
     void Update()
@@ -61,9 +80,10 @@ public class ReelTest : MonoBehaviour
             else if(manager.IsFinished && !manager.HasFinishedCheck)
             {
                 Debug.Log("Start Payout Check");
-                manager.StartCheckPayout(3);
-                Debug.Log("Payouts result" + manager.LastPayoutResult.Payouts);
-                Debug.Log("Bonus:" + manager.LastPayoutResult.BonusID + "ReplayOrJac" + manager.LastPayoutResult.IsReplayOrJAC);
+
+                StartCheckPayout(3);
+                //Debug.Log("Payouts result" + manager.LastPayoutResult.Payouts);
+                //Debug.Log("Bonus:" + manager.LastPayoutResult.BonusID + "ReplayOrJac" + manager.LastPayoutResult.IsReplayOrJAC);
             }
         }
 
@@ -76,6 +96,19 @@ public class ReelTest : MonoBehaviour
                 //Debug.Log("input end");
                 hasInput = false;
             }
+        }
+    }
+
+    private void StartCheckPayout(int betAmounts)
+    {
+        if (!manager.IsWorking)
+        {
+            payoutChecker.CheckPayoutLines(betAmounts, manager.LastSymbols);
+            manager.SetHasFinishedCheck(true);
+        }
+        else
+        {
+            Debug.Log("Failed to check payout because reels are spinning");
         }
     }
 } 
