@@ -48,6 +48,8 @@ public class ReelObject : MonoBehaviour
         HasStopped = true;
         symbolsObj = GetComponentsInChildren<SymbolChange>();
         Debug.Log("ReelSpin AwakeDone");
+
+        Debug.Log(ChangeAngle);
     }
 
     private void Start()
@@ -112,7 +114,7 @@ public class ReelObject : MonoBehaviour
     {
         transform.Rotate((ReturnAngularVelocity(RotateRPS)) * Time.deltaTime * rotateSpeed * Vector3.left);
 
-        // 一定角度に達したら図柄の更新(17.174 or 342.826)
+        // 一定角度に達したら図柄の更新(17.14286度)
         if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && Math.Sign(rotateSpeed) == -1 ||
             (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && Math.Sign(rotateSpeed) == 1)))
         {
