@@ -18,8 +18,11 @@ public class ReelTest : MonoBehaviour
     [SerializeField] private string payoutLineData;
 
     [SerializeField] private ReelManager manager;
-
     private PayoutChecker payoutChecker;
+
+    // これはメインループで使用する
+    // 払い出し判定完了したか
+    public bool hasFinishedCheck { get; private set; }
 
     // イベント用テスト
     // 入力があったか
@@ -27,6 +30,7 @@ public class ReelTest : MonoBehaviour
 
     void Awake()
     {
+        hasFinishedCheck = true;
         hasInput = false;
 
         // 払い出しラインの読み込み
@@ -50,9 +54,10 @@ public class ReelTest : MonoBehaviour
         {
             // リール回転
             if (OriginalInput.CheckOneKeyInput(KeyCode.UpArrow) && 
-                !manager.IsWorking && manager.HasFinishedCheck)
+                !manager.IsWorking && hasFinishedCheck)
             {
                 manager.StartReels();
+                hasFinishedCheck = false;
             }
             // 左停止
             if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.IsWorking)
@@ -77,7 +82,7 @@ public class ReelTest : MonoBehaviour
                 //Debug.Log("Input true");
             }
             // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-            else if(manager.IsFinished && !manager.HasFinishedCheck)
+            else if(manager.IsFinished && !hasFinishedCheck)
             {
                 Debug.Log("Start Payout Check");
 
@@ -104,7 +109,7 @@ public class ReelTest : MonoBehaviour
         if (!manager.IsWorking)
         {
             payoutChecker.CheckPayoutLines(betAmounts, manager.LastSymbols);
-            manager.SetHasFinishedCheck(true);
+            hasFinishedCheck = true;
         }
         else
         {

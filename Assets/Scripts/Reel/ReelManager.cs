@@ -21,8 +21,6 @@ public class ReelManager : MonoBehaviour
     public bool IsWorking { get; private set; }
     // 動作完了したか
     public bool IsFinished {  get; private set; }
-    // 判定完了したか
-    public bool HasFinishedCheck { get; private set; }
     // 第一停止をしたか
     private bool isFirstReelPushed;
     // 最初に止めたリール番号
@@ -59,7 +57,6 @@ public class ReelManager : MonoBehaviour
 
         IsFinished = true;
         IsWorking = false;
-        HasFinishedCheck = true;
 
         isFirstReelPushed = false;
         firstPushReel = ReelID.ReelLeft;
@@ -117,10 +114,6 @@ public class ReelManager : MonoBehaviour
     }
 
     // func
-
-    // 判定終了状態を変更
-    public void SetHasFinishedCheck(bool hasChecked) => HasFinishedCheck = hasChecked;
-
     // リール始動
     public void StartReels()
     {
@@ -128,7 +121,6 @@ public class ReelManager : MonoBehaviour
         if (!IsWorking)
         {
             IsFinished = false;
-            HasFinishedCheck = false;
             IsWorking = true;
             isFirstReelPushed = false;
 
@@ -166,7 +158,8 @@ public class ReelManager : MonoBehaviour
         // 先ほど得たディレイ分リール停止を遅らせる
         if (!reelObjects[(int)reelID].HasStopped)
         {
-            int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
+            int delay = 0;
+            //int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
             Debug.Log("Stop:" + reelID + "Delay:" + delay);
             reelObjects[(int)reelID].StopReel(delay);
         }
@@ -228,6 +221,5 @@ public class ReelManager : MonoBehaviour
                 Debug.Log(reelResult[i]);
             }
         }
-
     }
 }
