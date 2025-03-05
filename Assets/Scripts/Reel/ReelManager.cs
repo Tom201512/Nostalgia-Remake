@@ -144,7 +144,7 @@ public class ReelManager : MonoBehaviour
         if (!isFirstReelPushed)
         {
             isFirstReelPushed = true;
-            firstPushReel = reelID;
+            firstPushReel = reelID + 1;
             firstPushPos = pushedPos;
 
             Debug.Log("FirstPush:" + reelID);
@@ -158,8 +158,7 @@ public class ReelManager : MonoBehaviour
         // 先ほど得たディレイ分リール停止を遅らせる
         if (!reelObjects[(int)reelID].HasStopped)
         {
-            int delay = 0;
-            //int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
+            int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
             Debug.Log("Stop:" + reelID + "Delay:" + delay);
             reelObjects[(int)reelID].StopReel(delay);
         }

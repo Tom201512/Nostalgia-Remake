@@ -61,13 +61,21 @@ public class ReelObject : MonoBehaviour
     // 実行中(60FPSでの更新)
     private void FixedUpdate()
     {
-        if(maxSpeed != 0)
+        if (maxSpeed != 0)
         {
             //止まっていないときは加速
-            if (rotateSpeed <= maxSpeed) 
-            { 
-                SpeedUpReel(); 
+            if (rotateSpeed <= maxSpeed)
+            {
+                SpeedUpReel();
             }
+        }
+    }
+
+    // 実行中(常時更新)
+    private void Update()
+    {
+        if(maxSpeed != 0)
+        {
             RotateReel();
         }
     }

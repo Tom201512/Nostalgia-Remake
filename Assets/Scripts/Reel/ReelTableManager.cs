@@ -233,9 +233,16 @@ public class ReelTableManager
 
                 // 次は第一停止のリール停止位置を見る
                 // 停止位置条件が0なら無視
-                if (data.FirstReelPosition != 0 || ((byte)firstPushPos & data.FirstReelPosition) == 0)
+
+                // 第一停止の位置の分だけ1を左シフトし、条件のビットとAND算して条件を見る(0にならなければ条件を満たす)
+                int checkValue = 1 << firstPushPos + 1;
+                Debug.Log(checkValue);
+                Debug.Log(data.FirstReelPosition);
+
+                Debug.Log(checkValue & data.FirstReelPosition);
+                if (data.FirstReelPosition == 0 || (checkValue & data.FirstReelPosition) != 0)
                 {
-                    if (data.FirstReelPosition != 0)
+                    if (data.FirstReelPosition == 0)
                     {
                         Debug.Log("No condition");
                     }
