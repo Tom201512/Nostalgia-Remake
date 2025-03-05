@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 124730695963021864}
   - component: {fileID: 1933351381960056272}
-  - component: {fileID: 4258065972112701286}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: SymbolBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,23 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4258065972112701286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582631020889352479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 78dbc20b47b7a0843a5d4f1fb7d16f28, type: 2}
-  isGlobal: 0
-  blendDistance: 0
-  weight: 1
-  priority: 0
 --- !u!1 &2169237100488002603
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +64,7 @@ GameObject:
   - component: {fileID: 8697504711854980584}
   - component: {fileID: 6088670069622923628}
   - component: {fileID: 5812062176408448225}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: CenterSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +193,7 @@ GameObject:
   - component: {fileID: 3881858576254304565}
   - component: {fileID: 1973481292720505362}
   - component: {fileID: 6792466835698595732}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: UpperSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +322,7 @@ GameObject:
   - component: {fileID: 3263635740545263838}
   - component: {fileID: 7437800553861908442}
   - component: {fileID: 7736556047871062159}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: LowerSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +451,7 @@ GameObject:
   - component: {fileID: 388274985163544041}
   - component: {fileID: 5705782444918403029}
   - component: {fileID: 6214323685443651171}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ThirdUpperSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,13 +466,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4757995467152548435}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.43388376, y: 0, z: 0, w: 0.90096885}
-  m_LocalPosition: {x: 0, y: 10.16381, z: -8.105363}
+  m_LocalRotation: {x: 0.43461815, y: 0, z: 0, w: 0.9006148}
+  m_LocalPosition: {x: 0, y: 10.163811, z: -8.105366}
   m_LocalScale: {x: 6, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 124730695963021864}
-  m_LocalEulerAnglesHint: {x: 51.42858, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 51.522, y: 0, z: 0}
 --- !u!33 &1539663689471560309
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -598,7 +580,7 @@ GameObject:
   - component: {fileID: 2634127446213289859}
   - component: {fileID: 5789296230922956408}
   - component: {fileID: 6850784553440929380}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: SecondLowerSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +709,7 @@ GameObject:
   - component: {fileID: 4528911017091967449}
   - component: {fileID: 541414717676782629}
   - component: {fileID: 3475902339823703526}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ThirdLowerSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -742,13 +724,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7542297707965959537}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.43388385, y: 0, z: 0, w: 0.90096885}
-  m_LocalPosition: {x: 0, y: -10.16381, z: -8.105363}
+  m_LocalRotation: {x: -0.43461815, y: 0, z: 0, w: 0.9006148}
+  m_LocalPosition: {x: 0, y: -10.16381, z: -8.105366}
   m_LocalScale: {x: 6, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 124730695963021864}
-  m_LocalEulerAnglesHint: {x: -51.42858, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -51.522, y: 0, z: 0}
 --- !u!33 &2873624533222329729
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -856,7 +838,7 @@ GameObject:
   - component: {fileID: 7859404503323631681}
   - component: {fileID: 4770600337003448252}
   - component: {fileID: 6850214827577841014}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: SecondUpperSymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
