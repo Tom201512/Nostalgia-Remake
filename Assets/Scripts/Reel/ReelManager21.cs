@@ -1,9 +1,12 @@
 ﻿using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
+using static PayoutChecker;
+using static ReelTableManager;
 
-public class ReelManager : MonoBehaviour
+public class ReelManager21 : MonoBehaviour
 {
     // リールマネージャー
 
@@ -21,12 +24,12 @@ public class ReelManager : MonoBehaviour
     // 第一停止をしたか
     private bool isFirstReelPushed;
     // 最初に止めたリール番号
-    private ReelID firstPushReel;
+    private ReelManager.ReelID firstPushReel;
     // 停止位置
     private int firstPushPos;
     
-    // リールのオブジェクト
-    [SerializeField] private ReelObject[] reelObjects;
+    // リールのオブジェクト (21コマ版)
+    [SerializeField] private ReelObject21[] reelObjects;
     // リール配列のファイル
     [SerializeField] private string arrayPath;
 
@@ -40,7 +43,7 @@ public class ReelManager : MonoBehaviour
     // 最後に止めた位置
     public List<int> LastPos { get; private set; }
     // 最後に止まった出目
-    public List<List<ReelData.ReelSymbols>> LastSymbols { get; private set; }
+    public List<List<ReelData21.ReelSymbols>> LastSymbols { get; private set; }
 
     // 初期化
     void Awake()
@@ -56,11 +59,11 @@ public class ReelManager : MonoBehaviour
         IsWorking = false;
 
         isFirstReelPushed = false;
-        firstPushReel = ReelID.ReelLeft;
+        firstPushReel = ReelManager.ReelID.ReelLeft;
         firstPushPos = 0;
 
         LastPos = new List<int>();
-        LastSymbols = new List<List<ReelData.ReelSymbols>>();
+        LastSymbols = new List<List<ReelData21.ReelSymbols>>();
         try
         {
             // リール配列の読み込み
@@ -69,7 +72,7 @@ public class ReelManager : MonoBehaviour
             // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
             {
-                reelObjects[i].SetReelData(new ReelData(19, arrayData));
+                reelObjects[i].SetReelData(new ReelData21(19, arrayData));
             }
 
             Debug.Log("ReelData load done");
@@ -131,7 +134,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID)
+    public void StopSelectedReel(ReelManager.ReelID reelID)
     {
         // 押した位置
         int pushedPos = reelObjects[(int)reelID].GetStoppedPos();
@@ -169,7 +172,7 @@ public class ReelManager : MonoBehaviour
     // 全リールが停止したか確認
     private bool CheckAllReelStopped()
     {
-        foreach (ReelObject obj in reelObjects)
+        foreach (ReelObject21 obj in reelObjects)
         {
             // 止まっていないリールがまだあれば falseを返す
             if (!obj.HasStopped)
@@ -198,7 +201,7 @@ public class ReelManager : MonoBehaviour
             Debug.Log("Position:" + LastPos[i]);
 
             // データ作成
-            LastSymbols.Add(new List<ReelData.ReelSymbols>());
+            LastSymbols.Add(new List<ReelData21.ReelSymbols>());
 
             // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
             for (int j = (int)ReelData.ReelPosID.Lower3rd; j < (int)ReelData.ReelPosID.Upper3rd; j++)
@@ -210,7 +213,7 @@ public class ReelManager : MonoBehaviour
         Debug.Log("Final ReelPosition" + posBuffer);
 
         // 各リールごとに表示(デバッグ)
-        foreach(List<ReelData.ReelSymbols> reelResult in LastSymbols)
+        foreach(List<ReelData21.ReelSymbols> reelResult in LastSymbols)
         {
             Debug.Log("Reel:");
             for(int i = 0; i < reelResult.Count; i++)
