@@ -1,10 +1,7 @@
 ﻿using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
-using static PayoutChecker;
-using static ReelTableManager;
 
 public class ReelManager : MonoBehaviour
 {
