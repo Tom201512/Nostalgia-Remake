@@ -16,6 +16,8 @@ namespace ReelSpinGame_Reels
         public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
         // リール位置識別用
         public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
+        // リール位置の配列
+        public enum ReelPosArrayID { Lower3rd, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
 
         // var
         // リール配列

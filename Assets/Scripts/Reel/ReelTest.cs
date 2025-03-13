@@ -1,6 +1,4 @@
-﻿using ReelSpinGame_Bonus;
-using ReelSpinGame_Util.OriginalInputs;
-using System;
+﻿using ReelSpinGame_Util.OriginalInputs;
 using System.IO;
 using UnityEngine;
 
@@ -87,8 +85,8 @@ public class ReelTest : MonoBehaviour
                 Debug.Log("Start Payout Check");
 
                 StartCheckPayout(3);
-                //Debug.Log("Payouts result" + manager.LastPayoutResult.Payouts);
-                //Debug.Log("Bonus:" + manager.LastPayoutResult.BonusID + "ReplayOrJac" + manager.LastPayoutResult.IsReplayOrJAC);
+                Debug.Log("Payouts result" + payoutChecker.LastPayoutResult.Payouts);
+                Debug.Log("Bonus:" + payoutChecker.LastPayoutResult.BonusID + "ReplayOrJac" + payoutChecker.LastPayoutResult.IsReplayOrJAC);
             }
         }
 

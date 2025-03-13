@@ -28,6 +28,8 @@ public class ReelObject : MonoBehaviour
     // 停止するのに必要なディレイ(スベリ)
     private int delayToStop;
 
+    // リール本体
+    private ReelBase reelBase;
     // リール内の図柄
     private SymbolChange[] symbolsObj;
 
@@ -46,7 +48,9 @@ public class ReelObject : MonoBehaviour
         delayToStop = 0;
         IsStopping = false;
         HasStopped = true;
+
         symbolsObj = GetComponentsInChildren<SymbolChange>();
+        reelBase = GetComponentInChildren<ReelBase>();
         Debug.Log("ReelSpin AwakeDone");
 
         Debug.Log(ChangeAngle);
@@ -153,6 +157,12 @@ public class ReelObject : MonoBehaviour
             }
         }
     }
+
+    // リール本体そのものの明るさを変更
+    public void SetReelBaseBrightness(byte brightness) => reelBase.SetBrightness(brightness);
+
+    // 指定位置リール図柄の明るさを変更
+    public void SetSymbolBrightness(int posArrayID, byte brightness) => symbolsObj[posArrayID].ChangeBrightness(brightness);
 
     //図柄の更新
     private void UpdateSymbolsObjects()

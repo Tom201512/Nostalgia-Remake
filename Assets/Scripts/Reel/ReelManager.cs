@@ -96,6 +96,13 @@ public class ReelManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        // リールの明るさを変更するテスト
+        //reelObjects[(int)ReelID.ReelLeft].SetSymbolBrightness((int)ReelData.ReelPosArrayID.Center, 128);
+        //reelObjects[(int)ReelID.ReelLeft].SetReelBaseBrightness(128);
+    }
+
     void Update()
     {
         // 全リールが停止したかチェック
