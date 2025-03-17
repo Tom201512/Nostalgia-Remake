@@ -1,6 +1,5 @@
 using ReelSpinGame_Reels;
 using System;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class ReelObject : MonoBehaviour

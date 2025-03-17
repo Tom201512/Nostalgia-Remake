@@ -20,7 +20,6 @@ public class MedalTest : MonoBehaviour
 
     void Update()
     {
-
         // MAX BET
         if(OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {

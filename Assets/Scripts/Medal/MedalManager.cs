@@ -49,8 +49,7 @@ namespace ReelSpinGame_Medal
         {
             // Timerのストップ
             updateTimer.Stop();
-            updateTimer.Elapsed -= InsertMedal;
-            updateTimer.Elapsed -= PayoutMedal;
+            updateTimer.Dispose();
         }
 
 
