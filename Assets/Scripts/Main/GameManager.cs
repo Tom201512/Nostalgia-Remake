@@ -19,8 +19,10 @@ public class GameManager : MonoBehaviour
     public MedalManager Medal { get; private set; }
     public FlagLots Lots { get; private set; }
     public WaitManager Wait { get; private set; }
-    //public ReelManager
+    public ReelManager Reel { get; private set; }
+    public PayoutChecker Payout { get; private set; }
 
+    [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] MedalTestUI medalUI;
 
     // キー設定
@@ -49,6 +51,12 @@ public class GameManager : MonoBehaviour
     // JACはずれ確率
     [SerializeField] private int jacNoneProb;
 
+    // 払い出し表のデータ
+    [SerializeField] private string normalPayoutPath;
+    [SerializeField] private string bigPayoutPath;
+    [SerializeField] private string jacPayoutPath;
+    [SerializeField] private string payoutLinePath;
+
     public KeyCode[] KeyCodes { get; private set; }
 
     // ゲームステート用
@@ -66,6 +74,12 @@ public class GameManager : MonoBehaviour
 
         // ウェイト管理
         Wait = new WaitManager(false);
+
+        // リール
+        Reel = reelManagerObj.GetComponent<ReelManager>();
+
+        // 払い出し処理
+        Payout = new PayoutChecker(normalPayoutPath, bigPayoutPath, jacPayoutPath, payoutLinePath, PayoutChecker.PayoutCheckMode.PayoutNormal);
 
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 

@@ -10,10 +10,10 @@ public class ReelTest : MonoBehaviour
     [SerializeField] private KeyCode keyToStopRight;
 
     // 払い出し表のデータ
-    [SerializeField] private string normalPayoutData;
-    [SerializeField] private string bigPayoutData;
-    [SerializeField] private string jacPayoutData;
-    [SerializeField] private string payoutLineData;
+    [SerializeField] private string normalPayoutPath;
+    [SerializeField] private string bigPayoutPath;
+    [SerializeField] private string jacPayoutPath;
+    [SerializeField] private string payoutLinePath;
 
     [SerializeField] private ReelManager manager;
     private PayoutChecker payoutChecker;
@@ -30,16 +30,7 @@ public class ReelTest : MonoBehaviour
     {
         hasFinishedCheck = true;
         hasInput = false;
-
-        // 払い出しラインの読み込み
-        StreamReader payoutLines = new StreamReader(payoutLineData) ?? throw new System.Exception("PayoutLine file is missing");
-
-        // 払い出しデータの読み込み
-        StreamReader normalPayout = new StreamReader(normalPayoutData) ?? throw new System.Exception("NormalPayoutData file is missing");
-        StreamReader bigPayout = new StreamReader(bigPayoutData) ?? throw new System.Exception("BigPayoutData file is missing");
-        StreamReader jacPayout = new StreamReader(jacPayoutData) ?? throw new System.Exception("JacPayoutData file is missing");
-
-        payoutChecker = new PayoutChecker(normalPayout, bigPayout, jacPayout, payoutLines, PayoutChecker.PayoutCheckMode.PayoutNormal);
+        payoutChecker = new PayoutChecker(normalPayoutPath, bigPayoutPath, jacPayoutPath, payoutLinePath, PayoutChecker.PayoutCheckMode.PayoutNormal);
     }
 
     void Update()

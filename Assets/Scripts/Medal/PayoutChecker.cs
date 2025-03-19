@@ -111,9 +111,14 @@ public class PayoutChecker
     public PayoutCheckMode CheckMode { get; private set; }
 
     // コンストラクタ
-    public PayoutChecker(StreamReader normalPayout, StreamReader bigPayout, StreamReader jacPayout, 
-        StreamReader payoutLineData, PayoutCheckMode payoutMode)
+    public PayoutChecker(string normalPayoutPath, string bigPayoutPath, string jacPayoutPath,
+        string payoutLineDataPath, PayoutCheckMode payoutMode)
     {
+        StreamReader normalPayout = new StreamReader(normalPayoutPath);
+        StreamReader bigPayout = new StreamReader(bigPayoutPath);
+        StreamReader jacPayout = new StreamReader(jacPayoutPath);
+        StreamReader payoutLine = new StreamReader(payoutLineDataPath);
+
         // 判定モード読み込み
         CheckMode = payoutMode;
 
@@ -150,9 +155,9 @@ public class PayoutChecker
         payoutLineDatas = new List<PayoutLineData>();
 
         // データ読み込み
-        while(!payoutLineData.EndOfStream)
+        while(!payoutLine.EndOfStream)
         {
-            payoutLineDatas.Add(LoadPayoutLines(payoutLineData));
+            payoutLineDatas.Add(LoadPayoutLines(payoutLine));
         }
 
         // デバッグ用

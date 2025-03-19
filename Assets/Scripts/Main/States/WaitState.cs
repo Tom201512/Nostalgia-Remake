@@ -30,7 +30,7 @@ namespace ReelSpinGame_State.LotsState
             Debug.Log("Update Wait State");
             if(!gameManager.Wait.hasWait)
             {
-                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.playingState);
+                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PlayingState);
             }
         }
 

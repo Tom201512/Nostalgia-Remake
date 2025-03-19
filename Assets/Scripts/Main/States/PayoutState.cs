@@ -26,6 +26,10 @@ namespace ReelSpinGame_State.PayoutState
         public void StateUpdate()
         {
             Debug.Log("Update Payout State");
+            if(gameManager.Medal.PayoutAmounts == 0)
+            {
+                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
+            }
         }
 
         public void StateEnd()

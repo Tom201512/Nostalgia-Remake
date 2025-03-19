@@ -22,15 +22,15 @@ public class MainGameFlow
 
     // ゲーム状態
     // メダル投入
-    public InsertState insertState { get; private set; }
+    public InsertState InsertState { get; private set; }
     // 抽選
-    public LotsState lotsState { get; private set; }
+    public LotsState LotsState { get; private set; }
     // ウェイトの状態
-    public WaitState waitState { get; private set; }
+    public WaitState WaitState { get; private set; }
     // リール回転(プレイ中)
-    public PlayingState playingState { get; private set; }
+    public PlayingState PlayingState { get; private set; }
     // メダル払い出し
-    public PayoutState payoutState { get; private set; }
+    public PayoutState PayoutState { get; private set; }
 
     // コンストラクタ
     public MainGameFlow(GameManager gameManager)
@@ -38,13 +38,13 @@ public class MainGameFlow
         // 処理用タイマー作成
         flowStopTimer = new Timer();
 
-        insertState = new InsertState(gameManager);
-        lotsState = new LotsState(gameManager);
-        waitState = new WaitState(gameManager);
-        playingState = new PlayingState(gameManager);
-        payoutState = new PayoutState(gameManager);
+        InsertState = new InsertState(gameManager);
+        LotsState = new LotsState(gameManager);
+        WaitState = new WaitState(gameManager);
+        PlayingState = new PlayingState(gameManager);
+        PayoutState = new PayoutState(gameManager);
 
-        stateManager = new StateManager(insertState);
+        stateManager = new StateManager(InsertState);
     }
 
     // デストラクタ

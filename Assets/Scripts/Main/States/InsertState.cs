@@ -54,7 +54,7 @@ namespace ReelSpinGame_State.InsertState
                 // すでにベットされている場合は抽選へ
                 if (gameManager.Medal.CurrentBet > 0)
                 {
-                    gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.lotsState);
+                    gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
                 }
                 // そうでない場合はMAX BET
                 else

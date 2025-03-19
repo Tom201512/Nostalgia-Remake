@@ -159,14 +159,14 @@ Transform:
   m_GameObject: {fileID: 286284036}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3295841, y: 14.80498, z: -53.502785}
+  m_LocalPosition: {x: -2.6986437, y: 3.1237822, z: -22.9436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1883982893}
   - {fileID: 743666858137276082}
   - {fileID: 835677814}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 460868893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &286284038
 MonoBehaviour:
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186d082776b5e544ad495d9fe50947d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reelManagerObj: {fileID: 286284038}
   medalUI: {fileID: 938366606}
   maxBetKey: 32
   betOneKey: 49
@@ -235,6 +236,10 @@ MonoBehaviour:
   flagTableBPath: Assets/Scripts/FlagLots/Tables/FlagTableB.csv
   flagTableBIGPath: Assets/Scripts/FlagLots/Tables/FlagTableBIG.csv
   jacNoneProb: 0
+  normalPayoutPath: Assets/Scripts/Medal/Payouts/NormalPayoutData.csv
+  bigPayoutPath: Assets/Scripts/Medal/Payouts/BigPayoutData.csv
+  jacPayoutPath: Assets/Scripts/Medal/Payouts/JACPayout.csv
+  payoutLinePath: Assets/Scripts/Medal/Payouts/PayoutLine.csv
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -247,7 +252,8 @@ Transform:
   m_LocalPosition: {x: 0.36905944, y: 11.681198, z: -30.559185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 286284037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
@@ -1054,4 +1060,3 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 997782537}
   - {fileID: 460868893}
-  - {fileID: 286284037}
