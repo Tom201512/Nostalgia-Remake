@@ -23,7 +23,6 @@ namespace ReelSpinGame_State.LotsState
         public void StateStart()
         {
             Debug.Log("Start Wait State");
-            gameManager.Wait.SetWaitTimer();
         }
 
         public void StateUpdate()
@@ -38,6 +37,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateEnd()
         {
             Debug.Log("End Wait State");
+            gameManager.Wait.SetWaitTimer();
         }
     }
 }

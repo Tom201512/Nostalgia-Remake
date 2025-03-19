@@ -88,7 +88,8 @@ namespace ReelSpinGame_Medal
 
                     Debug.Log("Bet Received:" + remainingBet);
 
-                    updateTimer.Elapsed += InsertMedal;
+                    InsertMedal();
+                    updateTimer.Elapsed += UpdateInsert;
                     updateTimer.Start();
                 }
                 else
@@ -116,7 +117,8 @@ namespace ReelSpinGame_Medal
             if (!updateTimer.Enabled)
             {
                 PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MaxPayout);
-                updateTimer.Elapsed += PayoutMedal;
+                PayoutMedal();
+                updateTimer.Elapsed += UpdatePayout;
                 updateTimer.Start();
             }
             else
@@ -153,38 +155,55 @@ namespace ReelSpinGame_Medal
 
         // コルーチン用
 
-        // 投入処理
-        private void InsertMedal(object sender, ElapsedEventArgs e)
+        private void UpdateInsert(object sender, ElapsedEventArgs e)
         {
-            remainingBet -= 1;
-            Debug.Log("Bet Medal by 1");
-            CurrentBet += 1;
-
-            // 全て払い出したら処理終了
-            if (remainingBet <= 0)
+            // 投入処理
+            if (remainingBet > 0)
+            {
+                InsertMedal();
+            }
+            // 全て投入したら処理終了
+            else
             {
                 updateTimer.Stop();
-                updateTimer.Elapsed -= InsertMedal;
+                updateTimer.Elapsed -= UpdateInsert;
 
                 Debug.Log("Bet Finished");
                 Debug.Log("CurrentBet:" + CurrentBet);
             }
         }
 
-        // 払い出し処理
-        private void PayoutMedal(object sender, ElapsedEventArgs e)
+        private void UpdatePayout(object sender, ElapsedEventArgs e)
         {
-            PayoutAmounts -= 1;
-            Debug.Log("Payout Medal by 1");
-
+            // 払い出し処理
+            if (PayoutAmounts > 0)
+            {
+                PayoutMedal();
+            }
             // 全て払い出したら処理終了
-            if(PayoutAmounts == 0) 
-            { 
+            else
+            {
                 updateTimer.Stop();
-                updateTimer.Elapsed -= PayoutMedal;
+                updateTimer.Elapsed -= UpdatePayout;
 
                 Debug.Log("Payout Finished");
             }
+        }
+
+        // 投入処理
+        private void InsertMedal()
+        {
+            remainingBet -= 1;
+            Debug.Log("Remaining:" + remainingBet);
+            Debug.Log("Bet Medal by 1");
+            CurrentBet += 1;
+        }
+
+        // 払い出し処理
+        private void PayoutMedal()
+        {
+            PayoutAmounts -= 1;
+            Debug.Log("Payout Medal by 1");
         }
     }
 }

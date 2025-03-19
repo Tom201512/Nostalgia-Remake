@@ -54,7 +54,7 @@ public class WaitManager
 
         else if(hasWait)
         {
-            Debug.Log("Wait is enabled");
+            Debug.Log("Wait is enabled already");
         }
 
         // ウェイトカット、または実行中のウェイトがなければ実行
@@ -64,6 +64,8 @@ public class WaitManager
             updateTimer.Elapsed += WaitProcess;
             updateTimer.AutoReset = false;
             updateTimer.Start();
+
+            Debug.Log("Wait start");
         }
     }
 
