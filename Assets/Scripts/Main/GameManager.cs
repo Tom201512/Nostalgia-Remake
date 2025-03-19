@@ -1,9 +1,7 @@
-using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using ReelSpinGame_Lots.Flag;
 using UnityEngine;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +17,8 @@ public class GameManager : MonoBehaviour
     // 各種機能
 
     public MedalManager Medal { get; private set; }
-    //public FlagLots Lots { get; private set; }
+    public FlagLots Lots { get; private set; }
+    public WaitManager Wait { get; private set; }
     //public ReelManager
 
     [SerializeField] MedalTestUI medalUI;
@@ -39,6 +38,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode keyToStopMiddle;
     [SerializeField] private KeyCode keyToStopRight;
 
+    // 確率設定
+    [SerializeField] private int setting;
+    // 低確率時
+    [SerializeField] private string flagTableAPath;
+    // 高確率時
+    [SerializeField] private string flagTableBPath;
+    // BIG中テーブル
+    [SerializeField] private string flagTableBIGPath;
+    // JACはずれ確率
+    [SerializeField] private int jacNoneProb;
+
     public KeyCode[] KeyCodes { get; private set; }
 
     // ゲームステート用
@@ -46,17 +56,26 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        MainFlow = new MainGameFlow(this);
+        // メダル管理
         Medal = new MedalManager(0, MedalManager.MaxBet);
         Debug.Log("Medal is launched");
+
+        // フラグ管理
+        Lots = new FlagLots(setting, flagTableAPath, flagTableBPath, flagTableBIGPath, jacNoneProb);
+        Debug.Log("Lots is launched");
+
+        // ウェイト管理
+        Wait = new WaitManager(false);
+
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
-        medalUI.SetMedalManager(Medal);
+        // メインフロー作成
+        MainFlow = new MainGameFlow(this);
     }
 
     void Start()
     {
-        
+        medalUI.SetMedalManager(Medal);
     }
 
     void Update()

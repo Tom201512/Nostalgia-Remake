@@ -53,24 +53,28 @@ namespace ReelSpinGame_Lots.Flag
         };
 
         // コンストラクタ
-        public FlagLots(int setting, StreamReader tableAData,
-            StreamReader tableBData, StreamReader tableBIGData, int jacNoneProb)
+        public FlagLots(int setting, string flagADataPath,
+            string flagBDataPath, string flagBIGDataPath, int jacNoneProb)
         {
+            StreamReader tableA = new StreamReader(flagADataPath);
+            StreamReader tableB = new StreamReader(flagBDataPath);
+            StreamReader tableBIG = new StreamReader(flagBIGDataPath);
+
             // 設定値をもとにテーブル作成
             Debug.Log("Lots Setting set by :" + setting);
 
             // 設定値をもとにデータを得る(設定値の列まで読み込む)
             for (int i = 0; i < setting - 1; i++)
             {
-                tableAData.ReadLine();
-                tableBData.ReadLine();
-                tableBIGData.ReadLine();
+                tableA.ReadLine();
+                tableB.ReadLine();
+                tableBIG.ReadLine();
             }
 
             // データ読み込み
-            string[] valueA = tableAData.ReadLine().Split(',');
-            string[] valueB = tableBData.ReadLine().Split(',');
-            string[] valueBIG = tableBIGData.ReadLine().Split(',');
+            string[] valueA = tableA.ReadLine().Split(',');
+            string[] valueB = tableB.ReadLine().Split(',');
+            string[] valueBIG = tableBIG.ReadLine().Split(',');
 
             // 読み込んだテーブルをfloat配列に変換
             flagLotsTableA = Array.ConvertAll(valueA, float.Parse);

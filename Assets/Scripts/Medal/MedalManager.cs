@@ -126,7 +126,7 @@ namespace ReelSpinGame_Medal
         }
 
         // メダルリセット
-        private void ResetMedal()
+        public void ResetMedal()
         {
             CurrentBet = 0;
             Debug.Log("Reset Bet");

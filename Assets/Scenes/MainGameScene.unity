@@ -230,6 +230,11 @@ MonoBehaviour:
   keyToStopLeft: 276
   keyToStopMiddle: 274
   keyToStopRight: 275
+  setting: 0
+  flagTableAPath: Assets/Scripts/FlagLots/Tables/FlagTableA.csv
+  flagTableBPath: Assets/Scripts/FlagLots/Tables/FlagTableB.csv
+  flagTableBIGPath: Assets/Scripts/FlagLots/Tables/FlagTableBIG.csv
+  jacNoneProb: 0
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -332,13 +337,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5112979, y: -0, z: -0, w: 0.8594036}
+  m_LocalRotation: {x: 0.50541914, y: -0, z: -0, w: 0.862874}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 61.501, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60.718, y: 0, z: 0}
 --- !u!1001 &835677813
 PrefabInstance:
   m_ObjectHideFlags: 0

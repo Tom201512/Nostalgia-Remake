@@ -25,6 +25,8 @@ public class MainGameFlow
     public InsertState insertState { get; private set; }
     // 抽選
     public LotsState lotsState { get; private set; }
+    // ウェイトの状態
+    public WaitState waitState { get; private set; }
     // リール回転(プレイ中)
     public PlayingState playingState { get; private set; }
     // メダル払い出し
@@ -38,6 +40,7 @@ public class MainGameFlow
 
         insertState = new InsertState(gameManager);
         lotsState = new LotsState(gameManager);
+        waitState = new WaitState(gameManager);
         playingState = new PlayingState(gameManager);
         payoutState = new PayoutState(gameManager);
 

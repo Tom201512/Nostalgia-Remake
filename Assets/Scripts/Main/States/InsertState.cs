@@ -25,6 +25,7 @@ namespace ReelSpinGame_State.InsertState
         public void StateStart()
         {
             Debug.Log("Start Medal Insert");
+            gameManager.Medal.ResetMedal();
         }
 
         public void StateUpdate()

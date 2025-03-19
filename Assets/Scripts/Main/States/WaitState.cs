@@ -3,37 +3,41 @@ using ReelSpinGame_Interface;
 
 namespace ReelSpinGame_State.LotsState
 {
-    public class LotsState : IGameStatement
+    public class WaitState : IGameStatement
     {
         // var
         // このゲームの状態
+
         public MainGameFlow.GameStates State { get; }
 
         // ゲームマネージャ
         private GameManager gameManager;
 
         // コンストラクタ
-        public LotsState(GameManager gameManager)
+        public WaitState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.FlagLots;
+            State = MainGameFlow.GameStates.Wait;
             this.gameManager = gameManager;
         }
 
         public void StateStart()
         {
-            Debug.Log("Start Lots State");
-            gameManager.Lots.GetFlagLots();
-            gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.waitState);
+            Debug.Log("Start Wait State");
+            gameManager.Wait.SetWaitTimer();
         }
 
         public void StateUpdate()
         {
-            Debug.Log("Update Lots State");
+            Debug.Log("Update Wait State");
+            if(!gameManager.Wait.hasWait)
+            {
+                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.playingState);
+            }
         }
 
         public void StateEnd()
         {
-            Debug.Log("End Lots State");
+            Debug.Log("End Wait State");
         }
     }
 }

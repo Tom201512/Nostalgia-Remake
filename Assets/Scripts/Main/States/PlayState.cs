@@ -26,6 +26,7 @@ namespace ReelSpinGame_State.PlayingState
         public void StateUpdate()
         {
             Debug.Log("Update Playing State");
+            gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.insertState);
         }
 
         public void StateEnd()

@@ -42,13 +42,9 @@ public class FlagLotsTest : MonoBehaviour
 
         // ファイル読み込み
         try
-        {
-            StreamReader tableA = new StreamReader(flagTableAPath);
-            StreamReader tableB = new StreamReader(flagTableBPath);
-            StreamReader tableBIG = new StreamReader(flagTableBIGPath);
-            
+        {            
             // 設定値の部分になったら読み込む
-            flagLots = new FlagLots(setting, tableA, tableB, tableBIG, jacNoneProb);
+            flagLots = new FlagLots(setting, flagTableAPath, flagTableBPath, flagTableBIGPath, jacNoneProb);
         }
         catch (Exception e)
         {
