@@ -13,25 +13,20 @@ namespace ReelSpinGame_Bonus
 
         // 残り小役ゲーム数
         public const int BigGames = 30;
-
         // 残りJACIN
         public const int JacInTimes = 3;
 
         // JACゲーム中
         // 残りJACゲーム数
         public const int JacGames = 12;
-
         // 残り当選回数
         public const int JacHits = 12;
 
-
         // var
-
         // 処理状態
 
         // ボーナス中か
         public bool IsBonus { get; private set; }
-
         // JACゲーム中か
         public bool IsJacGame { get; private set; }
 
@@ -40,18 +35,14 @@ namespace ReelSpinGame_Bonus
         // 小役ゲーム中
         // 残り小役ゲーム数
         public int RemainingBIGGames { get; private set; }
-
         // 残りJACIN
         public int RemainingJACIN { get; private set; }
 
         // JACゲーム中
-
         // 残りJACゲーム数
         public int RemainingJACGames { get; private set; }
-
         // 残り当選回数
         public int RemainingJACHits { get; private set; }
-
 
         // コンストラクタ
         public BonusManager()

@@ -1,3 +1,4 @@
+using ReelSpinGame_Main.File;
 using System;
 using System.IO;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace ReelSpinGame_Lots.Flag
         // const
         // 最大フラグ数
         const int MaxFlagLots = 16384;
+        // JACはずれ確率
+        const int JacNoneProb = 256;
 
         // enum
         // フラグID
@@ -27,8 +30,6 @@ namespace ReelSpinGame_Lots.Flag
         private float[] flagLotsTableA;
         private float[] flagLotsTableB;
         private float[] flagLotsTableBIG;
-        // JAC GAME中はずれ
-        private float jacNoneProb;
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 
@@ -53,12 +54,14 @@ namespace ReelSpinGame_Lots.Flag
         };
 
         // コンストラクタ
-        public FlagLots(int setting, string flagADataPath,
-            string flagBDataPath, string flagBIGDataPath, int jacNoneProb)
+        public FlagLots(int setting)
         {
-            StreamReader tableA = new StreamReader(flagADataPath);
-            StreamReader tableB = new StreamReader(flagBDataPath);
-            StreamReader tableBIG = new StreamReader(flagBIGDataPath);
+            StreamReader tableA = new StreamReader(FileManager.FlagTableAPath) ??
+                throw new Exception("FlagTableA file is missing");
+            StreamReader tableB = new StreamReader(FileManager.FlagTableBPath) ??
+                throw new Exception("FlagTableB file is missing");
+            StreamReader tableBIG = new StreamReader(FileManager.FlagTableBIGPath) ??
+                throw new Exception("FlagTableBIG file is missing");
 
             // 設定値をもとにテーブル作成
             Debug.Log("Lots Setting set by :" + setting);
@@ -81,9 +84,6 @@ namespace ReelSpinGame_Lots.Flag
             flagLotsTableB = Array.ConvertAll(valueB, float.Parse);
             flagLotsTableBIG = Array.ConvertAll(valueBIG, float.Parse);
 
-            // JACはずれの設定
-            this.jacNoneProb = jacNoneProb;
-
             Debug.Log("NormalA Table:");
             for (int i = 0; i < lotResultNormal.Length; i++)
             {
@@ -102,7 +102,7 @@ namespace ReelSpinGame_Lots.Flag
                 Debug.Log(lotResultBig[i].ToString() + ":" + flagLotsTableBIG[i]);
             }
 
-            Debug.Log("JAC None Probability:" + this.jacNoneProb);
+            Debug.Log("JAC None Probability:" + JacNoneProb);
         }
 
         // func
@@ -179,7 +179,7 @@ namespace ReelSpinGame_Lots.Flag
             int flagCheckNum = 0;
 
             // はずれ抽選
-            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / jacNoneProb);
+            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / JacNoneProb);
             if (flag < flagCheckNum)
             {
                 return FlagId.FlagNone;

@@ -33,13 +33,12 @@ namespace ReelSpinGame_Medal
         public int MaxBetAmounts { get; private set; }
 
         // コンストラクタ
-        public MedalManager(int _credits, int _currentMaxBet)
+        public MedalManager(int credits, int curretMaxBet)
         {
-            this.Credits = _credits;
+            Credits = credits;
             CurrentBet = 0;
             PayoutAmounts = 0;
-            this.MaxBetAmounts = _currentMaxBet;
-
+            MaxBetAmounts = curretMaxBet;
             // 処理用タイマー作成
             updateTimer = new Timer(MedalUpdateTime);
         }
@@ -52,9 +51,7 @@ namespace ReelSpinGame_Medal
             updateTimer.Dispose();
         }
 
-
         // func
-
         // MAXベット枚数変更
         public void ChangeMaxBet(int maxBet)
         {

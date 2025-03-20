@@ -1,7 +1,7 @@
-using ReelSpinGame_Medal;
 using ReelSpinGame_Lots.Flag;
+using ReelSpinGame_Medal;
+using ReelSpinGame_Medal.Payout;
 using UnityEngine;
-using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] MedalTestUI medalUI;
+    [SerializeField] LotsTestUI lotsUI;
 
     // キー設定
 
@@ -40,22 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode keyToStopMiddle;
     [SerializeField] private KeyCode keyToStopRight;
 
-    // 確率設定
+    // 設定
     [SerializeField] private int setting;
-    // 低確率時
-    [SerializeField] private string flagTableAPath;
-    // 高確率時
-    [SerializeField] private string flagTableBPath;
-    // BIG中テーブル
-    [SerializeField] private string flagTableBIGPath;
-    // JACはずれ確率
-    [SerializeField] private int jacNoneProb;
-
-    // 払い出し表のデータ
-    [SerializeField] private string normalPayoutPath;
-    [SerializeField] private string bigPayoutPath;
-    [SerializeField] private string jacPayoutPath;
-    [SerializeField] private string payoutLinePath;
 
     public KeyCode[] KeyCodes { get; private set; }
 
@@ -69,7 +56,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Medal is launched");
 
         // フラグ管理
-        Lots = new FlagLots(setting, flagTableAPath, flagTableBPath, flagTableBIGPath, jacNoneProb);
+        Lots = new FlagLots(setting);
         Debug.Log("Lots is launched");
 
         // ウェイト管理
@@ -79,7 +66,7 @@ public class GameManager : MonoBehaviour
         Reel = reelManagerObj.GetComponent<ReelManager>();
 
         // 払い出し処理
-        Payout = new PayoutChecker(normalPayoutPath, bigPayoutPath, jacPayoutPath, payoutLinePath, PayoutChecker.PayoutCheckMode.PayoutNormal);
+        Payout = new PayoutChecker(PayoutChecker.PayoutCheckMode.PayoutNormal);
 
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
@@ -90,6 +77,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         medalUI.SetMedalManager(Medal);
+        lotsUI.SetFlagManager(Lots);
     }
 
     void Update()

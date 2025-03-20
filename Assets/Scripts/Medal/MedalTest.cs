@@ -13,11 +13,6 @@ public class MedalTest : MonoBehaviour
         medalManager = new MedalManager(0, MedalManager.MaxBet);
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         // MAX BET

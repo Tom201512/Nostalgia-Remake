@@ -1,5 +1,5 @@
-﻿using ReelSpinGame_Util.OriginalInputs;
-using System.IO;
+﻿using ReelSpinGame_Medal.Payout;
+using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
 
 public class ReelTest : MonoBehaviour
@@ -8,12 +8,6 @@ public class ReelTest : MonoBehaviour
     [SerializeField] private KeyCode keyToStopLeft;
     [SerializeField] private KeyCode keyToStopMiddle;
     [SerializeField] private KeyCode keyToStopRight;
-
-    // 払い出し表のデータ
-    [SerializeField] private string normalPayoutPath;
-    [SerializeField] private string bigPayoutPath;
-    [SerializeField] private string jacPayoutPath;
-    [SerializeField] private string payoutLinePath;
 
     [SerializeField] private ReelManager manager;
     private PayoutChecker payoutChecker;
@@ -30,7 +24,7 @@ public class ReelTest : MonoBehaviour
     {
         hasFinishedCheck = true;
         hasInput = false;
-        payoutChecker = new PayoutChecker(normalPayoutPath, bigPayoutPath, jacPayoutPath, payoutLinePath, PayoutChecker.PayoutCheckMode.PayoutNormal);
+        payoutChecker = new PayoutChecker(PayoutChecker.PayoutCheckMode.PayoutNormal);
     }
 
     void Update()
@@ -93,6 +87,7 @@ public class ReelTest : MonoBehaviour
         }
     }
 
+    // 払い出しの確認
     private void StartCheckPayout(int betAmounts)
     {
         if (!manager.IsWorking)

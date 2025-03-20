@@ -2,7 +2,6 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Lots.FlagCounter;
 using ReelSpinGame_Util.OriginalInputs;
 using System;
-using System.IO;
 using UnityEngine;
 
 public class FlagLotsTest : MonoBehaviour
@@ -44,7 +43,7 @@ public class FlagLotsTest : MonoBehaviour
         try
         {            
             // ê›íËílÇÃïîï™Ç…Ç»Ç¡ÇΩÇÁì«Ç›çûÇﬁ
-            flagLots = new FlagLots(setting, flagTableAPath, flagTableBPath, flagTableBIGPath, jacNoneProb);
+            flagLots = new FlagLots(setting);
         }
         catch (Exception e)
         {

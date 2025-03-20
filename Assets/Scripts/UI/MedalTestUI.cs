@@ -17,9 +17,11 @@ public class MedalTestUI : MonoBehaviour
     {
         string buffer = "";
 
+        buffer += "Medal-" + "\n";
         buffer += "Credits:" + medal.Credits + "\n";
         buffer += "Bet:" + medal.CurrentBet + "\n";
-        buffer += "Payout:" + medal.PayoutAmounts;
+        buffer += "Payout:" + medal.PayoutAmounts + "\n";
+        buffer += "MaxBet:" + medal.MaxBetAmounts;
 
         text.text = buffer;
     }

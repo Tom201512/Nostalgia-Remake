@@ -1,4 +1,5 @@
-﻿using ReelSpinGame_Reels;
+﻿using ReelSpinGame_Main.File;
+using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -27,13 +28,6 @@ public class ReelManager : MonoBehaviour
     
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
-    // リール配列のファイル
-    [SerializeField] private string arrayPath;
-
-    // 条件テーブル
-    [SerializeField] private string[] reelConditionDatas;
-    // リール制御テーブル
-    [SerializeField] private string[] delayTableDatas;
     // リール制御
     private ReelTableManager reelTableManager;
 
@@ -45,13 +39,6 @@ public class ReelManager : MonoBehaviour
     // 初期化
     void Awake()
     {
-        // リール条件とテーブルの数が一致するか確認する
-        if(reelConditionDatas.Length != ReelAmounts ||
-            delayTableDatas.Length != ReelAmounts)
-        {
-            throw new System.Exception("Either data of conditions and tables doesn't match the amount of reels");
-        }
-
         IsFinished = true;
         IsWorking = false;
 
@@ -61,10 +48,21 @@ public class ReelManager : MonoBehaviour
 
         LastPos = new List<int>();
         LastSymbols = new List<List<ReelData.ReelSymbols>>();
+
+        // リール配列データの設定
+        string[] reelConditionDatas = { FileManager.ReelLeftCondtiion, FileManager.ReelMiddleCondtiion, FileManager.ReelRightCondtiion };
+        string[] delayTableDatas = { FileManager.ReelLeftTable, FileManager.ReelMiddleTable, FileManager.ReelRightTable };
+
+        // リール条件とテーブルの数が一致するか確認する
+        if (reelConditionDatas.Length != ReelAmounts ||
+            delayTableDatas.Length != ReelAmounts)
+        {
+            throw new System.Exception("Either data of conditions and tables doesn't match the amount of reels");
+        }
+
         try
         {
-            // リール配列の読み込み
-            StreamReader arrayData = new StreamReader(arrayPath) ?? throw new System.Exception("Array path file is missing");
+            StreamReader arrayData = new StreamReader(FileManager.ReelArrayPath);
 
             // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
@@ -152,7 +150,6 @@ public class ReelManager : MonoBehaviour
             firstPushPos = pushedPos;
 
             Debug.Log("FirstPush:" + reelID);
-            Debug.Log(reelConditionDatas.Length);
         }
 
         // ここでディレイ(スベリコマ)を得て転送
