@@ -1,6 +1,7 @@
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Medal.Payout;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] MedalTestUI medalUI;
     [SerializeField] LotsTestUI lotsUI;
+    [SerializeField] WaitTestUI waitUI;
+    [SerializeField] ReelTestUI reelUI;
 
     // ÉLÅ[ê›íË
 
@@ -78,6 +81,8 @@ public class GameManager : MonoBehaviour
     {
         medalUI.SetMedalManager(Medal);
         lotsUI.SetFlagManager(Lots);
+        waitUI.SetWaitManager(Wait);
+        reelUI.SetReelManager(Reel);
     }
 
     void Update()

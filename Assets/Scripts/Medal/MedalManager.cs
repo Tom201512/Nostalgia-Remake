@@ -85,10 +85,13 @@ namespace ReelSpinGame_Medal
 
                     Debug.Log("Bet Received:" + remainingBet);
 
+                    // メダルの投入を開始する(残りはフレーム処理)
                     InsertMedal();
                     updateTimer.Elapsed += UpdateInsert;
                     updateTimer.Start();
                 }
+
+                // ベットがすでに終わっている、またはMAXベットの場合(Debug)
                 else
                 {
                     if(amounts > MaxBetAmounts)
@@ -101,6 +104,8 @@ namespace ReelSpinGame_Medal
                     }
                 }
             }
+
+            // 処理中でメダルが入れられない場合
             else
             {
                 Debug.Log("Insert is enabled");
@@ -114,6 +119,8 @@ namespace ReelSpinGame_Medal
             if (!updateTimer.Enabled)
             {
                 PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MaxPayout);
+
+                // メダルの払い出しを開始する(残りはフレーム処理)
                 PayoutMedal();
                 updateTimer.Elapsed += UpdatePayout;
                 updateTimer.Start();

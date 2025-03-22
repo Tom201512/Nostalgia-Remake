@@ -23,7 +23,7 @@ public class ReelManager : MonoBehaviour
     private bool isFirstReelPushed;
     // 最初に止めたリール番号
     private ReelID firstPushReel;
-    // 停止位置
+    // 第一停止リールの停止位置
     private int firstPushPos;
     
     // リールのオブジェクト
@@ -71,7 +71,6 @@ public class ReelManager : MonoBehaviour
             }
 
             Debug.Log("ReelData load done");
-
             Debug.Log("Array load done");
 
             // リール制御読み込み
@@ -116,6 +115,10 @@ public class ReelManager : MonoBehaviour
     }
 
     // func
+
+    // 指定したリールの現在位置を返す(デバッグ用)
+    public int GetCurrentReelPos(int reelID) => reelObjects[reelID].GetReelPos((int)ReelData.ReelPosID.Lower);
+
     // リール始動
     public void StartReels()
     {
