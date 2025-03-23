@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
-using ReelSpinGame_Main.File;
 
 namespace ReelSpinGame_Reels
 {
@@ -31,7 +30,7 @@ namespace ReelSpinGame_Reels
         {
             // 位置設定
             // もし位置が0~20でなければ例外を出す
-            if(lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
+            if (lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
             {
                 throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (MaxReelArray - 1));
             }

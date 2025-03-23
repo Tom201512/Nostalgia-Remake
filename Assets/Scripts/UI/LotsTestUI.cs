@@ -1,5 +1,4 @@
 using ReelSpinGame_Lots.Flag;
-using ReelSpinGame_Medal;
 using TMPro;
 using UnityEngine;
 

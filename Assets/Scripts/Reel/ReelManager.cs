@@ -74,7 +74,6 @@ public class ReelManager : MonoBehaviour
             Debug.Log("Array load done");
 
             // リール制御読み込み
-
             List<StreamReader> conditions = new List<StreamReader>();
             List<StreamReader> tables = new List<StreamReader>();
 
@@ -84,7 +83,6 @@ public class ReelManager : MonoBehaviour
                 tables.Add(new StreamReader(delayTableDatas[i]) ?? throw new System.Exception("ReelTable L file t" + i + "is missing"));
             }
             reelTableManager = new ReelTableManager(conditions, tables);
-
             Debug.Log("ReelData load done");
         }
         finally
@@ -115,9 +113,14 @@ public class ReelManager : MonoBehaviour
     }
 
     // func
-
-    // 指定したリールの現在位置を返す(デバッグ用)
+    // 指定したリールの現在位置を返す
     public int GetCurrentReelPos(int reelID) => reelObjects[reelID].GetReelPos((int)ReelData.ReelPosID.Lower);
+    // 指定したリールを止めた位置を返す
+    public int GetStoppedReelPos(int reelID) => reelObjects[reelID].GetLastPressedPos();
+    // 指定したリールのディレイ数を返す
+    public int GetLastDelay(int reelID) => reelObjects[reelID].GetLastDelay();
+    // 指定したリールの使用テーブルIDを返す
+    public int GetLastTableID(int reelID) => reelTableManager.UsedReelTableID[reelID];
 
     // リール始動
     public void StartReels()
@@ -142,7 +145,7 @@ public class ReelManager : MonoBehaviour
     public void StopSelectedReel(ReelID reelID)
     {
         // 押した位置
-        int pushedPos = reelObjects[(int)reelID].GetStoppedPos();
+        int pushedPos = reelObjects[(int)reelID].GetPressedPos();
         Debug.Log("Stopped:" + pushedPos);
 
         // 第一停止なら押したところの停止位置を得る

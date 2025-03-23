@@ -15,12 +15,17 @@ public class ReelTableManager
     private List<List<ReelConditionsData>> reelConditions;
     private List<List<ReelTableData>> reelDelayTables;
 
+    // 最後に使用したリールテーブルID
+    public int[] UsedReelTableID { get; private set; }
+
     // コンストラクタ
     public ReelTableManager(List<StreamReader> conditions, List<StreamReader> tables)
     {
         // リスト作成
         reelConditions = new List<List<ReelConditionsData>>();
         reelDelayTables = new List<List<ReelTableData>>();
+
+        UsedReelTableID = new int[ReelManager.ReelAmounts] { 0, 0, 0 };
 
         // リール条件とテーブルの数が合うかチェック
         if (conditions.Count != tables.Count)
@@ -102,10 +107,11 @@ public class ReelTableManager
 
                 // 第一停止の位置の分だけ1を左シフトし、条件のビットとAND算して条件を見る(0にならなければ条件を満たす)
                 int checkValue = 1 << firstPushPos + 1;
+
                 Debug.Log(checkValue);
                 Debug.Log(data.FirstReelPosition);
-
                 Debug.Log(checkValue & data.FirstReelPosition);
+
                 if (data.FirstReelPosition == 0 || (checkValue & data.FirstReelPosition) != 0)
                 {
                     if (data.FirstReelPosition == 0)
@@ -119,8 +125,9 @@ public class ReelTableManager
             }
             currentIndex += 1;
         }
+        // 見つけたリールテーブルを記録
         Debug.Log("Final Found:" + foundTable);
-
+        UsedReelTableID[(int)reelID] = foundTable;
         return foundTable;
     }
 

@@ -1,7 +1,6 @@
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Medal.Payout;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -39,7 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode betTwoKey;
     // リール始動(またはMAX BET)
     [SerializeField] private KeyCode startAndMaxBetKey;
-
+    // リール停止
     [SerializeField] private KeyCode keyToStopLeft;
     [SerializeField] private KeyCode keyToStopMiddle;
     [SerializeField] private KeyCode keyToStopRight;
@@ -64,12 +63,15 @@ public class GameManager : MonoBehaviour
 
         // ウェイト管理
         Wait = new WaitManager(false);
+        Debug.Log("Wait is launched");
 
         // リール
         Reel = reelManagerObj.GetComponent<ReelManager>();
+        Debug.Log("Reel is launched");
 
         // 払い出し処理
         Payout = new PayoutChecker(PayoutChecker.PayoutCheckMode.PayoutNormal);
+        Debug.Log("Payout is launched");
 
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
@@ -91,7 +93,6 @@ public class GameManager : MonoBehaviour
     }
 
     // func
-
     // キー設定変更
     public void ChangeKeyBinds(ControlSets controlSets, KeyCode changeKey) => KeyCodes[(int)controlSets] = changeKey;
 }

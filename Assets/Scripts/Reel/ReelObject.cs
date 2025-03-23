@@ -36,6 +36,10 @@ public class ReelObject : MonoBehaviour
     public bool IsStopping { get; private set; }
     // 停止したか
     public bool HasStopped { get; private set; }
+    // 最後に止めた位置(下段基準)
+    public int lastPressedPos { get; private set; }
+    // 最後に止めたときのディレイ数
+    public int lastDelay { get; private set; }
     // リール情報
     public ReelData ReelData { get; private set; }
 
@@ -45,6 +49,8 @@ public class ReelObject : MonoBehaviour
         rotateSpeed = 0.0f;
         maxSpeed = 0.0f;
         delayToStop = 0;
+        lastPressedPos = 0;
+        lastDelay = 0;
         IsStopping = false;
         HasStopped = true;
 
@@ -90,8 +96,12 @@ public class ReelObject : MonoBehaviour
     public int GetReelPos(int posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す
     public ReelData.ReelSymbols GetReelSymbol(int posID) => ReelData.GetReelSymbol((sbyte)posID);
-    // 停止位置を返す
-    public int GetStoppedPos() => ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
+    // 押した位置を返す(テーブル制御判定用)
+    public int GetPressedPos() => ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
+    // 最後に止めた停止位置を返す
+    public int GetLastPressedPos() => lastPressedPos;
+    // 直近のディレイ数を返す
+    public int GetLastDelay() => lastDelay;
 
     //　リール始動
     public void StartReel(float maxSpeed)
@@ -103,13 +113,18 @@ public class ReelObject : MonoBehaviour
     // リール停止
     public void StopReel(int delay)
     {
-        if(delay < 0 || delay > MaxDelay)
+        // 停止位置を記録
+        lastPressedPos = ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
+
+        if (delay < 0 || delay > MaxDelay)
         {
             throw new Exception("Invalid Delay. Must be within 0~4");
         }
-
         Debug.Log("Received Stop Delay:" + delay);
+
+        // テーブルから得たディレイを記録し、その分リールの停止を遅らせる。
         delayToStop = delay;
+        lastDelay = delay;
         IsStopping = true;
     }
 
