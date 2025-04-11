@@ -19,24 +19,24 @@ public class ReelTestUI : MonoBehaviour
         buffer += "Reels-" + "\n";
 
         // 現在のリール位置
-        buffer += "LeftPos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelLeft);
-        buffer += "MiddlePos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelMiddle);
-        buffer += "RightPos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelRight) + "\n";
+        buffer += "LeftPos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelLeft) + "\n";
+        buffer += "MiddlePos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelMiddle) + "\n";
+        buffer += "RightPos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelRight) + "\n" + "\n";
 
         // 停止した位置
-        buffer += "LeftStopped:" + reel.GetStoppedReelPos((int)ReelManager.ReelID.ReelLeft);
-        buffer += "MiddleStopped:" + reel.GetStoppedReelPos((int)ReelManager.ReelID.ReelMiddle);
-        buffer += "RightStopped:" + reel.GetStoppedReelPos((int)ReelManager.ReelID.ReelRight) + "\n";
+        buffer += "LeftStopped:" + (reel.GetStoppedReelPos((int)ReelManager.ReelID.ReelLeft) + 1) + "\n";
+        buffer += "MiddleStopped:" + (reel.GetStoppedReelPos((int)ReelManager.ReelID.ReelMiddle) + 1) + "\n";
+        buffer += "RightStopped:" + (reel.GetStoppedReelPos((int)ReelManager.ReelID.ReelRight) + 1) + "\n" + "\n";
 
         // スベリコマ数
-        buffer += "LeftDelay:" + reel.GetLastDelay((int)ReelManager.ReelID.ReelLeft);
-        buffer += "MiddleDelay:" + reel.GetLastDelay((int)ReelManager.ReelID.ReelMiddle);
-        buffer += "RightDelay:" + reel.GetLastDelay((int)ReelManager.ReelID.ReelRight) + "\n";
+        buffer += "LeftDelay:" + reel.GetLastDelay((int)ReelManager.ReelID.ReelLeft) + "\n";
+        buffer += "MiddleDelay:" + reel.GetLastDelay((int)ReelManager.ReelID.ReelMiddle) + "\n";
+        buffer += "RightDelay:" + reel.GetLastDelay((int)ReelManager.ReelID.ReelRight) + "\n" + "\n";
 
         // 使用されたテーブルID
-        buffer += "LeftTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelLeft);
-        buffer += "MiddleTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelMiddle);
-        buffer += "RightTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelRight) + "\n";
+        buffer += "LeftTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelLeft) + "\n";
+        buffer += "MiddleTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelMiddle) + "\n";
+        buffer += "RightTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelRight) + "\n" + "\n";
 
         text.text = buffer;
     }

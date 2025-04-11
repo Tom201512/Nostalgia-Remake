@@ -143,6 +143,13 @@ namespace ReelSpinGame_Lots.Flag
             Debug.Log("Flag:" + CurrentFlag);
         }
 
+        // 選択したフラグにする 強制役などでの使用
+        public void SelectFlag(FlagId flagID)
+        {
+            Debug.Log("Flag:" + CurrentFlag);
+            CurrentFlag = flagID;
+        }
+
         // テーブルからフラグ判定
         private FlagId CheckResultByTable(float[] lotsTable, FlagId[] lotResult)
         {

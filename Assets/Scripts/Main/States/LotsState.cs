@@ -22,7 +22,8 @@ namespace ReelSpinGame_State.LotsState
         public void StateStart()
         {
             Debug.Log("Start Lots State");
-            gameManager.Lots.GetFlagLots();
+            gameManager.Lots.SelectFlag(ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
+            //gameManager.Lots.GetFlagLots();
             gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.WaitState);
         }
 
