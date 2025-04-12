@@ -10,7 +10,7 @@ namespace ReelSpinGame_Reels.Tables
         // リール制御テーブル(ディレイを格納する)
         public byte[] TableData { get; private set; } = new byte[ReelData.MaxReelArray];
 
-        public ReelTableData(StreamReader LoadedData)
+        public ReelTableData(StringReader LoadedData)
         {
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;

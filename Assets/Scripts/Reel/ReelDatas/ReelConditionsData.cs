@@ -33,7 +33,7 @@ namespace ReelSpinGame_Reels.Conditions
         public byte ReelTableNumber { get; private set; }
 
         // コンストラクタ
-        public ReelConditionsData(StreamReader LoadedData)
+        public ReelConditionsData(StringReader LoadedData)
         {
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;

@@ -19,7 +19,7 @@ public class ReelTableManager
     public int[] UsedReelTableID { get; private set; }
 
     // コンストラクタ
-    public ReelTableManager(List<StreamReader> conditions, List<StreamReader> tables)
+    public ReelTableManager(List<StringReader> conditions, List<StringReader> tables)
     {
         // リスト作成
         reelConditions = new List<List<ReelConditionsData>>();
@@ -39,22 +39,17 @@ public class ReelTableManager
             // 条件読み込み
             reelConditions.Add(new List<ReelConditionsData>());
 
-            while (!conditions[i].EndOfStream)
+            while (conditions[i].Peek() != -1)
             {
                 reelConditions[i].Add(new ReelConditionsData(conditions[i]));
             }
 
             Debug.Log("Condition:" + i + "Read done" + reelConditions[i].Count);
-        }
 
-        Debug.Log("ReelConditions reading done");
-
-        for (int i = 0; i < tables.Count; i++)
-        {
             // 条件読み込み
             reelDelayTables.Add(new List<ReelTableData>());
 
-            while (!tables[i].EndOfStream)
+            while (tables[i].Peek() != -1)
             {
                 reelDelayTables[i].Add(new ReelTableData(tables[i]));
             }
@@ -62,6 +57,7 @@ public class ReelTableManager
             Debug.Log("DelayTable:" + i + "Read done" + reelDelayTables[i].Count);
         }
 
+        Debug.Log("ReelConditions reading done");
         Debug.Log("ReelTable reading done");
     }
 

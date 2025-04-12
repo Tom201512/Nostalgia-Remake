@@ -184,6 +184,15 @@ MonoBehaviour:
   - {fileID: 141395006}
   - {fileID: 1988532655}
   - {fileID: 1701692655}
+  reelArray: {fileID: 4900000, guid: a20e6c76ad11a1b43b26bbf3576fbb3a, type: 3}
+  reelConditions:
+  - {fileID: 4900000, guid: 8e2405ddd36027d419b0defde0cd1401, type: 3}
+  - {fileID: 4900000, guid: 87765570f6125274b9e615ad03a463f7, type: 3}
+  - {fileID: 4900000, guid: b4c8068a651b61840982d210a422cb2f, type: 3}
+  reelTables:
+  - {fileID: 4900000, guid: a342a2d3449b3614cba7b791813b4dee, type: 3}
+  - {fileID: 4900000, guid: 3e593680f443e5b4cbe0bafdabfd3a0e, type: 3}
+  - {fileID: 4900000, guid: 1361d31738b25d746a8483b158ba19a5, type: 3}
 --- !u!1 &341618348
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.62, y: -73.16}
+  m_AnchoredPosition: {x: 212.62012, y: -73.15991}
   m_SizeDelta: {x: 425.23486, y: 146.31952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &963194225
@@ -1004,7 +1013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1804.8928, y: -95.55899}
+  m_AnchoredPosition: {x: 1804.8928, y: -95.55908}
   m_SizeDelta: {x: 230.14, y: 191.1178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1227000792

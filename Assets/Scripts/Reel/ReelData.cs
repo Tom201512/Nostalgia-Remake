@@ -26,7 +26,7 @@ namespace ReelSpinGame_Reels
         private int currentLower;
 
         // コンストラクタ
-        public ReelData(int lowerPos, StreamReader arrayData) 
+        public ReelData(int lowerPos, StringReader arrayData) 
         {
             // 位置設定
             // もし位置が0~20でなければ例外を出す

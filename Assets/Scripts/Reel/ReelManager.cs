@@ -1,5 +1,4 @@
-﻿using ReelSpinGame_Main.File;
-using ReelSpinGame_Reels;
+﻿using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -21,8 +20,6 @@ public class ReelManager : MonoBehaviour
     public bool IsFinished {  get; private set; }
     // 停止可能になったか(リール速度が一定になって0.5秒後)
     public bool CanStop {  get; private set; }
-    // タイマー処理が終わったか
-    private bool HasFinishedTimer;
     // 第一停止をしたか
     private bool isFirstReelPushed;
     // 最初に止めたリール番号
@@ -35,18 +32,14 @@ public class ReelManager : MonoBehaviour
     // リール制御
     private ReelTableManager reelTableManager;
 
-    // 配列パス
-    private string ReelArrayPath = Application.streamingAssetsPath + "/DataFile/ArrayData.csv";
+    // 配列ファイル
+    [SerializeField] private TextAsset reelArray;
 
     // 停止条件テーブル
-    private string ReelLeftCondtiion = Application.streamingAssetsPath + "/DataFile/Conditions/ReelLConditions.csv";
-    private string ReelMiddleCondtiion = Application.streamingAssetsPath + "/DataFile/Conditions/ReelMConditions.csv";
-    private string ReelRightCondtiion = Application.streamingAssetsPath + "/DataFile/Conditions/ReelRConditions.csv";
+    [SerializeField] private TextAsset[] reelConditions;
 
     // スベリコマテーブル
-    private string ReelLeftTable = Application.streamingAssetsPath + "/DataFile/ReelTables/ReelLTable.csv";
-    private string ReelMiddleTable = Application.streamingAssetsPath + "/DataFile/ReelTables/ReelMTable.csv";
-    private string ReelRightTable = Application.streamingAssetsPath + "/DataFile/ReelTables/ReelRTable.csv";
+    [SerializeField] private TextAsset[] reelTables;
 
     // 最後に止めた位置
     public List<int> LastPos { get; private set; }
@@ -67,20 +60,16 @@ public class ReelManager : MonoBehaviour
         LastPos = new List<int>();
         LastSymbols = new List<List<ReelData.ReelSymbols>>();
 
-        // リール配列データの設定
-        string[] reelConditionDatas = { ReelLeftCondtiion, ReelMiddleCondtiion, ReelRightCondtiion };
-        string[] delayTableDatas = { ReelLeftTable, ReelMiddleTable, ReelRightTable };
-
         // リール条件とテーブルの数が一致するか確認する
-        if (reelConditionDatas.Length != ReelAmounts ||
-            delayTableDatas.Length != ReelAmounts)
+        if (reelConditions.Length != ReelAmounts ||
+            reelTables.Length != ReelAmounts)
         {
             throw new System.Exception("Either data of conditions and tables doesn't match the amount of reels");
         }
 
         try
         {
-            StreamReader arrayData = new StreamReader(ReelArrayPath);
+            StringReader arrayData = new StringReader(reelArray.text);
 
             // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
@@ -92,13 +81,13 @@ public class ReelManager : MonoBehaviour
             Debug.Log("Array load done");
 
             // リール制御読み込み
-            List<StreamReader> conditions = new List<StreamReader>();
-            List<StreamReader> tables = new List<StreamReader>();
+            List<StringReader> conditions = new List<StringReader>();
+            List<StringReader> tables = new List<StringReader>();
 
             for (int i = 0; i < ReelAmounts; i++)
             {
-                conditions.Add(new StreamReader(reelConditionDatas[i]) ?? throw new System.Exception("Condition file at" + i + "is missing"));
-                tables.Add(new StreamReader(delayTableDatas[i]) ?? throw new System.Exception("ReelTable L file t" + i + "is missing"));
+                conditions.Add(new StringReader(reelConditions[i].ToString()) ?? throw new System.Exception("Condition file at" + i + "is missing"));
+                tables.Add(new StringReader(reelTables[i].ToString()) ?? throw new System.Exception("ReelTable L file t" + i + "is missing"));
             }
             reelTableManager = new ReelTableManager(conditions, tables);
             Debug.Log("ReelData load done");
@@ -106,6 +95,10 @@ public class ReelManager : MonoBehaviour
         finally
         {
             Debug.Log("ReelManager awaken");
+
+            reelArray = null;
+            reelConditions = null;
+            reelTables = null;
         }
     }
 
