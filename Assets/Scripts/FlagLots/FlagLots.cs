@@ -31,6 +31,11 @@ namespace ReelSpinGame_Lots.Flag
         private float[] flagLotsTableB;
         private float[] flagLotsTableBIG;
 
+        // フラグ確率テーブル
+        private string FlagTableAPath = Application.streamingAssetsPath + "/DataFile/LotsTable/FlagTableA.csv";
+        private string FlagTableBPath = Application.streamingAssetsPath + "/DataFile/LotsTable/FlagTableB.csv";
+        private string FlagTableBIGPath = Application.streamingAssetsPath + "/DataFile/LotsTable/FlagTableBIG.csv";
+
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 
         {
@@ -56,11 +61,11 @@ namespace ReelSpinGame_Lots.Flag
         // コンストラクタ
         public FlagLots(int setting)
         {
-            StreamReader tableA = new StreamReader(FileManager.FlagTableAPath) ??
+            StreamReader tableA = new StreamReader(FlagTableAPath) ??
                 throw new Exception("FlagTableA file is missing");
-            StreamReader tableB = new StreamReader(FileManager.FlagTableBPath) ??
+            StreamReader tableB = new StreamReader(FlagTableBPath) ??
                 throw new Exception("FlagTableB file is missing");
-            StreamReader tableBIG = new StreamReader(FileManager.FlagTableBIGPath) ??
+            StreamReader tableBIG = new StreamReader(FlagTableBIGPath) ??
                 throw new Exception("FlagTableBIG file is missing");
 
             // 設定値をもとにテーブル作成

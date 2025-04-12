@@ -48,19 +48,26 @@ namespace ReelSpinGame_Medal.Payout
         private List<PayoutResultData> bigPayoutDatas;
         // JACゲーム中
         private List<PayoutResultData> jacPayoutDatas;
+
+        // 払い出し表と成立ラインデータ
+        private string NormalPayoutPath = Application.streamingAssetsPath + "/DataFile/Payouts/NormalPayoutData.csv";
+        private string BigPayoutPath = Application.streamingAssetsPath + "/DataFile/Payouts/BigPayoutData.csv";
+        private string JacPayoutPath = Application.streamingAssetsPath + "/DataFile/Payouts/JACPayout.csv";
+        private string PayoutLinePath = Application.streamingAssetsPath + "/DataFile/Payouts/PayoutLine.csv";
+
         // 選択中のテーブル
         public PayoutCheckMode CheckMode { get; private set; }
 
         // コンストラクタ
         public PayoutChecker(PayoutCheckMode payoutMode)
         {
-            StreamReader normalPayout = new StreamReader(FileManager.NormalPayoutPath) ?? 
+            StreamReader normalPayout = new StreamReader(NormalPayoutPath) ?? 
                 throw new Exception("NormalPayout file is missing");
-            StreamReader bigPayout = new StreamReader(FileManager.BigPayoutPath) ??
+            StreamReader bigPayout = new StreamReader(BigPayoutPath) ??
                 throw new Exception("BigPayout file is missing");
-            StreamReader jacPayout = new StreamReader(FileManager.JacPayoutPath) ??
+            StreamReader jacPayout = new StreamReader(JacPayoutPath) ??
                 throw new Exception("JacPayout file is missing");
-            StreamReader payoutLine = new StreamReader(FileManager.PayoutLinePath) ??
+            StreamReader payoutLine = new StreamReader(PayoutLinePath) ??
                 throw new Exception("PayoutLine file is missing");
 
             // 判定モード読み込み

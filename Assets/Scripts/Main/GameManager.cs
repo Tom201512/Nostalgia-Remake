@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight}
 
     // var
-
     // 各種機能
 
     public MedalManager Medal { get; private set; }
@@ -53,6 +52,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        // 画面
+        Debug.Log("Screen:" + Screen.width + "," + Screen.height);
+
         // メダル管理
         Medal = new MedalManager(0, MedalManager.MaxBet);
         Debug.Log("Medal is launched");
@@ -89,6 +91,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // 画面サイズ調整
+
+        // 終了処理
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Game Closed");
+            Application.Quit();
+        }
+
         MainFlow.UpdateState();
     }
 

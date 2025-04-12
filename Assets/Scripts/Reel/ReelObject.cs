@@ -11,7 +11,7 @@ public class ReelObject : MonoBehaviour
     // 図柄変更時の角度 (360度を21分割)
     const float ChangeAngle = 360.0f / 21.0f;
     // 回転速度 (Rotate Per Second)
-    public const float RotateRPS = 79.7f / 60.0f;
+    public const float RotateRPS = 79.8f / 60.0f;
     // リール重さ(kg)
     public const float ReelWeight = 25.5f;
     // リール半径(cm)
@@ -102,6 +102,12 @@ public class ReelObject : MonoBehaviour
     public int GetLastPressedPos() => lastPressedPos;
     // 直近のディレイ数を返す
     public int GetLastDelay() => lastDelay;
+    // 最高速度が返す
+    public bool IsMaximumSpeed()
+    {
+        Debug.Log("rotateSpeed:" + rotateSpeed + ",Max:" + maxSpeed);
+        return rotateSpeed == maxSpeed;
+    }
 
     //　リール始動
     public void StartReel(float maxSpeed)
@@ -131,8 +137,9 @@ public class ReelObject : MonoBehaviour
     // 速度加速
     private void SpeedUpReel()
     {
-        Math.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), 
-            -1 * maxSpeed, maxSpeed);
+        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed)
+        , -1 * maxSpeed, maxSpeed);
+        Debug.Log(rotateSpeed);
     }
 
     // リール回転
@@ -201,6 +208,6 @@ public class ReelObject : MonoBehaviour
     // 加速度を返す
     private float ReturnReelAccerateSpeed(float rpsValue)
     {
-        return ReelRadius / 100f * ReturnAngularVelocity(rpsValue) / 1000.0f;
+        return ReelRadius / 80f * ReturnAngularVelocity(rpsValue) / 1000.0f;
     }
 }

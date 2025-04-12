@@ -17,6 +17,7 @@ public class ReelTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Reels-" + "\n";
+        buffer += "CanStop:" + reel.CanStop + "\n";
 
         // Œ»İ‚ÌƒŠ[ƒ‹ˆÊ’u
         buffer += "LeftPos:" + reel.GetCurrentReelPos((int)ReelManager.ReelID.ReelLeft) + "\n";

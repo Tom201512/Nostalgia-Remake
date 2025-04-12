@@ -19,17 +19,34 @@ public class ReelManager : MonoBehaviour
     public bool IsWorking { get; private set; }
     // 動作完了したか
     public bool IsFinished {  get; private set; }
+    // 停止可能になったか(リール速度が一定になって0.5秒後)
+    public bool CanStop {  get; private set; }
+    // タイマー処理が終わったか
+    private bool HasFinishedTimer;
     // 第一停止をしたか
     private bool isFirstReelPushed;
     // 最初に止めたリール番号
     private ReelID firstPushReel;
     // 第一停止リールの停止位置
     private int firstPushPos;
-    
+
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
     // リール制御
     private ReelTableManager reelTableManager;
+
+    // 配列パス
+    private string ReelArrayPath = Application.streamingAssetsPath + "/DataFile/ArrayData.csv";
+
+    // 停止条件テーブル
+    private string ReelLeftCondtiion = Application.streamingAssetsPath + "/DataFile/Conditions/ReelLConditions.csv";
+    private string ReelMiddleCondtiion = Application.streamingAssetsPath + "/DataFile/Conditions/ReelMConditions.csv";
+    private string ReelRightCondtiion = Application.streamingAssetsPath + "/DataFile/Conditions/ReelRConditions.csv";
+
+    // スベリコマテーブル
+    private string ReelLeftTable = Application.streamingAssetsPath + "/DataFile/ReelTables/ReelLTable.csv";
+    private string ReelMiddleTable = Application.streamingAssetsPath + "/DataFile/ReelTables/ReelMTable.csv";
+    private string ReelRightTable = Application.streamingAssetsPath + "/DataFile/ReelTables/ReelRTable.csv";
 
     // 最後に止めた位置
     public List<int> LastPos { get; private set; }
@@ -41,6 +58,7 @@ public class ReelManager : MonoBehaviour
     {
         IsFinished = true;
         IsWorking = false;
+        CanStop = false;
 
         isFirstReelPushed = false;
         firstPushReel = ReelID.ReelLeft;
@@ -50,8 +68,8 @@ public class ReelManager : MonoBehaviour
         LastSymbols = new List<List<ReelData.ReelSymbols>>();
 
         // リール配列データの設定
-        string[] reelConditionDatas = { FileManager.ReelLeftCondtiion, FileManager.ReelMiddleCondtiion, FileManager.ReelRightCondtiion };
-        string[] delayTableDatas = { FileManager.ReelLeftTable, FileManager.ReelMiddleTable, FileManager.ReelRightTable };
+        string[] reelConditionDatas = { ReelLeftCondtiion, ReelMiddleCondtiion, ReelRightCondtiion };
+        string[] delayTableDatas = { ReelLeftTable, ReelMiddleTable, ReelRightTable };
 
         // リール条件とテーブルの数が一致するか確認する
         if (reelConditionDatas.Length != ReelAmounts ||
@@ -62,7 +80,7 @@ public class ReelManager : MonoBehaviour
 
         try
         {
-            StreamReader arrayData = new StreamReader(FileManager.ReelArrayPath);
+            StreamReader arrayData = new StreamReader(ReelArrayPath);
 
             // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
@@ -100,15 +118,25 @@ public class ReelManager : MonoBehaviour
 
     void Update()
     {
-        // 全リールが停止したかチェック
-        if(IsWorking && CheckAllReelStopped())
+        if(IsWorking)
         {
-            IsWorking = false;
-            IsFinished = true;
-            Debug.Log("All Reels are stopped");
+            // 全リールが等速かチェック(停止可能にする)
+            if(!CanStop && CheckReelSpeedMaximum() && !IsInvoking())
+            {
+                Invoke("EnableReelStop", 0.5f);
+            }
 
-            // リール停止位置記録
-            GenerateLastStopped();
+            // 全リールが停止したかチェック
+            if (CheckAllReelStopped())
+            {
+                CanStop = false;
+                IsWorking = false;
+                IsFinished = true;
+                Debug.Log("All Reels are stopped");
+
+                // リール停止位置記録
+                GenerateLastStopped();
+            }
         }
     }
 
@@ -144,35 +172,64 @@ public class ReelManager : MonoBehaviour
     // 各リール停止
     public void StopSelectedReel(ReelID reelID)
     {
-        // 押した位置
-        int pushedPos = reelObjects[(int)reelID].GetPressedPos();
-        Debug.Log("Stopped:" + pushedPos);
-
-        // 第一停止なら押したところの停止位置を得る
-        if (!isFirstReelPushed)
+        // 全リール速度が最高速度になっていれば
+        if(CanStop)
         {
-            isFirstReelPushed = true;
-            firstPushReel = reelID + 1;
-            firstPushPos = pushedPos;
+            // 押した位置
+            int pushedPos = reelObjects[(int)reelID].GetPressedPos();
+            Debug.Log("Stopped:" + pushedPos);
 
-            Debug.Log("FirstPush:" + reelID);
-        }
+            // 第一停止なら押したところの停止位置を得る
+            if (!isFirstReelPushed)
+            {
+                isFirstReelPushed = true;
+                firstPushReel = reelID + 1;
+                firstPushPos = pushedPos;
 
-        // ここでディレイ(スベリコマ)を得て転送
-        // 条件をチェック
-        int tableIndex = reelTableManager.FindTableToUse(reelID, 0, (int)firstPushReel, 0, 3, 0, firstPushPos);
+                Debug.Log("FirstPush:" + reelID);
+            }
 
-        // 先ほど得たディレイ分リール停止を遅らせる
-        if (!reelObjects[(int)reelID].HasStopped)
-        {
-            int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
-            Debug.Log("Stop:" + reelID + "Delay:" + delay);
-            reelObjects[(int)reelID].StopReel(delay);
+            // ここでディレイ(スベリコマ)を得て転送
+            // 条件をチェック
+            int tableIndex = reelTableManager.FindTableToUse(reelID, 0, (int)firstPushReel, 0, 3, 0, firstPushPos);
+
+            // 先ほど得たディレイ分リール停止を遅らせる
+            if (!reelObjects[(int)reelID].HasStopped)
+            {
+                int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
+                Debug.Log("Stop:" + reelID + "Delay:" + delay);
+                reelObjects[(int)reelID].StopReel(delay);
+            }
+            else
+            {
+                Debug.Log("Failed to stop the " + reelID.ToString());
+            }
         }
         else
         {
-            Debug.Log("Failed to stop the " + reelID.ToString());
+            Debug.Log("ReelSpeed is not maximum speed");
         }
+    }
+
+    // 全リール速度が最高速度かチェック
+    private bool CheckReelSpeedMaximum()
+    {
+        foreach (ReelObject obj in reelObjects)
+        {
+            // 一部リールが最高速度でなければ falseを返す
+            if (!obj.IsMaximumSpeed())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // リール停止可能にする(コルーチン用)
+    private void EnableReelStop()
+    {
+        CanStop = true;
+        Debug.Log("All reels are max speed");
     }
 
     // 全リールが停止したか確認
