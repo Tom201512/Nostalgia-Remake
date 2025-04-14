@@ -1,3 +1,4 @@
+using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
@@ -42,6 +43,9 @@ public class ReelObject : MonoBehaviour
     public int lastDelay { get; private set; }
     // リール情報
     public ReelData ReelData { get; private set; }
+
+    // リール情報テスト用(置き換え予定)
+    [SerializeField] ReelDatabase reelDatabaseFile;
 
     // 初期化
     private void Awake()
@@ -91,7 +95,7 @@ public class ReelObject : MonoBehaviour
 
     // func
     // リールデータを渡す
-    public void SetReelData(ReelData reelData) => ReelData = reelData;
+    public void SetReelData(byte initialLowerPos) => ReelData = new ReelData(initialLowerPos, this.reelDatabaseFile);
     // 指定位置からリール位置を渡す
     public int GetReelPos(int posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReelSpinGame_Datas;
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -21,12 +22,14 @@ namespace ReelSpinGame_Reels
 
         // var
         // リール配列
-        public byte[] ReelArray { get; private set; }
+        //public byte[] ReelArray { get; private set; }
+
+        public ReelDatabase ReelDatabase { get; private set; }
         // 現在の下段リール位置
         private int currentLower;
 
         // コンストラクタ
-        public ReelData(int lowerPos, StringReader arrayData) 
+        public ReelData(int lowerPos, ReelDatabase reelDatabase) 
         {
             // 位置設定
             // もし位置が0~20でなければ例外を出す
@@ -36,33 +39,29 @@ namespace ReelSpinGame_Reels
             }
             currentLower = lowerPos;
 
-            // 配列読み込み
-            string[] values = arrayData.ReadLine().Split(',');
-            // 配列に変換
-            ReelArray = Array.ConvertAll(values, byte.Parse);
-            
-            foreach (byte value in ReelArray)
+            ReelDatabase = reelDatabase;
+
+            foreach (byte value in ReelDatabase.Array)
             {
-                //Debug.Log(value + "Symbol:" + ReturnSymbol(value));
+                Debug.Log(value + "Symbol:" + ReturnSymbol(value));
             }
 
             Debug.Log("ReelGenerated Position at:" + lowerPos);
 
-            for(int i = 0; i < ReelArray.Length; i++)
+            for(int i = 0; i < ReelDatabase.Array.Length; i++)
             {
-                Debug.Log("No." + i + " Symbol:" + ReturnSymbol(ReelArray[i]));
+                Debug.Log("No." + i + " Symbol:" + ReturnSymbol(ReelDatabase.Array[i]));
             }
         }
 
         // func
-
         // リール配列の番号を図柄へ変更
-        private ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+        public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
 
         // 指定したリールの位置番号を返す
         public int GetReelPos(int posID) => OffsetReel(posID);
         // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelArray[OffsetReel(posID)]);
+        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
 

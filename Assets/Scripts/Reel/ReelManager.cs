@@ -74,7 +74,7 @@ public class ReelManager : MonoBehaviour
             // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
             {
-                reelObjects[i].SetReelData(new ReelData(19, arrayData));
+                reelObjects[i].SetReelData(19);
             }
 
             Debug.Log("ReelData load done");
