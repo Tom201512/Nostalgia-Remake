@@ -1,8 +1,5 @@
-using ReelSpinGame_Reels.Conditions;
-using ReelSpinGame_Reels.Tables;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using ReelSpinGame_Datas;
+using ReelSpinGame_Reels;
 using UnityEngine;
 
 public class ReelTableManager
@@ -12,58 +9,18 @@ public class ReelTableManager
     // const
 
     // var
-    private List<List<ReelConditionsData>> reelConditions;
-    private List<List<ReelTableData>> reelDelayTables;
-
     // 最後に使用したリールテーブルID
     public int[] UsedReelTableID { get; private set; }
 
     // コンストラクタ
-    public ReelTableManager(List<StringReader> conditions, List<StringReader> tables)
+    public ReelTableManager()
     {
-        // リスト作成
-        reelConditions = new List<List<ReelConditionsData>>();
-        reelDelayTables = new List<List<ReelTableData>>();
-
         UsedReelTableID = new int[ReelManager.ReelAmounts] { 0, 0, 0 };
-
-        // リール条件とテーブルの数が合うかチェック
-        if (conditions.Count != tables.Count)
-        {
-            throw new Exception("Condition counts and table counts doesn't match");
-        }
-        
-        // 条件の読み込み
-        for(int i = 0; i < conditions.Count; i++)
-        {
-            // 条件読み込み
-            reelConditions.Add(new List<ReelConditionsData>());
-
-            while (conditions[i].Peek() != -1)
-            {
-                reelConditions[i].Add(new ReelConditionsData(conditions[i]));
-            }
-
-            Debug.Log("Condition:" + i + "Read done" + reelConditions[i].Count);
-
-            // 条件読み込み
-            reelDelayTables.Add(new List<ReelTableData>());
-
-            while (tables[i].Peek() != -1)
-            {
-                reelDelayTables[i].Add(new ReelTableData(tables[i]));
-            }
-
-            Debug.Log("DelayTable:" + i + "Read done" + reelDelayTables[i].Count);
-        }
-
-        Debug.Log("ReelConditions reading done");
-        Debug.Log("ReelTable reading done");
     }
 
     // func
     // 条件から使用するテーブル番号を探す
-    public int FindTableToUse(ReelManager.ReelID reelID, int flagID, int firstPush, int bonus, int bet, int random, int firstPushPos)
+    public int FindTableToUse(ReelData reel, int flagID, int firstPush, int bonus, int bet, int random, int firstPushPos)
     {
         int condition = ReelConditionsData.ConvertConditionData(flagID, firstPush, bonus, bet, random);
         int[] orderToCheck = { flagID, firstPush, bonus, bet, random };
@@ -73,7 +30,7 @@ public class ReelTableManager
         // 検索中のテーブル
         int currentIndex = 0;
 
-        foreach (ReelConditionsData data in reelConditions[(int)reelID])
+        foreach (ReelConditionsData data in reel.ReelDatabase.Conditions)
         {
             Debug.Log("Search:" + currentIndex);
 
@@ -123,14 +80,14 @@ public class ReelTableManager
         }
         // 見つけたリールテーブルを記録
         Debug.Log("Final Found:" + foundTable);
-        UsedReelTableID[(int)reelID] = foundTable;
+        UsedReelTableID[reel.ReelID] = foundTable;
         return foundTable;
     }
 
     // 指定したリールのディレイ(スベリ)を返す
-    public byte GetDelayFromTable(ReelManager.ReelID reelID, int pushedPos, int tableIndex)
+    public byte GetDelayFromTable(ReelData reel, int pushedPos, int tableIndex)
     {
-        Debug.Log("Delay:" + reelDelayTables[(int)reelID][tableIndex].TableData[pushedPos]);
-        return reelDelayTables[(int)reelID][tableIndex].TableData[pushedPos];
+        Debug.Log("Delay:" + reel.ReelDatabase.Tables[tableIndex].TableData[pushedPos]);
+        return reel.ReelDatabase.Tables[tableIndex].TableData[pushedPos];
     }
 }

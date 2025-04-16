@@ -24,7 +24,7 @@ public class ReelTest : MonoBehaviour
     {
         hasFinishedCheck = true;
         hasInput = false;
-        payoutChecker = new PayoutChecker(PayoutChecker.PayoutCheckMode.PayoutNormal);
+        payoutChecker = new PayoutChecker();
     }
 
     void Update()

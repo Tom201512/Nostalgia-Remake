@@ -21,16 +21,17 @@ namespace ReelSpinGame_Reels
         public enum ReelPosArrayID { Lower3rd, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
 
         // var
-        // リール配列
-        //public byte[] ReelArray { get; private set; }
-
+        // リール識別ID
+        public int ReelID { get; private set; }
+        // リールのデータベース
         public ReelDatabase ReelDatabase { get; private set; }
         // 現在の下段リール位置
         private int currentLower;
 
         // コンストラクタ
-        public ReelData(int lowerPos, ReelDatabase reelDatabase) 
+        public ReelData(int reelID, int lowerPos, ReelDatabase reelDatabase) 
         {
+            ReelID = reelID;
             // 位置設定
             // もし位置が0~20でなければ例外を出す
             if (lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
@@ -38,7 +39,6 @@ namespace ReelSpinGame_Reels
                 throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (MaxReelArray - 1));
             }
             currentLower = lowerPos;
-
             ReelDatabase = reelDatabase;
 
             foreach (byte value in ReelDatabase.Array)

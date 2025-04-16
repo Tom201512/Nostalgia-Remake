@@ -32,15 +32,6 @@ public class ReelManager : MonoBehaviour
     // リール制御
     private ReelTableManager reelTableManager;
 
-    // 配列ファイル
-    [SerializeField] private TextAsset reelArray;
-
-    // 停止条件テーブル
-    [SerializeField] private TextAsset[] reelConditions;
-
-    // スベリコマテーブル
-    [SerializeField] private TextAsset[] reelTables;
-
     // 最後に止めた位置
     public List<int> LastPos { get; private set; }
     // 最後に止まった出目
@@ -60,45 +51,19 @@ public class ReelManager : MonoBehaviour
         LastPos = new List<int>();
         LastSymbols = new List<List<ReelData.ReelSymbols>>();
 
-        // リール条件とテーブルの数が一致するか確認する
-        if (reelConditions.Length != ReelAmounts ||
-            reelTables.Length != ReelAmounts)
-        {
-            throw new System.Exception("Either data of conditions and tables doesn't match the amount of reels");
-        }
-
         try
         {
-            StringReader arrayData = new StringReader(reelArray.text);
-
             // 各リールごとにデータを割り当てる
             for (int i = 0; i < reelObjects.Length; i++)
             {
-                reelObjects[i].SetReelData(19);
+                reelObjects[i].SetReelData(i,19);
             }
-
-            Debug.Log("ReelData load done");
-            Debug.Log("Array load done");
-
-            // リール制御読み込み
-            List<StringReader> conditions = new List<StringReader>();
-            List<StringReader> tables = new List<StringReader>();
-
-            for (int i = 0; i < ReelAmounts; i++)
-            {
-                conditions.Add(new StringReader(reelConditions[i].ToString()) ?? throw new System.Exception("Condition file at" + i + "is missing"));
-                tables.Add(new StringReader(reelTables[i].ToString()) ?? throw new System.Exception("ReelTable L file t" + i + "is missing"));
-            }
-            reelTableManager = new ReelTableManager(conditions, tables);
+            reelTableManager = new ReelTableManager();
             Debug.Log("ReelData load done");
         }
         finally
         {
             Debug.Log("ReelManager awaken");
-
-            reelArray = null;
-            reelConditions = null;
-            reelTables = null;
         }
     }
 
@@ -184,12 +149,13 @@ public class ReelManager : MonoBehaviour
 
             // ここでディレイ(スベリコマ)を得て転送
             // 条件をチェック
-            int tableIndex = reelTableManager.FindTableToUse(reelID, 0, (int)firstPushReel, 0, 3, 0, firstPushPos);
+            int tableIndex = reelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
+                , 0, (int)firstPushReel, 0, 3, 0, firstPushPos);
 
             // 先ほど得たディレイ分リール停止を遅らせる
             if (!reelObjects[(int)reelID].HasStopped)
             {
-                int delay = reelTableManager.GetDelayFromTable(reelID, pushedPos, tableIndex);
+                int delay = reelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);
                 Debug.Log("Stop:" + reelID + "Delay:" + delay);
                 reelObjects[(int)reelID].StopReel(delay);
             }

@@ -32,9 +32,9 @@ namespace ReelSpinGame_Lots.Flag
         private float[] flagLotsTableBIG;
 
         // フラグ確率テーブル
-        private string FlagTableAPath = Application.streamingAssetsPath + "/DataFile/LotsTable/FlagTableA.csv";
-        private string FlagTableBPath = Application.streamingAssetsPath + "/DataFile/LotsTable/FlagTableB.csv";
-        private string FlagTableBIGPath = Application.streamingAssetsPath + "/DataFile/LotsTable/FlagTableBIG.csv";
+        private string FlagTableAPath = Application.streamingAssetsPath + "/LotsTable/FlagTableA.csv";
+        private string FlagTableBPath = Application.streamingAssetsPath + "/LotsTable/FlagTableB.csv";
+        private string FlagTableBIGPath = Application.streamingAssetsPath + "/LotsTable/FlagTableBIG.csv";
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 

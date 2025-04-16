@@ -184,15 +184,6 @@ MonoBehaviour:
   - {fileID: 141395006}
   - {fileID: 1988532655}
   - {fileID: 1701692655}
-  reelArray: {fileID: 4900000, guid: a20e6c76ad11a1b43b26bbf3576fbb3a, type: 3}
-  reelConditions:
-  - {fileID: 4900000, guid: 8e2405ddd36027d419b0defde0cd1401, type: 3}
-  - {fileID: 4900000, guid: 87765570f6125274b9e615ad03a463f7, type: 3}
-  - {fileID: 4900000, guid: b4c8068a651b61840982d210a422cb2f, type: 3}
-  reelTables:
-  - {fileID: 4900000, guid: a342a2d3449b3614cba7b791813b4dee, type: 3}
-  - {fileID: 4900000, guid: 3e593680f443e5b4cbe0bafdabfd3a0e, type: 3}
-  - {fileID: 4900000, guid: 1361d31738b25d746a8483b158ba19a5, type: 3}
 --- !u!1 &341618348
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 460868893}
   - component: {fileID: 460868892}
+  - component: {fileID: 460868894}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -404,6 +396,19 @@ Transform:
   - {fileID: 286284037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &460868894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460868891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb536101fb89c4343852ece6963535ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  payoutDatabase: {fileID: 11400000, guid: 953bc8b943b6e074bb015c49355533ce, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +566,7 @@ PrefabInstance:
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
       value: 
-      objectReference: {fileID: 11400000, guid: 5a5ef78a63cea614eb2f314b16346abe, type: 2}
+      objectReference: {fileID: 11400000, guid: 13f766545f16473448d81242258187cc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1276,11 +1281,11 @@ PrefabInstance:
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabase
       value: 
-      objectReference: {fileID: 11400000, guid: 3bd16d6fca099e44e8cb73140f30e441, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
       value: 
-      objectReference: {fileID: 11400000, guid: 3bd16d6fca099e44e8cb73140f30e441, type: 2}
+      objectReference: {fileID: 11400000, guid: af5de9e1517d3fd4aa5d62863bed3395, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1512,7 +1517,7 @@ PrefabInstance:
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
       value: 
-      objectReference: {fileID: 11400000, guid: e6bafda17a8b2fe4eb14879b129ddb41, type: 2}
+      objectReference: {fileID: 11400000, guid: d6e5b9ac84b77ae44bccdaf944d4dcfb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

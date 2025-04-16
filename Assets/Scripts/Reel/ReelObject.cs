@@ -8,7 +8,6 @@ public class ReelObject : MonoBehaviour
     // リールオブジェクト
 
     // const
-
     // 図柄変更時の角度 (360度を21分割)
     const float ChangeAngle = 360.0f / 21.0f;
     // 回転速度 (Rotate Per Second)
@@ -60,6 +59,18 @@ public class ReelObject : MonoBehaviour
 
         symbolsObj = GetComponentsInChildren<SymbolChange>();
         reelBase = GetComponentInChildren<ReelBase>();
+
+        foreach (byte value in reelDatabaseFile.Array)
+        {
+            Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
+        }
+
+        for (int i = 0; i < reelDatabaseFile.Array.Length; i++)
+        {
+            Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(reelDatabaseFile.Array[i]));
+
+        }
+        Debug.Log("ReelArray Generated");
         Debug.Log("ReelSpin AwakeDone");
 
         Debug.Log(ChangeAngle);
@@ -95,7 +106,7 @@ public class ReelObject : MonoBehaviour
 
     // func
     // リールデータを渡す
-    public void SetReelData(byte initialLowerPos) => ReelData = new ReelData(initialLowerPos, this.reelDatabaseFile);
+    public void SetReelData(int reelID, int initialLowerPos) => ReelData = new ReelData(reelID, initialLowerPos, this.reelDatabaseFile);
     // 指定位置からリール位置を渡す
     public int GetReelPos(int posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す

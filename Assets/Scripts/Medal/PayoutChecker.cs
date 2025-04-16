@@ -1,15 +1,13 @@
+using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using ReelSpinGame_Medal.Payout.Lines;
-using ReelSpinGame_Medal.Payout.Results;
-using ReelSpinGame_Main.File;
 
 namespace ReelSpinGame_Medal.Payout
 {
-    public class PayoutChecker
+    public class PayoutChecker : MonoBehaviour
     {
         // 図柄の判定用
 
@@ -36,96 +34,21 @@ namespace ReelSpinGame_Medal.Payout
             public void SetReplayStatus(bool isReplayOrJac) => IsReplayOrJAC = isReplayOrJac;
         }
 
+        // 払い出しデータベース
+        [SerializeField] private PayoutDatabase payoutDatabase;
+
         // 最後に当たった結果
         public PayoutResultBuffer LastPayoutResult { get; private set; }
-        // 各払い出しラインのデータ
-        private List<PayoutLineData> payoutLineDatas;
-
-        // 各種払い出し構成のテーブル
-        // 通常時
-        private List<PayoutResultData> normalPayoutDatas;
-        // 小役ゲーム中
-        private List<PayoutResultData> bigPayoutDatas;
-        // JACゲーム中
-        private List<PayoutResultData> jacPayoutDatas;
-
-        // 払い出し表と成立ラインデータ
-        private string NormalPayoutPath = Application.streamingAssetsPath + "/DataFile/Payouts/NormalPayoutData.csv";
-        private string BigPayoutPath = Application.streamingAssetsPath + "/DataFile/Payouts/BigPayoutData.csv";
-        private string JacPayoutPath = Application.streamingAssetsPath + "/DataFile/Payouts/JACPayout.csv";
-        private string PayoutLinePath = Application.streamingAssetsPath + "/DataFile/Payouts/PayoutLine.csv";
+        public PayoutDatabase PayoutDatabase { get {return payoutDatabase; } }
 
         // 選択中のテーブル
         public PayoutCheckMode CheckMode { get; private set; }
 
-        // コンストラクタ
-        public PayoutChecker(PayoutCheckMode payoutMode)
+        private void Awake()
         {
-            StreamReader normalPayout = new StreamReader(NormalPayoutPath) ?? 
-                throw new Exception("NormalPayout file is missing");
-            StreamReader bigPayout = new StreamReader(BigPayoutPath) ??
-                throw new Exception("BigPayout file is missing");
-            StreamReader jacPayout = new StreamReader(JacPayoutPath) ??
-                throw new Exception("JacPayout file is missing");
-            StreamReader payoutLine = new StreamReader(PayoutLinePath) ??
-                throw new Exception("PayoutLine file is missing");
-
-            // 判定モード読み込み
-            CheckMode = payoutMode;
-
-            // 払い出し構成作成
-            normalPayoutDatas = new List<PayoutResultData>();
-            bigPayoutDatas = new List<PayoutResultData>();
-            jacPayoutDatas = new List<PayoutResultData>();
-
             // 最後に判定した時の結果
+            CheckMode = PayoutCheckMode.PayoutNormal;
             LastPayoutResult = new PayoutResultBuffer(0, 0, false);
-
-            // データ読み込み
-            // 通常時
-            while (!normalPayout.EndOfStream)
-            {
-                normalPayoutDatas.Add(LoadPayoutResult(normalPayout));
-            }
-
-            Debug.Log("NormalPayoutData loaded");
-
-            // BIG小役ゲーム中
-            while (!bigPayout.EndOfStream)
-            {
-                bigPayoutDatas.Add(LoadPayoutResult(bigPayout));
-            }
-
-            Debug.Log("BigPayoutData loaded");
-
-            // JACゲーム中
-            while (!jacPayout.EndOfStream)
-            {
-                jacPayoutDatas.Add(LoadPayoutResult(jacPayout));
-            }
-
-            Debug.Log("JacPayoutData loaded");
-
-            // 払い出しラインの読み込み
-            payoutLineDatas = new List<PayoutLineData>();
-
-            // データ読み込み
-            while (!payoutLine.EndOfStream)
-            {
-                payoutLineDatas.Add(LoadPayoutLines(payoutLine));
-            }
-
-            // デバッグ用
-            foreach (PayoutLineData data in payoutLineDatas)
-            {
-                string line = "";
-                foreach (sbyte b in data.PayoutLine)
-                {
-                    line += b.ToString();
-                }
-                Debug.Log(line + "," + data.BetCondition);
-            }
-            Debug.Log("PayoutLine Data loaded");
         }
 
         // func
@@ -141,7 +64,7 @@ namespace ReelSpinGame_Medal.Payout
             bool replayStatus = false;
 
             // 指定したラインごとにデータを得る
-            foreach (PayoutLineData lineData in payoutLineDatas)
+            foreach (PayoutLineData lineData in payoutDatabase.PayoutLines)
             {
                 // 指定ラインの結果を保管
                 List<ReelData.ReelSymbols> lineResult = new List<ReelData.ReelSymbols>();
@@ -154,7 +77,7 @@ namespace ReelSpinGame_Medal.Payout
                     foreach (List<ReelData.ReelSymbols> reelResult in lastSymbols)
                     {
                         // マイナス数値を配列番号に変換
-                        int lineIndex = lineData.PayoutLine[reelIndex] + (int)ReelData.ReelPosID.Lower3rd * -1;
+                        int lineIndex = lineData.PayoutLines[reelIndex] + (int)ReelData.ReelPosID.Lower3rd * -1;
 
                         Debug.Log("Symbol:" + reelResult[lineIndex]);
                         lineResult.Add(reelResult[lineIndex]);
@@ -180,7 +103,7 @@ namespace ReelSpinGame_Medal.Payout
                         // リプレイでなければ当たった時に変更
                         if (replayStatus == false)
                         {
-                            replayStatus = GetPayoutResultData(CheckMode)[foundIndex].hasReplayOrJAC;
+                            replayStatus = GetPayoutResultData(CheckMode)[foundIndex].HasReplayOrJac;
                         }
                     }
                 }
@@ -201,61 +124,6 @@ namespace ReelSpinGame_Medal.Payout
             LastPayoutResult.SetReplayStatus(replayStatus);
         }
 
-        // 払い出しラインのデータ読み込み
-        private PayoutLineData LoadPayoutLines(StreamReader streamLines)
-        {
-            // ストリームからデータを得る
-            sbyte[] byteBuffer = Array.ConvertAll(streamLines.ReadLine().Split(','), sbyte.Parse);
-            // 払い出しラインのデータ
-            sbyte[] lineData = new sbyte[ReelManager.ReelAmounts];
-            // デバッグ用
-            string combinationBuffer = "";
-
-            // 読み込み
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
-            {
-                lineData[i] = byteBuffer[i + (int)PayoutLineData.ReadPos.PayoutLineStart];
-                combinationBuffer += lineData[i];
-            }
-
-            PayoutLineData finalResult = new PayoutLineData((byte)byteBuffer[(int)PayoutLineData.ReadPos.BetCondition], lineData);
-
-            //デバッグ用
-            Debug.Log("Condition:" + finalResult.BetCondition + "Lines" + combinationBuffer);
-
-            return finalResult;
-        }
-
-        // 払い出し結果のデータ読み込み
-        private PayoutResultData LoadPayoutResult(StreamReader streamPayout)
-        {
-            // ストリームからデータを得る
-            byte[] byteBuffer = Array.ConvertAll(streamPayout.ReadLine().Split(','), byte.Parse);
-            // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
-            byte[] combinations = new byte[ReelManager.ReelAmounts];
-            // デバッグ用
-            string combinationBuffer = "";
-
-            // 読み込み
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
-            {
-                combinations[i] = byteBuffer[i + (int)PayoutResultData.ReadPos.CombinationsStart];
-                combinationBuffer += combinations[i];
-            }
-
-            // データ作成
-            PayoutResultData finalResult = new PayoutResultData(byteBuffer[(int)PayoutResultData.ReadPos.FlagID], combinations,
-                byteBuffer[(int)PayoutResultData.ReadPos.Payout], byteBuffer[(int)PayoutResultData.ReadPos.Bonus],
-                byteBuffer[(int)PayoutResultData.ReadPos.IsReplay] == 1);
-
-
-            //デバッグ用
-            Debug.Log("Combination:" + combinationBuffer + "Payouts:" + finalResult.Payouts +
-                "Bonus:" + finalResult.BonusType + "HasReplay:" + finalResult.hasReplayOrJAC);
-
-            return finalResult;
-        }
-
         // 図柄の判定(配列を返す)
         private int CheckPayoutLines(List<ReelData.ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
         {
@@ -272,7 +140,7 @@ namespace ReelSpinGame_Medal.Payout
                 int sameSymbolCount = 0;
 
                 // 図柄のチェック
-                for (int i = 0; i < data.Combinations.Length; i++)
+                for (int i = 0; i < data.Combinations.Count; i++)
                 {
                     // 図柄が合っているかチェック(ANYなら次の図柄へ)
                     if (data.Combinations[i] == PayoutResultData.AnySymbol ||
@@ -288,7 +156,7 @@ namespace ReelSpinGame_Medal.Payout
                 if (sameSymbolCount == ReelManager.ReelAmounts)
                 {
                     Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:"
-                     + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].hasReplayOrJAC);
+                     + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);
 
                     // 配列番号を送る
                     return indexNum;
@@ -307,13 +175,13 @@ namespace ReelSpinGame_Medal.Payout
             switch (payoutCheckMode)
             {
                 case PayoutCheckMode.PayoutNormal:
-                    return normalPayoutDatas;
+                    return payoutDatabase.NormalPayoutDatas;
 
                 case PayoutCheckMode.PayoutBIG:
-                    return bigPayoutDatas;
+                    return payoutDatabase.BigPayoutDatas;
 
                 case PayoutCheckMode.PayoutJAC:
-                    return jacPayoutDatas;
+                    return payoutDatabase.JacPayoutDatas;
             }
             return null;
         }

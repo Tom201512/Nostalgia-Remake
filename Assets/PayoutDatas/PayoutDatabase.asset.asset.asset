@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f193294f7c966274196484476f3026ba, type: 3}
+  m_Name: PayoutDatabase.asset.asset
+  m_EditorClassIdentifier: 
+  payoutLineDatas:
+  - betCondition: 1
+    payoutLines: 010101
+  - betCondition: 2
+    payoutLines: 020202
+  - betCondition: 2
+    payoutLines: 000000
+  - betCondition: 3
+    payoutLines: 000102
+  - betCondition: 3
+    payoutLines: 020100
+  normalPayoutDatas:
+  - flagID: 1
+    combinations: 
+    payouts: 15
+    bonusType: 1
+    hasReplayOrJac: 0
+  - flagID: 1
+    combinations: 
+    payouts: 15
+    bonusType: 1
+    hasReplayOrJac: 0
+  - flagID: 1
+    combinations: 
+    payouts: 15
+    bonusType: 1
+    hasReplayOrJac: 0
+  - flagID: 2
+    combinations: 
+    payouts: 15
+    bonusType: 2
+    hasReplayOrJac: 0
+  - flagID: 3
+    combinations: 
+    payouts: 2
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 4
+    combinations: 
+    payouts: 2
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 5
+    combinations: 
+    payouts: 15
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 6
+    combinations: 
+    payouts: 10
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 7
+    combinations: 
+    payouts: 0
+    bonusType: 0
+    hasReplayOrJac: 1
+  bigPayoutDatas:
+  - flagID: 3
+    combinations: 
+    payouts: 2
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 4
+    combinations: 
+    payouts: 2
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 5
+    combinations: 
+    payouts: 15
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 6
+    combinations: 
+    payouts: 10
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 7
+    combinations: 
+    payouts: 3
+    bonusType: 0
+    hasReplayOrJac: 1
+  jacPayoutDatas:
+  - flagID: 8
+    combinations: 
+    payouts: 15
+    bonusType: 0
+    hasReplayOrJac: 0
+  - flagID: 8
+    combinations: 
+    payouts: 15
+    bonusType: 0
+    hasReplayOrJac: 0

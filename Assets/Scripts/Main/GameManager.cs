@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Reel is launched");
 
         // ï•Ç¢èoÇµèàóù
-        Payout = new PayoutChecker(PayoutChecker.PayoutCheckMode.PayoutNormal);
+        Payout = GetComponent<PayoutChecker>();
         Debug.Log("Payout is launched");
 
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
