@@ -1,3 +1,4 @@
+using ReelSpinGame_Datass;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Lots.FlagCounter;
 using ReelSpinGame_Util.OriginalInputs;
@@ -13,12 +14,6 @@ public class FlagLotsTest : MonoBehaviour
     // フラグテーブル
     // 設定値
     [SerializeField] private int setting;
-    // 低確率時
-    [SerializeField] private string flagTableAPath;
-    // 高確率時
-    [SerializeField] private string flagTableBPath;
-    // BIG中テーブル
-    [SerializeField] private string flagTableBIGPath;
     // JACはずれ確率
     [SerializeField] private int jacNoneProb;
 
@@ -39,21 +34,8 @@ public class FlagLotsTest : MonoBehaviour
             throw new System.Exception("Invalid jacNoneProb, must be higher that 0");
         }
 
-        // ファイル読み込み
-        try
-        {            
-            // 設定値の部分になったら読み込む
-            flagLots = new FlagLots();
-        }
-        catch (Exception e)
-        {
-            throw e;
-        }
-        finally
-        {
-            // カウンタ作成
-            flagCounter = new FlagCounter(0);
-        }
+        flagLots = GetComponent<FlagLots>();
+        flagCounter = new FlagCounter(0);
     }
 
     void Update()

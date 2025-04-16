@@ -97,14 +97,15 @@ namespace ReelSpinGame_Lots.Flag
         {
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
             int flagCheckNum = 0;
+            int flag = GetFlag();
 
             int index = 0;
-            foreach(float f in flagTable.FlagDataBySettings[setting].FlagTable)
+            foreach(float f in flagTable.FlagDataBySettings[setting - 1].FlagTable)
             {
                 //各役ごとに抽選
                 flagCheckNum += Mathf.FloorToInt((float)MaxFlagLots / f);
 
-                if (GetFlag() < flagCheckNum)
+                if (flag < flagCheckNum)
                 {
                     return lotResult[index];
                 }
@@ -120,10 +121,11 @@ namespace ReelSpinGame_Lots.Flag
         {
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選。端数切捨て)
             int flagCheckNum = 0;
+            int flag = GetFlag();
 
             // はずれ抽選
             flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / nonePoss);
-            if (GetFlag() < flagCheckNum)
+            if (flag < flagCheckNum)
             {
                 return FlagId.FlagNone;
             }

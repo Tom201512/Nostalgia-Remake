@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 359706789}
   - component: {fileID: 359706790}
+  - component: {fileID: 359706791}
   m_Layer: 0
   m_Name: FlagLotTest
   m_TagString: Untagged
@@ -167,10 +168,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setting: 0
-  flagTableAPath: Assets/Scripts/FlagLots/Tables/FlagTableA.csv
-  flagTableBPath: Assets/Scripts/FlagLots/Tables/FlagTableB.csv
-  flagTableBIGPath: Assets/Scripts/FlagLots/Tables/FlagTableBIG.csv
   jacNoneProb: 256
+--- !u!114 &359706791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359706788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee82ddb11131364aa1b42a740c4b65d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
 --- !u!1 &1063794096
 GameObject:
   m_ObjectHideFlags: 0

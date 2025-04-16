@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
+    public int Setting { get { return setting; } }
 
     void Awake()
     {
@@ -79,6 +80,16 @@ public class GameManager : MonoBehaviour
 
         // メインフロー作成
         MainFlow = new MainGameFlow(this);
+
+        // 例外処理
+        if (setting < 0 && setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
+        // 0ならランダムを選ぶ
+        else if (setting == 0)
+        {
+            setting = Random.Range(1, 6);
+        }
+
+        Debug.Log("Setting:" + setting);
     }
 
     void Start()
