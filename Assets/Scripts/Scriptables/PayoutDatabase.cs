@@ -67,7 +67,7 @@ namespace ReelSpinGame_Datas
             }
 
             //デバッグ用
-            Debug.Log("Condition:" + byteBuffer[(int)PayoutLineData.ReadPos.BetCondition] + "Lines" + combinationBuffer);
+            Debug.Log("Condition:" + byteBuffer[(int)ReadPos.BetCondition] + "Lines" + combinationBuffer);
         }
     }
 

@@ -32,7 +32,7 @@ namespace ReelSpinGame_Datas
 
         private void Awake()
         {
-            fileName = "PayoutDatabase";
+            fileName = "PayoutDatabase.asset";
             payoutLineFile = null;
             normalPayoutFile = null;
             bigPayoutFile = null;
@@ -78,8 +78,6 @@ namespace ReelSpinGame_Datas
             payoutDatabase.SetBigPayout(MakeResultDatas(bigPayoutFile));
             // JACÉQÅ[ÉÄíÜ
             payoutDatabase.SetJacPayout(MakeResultDatas(jacPayoutFile));
-
-            fileName += ".asset";
 
             // ï€ë∂èàóù
             AssetDatabase.CreateAsset(payoutDatabase, Path.Combine(path, fileName));

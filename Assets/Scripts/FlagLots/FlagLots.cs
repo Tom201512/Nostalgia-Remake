@@ -1,19 +1,15 @@
-using ReelSpinGame_Main.File;
-using System;
-using System.IO;
+using ReelSpinGame_Datass;
 using UnityEngine;
 
 namespace ReelSpinGame_Lots.Flag
 {
-    public class FlagLots
+    public class FlagLots : MonoBehaviour
     {
         // フラグ抽選
 
         // const
         // 最大フラグ数
         const int MaxFlagLots = 16384;
-        // JACはずれ確率
-        const int JacNoneProb = 256;
 
         // enum
         // フラグID
@@ -22,19 +18,12 @@ namespace ReelSpinGame_Lots.Flag
         public enum FlagLotMode { NormalA, NormalB, BigBonus, JacGame };
 
         // var
+        // フラグデータベース
+        [SerializeField] FlagDatabase flagDatabase;
         // 現在フラグ(プロパティ)
         public FlagId CurrentFlag { get; private set; } = FlagId.FlagNone;
         // 参照するテーブルID
         public FlagLotMode CurrentTable { get; private set; } = FlagLotMode.NormalA;
-        // テーブル内数値
-        private float[] flagLotsTableA;
-        private float[] flagLotsTableB;
-        private float[] flagLotsTableBIG;
-
-        // フラグ確率テーブル
-        private string FlagTableAPath = Application.streamingAssetsPath + "/LotsTable/FlagTableA.csv";
-        private string FlagTableBPath = Application.streamingAssetsPath + "/LotsTable/FlagTableB.csv";
-        private string FlagTableBIGPath = Application.streamingAssetsPath + "/LotsTable/FlagTableBIG.csv";
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 
@@ -58,58 +47,6 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagReplayJACin
         };
 
-        // コンストラクタ
-        public FlagLots(int setting)
-        {
-            StreamReader tableA = new StreamReader(FlagTableAPath) ??
-                throw new Exception("FlagTableA file is missing");
-            StreamReader tableB = new StreamReader(FlagTableBPath) ??
-                throw new Exception("FlagTableB file is missing");
-            StreamReader tableBIG = new StreamReader(FlagTableBIGPath) ??
-                throw new Exception("FlagTableBIG file is missing");
-
-            // 設定値をもとにテーブル作成
-            Debug.Log("Lots Setting set by :" + setting);
-
-            // 設定値をもとにデータを得る(設定値の列まで読み込む)
-            for (int i = 0; i < setting - 1; i++)
-            {
-                tableA.ReadLine();
-                tableB.ReadLine();
-                tableBIG.ReadLine();
-            }
-
-            // データ読み込み
-            string[] valueA = tableA.ReadLine().Split(',');
-            string[] valueB = tableB.ReadLine().Split(',');
-            string[] valueBIG = tableBIG.ReadLine().Split(',');
-
-            // 読み込んだテーブルをfloat配列に変換
-            flagLotsTableA = Array.ConvertAll(valueA, float.Parse);
-            flagLotsTableB = Array.ConvertAll(valueB, float.Parse);
-            flagLotsTableBIG = Array.ConvertAll(valueBIG, float.Parse);
-
-            Debug.Log("NormalA Table:");
-            for (int i = 0; i < lotResultNormal.Length; i++)
-            {
-                Debug.Log(lotResultNormal[i].ToString() + ":" + flagLotsTableA[i]);
-            }
-
-            Debug.Log("NormalB Table:");
-            for (int i = 0; i < lotResultNormal.Length; i++)
-            {
-                Debug.Log(lotResultNormal[i].ToString() + ":" + flagLotsTableB[i]);
-            }
-
-            Debug.Log("BIG Table:");
-            for (int i = 0; i < lotResultBig.Length; i++)
-            {
-                Debug.Log(lotResultBig[i].ToString() + ":" + flagLotsTableBIG[i]);
-            }
-
-            Debug.Log("JAC None Probability:" + JacNoneProb);
-        }
-
         // func
         // テーブル変更
         public void ChangeTable(FlagLotMode mode)
@@ -119,25 +56,25 @@ namespace ReelSpinGame_Lots.Flag
         }
 
         // フラグ抽選の開始
-        public void GetFlagLots()
+        public void GetFlagLots(int setting)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
             {
                 case FlagLotMode.NormalA:
-                    CurrentFlag = CheckResultByTable(flagLotsTableA, lotResultNormal);
+                    CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalATable, lotResultNormal);
                     break;
 
                 case FlagLotMode.NormalB:
-                    CurrentFlag = CheckResultByTable(flagLotsTableB, lotResultNormal);
+                    CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalBTable, lotResultNormal);
                     break;
 
                 case FlagLotMode.BigBonus:
-                    CurrentFlag = CheckResultByTable(flagLotsTableBIG, lotResultBig);
+                    CurrentFlag = CheckResultByTable(setting, flagDatabase.BigTable, lotResultBig);
                     break;
 
                 case FlagLotMode.JacGame:
-                    CurrentFlag = BonusGameLots();
+                    CurrentFlag = BonusGameLots(flagDatabase.JacNonePoss);
                     break;
 
                 default:
@@ -156,49 +93,52 @@ namespace ReelSpinGame_Lots.Flag
         }
 
         // テーブルからフラグ判定
-        private FlagId CheckResultByTable(float[] lotsTable, FlagId[] lotResult)
+        private FlagId CheckResultByTable(int setting, FlagDataSets flagTable, FlagId[] lotResult)
         {
-            // 16384フラグを得る
-            int flag = UnityEngine.Random.Range(0, MaxFlagLots - 1);
-            Debug.Log("You get:" + flag);
-
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
             int flagCheckNum = 0;
 
-
-            for (int i = 0; i < lotsTable.Length; i++)
+            int index = 0;
+            foreach(float f in flagTable.FlagDataBySettings[setting].FlagTable)
             {
                 //各役ごとに抽選
-                flagCheckNum += Mathf.FloorToInt((float)MaxFlagLots / lotsTable[i]);
+                flagCheckNum += Mathf.FloorToInt((float)MaxFlagLots / f);
 
-                if (flag < flagCheckNum)
+                if (GetFlag() < flagCheckNum)
                 {
-                    return lotResult[i];
+                    return lotResult[index];
                 }
+                index += 1;
             }
+
             // 何も当たらなければ"はずれ"を返す
             return FlagId.FlagNone;
         }
 
         // BONUS GAME中の抽選
-        private FlagId BonusGameLots()
+        private FlagId BonusGameLots(float nonePoss)
         {
-            // 16384フラグを得る(0~16383)
-            int flag = UnityEngine.Random.Range(0, MaxFlagLots - 1);
-            Debug.Log("You get:" + flag);
-
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選。端数切捨て)
             int flagCheckNum = 0;
 
             // はずれ抽選
-            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / JacNoneProb);
-            if (flag < flagCheckNum)
+            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / nonePoss);
+            if (GetFlag() < flagCheckNum)
             {
                 return FlagId.FlagNone;
             }
 
             // 何も当たらなければ"JAC役"を返す
             return FlagId.FlagJAC;
+        }
+
+        // フラグ抽選
+        private int GetFlag()
+        {
+            // 16384フラグを得る(0~16383)
+            int flag = Random.Range(0, MaxFlagLots - 1);
+            Debug.Log("You get:" + flag);
+            return flag;
         }
     }
 }

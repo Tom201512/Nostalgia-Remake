@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5e3f7d7727ee441813300b066de706, type: 3}
+  m_Name: FlagDatabase
+  m_EditorClassIdentifier: 
+  normalATable:
+    flagDataBySettings:
+    - flagTable:
+      - 294
+      - 480
+      - 7.1
+      - 256.6
+      - 4.8
+      - 78.5
+      - 72.5
+    - flagTable:
+      - 285
+      - 471
+      - 7.1
+      - 256.6
+      - 4.8
+      - 78.5
+      - 72.5
+    - flagTable:
+      - 274
+      - 420
+      - 7.1
+      - 256.6
+      - 4.8
+      - 78.5
+      - 72.5
+    - flagTable:
+      - 254
+      - 415
+      - 7.1
+      - 256.6
+      - 4.8
+      - 78.5
+      - 72.5
+    - flagTable:
+      - 244
+      - 285
+      - 7.1
+      - 256.6
+      - 4.8
+      - 78.5
+      - 72.5
+    - flagTable:
+      - 240
+      - 260
+      - 7.1
+      - 256.6
+      - 4.8
+      - 78.5
+      - 72.5
+  normalBTable:
+    flagDataBySettings:
+    - flagTable:
+      - 294
+      - 480
+      - 7.1
+      - 16.8
+      - 4.8
+      - 25.5
+      - 6.7
+    - flagTable:
+      - 285
+      - 471
+      - 7.1
+      - 16.8
+      - 4.8
+      - 25.5
+      - 6.7
+    - flagTable:
+      - 274
+      - 420
+      - 7.1
+      - 16.8
+      - 4.8
+      - 25.5
+      - 6.7
+    - flagTable:
+      - 254
+      - 415
+      - 7.1
+      - 16.8
+      - 4.8
+      - 25.5
+      - 6.7
+    - flagTable:
+      - 244
+      - 285
+      - 7.1
+      - 16.8
+      - 4.8
+      - 25.5
+      - 6.7
+    - flagTable:
+      - 240
+      - 260
+      - 7.1
+      - 16.8
+      - 4.8
+      - 25.5
+      - 6.7
+  bigTable:
+    flagDataBySettings:
+    - flagTable:
+      - 512
+      - 512
+      - 4.8
+      - 3.2
+      - 3.86
+    - flagTable:
+      - 512
+      - 512
+      - 4.8
+      - 3.2
+      - 3.76
+    - flagTable:
+      - 512
+      - 512
+      - 4.8
+      - 3.2
+      - 3.66
+    - flagTable:
+      - 512
+      - 512
+      - 4.8
+      - 3.2
+      - 3.55
+    - flagTable:
+      - 512
+      - 512
+      - 4.8
+      - 3.2
+      - 3.54
+    - flagTable:
+      - 512
+      - 512
+      - 4.8
+      - 3.2
+      - 3.48
+  jacNonePoss: 255

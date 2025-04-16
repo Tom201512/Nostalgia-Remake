@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Medal is launched");
 
         // フラグ管理
-        Lots = new FlagLots(setting);
+        Lots = GetComponent<FlagLots>();
         Debug.Log("Lots is launched");
 
         // ウェイト管理

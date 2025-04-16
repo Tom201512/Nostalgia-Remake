@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 460868893}
   - component: {fileID: 460868892}
   - component: {fileID: 460868894}
+  - component: {fileID: 460868895}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -379,7 +380,7 @@ MonoBehaviour:
   keyToStopLeft: 276
   keyToStopMiddle: 274
   keyToStopRight: 275
-  setting: 0
+  setting: 6
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -408,7 +409,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb536101fb89c4343852ece6963535ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  payoutDatabase: {fileID: 11400000, guid: 953bc8b943b6e074bb015c49355533ce, type: 2}
+  payoutDatabase: {fileID: 11400000, guid: a47c33de0358c1840b1d8c65c3d18d0a, type: 2}
+--- !u!114 &460868895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460868891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee82ddb11131364aa1b42a740c4b65d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
