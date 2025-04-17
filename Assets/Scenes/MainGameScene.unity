@@ -219,7 +219,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.62, y: -193.5574}
+  m_AnchoredPosition: {x: 212.62, y: -252}
   m_SizeDelta: {x: 425.23, y: 94.4738}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &341618351
@@ -650,7 +650,11 @@ MonoBehaviour:
 
     Payout:
 
-    MaxBet:'
+    MaxBet:
+
+    LastBet:
+
+    Replay:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1356,7 +1360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.62, y: -333.18}
+  m_AnchoredPosition: {x: 212.62, y: -391.62262}
   m_SizeDelta: {x: 425.23, y: 184.7757}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088607535

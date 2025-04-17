@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Screen:" + Screen.width + "," + Screen.height);
 
         // ƒƒ_ƒ‹ŠÇ—
-        Medal = new MedalManager(0, MedalManager.MaxBet);
+        Medal = new MedalManager(0, MedalManager.MaxBet, 0, false);
         Debug.Log("Medal is launched");
 
         // ƒtƒ‰ƒOŠÇ—

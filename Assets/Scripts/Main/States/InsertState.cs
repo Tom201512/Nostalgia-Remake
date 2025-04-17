@@ -25,7 +25,6 @@ namespace ReelSpinGame_State.InsertState
         public void StateStart()
         {
             Debug.Log("Start Medal Insert");
-            gameManager.Medal.ResetMedal();
         }
 
         public void StateUpdate()
@@ -37,7 +36,7 @@ namespace ReelSpinGame_State.InsertState
             }
 
             // BET2
-            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetOne]))
+            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
             {
                 gameManager.Medal.StartBet(2);
             }

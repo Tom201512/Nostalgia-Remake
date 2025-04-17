@@ -16,10 +16,8 @@ public class WaitManager
     // var
     // 処理用タイマー
     private Timer updateTimer;
-
     // ウェイトが有効か
     public bool hasWait { get; private set; }
-
     // ウェイトを無効にしているか
     public bool hasWaitCut { get; private set; }
 

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using ReelSpinGame_Interface;
+﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
-using UnityEngine.EventSystems;
+using UnityEngine;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -10,8 +9,6 @@ namespace ReelSpinGame_State.PlayingState
         // const
 
         // var
-        // 払い出し判定完了したか
-        public bool hasFinishedCheck { get; private set; }
         // キー入力があったか
         bool hasInput;
 
@@ -23,7 +20,6 @@ namespace ReelSpinGame_State.PlayingState
         // コンストラクタ
         public PlayingState(GameManager gameManager)
         {
-            hasFinishedCheck = true;
             hasInput = false;
 
             State = MainGameFlow.GameStates.Playing;
@@ -36,7 +32,6 @@ namespace ReelSpinGame_State.PlayingState
 
             // リール始動
             gameManager.Reel.StartReels();
-            hasFinishedCheck = false;
         }
 
         public void StateUpdate()
@@ -71,7 +66,7 @@ namespace ReelSpinGame_State.PlayingState
                     hasInput = true;
                 }
                 // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-                else if (gameManager.Reel.IsFinished && !hasFinishedCheck)
+                else if (gameManager.Reel.IsFinished)
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PayoutState);
                 }
@@ -92,25 +87,6 @@ namespace ReelSpinGame_State.PlayingState
         public void StateEnd()
         {
             Debug.Log("End Playing State");
-
-            Debug.Log("Start Payout Check");
-
-            StartCheckPayout(3);
-            Debug.Log("Payouts result" + gameManager.Payout.LastPayoutResult.Payouts);
-            Debug.Log("Bonus:" + gameManager.Payout.LastPayoutResult.BonusID + "ReplayOrJac" + gameManager.Payout.LastPayoutResult.IsReplayOrJAC);
-        }
-
-        private void StartCheckPayout(int betAmounts)
-        {
-            if (!gameManager.Reel.IsWorking)
-            {
-                gameManager.Payout.CheckPayoutLines(betAmounts, gameManager.Reel.LastSymbols);
-                hasFinishedCheck = true;
-            }
-            else
-            {
-                Debug.Log("Failed to check payout because reels are spinning");
-            }
         }
     }
 }

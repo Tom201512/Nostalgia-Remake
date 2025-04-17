@@ -21,7 +21,9 @@ public class MedalTestUI : MonoBehaviour
         buffer += "Credits:" + medal.Credits + "\n";
         buffer += "Bet:" + medal.CurrentBet + "\n";
         buffer += "Payout:" + medal.PayoutAmounts + "\n";
-        buffer += "MaxBet:" + medal.MaxBetAmounts;
+        buffer += "MaxBet:" + medal.MaxBetAmounts + "\n";
+        buffer += "LastBet:" + medal.LastBetAmounts + "\n";
+        buffer += "Replay:" + medal.HasReplay;
 
         text.text = buffer;
     }

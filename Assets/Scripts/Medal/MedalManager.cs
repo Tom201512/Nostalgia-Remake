@@ -31,14 +31,20 @@ namespace ReelSpinGame_Medal
         public int PayoutAmounts { get; private set; }
         // 最高ベット枚数
         public int MaxBetAmounts { get; private set; }
+        // 最後にかけたメダル枚数
+        public int LastBetAmounts { get; private set; }
+        // リプレイ状態か
+        public bool HasReplay { get; private set; }
 
         // コンストラクタ
-        public MedalManager(int credits, int curretMaxBet)
+        public MedalManager(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
             Credits = credits;
             CurrentBet = 0;
             PayoutAmounts = 0;
             MaxBetAmounts = curretMaxBet;
+            LastBetAmounts = 0;
+            HasReplay = hasReplay;
             // 処理用タイマー作成
             updateTimer = new Timer(MedalUpdateTime);
         }
@@ -69,13 +75,13 @@ namespace ReelSpinGame_Medal
         // ベット処理開始
         public void StartBet(int amounts)
         {
-            // 処理ををしていないかチェック
-            if (!updateTimer.Enabled)
+            // 処理ををしていないか、またはリプレイでないかチェック
+            if (!HasReplay && !updateTimer.Enabled)
             {
                 // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
                 if(amounts != CurrentBet && amounts <= MaxBetAmounts)
                 {
-                    remainingBet = Math.Clamp(SetRemaining(amounts), 0, MaxBet);
+                    SetRemaining(amounts);
 
                     // もし現在のベットより少ない枚数ならリセット
                     if(amounts < CurrentBet)
@@ -86,6 +92,7 @@ namespace ReelSpinGame_Medal
                     Debug.Log("Bet Received:" + remainingBet);
 
                     // メダルの投入を開始する(残りはフレーム処理)
+                    LastBetAmounts = amounts;
                     InsertMedal();
                     updateTimer.Elapsed += UpdateInsert;
                     updateTimer.Start();
@@ -108,7 +115,14 @@ namespace ReelSpinGame_Medal
             // 処理中でメダルが入れられない場合
             else
             {
-                Debug.Log("Insert is enabled");
+                if(HasReplay)
+                {
+                    Debug.Log("Replay is enabled");
+                }
+                else
+                {
+                    Debug.Log("Insert is enabled");
+                }
             }
         }
 
@@ -138,8 +152,27 @@ namespace ReelSpinGame_Medal
             Debug.Log("Reset Bet");
         }
 
+        // リプレイ状態にする(前回と同じメダル枚数をかける)
+        public void SetReplay()
+        {
+            Debug.Log("Enable Replay" + LastBetAmounts);
+            SetRemaining(LastBetAmounts);
+            InsertMedal();
+            updateTimer.Elapsed += UpdateInsert;
+            updateTimer.Start();
+
+            HasReplay = true;
+        }
+
+        // リプレイ状態解除
+        public void DisableReplay()
+        {
+            HasReplay = false;
+            LastBetAmounts = 0;
+        }
+
         // 残りベット枚数を設定
-        private int SetRemaining(int amount)
+        private void SetRemaining(int amount)
         {
             // 現在のベット枚数よりも多く賭けると差分だけ掛ける
             // (2BETから1BETはリセットして調整)
@@ -148,14 +181,16 @@ namespace ReelSpinGame_Medal
             if(amount > CurrentBet && CurrentBet > 0)
             {
                 Debug.Log("You bet more than current bet");
-                return amount - CurrentBet;
+                remainingBet = Math.Clamp(amount - CurrentBet, 0, MaxBet);
             }
 
             // 少ない場合
-            // 0枚ならそのまま
-            return amount;
+            else
+            {
+                // 0枚ならそのまま
+                remainingBet = Math.Clamp(amount, 0, MaxBet);
+            }
         }
-
 
         // コルーチン用
 
