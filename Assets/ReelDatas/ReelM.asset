@@ -17,9 +17,6 @@ MonoBehaviour:
   - mainConditions: 0
     firstReelPosition: 0
     reelTableNumber: 0
-  - mainConditions: 4096
-    firstReelPosition: 0
-    reelTableNumber: 10
   - mainConditions: 16
     firstReelPosition: 2654784
     reelTableNumber: 1
@@ -47,6 +44,9 @@ MonoBehaviour:
   - mainConditions: 16
     firstReelPosition: 8192
     reelTableNumber: 9
+  - mainConditions: 4096
+    firstReelPosition: 0
+    reelTableNumber: 10
   tables:
   - tableData: 020100010002010002020000020302010002020000
   - tableData: 000100010100020100020200000302020000020200
@@ -58,7 +58,7 @@ MonoBehaviour:
   - tableData: 000302020000020000020000000302020000020000
   - tableData: 020100040302010002010003020100040302010003
   - tableData: 010000030201000201000002010004030201000302
-  - tableData: 040302010003020100010002010002010003020100
+  - tableData: 020100040302010002010003020100040302010003
   - tableData: 000100020200000002000002000001000300000002
   - tableData: 020104030201040302010000010000040302010000
   - tableData: 020403020100000204030201000004040302010003

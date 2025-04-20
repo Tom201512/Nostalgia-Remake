@@ -45,17 +45,17 @@ public class ReelTest : MonoBehaviour
             // 左停止
             if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelLeft);
+                manager.StopSelectedReel(ReelManager.ReelID.ReelLeft, 3, ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
             }
             // 中停止
             if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle);
+                manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 3, ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
             }
             // 右停止
             if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelRight);
+                manager.StopSelectedReel(ReelManager.ReelID.ReelRight, 3, ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
             }
 
             // 入力がないかチェック

@@ -1,4 +1,5 @@
-﻿using ReelSpinGame_Reels;
+﻿using ReelSpinGame_Lots.Flag;
+using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -128,7 +129,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID)
+    public void StopSelectedReel(ReelID reelID, int betAmounts, FlagLots.FlagId flagID)
     {
         // 全リール速度が最高速度になっていれば
         if(CanStop)
@@ -150,7 +151,7 @@ public class ReelManager : MonoBehaviour
             // ここでディレイ(スベリコマ)を得て転送
             // 条件をチェック
             int tableIndex = reelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
-                , 0, (int)firstPushReel, 0, 3, 0, firstPushPos);
+                , (int)flagID, (int)firstPushReel, 0, betAmounts, 0, firstPushPos);
 
             // 先ほど得たディレイ分リール停止を遅らせる
             if (!reelObjects[(int)reelID].HasStopped)

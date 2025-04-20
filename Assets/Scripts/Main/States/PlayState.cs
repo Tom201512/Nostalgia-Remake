@@ -36,7 +36,6 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateUpdate()
         {
-            Debug.Log("Update Playing State");
             // 何も入力が入っていなければ実行
             if (!hasInput)
             {
@@ -46,17 +45,17 @@ namespace ReelSpinGame_State.PlayingState
                     // 左停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopLeft]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelLeft);
+                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelLeft, gameManager.Medal.LastBetAmounts, gameManager.Lots.CurrentFlag);
                     }
                     // 中停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopMiddle]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelMiddle);
+                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelMiddle, gameManager.Medal.LastBetAmounts, gameManager.Lots.CurrentFlag);
                     }
                     // 右停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopRight]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelRight);
+                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelRight, gameManager.Medal.LastBetAmounts, gameManager.Lots.CurrentFlag);
                     }
                 }
 
