@@ -20,18 +20,18 @@ namespace ReelSpinGame_Medal.Payout
         {
             public int Payouts { get; private set; }
             public int BonusID { get; private set; }
-            public bool IsReplayOrJAC { get; private set; }
+            public bool IsReplayOrJacIn { get; private set; }
 
             public PayoutResultBuffer(int payouts, int bonusID, bool isReplayOrJac)
             {
                 Payouts = payouts;
                 BonusID = bonusID;
-                IsReplayOrJAC = isReplayOrJac;
+                IsReplayOrJacIn = isReplayOrJac;
             }
 
             public void SetPayout(int payouts) => Payouts = payouts;
             public void SetBonusID(int bonusID) => BonusID = bonusID;
-            public void SetReplayStatus(bool isReplayOrJac) => IsReplayOrJAC = isReplayOrJac;
+            public void SetReplayStatus(bool isReplayOrJac) => IsReplayOrJacIn = isReplayOrJac;
         }
 
         // 払い出しデータベース

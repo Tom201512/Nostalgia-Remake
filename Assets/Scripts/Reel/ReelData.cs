@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using static ReelManager;
 
 namespace ReelSpinGame_Reels
 {
@@ -22,7 +23,7 @@ namespace ReelSpinGame_Reels
 
         // var
         // リール識別ID
-        public int ReelID { get; private set; }
+        public int ReelID{ get; private set; }
         // リールのデータベース
         public ReelDatabase ReelDatabase { get; private set; }
         // 現在の下段リール位置

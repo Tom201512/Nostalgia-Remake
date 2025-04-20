@@ -8,8 +8,8 @@ namespace ReelSpinGame_Bonus
         // ボーナスのデータ
 
         // const
-
         public enum BonusType {BonusNone, BonusBIG, BonusREG }
+        public enum BonusStatus {BonusNone, BonusBIGGames, BonusJACGames};
 
         // 残り小役ゲーム数
         public const int BigGames = 30;
@@ -20,109 +20,113 @@ namespace ReelSpinGame_Bonus
         // 残りJACゲーム数
         public const int JacGames = 12;
         // 残り当選回数
-        public const int JacHits = 12;
+        public const int JacHits = 8;
 
         // var
-        // 処理状態
-
-        // ボーナス中か
-        public bool IsBonus { get; private set; }
-        // JACゲーム中か
-        public bool IsJacGame { get; private set; }
+        // 現在ストックしているボーナス
+        public BonusType HoldingBonusID { get; private set; }
+        // ボーナス状態
+        public BonusStatus CurrentBonusStatus { get; private set; }
 
         // 残りゲーム数、当選回数(JAC-INまたはJAC役)
 
         // 小役ゲーム中
         // 残り小役ゲーム数
-        public int RemainingBIGGames { get; private set; }
+        public int RemainingBigGames { get; private set; }
         // 残りJACIN
-        public int RemainingJACIN { get; private set; }
+        public int RemainingJacIn { get; private set; }
 
         // JACゲーム中
         // 残りJACゲーム数
-        public int RemainingJACGames { get; private set; }
+        public int RemainingJacGames { get; private set; }
         // 残り当選回数
-        public int RemainingJACHits { get; private set; }
+        public int RemainingJacHits { get; private set; }
 
         // コンストラクタ
         public BonusManager()
         {
-            RemainingBIGGames = 0;
-            RemainingJACIN = 0;
-            RemainingJACHits = 0;
-            RemainingJACGames = 0;
+            HoldingBonusID = (int)BonusType.BonusNone;
+            CurrentBonusStatus = (int)BonusStatus.BonusNone;
+            RemainingBigGames = 0;
+            RemainingJacIn = 0;
+            RemainingJacHits = 0;
+            RemainingJacGames = 0;
         }
 
-        public BonusManager(int remainingBIGGames, int remainingJACIN, int remainingJACGames, int remainingJACHits)
+        // ファイルを読み込む場合
+        public BonusManager(BonusType holdingBonusID, BonusStatus bonusStatus, int remainingBIGGames, int remainingJACIN, 
+            int remainingJACGames, int remainingJACHits)
         {
-            RemainingBIGGames = remainingBIGGames;
-            RemainingJACIN = remainingJACIN;
-            RemainingJACGames = remainingJACGames;
-            RemainingJACHits = remainingJACHits;
+            HoldingBonusID = holdingBonusID;
+            CurrentBonusStatus = bonusStatus;
+            RemainingBigGames = remainingBIGGames;
+            RemainingJacIn = remainingJACIN;
+            RemainingJacGames = remainingJACGames;
+            RemainingJacHits = remainingJACHits;
         }
 
         // func
-
         public void StartBigChance()
         {
             Debug.Log("BIG CHANCE start");
-            RemainingBIGGames = BigGames;
-            RemainingJACIN = JacInTimes;
-            IsBonus = true;
+            RemainingBigGames = BigGames;
+            RemainingJacIn = JacInTimes;
+            CurrentBonusStatus = BonusStatus.BonusBIGGames;
         }
 
         public void StartBonusGame()
         {
-            if (RemainingJACIN > 0)
+            if (RemainingJacIn > 0)
             {
-                RemainingJACIN -= 1;
+                RemainingJacIn -= 1;
             }
             Debug.Log("BONUS GAME start");
-            RemainingJACGames = JacGames;
-            RemainingJACHits = JacHits;
-
-            IsBonus = true;
-            IsJacGame = true;
+            RemainingJacGames = JacGames;
+            RemainingJacHits = JacHits;
+            CurrentBonusStatus = BonusStatus.BonusJACGames;
         }
 
-        // BIG中小役ゲーム数を減らす
+        // 小役ゲームを減らす
         public void DecreaseBigGames(bool hasJacIn)
         {
-            RemainingBIGGames -= 1;
+            RemainingBigGames -= 1;
 
             // JAC-INなら
             if (hasJacIn)
             {
-                RemainingJACIN -= 1;
+                RemainingJacIn -= 1;
                 StartBonusGame();
             }
 
             // 30ゲームを消化した場合
-            else if (RemainingBIGGames == 0)
+            else if (RemainingBigGames == 0)
             {
                 Debug.Log("BIG CHANCE end");
+                CurrentBonusStatus = BonusStatus.BonusNone;
             }
         }
 
         // ボーナスゲーム数を減らす
         public void DecreaseBonusGames(bool hasPayout)
         {
-            RemainingJACGames -= 1;
+            RemainingJacGames -= 1;
 
             if (hasPayout)
             {
-                RemainingJACHits -= 1;
+                RemainingJacHits -= 1;
             }
 
-            // JAC ゲーム数が0, または入賞回数が0の場合は終了
-            if (RemainingJACGames == 0 || RemainingJACHits == 0)
+            // JACゲーム数が0, または入賞回数が0の場合は終了
+            if (RemainingJacGames == 0 || RemainingJacHits == 0)
             {
                 Debug.Log("End Bonus Game");
+                CurrentBonusStatus = BonusStatus.BonusBIGGames;
 
                 // BIG中ならJAC-INが0の場合終了する
-                if (RemainingJACIN == 0)
+                if (RemainingJacIn == 0)
                 {
                     Debug.Log("BIG CHANCE end");
+                    CurrentBonusStatus = BonusStatus.BonusNone;
                 }
             }
         }

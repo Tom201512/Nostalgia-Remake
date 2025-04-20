@@ -1,8 +1,6 @@
-using ReelSpinGame_Datass;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Lots.FlagCounter;
 using ReelSpinGame_Util.OriginalInputs;
-using System;
 using UnityEngine;
 
 public class FlagLotsTest : MonoBehaviour
@@ -46,18 +44,16 @@ public class FlagLotsTest : MonoBehaviour
             flagLots?.GetFlagLots(setting);
 
             // 小役ならカウンタを増やし、はずれは減らす(通常時のみ)
-            if(flagLots.CurrentTable == FlagLots.FlagLotMode.NormalA ||
-                flagLots.CurrentTable == FlagLots.FlagLotMode.NormalB)
+            if(flagLots.CurrentTable == FlagLots.FlagLotMode.Normal)
             {
                 IncreaseFlagCounter();
-                ChangeNormalTable();
             }
         }
 
         // フラグ変更 (通常時)
         if (OriginalInput.CheckOneKeyInput(KeyCode.A))
         {
-            flagLots.ChangeTable(FlagLots.FlagLotMode.NormalA);
+            flagLots.ChangeTable(FlagLots.FlagLotMode.Normal);
         }
 
         // フラグ変更 (BIG小役ゲーム時)
@@ -76,25 +72,6 @@ public class FlagLotsTest : MonoBehaviour
         if (OriginalInput.CheckOneKeyInput(KeyCode.R))
         {
             flagCounter.ResetCounter();
-        }
-    }
-
-    private void ChangeNormalTable()
-    {
-        // カウンタが0以上の場合は低確率
-        if (flagLots.CurrentTable == FlagLots.FlagLotMode.NormalB &&
-            flagCounter.Counter >= 0)
-        {
-            flagLots.ChangeTable(FlagLots.FlagLotMode.NormalA);
-            Debug.Log("Table chagned to:" + FlagLots.FlagLotMode.NormalA.ToString());
-        }
-
-        // カウンタが0より少ないなら高確率
-        else if (flagLots.CurrentTable == FlagLots.FlagLotMode.NormalA &&
-            flagCounter.Counter < 0)
-        {
-            flagLots.ChangeTable(FlagLots.FlagLotMode.NormalB);
-            Debug.Log("Table chagned to:" + FlagLots.FlagLotMode.NormalB.ToString());
         }
     }
 

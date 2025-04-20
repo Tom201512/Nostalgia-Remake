@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Bonus;
 
 namespace ReelSpinGame_State.PayoutState
 {
@@ -28,31 +29,57 @@ namespace ReelSpinGame_State.PayoutState
 
             StartCheckPayout(gameManager.Medal.LastBetAmounts);
             Debug.Log("Payouts result" + gameManager.Payout.LastPayoutResult.Payouts);
-            Debug.Log("Bonus:" + gameManager.Payout.LastPayoutResult.BonusID + "ReplayOrJac" + gameManager.Payout.LastPayoutResult.IsReplayOrJAC);
+            Debug.Log("Bonus:" + gameManager.Payout.LastPayoutResult.BonusID + "ReplayOrJac" + gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
 
             gameManager.Medal.ResetMedal();
 
-            // 払い出しがあれば
-            if (gameManager.Payout.LastPayoutResult.Payouts > 0)
+            // 払い出し
+            gameManager.Medal.StartPayout(gameManager.Payout.LastPayoutResult.Payouts);
+
+            // ボーナスごとに処理を変える
+            switch (gameManager.Bonus.CurrentBonusStatus)
             {
-                gameManager.Medal.StartPayout(gameManager.Payout.LastPayoutResult.Payouts);
-            }
-            // JAC-IN(仮)
-            // リプレイの場合(通常時のみ)
-            if(gameManager.Payout.LastPayoutResult.IsReplayOrJAC)
-            {
-                gameManager.Medal.SetReplay(); // リプレイにする
-            }
-            else if(gameManager.Medal.HasReplay)
-            {
-                gameManager.Medal.DisableReplay();
+                // 小役ゲーム中はゲーム数を減らす
+                case BonusManager.BonusStatus.BonusBIGGames:
+                    gameManager.Bonus.DecreaseBigGames(gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
+                    break;
+
+                // ボーナスゲーム中はゲーム数を減らす
+                case BonusManager.BonusStatus.BonusJACGames:
+                    gameManager.Bonus.DecreaseBonusGames(gameManager.Payout.LastPayoutResult.Payouts > 0);
+                    break;
+
+                // 通常時はリプレイの処理
+                default:
+                    // ボーナスがあればボーナス開始
+                    // BIG
+                    if (gameManager.Payout.LastPayoutResult.BonusID == (int)BonusManager.BonusType.BonusBIG)
+                    {
+                        gameManager.Bonus.StartBigChance();
+                    }
+                    // REG
+                    if (gameManager.Payout.LastPayoutResult.BonusID == (int)BonusManager.BonusType.BonusREG)
+                    {
+                        gameManager.Bonus.StartBonusGame();
+                    }
+
+                    // リプレイまたはJAC-IN
+                    if (gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
+                    {
+                        gameManager.Medal.SetReplay(); // リプレイにする
+                    }
+                    else if (gameManager.Medal.HasReplay)
+                    {
+                        gameManager.Medal.DisableReplay();
+                    }
+                    break;
             }
 
-            if (TestFlag == false)
-            {
-                TestFlag = true;
-                gameManager.Medal.SetReplay(); // リプレイにする
-            }
+            //if (TestFlag == false)
+            //{
+             //   TestFlag = true;
+              //  gameManager.Medal.SetReplay(); // リプレイにする
+            //}
         }
 
         public void StateUpdate()

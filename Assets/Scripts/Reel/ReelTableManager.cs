@@ -80,7 +80,7 @@ public class ReelTableManager
         }
         // 見つけたリールテーブルを記録
         Debug.Log("Final Found:" + foundTable);
-        UsedReelTableID[reel.ReelID] = foundTable;
+        UsedReelTableID[(int)reel.ReelID] = foundTable;
         return foundTable;
     }
 

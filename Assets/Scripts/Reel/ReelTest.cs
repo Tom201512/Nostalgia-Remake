@@ -71,7 +71,7 @@ public class ReelTest : MonoBehaviour
 
                 StartCheckPayout(3);
                 Debug.Log("Payouts result" + payoutChecker.LastPayoutResult.Payouts);
-                Debug.Log("Bonus:" + payoutChecker.LastPayoutResult.BonusID + "ReplayOrJac" + payoutChecker.LastPayoutResult.IsReplayOrJAC);
+                Debug.Log("Bonus:" + payoutChecker.LastPayoutResult.BonusID + "ReplayOrJac" + payoutChecker.LastPayoutResult.IsReplayOrJacIn);
             }
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace ReelSpinGame_Datass
+namespace ReelSpinGame_Datas
 {
     // フラグデータベース
     public class FlagDatabase : ScriptableObject

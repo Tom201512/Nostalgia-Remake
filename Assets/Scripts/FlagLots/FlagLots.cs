@@ -1,5 +1,6 @@
-using ReelSpinGame_Datass;
 using UnityEngine;
+using ReelSpinGame_Datas;
+using ReelSpinGame_Lots.FlagCounter;
 
 namespace ReelSpinGame_Lots.Flag
 {
@@ -15,15 +16,17 @@ namespace ReelSpinGame_Lots.Flag
         // フラグID
         public enum FlagId { FlagNone, FlagBig, FlagReg, FlagCherry2, FlagCherry4, FlagMelon, FlagBell, FlagReplayJACin, FlagJAC }
         // フラグテーブル
-        public enum FlagLotMode { NormalA, NormalB, BigBonus, JacGame };
+        public enum FlagLotMode { Normal, BigBonus, JacGame };
 
         // var
         // フラグデータベース
         [SerializeField] FlagDatabase flagDatabase;
         // 現在フラグ(プロパティ)
-        public FlagId CurrentFlag { get; private set; } = FlagId.FlagNone;
+        public FlagId CurrentFlag { get; private set; }
         // 参照するテーブルID
-        public FlagLotMode CurrentTable { get; private set; } = FlagLotMode.NormalA;
+        public FlagLotMode CurrentTable { get; private set; }
+        // フラグカウンタ
+        public FlagCounter.FlagCounter FlagCounter { get; private set; }
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 
@@ -47,6 +50,11 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagReplayJACin
         };
 
+        public FlagLots(int counterValue)
+        {
+            FlagCounter = new FlagCounter.FlagCounter(counterValue);
+        }
+
         // func
         // テーブル変更
         public void ChangeTable(FlagLotMode mode)
@@ -61,12 +69,19 @@ namespace ReelSpinGame_Lots.Flag
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
             {
-                case FlagLotMode.NormalA:
-                    CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalATable, lotResultNormal);
-                    break;
+                case FlagLotMode.Normal:
 
-                case FlagLotMode.NormalB:
-                    CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalBTable, lotResultNormal);
+                    // カウンタが0より少ないなら高確率
+                    if (FlagCounter.Counter < 0)
+                    {
+                        CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalBTable, lotResultNormal);
+                    }
+                    // カウンタが0以上の場合は低確率
+                    else
+                    {
+                        CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalATable, lotResultNormal);
+                    }
+
                     break;
 
                 case FlagLotMode.BigBonus:

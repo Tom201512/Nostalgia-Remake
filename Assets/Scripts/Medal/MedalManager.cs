@@ -135,9 +135,17 @@ namespace ReelSpinGame_Medal
                 PayoutAmounts = Math.Clamp(PayoutAmounts + amounts, 0, MaxPayout);
 
                 // メダルの払い出しを開始する(残りはフレーム処理)
-                PayoutMedal();
-                updateTimer.Elapsed += UpdatePayout;
-                updateTimer.Start();
+
+                if (amounts > 0)
+                {
+                    PayoutMedal();
+                    updateTimer.Elapsed += UpdatePayout;
+                    updateTimer.Start();
+                }
+                else
+                {
+                    Debug.Log("No Payouts");
+                }
             }
             else
             {

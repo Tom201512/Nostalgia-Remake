@@ -1,3 +1,4 @@
+using ReelSpinGame_Bonus;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Medal.Payout;
@@ -8,7 +9,6 @@ public class GameManager : MonoBehaviour
     // ゲームの管理
 
     // const
-
     // 各種操作のシリアライズ
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight}
 
@@ -20,15 +20,16 @@ public class GameManager : MonoBehaviour
     public WaitManager Wait { get; private set; }
     public ReelManager Reel { get; private set; }
     public PayoutChecker Payout { get; private set; }
+    public BonusManager Bonus { get; private set; }
 
     [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] MedalTestUI medalUI;
     [SerializeField] LotsTestUI lotsUI;
     [SerializeField] WaitTestUI waitUI;
     [SerializeField] ReelTestUI reelUI;
+    [SerializeField] BonusTestUI bonusUI;
 
     // キー設定
-
     // MAXBET
     [SerializeField] private KeyCode maxBetKey;
     // 1BET
@@ -76,6 +77,10 @@ public class GameManager : MonoBehaviour
         Payout = GetComponent<PayoutChecker>();
         Debug.Log("Payout is launched");
 
+        // ボーナス
+        Bonus = new BonusManager();
+
+        // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
         // メインフロー作成
@@ -98,6 +103,7 @@ public class GameManager : MonoBehaviour
         lotsUI.SetFlagManager(Lots);
         waitUI.SetWaitManager(Wait);
         reelUI.SetReelManager(Reel);
+        bonusUI.SetBonusManager(Bonus);
     }
 
     void Update()

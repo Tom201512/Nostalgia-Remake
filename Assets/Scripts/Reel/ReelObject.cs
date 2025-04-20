@@ -108,9 +108,9 @@ public class ReelObject : MonoBehaviour
     // リールデータを渡す
     public void SetReelData(int reelID, int initialLowerPos) => ReelData = new ReelData(reelID, initialLowerPos, this.reelDatabaseFile);
     // 指定位置からリール位置を渡す
-    public int GetReelPos(int posID) => ReelData.GetReelPos((sbyte)posID);
+    public int GetReelPos(ReelData.ReelPosID posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す
-    public ReelData.ReelSymbols GetReelSymbol(int posID) => ReelData.GetReelSymbol((sbyte)posID);
+    public ReelData.ReelSymbols GetReelSymbol(ReelData.ReelPosID posID) => ReelData.GetReelSymbol((sbyte)posID);
     // 押した位置を返す(テーブル制御判定用)
     public int GetPressedPos() => ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
     // 最後に止めた停止位置を返す
