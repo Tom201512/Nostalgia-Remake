@@ -50,9 +50,9 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagReplayJACin
         };
 
-        public FlagLots(int counterValue)
+        void Awake()
         {
-            FlagCounter = new FlagCounter.FlagCounter(counterValue);
+            FlagCounter = new FlagCounter.FlagCounter(0);
         }
 
         // func

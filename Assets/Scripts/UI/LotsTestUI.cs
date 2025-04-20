@@ -20,6 +20,7 @@ public class LotsTestUI : MonoBehaviour
         buffer += "Lots-" + "\n";
         buffer += "Flag:" + lots.CurrentFlag + "\n";
         buffer += "Table:" + lots.CurrentTable + "\n";
+        buffer += "Counter:" + lots.FlagCounter.Counter + "\n";
 
         text.text = buffer;
     }
