@@ -72,8 +72,6 @@ public class ReelObject : MonoBehaviour
         }
         Debug.Log("ReelArray Generated");
         Debug.Log("ReelSpin AwakeDone");
-
-        Debug.Log(ChangeAngle);
     }
 
     private void Start()
@@ -118,11 +116,7 @@ public class ReelObject : MonoBehaviour
     // 直近のディレイ数を返す
     public int GetLastDelay() => lastDelay;
     // 最高速度が返す
-    public bool IsMaximumSpeed()
-    {
-        Debug.Log("rotateSpeed:" + rotateSpeed + ",Max:" + maxSpeed);
-        return rotateSpeed == maxSpeed;
-    }
+    public bool IsMaximumSpeed() => rotateSpeed == maxSpeed;
 
     //　リール始動
     public void StartReel(float maxSpeed)
@@ -150,12 +144,8 @@ public class ReelObject : MonoBehaviour
     }
 
     // 速度加速
-    private void SpeedUpReel()
-    {
-        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed)
-        , -1 * maxSpeed, maxSpeed);
-        Debug.Log(rotateSpeed);
-    }
+    private void SpeedUpReel()=> 
+        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
 
     // リール回転
     private void RotateReel()
@@ -221,8 +211,5 @@ public class ReelObject : MonoBehaviour
     }
 
     // 加速度を返す
-    private float ReturnReelAccerateSpeed(float rpsValue)
-    {
-        return ReelRadius / 80f * ReturnAngularVelocity(rpsValue) / 1000.0f;
-    }
+    private float ReturnReelAccerateSpeed(float rpsValue) => ReelRadius / 80f * ReturnAngularVelocity(rpsValue) / 1000.0f;
 }

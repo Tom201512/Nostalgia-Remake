@@ -30,10 +30,15 @@ public class ReelTableManager
         // ŒŸõ’†‚Ìƒe[ƒuƒ‹
         int currentIndex = 0;
 
+        Debug.Log("Flag:" + flagID);
+        Debug.Log("FirstPush:" + firstPush);
+        Debug.Log("Bonus:" + bonus);
+        Debug.Log("bet:" + bet);
+        Debug.Log("Random:" + random);
+
         foreach (ReelConditionsData data in reel.ReelDatabase.Conditions)
         {
             Debug.Log("Search:" + currentIndex);
-
             // ğŒ‚ª‡‚Á‚Ä‚¢‚é‚©
             bool conditionMet = true;
 

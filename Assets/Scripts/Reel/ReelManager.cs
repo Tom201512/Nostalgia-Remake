@@ -1,7 +1,6 @@
 ﻿using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class ReelManager : MonoBehaviour
@@ -13,6 +12,8 @@ public class ReelManager : MonoBehaviour
     public const int ReelAmounts = 3; 
     // リール識別用ID
     public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
+    // 最大 ランダムテーブル数(0~5)
+    const int MaxRandomLots = 6;
 
     // var
     // 全リールが動作中か
@@ -37,6 +38,8 @@ public class ReelManager : MonoBehaviour
     public List<int> LastPos { get; private set; }
     // 最後に止まった出目
     public List<List<ReelData.ReelSymbols>> LastSymbols { get; private set; }
+    // リールテーブルのランダム数値
+    public int RandomValue { get; private set; }
 
     // 初期化
     void Awake()
@@ -48,6 +51,8 @@ public class ReelManager : MonoBehaviour
         isFirstReelPushed = false;
         firstPushReel = ReelID.ReelLeft;
         firstPushPos = 0;
+        RandomValue = 0;
+
 
         LastPos = new List<int>();
         LastSymbols = new List<List<ReelData.ReelSymbols>>();
@@ -112,6 +117,9 @@ public class ReelManager : MonoBehaviour
     // リール始動
     public void StartReels()
     {
+        // ランダム数値決定
+        RandomValue = Random.Range(0, MaxRandomLots - 1);
+
         // リールが回っていなければ回転
         if (!IsWorking)
         {
@@ -151,7 +159,7 @@ public class ReelManager : MonoBehaviour
             // ここでディレイ(スベリコマ)を得て転送
             // 条件をチェック
             int tableIndex = reelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
-                , (int)flagID, (int)firstPushReel, 0, betAmounts, 0, firstPushPos);
+                , (int)flagID, (int)firstPushReel, 0, betAmounts, RandomValue, firstPushPos);
 
             // 先ほど得たディレイ分リール停止を遅らせる
             if (!reelObjects[(int)reelID].HasStopped)

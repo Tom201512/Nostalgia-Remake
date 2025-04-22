@@ -14,7 +14,7 @@ namespace ReelSpinGame_Lots.Flag
 
         // enum
         // フラグID
-        public enum FlagId { FlagNone, FlagBig, FlagReg, FlagCherry2, FlagCherry4, FlagMelon, FlagBell, FlagReplayJACin, FlagJAC }
+        public enum FlagId { FlagNone, FlagBig, FlagReg, FlagCherry2, FlagCherry4, FlagMelon, FlagBell, FlagReplayJacIn, FlagJac }
         // フラグテーブル
         public enum FlagLotMode { Normal, BigBonus, JacGame };
 
@@ -27,6 +27,8 @@ namespace ReelSpinGame_Lots.Flag
         public FlagLotMode CurrentTable { get; private set; }
         // フラグカウンタ
         public FlagCounter.FlagCounter FlagCounter { get; private set; }
+        // ランダムカウンタ
+        public int RandomValue { get; private set; }
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 
@@ -37,7 +39,7 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagCherry4,
             FlagId.FlagMelon,
             FlagId.FlagBell,
-            FlagId.FlagReplayJACin
+            FlagId.FlagReplayJacIn
         };
 
         // BIG CHANCE中
@@ -47,7 +49,7 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagCherry4,
             FlagId.FlagMelon,
             FlagId.FlagBell,
-            FlagId.FlagReplayJACin
+            FlagId.FlagReplayJacIn
         };
 
         void Awake()
@@ -66,6 +68,8 @@ namespace ReelSpinGame_Lots.Flag
         // フラグ抽選の開始
         public void GetFlagLots(int setting)
         {
+            // ランダムテーブルを決める
+
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
             {
@@ -139,14 +143,14 @@ namespace ReelSpinGame_Lots.Flag
             int flag = GetFlag();
 
             // はずれ抽選
-            flagCheckNum = Mathf.FloorToInt((float)MaxFlagLots / nonePoss);
+            flagCheckNum = Mathf.FloorToInt(MaxFlagLots / nonePoss);
             if (flag < flagCheckNum)
             {
                 return FlagId.FlagNone;
             }
 
             // 何も当たらなければ"JAC役"を返す
-            return FlagId.FlagJAC;
+            return FlagId.FlagJac;
         }
 
         // フラグ抽選

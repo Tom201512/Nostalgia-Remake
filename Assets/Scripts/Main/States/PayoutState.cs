@@ -101,7 +101,8 @@ namespace ReelSpinGame_State.PayoutState
 
                     // フラグ管理
                     // 小役が当選していたら増加させる
-                    if(gameManager.Payout.LastPayoutResult.Payouts > 0)
+                    // またはリプレイ
+                    if(gameManager.Payout.LastPayoutResult.Payouts > 0 || gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
                     {
                         gameManager.Lots.FlagCounter.IncreaseCounter(gameManager.Payout.LastPayoutResult.Payouts);
                     }

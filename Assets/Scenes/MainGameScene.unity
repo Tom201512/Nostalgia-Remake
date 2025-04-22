@@ -382,6 +382,8 @@ MonoBehaviour:
   keyToStopMiddle: 274
   keyToStopRight: 275
   setting: 6
+  useInstant: 1
+  instantFlagID: 7
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -1128,7 +1130,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 1920, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

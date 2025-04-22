@@ -39,6 +39,9 @@ public class ReelTestUI : MonoBehaviour
         buffer += "MiddleTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelMiddle) + "\n";
         buffer += "RightTableID" + reel.GetLastTableID((int)ReelManager.ReelID.ReelRight) + "\n" + "\n";
 
+        // ƒ‰ƒ“ƒ_ƒ€’l
+        buffer += "Random" + reel.RandomValue + "\n" + "\n";
+
         text.text = buffer;
     }
 

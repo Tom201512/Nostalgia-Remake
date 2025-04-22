@@ -104,18 +104,18 @@ namespace ReelSpinGame_Datas
             // ストリームからデータを得る
             byte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), byte.Parse);
             // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
-            byte[] combinations = new byte[ReelManager.ReelAmounts];
+            combinations = new List<byte>();
             // デバッグ用
             string combinationBuffer = "";
 
             // データ作成
             // フラグID
-            flagID = byteBuffer[(int)PayoutResultData.ReadPos.FlagID];
+            flagID = byteBuffer[(int)ReadPos.FlagID];
 
             // 組み合わせ
             for (int i = 0; i < ReelManager.ReelAmounts; i++)
             {
-                combinations[i] = byteBuffer[i + (int)ReadPos.CombinationsStart];
+                combinations.Add(byteBuffer[i + (int)ReadPos.CombinationsStart]);
                 combinationBuffer += combinations[i];
             }
             // 払い出し
@@ -123,7 +123,7 @@ namespace ReelSpinGame_Datas
             // ボーナス
             bonusType = byteBuffer[(int)ReadPos.Bonus];
             // リプレイの有無
-            hasReplayOrJac = byteBuffer[(int)PayoutResultData.ReadPos.IsReplay] == 1;
+            hasReplayOrJac = byteBuffer[(int)ReadPos.IsReplay] == 1;
 
             //デバッグ用
             Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payouts:" + payouts +
