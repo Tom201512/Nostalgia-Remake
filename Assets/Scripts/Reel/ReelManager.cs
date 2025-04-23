@@ -12,7 +12,7 @@ public class ReelManager : MonoBehaviour
     public const int ReelAmounts = 3; 
     // リール識別用ID
     public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
-    // 最大 ランダムテーブル数(0~5)
+    // 最大 ランダムテーブル数(1~6)
     const int MaxRandomLots = 6;
 
     // var
@@ -118,7 +118,7 @@ public class ReelManager : MonoBehaviour
     public void StartReels()
     {
         // ランダム数値決定
-        RandomValue = Random.Range(0, MaxRandomLots - 1);
+        RandomValue = Random.Range(1, MaxRandomLots);
 
         // リールが回っていなければ回転
         if (!IsWorking)

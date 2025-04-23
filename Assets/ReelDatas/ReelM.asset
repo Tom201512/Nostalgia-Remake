@@ -51,16 +51,31 @@ MonoBehaviour:
     firstReelPosition: 0
     reelTableNumber: 24
   - mainConditions: 8215
-    firstReelPosition: 0
+    firstReelPosition: 2052
     reelTableNumber: 23
   - mainConditions: 8215
-    firstReelPosition: 0
+    firstReelPosition: 1393842
     reelTableNumber: 25
   - mainConditions: 12311
-    firstReelPosition: 0
+    firstReelPosition: 32
+    reelTableNumber: 25
+  - mainConditions: 143383
+    firstReelPosition: 2052
     reelTableNumber: 23
-  - mainConditions: 12311
-    firstReelPosition: 0
+  - mainConditions: 143383
+    firstReelPosition: 1393810
+    reelTableNumber: 25
+  - mainConditions: 274455
+    firstReelPosition: 2052
+    reelTableNumber: 23
+  - mainConditions: 274455
+    firstReelPosition: 1393810
+    reelTableNumber: 25
+  - mainConditions: 405527
+    firstReelPosition: 2052
+    reelTableNumber: 23
+  - mainConditions: 405527
+    firstReelPosition: 1393810
     reelTableNumber: 25
   tables:
   - tableData: 020100010002010002020000020302010002020000
