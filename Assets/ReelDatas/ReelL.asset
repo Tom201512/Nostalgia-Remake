@@ -271,16 +271,16 @@ MonoBehaviour:
     reelTableNumber: 13
   - mainConditions: 204806
     firstReelPosition: 0
-    reelTableNumber: 16
+    reelTableNumber: 14
   - mainConditions: 270342
     firstReelPosition: 0
-    reelTableNumber: 16
+    reelTableNumber: 14
   - mainConditions: 335878
     firstReelPosition: 0
-    reelTableNumber: 14
+    reelTableNumber: 16
   - mainConditions: 401414
     firstReelPosition: 0
-    reelTableNumber: 14
+    reelTableNumber: 16
   - mainConditions: 208902
     firstReelPosition: 0
     reelTableNumber: 14
