@@ -142,28 +142,29 @@ public class ReelManager : MonoBehaviour
         // 全リール速度が最高速度になっていれば
         if(CanStop)
         {
-            // 押した位置
-            int pushedPos = reelObjects[(int)reelID].GetPressedPos();
-            Debug.Log("Stopped:" + pushedPos);
-
-            // 第一停止なら押したところの停止位置を得る
-            if (!isFirstReelPushed)
-            {
-                isFirstReelPushed = true;
-                firstPushReel = reelID + 1;
-                firstPushPos = pushedPos;
-
-                Debug.Log("FirstPush:" + reelID);
-            }
-
-            // ここでディレイ(スベリコマ)を得て転送
-            // 条件をチェック
-            int tableIndex = reelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
-                , (int)flagID, (int)firstPushReel, 0, betAmounts, RandomValue, firstPushPos);
-
-            // 先ほど得たディレイ分リール停止を遅らせる
+            // 止められる状態なら
             if (!reelObjects[(int)reelID].HasStopped)
             {
+                // 押した位置
+                int pushedPos = reelObjects[(int)reelID].GetPressedPos();
+                Debug.Log("Stopped:" + pushedPos);
+
+                // 第一停止なら押したところの停止位置を得る
+                if (!isFirstReelPushed)
+                {
+                    isFirstReelPushed = true;
+                    firstPushReel = reelID + 1;
+                    firstPushPos = pushedPos;
+
+                    Debug.Log("FirstPush:" + reelID);
+                }
+
+                // ここでディレイ(スベリコマ)を得て転送
+                // 条件をチェック
+                int tableIndex = reelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
+                    , (int)flagID, (int)firstPushReel, 0, betAmounts, RandomValue, firstPushPos);
+
+                // 先ほど得たディレイ分リール停止を遅らせる
                 int delay = reelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);
                 Debug.Log("Stop:" + reelID + "Delay:" + delay);
                 reelObjects[(int)reelID].StopReel(delay);

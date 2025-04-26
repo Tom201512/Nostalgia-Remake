@@ -93,6 +93,41 @@ namespace ReelSpinGame_Datas
             }
         }
 
+        public ReelConditionsData(StreamReader buffer)
+        {
+            string[] values = buffer.ReadLine().Split(',');
+
+            int indexNum = 0;
+            foreach (string value in values)
+            {
+                // メイン条件(16進数で読み込みint型で圧縮)
+                if (indexNum < ConditionMaxRead)
+                {
+                    int offset = (int)Math.Pow(16, indexNum);
+                    mainConditions += Convert.ToInt32(value) * offset;
+                }
+
+                // 第一リール停止
+                else if (indexNum < FirstReelPosMaxRead)
+                {
+                    firstReelPosition += ConvertToArrayBit(Convert.ToInt32(value));
+                }
+
+                // テーブルID読み込み
+                else if (indexNum < ReelTableIDMaxRead)
+                {
+                    reelTableNumber = Convert.ToByte(value);
+                }
+
+                // 最後の部分は読まない(テーブル名)
+                else
+                {
+                    break;
+                }
+                indexNum += 1;
+            }
+        }
+
         // func
         // 各条件の数値を返す
         public int GetConditionData(int conditionID) => ((MainConditions >> ConditionBitOffset * conditionID) & 0xF);
@@ -132,6 +167,38 @@ namespace ReelSpinGame_Datas
 
         // コンストラクタ
         public ReelTableData(StringReader LoadedData)
+        {
+            tableData = new List<byte>();
+
+            string[] values = LoadedData.ReadLine().Split(',');
+            int indexNum = 0;
+            // デバッグ用
+            string debugBuffer = "";
+
+            // 読み込み開始
+            foreach (string value in values)
+            {
+                Debug.Log(value);
+                // リールデータを読み込む
+                if (indexNum < ReelData.MaxReelArray)
+                {
+                    tableData.Add(Convert.ToByte(value));
+                    debugBuffer += tableData[indexNum];
+                }
+
+                // 最後の一行は読まない(テーブル名)
+                else
+                {
+                    break;
+                }
+                indexNum++;
+            }
+
+            Debug.Log("Array:" + debugBuffer);
+        }
+
+        // コンストラクタ
+        public ReelTableData(StreamReader LoadedData)
         {
             tableData = new List<byte>();
 

@@ -383,7 +383,7 @@ MonoBehaviour:
   keyToStopRight: 275
   setting: 6
   useInstant: 1
-  instantFlagID: 6
+  instantFlagID: 3
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
