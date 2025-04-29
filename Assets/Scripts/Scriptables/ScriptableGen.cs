@@ -23,6 +23,12 @@ namespace ReelSpinGame_Datas
         // フラグのファイル
         private const string FlagPath = "LotsTable";
 
+        // 払い出し関連のファイル
+        private const string PayoutPath = "Payouts";
+
+        // JACはずれデフォルト値
+        private const float JacNoneDefault = 256f;
+
         // var
         // 各リールを作る際に選んだボタン番号
         private int reelSelection;
@@ -43,6 +49,7 @@ namespace ReelSpinGame_Datas
         private void Awake()
         {
             reelSelection = -1;
+            jacNoneProb = JacNoneDefault;
         }
 
         private void OnGUI()
@@ -86,6 +93,14 @@ namespace ReelSpinGame_Datas
             {
                 Debug.Log("Pressed");
                 MakeFlagData();
+            }
+
+            GUILayout.Label("\n払い出しデータベース作成\n");
+
+            if (GUILayout.Button("払い出しデータベース作成"))
+            {
+                Debug.Log("Pressed");
+                MakePayoutData();
             }
         }
 
@@ -163,6 +178,39 @@ namespace ReelSpinGame_Datas
             // 保存処理
             AssetDatabase.CreateAsset(flagDatabase, Path.Combine(path, "FlagDatabase.asset"));
             Debug.Log("Flag Database is generated");
+        }
+
+
+        private void MakePayoutData()
+        {
+            // ディレクトリの作成
+            string path = "Assets/PayoutDatas";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Debug.Log("Directory is created");
+            }
+
+            // スクリプタブルオブジェクト作成
+            PayoutDatabase payoutDatabase = CreateInstance<PayoutDatabase>();
+
+            // 払い出しライン作成
+            payoutDatabase.SetPayoutLines(PayoutDatabaseGen.MakePayoutLineDatas(
+                new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - PayoutLineData.csv"))));
+            // 払い出し組み合わせ表作成
+            // 通常時
+            payoutDatabase.SetNormalPayout(PayoutDatabaseGen.MakeResultDatas(
+                new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - NormalPayout.csv"))));
+            // 小役ゲーム中
+            payoutDatabase.SetBigPayout(PayoutDatabaseGen.MakeResultDatas(
+                new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - BigPayout.csv"))));
+            // JACゲーム中
+            payoutDatabase.SetJacPayout(PayoutDatabaseGen.MakeResultDatas(
+                new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - JacPayout.csv"))));
+            // 保存処理
+            AssetDatabase.CreateAsset(payoutDatabase, Path.Combine(path, "PayoutDatabase.asset"));
+            Debug.Log("Payout Database is generated");
         }
     }
 #endif

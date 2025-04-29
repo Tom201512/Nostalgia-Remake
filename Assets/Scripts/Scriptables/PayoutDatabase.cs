@@ -48,7 +48,7 @@ namespace ReelSpinGame_Datas
         public byte BetCondition { get { return betCondition; } }
         public List<sbyte> PayoutLines { get { return payoutLines; }}
 
-        public PayoutLineData(StringReader loadedData)
+        public PayoutLineData(StreamReader loadedData)
         {
             // ストリームからデータを得る
             sbyte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), sbyte.Parse);
@@ -99,7 +99,7 @@ namespace ReelSpinGame_Datas
         public byte BonusType { get { return bonusType; } }
         public bool HasReplayOrJac { get { return hasReplayOrJac; } }
 
-        public PayoutResultData(StringReader loadedData)
+        public PayoutResultData(StreamReader loadedData)
         {
             // ストリームからデータを得る
             byte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), byte.Parse);
