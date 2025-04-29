@@ -150,8 +150,6 @@ namespace ReelSpinGame_Medal.Payout
                     }
                 }
 
-                Debug.Log(sameSymbolCount);
-
                 // “¯‚¶}•¿(ANYŠÜ‚ß)‚ªƒŠ[ƒ‹‚Ì”‚Æ‡‚¦‚Î“–‘I‚Æ‚İ‚È‚·
                 if (sameSymbolCount == ReelManager.ReelAmounts)
                 {

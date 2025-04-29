@@ -1,6 +1,5 @@
-using UnityEngine;
 using ReelSpinGame_Datas;
-using ReelSpinGame_Lots.FlagCounter;
+using UnityEngine;
 
 namespace ReelSpinGame_Lots.Flag
 {
@@ -11,6 +10,8 @@ namespace ReelSpinGame_Lots.Flag
         // const
         // 最大フラグ数
         const int MaxFlagLots = 16384;
+        // テーブルシーク位置
+        const int SeekNum = 6;
 
         // enum
         // フラグID
@@ -66,7 +67,7 @@ namespace ReelSpinGame_Lots.Flag
         }
 
         // フラグ抽選の開始
-        public void GetFlagLots(int setting)
+        public void GetFlagLots(int setting, int betAmounts)
         {
             // ランダムテーブルを決める
 
@@ -78,12 +79,12 @@ namespace ReelSpinGame_Lots.Flag
                     // カウンタが0より少ないなら高確率
                     if (FlagCounter.Counter < 0)
                     {
-                        CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalBTable, lotResultNormal);
+                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalBTable, lotResultNormal);
                     }
                     // カウンタが0以上の場合は低確率
                     else
                     {
-                        CurrentFlag = CheckResultByTable(setting, flagDatabase.NormalATable, lotResultNormal);
+                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalATable, lotResultNormal);
                     }
 
                     break;
@@ -122,7 +123,37 @@ namespace ReelSpinGame_Lots.Flag
             foreach(float f in flagTable.FlagDataBySettings[setting - 1].FlagTable)
             {
                 //各役ごとに抽選
-                flagCheckNum += Mathf.FloorToInt((float)MaxFlagLots / f);
+                flagCheckNum += Mathf.RoundToInt((float)MaxFlagLots / f);
+
+                if (flag < flagCheckNum)
+                {
+                    return lotResult[index];
+                }
+                index += 1;
+            }
+
+            // 何も当たらなければ"はずれ"を返す
+            return FlagId.FlagNone;
+        }
+
+        // テーブル、設定値とベット枚数からフラグ判定
+        private FlagId CheckResultByTable(int setting, int betAmounts, FlagDataSets flagTable, FlagId[] lotResult)
+        {
+            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
+            int flagCheckNum = 0;
+            int flag = GetFlag();
+
+            // ベット枚数に合わせたテーブルを参照するようにする
+            int offset = SeekNum * (betAmounts - 1);
+            Debug.Log(offset);
+
+            int index = 0;
+
+            Debug.Log(setting + offset - 1);
+            foreach (float f in flagTable.FlagDataBySettings[setting + offset - 1].FlagTable)
+            {
+                //各役ごとに抽選
+                flagCheckNum += Mathf.RoundToInt((float)MaxFlagLots / f);
 
                 if (flag < flagCheckNum)
                 {

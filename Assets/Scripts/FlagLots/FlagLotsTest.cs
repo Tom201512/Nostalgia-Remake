@@ -41,7 +41,7 @@ public class FlagLotsTest : MonoBehaviour
         // フラグ抽選
         if (OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {
-            flagLots?.GetFlagLots(setting);
+            flagLots?.GetFlagLots(setting, 3);
 
             // 小役ならカウンタを増やし、はずれは減らす(通常時のみ)
             if(flagLots.CurrentTable == FlagLots.FlagLotMode.Normal)

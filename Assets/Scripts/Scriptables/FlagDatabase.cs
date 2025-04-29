@@ -14,6 +14,11 @@ namespace ReelSpinGame_Datas
         [SerializeField] private FlagDataSets normalBTable;
         // 小役ゲーム中
         [SerializeField] private FlagDataSets bigTable;
+
+        // 通常時(全パターン全設定)
+        [SerializeField] private FlagDataSets normalAllTable;
+        // BIG中小役ゲーム時(全パターン全設定)
+        [SerializeField] private FlagDataSets bigAllTable;
         // JAC時のはずれ
         [SerializeField] private float jacNonePoss;
 
@@ -36,7 +41,7 @@ namespace ReelSpinGame_Datas
         [SerializeField] List<FlagDataBySetting> flagDataBySettings;
         public List<FlagDataBySetting> FlagDataBySettings { get { return flagDataBySettings; } }
 
-        public FlagDataSets(StringReader loadedData)
+        public FlagDataSets(StreamReader loadedData)
         {
             flagDataBySettings = new List<FlagDataBySetting>();
             // 全ての行を読み込む
@@ -58,7 +63,7 @@ namespace ReelSpinGame_Datas
 
         public float[] FlagTable { get { return flagTable; } }
 
-        public FlagDataBySetting(StringReader loadedData)
+        public FlagDataBySetting(StreamReader loadedData)
         {
             string[] values = loadedData.ReadLine().Split(',');
             string buffer = "";

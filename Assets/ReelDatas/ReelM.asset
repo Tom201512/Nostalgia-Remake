@@ -42,7 +42,7 @@ MonoBehaviour:
     firstReelPosition: 12
     reelTableNumber: 8
   - mainConditions: 16
-    firstReelPosition: 0
+    firstReelPosition: 8192
     reelTableNumber: 9
   - mainConditions: 3
     firstReelPosition: 0

@@ -20,9 +20,15 @@ namespace ReelSpinGame_Datas
         private const string MiddlePath = "ReelM";
         private const string RightPath = "ReelR";
 
+        // フラグのファイル
+        private const string FlagPath = "LotsTable";
+
         // var
         // 各リールを作る際に選んだボタン番号
         private int reelSelection;
+
+        // JACゲーム時のはずれ確率
+        private float jacNoneProb;
 
         // func
         // リール配列の作成
@@ -42,10 +48,6 @@ namespace ReelSpinGame_Datas
         private void OnGUI()
         {
             GUILayout.Label("スクリプタブルオブジェクト作成\n");
-            // fileName = EditorGUILayout.TextField("File Name", fileName);
-            //arrayFile = (TextAsset)EditorGUILayout.ObjectField("Array:", arrayFile, typeof(TextAsset), true);
-            //conditionsFile = (TextAsset)EditorGUILayout.ObjectField("Conditions:", conditionsFile, typeof(TextAsset), true);
-            //delaysData = (TextAsset)EditorGUILayout.ObjectField("Tables:", delaysData, typeof(TextAsset), true);
             GUILayout.Label("リールデータ作成\n");
 
             if (GUILayout.Button("全リールデータ作成"))
@@ -76,6 +78,15 @@ namespace ReelSpinGame_Datas
                 reelSelection = -1;
                 MakeReelData(RightPath);
             }
+
+            GUILayout.Label("\nフラグデータの作成\n");
+            jacNoneProb = EditorGUILayout.FloatField("JAC時はずれ確率(float)", jacNoneProb);
+
+            if (GUILayout.Button("フラグデータ作成"))
+            {
+                Debug.Log("Pressed");
+                MakeFlagData();
+            }
         }
 
         private void MakeReelDataAll()
@@ -104,11 +115,14 @@ namespace ReelSpinGame_Datas
             // スクリプタブルオブジェクト作成
             ReelDatabase reelDatabase = CreateInstance<ReelDatabase>();
             // 配列作成
-            reelDatabase.SetArray(MakeReelArray(new StreamReader(Path.Combine(DataPath, filePath, filePath + "Array.csv"))));
+            reelDatabase.SetArray(ReelDatabaseGen.MakeReelArray
+                (new StreamReader(Path.Combine(DataPath, filePath, "Nostalgia_Reel - " + filePath + "Array.csv"))));
             // 条件テーブル作成
-            reelDatabase.SetConditions(MakeReelConditions(new StreamReader(Path.Combine(DataPath, filePath, filePath + "Condition.csv"))));
+            reelDatabase.SetConditions(ReelDatabaseGen.MakeReelConditions
+                (new StreamReader(Path.Combine(DataPath, filePath, "Nostalgia_Reel - " + filePath + "Condition.csv"))));
             // ディレイテーブル作成
-            reelDatabase.SetTables(MakeTableDatas(new StreamReader(Path.Combine(DataPath, filePath, filePath + "Table.csv"))));
+            reelDatabase.SetTables(ReelDatabaseGen.MakeTableDatas
+                (new StreamReader(Path.Combine(DataPath, filePath, "Nostalgia_Reel - " + filePath + "Table.csv"))));
 
             var fileName = filePath + ".asset";
             // 保存処理
@@ -116,63 +130,39 @@ namespace ReelSpinGame_Datas
             Debug.Log("ReelData is generated");
         }
 
-        private byte[] MakeReelArray(StreamReader arrayFile)
+
+        private void MakeFlagData()
         {
-            // 配列読み込み
-            string[] values = arrayFile.ReadLine().Split(',');
-            // 配列に変換
-            byte[] result = Array.ConvertAll(values, byte.Parse);
+            // ディレクトリの作成
+            string path = "Assets/FlagDatas";
 
-            foreach (byte value in result)
+            if (!Directory.Exists(path))
             {
-                Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
+                Directory.CreateDirectory(path);
+                Debug.Log("Directory is created");
             }
 
-            for (int i = 0; i < ReelData.MaxReelArray; i++)
-            {
-                Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(result[i]));
-            }
+            // スクリプタブルオブジェクト作成
+            FlagDatabase flagDatabase = CreateInstance<FlagDatabase>();
 
-            return result;
-        }
+            // フラグテーブル作成
+            // 通常時Aフラグテーブル作成
+            flagDatabase.SetNormalATable(FlagDatabaseGen.MakeFlagTableSets(
+                new StreamReader(Path.Combine(DataPath, FlagPath, "Nostalgia_Flag - FlagTableNormalA.csv"))));
 
-        private List<ReelConditionsData> MakeReelConditions(StreamReader conditionsFile)
-        {
-            List<ReelConditionsData> finalResult = new List<ReelConditionsData>();
+            // 通常時Bフラグテーブル作成
+            flagDatabase.SetNormalBTable(FlagDatabaseGen.MakeFlagTableSets(
+                new StreamReader(Path.Combine(DataPath, FlagPath, "Nostalgia_Flag - FlagTableNormalB.csv"))));
 
-            // 全ての行を読み込む
-            while (conditionsFile.Peek() != -1)
-            {
-                finalResult.Add(new ReelConditionsData(conditionsFile));
-            }
+            // 小役ゲーム中フラグテーブル作成
+            flagDatabase.SetBIGTable(FlagDatabaseGen.MakeFlagTableSets(
+                new StreamReader(Path.Combine(DataPath, FlagPath, "Nostalgia_Flag - FlagTableBig.csv"))));
+            // JAC時ハズレ
+            flagDatabase.SetJACNonePoss(jacNoneProb);
 
-            foreach (ReelConditionsData condition in finalResult)
-            {
-                // デバッグ用
-                string ConditionDebug = "";
-
-                for (int i = 0; i < 5; i++)
-                {
-                    ConditionDebug += condition.GetConditionData(i).ToString() + ",";
-                }
-
-                Debug.Log("Condition:" + condition.MainConditions + "Details:" + ConditionDebug + "FirstReel:" + condition.FirstReelPosition + "ReelTableNum" + condition.ReelTableNumber);
-            }
-
-            return finalResult;
-        }
-
-        private List<ReelTableData> MakeTableDatas(StreamReader tablesFile)
-        {
-            List<ReelTableData> finalResult = new List<ReelTableData>();
-
-            // 全ての行を読み込む
-            while (tablesFile.Peek() != -1)
-            {
-                finalResult.Add(new ReelTableData(tablesFile));
-            }
-
-            return finalResult;
+            // 保存処理
+            AssetDatabase.CreateAsset(flagDatabase, Path.Combine(path, "FlagDatabase.asset"));
+            Debug.Log("Flag Database is generated");
         }
     }
 #endif

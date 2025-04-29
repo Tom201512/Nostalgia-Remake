@@ -29,7 +29,7 @@ namespace ReelSpinGame_State.LotsState
             }
             else
             {
-                gameManager.Lots.GetFlagLots(gameManager.Setting);
+                gameManager.Lots.GetFlagLots(gameManager.Setting,gameManager.Medal.LastBetAmounts);
             }
 
             gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.WaitState);
