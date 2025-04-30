@@ -26,12 +26,12 @@ MonoBehaviour:
   - mainConditions: 4112
     firstReelPosition: 0
     reelTableNumber: 2
-  - mainConditions: 17
+  - mainConditions: 1
     firstReelPosition: 0
-    reelTableNumber: 3
-  - mainConditions: 18
+    reelTableNumber: 2
+  - mainConditions: 2
     firstReelPosition: 0
-    reelTableNumber: 3
+    reelTableNumber: 2
   - mainConditions: 3
     firstReelPosition: 0
     reelTableNumber: 5
@@ -125,13 +125,13 @@ MonoBehaviour:
   - mainConditions: 4119
     firstReelPosition: 0
     reelTableNumber: 16
-  - mainConditions: 24
+  - mainConditions: 8
     firstReelPosition: 0
     reelTableNumber: 19
   tables:
   - tableData: 010201010003020300010001000100010003020300
   - tableData: 000000010003020300000001000000000003020300
-  - tableData: 010003020100010003020100000403020100010001
+  - tableData: 010003020100010003020100020100020100010001
   - tableData: 010102010003020100010000000000010003020100
   - tableData: 010001000404040202010000000000000404030200
   - tableData: 020104030201000302010302010004030201000302

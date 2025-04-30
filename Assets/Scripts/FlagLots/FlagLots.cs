@@ -49,8 +49,8 @@ namespace ReelSpinGame_Lots.Flag
             FlagId.FlagCherry2,
             FlagId.FlagCherry4,
             FlagId.FlagMelon,
-            FlagId.FlagBell,
-            FlagId.FlagReplayJacIn
+            FlagId.FlagReplayJacIn,
+            FlagId.FlagBell
         };
 
         void Awake()

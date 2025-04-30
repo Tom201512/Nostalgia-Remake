@@ -32,6 +32,12 @@ namespace ReelSpinGame_State.LotsState
                 gameManager.Lots.GetFlagLots(gameManager.Setting,gameManager.Medal.LastBetAmounts);
             }
 
+            // ボーナス中ならここでゲーム数を減らす
+            if(gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
+            {
+                gameManager.Bonus.DecreaseGames();
+            }
+
             gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.WaitState);
         }
 

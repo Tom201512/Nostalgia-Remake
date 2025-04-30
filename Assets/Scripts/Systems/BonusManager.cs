@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ReelSpinGame_Bonus
 {
@@ -86,15 +85,24 @@ namespace ReelSpinGame_Bonus
             CurrentBonusStatus = BonusStatus.BonusJACGames;
         }
 
-        // 小役ゲームを減らす
-        public void DecreaseBigGames(bool hasJacIn)
+        public void DecreaseGames()
         {
-            RemainingBigGames -= 1;
+            if(CurrentBonusStatus == BonusStatus.BonusBIGGames)
+            {
+                RemainingBigGames -= 1;
+            }
+            else if(CurrentBonusStatus == BonusStatus.BonusJACGames)
+            {
+                RemainingJacGames -= 1;
+            }
+        }
 
+        // 小役ゲーム中の状態遷移
+        public void CheckBigGameStatus(bool hasJacIn)
+        {
             // JAC-INなら
             if (hasJacIn)
             {
-                RemainingJacIn -= 1;
                 StartBonusGame();
             }
 
@@ -106,11 +114,9 @@ namespace ReelSpinGame_Bonus
             }
         }
 
-        // ボーナスゲーム数を減らす
-        public void DecreaseBonusGames(bool hasPayout)
+        // ボーナスゲームの状態遷移
+        public void CheckBonusGameStatus(bool hasPayout)
         {
-            RemainingJacGames -= 1;
-
             if (hasPayout)
             {
                 RemainingJacHits -= 1;
