@@ -65,6 +65,9 @@ namespace ReelSpinGame_Bonus
         }
 
         // func
+        // ボーナスストック状態の更新
+        public void SetBonusStock(BonusType bonusType) => HoldingBonusID = bonusType;
+
         public void StartBigChance()
         {
             Debug.Log("BIG CHANCE start");

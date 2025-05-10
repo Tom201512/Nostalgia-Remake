@@ -45,17 +45,20 @@ public class ReelTest : MonoBehaviour
             // 左停止
             if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelLeft, 3, ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
+                manager.StopSelectedReel(ReelManager.ReelID.ReelLeft, 3, 
+                    ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone, ReelSpinGame_Bonus.BonusManager.BonusType.BonusNone);
             }
             // 中停止
             if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 3, ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
+                manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 3, 
+                    ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone, ReelSpinGame_Bonus.BonusManager.BonusType.BonusNone);
             }
             // 右停止
             if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelRight, 3, ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone);
+                manager.StopSelectedReel(ReelManager.ReelID.ReelRight, 3, 
+                    ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagNone, ReelSpinGame_Bonus.BonusManager.BonusType.BonusNone);
             }
 
             // 入力がないかチェック

@@ -30,7 +30,9 @@ public class ReelObject : MonoBehaviour
     // リール本体
     private ReelBase reelBase;
     // リール内の図柄
-    private SymbolChange[] symbolsObj;
+    //private SymbolChange[] symbolsObj;
+    // 図柄マネージャー
+    private SymbolManager symbolManager;
 
     // 止まる予定か
     public bool IsStopping { get; private set; }
@@ -43,7 +45,7 @@ public class ReelObject : MonoBehaviour
     // リール情報
     public ReelData ReelData { get; private set; }
 
-    // リール情報テスト用(置き換え予定)
+    // リール情報
     [SerializeField] ReelDatabase reelDatabaseFile;
 
     // 初期化
@@ -57,8 +59,9 @@ public class ReelObject : MonoBehaviour
         IsStopping = false;
         HasStopped = true;
 
-        symbolsObj = GetComponentsInChildren<SymbolChange>();
+        //symbolsObj = GetComponentsInChildren<SymbolChange>();
         reelBase = GetComponentInChildren<ReelBase>();
+        symbolManager = GetComponentInChildren<SymbolManager>();
 
         foreach (byte value in reelDatabaseFile.Array)
         {
@@ -76,7 +79,8 @@ public class ReelObject : MonoBehaviour
 
     private void Start()
     {
-        UpdateSymbolsObjects();
+        symbolManager.SetReelData(ReelData);
+        symbolManager.UpdateSymbolsObjects();
         Debug.Log("StartDone");
     }
 
@@ -104,7 +108,11 @@ public class ReelObject : MonoBehaviour
 
     // func
     // リールデータを渡す
-    public void SetReelData(int reelID, int initialLowerPos) => ReelData = new ReelData(reelID, initialLowerPos, this.reelDatabaseFile);
+    public void SetReelData(int reelID, int initialLowerPos)
+    {
+        ReelData = new ReelData(reelID, initialLowerPos, reelDatabaseFile);
+    }
+
     // 指定位置からリール位置を渡す
     public int GetReelPos(ReelData.ReelPosID posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す
@@ -158,9 +166,9 @@ public class ReelObject : MonoBehaviour
         {
             // 図柄位置変更
             ReelData.ChangeReelPos(rotateSpeed);
-            UpdateSymbolsObjects();
+            symbolManager.UpdateSymbolsObjects();
 
-            // 変更角度分だけ回転を戻す。
+            // 図柄の場所だけ変更角度分回転を戻す
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
 
             // 停止する場合は
@@ -188,17 +196,7 @@ public class ReelObject : MonoBehaviour
     public void SetReelBaseBrightness(byte brightness) => reelBase.SetBrightness(brightness);
 
     // 指定位置リール図柄の明るさを変更
-    public void SetSymbolBrightness(int posArrayID, byte brightness) => symbolsObj[posArrayID].ChangeBrightness(brightness);
-
-    //図柄の更新
-    private void UpdateSymbolsObjects()
-    {
-        // 現在のリール下段を基準として位置を更新する。
-        foreach(SymbolChange symbol in symbolsObj)
-        {
-            symbol.ChangeSymbol(ReelData.GetReelSymbol((sbyte)symbol.GetPosID()));
-        }
-    }
+    public void SetSymbolBrightness(int posArrayID, byte brightness) => symbolManager.SymbolObj[posArrayID].ChangeBrightness(brightness);
 
     // 回転率計算
     private float ReturnAngularVelocity(float rpsValue)
