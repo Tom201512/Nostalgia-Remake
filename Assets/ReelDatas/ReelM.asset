@@ -85,7 +85,7 @@ MonoBehaviour:
     reelTableNumber: 27
   - mainConditions: 393237
     firstReelPosition: 1048580
-    reelTableNumber: 27
+    reelTableNumber: 29
   - mainConditions: 4117
     firstReelPosition: 0
     reelTableNumber: 28
