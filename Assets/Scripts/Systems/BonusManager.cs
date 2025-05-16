@@ -74,6 +74,7 @@ namespace ReelSpinGame_Bonus
             RemainingBigGames = BigGames;
             RemainingJacIn = JacInTimes;
             CurrentBonusStatus = BonusStatus.BonusBIGGames;
+            HoldingBonusID = BonusType.BonusNone;
         }
 
         public void StartBonusGame()
@@ -86,6 +87,7 @@ namespace ReelSpinGame_Bonus
             RemainingJacGames = JacGames;
             RemainingJacHits = JacHits;
             CurrentBonusStatus = BonusStatus.BonusJACGames;
+            HoldingBonusID = BonusType.BonusNone;
         }
 
         public void DecreaseGames()
@@ -113,7 +115,7 @@ namespace ReelSpinGame_Bonus
             else if (RemainingBigGames == 0)
             {
                 Debug.Log("BIG CHANCE end");
-                CurrentBonusStatus = BonusStatus.BonusNone;
+                EndBonusStatus();
             }
         }
 
@@ -129,15 +131,27 @@ namespace ReelSpinGame_Bonus
             if (RemainingJacGames == 0 || RemainingJacHits == 0)
             {
                 Debug.Log("End Bonus Game");
-                CurrentBonusStatus = BonusStatus.BonusBIGGames;
 
-                // BIG中ならJAC-INが0の場合終了する
-                if (RemainingJacIn == 0)
+                // BIG中なら残りJAC-INの数があれば小役ゲームへ移行
+                if (RemainingJacIn > 0)
                 {
-                    Debug.Log("BIG CHANCE end");
-                    CurrentBonusStatus = BonusStatus.BonusNone;
+                    CurrentBonusStatus = BonusStatus.BonusBIGGames;
+                }
+                else
+                {
+                    EndBonusStatus();
                 }
             }
+        }
+
+        public void EndBonusStatus()
+        {
+            RemainingBigGames = 0;
+            RemainingJacIn = 0;
+            RemainingJacGames = 0;
+            RemainingJacHits = 0;
+            CurrentBonusStatus = BonusStatus.BonusNone;
+            Debug.Log("Bonus Reset");
         }
     }
 }

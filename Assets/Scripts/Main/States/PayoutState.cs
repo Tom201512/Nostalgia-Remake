@@ -99,13 +99,32 @@ namespace ReelSpinGame_State.PayoutState
                         gameManager.Lots.FlagCounter.ResetCounter();
                     }
                     // REG
-                    if (gameManager.Payout.LastPayoutResult.BonusID == (int)BonusManager.BonusType.BonusREG)
+                    else if (gameManager.Payout.LastPayoutResult.BonusID == (int)BonusManager.BonusType.BonusREG)
                     {
                         gameManager.Bonus.StartBonusGame();
                         gameManager.Medal.ChangeMaxBet(1);
                         gameManager.Lots.ChangeTable(ReelSpinGame_Lots.Flag.FlagLots.FlagLotMode.JacGame);
                         gameManager.Payout.ChangePayoutCheckMode(ReelSpinGame_Medal.Payout.PayoutChecker.PayoutCheckMode.PayoutJAC);
                         gameManager.Lots.FlagCounter.ResetCounter();
+                    }
+                    // 取りこぼした場合はストックさせる
+                    else
+                    {
+                        // いずれかのボーナスが引かれた場合はストック(BIGまたはREGのどちらかをストックする)
+                        // これにより常に成立後出目が出るようになる。
+                        if (gameManager.Bonus.HoldingBonusID == BonusManager.BonusType.BonusNone)
+                        {
+                            // BIG
+                            if (gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagBig)
+                            {
+                                gameManager.Bonus.SetBonusStock(BonusManager.BonusType.BonusBIG);
+                            }
+                            // REG
+                            if (gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagReg)
+                            {
+                                gameManager.Bonus.SetBonusStock(BonusManager.BonusType.BonusREG);
+                            }
+                        }
                     }
 
                     // リプレイ
@@ -130,22 +149,6 @@ namespace ReelSpinGame_State.PayoutState
                     {
                         gameManager.Lots.FlagCounter.DecreaseCounter(
                             gameManager.Setting, gameManager.Medal.LastBetAmounts);
-                    }
-
-                    // いずれかのボーナスが引かれた場合はストック(BIGまたはREGのどちらかをストックする)
-                    // これにより常に成立後出目が出るようになる。
-                    if(gameManager.Bonus.HoldingBonusID == BonusManager.BonusType.BonusNone)
-                    {
-                        // BIG
-                        if(gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagBig)
-                        {
-                            gameManager.Bonus.SetBonusStock(BonusManager.BonusType.BonusBIG);
-                        }
-                        // REG
-                        if (gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagReg)
-                        {
-                            gameManager.Bonus.SetBonusStock(BonusManager.BonusType.BonusREG);
-                        }
                     }
                     break;
             }

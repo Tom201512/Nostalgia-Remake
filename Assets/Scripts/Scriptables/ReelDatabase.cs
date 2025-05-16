@@ -118,12 +118,6 @@ namespace ReelSpinGame_Datas
                 {
                     reelTableNumber = Convert.ToByte(value);
                 }
-
-                // 最後の部分は読まない(テーブル名)
-                else
-                {
-                    break;
-                }
                 indexNum += 1;
             }
         }
@@ -184,12 +178,6 @@ namespace ReelSpinGame_Datas
                 {
                     tableData.Add(Convert.ToByte(value));
                     debugBuffer += tableData[indexNum];
-                }
-
-                // 最後の一行は読まない(テーブル名)
-                else
-                {
-                    break;
                 }
                 indexNum++;
             }
