@@ -65,6 +65,21 @@ MonoBehaviour:
   - mainConditions: 4112
     firstReelPosition: 0
     reelTableNumber: 2
+  - mainConditions: 272
+    firstReelPosition: 0
+    reelTableNumber: 12
+  - mainConditions: 4368
+    firstReelPosition: 0
+    reelTableNumber: 8
+  - mainConditions: 266512
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 332048
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 397584
+    firstReelPosition: 0
+    reelTableNumber: 9
   - mainConditions: 528
     firstReelPosition: 0
     reelTableNumber: 13
@@ -134,6 +149,36 @@ MonoBehaviour:
   - mainConditions: 270849
     firstReelPosition: 0
     reelTableNumber: 4
+  - mainConditions: 17
+    firstReelPosition: 0
+    reelTableNumber: 10
+  - mainConditions: 4113
+    firstReelPosition: 0
+    reelTableNumber: 8
+  - mainConditions: 266257
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 331793
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 397329
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 273
+    firstReelPosition: 0
+    reelTableNumber: 12
+  - mainConditions: 4369
+    firstReelPosition: 0
+    reelTableNumber: 8
+  - mainConditions: 266513
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 332049
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 397585
+    firstReelPosition: 0
+    reelTableNumber: 9
   - mainConditions: 529
     firstReelPosition: 0
     reelTableNumber: 13
@@ -198,6 +243,21 @@ MonoBehaviour:
     firstReelPosition: 0
     reelTableNumber: 11
   - mainConditions: 4114
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 274
+    firstReelPosition: 0
+    reelTableNumber: 12
+  - mainConditions: 4370
+    firstReelPosition: 0
+    reelTableNumber: 8
+  - mainConditions: 266514
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 332050
+    firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 397586
     firstReelPosition: 0
     reelTableNumber: 9
   - mainConditions: 530
