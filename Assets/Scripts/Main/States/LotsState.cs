@@ -23,17 +23,10 @@ namespace ReelSpinGame_State.LotsState
         {
             Debug.Log("Start Lots State");
 
-            if(gameManager.UseInstant)
-            {
-                gameManager.Lots.SelectFlag(gameManager.InstantFlagID);
-            }
-            else
-            {
-                gameManager.Lots.GetFlagLots(gameManager.Setting,gameManager.Medal.LastBetAmounts);
-            }
+            gameManager.Lots.GetFlagLots(gameManager.Setting, gameManager.Medal.LastBetAmounts);
 
             // ボーナス中ならここでゲーム数を減らす
-            if(gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
+            if (gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
             {
                 gameManager.Bonus.DecreaseGames();
             }

@@ -42,18 +42,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode keyToStopRight;
 
     // 設定
-    [SerializeField] private int setting;
-    // デバッグ用(強制役)
-    [SerializeField] private bool useInstant;
-    [SerializeField] private FlagLots.FlagId instantFlagID;
+    [Range(0,6), SerializeField] private int setting;
 
     public KeyCode[] KeyCodes { get; private set; }
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
     public int Setting { get { return setting; } }
-    public bool UseInstant { get { return useInstant; } }
-    public FlagLots.FlagId InstantFlagID { get { return instantFlagID; } }
 
     void Awake()
     {

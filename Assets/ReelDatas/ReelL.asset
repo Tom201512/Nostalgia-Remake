@@ -293,6 +293,18 @@ MonoBehaviour:
   - mainConditions: 4117
     firstReelPosition: 0
     reelTableNumber: 20
+  - mainConditions: 277
+    firstReelPosition: 0
+    reelTableNumber: 17
+  - mainConditions: 4373
+    firstReelPosition: 0
+    reelTableNumber: 20
+  - mainConditions: 533
+    firstReelPosition: 0
+    reelTableNumber: 17
+  - mainConditions: 4629
+    firstReelPosition: 0
+    reelTableNumber: 20
   - mainConditions: 6
     firstReelPosition: 0
     reelTableNumber: 24
@@ -312,6 +324,18 @@ MonoBehaviour:
     firstReelPosition: 0
     reelTableNumber: 21
   - mainConditions: 4118
+    firstReelPosition: 0
+    reelTableNumber: 24
+  - mainConditions: 278
+    firstReelPosition: 0
+    reelTableNumber: 22
+  - mainConditions: 4374
+    firstReelPosition: 0
+    reelTableNumber: 24
+  - mainConditions: 534
+    firstReelPosition: 0
+    reelTableNumber: 22
+  - mainConditions: 4630
     firstReelPosition: 0
     reelTableNumber: 24
   - mainConditions: 7

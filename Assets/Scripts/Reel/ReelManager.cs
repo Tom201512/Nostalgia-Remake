@@ -39,6 +39,11 @@ public class ReelManager : MonoBehaviour
     public List<int> LastPos { get; private set; }
     // 最後に止まった出目
     public List<List<ReelData.ReelSymbols>> LastSymbols { get; private set; }
+
+    // 強制ランダム数値
+    [SerializeField] private bool instantRandomMode;
+    // 強制時のランダム数値
+    [Range(1,6),SerializeField] private int instantRandomValue;
     // リールテーブルのランダム数値
     public int RandomValue { get; private set; }
 
@@ -118,7 +123,13 @@ public class ReelManager : MonoBehaviour
     public void StartReels()
     {
         // ランダム数値決定
+
         RandomValue = Random.Range(1, MaxRandomLots);
+        if (instantRandomMode)
+        {
+            RandomValue = instantRandomValue;
+        }
+
 
         // リールが回っていなければ回転
         if (!IsWorking)

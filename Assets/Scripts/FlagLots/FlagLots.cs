@@ -28,8 +28,10 @@ namespace ReelSpinGame_Lots.Flag
         public FlagLotMode CurrentTable { get; private set; }
         // フラグカウンタ
         public FlagCounter.FlagCounter FlagCounter { get; private set; }
-        // ランダムカウンタ
-        public int RandomValue { get; private set; }
+
+        // デバッグ用(強制役)
+        [SerializeField] private bool useInstant;
+        [SerializeField] private FlagId instantFlagID;
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
         private FlagId[] lotResultNormal = new FlagId[] 
@@ -71,36 +73,44 @@ namespace ReelSpinGame_Lots.Flag
         {
             // ランダムテーブルを決める
 
-            // 現在の参照テーブルをもとに抽選
-            switch (CurrentTable)
+            // 強制役がある場合
+            if(useInstant)
             {
-                case FlagLotMode.Normal:
+                CurrentFlag = instantFlagID;
+            }
+            else
+            {
+                // 現在の参照テーブルをもとに抽選
+                switch (CurrentTable)
+                {
+                    case FlagLotMode.Normal:
 
-                    // カウンタが0より少ないなら高確率
-                    if (FlagCounter.Counter < 0)
-                    {
-                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalBTable, lotResultNormal);
-                    }
-                    // カウンタが0以上の場合は低確率
-                    else
-                    {
-                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalATable, lotResultNormal);
-                    }
+                        // カウンタが0より少ないなら高確率
+                        if (FlagCounter.Counter < 0)
+                        {
+                            CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalBTable, lotResultNormal);
+                        }
+                        // カウンタが0以上の場合は低確率
+                        else
+                        {
+                            CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalATable, lotResultNormal);
+                        }
 
-                    break;
+                        break;
 
-                case FlagLotMode.BigBonus:
-                    CurrentFlag = CheckResultByTable(setting, flagDatabase.BigTable, lotResultBig);
-                    break;
+                    case FlagLotMode.BigBonus:
+                        CurrentFlag = CheckResultByTable(setting, flagDatabase.BigTable, lotResultBig);
+                        break;
 
-                case FlagLotMode.JacGame:
-                    CurrentFlag = BonusGameLots(flagDatabase.JacNonePoss);
-                    break;
+                    case FlagLotMode.JacGame:
+                        CurrentFlag = BonusGameLots(flagDatabase.JacNonePoss);
+                        break;
 
-                default:
-                    Debug.LogError("No table found");
-                    break;
+                    default:
+                        Debug.LogError("No table found");
+                        break;
 
+                }
             }
             Debug.Log("Flag:" + CurrentFlag);
         }
