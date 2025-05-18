@@ -173,8 +173,8 @@ MonoBehaviour:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
   - {fileID: 1933351381669917605}
-  instantRandomMode: 1
-  instantRandomValue: 6
+  instantRandomMode: 0
+  instantRandomValue: 1
 --- !u!1 &341618348
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
   useInstant: 1
-  instantFlagID: 5
+  instantFlagID: 4
 --- !u!1 &660297967
 GameObject:
   m_ObjectHideFlags: 0
