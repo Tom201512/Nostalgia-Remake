@@ -141,6 +141,7 @@ namespace ReelSpinGame_Datas
 
             var fileName = filePath + ".asset";
             // •Û‘¶ˆ—
+
             AssetDatabase.CreateAsset(reelDatabase, Path.Combine(path, fileName));
             Debug.Log("ReelData is generated");
         }

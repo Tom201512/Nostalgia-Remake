@@ -81,7 +81,7 @@ MonoBehaviour:
     firstReelPosition: 0
     reelTableNumber: 15
   - mainConditions: 16
-    firstReelPosition: 2392640
+    firstReelPosition: 0
     reelTableNumber: 1
   - mainConditions: 16
     firstReelPosition: 540800
@@ -1154,21 +1154,18 @@ MonoBehaviour:
   - mainConditions: 21
     firstReelPosition: 0
     reelTableNumber: 28
+  - mainConditions: 21
+    firstReelPosition: 320770
+    reelTableNumber: 26
   - mainConditions: 4117
     firstReelPosition: 0
     reelTableNumber: 26
   - mainConditions: 8213
-    firstReelPosition: 0
-    reelTableNumber: 26
-  - mainConditions: 8213
-    firstReelPosition: 2626144
+    firstReelPosition: 3674724
     reelTableNumber: 25
   - mainConditions: 8213
     firstReelPosition: 198808
     reelTableNumber: 27
-  - mainConditions: 8213
-    firstReelPosition: 1048580
-    reelTableNumber: 25
   - mainConditions: 270357
     firstReelPosition: 1048580
     reelTableNumber: 27
@@ -1178,18 +1175,15 @@ MonoBehaviour:
   - mainConditions: 401429
     firstReelPosition: 1048580
     reelTableNumber: 27
-  - mainConditions: 12309
-    firstReelPosition: 320770
-    reelTableNumber: 26
-  - mainConditions: 208917
-    firstReelPosition: 1048580
-    reelTableNumber: 25
   - mainConditions: 143381
     firstReelPosition: 2626144
     reelTableNumber: 25
   - mainConditions: 143381
     firstReelPosition: 198808
     reelTableNumber: 27
+  - mainConditions: 208917
+    firstReelPosition: 1048580
+    reelTableNumber: 25
   - mainConditions: 274453
     firstReelPosition: 2626144
     reelTableNumber: 25
@@ -1215,10 +1209,7 @@ MonoBehaviour:
     firstReelPosition: 8
     reelTableNumber: 26
   - mainConditions: 12565
-    firstReelPosition: 16384
-    reelTableNumber: 28
-  - mainConditions: 12565
-    firstReelPosition: 8192
+    firstReelPosition: 24576
     reelTableNumber: 28
   - mainConditions: 143637
     firstReelPosition: 16384
@@ -1295,36 +1286,39 @@ MonoBehaviour:
   - mainConditions: 22
     firstReelPosition: 0
     reelTableNumber: 30
+  - mainConditions: 4118
+    firstReelPosition: 0
+    reelTableNumber: 30
   - mainConditions: 8214
-    firstReelPosition: 3466328
+    firstReelPosition: 1369176
     reelTableNumber: 29
   - mainConditions: 8214
     firstReelPosition: 4866
     reelTableNumber: 31
   - mainConditions: 143382
-    firstReelPosition: 3466328
+    firstReelPosition: 1369176
     reelTableNumber: 29
   - mainConditions: 143382
     firstReelPosition: 4866
     reelTableNumber: 31
   - mainConditions: 274454
-    firstReelPosition: 3466328
+    firstReelPosition: 1369176
     reelTableNumber: 29
   - mainConditions: 274454
     firstReelPosition: 4866
     reelTableNumber: 31
   - mainConditions: 405526
-    firstReelPosition: 3466328
+    firstReelPosition: 1369176
     reelTableNumber: 29
   - mainConditions: 405526
     firstReelPosition: 4866
     reelTableNumber: 31
   - mainConditions: 8470
     firstReelPosition: 16384
-    reelTableNumber: 31
+    reelTableNumber: 30
   - mainConditions: 8470
     firstReelPosition: 32768
-    reelTableNumber: 30
+    reelTableNumber: 31
   - mainConditions: 12566
     firstReelPosition: 16384
     reelTableNumber: 30
@@ -1339,10 +1333,10 @@ MonoBehaviour:
     reelTableNumber: 31
   - mainConditions: 8726
     firstReelPosition: 16384
-    reelTableNumber: 31
+    reelTableNumber: 30
   - mainConditions: 8726
     firstReelPosition: 32768
-    reelTableNumber: 30
+    reelTableNumber: 31
   - mainConditions: 12822
     firstReelPosition: 16384
     reelTableNumber: 30
@@ -1364,29 +1358,32 @@ MonoBehaviour:
   - mainConditions: 23
     firstReelPosition: 0
     reelTableNumber: 33
-  - mainConditions: 8215
-    firstReelPosition: 2052
-    reelTableNumber: 32
-  - mainConditions: 8215
-    firstReelPosition: 1418418
-    reelTableNumber: 34
-  - mainConditions: 12311
+  - mainConditions: 23
     firstReelPosition: 48
     reelTableNumber: 34
+  - mainConditions: 4119
+    firstReelPosition: 0
+    reelTableNumber: 33
+  - mainConditions: 8215
+    firstReelPosition: 4
+    reelTableNumber: 32
+  - mainConditions: 8215
+    firstReelPosition: 1418370
+    reelTableNumber: 34
   - mainConditions: 143383
-    firstReelPosition: 2052
+    firstReelPosition: 4
     reelTableNumber: 32
   - mainConditions: 143383
     firstReelPosition: 1418370
     reelTableNumber: 34
   - mainConditions: 274455
-    firstReelPosition: 2052
+    firstReelPosition: 4
     reelTableNumber: 32
   - mainConditions: 274455
     firstReelPosition: 1418370
     reelTableNumber: 34
   - mainConditions: 405527
-    firstReelPosition: 2052
+    firstReelPosition: 4
     reelTableNumber: 32
   - mainConditions: 405527
     firstReelPosition: 1418370
