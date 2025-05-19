@@ -46,9 +46,8 @@ public class ReelTableManager
 
             for (int i = 0; i < orderToCheck.Length; i++)
             {
-                // フラグID、ボーナスID以外の条件で0があった場合はパスする
-                if (i != (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0 ||
-                    i != (int)ReelConditionsData.ConditionID.Bonus && data.GetConditionData(i) == 0)
+                // フラグID以外の条件で0があった場合はパスする
+                if (i != (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0)
                 {
                     continue;
                 }

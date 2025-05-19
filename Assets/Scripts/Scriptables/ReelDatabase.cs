@@ -110,6 +110,7 @@ namespace ReelSpinGame_Datas
                 // ‘æˆêƒŠ[ƒ‹’â~
                 else if (indexNum < FirstReelPosMaxRead)
                 {
+                    Debug.Log(value);
                     firstReelPosition += ConvertToArrayBit(Convert.ToInt32(value));
                 }
 
