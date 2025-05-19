@@ -20,10 +20,10 @@ public class ReelTableManager
 
     // func
     // 条件から使用するテーブル番号を探す
-    public int FindTableToUse(ReelData reel, int flagID, int firstPush, int bonus, int bet, int random, int firstPushPos)
+    public int FindTableToUse(ReelData reel, int flagID, int firstPush, int bet, int bonus, int random, int firstPushPos)
     {
-        int condition = ReelConditionsData.ConvertConditionData(flagID, firstPush, bonus, bet, random);
-        int[] orderToCheck = { flagID, firstPush, bonus, bet, random };
+        int condition = ReelConditionsData.ConvertConditionData(flagID, firstPush, bet, bonus, random);
+        int[] orderToCheck = { flagID, firstPush, bet, bonus, random };
 
         // 使用するテーブル配列の番号(-1はエラー)
         int foundTable = -1;
@@ -32,8 +32,8 @@ public class ReelTableManager
 
         Debug.Log("Flag:" + flagID);
         Debug.Log("FirstPush:" + firstPush);
-        Debug.Log("Bonus:" + bonus);
         Debug.Log("bet:" + bet);
+        Debug.Log("Bonus:" + bonus);
         Debug.Log("Random:" + random);
 
         foreach (ReelConditionsData data in reel.ReelDatabase.Conditions)

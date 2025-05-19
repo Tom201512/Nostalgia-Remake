@@ -173,7 +173,7 @@ public class ReelManager : MonoBehaviour
                 // ここでディレイ(スベリコマ)を得て転送
                 // 条件をチェック
                 int tableIndex = reelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
-                    , (int)flagID, (int)firstPushReel, (int)bonusID, betAmounts, RandomValue, firstPushPos);
+                    , (int)flagID, (int)firstPushReel, betAmounts, (int)bonusID, RandomValue, firstPushPos);
 
                 // 先ほど得たディレイ分リール停止を遅らせる
                 int delay = reelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);

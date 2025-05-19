@@ -43,7 +43,7 @@ namespace ReelSpinGame_Datas
 
         // enum
         // 条件のシリアライズ
-        public enum ConditionID { Flag, FirstPush, Bonus, Bet, Random }
+        public enum ConditionID { Flag, FirstPush, Bet, Bonus, Random }
 
         // var
         // フラグID, 第一停止, ボーナス, ベット枚数, ランダム制御の順で読み込む
@@ -127,12 +127,12 @@ namespace ReelSpinGame_Datas
         public int GetConditionData(int conditionID) => ((MainConditions >> ConditionBitOffset * conditionID) & 0xF);
 
         // 各条件をintにする
-        public static int ConvertConditionData(int flagID, int firstPush, int bonus, int bet, int random)
+        public static int ConvertConditionData(int flagID, int firstPush, int bet, int bonus, int random)
         {
             // 16進数のデータへ変更
             int conditions = 0;
             // 配列にする
-            int[] conditionArray = { flagID, firstPush, bonus, bet, random };
+            int[] conditionArray = { flagID, firstPush, bet, bonus, random };
 
             for (int i = 0; i < (int)ConditionID.Random; i++)
             {
