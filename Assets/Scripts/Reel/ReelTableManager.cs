@@ -1,3 +1,4 @@
+using ReelSpinGame_Bonus;
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class ReelTableManager
     // リールテーブル管理用
 
     // const
+    public const int BonusAnyValueID = 3;
 
     // var
     // 最後に使用したリールテーブルID
@@ -44,10 +46,19 @@ public class ReelTableManager
 
             for (int i = 0; i < orderToCheck.Length; i++)
             {
-                // フラグID、ボーナス以外の条件は0ならパス
+                // フラグID、ボーナスID以外の条件で0があった場合はパスする
                 if (i != (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0 ||
                     i != (int)ReelConditionsData.ConditionID.Bonus && data.GetConditionData(i) == 0)
                 {
+                    continue;
+                }
+                // ボーナス条件は3ならいずれかのボーナスが成立していればパス
+                else if(i == (int)ReelConditionsData.ConditionID.Bonus && 
+                    data.GetConditionData(i) == BonusAnyValueID &&
+                    bonus != (int)BonusManager.BonusType.BonusNone)
+                {
+                    Debug.Log(data.GetConditionData(i) + "ANY BONUS");
+                    Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
                 else if (orderToCheck[i] != data.GetConditionData(i))
