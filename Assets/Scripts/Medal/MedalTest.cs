@@ -1,3 +1,4 @@
+using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
@@ -7,10 +8,12 @@ public class MedalTest : MonoBehaviour
     // メダル処理のテスト用
 
     private MedalManager medalManager;
+    private MedalData medalData;
 
     void Awake()
     {
-        medalManager = new MedalManager(0, MedalManager.MaxBet, 0, false);
+        medalData = new MedalData();
+        medalManager = new MedalManager(0, MedalManager.MaxBet, 0, false, medalData);
     }
 
     void Update()

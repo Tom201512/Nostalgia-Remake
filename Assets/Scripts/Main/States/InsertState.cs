@@ -50,10 +50,19 @@ namespace ReelSpinGame_State.InsertState
             // ベット終了
             if(OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
             {
+                // 投入枚数を反映する
+                gameManager.Medal.ApplyLastBetToReceiver();
+
                 // すでにベットされている場合は抽選へ
                 if (gameManager.Medal.CurrentBet > 0)
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
+
+                    // ボーナス中なら払い出し枚数を減らす
+                    if(gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
+                    {
+                        gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Medal.CurrentBet);
+                    }
                 }
                 // そうでない場合はMAX BET
                 else

@@ -2,6 +2,7 @@ using ReelSpinGame_Bonus;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Medal.Payout;
+using ReelSpinGame_System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] WaitTestUI waitUI;
     [SerializeField] ReelTestUI reelUI;
     [SerializeField] BonusTestUI bonusUI;
+    [SerializeField] PlayerUI playerUI;
 
     // キー設定
     // MAXBET
@@ -43,21 +45,27 @@ public class GameManager : MonoBehaviour
 
     // 設定
     [Range(0,6), SerializeField] private int setting;
-
+    // 入力用キーコード
     public KeyCode[] KeyCodes { get; private set; }
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
     public int Setting { get { return setting; } }
 
+    // プレイヤーデータ用
+    public PlayingDatabase PlayerData { get; private set; }
+
     void Awake()
     {
+        // プレイヤーデータ作成
+        PlayerData = new PlayingDatabase();
+
         // 画面
         Debug.Log("Screen:" + Screen.width + "," + Screen.height);
         Screen.SetResolution(960, 540, false);
 
         // メダル管理
-        Medal = new MedalManager(0, MedalManager.MaxBet, 0, false);
+        Medal = new MedalManager(0, MedalManager.MaxBet, 0, false, PlayerData.PlayerMedalData);
         Debug.Log("Medal is launched");
 
         // フラグ管理
@@ -92,7 +100,6 @@ public class GameManager : MonoBehaviour
         {
             setting = Random.Range(1, 6);
         }
-
         Debug.Log("Setting:" + setting);
     }
 
@@ -103,6 +110,7 @@ public class GameManager : MonoBehaviour
         waitUI.SetWaitManager(Wait);
         reelUI.SetReelManager(Reel);
         bonusUI.SetBonusManager(Bonus);
+        playerUI.SetPlayerData(PlayerData);
     }
 
     void Update()
