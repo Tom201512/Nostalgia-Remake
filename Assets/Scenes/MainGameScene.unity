@@ -415,8 +415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
-  instantFlagID: 1
+  useInstant: 0
+  instantFlagID: 0
 --- !u!1 &660297967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,7 +1646,7 @@ PrefabInstance:
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
       value: 
-      objectReference: {fileID: 11400000, guid: af5de9e1517d3fd4aa5d62863bed3395, type: 2}
+      objectReference: {fileID: 11400000, guid: 5e0103a395971e94b8db84a44f66c812, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
