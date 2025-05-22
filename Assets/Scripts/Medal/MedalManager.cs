@@ -1,8 +1,6 @@
-using ReelSpinGame_System;
 using System;
 using System.Timers;
 using UnityEngine;
-using ReelSpinGame_Datas;
 
 namespace ReelSpinGame_Medal
 {
@@ -27,6 +25,14 @@ namespace ReelSpinGame_Medal
         // 処理用タイマー
         public Timer UpdateTimer { get; private set; }
 
+        // 投入されたかのイベント
+        public delegate void MedalInsertedEvent(int insert);
+        public event MedalInsertedEvent HasMedalInserted;
+
+        // 払い出されたかのイベント
+        public delegate void MedalHasPayoutEvent(int payout);
+        public event MedalHasPayoutEvent HasMedalPayout;
+
         // クレジット枚数
         public int Credits { get; private set; }
         // ベット枚数
@@ -40,11 +46,8 @@ namespace ReelSpinGame_Medal
         // リプレイ状態か
         public bool HasReplay { get; private set; }
 
-        // 受け取る側のメダルデータ
-        private MedalData receiverMedalData;
-
         // コンストラクタ
-        public MedalManager(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay, MedalData receiverMedalData)
+        public MedalManager(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
             Credits = credits;
             CurrentBet = 0;
@@ -55,8 +58,8 @@ namespace ReelSpinGame_Medal
             // 処理用タイマー作成
             UpdateTimer = new Timer(MedalUpdateTime);
 
-            // プレイヤーのメダルデータを得る
-            this.receiverMedalData = receiverMedalData;
+            HasMedalInserted += InsertMedal;
+            HasMedalPayout += PayoutMedal;
         }
 
         // デストラクタ
@@ -108,7 +111,7 @@ namespace ReelSpinGame_Medal
 
                     // メダルの投入を開始する(残りはフレーム処理)
                     LastBetAmounts = amounts;
-                    InsertMedal();
+                    HasMedalInserted.Invoke(1);
                     UpdateTimer.Elapsed += UpdateInsert;
                     UpdateTimer.Start();
                 }
@@ -159,7 +162,7 @@ namespace ReelSpinGame_Medal
 
                 if (amounts > 0)
                 {
-                    PayoutMedal();
+                    HasMedalPayout.Invoke(1);
                     UpdateTimer.Elapsed += UpdatePayout;
                     UpdateTimer.Start();
                 }
@@ -174,13 +177,6 @@ namespace ReelSpinGame_Medal
             }
         }
 
-        // 最後に掛けた枚数を反映させる
-        public void ApplyLastBetToReceiver()
-        {
-            receiverMedalData.DecreasePlayerMedal(LastBetAmounts);
-            receiverMedalData.IncreaseInMedal(LastBetAmounts);
-        }
-
         // メダルリセット
         public void ResetMedal()
         {
@@ -193,8 +189,7 @@ namespace ReelSpinGame_Medal
         {
             Debug.Log("Enable Replay" + LastBetAmounts);
             SetRemaining(LastBetAmounts);
-            receiverMedalData.IncreaseOutMedal(3);
-            InsertMedal();
+            HasMedalInserted.Invoke(1);
             UpdateTimer.Elapsed += UpdateInsert;
             UpdateTimer.Start();
 
@@ -236,7 +231,7 @@ namespace ReelSpinGame_Medal
             // 投入処理
             if (remainingBet > 0)
             {
-                InsertMedal();
+                HasMedalInserted.Invoke(1);
             }
             // 全て投入したら処理終了
             else
@@ -254,7 +249,7 @@ namespace ReelSpinGame_Medal
             // 払い出し処理
             if (PayoutAmounts > 0)
             {
-                PayoutMedal();
+                HasMedalPayout.Invoke(1);
             }
             // 全て払い出したら処理終了
             else
@@ -267,27 +262,25 @@ namespace ReelSpinGame_Medal
         }
 
         // 投入処理
-        private void InsertMedal()
+        private void InsertMedal(int amount)
         {
-            remainingBet -= 1;
+            remainingBet -= amount;
             Debug.Log("Remaining:" + remainingBet);
             Debug.Log("Bet Medal by 1");
-            CurrentBet += 1;
+            CurrentBet += amount;
 
             if (!HasReplay)
             {
-                ChangeCredit(-1);
+                ChangeCredit(-amount);
             }
         }
 
         // 払い出し処理
-        private void PayoutMedal()
+        private void PayoutMedal(int amount)
         {
-            PayoutAmounts -= 1;
-            ChangeCredit(1);
-            receiverMedalData.IncreasePlayerMedal(1);
-            receiverMedalData.IncreaseOutMedal(1);
-            Debug.Log("Payout Medal by 1");
+            PayoutAmounts -= amount;
+            ChangeCredit(amount);
+            Debug.Log("Payout Medal by:" + amount);
         }
     }
 }

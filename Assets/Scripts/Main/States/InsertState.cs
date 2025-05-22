@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using ReelSpinGame_Interface;
-using ReelSpinGame_Medal;
+﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
+using UnityEngine;
 
 namespace ReelSpinGame_State.InsertState
 {
@@ -44,14 +43,15 @@ namespace ReelSpinGame_State.InsertState
             // BET1
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetOne]))
             {
-                gameManager.Medal?.StartBet(1);
+                gameManager.Medal.StartBet(1);
             }
 
             // ベット終了
             if(OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
             {
                 // 投入枚数を反映する
-                gameManager.Medal.ApplyLastBetToReceiver();
+                gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.LastBetAmounts);
+                gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.LastBetAmounts);
 
                 // すでにベットされている場合は抽選へ
                 if (gameManager.Medal.CurrentBet > 0)
@@ -61,7 +61,7 @@ namespace ReelSpinGame_State.InsertState
                     // ボーナス中なら払い出し枚数を減らす
                     if(gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
                     {
-                        gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Medal.CurrentBet);
+                        gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.LastBetAmounts);
                     }
                 }
                 // そうでない場合はMAX BET

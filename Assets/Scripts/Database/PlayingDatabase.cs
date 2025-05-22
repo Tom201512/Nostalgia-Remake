@@ -75,7 +75,7 @@ namespace ReelSpinGame_System
         }
 
         // 現在のボーナス履歴に払い出しを追加する
-        public void ChangeBonusPayoutToLast(int payouts) => BonusHitDatas[~1].ChangeBonusPayouts(payouts);
+        public void ChangeBonusPayoutToLast(int payouts) => BonusHitDatas[^1].ChangeBonusPayouts(payouts);
 
         // ビッグチャンス回数の増加
         public void IncreaseBigChance() => BigTimes += 1;

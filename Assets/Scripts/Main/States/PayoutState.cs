@@ -35,6 +35,9 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.Medal.ResetMedal();
 
             // 払い出し
+            gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
+            gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
+
             gameManager.Medal.StartPayout(gameManager.Payout.LastPayoutResult.Payouts);
 
             // ボーナス中なら各ボーナスの払い出しを増やす
@@ -124,6 +127,8 @@ namespace ReelSpinGame_State.PayoutState
                     // リプレイ
                     if (gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
                     {
+                        // 最後に賭けた枚数をOUTに反映
+                        gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal(gameManager.Medal.LastBetAmounts);
                         gameManager.Medal.SetReplay();
                     }
                     else if (gameManager.Medal.HasReplay)
@@ -159,6 +164,8 @@ namespace ReelSpinGame_State.PayoutState
         {
             if(gameManager.Medal.PayoutAmounts == 0)
             {
+                gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
+                gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
                 gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
             }
         }
@@ -183,6 +190,7 @@ namespace ReelSpinGame_State.PayoutState
         //　ボーナス開始
         private void StartBonus()
         {
+            // ビッグチャンス
             if(gameManager.Payout.LastPayoutResult.BonusID == (int)BonusManager.BonusType.BonusBIG)
             {
                 gameManager.Bonus.StartBigChance();
@@ -190,6 +198,8 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Payout.ChangePayoutCheckMode(ReelSpinGame_Medal.Payout.PayoutChecker.PayoutCheckMode.PayoutBIG);
                 gameManager.PlayerData.IncreaseBigChance();
             }
+
+            // ボーナスゲーム
             else if (gameManager.Payout.LastPayoutResult.BonusID == (int)BonusManager.BonusType.BonusREG)
             {
                 gameManager.Bonus.StartBonusGame();

@@ -13,7 +13,7 @@ public class MedalTest : MonoBehaviour
     void Awake()
     {
         medalData = new MedalData();
-        medalManager = new MedalManager(0, MedalManager.MaxBet, 0, false, medalData);
+        medalManager = new MedalManager(0, MedalManager.MaxBet, 0, false);
     }
 
     void Update()

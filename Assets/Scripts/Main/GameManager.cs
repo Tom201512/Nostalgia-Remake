@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(960, 540, false);
 
         // ƒƒ_ƒ‹ŠÇ—
-        Medal = new MedalManager(0, MedalManager.MaxBet, 0, false, PlayerData.PlayerMedalData);
+        Medal = new MedalManager(0, MedalManager.MaxBet, 0, false);
         Debug.Log("Medal is launched");
 
         // ƒtƒ‰ƒOŠÇ—
@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // UI İ’è
         medalUI.SetMedalManager(Medal);
         lotsUI.SetFlagManager(Lots);
         waitUI.SetWaitManager(Wait);

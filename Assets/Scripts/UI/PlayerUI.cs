@@ -29,7 +29,7 @@ public class PlayerUI : MonoBehaviour
         if (playingDatabase.PlayerMedalData.CurrentInMedal > 0 && playingDatabase.PlayerMedalData.CurrentOutMedal > 0)
         {
             float payoutRate = (float)playingDatabase.PlayerMedalData.CurrentOutMedal / playingDatabase.PlayerMedalData.CurrentInMedal * 100;
-            buffer += "Payout:" + System.MathF.Round(payoutRate, 2) + "\n" + "\n";
+            buffer += "Payout:" + payoutRate.ToString("F2") + "%" + "\n" + "\n";
         }
         else
         {
