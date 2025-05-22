@@ -209,6 +209,9 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.PlayerData.IncreaseBonusGame();
             }
 
+            // 15枚の払い出しを加算
+            Debug.Log(gameManager.Payout.LastPayoutResult.Payouts);
+            gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Payout.LastPayoutResult.Payouts);
             gameManager.Lots.FlagCounter.ResetCounter();
             gameManager.PlayerData.SetLastBonusStart();
         }

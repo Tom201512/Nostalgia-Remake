@@ -14,11 +14,6 @@ namespace ReelSpinGame_Datas
         [SerializeField] private FlagDataSets normalBTable;
         // 小役ゲーム中
         [SerializeField] private FlagDataSets bigTable;
-
-        // 通常時(全パターン全設定)
-        [SerializeField] private FlagDataSets normalAllTable;
-        // BIG中小役ゲーム時(全パターン全設定)
-        [SerializeField] private FlagDataSets bigAllTable;
         // JAC時のはずれ
         [SerializeField] private float jacNonePoss;
 
