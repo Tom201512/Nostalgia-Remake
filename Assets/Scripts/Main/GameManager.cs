@@ -101,6 +101,9 @@ public class GameManager : MonoBehaviour
             setting = Random.Range(1, 6);
         }
         Debug.Log("Setting:" + setting);
+
+        // ‰æ–ÊƒTƒCƒY‰Šú‰»
+        Screen.SetResolution(1600, 900, false);
     }
 
     void Start()
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        MainFlow.UpdateState();
+            MainFlow.UpdateState();
     }
 
     // func
