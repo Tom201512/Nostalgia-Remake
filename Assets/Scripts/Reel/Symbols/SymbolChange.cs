@@ -20,6 +20,7 @@ public class SymbolChange : MonoBehaviour
     {
         render = GetComponent<Renderer>();
         render.material.mainTexture = symbolImages[(int)currentSymbol];
+        render.material.EnableKeyword("_EMISSION");
     }
 
     // }•¿•ÏX
@@ -32,12 +33,16 @@ public class SymbolChange : MonoBehaviour
     public ReelData.ReelPosID GetPosID() => posID;
 
     // }•¿‚Ì–¾‚é‚³‚ğ•ÏX‚·‚é(0~255)
-    public void ChangeBrightness(byte brightness) => ChangeMaterialColor(brightness, brightness, brightness);
-
-    // }•¿‚ÌF•ÏX
-    public void ChangeMaterialColor(byte r, byte g, byte b)
+    public void ChangeBrightness(byte r, byte g, byte b)
     {
         render.material.SetColor("_Color", new Color32(r, g, b, 255));
         Debug.Log("SetColor" + r + "," + g + "," + b);
+    }
+
+    // }•¿‚ÌŒõ“x‚ğ•ÏX‚·‚é
+    public void ChangeEmmision(byte r, byte g, byte b)
+    {
+        render.material.SetColor("_EmissionColor", new Color32(r, g, b, 255));
+        Debug.Log("_Emission" + r + "," + g + "," + b);
     }
 }

@@ -81,7 +81,8 @@ public class ReelManager : MonoBehaviour
     void Start()
     {
         // リールの明るさを変更するテスト
-        //reelObjects[(int)ReelID.ReelLeft].SetSymbolBrightness((int)ReelData.ReelPosArrayID.Center, 128);
+        //reelObjects[(int)ReelID.ReelLeft].SetSymbolBrightness((int)ReelData.ReelPosArrayID.Center, 255);
+        reelObjects[(int)ReelID.ReelLeft].SetSymbolEmission((int)ReelData.ReelPosArrayID.Center, 100,20,20);
         //reelObjects[(int)ReelID.ReelLeft].SetReelBaseBrightness(128);
     }
 
