@@ -32,21 +32,21 @@ namespace ReelSpinGame_State.InsertState
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.MaxBet]))
             {
                 gameManager.Medal.StartMAXBet();
-                gameManager.Reel.FlashManager.StopFlash();
+                StopReelFlash();
             }
 
             // BET2
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
             {
                 gameManager.Medal.StartBet(2);
-                gameManager.Reel.FlashManager.StopFlash();
+                StopReelFlash();
             }
 
             // BET1
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetOne]))
             {
                 gameManager.Medal.StartBet(1);
-                gameManager.Reel.FlashManager.StopFlash();
+                StopReelFlash();
             }
 
             // ベット終了
@@ -79,6 +79,25 @@ namespace ReelSpinGame_State.InsertState
         public void StateEnd()
         {
             Debug.Log("End Medal Insert");
+        }
+
+        // フラッシュを止める
+        private void StopReelFlash()
+        {
+            Debug.Log("Stop Flash");
+            gameManager.Reel.FlashManager.StopFlash();
+
+            // JAC GAME中なら点灯方法を少し変える
+            if(gameManager.Bonus.CurrentBonusStatus == ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusJACGames)
+            {
+                gameManager.Reel.FlashManager.EnableJacGameLight();
+                Debug.Log("Jac Turn On");
+            }
+            else
+            {
+                gameManager.Reel.FlashManager.TurnOnAllReels();
+                Debug.Log("Turn On");
+            }
         }
     }
 }

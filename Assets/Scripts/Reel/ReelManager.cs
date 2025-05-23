@@ -87,7 +87,7 @@ public class ReelManager : MonoBehaviour
 
     private void Start()
     {
-        FlashManager.StartFlash();
+        //FlashManager.StartFlash();
     }
 
     void Update()
