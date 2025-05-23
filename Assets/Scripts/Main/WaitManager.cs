@@ -1,6 +1,5 @@
-using System;
-using System.Timers;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class WaitManager
 {
@@ -14,8 +13,6 @@ public class WaitManager
     public MainGameFlow MainFlow { get; private set; }
 
     // var
-    // 処理用タイマー
-    private Timer updateTimer;
     // ウェイトが有効か
     public bool hasWait { get; private set; }
     // ウェイトを無効にしているか
@@ -24,17 +21,8 @@ public class WaitManager
     // コンストラクタ
     public WaitManager(bool hasWaitCut)
     {
-        // 処理用タイマー作成
+        // ウェイトカット設定
         this.hasWaitCut = hasWaitCut;
-        updateTimer = new Timer(WaitTimerSetting);
-    }
-
-    // デストラクタ
-    ~WaitManager()
-    {
-        // Timerのストップ
-        updateTimer.Stop();
-        updateTimer.Dispose();
     }
 
     // func
@@ -58,22 +46,23 @@ public class WaitManager
         // ウェイトカット、または実行中のウェイトがなければ実行
         else
         {
-            hasWait = true;
-            updateTimer.Elapsed += WaitProcess;
-            updateTimer.AutoReset = false;
-            updateTimer.Start();
-
-            Debug.Log("Wait start");
+            Task.Run(ActivateWaitTimer);
         }
     }
 
-    // コルーチン用
-
-    // ウェイト管理
-    private void WaitProcess(object sender, ElapsedEventArgs e)
+    async Task ActivateWaitTimer()
     {
-        hasWait = false;
-        updateTimer.Elapsed -= WaitProcess;
-        Debug.Log("Wait disabled");
+        try
+        {
+            Debug.Log("Wait start");
+            hasWait = true;
+            await Task.Delay(WaitTimerSetting);
+            hasWait = false;
+            Debug.Log("Wait disabled");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Error:" + ex);
+        }
     }
 }

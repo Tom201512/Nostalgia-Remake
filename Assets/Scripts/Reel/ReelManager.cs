@@ -3,6 +3,7 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelData;
 
 public class ReelManager : MonoBehaviour
 {
@@ -32,13 +33,16 @@ public class ReelManager : MonoBehaviour
 
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
+
     // リール制御
     private ReelTableManager reelTableManager;
+    // フラッシュ機能
+    public FlashManager FlashManager { get; private set; }
 
     // 最後に止めた位置
     public List<int> LastPos { get; private set; }
     // 最後に止まった出目
-    public List<List<ReelData.ReelSymbols>> LastSymbols { get; private set; }
+    public List<List<ReelSymbols>> LastSymbols { get; private set; }
 
     // 強制ランダム数値
     [SerializeField] private bool instantRandomMode;
@@ -60,7 +64,7 @@ public class ReelManager : MonoBehaviour
         RandomValue = 0;
 
         LastPos = new List<int>();
-        LastSymbols = new List<List<ReelData.ReelSymbols>>();
+        LastSymbols = new List<List<ReelSymbols>>();
 
         try
         {
@@ -76,14 +80,14 @@ public class ReelManager : MonoBehaviour
         {
             Debug.Log("ReelManager awaken");
         }
+
+        FlashManager = GetComponent<FlashManager>();
+        FlashManager.SetReelObjects(reelObjects);
     }
 
-    void Start()
+    private void Start()
     {
-        // リールの明るさを変更するテスト
-        //reelObjects[(int)ReelID.ReelLeft].SetSymbolBrightness((int)ReelData.ReelPosArrayID.Center, 255);
-        reelObjects[(int)ReelID.ReelLeft].SetSymbolEmission((int)ReelData.ReelPosArrayID.Center, 100,20,20);
-        //reelObjects[(int)ReelID.ReelLeft].SetReelBaseBrightness(128);
+        FlashManager.StartFlash();
     }
 
     void Update()
@@ -112,13 +116,18 @@ public class ReelManager : MonoBehaviour
 
     // func
     // 指定したリールの現在位置を返す
-    public int GetCurrentReelPos(int reelID) => reelObjects[reelID].GetReelPos((int)ReelData.ReelPosID.Lower);
+    public int GetCurrentReelPos(int reelID) => reelObjects[reelID].GetReelPos((int)ReelPosID.Lower);
     // 指定したリールを止めた位置を返す
     public int GetStoppedReelPos(int reelID) => reelObjects[reelID].GetLastPressedPos();
     // 指定したリールのディレイ数を返す
     public int GetLastDelay(int reelID) => reelObjects[reelID].GetLastDelay();
     // 指定したリールの使用テーブルIDを返す
     public int GetLastTableID(int reelID) => reelTableManager.UsedReelTableID[reelID];
+    // 指定リール本体の明るさ変更
+    public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
+    // 指定したリールと図柄の明るさ変更
+    public void SetReelSymbolBrightness(int reelID, ReelPosArrayID symbolPos, byte r, byte g, byte b) => 
+        reelObjects[reelID].SetSymbolBrightness((int)symbolPos, r, g, b);
 
     // リール始動
     public void StartReels()

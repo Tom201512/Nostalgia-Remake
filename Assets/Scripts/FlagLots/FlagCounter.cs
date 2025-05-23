@@ -12,9 +12,9 @@ namespace ReelSpinGame_Lots.FlagCounter
         //小役カウンタ増加値
         const int CounterIncreaseDefault = 100;
         // 設定5時
-        const int CounterIncrease5 = 104;
+        const int CounterIncrease5 = 102;
         // 設定6時
-        const int CounterIncrease6 = 108;
+        const int CounterIncrease6 = 104;
 
         // var
         // 小役カウンタ

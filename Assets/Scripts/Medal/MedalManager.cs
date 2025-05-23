@@ -1,5 +1,5 @@
 using System;
-using System.Timers;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ReelSpinGame_Medal
@@ -22,8 +22,6 @@ namespace ReelSpinGame_Medal
         // var
         // 残りベット枚数
         private int remainingBet;
-        // 処理用タイマー
-        public Timer UpdateTimer { get; private set; }
 
         // 投入されたかのイベント
         public delegate void MedalInsertedEvent(int insert);
@@ -55,19 +53,9 @@ namespace ReelSpinGame_Medal
             MaxBetAmounts = curretMaxBet;
             LastBetAmounts = 0;
             HasReplay = hasReplay;
-            // 処理用タイマー作成
-            UpdateTimer = new Timer(MedalUpdateTime);
 
             HasMedalInserted += InsertMedal;
             HasMedalPayout += PayoutMedal;
-        }
-
-        // デストラクタ
-        ~MedalManager()
-        {
-            // Timerのストップ
-            UpdateTimer.Stop();
-            UpdateTimer.Dispose();
         }
 
         // func
@@ -92,7 +80,7 @@ namespace ReelSpinGame_Medal
         public void StartBet(int amounts)
         {
             // 処理ををしていないか、またはリプレイでないかチェック
-            if (!HasReplay && !UpdateTimer.Enabled)
+            if (!HasReplay && UpdateInsert().IsCompleted)
             {
                 // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
                 if(amounts != CurrentBet && amounts <= MaxBetAmounts)
@@ -111,9 +99,7 @@ namespace ReelSpinGame_Medal
 
                     // メダルの投入を開始する(残りはフレーム処理)
                     LastBetAmounts = amounts;
-                    HasMedalInserted.Invoke(1);
-                    UpdateTimer.Elapsed += UpdateInsert;
-                    UpdateTimer.Start();
+                    Task.Run(UpdateInsert);
                 }
 
                 // ベットがすでに終わっている、またはMAXベットの場合(Debug)
@@ -148,7 +134,7 @@ namespace ReelSpinGame_Medal
         public void StartPayout(int amounts)
         {
             // 払い出しをしていないかチェック
-            if (!UpdateTimer.Enabled)
+            if (UpdatePayout().IsCompleted)
             {
                 // クレジット枚数が0より少ないかチェック
                 if(Credits < 0)
@@ -162,9 +148,7 @@ namespace ReelSpinGame_Medal
 
                 if (amounts > 0)
                 {
-                    HasMedalPayout.Invoke(1);
-                    UpdateTimer.Elapsed += UpdatePayout;
-                    UpdateTimer.Start();
+                    Task.Run(UpdatePayout);
                 }
                 else
                 {
@@ -189,10 +173,7 @@ namespace ReelSpinGame_Medal
         {
             Debug.Log("Enable Replay" + LastBetAmounts);
             SetRemaining(LastBetAmounts);
-            HasMedalInserted.Invoke(1);
-            UpdateTimer.Elapsed += UpdateInsert;
-            UpdateTimer.Start();
-
+            Task.Run(UpdateInsert);
             HasReplay = true;
         }
 
@@ -225,40 +206,31 @@ namespace ReelSpinGame_Medal
         }
 
         // コルーチン用
-
-        private void UpdateInsert(object sender, ElapsedEventArgs e)
+        private async Task UpdateInsert()
         {
             // 投入処理
-            if (remainingBet > 0)
+            while (remainingBet > 0)
             {
                 HasMedalInserted.Invoke(1);
+                await Task.Delay(MedalUpdateTime);
             }
             // 全て投入したら処理終了
-            else
-            {
-                UpdateTimer.Stop();
-                UpdateTimer.Elapsed -= UpdateInsert;
 
-                Debug.Log("Bet Finished");
-                Debug.Log("CurrentBet:" + CurrentBet);
-            }
+            Debug.Log("Bet Finished");
+            Debug.Log("CurrentBet:" + CurrentBet);
         }
 
-        private void UpdatePayout(object sender, ElapsedEventArgs e)
+        private async Task UpdatePayout()
         {
             // 払い出し処理
-            if (PayoutAmounts > 0)
+            while (PayoutAmounts > 0)
             {
                 HasMedalPayout.Invoke(1);
+                await Task.Delay(MedalUpdateTime);
             }
-            // 全て払い出したら処理終了
-            else
-            {
-                UpdateTimer.Stop();
-                UpdateTimer.Elapsed -= UpdatePayout;
 
-                Debug.Log("Payout Finished");
-            }
+            // 全て払い出したら処理終了
+            Debug.Log("Payout Finished");
         }
 
         // 投入処理

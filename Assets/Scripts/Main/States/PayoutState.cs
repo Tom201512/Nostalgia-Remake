@@ -37,8 +37,13 @@ namespace ReelSpinGame_State.PayoutState
             // 払い出し
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
-
             gameManager.Medal.StartPayout(gameManager.Payout.LastPayoutResult.Payouts);
+
+            // フラッシュを開始させる
+            if(gameManager.Payout.LastPayoutResult.Payouts != 0)
+            {
+                gameManager.Reel.FlashManager.StartFlash();
+            }
 
             // ボーナス中なら各ボーナスの払い出しを増やす
             if(gameManager.Bonus.CurrentBonusStatus != BonusManager.BonusStatus.BonusNone)

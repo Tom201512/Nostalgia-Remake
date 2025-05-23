@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 286284037}
   - component: {fileID: 286284038}
+  - component: {fileID: 286284039}
   m_Layer: 0
   m_Name: ReelManager
   m_TagString: Untagged
@@ -175,6 +176,18 @@ MonoBehaviour:
   - {fileID: 1933351381669917605}
   instantRandomMode: 0
   instantRandomValue: 6
+--- !u!114 &286284039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286284036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc3a7cbc6c835b408628e8ec849ed93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &341618348
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,8 +429,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 0
-  instantFlagID: 0
+  useInstant: 1
+  instantFlagID: 6
 --- !u!1 &660297967
 GameObject:
   m_ObjectHideFlags: 0

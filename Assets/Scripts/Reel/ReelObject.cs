@@ -194,7 +194,6 @@ public class ReelObject : MonoBehaviour
 
     // リール本体そのものの明るさを変更
     public void SetReelBaseBrightness(byte brightness) => reelBase.SetBrightness(brightness);
-
     // 指定位置リール図柄の明るさを変更
     public void SetSymbolBrightness(int posArrayID, byte r, byte g, byte b) => symbolManager.SymbolObj[posArrayID].ChangeBrightness(r,g,b);
     // 指定位置リール図柄の光度を変更

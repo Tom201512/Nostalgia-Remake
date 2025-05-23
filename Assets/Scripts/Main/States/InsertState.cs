@@ -32,18 +32,21 @@ namespace ReelSpinGame_State.InsertState
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.MaxBet]))
             {
                 gameManager.Medal.StartMAXBet();
+                gameManager.Reel.FlashManager.StopFlash();
             }
 
             // BET2
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
             {
                 gameManager.Medal.StartBet(2);
+                gameManager.Reel.FlashManager.StopFlash();
             }
 
             // BET1
             if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetOne]))
             {
                 gameManager.Medal.StartBet(1);
+                gameManager.Reel.FlashManager.StopFlash();
             }
 
             // ベット終了
@@ -68,6 +71,7 @@ namespace ReelSpinGame_State.InsertState
                 else
                 {
                     gameManager.Medal.StartMAXBet();
+                    gameManager.Reel.FlashManager.StopFlash();
                 }
             }
         }
