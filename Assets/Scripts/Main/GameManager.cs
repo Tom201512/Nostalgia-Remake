@@ -104,6 +104,9 @@ public class GameManager : MonoBehaviour
 
         // ‰æ–ÊƒTƒCƒY‰Šú‰»
         Screen.SetResolution(1600, 900, false);
+
+        // FPSŒÅ’è
+        Application.targetFrameRate = 60;
     }
 
     void Start()

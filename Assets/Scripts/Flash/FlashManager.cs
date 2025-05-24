@@ -15,15 +15,15 @@ public class FlashManager : MonoBehaviour
     // リールフラッシュの間隔(秒間隔)
     const float ReelFlashTime = 0.01f;
     // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
-    const int PayoutFlashFrames = 18;
+    const int PayoutFlashFrames = 15;
     // リプレイ時に待機する時間(秒)
     const int ReplayWaitTime = 1;
     // デフォルトの明るさ(点灯時)
     const int TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
-    const int TurnOffValue = 160;
-    // 図柄を変更する際のループ回数
-    const int SymbolLoops = 3;
+    const int TurnOffSymbolValue = 120;
+    // デフォルトの暗さ(リール本体消灯時)
+    const int TurnOffBodyValue = 80;
     // シーク位置オフセット用
     const int SeekOffset = 4;
     // 変更しないときの数値
@@ -65,6 +65,11 @@ public class FlashManager : MonoBehaviour
         }
 
         Debug.Log("FlashManager awaken");
+    }
+
+    public void Start()
+    {
+        StartFlash(0);
     }
 
     public void OnDestroy()
@@ -125,11 +130,11 @@ public class FlashManager : MonoBehaviour
     {
         foreach (ReelObject reel in ReelObjects)
         {
-            reel.SetReelBaseBrightness(TurnOffValue);
+            reel.SetReelBaseBrightness(TurnOffBodyValue);
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
                 Debug.Log("PosID:" + i);
-                reel.SetSymbolBrightness(i, TurnOffValue, TurnOffValue, TurnOffValue);
+                reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
             }
         }
         Debug.Log("All reels are turned off");
@@ -140,7 +145,7 @@ public class FlashManager : MonoBehaviour
     {
         foreach (ReelObject reel in ReelObjects)
         {
-            reel.SetReelBaseBrightness(TurnOffValue);
+            reel.SetReelBaseBrightness(TurnOffSymbolValue);
 
             // 真ん中以外点灯
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
@@ -151,7 +156,7 @@ public class FlashManager : MonoBehaviour
                 }
                 else
                 {
-                    reel.SetSymbolBrightness(i, TurnOffValue, TurnOffValue, TurnOffValue);
+                    reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
                 }
             }
         }
@@ -268,12 +273,12 @@ public class FlashManager : MonoBehaviour
     public void PayoutFlash(List<PayoutLineData> lastPayoutLines)
     {
         // 明るさの計算(0.01秒で25下げる)
-        int distance = TurnOnValue - TurnOffValue;
+        int distance = TurnOnValue - TurnOffSymbolValue;
         float changeValue = distance / PayoutFlashFrames;
         // 0.01秒で下げる明るさの量(0.08秒でもとに戻る)
         float result = TurnOnValue - CurrentFrame * changeValue;
         // 数値を超えないように調整
-        result = Math.Clamp(result, TurnOffValue, TurnOnValue);
+        result = Math.Clamp(result, TurnOffSymbolValue, TurnOnValue);
         // byte型に変換
         byte brightness = (byte)Math.Round(result);
 
