@@ -312,5 +312,7 @@ public class FlashManager : MonoBehaviour
         Debug.Log("Replay Finished");
         HasReplayWait = false;
         HasFlash = false;
+
+        TurnOnAllReels();
     }
 }
