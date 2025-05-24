@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Threading.Tasks;
 
 public class WaitManager
 {
@@ -7,7 +6,7 @@ public class WaitManager
 
     // const
     // ウェイトに必要な時間(ミリ秒)
-    public const int WaitTimerSetting = 4100;
+    public const float WaitTimerSetting = 4.1f;
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
@@ -23,6 +22,13 @@ public class WaitManager
     {
         // ウェイトカット設定
         this.hasWaitCut = hasWaitCut;
+    }
+
+    // デストラクタ
+    ~WaitManager()
+    {
+        Debug.Log("Wait is disposed");
+        cancellationTokenSource.Cancel();
     }
 
     // func
@@ -54,6 +60,9 @@ public class WaitManager
     {
         try
         {
+            // キャンセルがあった場合
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
+
             Debug.Log("Wait start");
             hasWait = true;
             await Task.Delay(WaitTimerSetting);

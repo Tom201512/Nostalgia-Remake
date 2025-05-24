@@ -42,7 +42,7 @@ namespace ReelSpinGame_State.PayoutState
             // フラッシュを開始させる
             if(gameManager.Payout.LastPayoutResult.Payouts != 0)
             {
-                gameManager.Reel.FlashManager.StartFlash();
+                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines);
             }
 
             // ボーナス中なら各ボーナスの払い出しを増やす

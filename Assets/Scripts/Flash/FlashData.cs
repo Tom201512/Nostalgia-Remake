@@ -12,9 +12,6 @@ namespace ReelSpinGame_Flash
 		// プロパティのシリアライズ
 		public enum PropertyID { FrameID, Body, SymbolLower, LoopPosition = 13};
 
-		// フラッシュのID
-		public enum FlashID { PayoutMiddle, PayoutLower, PayoutUpper, PayoutDiagonalA, PayoutDiagonalB, Flash_V}
-
 		// var 
 		// フラッシュのデータ
 		public List<int[]> FlashArray { get; private set; }

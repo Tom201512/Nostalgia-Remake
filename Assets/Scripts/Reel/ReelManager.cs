@@ -116,18 +116,19 @@ public class ReelManager : MonoBehaviour
 
     // func
     // 指定したリールの現在位置を返す
-    public int GetCurrentReelPos(int reelID) => reelObjects[reelID].GetReelPos((int)ReelPosID.Lower);
+    public int GetCurrentReelPos(int reelID) => reelObjects[reelID].ReelData.GetReelPos((int)ReelPosID.Lower);
     // 指定したリールを止めた位置を返す
     public int GetStoppedReelPos(int reelID) => reelObjects[reelID].GetLastPressedPos();
     // 指定したリールのディレイ数を返す
     public int GetLastDelay(int reelID) => reelObjects[reelID].GetLastDelay();
     // 指定したリールの使用テーブルIDを返す
     public int GetLastTableID(int reelID) => reelTableManager.UsedReelTableID[reelID];
+
     // 指定リール本体の明るさ変更
     public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
     // 指定したリールと図柄の明るさ変更
-    public void SetReelSymbolBrightness(int reelID, ReelPosArrayID symbolPos, byte r, byte g, byte b) => 
-        reelObjects[reelID].SetSymbolBrightness((int)symbolPos, r, g, b);
+    public void SetReelSymbolBrightness(int reelID, ReelPosID symbolPos, byte r, byte g, byte b) => 
+        reelObjects[reelID].SetSymbolBrightness(GetReelArrayIndex((int)symbolPos), r, g, b);
 
     // リール始動
     public void StartReels()
@@ -248,13 +249,13 @@ public class ReelManager : MonoBehaviour
         // リール図柄を作成する
         for(int i = 0; i < reelObjects.Length; i++)
         {
-            LastPos.Add(reelObjects[i].GetReelPos((int)ReelData.ReelPosID.Lower));
+            LastPos.Add(reelObjects[i].ReelData.GetReelPos((int)ReelPosID.Lower));
             posBuffer += LastPos[i];
 
             Debug.Log("Position:" + LastPos[i]);
 
             // データ作成
-            LastSymbols.Add(new List<ReelData.ReelSymbols>());
+            LastSymbols.Add(new List<ReelSymbols>());
 
             // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
             for (int j = (int)ReelData.ReelPosID.Lower3rd; j < (int)ReelData.ReelPosID.Upper3rd; j++)
@@ -266,7 +267,7 @@ public class ReelManager : MonoBehaviour
         Debug.Log("Final ReelPosition" + posBuffer);
 
         // 各リールごとに表示(デバッグ)
-        foreach(List<ReelData.ReelSymbols> reelResult in LastSymbols)
+        foreach(List<ReelSymbols> reelResult in LastSymbols)
         {
             Debug.Log("Reel:");
             for(int i = 0; i < reelResult.Count; i++)

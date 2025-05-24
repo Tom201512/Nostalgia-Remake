@@ -1,9 +1,11 @@
+using ReelSpinGame_Datas;
 using ReelSpinGame_Flash;
-using ReelSpinGame_Reels;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelData;
 
 public class FlashManager : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class FlashManager : MonoBehaviour
     // const
     // リールフラッシュの間隔(秒間隔)
     const float ReelFlashTime = 0.01f;
+    // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
+    const int PayoutFlashFrames = 15;
     // デフォルトの明るさ(点灯時)
     const int TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
@@ -23,41 +27,60 @@ public class FlashManager : MonoBehaviour
     // 変更しないときの数値
     const int NoChangeValue = -1;
 
+    // 払い出しラインのID
+    public enum PayoutLineID {PayoutMiddle, PayoutLower, PayoutUpper, PayoutDiagonalA, PayoutDiagonalB};
+
     // var
     // 現在のフレーム数(1フレーム0.1秒)
     public int CurrentFrame { get; private set; }
     // フラッシュ中か
     public bool HasFlash { get; private set; }
+    // 現在のフラッシュID
+    public int CurrentFlashID { get; private set; }
 
     // リールオブジェクト
     public ReelObject[] ReelObjects { get; private set; }
     // フラッシュデータ
     public List<FlashData> FlashDatabase { get; private set; }
-    [SerializeField] private TextAsset testAsset;
+    [SerializeField] private List<TextAsset> testAssetList;
 
     // func
     public void Awake()
     {
         HasFlash = false;
+        CurrentFlashID = 0;
         FlashDatabase = new List<FlashData>();
-        StringReader buffer = new StringReader(testAsset.text);
-        FlashDatabase.Add(new FlashData(buffer));
+
+        foreach(TextAsset textAsset in testAssetList)
+        {
+            StringReader buffer = new StringReader(textAsset.text);
+            FlashDatabase.Add(new FlashData(buffer));
+        }
+
         Debug.Log("FlashManager awaken");
     }
 
     public void Start()
     {
-        StartFlash();
+        //StartFlash(0);
     }
 
     public void SetReelObjects(ReelObject[] reelObjects) => ReelObjects = reelObjects;
 
     // フラッシュ再生
-    public void StartFlash()
+    public void StartFlash(int flashID)
     {
         CurrentFrame = 0;
         HasFlash = true;
         StartCoroutine("FlashUpdate");
+        Debug.Log("Flash started");
+    }
+
+    public void StartPayoutFlash(List<PayoutLineData> lastPayoutLines)
+    {
+        CurrentFrame = 0;
+        HasFlash = true;
+        StartCoroutine("PayoutFlashUpdate",lastPayoutLines);
         Debug.Log("Flash started");
     }
 
@@ -73,7 +96,7 @@ public class FlashManager : MonoBehaviour
         foreach(ReelObject reel in ReelObjects)
         {
             reel.SetReelBaseBrightness(TurnOnValue);
-            for (int i = 0; i < (int)ReelData.ReelPosArrayID.Upper3rd; i++)
+            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
                 reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
             }
@@ -87,7 +110,7 @@ public class FlashManager : MonoBehaviour
         foreach (ReelObject reel in ReelObjects)
         {
             reel.SetReelBaseBrightness(TurnOffValue);
-            for (int i = 0; i < (int)ReelData.ReelPosArrayID.Upper3rd; i++)
+            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
                 Debug.Log("PosID:" + i);
                 reel.SetSymbolBrightness(i, TurnOffValue, TurnOffValue, TurnOffValue);
@@ -104,9 +127,9 @@ public class FlashManager : MonoBehaviour
             reel.SetReelBaseBrightness(TurnOffValue);
 
             // 真ん中以外点灯
-            for (int i = 0; i < (int)ReelData.ReelPosArrayID.Upper3rd; i++)
+            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
-                if(i == (int)ReelData.ReelPosArrayID.Center)
+                if (i == GetReelArrayIndex((int)ReelPosID.Center))
                 {
                     reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
                 }
@@ -116,7 +139,7 @@ public class FlashManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("All reels are turned on");
+        Debug.Log("turned on JACGAME lights");
     }
 
     // フラッシュの更新処理
@@ -134,11 +157,30 @@ public class FlashManager : MonoBehaviour
         yield break;
     }
 
+    public IEnumerator PayoutFlashUpdate(List<PayoutLineData> lastPayoutLines)
+    {
+        Debug.Log("Payout Coroutine called");
+        while (HasFlash)
+        {
+            PayoutFlash(lastPayoutLines);
+            Debug.Log("Flash:" + CurrentFrame);
+            yield return new WaitForSeconds(ReelFlashTime);
+        }
+
+        Debug.Log("Flash Stopped by Insert");
+        yield break;
+    }
+
     // フラッシュデータの処理を反映する
     public void ReadFlashData()
     {
-        int[] flashData = FlashDatabase[0].GetCurrentFlashData();
-        Debug.Log("Seek:"+ FlashDatabase[0].CurrentSeekPos);
+        if(CurrentFlashID >= FlashDatabase.Count)
+        {
+            throw new System.Exception("FlashID is Overflow the flashDatabase");
+        }
+
+        int[] flashData = FlashDatabase[CurrentFlashID].GetCurrentFlashData();
+        Debug.Log("Seek:"+ FlashDatabase[CurrentFlashID].CurrentSeekPos);
 
         // 現在のフレームと一致しなければ読み込まない
         Debug.Log("Segment:" + flashData[(int)FlashData.PropertyID.FrameID]);
@@ -149,7 +191,6 @@ public class FlashManager : MonoBehaviour
             {
                 // 本体変更
                 int bodyBright = flashData[(int)FlashData.PropertyID.Body + reel.ReelData.ReelID * SeekOffset];
-
                 Debug.Log("Change Body:" + reel.ReelData.ReelID + "Bright:" + bodyBright);
                 if (bodyBright != NoChangeValue)
                 {
@@ -179,10 +220,10 @@ public class FlashManager : MonoBehaviour
             }
 
             // データのシーク位置変更
-            if (!FlashDatabase[0].HasSeekReachedEnd())
+            if (!FlashDatabase[CurrentFlashID].HasSeekReachedEnd())
             {
                 CurrentFrame += 1;
-                FlashDatabase[0].MoveNextSeek();
+                FlashDatabase[CurrentFlashID].MoveNextSeek();
                 Debug.Log("SeekMoved");
                 Debug.Log("NextFrame");
             }
@@ -192,7 +233,7 @@ public class FlashManager : MonoBehaviour
             if (flashData[(int)FlashData.PropertyID.LoopPosition] != NoChangeValue)
             {
                 CurrentFrame = flashData[(int)FlashData.PropertyID.LoopPosition];
-                FlashDatabase[0].ResetSeek();
+                FlashDatabase[CurrentFlashID].ResetSeek();
                 Debug.Log("LoopFlash");
             }
         }
@@ -200,6 +241,45 @@ public class FlashManager : MonoBehaviour
         {
             CurrentFrame += 1;
             Debug.Log("NextFrame");
+        }
+    }
+
+    // 払い出し時のフラッシュ
+    public void PayoutFlash(List<PayoutLineData> lastPayoutLines)
+    {
+        // 明るさの計算(0.01秒で25下げる)
+        int distance = TurnOnValue - TurnOffValue;
+        float changeValue = distance / PayoutFlashFrames;
+        // 0.01秒で下げる明るさの量(0.08秒でもとに戻る)
+        float result = TurnOnValue - CurrentFrame * changeValue;
+        // 数値を超えないように調整
+        result = Math.Clamp(result, TurnOffValue, TurnOnValue);
+        // byte型に変換
+        byte brightness = (byte)Math.Round(result);
+
+        //全ての払い出しのあったラインをフラッシュさせる
+        foreach (PayoutLineData payoutLine in lastPayoutLines)
+        {
+            for(int i = 0; i < payoutLine.PayoutLines.Count; i++)
+            {
+                // 図柄点灯
+                ReelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i],brightness, brightness, brightness);
+
+                // 左リールにチェリーがある場合はチェリーのみ点灯
+                if (ReelObjects[(int)ReelManager.ReelID.ReelLeft].GetReelSymbol
+                    (payoutLine.PayoutLines[(int)ReelManager.ReelID.ReelLeft]) == ReelSymbols.Cherry)
+                {
+                    break;
+                }
+            }
+        }
+
+        // ループさせる
+        CurrentFrame += 1;
+
+        if(CurrentFrame == PayoutFlashFrames)
+        {
+            CurrentFrame = 0;
         }
     }
 }

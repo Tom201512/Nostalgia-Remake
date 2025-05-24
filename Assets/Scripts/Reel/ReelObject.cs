@@ -42,6 +42,7 @@ public class ReelObject : MonoBehaviour
     public int lastPressedPos { get; private set; }
     // 最後に止めたときのディレイ数
     public int lastDelay { get; private set; }
+
     // リール情報
     public ReelData ReelData { get; private set; }
 
@@ -113,10 +114,8 @@ public class ReelObject : MonoBehaviour
         ReelData = new ReelData(reelID, initialLowerPos, reelDatabaseFile);
     }
 
-    // 指定位置からリール位置を渡す
-    public int GetReelPos(ReelData.ReelPosID posID) => ReelData.GetReelPos((sbyte)posID);
     // 指定位置からリール図柄を渡す
-    public ReelData.ReelSymbols GetReelSymbol(ReelData.ReelPosID posID) => ReelData.GetReelSymbol((sbyte)posID);
+    public ReelData.ReelSymbols GetReelSymbol(int posID) => ReelData.GetReelSymbol(posID);
     // 押した位置を返す(テーブル制御判定用)
     public int GetPressedPos() => ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
     // 最後に止めた停止位置を返す
@@ -195,9 +194,9 @@ public class ReelObject : MonoBehaviour
     // リール本体そのものの明るさを変更
     public void SetReelBaseBrightness(byte brightness) => reelBase.SetBrightness(brightness);
     // 指定位置リール図柄の明るさを変更
-    public void SetSymbolBrightness(int posArrayID, byte r, byte g, byte b) => symbolManager.SymbolObj[posArrayID].ChangeBrightness(r,g,b);
+    public void SetSymbolBrightness(int posID, byte r, byte g, byte b) => symbolManager.SymbolObj[ReelData.GetReelArrayIndex(posID)].ChangeBrightness(r,g,b);
     // 指定位置リール図柄の光度を変更
-    public void SetSymbolEmission(int posArrayID, byte r, byte g, byte b) => symbolManager.SymbolObj[posArrayID].ChangeEmmision(r,g,b);
+    public void SetSymbolEmission(int posID, byte r, byte g, byte b) => symbolManager.SymbolObj[ReelData.GetReelArrayIndex(posID)].ChangeEmmision(r,g,b);
 
     // 回転率計算
     private float ReturnAngularVelocity(float rpsValue)

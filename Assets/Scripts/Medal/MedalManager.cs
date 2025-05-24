@@ -1,4 +1,6 @@
 using System;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -31,6 +33,9 @@ namespace ReelSpinGame_Medal
         public delegate void MedalHasPayoutEvent(int payout);
         public event MedalHasPayoutEvent HasMedalPayout;
 
+        // キャンセル用
+        private CancellationTokenSource cancellationTokenSource;
+
         // クレジット枚数
         public int Credits { get; private set; }
         // ベット枚数
@@ -56,6 +61,16 @@ namespace ReelSpinGame_Medal
 
             HasMedalInserted += InsertMedal;
             HasMedalPayout += PayoutMedal;
+
+            cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        // デストラクタ
+        ~MedalManager()
+        {
+            Debug.Log("Medal is disposed");
+            cancellationTokenSource.Cancel();
+            Debug.Log(cancellationTokenSource.Token.IsCancellationRequested);
         }
 
         // func
@@ -208,29 +223,49 @@ namespace ReelSpinGame_Medal
         // コルーチン用
         private async Task UpdateInsert()
         {
-            // 投入処理
-            while (remainingBet > 0)
+            try
             {
-                HasMedalInserted.Invoke(1);
-                await Task.Delay(MedalUpdateTime);
-            }
-            // 全て投入したら処理終了
+                // 投入処理
+                while (remainingBet > 0)
+                {
+                    // キャンセルがあった場合
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-            Debug.Log("Bet Finished");
-            Debug.Log("CurrentBet:" + CurrentBet);
+                    HasMedalInserted.Invoke(1);
+                    await Task.Delay(MedalUpdateTime);
+                }
+                // 全て投入したら処理終了
+
+                Debug.Log("Bet Finished");
+                Debug.Log("CurrentBet:" + CurrentBet);
+            }
+            catch(Exception ex)
+            {
+                Debug.Log(ex);
+            }
         }
 
         private async Task UpdatePayout()
         {
-            // 払い出し処理
-            while (PayoutAmounts > 0)
+            try
             {
-                HasMedalPayout.Invoke(1);
-                await Task.Delay(MedalUpdateTime);
-            }
+                // 払い出し処理
+                while (PayoutAmounts > 0)
+                {
+                    // キャンセルがあった場合
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-            // 全て払い出したら処理終了
-            Debug.Log("Payout Finished");
+                    HasMedalPayout.Invoke(1);
+                    await Task.Delay(MedalUpdateTime);
+                }
+
+                // 全て払い出したら処理終了
+                Debug.Log("Payout Finished");
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
         }
 
         // 投入処理

@@ -1,8 +1,6 @@
 ﻿using ReelSpinGame_Datas;
 using System;
-using System.IO;
 using UnityEngine;
-using static ReelManager;
 
 namespace ReelSpinGame_Reels
 {
@@ -18,8 +16,6 @@ namespace ReelSpinGame_Reels
         public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
         // リール位置識別用
         public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
-        // リール位置の配列
-        public enum ReelPosArrayID { Lower3rd, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
 
         // var
         // リール識別ID
@@ -58,13 +54,14 @@ namespace ReelSpinGame_Reels
         // func
         // リール配列の番号を図柄へ変更
         public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
-
         // 指定したリールの位置番号を返す
         public int GetReelPos(int posID) => OffsetReel(posID);
         // リールの位置から図柄を返す
         public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
+        // リール位置を配列要素に置き換える
+        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
 
         // リール位置をオーバーフローしない数値で返す
         private int OffsetReel(int offset)
