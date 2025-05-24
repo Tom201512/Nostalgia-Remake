@@ -1,12 +1,14 @@
 ﻿using ReelSpinGame_Bonus;
 using ReelSpinGame_Interface;
-using System;
 using UnityEngine;
 
 namespace ReelSpinGame_State.PayoutState
 {
     public class PayoutState : IGameStatement
     {
+        // const
+
+        // var
         // このゲームの状態
         public MainGameFlow.GameStates State { get; }
 
@@ -39,14 +41,8 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
             gameManager.Medal.StartPayout(gameManager.Payout.LastPayoutResult.Payouts);
 
-            // フラッシュを開始させる
-            if(gameManager.Payout.LastPayoutResult.Payouts != 0)
-            {
-                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines);
-            }
-
             // ボーナス中なら各ボーナスの払い出しを増やす
-            if(gameManager.Bonus.CurrentBonusStatus != BonusManager.BonusStatus.BonusNone)
+            if (gameManager.Bonus.CurrentBonusStatus != BonusManager.BonusStatus.BonusNone)
             {
                 gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Payout.LastPayoutResult.Payouts);
             }
@@ -129,22 +125,10 @@ namespace ReelSpinGame_State.PayoutState
                         }
                     }
 
-                    // リプレイ
-                    if (gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
-                    {
-                        // 最後に賭けた枚数をOUTに反映
-                        gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal(gameManager.Medal.LastBetAmounts);
-                        gameManager.Medal.SetReplay();
-                    }
-                    else if (gameManager.Medal.HasReplay)
-                    {
-                        gameManager.Medal.DisableReplay();
-                    }
-
                     // フラグ管理
                     // 小役が当選していたら増加させる
                     // リプレイでは増やさない(0増加)
-                    if(gameManager.Payout.LastPayoutResult.Payouts > 0 || gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
+                    if (gameManager.Payout.LastPayoutResult.Payouts > 0 || gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
                     {
                         gameManager.Lots.FlagCounter.IncreaseCounter(gameManager.Payout.LastPayoutResult.Payouts);
                     }
@@ -157,21 +141,65 @@ namespace ReelSpinGame_State.PayoutState
                     break;
             }
 
+            // フラッシュを開始させる
+            if (gameManager.Payout.LastPayoutResult.Payouts != 0)
+            {
+                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines, 
+                    gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
+            }
 
-            //if (TestFlag == false)
-            //{
-             //   TestFlag = true;
-              //  gameManager.Medal.SetReplay(); // リプレイにする
-            //}
+            // 通常時のリプレイだった場合は3秒待たせる。
+            else if(gameManager.Bonus.CurrentBonusStatus == BonusManager.BonusStatus.BonusNone &&
+                gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
+            {
+                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines,
+                    gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
+            }
+
+            // 通常時はずれの場合は一定確率(1/6)でフラッシュさせる
+            else if (gameManager.Bonus.CurrentBonusStatus == BonusManager.BonusStatus.BonusNone &&
+                gameManager.Bonus.HoldingBonusID != BonusManager.BonusType.BonusNone &&
+                UnityEngine.Random.Range(0, 5) == 0)
+            {
+                gameManager.Reel.FlashManager.StartFlash((int)FlashManager.FlashID.V_Flash);
+            }
+
+            // ボーナス中はビタハズシかでフラッシュさせる
+            else if (gameManager.Bonus.CurrentBonusStatus == BonusManager.BonusStatus.BonusBIGGames &&
+                gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagReplayJacIn)
+            {
+                // 11番、17番を押した場合はフラッシュ
+
+                Debug.Log(gameManager.Reel.LastPos[(int)ReelManager.ReelID.ReelLeft]);
+                if (gameManager.Reel.LastPos[(int)ReelManager.ReelID.ReelLeft] + 1 == 11 ||
+                        gameManager.Reel.LastPos[(int)ReelManager.ReelID.ReelLeft] + 1 == 17)
+                {
+                    gameManager.Reel.FlashManager.StartFlash((int)FlashManager.FlashID.V_Flash);
+                }
+            }
         }
 
         public void StateUpdate()
         {
-            if(gameManager.Medal.PayoutAmounts == 0)
+            // 払い出し、リプレイの待機処理が終わっていたら投入状態へ
+            if(gameManager.Medal.PayoutAmounts == 0 && !gameManager.Reel.FlashManager.HasReplayWait)
             {
                 gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
                 gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
                 gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
+
+                // リプレイ処理
+                if (gameManager.Bonus.CurrentBonusStatus == BonusManager.BonusStatus.BonusNone &&
+                    gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
+                {
+                    // 最後に賭けた枚数をOUTに反映
+                    gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal(gameManager.Medal.LastBetAmounts);
+                    gameManager.Medal.SetReplay();
+                }
+                else if (gameManager.Medal.HasReplay)
+                {
+                    gameManager.Medal.DisableReplay();
+                }
             }
         }
 

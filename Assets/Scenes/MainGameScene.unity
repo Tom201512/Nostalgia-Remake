@@ -188,7 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc3a7cbc6c835b408628e8ec849ed93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testAssetList: []
+  testAssetList:
+  - {fileID: 4900000, guid: 50ab29c0d7cca6c4487f814604e56e66, type: 3}
 --- !u!1 &341618348
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
   useInstant: 1
-  instantFlagID: 8
+  instantFlagID: 1
 --- !u!1 &660297967
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +636,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.9303958, b: 0.740566, a: 1}
+  m_Color: {r: 1, g: 0.94725555, b: 0.8066038, a: 1}
   m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30

@@ -15,11 +15,13 @@ public class FlashManager : MonoBehaviour
     // リールフラッシュの間隔(秒間隔)
     const float ReelFlashTime = 0.01f;
     // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
-    const int PayoutFlashFrames = 15;
+    const int PayoutFlashFrames = 18;
+    // リプレイ時に待機する時間(秒)
+    const int ReplayWaitTime = 1;
     // デフォルトの明るさ(点灯時)
     const int TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
-    const int TurnOffValue = 180;
+    const int TurnOffValue = 160;
     // 図柄を変更する際のループ回数
     const int SymbolLoops = 3;
     // シーク位置オフセット用
@@ -27,6 +29,8 @@ public class FlashManager : MonoBehaviour
     // 変更しないときの数値
     const int NoChangeValue = -1;
 
+    // デフォルトのフラッシュID
+    public enum FlashID { V_Flash};
     // 払い出しラインのID
     public enum PayoutLineID {PayoutMiddle, PayoutLower, PayoutUpper, PayoutDiagonalA, PayoutDiagonalB};
 
@@ -35,6 +39,8 @@ public class FlashManager : MonoBehaviour
     public int CurrentFrame { get; private set; }
     // フラッシュ中か
     public bool HasFlash { get; private set; }
+    // リプレイフラッシュで待機中か
+    public bool HasReplayWait { get; private set; }
     // 現在のフラッシュID
     public int CurrentFlashID { get; private set; }
 
@@ -48,6 +54,7 @@ public class FlashManager : MonoBehaviour
     public void Awake()
     {
         HasFlash = false;
+        HasReplayWait = false;
         CurrentFlashID = 0;
         FlashDatabase = new List<FlashData>();
 
@@ -73,15 +80,23 @@ public class FlashManager : MonoBehaviour
     {
         CurrentFrame = 0;
         HasFlash = true;
+        FlashDatabase[flashID].SetSeek(0);
         StartCoroutine("FlashUpdate");
         Debug.Log("Flash started");
     }
 
-    public void StartPayoutFlash(List<PayoutLineData> lastPayoutLines)
+    // 払い出しフラッシュ開始
+    public void StartPayoutFlash(List<PayoutLineData> lastPayoutLines, bool hasReplay)
     {
         CurrentFrame = 0;
         HasFlash = true;
         StartCoroutine("PayoutFlashUpdate",lastPayoutLines);
+
+        // リプレイがあった場合は追加で待機処理を入れる
+        if(hasReplay)
+        {
+            StartCoroutine("EnableReplayTimer");
+        }
         Debug.Log("Flash started");
     }
 
@@ -177,11 +192,10 @@ public class FlashManager : MonoBehaviour
     {
         if(CurrentFlashID >= FlashDatabase.Count)
         {
-            throw new System.Exception("FlashID is Overflow the flashDatabase");
+            throw new Exception("FlashID is Overflow the flashDatabase");
         }
 
         int[] flashData = FlashDatabase[CurrentFlashID].GetCurrentFlashData();
-        Debug.Log("Seek:"+ FlashDatabase[CurrentFlashID].CurrentSeekPos);
 
         // 現在のフレームと一致しなければ読み込まない
         Debug.Log("Segment:" + flashData[(int)FlashData.PropertyID.FrameID]);
@@ -204,14 +218,14 @@ public class FlashManager : MonoBehaviour
 
                 Debug.Log("Change Symbols");
                 // 図柄の明るさ変更
-                for (int i = 0; i < SymbolLoops; i++)
+                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
                 {
                     int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.ReelData.ReelID * SeekOffset];
 
-                    Debug.Log("Symbol:" + ((int)FlashData.PropertyID.SymbolLower + i) + "Bright:" + symbolBright);
+                    Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
                     if(symbolBright != NoChangeValue)
                     {
-                        reel.SetSymbolBrightness((int)FlashData.PropertyID.SymbolLower + i, (byte)symbolBright, (byte)symbolBright, (byte)symbolBright);
+                        reel.SetSymbolBrightness(i, (byte)symbolBright, (byte)symbolBright, (byte)symbolBright);
                     }
                     else
                     {
@@ -228,14 +242,19 @@ public class FlashManager : MonoBehaviour
                 Debug.Log("SeekMoved");
                 Debug.Log("NextFrame");
             }
-
             // ループさせるか(ループの場合は特定フレームまで移動させる)
             // しない場合は停止する。
             if (flashData[(int)FlashData.PropertyID.LoopPosition] != NoChangeValue)
             {
                 CurrentFrame = flashData[(int)FlashData.PropertyID.LoopPosition];
-                FlashDatabase[CurrentFlashID].ResetSeek();
+                FlashDatabase[CurrentFlashID].SetSeek(flashData[(int)FlashData.PropertyID.LoopPosition]);
                 Debug.Log("LoopFlash");
+            }
+            // 最終行までよんでループがない場合は終了
+            else if(FlashDatabase[CurrentFlashID].HasSeekReachedEnd())
+            {
+                Debug.Log("Finish Flash");
+                HasFlash = false;
             }
         }
         else
@@ -282,5 +301,16 @@ public class FlashManager : MonoBehaviour
         {
             CurrentFrame = 0;
         }
+    }
+
+    // リプレイ時のフラッシュ切り
+    private IEnumerator EnableReplayTimer()
+    {
+        HasReplayWait = true;
+        Debug.Log("Replay Timer Start");
+        yield return new WaitForSeconds(ReplayWaitTime);
+        Debug.Log("Replay Finished");
+        HasReplayWait = false;
+        HasFlash = false;
     }
 }

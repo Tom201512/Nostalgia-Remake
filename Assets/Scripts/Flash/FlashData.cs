@@ -42,12 +42,12 @@ namespace ReelSpinGame_Flash
 		public int[] GetCurrentFlashData() => FlashArray[CurrentSeekPos];
 
 		// データを最後まで読んだか確認する
-		public bool HasSeekReachedEnd() => CurrentSeekPos == FlashArray.Count - 1;
+		public bool HasSeekReachedEnd() => CurrentSeekPos == FlashArray.Count;
 
 		// シーク位置変更
 		public void MoveNextSeek() => CurrentSeekPos += 1;
 
-		// シーク位置をリセットする
-		public void ResetSeek() => CurrentSeekPos = 0;
+		// シーク位置を戻す
+		public void SetSeek(int seekPos) => CurrentSeekPos = seekPos;
 	}
 }
