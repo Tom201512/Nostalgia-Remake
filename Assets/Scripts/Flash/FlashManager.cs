@@ -60,9 +60,10 @@ public class FlashManager : MonoBehaviour
         Debug.Log("FlashManager awaken");
     }
 
-    public void Start()
+    public void OnDestroy()
     {
-        //StartFlash(0);
+        StopAllCoroutines();
+        Debug.Log("Coroutines are stopped");
     }
 
     public void SetReelObjects(ReelObject[] reelObjects) => ReelObjects = reelObjects;
@@ -129,7 +130,7 @@ public class FlashManager : MonoBehaviour
             // ^‚ñ’†ˆÈŠO“_“”
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
-                if (i == GetReelArrayIndex((int)ReelPosID.Center))
+                if (i == (int)ReelPosID.Center)
                 {
                     reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
                 }

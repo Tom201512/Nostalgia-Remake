@@ -131,6 +131,13 @@ public class GameManager : MonoBehaviour
             MainFlow.UpdateState();
     }
 
+    // タイマーを持つ機能の廃棄
+    private void OnDestroy()
+    {
+        Medal.DisposeMedal();
+        Wait.DisposeWait();
+    }
+
     // func
     // キー設定変更
     public void ChangeKeyBinds(ControlSets controlSets, KeyCode changeKey) => KeyCodes[(int)controlSets] = changeKey;

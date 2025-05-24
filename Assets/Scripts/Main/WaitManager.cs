@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class WaitManager
@@ -6,7 +8,7 @@ public class WaitManager
 
     // const
     // ウェイトに必要な時間(ミリ秒)
-    public const float WaitTimerSetting = 4.1f;
+    public const int WaitTimerSetting = 4100;
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
@@ -16,25 +18,27 @@ public class WaitManager
     public bool hasWait { get; private set; }
     // ウェイトを無効にしているか
     public bool hasWaitCut { get; private set; }
+    // キャンセル用
+    private CancellationTokenSource cancel;
 
     // コンストラクタ
     public WaitManager(bool hasWaitCut)
     {
         // ウェイトカット設定
+        cancel = new CancellationTokenSource();
         this.hasWaitCut = hasWaitCut;
-    }
-
-    // デストラクタ
-    ~WaitManager()
-    {
-        Debug.Log("Wait is disposed");
-        cancellationTokenSource.Cancel();
     }
 
     // func
 
     // ウェイトカットの設定
     public void SetWaitCutSetting(bool hasWaitCut) => this.hasWaitCut = hasWaitCut;
+    
+    public void DisposeWait()
+    {
+        Debug.Log("Wait is disposed");
+        cancel.Cancel();
+    }
 
     // ウェイトをかける
     public void SetWaitTimer()
@@ -60,12 +64,14 @@ public class WaitManager
     {
         try
         {
-            // キャンセルがあった場合
-            cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
             Debug.Log("Wait start");
             hasWait = true;
             await Task.Delay(WaitTimerSetting);
+            if (cancel.IsCancellationRequested)
+            {
+                Debug.Log("Cancelled");
+                return;
+            }
             hasWait = false;
             Debug.Log("Wait disabled");
         }

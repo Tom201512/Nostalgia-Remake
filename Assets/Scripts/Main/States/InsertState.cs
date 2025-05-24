@@ -71,7 +71,7 @@ namespace ReelSpinGame_State.InsertState
                 else
                 {
                     gameManager.Medal.StartMAXBet();
-                    gameManager.Reel.FlashManager.StopFlash();
+                    StopReelFlash();
                 }
             }
         }

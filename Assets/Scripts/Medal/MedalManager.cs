@@ -1,5 +1,4 @@
 using System;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -34,7 +33,7 @@ namespace ReelSpinGame_Medal
         public event MedalHasPayoutEvent HasMedalPayout;
 
         // キャンセル用
-        private CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource cancel;
 
         // クレジット枚数
         public int Credits { get; private set; }
@@ -62,18 +61,16 @@ namespace ReelSpinGame_Medal
             HasMedalInserted += InsertMedal;
             HasMedalPayout += PayoutMedal;
 
-            cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        // デストラクタ
-        ~MedalManager()
-        {
-            Debug.Log("Medal is disposed");
-            cancellationTokenSource.Cancel();
-            Debug.Log(cancellationTokenSource.Token.IsCancellationRequested);
+            cancel = new CancellationTokenSource();
         }
 
         // func
+        public void DisposeMedal()
+        {
+            Debug.Log("Medal is disposed");
+            cancel.Cancel();
+        }
+
         // MAXベット枚数変更
         public void ChangeMaxBet(int maxBet)
         {
@@ -229,7 +226,11 @@ namespace ReelSpinGame_Medal
                 while (remainingBet > 0)
                 {
                     // キャンセルがあった場合
-                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    if (cancel.IsCancellationRequested)
+                    {
+                        Debug.Log("Cancelled");
+                        return;
+                    }
 
                     HasMedalInserted.Invoke(1);
                     await Task.Delay(MedalUpdateTime);
@@ -253,7 +254,11 @@ namespace ReelSpinGame_Medal
                 while (PayoutAmounts > 0)
                 {
                     // キャンセルがあった場合
-                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    if (cancel.IsCancellationRequested)
+                    {
+                        Debug.Log("Cancelled");
+                        return;
+                    }
 
                     HasMedalPayout.Invoke(1);
                     await Task.Delay(MedalUpdateTime);
