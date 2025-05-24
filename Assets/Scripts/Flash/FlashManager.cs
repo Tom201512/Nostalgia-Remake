@@ -67,11 +67,6 @@ public class FlashManager : MonoBehaviour
         Debug.Log("FlashManager awaken");
     }
 
-    public void Start()
-    {
-        StartFlash(0);
-    }
-
     public void OnDestroy()
     {
         StopAllCoroutines();
