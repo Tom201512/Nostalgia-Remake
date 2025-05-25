@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] BonusTestUI bonusUI;
     [SerializeField] PlayerUI playerUI;
 
+    [SerializeField] StatusPanel statusPanel;
+    public StatusPanel Status { get; private set; }
+
     // キー設定
     // MAXBET
     [SerializeField] private KeyCode maxBetKey;
@@ -68,9 +71,12 @@ public class GameManager : MonoBehaviour
         Medal = GetComponent<MedalManager>();
         Debug.Log("Medal is launched");
 
+        // メダル設定
+        Medal.SetMedalData(0, 3, 0, false);
+
         // フラグ管理
-        Lots= GetComponent<FlagLots>();
-        Debug.Log("Lots.FlagBehaviour.is launched");
+        Lots = GetComponent<FlagLots>();
+        Debug.Log("Lots is launched");
 
         // ウェイト管理
         Wait = new WaitManager(false);
@@ -86,12 +92,17 @@ public class GameManager : MonoBehaviour
 
         // ボーナス
         Bonus = new BonusManager();
-
-        // キーボードのコード設定
-        KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
+        Debug.Log("Bonus is launched");
 
         // メインフロー作成
         MainFlow = new MainGameFlow(this);
+
+        // ステータスパネル
+        Status = statusPanel;
+        Debug.Log("StatusPanel is launched");
+
+        // キーボードのコード設定
+        KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
         // 例外処理
         if (setting < 0 && setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
@@ -112,12 +123,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // UI 設定
-        Medal.SetMedalData(0, 3, 0, false);
+        medalUI.SetMedalManager(Medal);
         lotsUI.SetFlagManager(Lots);
         waitUI.SetWaitManager(Wait);
         reelUI.SetReelManager(Reel);
         bonusUI.SetBonusManager(Bonus);
         playerUI.SetPlayerData(PlayerData);
+
+        // ステート開始
+        MainFlow.stateManager.StartState();
     }
 
     void Update()
@@ -131,7 +145,7 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-            MainFlow.UpdateState();
+        MainFlow.UpdateState();
     }
 
     // タイマーを持つ機能の廃棄

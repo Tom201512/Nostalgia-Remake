@@ -13,7 +13,12 @@ namespace ReelSpinGame_State
         public StateManager(IGameStatement startingState)
         {
             CurrentState = startingState;
-            startingState.StateStart();
+        }
+
+        // ステート開始
+        public void StartState()
+        {
+            CurrentState.StateStart();
         }
 
         // 別のゲーム状態に移行

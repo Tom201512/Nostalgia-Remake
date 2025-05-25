@@ -58,6 +58,10 @@ namespace ReelSpinGame_State.LotsState
         public void StateEnd()
         {
             Debug.Log("End Lots.FlagBehaviour.State");
+            if (gameManager.Wait.HasWait)
+            {
+                gameManager.Status.TurnOnWaitLamp();
+            }
         }
     }
 }

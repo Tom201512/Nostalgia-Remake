@@ -50,6 +50,7 @@ public class LampComponent : MonoBehaviour
 
     private IEnumerator TurnOnLamp()
     {
+        StopCoroutine(nameof(TurnOffLamp));
         IsTurnedOn = true;
         Debug.Log("Start TurnOn");
         // –¾‚é‚³‚ÌŒvŽZ(0.03•b‚¸‚Â‰º‚°‚é)
@@ -73,6 +74,7 @@ public class LampComponent : MonoBehaviour
 
     private IEnumerator TurnOffLamp()
     {
+        StopCoroutine(nameof(TurnOnLamp));
         IsTurnedOn = false;
         Debug.Log("Start TurnOff");
         // –¾‚é‚³‚ÌŒvŽZ(0.03•b‚¸‚Â‰º‚°‚é)

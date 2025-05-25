@@ -1,6 +1,4 @@
 using ReelSpinGame_Medal;
-using System.Collections;
-using System.Timers;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +7,7 @@ public class MedalTestUI : MonoBehaviour
     // var
     TextMeshProUGUI text;
     // ƒƒ_ƒ‹‚Ìˆ—
-    [SerializeField] MedalManager medal;
+    private MedalManager medal;
 
     // func
     void Awake()
@@ -31,4 +29,6 @@ public class MedalTestUI : MonoBehaviour
 
         text.text = buffer;
     }
+
+    public void SetMedalManager(MedalManager medalManager) => medal = medalManager;
 }

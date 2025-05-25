@@ -5,7 +5,7 @@ using UnityEngine;
 public class LotsTestUI : MonoBehaviour
 {
     TextMeshProUGUI text;
-    FlagLots lots;
+    private FlagLots lots;
     // Start is called before the first frame update
     void Awake()
     {

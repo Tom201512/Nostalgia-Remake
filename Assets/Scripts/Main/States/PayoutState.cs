@@ -188,7 +188,6 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
                 gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
-                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
 
                 // リプレイ処理
                 if (gameManager.Bonus.CurrentBonusStatus == BonusManager.BonusStatus.BonusNone &&
@@ -202,12 +201,24 @@ namespace ReelSpinGame_State.PayoutState
                 {
                     gameManager.Medal.MedalBehaviour.DisableReplay();
                 }
+
+                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
             }
         }
 
         public void StateEnd()
         {
             Debug.Log("End Payout State");
+            Debug.Log("HasReplay:" + gameManager.Medal.MedalBehaviour.HasReplay);
+
+            if(gameManager.Medal.MedalBehaviour.HasReplay)
+            {
+                gameManager.Status.TurnOnReplayLamp();
+            }
+            else
+            {
+                gameManager.Status.TurnOffReplayLamp();
+            }
         }
 
         private void StartCheckPayout(int betAmounts)

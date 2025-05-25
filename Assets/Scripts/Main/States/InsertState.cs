@@ -24,6 +24,11 @@ namespace ReelSpinGame_State.InsertState
         public void StateStart()
         {
             Debug.Log("Start Medal Insert");
+            
+            if(!gameManager.Medal.MedalBehaviour.HasReplay)
+            {
+                gameManager.Status.TurnOnInsertLamp();
+            }
         }
 
         public void StateUpdate()
@@ -47,6 +52,12 @@ namespace ReelSpinGame_State.InsertState
             {
                 gameManager.Medal.StartBet(1);
                 StopReelFlash();
+            }
+
+            // ベット枚数がある場合
+            if(gameManager.Medal.MedalBehaviour.CurrentBet > 0)
+            {
+                gameManager.Status.TurnOnStartLamp();
             }
 
             // ベット終了
@@ -79,6 +90,8 @@ namespace ReelSpinGame_State.InsertState
         public void StateEnd()
         {
             Debug.Log("End Medal Insert");
+            gameManager.Status.TurnOffInsertlamp();
+            gameManager.Status.TurnOffStartlamp();
         }
 
         // フラッシュを止める
