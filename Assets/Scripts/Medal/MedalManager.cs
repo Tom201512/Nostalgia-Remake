@@ -28,6 +28,11 @@ namespace ReelSpinGame_Medal
             HasMedalUpdate = false;
         }
 
+        void Update()
+        {
+
+        }
+
         // コンストラクタ
         public void SetMedalData(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
@@ -57,11 +62,11 @@ namespace ReelSpinGame_Medal
                 // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
                 if (amounts != MedalBehaviour.CurrentBet && amounts <= MedalBehaviour.MaxBetAmounts)
                 {
+                    // ベット枚数設定
                     MedalBehaviour.SetRemainingBet(amounts);
                     // メダルの投入を開始する(残りはフレーム処理)
                     StartCoroutine(nameof(UpdateInsert));
                 }
-
                 // ベットがすでに終わっている、またはMAXベットの場合(Debug)
                 else
                 {
@@ -132,10 +137,7 @@ namespace ReelSpinGame_Medal
             while (MedalBehaviour.RemainingBet > 0)
             {
                 MedalBehaviour.InsertOneMedal();
-                if(MedalBehaviour.CurrentBet == 1)
-                {
-                    medalPanel.TurnOnMedal1Lamp();
-                }
+                medalPanel.UpdateLampByBet(MedalBehaviour.CurrentBet, MedalBehaviour.LastBetAmounts);
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
 
