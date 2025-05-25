@@ -33,14 +33,6 @@ namespace ReelSpinGame_Medal
         // リプレイ状態か
         public bool HasReplay { get; private set; }
 
-        // 投入されたかのイベント
-        public delegate void MedalInsertedEvent(int insert);
-        public event MedalInsertedEvent HasMedalInserted;
-
-        // 払い出されたかのイベント
-        public delegate void MedalHasPayoutEvent(int payout);
-        public event MedalHasPayoutEvent HasMedalPayout;
-
         // コンストラクタ
         public MedalBehaviour(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
@@ -119,6 +111,7 @@ namespace ReelSpinGame_Medal
             Debug.Log("Remaining:" + RemainingBet);
             Debug.Log("Bet Medal by 1");
             CurrentBet += 1;
+           //HasMedalInserted.Invoke(1);
 
             if (!HasReplay)
             {
@@ -134,7 +127,6 @@ namespace ReelSpinGame_Medal
             {
                 Credits = 0;
             }
-
             PayoutAmounts -= 1;
             ChangeCredit(1);
             Debug.Log("Payout Medal by:" + 1);

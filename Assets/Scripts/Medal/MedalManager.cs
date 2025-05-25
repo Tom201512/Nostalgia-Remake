@@ -19,6 +19,9 @@ namespace ReelSpinGame_Medal
 
         // メダルの更新処理中か
         public bool HasMedalUpdate { get; private set; }
+        // メダルが払い出されたか
+        public delegate void MedalHasPayoutEvent(int payout);
+        public event MedalHasPayoutEvent HasMedalPayout;
 
         void Awake()
         {
@@ -145,6 +148,7 @@ namespace ReelSpinGame_Medal
             while (MedalBehaviour.PayoutAmounts > 0)
             {
                 MedalBehaviour.PayoutOneMedal();
+                HasMedalPayout.Invoke(1);
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
             // 全て払い出したら処理終了

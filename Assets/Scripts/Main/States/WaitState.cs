@@ -28,7 +28,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             Debug.Log("Update Wait State");
-            if(!gameManager.Wait.hasWait)
+            if(!gameManager.Wait.HasWait)
             {
                 gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PlayingState);
             }

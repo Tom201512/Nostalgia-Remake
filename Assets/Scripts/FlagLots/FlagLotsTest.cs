@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FlagLotsTest : MonoBehaviour
 {
+    /*
     // フラグ処理のテスト用
     private FlagLots flagLots;
     private FlagCounter flagCounter;
@@ -41,7 +42,7 @@ public class FlagLotsTest : MonoBehaviour
         // フラグ抽選
         if (OriginalInput.CheckOneKeyInput(KeyCode.Space))
         {
-            flagLots?.GetFlagLots(setting, 3);
+            flagLots?.FlagBehaviour.GetFlagLots(setting, 3);
 
             // 小役ならカウンタを増やし、はずれは減らす(通常時のみ)
             if(flagLots.CurrentTable == FlagLots.FlagLotMode.Normal)
@@ -101,6 +102,6 @@ public class FlagLotsTest : MonoBehaviour
         {
             flagCounter?.DecreaseCounter(6, 3);
         }
-    }
+    }*/
 }
 

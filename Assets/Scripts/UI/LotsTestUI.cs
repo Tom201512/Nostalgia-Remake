@@ -17,10 +17,10 @@ public class LotsTestUI : MonoBehaviour
     {
         string buffer = "";
 
-        buffer += "Lots-" + "\n";
-        buffer += "Flag:" + lots.CurrentFlag + "\n";
-        buffer += "Table:" + lots.CurrentTable + "\n";
-        buffer += "Counter:" + lots.FlagCounter.Counter + "\n";
+        buffer += "Lots.FlagBehaviour." + "\n";
+        buffer += "Flag:" + lots.FlagBehaviour.CurrentFlag + "\n";
+        buffer += "Table:" + lots.FlagBehaviour.CurrentTable + "\n";
+        buffer += "Counter:" + lots.FlagBehaviour.FlagCounter.Counter + "\n";
 
         text.text = buffer;
     }

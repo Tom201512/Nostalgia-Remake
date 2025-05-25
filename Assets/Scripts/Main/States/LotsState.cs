@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using ReelSpinGame_Interface;
+using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -21,16 +22,16 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateStart()
         {
-            Debug.Log("Start Lots State");
+            Debug.Log("Start Lots.FlagBehaviour.State");
 
-            gameManager.Lots.GetFlagLots(gameManager.Setting, gameManager.Medal.MedalBehaviour.LastBetAmounts);
+            gameManager.Lots.StartFlagLots(gameManager.Setting, gameManager.Medal.MedalBehaviour.LastBetAmounts);
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if(gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagBig)
+            if(gameManager.Lots.FlagBehaviour.CurrentFlag == FlagId.FlagBig)
             {
                 gameManager.PlayerData.AddBonusResult(ReelSpinGame_Bonus.BonusManager.BonusType.BonusBIG);
             }
-            else if (gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagReg)
+            else if (gameManager.Lots.FlagBehaviour.CurrentFlag == FlagId.FlagReg)
             {
                 gameManager.PlayerData.AddBonusResult(ReelSpinGame_Bonus.BonusManager.BonusType.BonusREG);
             }
@@ -51,12 +52,12 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateUpdate()
         {
-            Debug.Log("Update Lots State");
+            Debug.Log("Update Lots.FlagBehaviour.State");
         }
 
         public void StateEnd()
         {
-            Debug.Log("End Lots State");
+            Debug.Log("End Lots.FlagBehaviour.State");
         }
     }
 }

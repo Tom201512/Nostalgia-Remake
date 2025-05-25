@@ -1,9 +1,9 @@
 ﻿using ReelSpinGame_Bonus;
-using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Lots.FlagBehaviour;
 
 public class ReelManager : MonoBehaviour
 {
@@ -159,7 +159,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID, int betAmounts, FlagLots.FlagId flagID, BonusManager.BonusType bonusID)
+    public void StopSelectedReel(ReelID reelID, int betAmounts, FlagId flagID, BonusManager.BonusType bonusID)
     {
         // 全リール速度が最高速度になっていれば
         if(CanStop)

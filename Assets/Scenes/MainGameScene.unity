@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91da1b1481241a4dbc64547b65375c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  medalPanel: {fileID: 1321184546}
+  medal: {fileID: 460868896}
 --- !u!114 &938366607
 MonoBehaviour:
   m_ObjectHideFlags: 0

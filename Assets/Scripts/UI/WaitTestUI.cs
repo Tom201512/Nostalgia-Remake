@@ -17,8 +17,8 @@ public class WaitTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Wait-" + "\n";
-        buffer += "WaitEnable?:" + wait.hasWait + "\n";
-        buffer += "WaitCut:" + wait.hasWaitCut;
+        buffer += "WaitEnable?:" + wait.HasWait + "\n";
+        buffer += "WaitCut:" + wait.HasWaitCut;
         text.text = buffer;
     }
 

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     // var
     // 各種機能
     public MedalManager Medal { get; private set; }
-    public FlagLots Lots { get; private set; }
+    public FlagLots Lots{ get; private set; }
     public WaitManager Wait { get; private set; }
     public ReelManager Reel { get; private set; }
     public PayoutChecker Payout { get; private set; }
@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Medal is launched");
 
         // フラグ管理
-        Lots = GetComponent<FlagLots>();
-        Debug.Log("Lots is launched");
+        Lots= GetComponent<FlagLots>();
+        Debug.Log("Lots.FlagBehaviour.is launched");
 
         // ウェイト管理
         Wait = new WaitManager(false);

@@ -13,15 +13,15 @@ public class WaitManager
     // 処理用タイマー
     private Timer updateTimer;
     // ウェイトが有効か
-    public bool hasWait { get; private set; }
+    public bool HasWait { get; private set; }
     // ウェイトを無効にしているか
-    public bool hasWaitCut { get; private set; }
+    public bool HasWaitCut { get; private set; }
 
     // コンストラクタ
     public WaitManager(bool hasWaitCut)
     {
         // 処理用タイマー作成
-        this.hasWaitCut = hasWaitCut;
+        HasWaitCut = hasWaitCut;
         updateTimer = new Timer(WaitTimerSetting);
     }
 
@@ -35,17 +35,17 @@ public class WaitManager
     }
 
     // ウェイトカットの設定
-    public void SetWaitCutSetting(bool hasWaitCut) => this.hasWaitCut = hasWaitCut;
+    public void SetWaitCutSetting(bool hasWaitCut) => HasWaitCut = hasWaitCut;
 
     // ウェイトをかける
     public void SetWaitTimer()
     {
-        if (hasWaitCut)
+        if (HasWaitCut)
         {
             Debug.Log("WaitCut is enabled");
         }
 
-        else if (hasWait)
+        else if (HasWait)
         {
             Debug.Log("Wait is enabled already");
         }
@@ -53,7 +53,7 @@ public class WaitManager
         // ウェイトカット、または実行中のウェイトがなければ実行
         else
         {
-            hasWait = true;
+            HasWait = true;
             updateTimer.Elapsed += WaitProcess;
             updateTimer.AutoReset = false;
             updateTimer.Start();
@@ -67,7 +67,7 @@ public class WaitManager
     // ウェイト管理
     private void WaitProcess(object sender, ElapsedEventArgs e)
     {
-        hasWait = false;
+        HasWait = false;
         updateTimer.Elapsed -= WaitProcess;
         Debug.Log("Wait disabled");
     }
