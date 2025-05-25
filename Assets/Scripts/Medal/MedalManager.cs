@@ -1,6 +1,5 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Timers;
 using UnityEngine;
 
 namespace ReelSpinGame_Medal
@@ -23,6 +22,8 @@ namespace ReelSpinGame_Medal
         // var
         // 残りベット枚数
         private int remainingBet;
+        // 処理用タイマー
+        public Timer UpdateTimer { get; private set; }
 
         // 投入されたかのイベント
         public delegate void MedalInsertedEvent(int insert);
@@ -31,9 +32,6 @@ namespace ReelSpinGame_Medal
         // 払い出されたかのイベント
         public delegate void MedalHasPayoutEvent(int payout);
         public event MedalHasPayoutEvent HasMedalPayout;
-
-        // キャンセル用
-        private CancellationTokenSource cancel;
 
         // クレジット枚数
         public int Credits { get; private set; }
@@ -57,20 +55,22 @@ namespace ReelSpinGame_Medal
             MaxBetAmounts = curretMaxBet;
             LastBetAmounts = 0;
             HasReplay = hasReplay;
+            // 処理用タイマー作成
+            UpdateTimer = new Timer(MedalUpdateTime);
 
             HasMedalInserted += InsertMedal;
             HasMedalPayout += PayoutMedal;
+        }
 
-            cancel = new CancellationTokenSource();
+        // タイマー処理の破棄
+        public void DisposeMedal()
+        {
+            // Timerのストップ
+            UpdateTimer.Stop();
+            UpdateTimer.Dispose();
         }
 
         // func
-        public void DisposeMedal()
-        {
-            Debug.Log("Medal is disposed");
-            cancel.Cancel();
-        }
-
         // MAXベット枚数変更
         public void ChangeMaxBet(int maxBet)
         {
@@ -92,15 +92,15 @@ namespace ReelSpinGame_Medal
         public void StartBet(int amounts)
         {
             // 処理ををしていないか、またはリプレイでないかチェック
-            if (!HasReplay && UpdateInsert().IsCompleted)
+            if (!HasReplay && !UpdateTimer.Enabled)
             {
                 // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
-                if(amounts != CurrentBet && amounts <= MaxBetAmounts)
+                if (amounts != CurrentBet && amounts <= MaxBetAmounts)
                 {
                     SetRemaining(amounts);
 
                     // もし現在のベットより少ない枚数ならリセット
-                    if(amounts < CurrentBet)
+                    if (amounts < CurrentBet)
                     {
                         // ベットで使ったクレジット分を返す
                         ChangeCredit(CurrentBet);
@@ -111,13 +111,15 @@ namespace ReelSpinGame_Medal
 
                     // メダルの投入を開始する(残りはフレーム処理)
                     LastBetAmounts = amounts;
-                    Task.Run(UpdateInsert);
+                    HasMedalInserted.Invoke(1);
+                    UpdateTimer.Elapsed += UpdateInsert;
+                    UpdateTimer.Start();
                 }
 
                 // ベットがすでに終わっている、またはMAXベットの場合(Debug)
                 else
                 {
-                    if(amounts > MaxBetAmounts)
+                    if (amounts > MaxBetAmounts)
                     {
                         Debug.Log("The MAX Bet is now :" + MaxBetAmounts);
                     }
@@ -131,7 +133,7 @@ namespace ReelSpinGame_Medal
             // 処理中でメダルが入れられない場合
             else
             {
-                if(HasReplay)
+                if (HasReplay)
                 {
                     Debug.Log("Replay is enabled");
                 }
@@ -146,10 +148,10 @@ namespace ReelSpinGame_Medal
         public void StartPayout(int amounts)
         {
             // 払い出しをしていないかチェック
-            if (UpdatePayout().IsCompleted)
+            if (!UpdateTimer.Enabled)
             {
                 // クレジット枚数が0より少ないかチェック
-                if(Credits < 0)
+                if (Credits < 0)
                 {
                     Credits = 0;
                 }
@@ -160,7 +162,9 @@ namespace ReelSpinGame_Medal
 
                 if (amounts > 0)
                 {
-                    Task.Run(UpdatePayout);
+                    HasMedalPayout.Invoke(1);
+                    UpdateTimer.Elapsed += UpdatePayout;
+                    UpdateTimer.Start();
                 }
                 else
                 {
@@ -185,7 +189,10 @@ namespace ReelSpinGame_Medal
         {
             Debug.Log("Enable Replay" + LastBetAmounts);
             SetRemaining(LastBetAmounts);
-            Task.Run(UpdateInsert);
+            HasMedalInserted.Invoke(1);
+            UpdateTimer.Elapsed += UpdateInsert;
+            UpdateTimer.Start();
+
             HasReplay = true;
         }
 
@@ -203,7 +210,7 @@ namespace ReelSpinGame_Medal
             // (2BETから1BETはリセットして調整)
 
             // 多い場合(1枚以上ベットされていること)
-            if(amount > CurrentBet && CurrentBet > 0)
+            if (amount > CurrentBet && CurrentBet > 0)
             {
                 Debug.Log("You bet more than current bet");
                 remainingBet = Math.Clamp(amount - CurrentBet, 0, MaxBet);
@@ -218,58 +225,39 @@ namespace ReelSpinGame_Medal
         }
 
         // コルーチン用
-        private async Task UpdateInsert()
-        {
-            try
-            {
-                // 投入処理
-                while (remainingBet > 0)
-                {
-                    // キャンセルがあった場合
-                    if (cancel.IsCancellationRequested)
-                    {
-                        Debug.Log("Cancelled");
-                        return;
-                    }
 
-                    HasMedalInserted.Invoke(1);
-                    await Task.Delay(MedalUpdateTime);
-                }
-                // 全て投入したら処理終了
+        private void UpdateInsert(object sender, ElapsedEventArgs e)
+        {
+            // 投入処理
+            if (remainingBet > 0)
+            {
+                HasMedalInserted.Invoke(1);
+            }
+            // 全て投入したら処理終了
+            else
+            {
+                UpdateTimer.Stop();
+                UpdateTimer.Elapsed -= UpdateInsert;
 
                 Debug.Log("Bet Finished");
                 Debug.Log("CurrentBet:" + CurrentBet);
             }
-            catch(Exception ex)
-            {
-                Debug.Log(ex);
-            }
         }
 
-        private async Task UpdatePayout()
+        private void UpdatePayout(object sender, ElapsedEventArgs e)
         {
-            try
+            // 払い出し処理
+            if (PayoutAmounts > 0)
             {
-                // 払い出し処理
-                while (PayoutAmounts > 0)
-                {
-                    // キャンセルがあった場合
-                    if (cancel.IsCancellationRequested)
-                    {
-                        Debug.Log("Cancelled");
-                        return;
-                    }
-
-                    HasMedalPayout.Invoke(1);
-                    await Task.Delay(MedalUpdateTime);
-                }
-
-                // 全て払い出したら処理終了
-                Debug.Log("Payout Finished");
+                HasMedalPayout.Invoke(1);
             }
-            catch (Exception ex)
+            // 全て払い出したら処理終了
+            else
             {
-                Debug.Log(ex);
+                UpdateTimer.Stop();
+                UpdateTimer.Elapsed -= UpdatePayout;
+
+                Debug.Log("Payout Finished");
             }
         }
 

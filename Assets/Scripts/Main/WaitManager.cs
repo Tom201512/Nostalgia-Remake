@@ -1,5 +1,5 @@
-using System.Threading;
-using System.Threading.Tasks;
+using System;
+using System.Timers;
 using UnityEngine;
 
 public class WaitManager
@@ -14,31 +14,32 @@ public class WaitManager
     public MainGameFlow MainFlow { get; private set; }
 
     // var
+    // 処理用タイマー
+    private Timer updateTimer;
     // ウェイトが有効か
     public bool hasWait { get; private set; }
     // ウェイトを無効にしているか
     public bool hasWaitCut { get; private set; }
-    // キャンセル用
-    private CancellationTokenSource cancel;
 
     // コンストラクタ
     public WaitManager(bool hasWaitCut)
     {
-        // ウェイトカット設定
-        cancel = new CancellationTokenSource();
+        // 処理用タイマー作成
         this.hasWaitCut = hasWaitCut;
+        updateTimer = new Timer(WaitTimerSetting);
     }
 
     // func
+    // タイマー処理の破棄
+    public void DisposeWait()
+    {
+        // Timerのストップ
+        updateTimer.Stop();
+        updateTimer.Dispose();
+    }
 
     // ウェイトカットの設定
     public void SetWaitCutSetting(bool hasWaitCut) => this.hasWaitCut = hasWaitCut;
-    
-    public void DisposeWait()
-    {
-        Debug.Log("Wait is disposed");
-        cancel.Cancel();
-    }
 
     // ウェイトをかける
     public void SetWaitTimer()
@@ -48,7 +49,7 @@ public class WaitManager
             Debug.Log("WaitCut is enabled");
         }
 
-        else if(hasWait)
+        else if (hasWait)
         {
             Debug.Log("Wait is enabled already");
         }
@@ -56,28 +57,22 @@ public class WaitManager
         // ウェイトカット、または実行中のウェイトがなければ実行
         else
         {
-            Task.Run(ActivateWaitTimer);
+            hasWait = true;
+            updateTimer.Elapsed += WaitProcess;
+            updateTimer.AutoReset = false;
+            updateTimer.Start();
+
+            Debug.Log("Wait start");
         }
     }
 
-    async Task ActivateWaitTimer()
+    // コルーチン用
+
+    // ウェイト管理
+    private void WaitProcess(object sender, ElapsedEventArgs e)
     {
-        try
-        {
-            Debug.Log("Wait start");
-            hasWait = true;
-            await Task.Delay(WaitTimerSetting);
-            if (cancel.IsCancellationRequested)
-            {
-                Debug.Log("Cancelled");
-                return;
-            }
-            hasWait = false;
-            Debug.Log("Wait disabled");
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError("Error:" + ex);
-        }
+        hasWait = false;
+        updateTimer.Elapsed -= WaitProcess;
+        Debug.Log("Wait disabled");
     }
 }

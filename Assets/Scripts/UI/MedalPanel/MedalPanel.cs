@@ -22,7 +22,6 @@ public class MedalPanel : MonoBehaviour
 
     public void ChangeMedal2Lamp(byte brightness)
     {
-        Debug.Log(new Color(brightness, brightness, brightness));
         medal2A.color = new Color32(brightness, brightness, brightness, 255);
         medal2B.color = new Color32(brightness, brightness, brightness, 255);
     }

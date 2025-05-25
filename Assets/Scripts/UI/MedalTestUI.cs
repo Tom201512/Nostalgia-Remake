@@ -1,4 +1,6 @@
 using ReelSpinGame_Medal;
+using System.Collections;
+using System.Timers;
 using TMPro;
 using UnityEngine;
 
@@ -23,6 +25,11 @@ public class MedalTestUI : MonoBehaviour
         text = GetComponent<TextMeshProUGUI>();
     }
 
+    void Start()
+    {
+        medal.HasMedalInserted += UpdateMedal;
+    }
+
     void Update()
     {
         string buffer = "";
@@ -36,14 +43,18 @@ public class MedalTestUI : MonoBehaviour
         buffer += "Replay:" + medal.HasReplay;
 
         text.text = buffer;
-
-        ChangeMedalPanelBrightness();
     }
 
     public void SetMedalManager(MedalManager medalManager) => medal = medalManager;
 
-    public void ChangeMedalPanelBrightness()
+    public void UpdateMedal(int amounts)
     {
+        StartCoroutine("ChangeMedalPanelBrightness");
+    }
+
+    public IEnumerator ChangeMedalPanelBrightness()
+    {
+        Debug.Log("Event Called");
         if(medal.CurrentBet == 0)
         {
             if (medal.LastBetAmounts >= 1)
@@ -77,6 +88,7 @@ public class MedalTestUI : MonoBehaviour
         {
             if (medal.CurrentBet >= 1)
             {
+                Debug.Log("Bet1");
                 medalPanel.ChangeMedal1Lamp(TurnOnValue);
             }
             else
@@ -86,6 +98,7 @@ public class MedalTestUI : MonoBehaviour
 
             if (medal.CurrentBet >= 2)
             {
+                Debug.Log("Bet2");
                 medalPanel.ChangeMedal2Lamp(TurnOnValue);
             }
             else
@@ -95,6 +108,7 @@ public class MedalTestUI : MonoBehaviour
 
             if (medal.CurrentBet >= 3)
             {
+                Debug.Log("Bet3");
                 medalPanel.ChangeMedal3Lamp(TurnOnValue);
             }
             else
@@ -102,5 +116,6 @@ public class MedalTestUI : MonoBehaviour
                 medalPanel.ChangeMedal3Lamp(TurnOffValue);
             }
         }
+        yield return null;
     }
 }
