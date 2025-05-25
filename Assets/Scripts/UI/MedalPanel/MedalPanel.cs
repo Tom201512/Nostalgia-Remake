@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +11,10 @@ public class MedalPanel : MonoBehaviour
     const byte TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
     const byte TurnOffValue = 120;
+    // 点灯させるために必要なフレーム数
+    const byte FrameCount = 3;
+    // ランプ点灯の間隔(秒間隔)
+    const float LampFlashTime = 0.01f;
 
     // メダルパネル部分
     // var
@@ -22,80 +29,84 @@ public class MedalPanel : MonoBehaviour
     // メダル3枚ランプB(下)
     [SerializeField] private Image medal3B;
 
+    private bool isMedal1TurnedOn;
+    private bool isMedal2TurnedOn;
+    private bool isMedal3TurnedOn;
+
     // func
-    private void ChangeMedal1Lamp(byte brightness) => medal1.color = new Color32(brightness, brightness, brightness, 255);
-
-    private void ChangeMedal2Lamp(byte brightness)
+    public void Awake()
     {
-        medal2A.color = new Color32(brightness, brightness, brightness, 255);
-        medal2B.color = new Color32(brightness, brightness, brightness, 255);
+        isMedal1TurnedOn = false;
+        isMedal2TurnedOn = false;
+        isMedal3TurnedOn = false;
     }
 
-    private void ChangeMedal3Lamp(byte brightness)
+    public void OnDestroy()
     {
-        medal3A.color = new Color32(brightness, brightness, brightness, 255);
-        medal3B.color = new Color32(brightness, brightness, brightness, 255);
+        StopAllCoroutines();
     }
 
-    public void UpdateMedalPanel(int currentBet, int lastBetAmounts)
+    public void TurnOnMedal1Lamp() => StartCoroutine(nameof(TurnOnLamp), new Image[] { medal1 });
+    public void TurnOnMedal2Lamp() => StartCoroutine(nameof(TurnOnLamp), new Image[] { medal2A, medal2B });
+    public void TurnOnMedal3Lamp() => StartCoroutine(nameof(TurnOnLamp), new Image[] { medal3A, medal3B });
+
+    private IEnumerator TurnOnLamp(Image[] lamp)
     {
-        if (currentBet == 0)
+        Debug.Log("Start TurnOn");
+
+        // 現在の明るさ
+        byte brightness = TurnOffValue;
+        // 明るさの計算(0.01秒で25下げる)
+        int distance = TurnOnValue - TurnOffValue;
+        float changeValue = (float)distance / FrameCount;
+        Debug.Log("ChangeValue:" + changeValue);
+
+        while (brightness < TurnOnValue)
         {
-            if (lastBetAmounts >= 1)
+            // 数値を超えないように調整
+            brightness = (byte)Math.Clamp(brightness + changeValue, TurnOffValue, TurnOnValue);
+
+            Debug.Log("Brightness:" + brightness);
+
+            foreach (Image i in lamp)
             {
-                ChangeMedal1Lamp(TurnOnValue);
-            }
-            else
-            {
-                ChangeMedal1Lamp(TurnOffValue);
+                i.color = new Color32(brightness, brightness, brightness, 255);
             }
 
-            if (lastBetAmounts >= 2)
-            {
-                ChangeMedal2Lamp(TurnOnValue);
-            }
-            else
-            {
-                ChangeMedal2Lamp(TurnOffValue);
-            }
-
-            if (lastBetAmounts >= 3)
-            {
-                ChangeMedal3Lamp(TurnOnValue);
-            }
-            else
-            {
-                ChangeMedal3Lamp(TurnOffValue);
-            }
+            yield return new WaitForSeconds(LampFlashTime);
         }
-        else
+        Debug.Log("Lamp turned on");
+    }
+
+    private IEnumerator TurnOffLamp(Image[] lamp)
+    {
+        Debug.Log("Start TurnOff");
+
+        // 現在の明るさ
+        byte brightness = TurnOnValue;
+        // 明るさの計算(0.01秒で25下げる)
+        int distance = TurnOnValue - TurnOffValue;
+        float changeValue = (float)distance / FrameCount;
+
+        // 0.01秒で上げる明るさの量
+        float result = brightness + changeValue;
+        // 数値を超えないように調整
+        result = Math.Clamp(result, TurnOffValue, TurnOnValue);
+
+        while (brightness < TurnOffValue)
         {
-            if (currentBet >= 1)
+            // byte型に変換して足し合わせる
+            brightness += (byte)result;
+
+            Debug.Log("Brightness:" + brightness);
+
+            foreach (Image i in lamp)
             {
-                ChangeMedal1Lamp(TurnOnValue);
-            }
-            else
-            {
-                ChangeMedal1Lamp(TurnOffValue);
+                i.color = new Color32(brightness, brightness, brightness, 255);
             }
 
-            if (currentBet >= 2)
-            {
-                ChangeMedal2Lamp(TurnOnValue);
-            }
-            else
-            {
-                ChangeMedal2Lamp(TurnOffValue);
-            }
-
-            if (currentBet >= 3)
-            {
-                ChangeMedal3Lamp(TurnOnValue);
-            }
-            else
-            {
-                ChangeMedal3Lamp(TurnOffValue);
-            }
+            yield return new WaitForSeconds(LampFlashTime);
         }
+        Debug.Log("Lamp turned on");
     }
 }

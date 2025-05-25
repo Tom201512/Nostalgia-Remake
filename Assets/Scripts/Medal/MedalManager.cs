@@ -59,7 +59,7 @@ namespace ReelSpinGame_Medal
                 {
                     MedalBehaviour.SetRemainingBet(amounts);
                     // メダルの投入を開始する(残りはフレーム処理)
-                    StartCoroutine("UpdateInsert");
+                    StartCoroutine(nameof(UpdateInsert));
                 }
 
                 // ベットがすでに終わっている、またはMAXベットの場合(Debug)
@@ -132,7 +132,10 @@ namespace ReelSpinGame_Medal
             while (MedalBehaviour.RemainingBet > 0)
             {
                 MedalBehaviour.InsertOneMedal();
-                medalPanel.UpdateMedalPanel(MedalBehaviour.CurrentBet, MedalBehaviour.LastBetAmounts);
+                if(MedalBehaviour.CurrentBet == 1)
+                {
+                    medalPanel.TurnOnMedal1Lamp();
+                }
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
 
