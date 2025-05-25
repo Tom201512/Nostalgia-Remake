@@ -9,10 +9,6 @@ public class WaitManager
     // const
     // ウェイトに必要な時間(ミリ秒)
     public const int WaitTimerSetting = 4100;
-
-    // ゲームステート用
-    public MainGameFlow MainFlow { get; private set; }
-
     // var
     // 処理用タイマー
     private Timer updateTimer;

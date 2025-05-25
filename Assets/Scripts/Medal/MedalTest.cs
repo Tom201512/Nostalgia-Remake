@@ -7,13 +7,12 @@ public class MedalTest : MonoBehaviour
 {
     // メダル処理のテスト用
 
-    private MedalManager medalManager;
+    [SerializeField] private MedalManager medalManager;
     private MedalData medalData;
 
     void Awake()
     {
         medalData = new MedalData();
-        medalManager = new MedalManager(0, MedalManager.MaxBet, 0, false);
     }
 
     void Update()
@@ -40,7 +39,7 @@ public class MedalTest : MonoBehaviour
         if (OriginalInput.CheckOneKeyInput(KeyCode.P))
         {
             //medalManager?.StartPayout(15);
-            medalManager?.ChangeMaxBet(1);
+            //medalManager?.ChangeMaxBet(1);
         }
     }
 }

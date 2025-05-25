@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(960, 540, false);
 
         // メダル管理
-        Medal = new MedalManager(0, MedalManager.MaxBet, 0, false);
+        Medal = GetComponent<MedalManager>();
         Debug.Log("Medal is launched");
 
         // フラグ管理
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // UI 設定
-        medalUI.SetMedalManager(Medal);
+        Medal.SetMedalData(0, 3, 0, false);
         lotsUI.SetFlagManager(Lots);
         waitUI.SetWaitManager(Wait);
         reelUI.SetReelManager(Reel);
@@ -137,7 +137,6 @@ public class GameManager : MonoBehaviour
     // タイマーを持つ機能の廃棄
     private void OnDestroy()
     {
-        Medal.DisposeMedal();
         Wait.DisposeWait();
     }
 

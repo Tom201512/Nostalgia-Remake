@@ -23,7 +23,7 @@ namespace ReelSpinGame_State.LotsState
         {
             Debug.Log("Start Lots State");
 
-            gameManager.Lots.GetFlagLots(gameManager.Setting, gameManager.Medal.LastBetAmounts);
+            gameManager.Lots.GetFlagLots(gameManager.Setting, gameManager.Medal.MedalBehaviour.LastBetAmounts);
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
             if(gameManager.Lots.CurrentFlag == ReelSpinGame_Lots.Flag.FlagLots.FlagId.FlagBig)
