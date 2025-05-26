@@ -1,0 +1,75 @@
+using System;
+using UnityEngine;
+
+public class MedalSevenSegment : MonoBehaviour
+{
+    // メダル用セグメント
+
+    // const
+    // 桁数のID
+    public enum DigitID{SecondDigit, FirstDigit}
+
+    // var
+    // 7セグ
+    private Segment[] segments;
+
+    // func
+
+    void Awake()
+    {
+        segments = GetComponentsInChildren<Segment>();
+    }
+
+    // 指定した桁数のメダルを表示
+    public void ShowSegmentByNumber(int num)
+    {
+        // 0~99に調整
+        num = Math.Clamp(num, 0, 99);
+
+        // 10の桁を得る
+        int SecondDigit = GetDigits(num, 2);
+
+        // 1の桁を得る
+        int FirstDigit = GetDigits(num, 1);
+
+        // セグメントに反映
+        segments[(int)DigitID.FirstDigit].TurnOnLampByNumber(FirstDigit);
+
+        // 2桁目以降は10以上でないと非表示
+        if(SecondDigit > 0)
+        {
+            segments[(int)DigitID.SecondDigit].TurnOnLampByNumber(SecondDigit);
+        }
+        else
+        {
+            segments[(int)DigitID.SecondDigit].TurnOffAll();
+        }
+    }
+
+    // セグメントをすべて消す
+    public void TurnOffAllSegments()
+    {
+        foreach(Segment segment in segments)
+        {
+            segment.TurnOffAll();
+        }
+    }
+
+    // 指定桁数を求める
+    public static int GetDigits(int value, int digit)
+    {
+        Debug.Log("Digit:" + digit);
+        Debug.Log("value:" + value);
+        int sum = 0;
+        // 指定桁数まで数字を出す
+        for (int i = 0; i < digit; i++)
+        {
+            sum = (value % 10);
+            value = (value / 10);
+
+            Debug.Log("DigitResult" + i + ":" + sum);
+        }
+
+        return sum;
+    }
+}

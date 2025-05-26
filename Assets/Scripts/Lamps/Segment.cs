@@ -257,6 +257,27 @@ public class Segment : MonoBehaviour
         TurnOffAll();
     }
 
+    // ハイフンを表示
+    public void TurnOnBar()
+    {
+        LampComponent[] turnOnLamps = new LampComponent[]
+        {
+            lamps[(int)LampID.E]
+        };
+
+        LampComponent[] turnOffLamps = new LampComponent[]
+        {
+            lamps[(int)LampID.A],
+            lamps[(int)LampID.B],
+            lamps[(int)LampID.C],
+            lamps[(int)LampID.D],
+            lamps[(int)LampID.F],
+            lamps[(int)LampID.G],
+        };
+
+        TurnOnLamps(turnOnLamps, turnOffLamps);
+    }
+
     private void TurnOnLamps(LampComponent[] turnOnLamps, LampComponent[] turnOffLamps)
     {
         foreach (LampComponent lamp in turnOnLamps)

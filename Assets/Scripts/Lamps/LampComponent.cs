@@ -24,7 +24,7 @@ public class LampComponent : MonoBehaviour
     // 現在の明るさ
     private byte brightness;
 
-    // Start is called before the first frame update
+    // func
     void Awake()
     {
         brightness = TurnOffValue;
@@ -32,6 +32,12 @@ public class LampComponent : MonoBehaviour
         image = GetComponent<Image>();
     }
 
+    public void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+    // 点灯
     public void TurnOn()
     {
         if(!IsTurnedOn)
@@ -40,6 +46,7 @@ public class LampComponent : MonoBehaviour
         }
     }
 
+    // 消灯
     public void TurnOff()
     {
         if(IsTurnedOn)
@@ -48,6 +55,7 @@ public class LampComponent : MonoBehaviour
         }
     }
 
+    // コルーチン用
     private IEnumerator TurnOnLamp()
     {
         StopCoroutine(nameof(TurnOffLamp));

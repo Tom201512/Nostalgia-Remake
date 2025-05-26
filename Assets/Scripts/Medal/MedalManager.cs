@@ -17,6 +17,11 @@ namespace ReelSpinGame_Medal
         // メダルのUI
         [SerializeField] private MedalPanel medalPanel;
 
+        // クレジットセグメント
+        [SerializeField] private MedalSevenSegment creditSegments;
+        // 払い出しセグメント
+        [SerializeField] private MedalSevenSegment payoutSegments;
+
         // メダルの更新処理中か
         public bool HasMedalUpdate { get; private set; }
         // メダルが払い出されたか
@@ -28,15 +33,12 @@ namespace ReelSpinGame_Medal
             HasMedalUpdate = false;
         }
 
-        void Update()
-        {
-
-        }
-
         // コンストラクタ
         public void SetMedalData(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
             MedalBehaviour = new MedalBehaviour(credits, curretMaxBet, lastBetAmounts, hasReplay);
+            // ここでクレジット更新
+            creditSegments.ShowSegmentByNumber(credits);
         }
 
         // タイマー処理の破棄
@@ -133,11 +135,18 @@ namespace ReelSpinGame_Medal
         {
             Debug.Log("StartBet");
             HasMedalUpdate = true;
-            // 投入処理
+            // 残りベット枚数がなくなるまで処理
             while (MedalBehaviour.RemainingBet > 0)
             {
+                // メダル投入
                 MedalBehaviour.InsertOneMedal();
+                // ランプ、セグメント更新
                 medalPanel.UpdateLampByBet(MedalBehaviour.CurrentBet, MedalBehaviour.LastBetAmounts);
+                // クレジット更新
+                creditSegments.ShowSegmentByNumber(MedalBehaviour.Credits);
+                // 払い出しセグメントを消す
+                payoutSegments.TurnOffAllSegments();
+                // 0.12秒待機
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
 
@@ -152,8 +161,13 @@ namespace ReelSpinGame_Medal
             // 払い出し処理
             while (MedalBehaviour.PayoutAmounts > 0)
             {
+                // メダル払い出し
                 MedalBehaviour.PayoutOneMedal();
                 HasMedalPayout.Invoke(1);
+                // クレジットと払い出しセグメント更新
+                creditSegments.ShowSegmentByNumber(MedalBehaviour.Credits);
+                payoutSegments.ShowSegmentByNumber(MedalBehaviour.LastPayoutAmounts);
+
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
             // 全て払い出したら処理終了

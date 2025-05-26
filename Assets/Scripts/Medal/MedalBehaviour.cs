@@ -30,6 +30,8 @@ namespace ReelSpinGame_Medal
         public int MaxBetAmounts { get; private set; }
         // 最後にかけたメダル枚数
         public int LastBetAmounts { get; private set; }
+        // 最後に払い出したメダル枚数
+        public int LastPayoutAmounts {get; private set; }
         // リプレイ状態か
         public bool HasReplay { get; private set; }
 
@@ -38,6 +40,7 @@ namespace ReelSpinGame_Medal
         {
             CurrentBet = 0;
             PayoutAmounts = 0;
+            LastPayoutAmounts = 0;
 
             Credits = credits;
             MaxBetAmounts = curretMaxBet;
@@ -76,6 +79,9 @@ namespace ReelSpinGame_Medal
         // 残りベット枚数を設定
         public void SetRemainingBet(int amounts)
         {
+            // 最後に払い出したメダルリセット
+            LastPayoutAmounts = 0;
+
             // 現在のベット枚数よりも多く賭けると差分だけ掛ける
             // (2BETから1BETはリセットして調整)
 
@@ -113,6 +119,7 @@ namespace ReelSpinGame_Medal
             CurrentBet += 1;
            //HasMedalInserted.Invoke(1);
 
+            // リプレイでなければクレジットを減らす
             if (!HasReplay)
             {
                 ChangeCredit(-1);
@@ -122,12 +129,18 @@ namespace ReelSpinGame_Medal
         // 払い出し処理
         public void PayoutOneMedal()
         {
-            // クレジット枚数が0より少ないかチェック
+            // クレジット枚数を0枚にする(負数の場合)
             if (Credits < 0)
             {
                 Credits = 0;
             }
             PayoutAmounts -= 1;
+            // リプレイでなければ最後に払い出した枚数を増やす
+            if(!HasReplay)
+            {
+                LastPayoutAmounts += 1;
+            }
+            // クレジット変更
             ChangeCredit(1);
             Debug.Log("Payout Medal by:" + 1);
         }
