@@ -1,6 +1,5 @@
 ﻿using ReelSpinGame_Reels;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;

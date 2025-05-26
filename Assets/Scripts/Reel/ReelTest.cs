@@ -1,8 +1,8 @@
-﻿using ReelSpinGame_Medal.Payout;
-using ReelSpinGame_Util.OriginalInputs;
+﻿using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
-using static ReelSpinGame_Lots.FlagBehaviour;
+using ReelSpinGame_Medal;
 using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 public class ReelTest : MonoBehaviour
@@ -98,7 +98,7 @@ public class ReelTest : MonoBehaviour
     {
         if (!manager.Data.IsWorking)
         {
-            payoutChecker.CheckPayoutLines(betAmounts, manager.Data.LastSymbols);
+            payoutChecker.CheckPayoutLines(betAmounts, manager.Data.LastStopped);
             hasFinishedCheck = true;
         }
         else

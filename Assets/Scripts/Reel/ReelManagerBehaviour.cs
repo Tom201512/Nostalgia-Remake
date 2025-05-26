@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using ReelSpinGame_Datas;
+using System.Collections.Generic;
 using UnityEngine;
+using static FlashManager;
 using static ReelSpinGame_Reels.ReelData;
 
 namespace ReelSpinGame_Reels
@@ -33,10 +35,8 @@ namespace ReelSpinGame_Reels
         // リール制御
         public ReelTableManager ReelTableManager { get; private set; }
 
-        // 最後に止めた位置
-        public List<int> LastPos { get; private set; }
-        // 最後に止まった出目
-        public List<List<ReelSymbols>> LastSymbols { get; private set; }
+        // 最後に止めたリールのデータ
+        public LastStoppedReelData LastStopped { get; private set; }
 
         // リールテーブルのランダム数値
         public int RandomValue { get; private set; }
@@ -53,9 +53,7 @@ namespace ReelSpinGame_Reels
             FirstPushPos = 0;
             RandomValue = 0;
 
-            LastPos = new List<int>();
-            LastSymbols = new List<List<ReelSymbols>>();
-
+            LastStopped = new LastStoppedReelData();
             ReelTableManager = new ReelTableManager();
         }
 
@@ -85,44 +83,7 @@ namespace ReelSpinGame_Reels
             }
         }
 
-        // 最後に止めた結果を作る
-        public void GenerateLastStopped(ReelObject[] reelObjects)
-        {
-            // 初期化
-            LastPos.Clear();
-            LastSymbols.Clear();
-
-            string posBuffer = "";
-
-            // リール図柄を作成する
-            for (int i = 0; i < reelObjects.Length; i++)
-            {
-                LastPos.Add(reelObjects[i].ReelData.GetReelPos((int)ReelPosID.Lower));
-                posBuffer += LastPos[i];
-
-                Debug.Log("Position:" + LastPos[i]);
-
-                // データ作成
-                LastSymbols.Add(new List<ReelSymbols>());
-
-                // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
-                for (int j = (int)ReelData.ReelPosID.Lower3rd; j < (int)ReelData.ReelPosID.Upper3rd; j++)
-                {
-                    LastSymbols[i].Add(reelObjects[i].ReelData.GetReelSymbol(j));
-                    Debug.Log("Symbol:" + reelObjects[i].ReelData.GetReelSymbol(j));
-                }
-            }
-            Debug.Log("Final ReelPosition" + posBuffer);
-
-            // 各リールごとに表示(デバッグ)
-            foreach (List<ReelSymbols> reelResult in LastSymbols)
-            {
-                Debug.Log("Reel:");
-                for (int i = 0; i < reelResult.Count; i++)
-                {
-                    Debug.Log(reelResult[i]);
-                }
-            }
-        }
+        // 最後に止めたリールデータを作る
+        public void GenerateLastStopped(ReelObject[] reelObjects) => LastStopped.GenerateLastStopped(reelObjects);
     }
 }

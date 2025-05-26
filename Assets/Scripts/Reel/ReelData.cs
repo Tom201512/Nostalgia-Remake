@@ -33,7 +33,7 @@ namespace ReelSpinGame_Reels
             // もし位置が0~20でなければ例外を出す
             if (lowerPos < 0 ||  lowerPos > MaxReelArray - 1)
             {
-                throw new System.Exception("Invalid Position num. Must be within 0 ~ " + (MaxReelArray - 1));
+                throw new Exception("Invalid Position num. Must be within 0 ~ " + (MaxReelArray - 1));
             }
             currentLower = lowerPos;
             ReelDatabase = reelDatabase;
@@ -59,7 +59,7 @@ namespace ReelSpinGame_Reels
         // リールの位置から図柄を返す
         public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
-        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((sbyte)Mathf.Sign(rotateSpeed));
+        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
         // リール位置を配列要素に置き換える
         public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
 

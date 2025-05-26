@@ -1,5 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using ReelSpinGame_Datas;
+using ReelSpinGame_Reels;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace ReelSpinGame_Bonus
 {
@@ -7,8 +9,15 @@ namespace ReelSpinGame_Bonus
 	{
         // ボーナスの処理
         // const
+
+        // ボーナスの種類
         public enum BonusType { BonusNone, BonusBIG, BonusREG }
+
+        // ボーナスの状態
         public enum BonusStatus { BonusNone, BonusBIGGames, BonusJACGames };
+
+        // BIGボーナスで当選した色
+        public enum BigColor {None, Red, Blue, Black};
 
         // 残り小役ゲーム数
         public const int BigGames = 30;
@@ -26,6 +35,8 @@ namespace ReelSpinGame_Bonus
         public BonusType HoldingBonusID { get; private set; }
         // ボーナス状態
         public BonusStatus CurrentBonusStatus { get; private set; }
+        // BIGボーナス当選時の色
+        public BigColor BigBonusColor { get; private set; }
 
         // 残りゲーム数、当選回数(JAC-INまたはJAC役)
 
@@ -44,8 +55,9 @@ namespace ReelSpinGame_Bonus
         // コンストラクタ
         public BonusBehaviour()
         {
-            HoldingBonusID = (int)BonusType.BonusNone;
-            CurrentBonusStatus = (int)BonusStatus.BonusNone;
+            HoldingBonusID = BonusType.BonusNone;
+            CurrentBonusStatus = BonusStatus.BonusNone;
+            BigBonusColor = BigColor.None;
             RemainingBigGames = 0;
             RemainingJacIn = 0;
             RemainingJacHits = 0;
@@ -67,13 +79,14 @@ namespace ReelSpinGame_Bonus
         // ボーナスストック状態の更新
         public void SetBonusStock(BonusType bonusType) => HoldingBonusID = bonusType;
 
-        public void StartBigChance()
+        public void StartBigChance(List<PayoutLineData> lastPayoutLines, LastStoppedReelData lastStopped)
         {
             Debug.Log("BIG CHANCE start");
             RemainingBigGames = BigGames;
             RemainingJacIn = JacInTimes;
             CurrentBonusStatus = BonusStatus.BonusBIGGames;
             HoldingBonusID = BonusType.BonusNone;
+            CheckBonusColor(lastPayoutLines, lastStopped);
         }
 
         public void StartBonusGame()
@@ -152,5 +165,57 @@ namespace ReelSpinGame_Bonus
             CurrentBonusStatus = BonusStatus.BonusNone;
             Debug.Log("Bonus Reset");
         }
+
+        private void CheckBonusColor(List<PayoutLineData> lastPayoutLines, LastStoppedReelData lastStopped)
+        {
+            BigBonusColor = BigColor.None;
+
+            // 払い出しラインからボーナスが何色だったかを得る
+            foreach (PayoutLineData payoutLine in lastPayoutLines)
+            {
+                int redCount = 0;
+                int blueCount = 0;
+                int barCount = 0;
+
+                for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
+                {
+                    if(lastStopped.GetLastStoppedSymbol(i, payoutLine.PayoutLines[i]) == ReelData.ReelSymbols.RedSeven)
+                    {
+                        redCount += 1;
+                        Debug.Log("Red:" + redCount);
+                    }
+                    if (lastStopped.GetLastStoppedSymbol(i, payoutLine.PayoutLines[i]) == ReelData.ReelSymbols.BlueSeven)
+                    {
+                        blueCount += 1;
+                        Debug.Log("Blue:" + blueCount);
+                    }
+                    if (lastStopped.GetLastStoppedSymbol(i, payoutLine.PayoutLines[i]) == ReelData.ReelSymbols.BAR)
+                    {
+                        barCount += 1;
+                        Debug.Log("BAR:" + barCount);
+                    }
+                }
+
+                // 赤7揃いの場合
+                if(redCount == 3)
+                {
+                    BigBonusColor = BigColor.Red;
+                }
+                // 青7揃いの場合
+                else if(blueCount == 3)
+                {
+                    BigBonusColor = BigColor.Blue;
+                }
+                // BB7揃いの場合
+                else if(redCount == 1 && barCount == 2)
+                {
+                    BigBonusColor = BigColor.Black;
+                }
+            }
+
+            Debug.Log("Bonus Color:" + BigBonusColor);
+        }
+
+        public void ResetBonusColor() => BigBonusColor = BigColor.None;
     }
 }

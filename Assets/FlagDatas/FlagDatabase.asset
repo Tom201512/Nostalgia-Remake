@@ -414,8 +414,4 @@ MonoBehaviour:
       - 4.8
       - 3.2
       - 3.5
-  normalAllTable:
-    flagDataBySettings: []
-  bigAllTable:
-    flagDataBySettings: []
   jacNonePoss: 256

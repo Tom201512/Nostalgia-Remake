@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
-namespace ReelSpinGame_Medal.Payout
+namespace ReelSpinGame_Medal
 {
     public class PayoutChecker : MonoBehaviour
     {
@@ -60,7 +60,7 @@ namespace ReelSpinGame_Medal.Payout
         public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => CheckMode = checkMode;
 
         // ライン判定
-        public void CheckPayoutLines(int betAmount, List<List<ReelData.ReelSymbols>> lastSymbols)
+        public void CheckPayoutLines(int betAmount, LastStoppedReelData lastStoppedData)
         {
             // 最終的な払い出し結果
             int finalPayouts = 0;
@@ -79,7 +79,7 @@ namespace ReelSpinGame_Medal.Payout
                 {
                     // 各リールから指定ラインの位置を得る(枠下2段目を基準に)
                     int reelIndex = 0;
-                    foreach (List<ReelData.ReelSymbols> reelResult in lastSymbols)
+                    foreach (List<ReelData.ReelSymbols> reelResult in lastStoppedData.LastSymbols)
                     {
                         // マイナス数値を配列番号に変換
                         int lineIndex = ReelData.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
