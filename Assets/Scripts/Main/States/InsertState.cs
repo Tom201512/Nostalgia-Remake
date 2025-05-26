@@ -92,8 +92,7 @@ namespace ReelSpinGame_State.InsertState
         public void StateEnd()
         {
             Debug.Log("End Medal Insert");
-            gameManager.Status.TurnOffInsertlamp();
-            gameManager.Status.TurnOffStartlamp();
+            gameManager.Status.TurnOffInsertAndStartlamp();
         }
 
         // フラッシュを止める
