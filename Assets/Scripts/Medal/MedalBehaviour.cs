@@ -135,11 +135,7 @@ namespace ReelSpinGame_Medal
                 Credits = 0;
             }
             PayoutAmounts -= 1;
-            // リプレイでなければ最後に払い出した枚数を増やす
-            if(!HasReplay)
-            {
-                LastPayoutAmounts += 1;
-            }
+            LastPayoutAmounts += 1;
             // クレジット変更
             ChangeCredit(1);
             Debug.Log("Payout Medal by:" + 1);

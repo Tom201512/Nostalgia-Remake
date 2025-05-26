@@ -166,6 +166,7 @@ namespace ReelSpinGame_Medal
                 HasMedalPayout.Invoke(1);
                 // クレジットと払い出しセグメント更新
                 creditSegments.ShowSegmentByNumber(Data.Credits);
+                Debug.Log("LastPayoutAmounts:" + Data.LastPayoutAmounts);
                 payoutSegments.ShowSegmentByNumber(Data.LastPayoutAmounts);
 
                 yield return new WaitForSeconds(MedalUpdateTime);

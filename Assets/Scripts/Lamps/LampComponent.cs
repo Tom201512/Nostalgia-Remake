@@ -10,7 +10,7 @@ public class LampComponent : MonoBehaviour
     // デフォルトの明るさ(点灯時)
     const byte TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
-    const byte TurnOffValue = 60;
+    const byte TurnOffValue = 120;
     // 点灯させるために必要なフレーム数
     const byte FrameCount = 5;
     // ランプ点灯の間隔(秒間隔)
