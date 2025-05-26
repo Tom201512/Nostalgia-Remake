@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 public class FlashManager : MonoBehaviour
 {
@@ -286,8 +287,8 @@ public class FlashManager : MonoBehaviour
                 ReelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i],brightness, brightness, brightness);
 
                 // 左リールにチェリーがある場合はチェリーのみ点灯
-                if (ReelObjects[(int)ReelManager.ReelID.ReelLeft].GetReelSymbol
-                    (payoutLine.PayoutLines[(int)ReelManager.ReelID.ReelLeft]) == ReelSymbols.Cherry)
+                if (ReelObjects[(int)ReelID.ReelLeft].GetReelSymbol
+                    (payoutLine.PayoutLines[(int)ReelID.ReelLeft]) == ReelSymbols.Cherry)
                 {
                     break;
                 }

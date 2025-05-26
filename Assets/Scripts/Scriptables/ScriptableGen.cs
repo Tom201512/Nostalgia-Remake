@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Datas
 {
@@ -65,19 +66,19 @@ namespace ReelSpinGame_Datas
 
             reelSelection = GUILayout.Toolbar(reelSelection, new[] { "左", "中", "右" });
 
-            if (reelSelection == (int)ReelManager.ReelID.ReelLeft)
+            if (reelSelection == (int)ReelID.ReelLeft)
             {
                 reelSelection = -1;
                 MakeReelData(LeftPath);
             }
 
-            if (reelSelection == (int)ReelManager.ReelID.ReelMiddle)
+            if (reelSelection == (int)ReelID.ReelMiddle)
             {
                 reelSelection = -1;
                 MakeReelData(MiddlePath);
             }
 
-            if (reelSelection == (int)ReelManager.ReelID.ReelRight)
+            if (reelSelection == (int)ReelID.ReelRight)
             {
                 reelSelection = -1;
                 MakeReelData(RightPath);
@@ -106,7 +107,7 @@ namespace ReelSpinGame_Datas
             string[] pathOrder = { LeftPath, MiddlePath, RightPath };
 
             // あらかじめ設定したディレクトリから全リールのデータを読み込む
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
+            for (int i = 0; i < ReelAmounts; i++)
             {
                 MakeReelData(pathOrder[i]);
             }

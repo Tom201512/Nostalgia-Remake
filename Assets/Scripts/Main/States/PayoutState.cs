@@ -3,6 +3,7 @@ using ReelSpinGame_Interface;
 using UnityEngine;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_State.PayoutState
 {
@@ -173,9 +174,9 @@ namespace ReelSpinGame_State.PayoutState
             {
                 // 11番、17番を押した場合はフラッシュ
 
-                Debug.Log(gameManager.Reel.LastPos[(int)ReelManager.ReelID.ReelLeft]);
-                if (gameManager.Reel.LastPos[(int)ReelManager.ReelID.ReelLeft] + 1 == 11 ||
-                        gameManager.Reel.LastPos[(int)ReelManager.ReelID.ReelLeft] + 1 == 17)
+                Debug.Log(gameManager.Reel.Data.LastPos[(int)ReelID.ReelLeft]);
+                if (gameManager.Reel.Data.LastPos[(int)ReelID.ReelLeft] + 1 == 11 ||
+                        gameManager.Reel.Data.LastPos[(int)ReelID.ReelLeft] + 1 == 17)
                 {
                     gameManager.Reel.FlashManager.StartFlash((int)FlashManager.FlashID.V_Flash);
                 }
@@ -228,9 +229,9 @@ namespace ReelSpinGame_State.PayoutState
 
         private void StartCheckPayout(int betAmounts)
         {
-            if (!gameManager.Reel.IsWorking)
+            if (!gameManager.Reel.Data.IsWorking)
             {
-                gameManager.Payout.CheckPayoutLines(betAmounts, gameManager.Reel.LastSymbols);
+                gameManager.Payout.CheckPayoutLines(betAmounts, gameManager.Reel.Data.LastSymbols);
             }
             else
             {

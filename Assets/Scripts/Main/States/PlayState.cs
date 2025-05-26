@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -42,12 +43,12 @@ namespace ReelSpinGame_State.PlayingState
             if (!hasInput)
             {
                 // リール停止処理
-                if (gameManager.Reel.IsWorking)
+                if (gameManager.Reel.Data.IsWorking)
                 {
                     // 左停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopLeft]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelLeft, 
+                        gameManager.Reel.StopSelectedReel(ReelID.ReelLeft, 
                             gameManager.Medal.Data.LastBetAmounts, 
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
@@ -55,7 +56,7 @@ namespace ReelSpinGame_State.PlayingState
                     // 中停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopMiddle]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 
+                        gameManager.Reel.StopSelectedReel(ReelID.ReelMiddle, 
                             gameManager.Medal.Data.LastBetAmounts,
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
@@ -63,7 +64,7 @@ namespace ReelSpinGame_State.PlayingState
                     // 右停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopRight]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelRight, 
+                        gameManager.Reel.StopSelectedReel(ReelID.ReelRight, 
                             gameManager.Medal.Data.LastBetAmounts, 
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
@@ -76,7 +77,7 @@ namespace ReelSpinGame_State.PlayingState
                     hasInput = true;
                 }
                 // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-                else if (gameManager.Reel.IsFinished)
+                else if (gameManager.Reel.Data.IsFinished)
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PayoutState);
                 }

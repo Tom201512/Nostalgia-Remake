@@ -2,6 +2,7 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Medal.Payout
 {
@@ -175,7 +176,7 @@ namespace ReelSpinGame_Medal.Payout
                 }
 
                 // “¯‚¶}•¿(ANYŠÜ‚ß)‚ªƒŠ[ƒ‹‚Ì”‚Æ‡‚¦‚Î“–‘I‚Æ‚İ‚È‚·
-                if (sameSymbolCount == ReelManager.ReelAmounts)
+                if (sameSymbolCount == ReelAmounts)
                 {
                     Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:"
                      + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Datas
 {
@@ -60,7 +61,7 @@ namespace ReelSpinGame_Datas
 
             betCondition = (byte)byteBuffer[(int)ReadPos.BetCondition];
             // ì«Ç›çûÇ›
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
+            for (int i = 0; i < ReelAmounts; i++)
             {
                 payoutLines.Add(byteBuffer[i + (int)ReadPos.PayoutLineStart]);
                 combinationBuffer += payoutLines[i];
@@ -113,7 +114,7 @@ namespace ReelSpinGame_Datas
             flagID = byteBuffer[(int)ReadPos.FlagID];
 
             // ëgÇ›çáÇÌÇπ
-            for (int i = 0; i < ReelManager.ReelAmounts; i++)
+            for (int i = 0; i < ReelAmounts; i++)
             {
                 combinations.Add(byteBuffer[i + (int)ReadPos.CombinationsStart]);
                 combinationBuffer += combinations[i];

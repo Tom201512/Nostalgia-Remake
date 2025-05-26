@@ -3,6 +3,7 @@ using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 public class ReelTest : MonoBehaviour
 {
@@ -39,27 +40,27 @@ public class ReelTest : MonoBehaviour
         {
             // リール回転
             if (OriginalInput.CheckOneKeyInput(KeyCode.UpArrow) && 
-                !manager.IsWorking && hasFinishedCheck)
+                !manager.Data.IsWorking && hasFinishedCheck)
             {
                 manager.StartReels();
                 hasFinishedCheck = false;
             }
             // 左停止
-            if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.IsWorking)
+            if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.Data.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelLeft, 3, 
+                manager.StopSelectedReel(ReelID.ReelLeft, 3, 
                     FlagId.FlagNone, BonusType.BonusNone);
             }
             // 中停止
-            if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.IsWorking)
+            if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.Data.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 3, 
+                manager.StopSelectedReel(ReelID.ReelMiddle, 3, 
                     FlagId.FlagNone, BonusType.BonusNone);
             }
             // 右停止
-            if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.IsWorking)
+            if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.Data.IsWorking)
             {
-                manager.StopSelectedReel(ReelManager.ReelID.ReelRight, 3, 
+                manager.StopSelectedReel(ReelID.ReelRight, 3, 
                     FlagId.FlagNone, BonusType.BonusNone);
             }
 
@@ -70,7 +71,7 @@ public class ReelTest : MonoBehaviour
                 //Debug.Log("Input true");
             }
             // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-            else if(manager.IsFinished && !hasFinishedCheck)
+            else if(manager.Data.IsFinished && !hasFinishedCheck)
             {
                 Debug.Log("Start Payout Check");
 
@@ -95,9 +96,9 @@ public class ReelTest : MonoBehaviour
     // 払い出しの確認
     private void StartCheckPayout(int betAmounts)
     {
-        if (!manager.IsWorking)
+        if (!manager.Data.IsWorking)
         {
-            payoutChecker.CheckPayoutLines(betAmounts, manager.LastSymbols);
+            payoutChecker.CheckPayoutLines(betAmounts, manager.Data.LastSymbols);
             hasFinishedCheck = true;
         }
         else
