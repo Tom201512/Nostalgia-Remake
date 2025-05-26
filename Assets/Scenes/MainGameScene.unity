@@ -879,7 +879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
   useInstant: 0
-  instantFlagID: 0
+  instantFlagID: 2
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1844,30 +1844,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffectList:
-    bet: {fileID: 0}
-    wait: {fileID: 0}
-    start: {fileID: 0}
-    stop: {fileID: 0}
-    riichiSound: {fileID: 0}
-    replay: {fileID: 0}
-    normalPayout: {fileID: 0}
-    maxpayout: {fileID: 0}
-    jacPayout: {fileID: 0}
+    bet: {fileID: 8300000, guid: 36436fa7ee5d9824f8b51baeb5a7366c, type: 3}
+    wait: {fileID: 8300000, guid: a9ae3d4fbb810714cada510958b1b403, type: 3}
+    start: {fileID: 8300000, guid: a59dca87916edc24e8727f5031588ada, type: 3}
+    stop: {fileID: 8300000, guid: 229678cf824055d44a685c36b2df2979, type: 3}
+    riichiSound: {fileID: 8300000, guid: c8d6c9bc18254d14095f70d43c874281, type: 3}
+    replay: {fileID: 8300000, guid: a4d9b0699cd6c07438e2b34b0e088366, type: 3}
+    normalPayout: {fileID: 8300000, guid: 569ea9fca0932e54abb92777d431faa7, type: 3}
+    maxpayout: {fileID: 8300000, guid: 8343db427e33012489c8c1e617b9115c, type: 3}
+    jacPayout: {fileID: 8300000, guid: 85654bdff9fbcee488461992d9db9240, type: 3}
   bgmList:
-    redStart: {fileID: 0}
-    redBGM: {fileID: 0}
-    redJAC: {fileID: 0}
-    redEnd: {fileID: 0}
-    blueStart: {fileID: 0}
-    blueBGM: {fileID: 0}
-    blueJAC: {fileID: 0}
-    blueEnd: {fileID: 0}
-    blackStart: {fileID: 0}
-    blackBGM: {fileID: 0}
-    blackJAC: {fileID: 0}
-    blackEnd: {fileID: 0}
-    regStart: {fileID: 0}
-    regJac: {fileID: 0}
+    redStart: {fileID: 8300000, guid: 02288b728f39f9643a2bb545ef5dca14, type: 3}
+    redBGM: {fileID: 8300000, guid: 48d47c8b934190a4aa5a9c5630933ac3, type: 3}
+    redJAC: {fileID: 8300000, guid: cd81ffe5beaec0c419ed1d66e3796dd0, type: 3}
+    redEnd: {fileID: 8300000, guid: ef08b194580de724b9286efba483beb0, type: 3}
+    blueStart: {fileID: 8300000, guid: c509136196603b9468fcd7208ba9d336, type: 3}
+    blueBGM: {fileID: 8300000, guid: 97eaf1c4875c3d4478184afa5870d74e, type: 3}
+    blueJAC: {fileID: 8300000, guid: 30fb944b7b4986b4a83c625d31c84d10, type: 3}
+    blueEnd: {fileID: 8300000, guid: 20427d45f2aee8344b1d5de0229b3b50, type: 3}
+    blackStart: {fileID: 8300000, guid: 60e3dadfaeebd6e43bdc40a1cc4732a3, type: 3}
+    blackBGM: {fileID: 8300000, guid: ce18224f0d073b042aeb4868e1c754ac, type: 3}
+    blackJAC: {fileID: 8300000, guid: b87a08d0839c7714e92e42bf41dc6d4d, type: 3}
+    blackEnd: {fileID: 8300000, guid: d20d0611bcaa8594ebf3be146c8829d9, type: 3}
+    regStart: {fileID: 8300000, guid: 53ac3ff7954a4af4caf7b84e36059e24, type: 3}
+    regJac: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
 --- !u!1001 &913272569
 PrefabInstance:
   m_ObjectHideFlags: 0
