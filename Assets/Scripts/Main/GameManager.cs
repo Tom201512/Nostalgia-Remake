@@ -71,9 +71,6 @@ public class GameManager : MonoBehaviour
         Medal = GetComponent<MedalManager>();
         Debug.Log("Medal is launched");
 
-        // メダル設定
-        Medal.SetMedalData(0, 3, 0, false);
-
         // フラグ管理
         Lots = GetComponent<FlagLots>();
         Debug.Log("Lots is launched");
@@ -124,6 +121,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // メダル設定
+        Medal.SetMedalData(0, 3, 0, false);
+
         // UI 設定
         waitUI.SetWaitManager(Wait);
         playerUI.SetPlayerData(PlayerData);

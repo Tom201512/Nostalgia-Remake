@@ -24,11 +24,6 @@ public class BonusSevenSegment : MonoBehaviour
         Debug.Log("Counts:" + segments.Length);
     }
 
-    private void Start()
-    {
-        ShowSegmentByNumber(3, 30);
-    }
-
     // BIG中のボーナス表示
     public void ShowBigStatus(int remainingJac, int remainingBigGames) => ShowSegmentByNumber(remainingJac, remainingBigGames);
     // JAC中のボーナス表示
@@ -56,16 +51,7 @@ public class BonusSevenSegment : MonoBehaviour
 
         // セグメントに反映
         segments[(int)DigitID.GamesFirstDigit].TurnOnLampByNumber(FirstDigit);
-
-        // 2桁目以降は10以上でないと非表示
-        if (SecondDigit > 0)
-        {
-            segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(SecondDigit);
-        }
-        else
-        {
-            segments[(int)DigitID.GamesSecondDigit].TurnOffAll();
-        }
+        segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(SecondDigit);
     }
 
     // セグメントをすべて消す

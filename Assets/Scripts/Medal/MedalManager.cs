@@ -37,6 +37,8 @@ namespace ReelSpinGame_Medal
         public void SetMedalData(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
             Data = new MedalBehaviour(credits, curretMaxBet, lastBetAmounts, hasReplay);
+            Debug.Log("Credits:" + credits);
+            creditSegments.ShowSegmentByNumber(credits);
         }
 
         // タイマー処理の破棄

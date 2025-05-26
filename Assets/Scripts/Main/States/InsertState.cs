@@ -26,6 +26,7 @@ namespace ReelSpinGame_State.InsertState
         {
             Debug.Log("Start Medal Insert");
             
+            // リプレイでなければINSERTランプ表示
             if(!gameManager.Medal.Data.HasReplay)
             {
                 gameManager.Status.TurnOnInsertLamp();

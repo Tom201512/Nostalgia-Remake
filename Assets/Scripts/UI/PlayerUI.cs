@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerUI : MonoBehaviour
 {
     TextMeshProUGUI text;
-     PlayingDatabase playingDatabase;
+    PlayingDatabase playingDatabase;
     // Start is called before the first frame update
     void Awake()
     {

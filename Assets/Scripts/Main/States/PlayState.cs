@@ -31,6 +31,9 @@ namespace ReelSpinGame_State.PlayingState
 
             // リール始動
             gameManager.Reel.StartReels();
+
+            // ボーナス中のランプ処理
+            gameManager.Bonus.UpdateSegments();
         }
 
         public void StateUpdate()

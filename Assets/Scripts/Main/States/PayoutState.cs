@@ -212,6 +212,7 @@ namespace ReelSpinGame_State.PayoutState
             Debug.Log("End Payout State");
             Debug.Log("HasReplay:" + gameManager.Medal.Data.HasReplay);
 
+            // リプレイの処理
             if(gameManager.Medal.Data.HasReplay)
             {
                 gameManager.Status.TurnOnReplayLamp();
@@ -220,6 +221,9 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gameManager.Status.TurnOffReplayLamp();
             }
+
+            // ボーナス中のランプ処理
+            gameManager.Bonus.UpdateSegments();
         }
 
         private void StartCheckPayout(int betAmounts)
