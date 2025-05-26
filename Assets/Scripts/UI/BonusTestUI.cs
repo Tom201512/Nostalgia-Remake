@@ -5,7 +5,7 @@ using ReelSpinGame_Bonus;
 public class BonusTestUI : MonoBehaviour
 {
     TextMeshProUGUI text;
-    BonusManager bonus;
+    [SerializeField] private BonusManager bonusManager;
     // Start is called before the first frame update
     void Awake()
     {
@@ -19,20 +19,18 @@ public class BonusTestUI : MonoBehaviour
 
         buffer += "Bonus-" + "\n";
         // ストック中のボーナス
-        buffer += "Holding:" + bonus.HoldingBonusID + "\n";
+        buffer += "Holding:" + bonusManager.Data.HoldingBonusID + "\n";
         // ボーナス状態
-        buffer += "Status:" + bonus.CurrentBonusStatus + "\n";
+        buffer += "Status:" + bonusManager.Data.CurrentBonusStatus + "\n";
 
         // BIG中の状態
-        buffer += "BIG_Games:" + bonus.RemainingBigGames + "\n";
-        buffer += "BIG_JACIN:" + bonus.RemainingJacIn + "\n";
+        buffer += "BIG_Games:" + bonusManager.Data.RemainingBigGames + "\n";
+        buffer += "BIG_JACIN:" + bonusManager.Data.RemainingJacIn + "\n";
 
         // JAC中の状態
-        buffer += "JAC_Games:" + bonus.RemainingJacGames + "\n";
-        buffer += "JAC_Hits:" + bonus.RemainingJacHits + "\n";
+        buffer += "JAC_Games:" + bonusManager.Data.RemainingJacGames + "\n";
+        buffer += "JAC_Hits:" + bonusManager.Data.RemainingJacHits + "\n";
 
         text.text = buffer;
     }
-
-    public void SetBonusManager(BonusManager bonusManager) => this.bonus = bonusManager;
 }

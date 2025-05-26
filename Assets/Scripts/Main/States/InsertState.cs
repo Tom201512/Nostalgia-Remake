@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
+using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_State.InsertState
 {
@@ -25,7 +26,7 @@ namespace ReelSpinGame_State.InsertState
         {
             Debug.Log("Start Medal Insert");
             
-            if(!gameManager.Medal.MedalBehaviour.HasReplay)
+            if(!gameManager.Medal.Data.HasReplay)
             {
                 gameManager.Status.TurnOnInsertLamp();
             }
@@ -55,7 +56,7 @@ namespace ReelSpinGame_State.InsertState
             }
 
             // ベット枚数がある場合
-            if(gameManager.Medal.MedalBehaviour.CurrentBet > 0)
+            if(gameManager.Medal.Data.CurrentBet > 0)
             {
                 gameManager.Status.TurnOnStartLamp();
             }
@@ -64,18 +65,18 @@ namespace ReelSpinGame_State.InsertState
             if(OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
             {
                 // 投入枚数を反映する
-                gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.MedalBehaviour.LastBetAmounts);
-                gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.MedalBehaviour.LastBetAmounts);
+                gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.Data.LastBetAmounts);
+                gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.Data.LastBetAmounts);
 
                 // すでにベットされている場合は抽選へ
-                if (gameManager.Medal.MedalBehaviour.CurrentBet > 0)
+                if (gameManager.Medal.Data.CurrentBet > 0)
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
 
                     // ボーナス中なら払い出し枚数を減らす
-                    if(gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
+                    if(gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
                     {
-                        gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.MedalBehaviour.LastBetAmounts);
+                        gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.Data.LastBetAmounts);
                     }
                 }
                 // そうでない場合はMAX BET
@@ -101,7 +102,7 @@ namespace ReelSpinGame_State.InsertState
             gameManager.Reel.FlashManager.StopFlash();
 
             // JAC GAME中なら点灯方法を少し変える
-            if(gameManager.Bonus.CurrentBonusStatus == ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusJACGames)
+            if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
             {
                 gameManager.Reel.FlashManager.EnableJacGameLight();
                 Debug.Log("Jac Turn On");

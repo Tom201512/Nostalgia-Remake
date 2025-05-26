@@ -7,7 +7,7 @@ public class MedalTestUI : MonoBehaviour
     // var
     TextMeshProUGUI text;
     // ƒƒ_ƒ‹‚Ìˆ—
-    private MedalManager medal;
+    [SerializeField] private MedalManager medal;
 
     // func
     void Awake()
@@ -20,15 +20,13 @@ public class MedalTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Medal-" + "\n";
-        buffer += "Credits:" + medal.MedalBehaviour.Credits + "\n";
-        buffer += "Bet:" + medal.MedalBehaviour.CurrentBet + "\n";
-        buffer += "Payout:" + medal.MedalBehaviour.PayoutAmounts + "\n";
-        buffer += "MaxBet:" + medal.MedalBehaviour.MaxBetAmounts + "\n";
-        buffer += "LastBet:" + medal.MedalBehaviour.LastBetAmounts + "\n";
-        buffer += "Replay:" + medal.MedalBehaviour.HasReplay;
+        buffer += "Credits:" + medal.Data.Credits + "\n";
+        buffer += "Bet:" + medal.Data.CurrentBet + "\n";
+        buffer += "Payout:" + medal.Data.PayoutAmounts + "\n";
+        buffer += "MaxBet:" + medal.Data.MaxBetAmounts + "\n";
+        buffer += "LastBet:" + medal.Data.LastBetAmounts + "\n";
+        buffer += "Replay:" + medal.Data.HasReplay;
 
         text.text = buffer;
     }
-
-    public void SetMedalManager(MedalManager medalManager) => medal = medalManager;
 }

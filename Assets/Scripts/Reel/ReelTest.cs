@@ -2,6 +2,7 @@
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Bonus.BonusBehaviour;
 
 public class ReelTest : MonoBehaviour
 {
@@ -47,19 +48,19 @@ public class ReelTest : MonoBehaviour
             if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.IsWorking)
             {
                 manager.StopSelectedReel(ReelManager.ReelID.ReelLeft, 3, 
-                    FlagId.FlagNone, ReelSpinGame_Bonus.BonusManager.BonusType.BonusNone);
+                    FlagId.FlagNone, BonusType.BonusNone);
             }
             // 中停止
             if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.IsWorking)
             {
                 manager.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 3, 
-                    FlagId.FlagNone, ReelSpinGame_Bonus.BonusManager.BonusType.BonusNone);
+                    FlagId.FlagNone, BonusType.BonusNone);
             }
             // 右停止
             if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.IsWorking)
             {
                 manager.StopSelectedReel(ReelManager.ReelID.ReelRight, 3, 
-                    FlagId.FlagNone, ReelSpinGame_Bonus.BonusManager.BonusType.BonusNone);
+                    FlagId.FlagNone, BonusType.BonusNone);
             }
 
             // 入力がないかチェック

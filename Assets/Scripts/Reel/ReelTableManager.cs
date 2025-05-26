@@ -2,6 +2,7 @@ using ReelSpinGame_Bonus;
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using UnityEngine;
+using static ReelSpinGame_Bonus.BonusBehaviour;
 
 public class ReelTableManager
 {
@@ -54,7 +55,7 @@ public class ReelTableManager
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
                 else if(i == (int)ReelConditionsData.ConditionID.Bonus && 
                     data.GetConditionData(i) == BonusAnyValueID &&
-                    bonus != (int)BonusManager.BonusType.BonusNone)
+                    bonus != (int)BonusType.BonusNone)
                 {
                     Debug.Log(data.GetConditionData(i) + "ANY BONUS");
                     Debug.Log(bonus + "ANY BONUS");

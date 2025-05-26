@@ -91,8 +91,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Payout is launched");
 
         // ボーナス
-        Bonus = new BonusManager();
+        Bonus = GetComponent<BonusManager>();
         Debug.Log("Bonus is launched");
+
+        // ボーナス設定
 
         // メインフロー作成
         MainFlow = new MainGameFlow(this);
@@ -123,11 +125,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // UI 設定
-        medalUI.SetMedalManager(Medal);
-        lotsUI.SetFlagManager(Lots);
         waitUI.SetWaitManager(Wait);
-        reelUI.SetReelManager(Reel);
-        bonusUI.SetBonusManager(Bonus);
         playerUI.SetPlayerData(PlayerData);
 
         // ステート開始

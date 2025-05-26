@@ -5,7 +5,7 @@ using UnityEngine;
 public class LotsTestUI : MonoBehaviour
 {
     TextMeshProUGUI text;
-    private FlagLots lots;
+    [SerializeField] private FlagLots lots;
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,12 +18,10 @@ public class LotsTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Lots-" + "\n";
-        buffer += "Flag:" + lots.FlagBehaviour.CurrentFlag + "\n";
-        buffer += "Table:" + lots.FlagBehaviour.CurrentTable + "\n";
-        buffer += "Counter:" + lots.FlagBehaviour.FlagCounter.Counter + "\n";
+        buffer += "Flag:" + lots.Data.CurrentFlag + "\n";
+        buffer += "Table:" + lots.Data.CurrentTable + "\n";
+        buffer += "Counter:" + lots.Data.FlagCounter.Counter + "\n";
 
         text.text = buffer;
     }
-
-    public void SetFlagManager(FlagLots lots) => this.lots = lots;
 }

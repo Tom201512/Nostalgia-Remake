@@ -262,7 +262,7 @@ public class Segment : MonoBehaviour
     {
         LampComponent[] turnOnLamps = new LampComponent[]
         {
-            lamps[(int)LampID.E]
+            lamps[(int)LampID.G]
         };
 
         LampComponent[] turnOffLamps = new LampComponent[]
@@ -271,6 +271,27 @@ public class Segment : MonoBehaviour
             lamps[(int)LampID.B],
             lamps[(int)LampID.C],
             lamps[(int)LampID.D],
+            lamps[(int)LampID.E],
+            lamps[(int)LampID.F]
+        };
+
+        TurnOnLamps(turnOnLamps, turnOffLamps);
+    }
+
+    // J‚ð•\Ž¦(JACGAME’†)
+    public void TurnOnJAC()
+    {
+        LampComponent[] turnOnLamps = new LampComponent[]
+        {
+            lamps[(int)LampID.B],
+            lamps[(int)LampID.C],
+            lamps[(int)LampID.D],
+            lamps[(int)LampID.E]
+        };
+
+        LampComponent[] turnOffLamps = new LampComponent[]
+        {
+            lamps[(int)LampID.A],
             lamps[(int)LampID.F],
             lamps[(int)LampID.G],
         };

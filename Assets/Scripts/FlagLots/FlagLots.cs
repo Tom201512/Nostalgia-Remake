@@ -8,8 +8,8 @@ namespace ReelSpinGame_Lots.Flag
     {
         // フラグ抽選
         // var
-        // フラグの処理
-        public FlagBehaviour FlagBehaviour { get; private set; }
+        // フラグ抽選中のデータ
+        public FlagBehaviour Data { get; private set; }
 
         // フラグデータベース
         [SerializeField] FlagDatabase flagDatabase;
@@ -21,12 +21,12 @@ namespace ReelSpinGame_Lots.Flag
 
         void Awake()
         {
-            FlagBehaviour = new FlagBehaviour();
+            Data = new FlagBehaviour();
         }
 
         public void StartFlagLots(int setting, int betAmounts)
         {
-            FlagBehaviour.GetFlagLots(setting, betAmounts, useInstant, instantFlagID, flagDatabase);
+            Data.GetFlagLots(setting, betAmounts, useInstant, instantFlagID, flagDatabase);
         }
     }
 }

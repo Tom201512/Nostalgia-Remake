@@ -45,25 +45,25 @@ namespace ReelSpinGame_State.PlayingState
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopLeft]))
                     {
                         gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelLeft, 
-                            gameManager.Medal.MedalBehaviour.LastBetAmounts, 
-                            gameManager.Lots.FlagBehaviour.CurrentFlag, 
-                            gameManager.Bonus.HoldingBonusID);
+                            gameManager.Medal.Data.LastBetAmounts, 
+                            gameManager.Lots.Data.CurrentFlag, 
+                            gameManager.Bonus.Data.HoldingBonusID);
                     }
                     // 中停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopMiddle]))
                     {
                         gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelMiddle, 
-                            gameManager.Medal.MedalBehaviour.LastBetAmounts,
-                            gameManager.Lots.FlagBehaviour.CurrentFlag, 
-                            gameManager.Bonus.HoldingBonusID);
+                            gameManager.Medal.Data.LastBetAmounts,
+                            gameManager.Lots.Data.CurrentFlag, 
+                            gameManager.Bonus.Data.HoldingBonusID);
                     }
                     // 右停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopRight]))
                     {
                         gameManager.Reel.StopSelectedReel(ReelManager.ReelID.ReelRight, 
-                            gameManager.Medal.MedalBehaviour.LastBetAmounts, 
-                            gameManager.Lots.FlagBehaviour.CurrentFlag, 
-                            gameManager.Bonus.HoldingBonusID);
+                            gameManager.Medal.Data.LastBetAmounts, 
+                            gameManager.Lots.Data.CurrentFlag, 
+                            gameManager.Bonus.Data.HoldingBonusID);
                     }
                 }
 

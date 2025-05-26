@@ -4,7 +4,7 @@ using UnityEngine;
 public class ReelTestUI : MonoBehaviour
 {
     TextMeshProUGUI text;
-    ReelManager reel;
+    [SerializeField] private ReelManager reel;
     // Start is called before the first frame update
     void Awake()
     {
@@ -44,6 +44,4 @@ public class ReelTestUI : MonoBehaviour
 
         text.text = buffer;
     }
-
-    public void SetReelManager(ReelManager reelManager) => this.reel = reelManager;
 }

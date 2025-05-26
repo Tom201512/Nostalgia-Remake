@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using ReelSpinGame_Interface;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -24,22 +25,22 @@ namespace ReelSpinGame_State.LotsState
         {
             Debug.Log("Start Lots.FlagBehaviour.State");
 
-            gameManager.Lots.StartFlagLots(gameManager.Setting, gameManager.Medal.MedalBehaviour.LastBetAmounts);
+            gameManager.Lots.StartFlagLots(gameManager.Setting, gameManager.Medal.Data.LastBetAmounts);
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if(gameManager.Lots.FlagBehaviour.CurrentFlag == FlagId.FlagBig)
+            if(gameManager.Lots.Data.CurrentFlag == FlagId.FlagBig)
             {
-                gameManager.PlayerData.AddBonusResult(ReelSpinGame_Bonus.BonusManager.BonusType.BonusBIG);
+                gameManager.PlayerData.AddBonusResult(BonusType.BonusBIG);
             }
-            else if (gameManager.Lots.FlagBehaviour.CurrentFlag == FlagId.FlagReg)
+            else if (gameManager.Lots.Data.CurrentFlag == FlagId.FlagReg)
             {
-                gameManager.PlayerData.AddBonusResult(ReelSpinGame_Bonus.BonusManager.BonusType.BonusREG);
+                gameManager.PlayerData.AddBonusResult(BonusType.BonusREG);
             }
 
             // ボーナス中ならここでゲーム数を減らす
-            if (gameManager.Bonus.CurrentBonusStatus != ReelSpinGame_Bonus.BonusManager.BonusStatus.BonusNone)
+            if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
             {
-                gameManager.Bonus.DecreaseGames();
+                gameManager.Bonus.Data.DecreaseGames();
             }
             // そうでない場合は通常時のゲーム数を加算
             else
