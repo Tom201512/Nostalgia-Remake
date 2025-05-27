@@ -84,6 +84,8 @@ public class ReelManager : MonoBehaviour
     public int GetCurrentReelPos(int reelID) => reelObjects[reelID].ReelData.GetReelPos((int)ReelPosID.Lower);
     // 指定したリールを止めた位置を返す
     public int GetStoppedReelPos(int reelID) => reelObjects[reelID].ReelData.LastPressedPos;
+    // 指定リールの停止予定位置を返す
+    public int GetWillStopReelPos(int reelID) => reelObjects[reelID].ReelData.WillStopPos;
     // 指定したリールのディレイ数を返す
     public int GetLastDelay(int reelID) => reelObjects[reelID].ReelData.LastDelay;
 
@@ -174,12 +176,14 @@ public class ReelManager : MonoBehaviour
             // ベット条件を満たしているか確認
             if(line.BetCondition >= betAmounts)
             {
-                // 停止したリールからリーチ状態か確認
+                // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Length; i++)
                 {
+                    Debug.Log("WillStop Pos:" + reelObjects[i].ReelData.WillStopPos);
+                    Debug.Log("Pos:" + line.PayoutLines[i]);
+                    Debug.Log("WillStop Symbol:" + reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]));
                     // 赤7をカウント
-                    if (reelObjects[i].ReelData.HasStopped && 
-                        reelObjects[i].ReelData.GetReelSymbol(line.PayoutLines[i]) == ReelSymbols.RedSeven)
+                    if (reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                     {
                         redCount += 1;
 
@@ -190,18 +194,22 @@ public class ReelManager : MonoBehaviour
                         }
                     }
                     // 青7をカウント
-                    if (reelObjects[i].ReelData.HasStopped &&
-                        reelObjects[i].ReelData.GetReelSymbol(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
+                    if (reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
                     {
                         blueCount += 1;
                     }
+
                     // BARをカウント(右以外)
-                    if (reelObjects[i].ReelData.HasStopped && i != (int)ReelID.ReelRight &&
-                        reelObjects[i].ReelData.GetReelSymbol(line.PayoutLines[i]) == ReelSymbols.BAR)
+                    if (i != (int)ReelID.ReelRight &&
+                        reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
                     {
                         bb7Count += 1;
                     }
                 }
+
+                Debug.Log("Red:" + redCount);
+                Debug.Log("Blue:" + blueCount);
+                Debug.Log("Black:" + bb7Count);
 
                 // 赤7がライン上に2つあれば赤7
                 if(redCount == 2)

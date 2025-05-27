@@ -1,5 +1,6 @@
 ﻿using ReelSpinGame_Datas;
 using System;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels
@@ -77,11 +78,13 @@ namespace ReelSpinGame_Reels
         public int GetReelPos(int posID) => OffsetReel(currentLower, posID);
         // リールの位置から図柄を返す
         public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
+        // 停止予定の位置からリール図柄を返す
+        public ReelSymbols GetSymbolFromWillStop(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel(currentLower, (int)Mathf.Sign(rotateSpeed));
         // リール位置を配列要素に置き換える
         public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
-        // 停止したリール位置を返す
+        // 停止したリール位置を返す(中段)
         public int GetStoppedPos() => GetReelPos((int)ReelPosID.Center);
 
         // 停止位置になったか
@@ -109,6 +112,7 @@ namespace ReelSpinGame_Reels
 
             // テーブルから得たディレイを記録し、その分リールの停止を遅らせる。
             WillStopPos = OffsetReel(LastPressedPos, delay);
+            Debug.Log("WillStop:" + WillStopPos);
             LastDelay = delay;
             IsStopping = true;
         }
@@ -123,16 +127,20 @@ namespace ReelSpinGame_Reels
         // リール位置をオーバーフローしない数値で返す
         private int OffsetReel(int reelPos, int offset)
         {
+            Debug.Log("ReelPos:" + reelPos);
             if (reelPos + offset < 0)
             {
+                Debug.Log("Offset:" + (MaxReelArray + reelPos + offset));
                 return MaxReelArray + reelPos + offset;
             }
 
             else if (reelPos + offset > MaxReelArray - 1)
             {
+                Debug.Log("Offset:" + (reelPos + offset - MaxReelArray));
                 return reelPos + offset - MaxReelArray;
             }
             // オーバーフローがないならそのまま返す
+            Debug.Log("Offset:" + (reelPos + offset));
             return reelPos + offset;
         }
     }

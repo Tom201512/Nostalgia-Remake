@@ -25,6 +25,11 @@ public class ReelTestUI : MonoBehaviour
         buffer += "MiddlePos:" + reel.GetCurrentReelPos((int)ReelID.ReelMiddle) + "\n";
         buffer += "RightPos:" + reel.GetCurrentReelPos((int)ReelID.ReelRight) + "\n" + "\n";
 
+        // ’âŽ~—\’èˆÊ’u
+        buffer += "LeftWillStopAt:" + (reel.GetWillStopReelPos((int)ReelID.ReelLeft)) + "\n";
+        buffer += "MiddleWillStopAt:" + (reel.GetWillStopReelPos((int)ReelID.ReelMiddle)) + "\n";
+        buffer += "RightWillStopAt:" + (reel.GetWillStopReelPos((int)ReelID.ReelRight)) + "\n" + "\n";
+
         // ’âŽ~‚µ‚½ˆÊ’u
         buffer += "LeftStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelLeft)) + "\n";
         buffer += "MiddleStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelMiddle)) + "\n";

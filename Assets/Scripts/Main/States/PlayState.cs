@@ -57,6 +57,10 @@ namespace ReelSpinGame_State.PlayingState
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
 
+                        // リーチ確認
+                        gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
+                            gameManager.Medal.Data.LastPayoutAmounts);
+
                         PlayStopSound();
                     }
                     // 中停止
@@ -67,6 +71,10 @@ namespace ReelSpinGame_State.PlayingState
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
 
+                        // リーチ確認
+                        gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
+                            gameManager.Medal.Data.LastPayoutAmounts);
+
                         PlayStopSound();
                     }
                     // 右停止
@@ -76,6 +84,10 @@ namespace ReelSpinGame_State.PlayingState
                             gameManager.Medal.Data.LastBetAmounts, 
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
+
+                        // リーチ確認
+                        gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
+                            gameManager.Medal.Data.LastPayoutAmounts);
 
                         PlayStopSound();
                     }
