@@ -11,6 +11,8 @@ namespace ReelSpinGame_Reels
         // const 
         // リール配列要素数
         public const int MaxReelArray = 21;
+        // 最高ディレイ(スベリコマ数 4)
+        public const int MaxDelay = 4;
 
         // 図柄
         public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
@@ -25,9 +27,26 @@ namespace ReelSpinGame_Reels
         // 現在の下段リール位置
         private int currentLower;
 
+        // 止まる予定か
+        public bool IsStopping { get; private set; }
+        // 停止したか
+        public bool HasStopped { get; private set; }
+        // 最後に止めた位置(下段基準)
+        public int LastPressedPos { get; private set; }
+        // 将来的に止まる位置(下段基準)
+        public int WillStopPos { get; private set; }
+        // 最後に止めたときのディレイ数
+        public int LastDelay { get; private set; }
+
         // コンストラクタ
         public ReelData(int reelID, int lowerPos, ReelDatabase reelDatabase) 
         {
+            LastPressedPos = 0;
+            LastDelay = 0;
+            WillStopPos = 0;
+            IsStopping = false;
+            HasStopped = true;
+
             ReelID = reelID;
             // 位置設定
             // もし位置が0~20でなければ例外を出す
@@ -55,28 +74,66 @@ namespace ReelSpinGame_Reels
         // リール配列の番号を図柄へ変更
         public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
         // 指定したリールの位置番号を返す
-        public int GetReelPos(int posID) => OffsetReel(posID);
+        public int GetReelPos(int posID) => OffsetReel(currentLower, posID);
         // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(posID)]);
+        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
-        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel((int)Mathf.Sign(rotateSpeed));
+        public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel(currentLower, (int)Mathf.Sign(rotateSpeed));
         // リール位置を配列要素に置き換える
         public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
+        // 停止したリール位置を返す
+        public int GetStoppedPos() => GetReelPos((int)ReelPosID.Center);
+
+        // 停止位置になったか
+        public bool CheckReachedStop() => currentLower == WillStopPos;
+
+        // 回転を開始させる
+        public void BeginStartReel()
+        {
+            HasStopped = false;
+            WillStopPos = 0;
+            LastDelay = 0;
+            WillStopPos = 0;
+        }
+
+        // 停止させる
+        public void BeginStopReel(int pushedPos, int delay)
+        {
+            LastPressedPos = pushedPos;
+
+            if (delay < 0 || delay > MaxDelay)
+            {
+                throw new Exception("Invalid Delay. Must be within 0~4");
+            }
+            Debug.Log("Received Stop Delay:" + delay);
+
+            // テーブルから得たディレイを記録し、その分リールの停止を遅らせる。
+            WillStopPos = OffsetReel(LastPressedPos, delay);
+            LastDelay = delay;
+            IsStopping = true;
+        }
+
+        // 停止処理を終了させる
+        public void FinishStopReel()
+        {
+            IsStopping = false;
+            HasStopped = true;
+        }
 
         // リール位置をオーバーフローしない数値で返す
-        private int OffsetReel(int offset)
+        private int OffsetReel(int reelPos, int offset)
         {
-            if (currentLower + offset < 0)
+            if (reelPos + offset < 0)
             {
-                return MaxReelArray + currentLower + offset;
+                return MaxReelArray + reelPos + offset;
             }
 
-            else if (currentLower + offset > MaxReelArray - 1)
+            else if (reelPos + offset > MaxReelArray - 1)
             {
-                return currentLower + offset - MaxReelArray;
+                return reelPos + offset - MaxReelArray;
             }
             // オーバーフローがないならそのまま返す
-            return currentLower + offset;
+            return reelPos + offset;
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using ReelSpinGame_Reels;
+﻿using ReelSpinGame_Bonus;
+using ReelSpinGame_Datas;
+using ReelSpinGame_Reels;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
@@ -80,9 +83,9 @@ public class ReelManager : MonoBehaviour
     // 指定したリールの現在位置を返す
     public int GetCurrentReelPos(int reelID) => reelObjects[reelID].ReelData.GetReelPos((int)ReelPosID.Lower);
     // 指定したリールを止めた位置を返す
-    public int GetStoppedReelPos(int reelID) => reelObjects[reelID].GetLastPressedPos();
+    public int GetStoppedReelPos(int reelID) => reelObjects[reelID].ReelData.LastPressedPos;
     // 指定したリールのディレイ数を返す
-    public int GetLastDelay(int reelID) => reelObjects[reelID].GetLastDelay();
+    public int GetLastDelay(int reelID) => reelObjects[reelID].ReelData.LastDelay;
 
     // 指定リール本体の明るさ変更
     public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
@@ -119,10 +122,10 @@ public class ReelManager : MonoBehaviour
         if(Data.CanStop)
         {
             // 止められる状態なら
-            if (!reelObjects[(int)reelID].HasStopped)
+            if (!reelObjects[(int)reelID].ReelData.HasStopped)
             {
-                // 押した位置
-                int pushedPos = reelObjects[(int)reelID].GetPressedPos();
+                // 押した位置を得る
+                int pushedPos = reelObjects[(int)reelID].ReelData.GetStoppedPos();
                 Debug.Log("Stopped:" + pushedPos);
 
                 // 第一停止なら押したところの停止位置を得る
@@ -140,10 +143,12 @@ public class ReelManager : MonoBehaviour
                 int tableIndex = Data.ReelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
                     , flagID, Data.FirstPushReel, betAmounts, (int)bonusID, Data.RandomValue, Data.FirstPushPos);
 
-                // 先ほど得たディレイ分リール停止を遅らせる
+                // ディレイ(スベリコマ)を得る
                 int delay = Data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);
                 Debug.Log("Stop:" + reelID + "Delay:" + delay);
-                reelObjects[(int)reelID].StopReel(delay);
+
+                // リールを止める
+                reelObjects[(int)reelID].StopReel(pushedPos, delay);
             }
             else
             {
@@ -154,6 +159,73 @@ public class ReelManager : MonoBehaviour
         {
             Debug.Log("ReelSpeed is not maximum speed");
         }
+    }
+
+    // リーチ状態か確認する
+    public BigColor CheckRiichiStatus(List<PayoutLineData> payoutLines, int betAmounts)
+    {
+        // 払い出しラインとベット枚数から確認
+        foreach(PayoutLineData line in payoutLines)
+        {
+            int redCount = 0;
+            int blueCount = 0;
+            int bb7Count = 0;
+
+            // ベット条件を満たしているか確認
+            if(line.BetCondition >= betAmounts)
+            {
+                // 停止したリールからリーチ状態か確認
+                for (int i = 0; i < reelObjects.Length; i++)
+                {
+                    // 赤7をカウント
+                    if (reelObjects[i].ReelData.HasStopped && 
+                        reelObjects[i].ReelData.GetReelSymbol(line.PayoutLines[i]) == ReelSymbols.RedSeven)
+                    {
+                        redCount += 1;
+
+                        // 右リールの場合はBB7のカウントとしても増やす
+                        if(i == (int)ReelID.ReelRight)
+                        {
+                            bb7Count += 1;
+                        }
+                    }
+                    // 青7をカウント
+                    if (reelObjects[i].ReelData.HasStopped &&
+                        reelObjects[i].ReelData.GetReelSymbol(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
+                    {
+                        blueCount += 1;
+                    }
+                    // BARをカウント(右以外)
+                    if (reelObjects[i].ReelData.HasStopped && i != (int)ReelID.ReelRight &&
+                        reelObjects[i].ReelData.GetReelSymbol(line.PayoutLines[i]) == ReelSymbols.BAR)
+                    {
+                        bb7Count += 1;
+                    }
+                }
+
+                // 赤7がライン上に2つあれば赤7
+                if(redCount == 2)
+                {
+                    Debug.Log("Riichi:" + BigColor.Red);
+                    return BigColor.Red;
+                }
+                // 青7がライン上に2つあれば青7
+                if (blueCount == 2)
+                {
+                    Debug.Log("Riichi:" + BigColor.Blue);
+                    return BigColor.Blue;
+                }
+                // BARが2つ、またはBAR1つ赤7一つなら
+                if (bb7Count == 2)
+                {
+                    Debug.Log("Riichi:" + BigColor.Black);
+                    return BigColor.Black;
+                }
+            }
+        }
+
+        Debug.Log("Riichi:" + BigColor.None);
+        return BigColor.None;
     }
 
     // 全リール速度が最高速度かチェック
@@ -185,7 +257,7 @@ public class ReelManager : MonoBehaviour
         foreach (ReelObject obj in reelObjects)
         {
             // 止まっていないリールがまだあれば falseを返す
-            if (!obj.HasStopped)
+            if (!obj.ReelData.HasStopped)
             {
                 return false;
             }

@@ -2,6 +2,7 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelData;
 
 public class ReelObject : MonoBehaviour
 {
@@ -16,16 +17,12 @@ public class ReelObject : MonoBehaviour
     public const float ReelWeight = 25.5f;
     // リール半径(cm)
     public const float ReelRadius = 12.75f;
-    // 最高ディレイ(スベリコマ数 4)
-    public const int MaxDelay = 4;
 
     // var
     // 現在の回転速度
     private float rotateSpeed;
     // 最高速度
     private float maxSpeed;
-    // 停止するのに必要なディレイ(スベリ)
-    private int delayToStop;
 
     // リール本体
     private ReelBase reelBase;
@@ -33,15 +30,6 @@ public class ReelObject : MonoBehaviour
     //private SymbolChange[] symbolsObj;
     // 図柄マネージャー
     private SymbolManager symbolManager;
-
-    // 止まる予定か
-    public bool IsStopping { get; private set; }
-    // 停止したか
-    public bool HasStopped { get; private set; }
-    // 最後に止めた位置(下段基準)
-    public int lastPressedPos { get; private set; }
-    // 最後に止めたときのディレイ数
-    public int lastDelay { get; private set; }
 
     // リール情報
     public ReelData ReelData { get; private set; }
@@ -54,24 +42,18 @@ public class ReelObject : MonoBehaviour
     {
         rotateSpeed = 0.0f;
         maxSpeed = 0.0f;
-        delayToStop = 0;
-        lastPressedPos = 0;
-        lastDelay = 0;
-        IsStopping = false;
-        HasStopped = true;
 
-        //symbolsObj = GetComponentsInChildren<SymbolChange>();
         reelBase = GetComponentInChildren<ReelBase>();
         symbolManager = GetComponentInChildren<SymbolManager>();
 
         foreach (byte value in reelDatabaseFile.Array)
         {
-            Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
+            Debug.Log(value + "Symbol:" + ReturnSymbol(value));
         }
 
         for (int i = 0; i < reelDatabaseFile.Array.Length; i++)
         {
-            Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(reelDatabaseFile.Array[i]));
+            Debug.Log("No." + i + " Symbol:" + ReturnSymbol(reelDatabaseFile.Array[i]));
 
         }
         Debug.Log("ReelArray Generated");
@@ -114,14 +96,6 @@ public class ReelObject : MonoBehaviour
         ReelData = new ReelData(reelID, initialLowerPos, reelDatabaseFile);
     }
 
-    // 指定位置からリール図柄を渡す
-    public ReelData.ReelSymbols GetReelSymbol(int posID) => ReelData.GetReelSymbol(posID);
-    // 押した位置を返す(テーブル制御判定用)
-    public int GetPressedPos() => ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
-    // 最後に止めた停止位置を返す
-    public int GetLastPressedPos() => lastPressedPos;
-    // 直近のディレイ数を返す
-    public int GetLastDelay() => lastDelay;
     // 最高速度が返す
     public bool IsMaximumSpeed() => rotateSpeed == maxSpeed;
 
@@ -129,25 +103,13 @@ public class ReelObject : MonoBehaviour
     public void StartReel(float maxSpeed)
     {
         this.maxSpeed = maxSpeed;
-        HasStopped = false;
+        ReelData.BeginStartReel();
     }
 
     // リール停止
-    public void StopReel(int delay)
+    public void StopReel(int pushedPos, int delay)
     {
-        // 停止位置を記録
-        lastPressedPos = ReelData.GetReelPos((int)ReelData.ReelPosID.Center);
-
-        if (delay < 0 || delay > MaxDelay)
-        {
-            throw new Exception("Invalid Delay. Must be within 0~4");
-        }
-        Debug.Log("Received Stop Delay:" + delay);
-
-        // テーブルから得たディレイを記録し、その分リールの停止を遅らせる。
-        delayToStop = delay;
-        lastDelay = delay;
-        IsStopping = true;
+        ReelData.BeginStopReel(pushedPos, delay);
     }
 
     // 速度加速
@@ -170,23 +132,16 @@ public class ReelObject : MonoBehaviour
             // 図柄の場所だけ変更角度分回転を戻す
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
 
-            // 停止する場合は
-            if (IsStopping && delayToStop == 0)
+            // 停止する位置になったら
+            if (ReelData.IsStopping && ReelData.CheckReachedStop())
             {
                 // 再度リールの角度を調整して停止させる
                 transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));
                 rotateSpeed = 0;
                 maxSpeed = 0;
-                IsStopping = false;
-                HasStopped = true;
+                ReelData.FinishStopReel();
 
                 Debug.Log("Stopped");
-            }
-
-            // 停止するがディレイ(スベリ)があれば数値を減らす(次の図柄更新で止める)
-            else if (IsStopping)
-            {
-                delayToStop -= 1;
             }
         }
     }
