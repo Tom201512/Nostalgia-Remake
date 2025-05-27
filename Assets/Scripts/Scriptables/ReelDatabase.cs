@@ -125,7 +125,7 @@ namespace ReelSpinGame_Datas
 
         // func
         // ŠeğŒ‚Ì”’l‚ğ•Ô‚·
-        public int GetConditionData(int conditionID) => ((MainConditions >> ConditionBitOffset * conditionID) & 0xF);
+        public static int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
 
         // ŠeğŒ‚ğint‚É‚·‚é
         public static int ConvertConditionData(int flagID, int firstPush, int bet, int bonus, int random)

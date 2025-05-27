@@ -4,6 +4,7 @@ using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Datas.ReelConditionsData;
 
 public class ReelTableManager
 {
@@ -26,8 +27,8 @@ public class ReelTableManager
     // 条件から使用するテーブル番号を探す
     public int FindTableToUse(ReelData reel, FlagId flagID, ReelID firstPushReel, int bet, int bonus, int random, int firstPushPos)
     {
-        int condition = ReelConditionsData.ConvertConditionData((int)flagID, (int)firstPushReel, bet, bonus, random);
-        int[] orderToCheck = { (int)flagID, (int)firstPushReel, bet, bonus, random };
+        // 条件文にする(第一停止は0だと判定しないので1を足す)
+        int condition = ConvertConditionData((int)flagID, (int)firstPushReel + 1, bet, bonus, random);
 
         // 使用するテーブル配列の番号(-1はエラー)
         int foundTable = -1;
@@ -46,23 +47,24 @@ public class ReelTableManager
             // 条件が合っているか
             bool conditionMet = true;
 
-            for (int i = 0; i < orderToCheck.Length; i++)
+            for (int i = 0; i < ConditionMaxRead; i++)
             {
                 // フラグID以外の条件で0があった場合はパスする
-                if (i != (int)ReelConditionsData.ConditionID.Flag && data.GetConditionData(i) == 0)
+                if (i != (int)ConditionID.Flag && GetConditionData(data.MainConditions,i) == 0)
                 {
                     continue;
                 }
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
-                else if(i == (int)ReelConditionsData.ConditionID.Bonus && 
-                    data.GetConditionData(i) == BonusAnyValueID &&
+                else if(i == (int)ConditionID.Bonus && 
+                    GetConditionData(data.MainConditions, i) == BonusAnyValueID &&
                     bonus != (int)BonusType.BonusNone)
                 {
-                    Debug.Log(data.GetConditionData(i) + "ANY BONUS");
+                    Debug.Log(GetConditionData(data.MainConditions, i) + "ANY BONUS");
                     Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
-                else if (orderToCheck[i] != data.GetConditionData(i))
+                // それ以外は受け取ったものと条件が合うか確認する
+                else if (GetConditionData(condition, i) != GetConditionData(data.MainConditions, i))
                 {
                     conditionMet = false;
                 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Datas.ReelConditionsData;
 
 namespace ReelSpinGame_Datas
 {
@@ -46,7 +47,7 @@ namespace ReelSpinGame_Datas
 
                 for (int i = 0; i < 5; i++)
                 {
-                    ConditionDebug += condition.GetConditionData(i).ToString() + ",";
+                    ConditionDebug += GetConditionData(condition.MainConditions, i).ToString() + ",";
                 }
 
                 Debug.Log("Condition:" + condition.MainConditions + "Details:" + ConditionDebug + "FirstReel:" + condition.FirstReelPosition + "ReelTableNum" + condition.ReelTableNumber);
