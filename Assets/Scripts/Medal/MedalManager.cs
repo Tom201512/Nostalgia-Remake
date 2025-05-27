@@ -137,6 +137,12 @@ namespace ReelSpinGame_Medal
             StartCoroutine(nameof(UpdateInsert));
         }
 
+        // メダル処理終了
+        public void FinishMedalInsert()
+        {
+            Data.OffFinishedMedal();
+        }
+
         // func
         // コルーチン用
         private IEnumerator UpdateInsert()

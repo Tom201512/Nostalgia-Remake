@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_State.InsertState
@@ -69,22 +70,26 @@ namespace ReelSpinGame_State.InsertState
                 gameManager.Status.TurnOnStartLamp();
             }
 
-            // ベット終了
+            // ベット終了 または MAXBET
             if(OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
             {
-                // 投入枚数を反映する
-                gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.Data.LastBetAmounts);
-                gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.Data.LastBetAmounts);
-
-                // すでにベットされている場合は抽選へ
-                if (gameManager.Medal.Data.CurrentBet > 0)
+                // ベットが終了していたら
+                if(gameManager.Medal.Data.FinishedBet)
                 {
-                    gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
+                    // 投入枚数を反映する
+                    gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.Data.LastBetAmounts);
+                    gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.Data.LastBetAmounts);
 
-                    // ボーナス中なら払い出し枚数を減らす
-                    if(gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
+                    // すでにベットされている場合は抽選へ
+                    if (gameManager.Medal.Data.CurrentBet > 0)
                     {
-                        gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.Data.LastBetAmounts);
+                        gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
+
+                        // ボーナス中なら払い出し枚数を減らす
+                        if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
+                        {
+                            gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.Data.LastBetAmounts);
+                        }
                     }
                 }
                 // そうでない場合はMAX BET
@@ -101,6 +106,7 @@ namespace ReelSpinGame_State.InsertState
             Debug.Log("End Medal Insert");
             gameManager.Status.TurnOffInsertAndStartlamp();
             gameManager.Medal.HasMedalInsert -= BetSound;
+            gameManager.Medal.FinishMedalInsert();
         }
 
         // フラッシュを止める

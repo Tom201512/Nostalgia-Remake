@@ -32,6 +32,8 @@ namespace ReelSpinGame_Medal
         public int LastBetAmounts { get; private set; }
         // 最後に払い出したメダル枚数
         public int LastPayoutAmounts {get; private set; }
+        // ベット完了しているか
+        public bool FinishedBet { get; private set; }
         // リプレイ状態か
         public bool HasReplay { get; private set; }
 
@@ -46,6 +48,7 @@ namespace ReelSpinGame_Medal
             MaxBetAmounts = curretMaxBet;
             LastBetAmounts = lastBetAmounts;
             HasReplay = hasReplay;
+            FinishedBet = false;
         }
 
         // func
@@ -60,6 +63,8 @@ namespace ReelSpinGame_Medal
 
         // メダルリセット
         public void ResetMedal() => CurrentBet = 0;
+        // メダル処理終了をオフにする
+        public void OffFinishedMedal() => FinishedBet = false;
 
 
         // リプレイにする
@@ -79,6 +84,7 @@ namespace ReelSpinGame_Medal
         // 残りベット枚数を設定
         public void SetRemainingBet(int amounts)
         {
+            FinishedBet = false;
             // 最後に払い出したメダルリセット
             LastPayoutAmounts = 0;
 
@@ -123,6 +129,12 @@ namespace ReelSpinGame_Medal
             if (!HasReplay)
             {
                 ChangeCredit(-1);
+            }
+
+            // 残り枚数が0になったら終了
+            if(RemainingBet == 0)
+            {
+                FinishedBet = true;
             }
         }
 
