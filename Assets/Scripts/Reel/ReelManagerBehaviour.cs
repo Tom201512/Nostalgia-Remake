@@ -1,5 +1,8 @@
 ﻿using ReelSpinGame_Datas;
+using System.Collections.Generic;
 using UnityEngine;
+using static FlashManager;
+using static ReelSpinGame_Reels.ReelData;
 
 namespace ReelSpinGame_Reels
 {

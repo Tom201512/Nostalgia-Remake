@@ -287,7 +287,7 @@ public class FlashManager : MonoBehaviour
                 ReelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i],brightness, brightness, brightness);
 
                 // 左リールにチェリーがある場合はチェリーのみ点灯
-                if (ReelObjects[(int)ReelID.ReelLeft].ReelData.GetReelSymbol
+                if (ReelObjects[(int)ReelID.ReelLeft].GetReelSymbol
                     (payoutLine.PayoutLines[(int)ReelID.ReelLeft]) == ReelSymbols.Cherry)
                 {
                     break;
