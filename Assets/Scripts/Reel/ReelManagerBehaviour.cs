@@ -28,6 +28,8 @@ namespace ReelSpinGame_Reels
         public ReelID FirstPushReel { get; private set; }
         // 第一停止リールの停止位置
         public int FirstPushPos { get; private set; }
+        // 停止したリール数
+        public int StoppedReelCount { get; private set; }
 
         // リール制御
         public ReelTableManager ReelTableManager { get; private set; }
@@ -49,6 +51,7 @@ namespace ReelSpinGame_Reels
             FirstPushReel = ReelID.ReelLeft;
             FirstPushPos = 0;
             RandomValue = 0;
+            StoppedReelCount = 0;
 
             LastStopped = new LastStoppedReelData();
             ReelTableManager = new ReelTableManager();
@@ -69,6 +72,10 @@ namespace ReelSpinGame_Reels
         public void SetFirstPushReel(ReelID value) => FirstPushReel = value;
         // 第一停止位置の設定
         public void SetFirstPushPos(int value) => FirstPushPos = value;
+        // 停止したリール数を増やす
+        public void IncreaseStoppedCount() => StoppedReelCount += 1;
+        // 停止したリール数のリセット
+        public void ResetStoppedCount() => StoppedReelCount = 0;
 
         // ランダム数値の決定
         public void SetRandomValue(bool hasInstantMode, int instantRandomValue)

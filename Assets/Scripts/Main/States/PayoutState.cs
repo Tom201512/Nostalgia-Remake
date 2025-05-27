@@ -45,6 +45,13 @@ namespace ReelSpinGame_State.PayoutState
 
             gameManager.Medal.StartPayout(gameManager.Payout.LastPayoutResult.Payouts);
 
+            // 払い出し音再生
+            if(gameManager.Payout.LastPayoutResult.Payouts > 0)
+            {
+                // 払い出し音再生
+                PayoutSound();
+            }
+
             // ボーナス中なら各ボーナスの払い出しを増やす
             if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
             {
@@ -148,11 +155,8 @@ namespace ReelSpinGame_State.PayoutState
             // フラッシュを開始させる
             if (gameManager.Payout.LastPayoutResult.Payouts != 0)
             {
-                // 払い出し音再生
-                PayoutSound();
                 // フラッシュさせる
-                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines, 
-                    gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
+                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines, false);
             }
 
             // 通常時のリプレイだった場合は3秒待たせる。
@@ -162,8 +166,7 @@ namespace ReelSpinGame_State.PayoutState
                 //音再生
                 gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Replay);
                 // フラッシュさせる
-                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines,
-                    gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
+                gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines,true);
             }
 
             // 通常時はずれの場合は一定確率(1/6)でフラッシュさせる

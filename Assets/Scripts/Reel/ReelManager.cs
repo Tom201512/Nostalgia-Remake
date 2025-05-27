@@ -88,6 +88,8 @@ public class ReelManager : MonoBehaviour
     public int GetWillStopReelPos(int reelID) => reelObjects[reelID].ReelData.WillStopPos;
     // 指定したリールのディレイ数を返す
     public int GetLastDelay(int reelID) => reelObjects[reelID].ReelData.LastDelay;
+    // 指定リールが止められるか確認する
+    public bool GetCanReelStop(int reelID) => reelObjects[reelID].ReelData.CanStop;
 
     // 指定リール本体の明るさ変更
     public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
@@ -112,6 +114,8 @@ public class ReelManager : MonoBehaviour
             {
                 reelObjects[i].StartReel(1.0f);
             }
+
+            Data.ResetStoppedCount();
             Debug.Log("Reel start");
         }
         else { Debug.Log("Reel is working now"); }
@@ -151,6 +155,9 @@ public class ReelManager : MonoBehaviour
 
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);
+
+                // 停止したリール数を増やす
+                Data.IncreaseStoppedCount();
             }
             else
             {
@@ -173,8 +180,9 @@ public class ReelManager : MonoBehaviour
             int blueCount = 0;
             int bb7Count = 0;
 
+            Debug.Log("BetCondition:" + line.BetCondition + "Bet:" + betAmounts);
             // ベット条件を満たしているか確認
-            if(line.BetCondition >= betAmounts)
+            if(betAmounts >= line.BetCondition)
             {
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Length; i++)

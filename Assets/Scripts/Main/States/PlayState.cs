@@ -3,6 +3,7 @@ using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -52,44 +53,17 @@ namespace ReelSpinGame_State.PlayingState
                     // 左停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopLeft]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelID.ReelLeft, 
-                            gameManager.Medal.Data.LastBetAmounts, 
-                            gameManager.Lots.Data.CurrentFlag, 
-                            gameManager.Bonus.Data.HoldingBonusID);
-
-                        // リーチ確認
-                        gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
-                            gameManager.Medal.Data.LastPayoutAmounts);
-
-                        PlayStopSound();
+                        StopReel(ReelID.ReelLeft);
                     }
                     // 中停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopMiddle]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelID.ReelMiddle, 
-                            gameManager.Medal.Data.LastBetAmounts,
-                            gameManager.Lots.Data.CurrentFlag, 
-                            gameManager.Bonus.Data.HoldingBonusID);
-
-                        // リーチ確認
-                        gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
-                            gameManager.Medal.Data.LastPayoutAmounts);
-
-                        PlayStopSound();
+                        StopReel(ReelID.ReelMiddle);
                     }
                     // 右停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopRight]))
                     {
-                        gameManager.Reel.StopSelectedReel(ReelID.ReelRight, 
-                            gameManager.Medal.Data.LastBetAmounts, 
-                            gameManager.Lots.Data.CurrentFlag, 
-                            gameManager.Bonus.Data.HoldingBonusID);
-
-                        // リーチ確認
-                        gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
-                            gameManager.Medal.Data.LastPayoutAmounts);
-
-                        PlayStopSound();
+                        StopReel(ReelID.ReelRight);
                     }
                 }
 
@@ -122,11 +96,54 @@ namespace ReelSpinGame_State.PlayingState
             Debug.Log("End Playing State");
         }
 
+        // リール停止
+        private void StopReel(ReelID reelID)
+        {
+            if (gameManager.Reel.Data.CanStop && gameManager.Reel.GetCanReelStop((int)reelID))
+            {
+                gameManager.Reel.StopSelectedReel(reelID,
+                    gameManager.Medal.Data.LastBetAmounts,
+                    gameManager.Lots.Data.CurrentFlag,
+                    gameManager.Bonus.Data.HoldingBonusID);
+
+                // 停止音再生
+                PlayStopSound();
+                // 通常時,第二停止でリーチしていたら音を鳴らす
+                if (gameManager.Reel.Data.StoppedReelCount == 2 &&
+                    gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone)
+                {
+                    // リーチがあれば再生
+                    PlayRiichiSound();
+                }
+            }
+        }
+
         // 停止音再生
-        public void PlayStopSound()
+        private void PlayStopSound()
         {
             // 停止音サウンド再生
             gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Stop);
+        }
+
+        // テンパイ音再生
+        private void PlayRiichiSound()
+        {
+            // リーチの色を記録
+            BigColor riichiValue = gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
+                            gameManager.Medal.Data.LastBetAmounts);
+
+            if(riichiValue == BigColor.Red)
+            {
+                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
+            }
+            if (riichiValue == BigColor.Blue)
+            {
+                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.BlueRiichiSound);
+            }
+            if (riichiValue == BigColor.Black)
+            {
+                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.BB7RiichiSound);
+            }
         }
     }
 }

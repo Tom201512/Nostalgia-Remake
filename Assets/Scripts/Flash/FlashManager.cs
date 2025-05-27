@@ -87,14 +87,14 @@ public class FlashManager : MonoBehaviour
     }
 
     // 払い出しフラッシュ開始
-    public void StartPayoutFlash(List<PayoutLineData> lastPayoutLines, bool hasReplay)
+    public void StartPayoutFlash(List<PayoutLineData> lastPayoutLines, bool waitForReplay)
     {
         CurrentFrame = 0;
         HasFlash = true;
         StartCoroutine("PayoutFlashUpdate",lastPayoutLines);
 
-        // リプレイがあった場合は追加で待機処理を入れる
-        if(hasReplay)
+        // リプレイタイマーをつける設定をした場合
+        if(waitForReplay)
         {
             StartCoroutine("EnableReplayTimer");
         }

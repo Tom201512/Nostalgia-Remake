@@ -28,6 +28,8 @@ namespace ReelSpinGame_Reels
         // 現在の下段リール位置
         private int currentLower;
 
+        // 停止可能か
+        public bool CanStop { get; private set; }
         // 止まる予定か
         public bool IsStopping { get; private set; }
         // 停止したか
@@ -47,6 +49,7 @@ namespace ReelSpinGame_Reels
             WillStopPos = 0;
             IsStopping = false;
             HasStopped = true;
+            CanStop = false;
 
             ReelID = reelID;
             // 位置設定
@@ -93,6 +96,7 @@ namespace ReelSpinGame_Reels
         // 回転を開始させる
         public void BeginStartReel()
         {
+            CanStop = true;
             HasStopped = false;
             WillStopPos = 0;
             LastDelay = 0;
@@ -115,6 +119,7 @@ namespace ReelSpinGame_Reels
             Debug.Log("WillStop:" + WillStopPos);
             LastDelay = delay;
             IsStopping = true;
+            CanStop = false;
         }
 
         // 停止処理を終了させる

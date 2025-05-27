@@ -14,7 +14,9 @@ namespace ReelSpinGame_Sound
 		[SerializeField] private AudioClip wait;
 		[SerializeField] private AudioClip start;
 		[SerializeField] private AudioClip stop;
-		[SerializeField] private AudioClip riichiSound;
+		[SerializeField] private AudioClip redRiichiSound;
+		[SerializeField] private AudioClip blueRiichiSound;
+		[SerializeField] private AudioClip bb7RiichiSound;
 		[SerializeField] private AudioClip replay;
 		[SerializeField] private AudioClip normalPayout;
 		[SerializeField] private AudioClip maxpayout;
@@ -24,7 +26,9 @@ namespace ReelSpinGame_Sound
 		public AudioClip Wait { get { return wait; } }
 		public AudioClip Start { get { return start; } }
 		public AudioClip Stop { get { return stop; } }
-		public AudioClip RiichiSound { get { return riichiSound; } }
+		public AudioClip RedRiichiSound { get { return redRiichiSound; } }
+		public AudioClip BlueRiichiSound { get { return blueRiichiSound; } }
+		public AudioClip BB7RiichiSound { get { return bb7RiichiSound; } }
 		public AudioClip Replay { get { return replay; } }
 		public AudioClip NormalPayout { get { return normalPayout; } }
 		public AudioClip MaxPayout { get { return maxpayout; } }
