@@ -35,6 +35,9 @@ namespace ReelSpinGame_State.PlayingState
 
             // ボーナス中のランプ処理
             gameManager.Bonus.UpdateSegments();
+
+            // スタートサウンド再生
+            gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Start);
         }
 
         public void StateUpdate()
@@ -52,6 +55,8 @@ namespace ReelSpinGame_State.PlayingState
                             gameManager.Medal.Data.LastBetAmounts, 
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
+
+                        PlayStopSound();
                     }
                     // 中停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopMiddle]))
@@ -60,6 +65,8 @@ namespace ReelSpinGame_State.PlayingState
                             gameManager.Medal.Data.LastBetAmounts,
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
+
+                        PlayStopSound();
                     }
                     // 右停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopRight]))
@@ -68,6 +75,8 @@ namespace ReelSpinGame_State.PlayingState
                             gameManager.Medal.Data.LastBetAmounts, 
                             gameManager.Lots.Data.CurrentFlag, 
                             gameManager.Bonus.Data.HoldingBonusID);
+
+                        PlayStopSound();
                     }
                 }
 
@@ -98,6 +107,13 @@ namespace ReelSpinGame_State.PlayingState
         public void StateEnd()
         {
             Debug.Log("End Playing State");
+        }
+
+        // 停止音再生
+        public void PlayStopSound()
+        {
+            // 停止音サウンド再生
+            gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Stop);
         }
     }
 }

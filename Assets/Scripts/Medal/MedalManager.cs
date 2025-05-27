@@ -24,6 +24,9 @@ namespace ReelSpinGame_Medal
 
         // メダルの更新処理中か
         public bool HasMedalUpdate { get; private set; }
+        // メダルが投入されたか
+        public delegate void MedalHasInsertEvent();
+        public event MedalHasInsertEvent HasMedalInsert;
         // メダルが払い出されたか
         public delegate void MedalHasPayoutEvent(int payout);
         public event MedalHasPayoutEvent HasMedalPayout;
@@ -126,6 +129,11 @@ namespace ReelSpinGame_Medal
         {
             Debug.Log("Enable Replay" + Data.LastBetAmounts);
             Data.EnableReplay();
+        }
+
+        // リプレイ投入を開始
+        public void StartReplayInsert()
+        {
             StartCoroutine(nameof(UpdateInsert));
         }
 
@@ -140,6 +148,8 @@ namespace ReelSpinGame_Medal
             {
                 // メダル投入
                 Data.InsertOneMedal();
+                // イベント送信
+                HasMedalInsert.Invoke();
                 // ランプ、セグメント更新
                 medalPanel.UpdateLampByBet(Data.CurrentBet, Data.LastBetAmounts);
                 // クレジット更新

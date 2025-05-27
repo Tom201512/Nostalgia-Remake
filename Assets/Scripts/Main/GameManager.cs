@@ -1,6 +1,7 @@
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
+using ReelSpinGame_Sound;
 using ReelSpinGame_System;
 using UnityEngine;
 
@@ -13,20 +14,22 @@ public class GameManager : MonoBehaviour
 
     // var
     // 各種機能
-    public MedalManager Medal { get; private set; }
-    public FlagLots Lots{ get; private set; }
-    public WaitManager Wait { get; private set; }
-    public ReelManager Reel { get; private set; }
-    public PayoutChecker Payout { get; private set; }
-    public BonusManager Bonus { get; private set; }
-
     [SerializeField] private ReelManager reelManagerObj;
+    [SerializeField] private SoundManager soundManagerObj;
     [SerializeField] MedalTestUI medalUI;
     [SerializeField] LotsTestUI lotsUI;
     [SerializeField] WaitTestUI waitUI;
     [SerializeField] ReelTestUI reelUI;
     [SerializeField] BonusTestUI bonusUI;
     [SerializeField] PlayerUI playerUI;
+
+    public MedalManager Medal { get; private set; }
+    public FlagLots Lots { get; private set; }
+    public WaitManager Wait { get; private set; }
+    public ReelManager Reel { get { return reelManagerObj; } }
+    public PayoutChecker Payout { get; private set; }
+    public BonusManager Bonus { get; private set; }
+    public SoundManager Sound { get { return soundManagerObj; } }
 
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }
@@ -77,10 +80,6 @@ public class GameManager : MonoBehaviour
         // ウェイト管理
         Wait = new WaitManager(false);
         Debug.Log("Wait is launched");
-
-        // リール
-        Reel = reelManagerObj.GetComponent<ReelManager>();
-        Debug.Log("Reel is launched");
 
         // 払い出し処理
         Payout = GetComponent<PayoutChecker>();

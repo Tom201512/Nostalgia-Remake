@@ -25,11 +25,18 @@ namespace ReelSpinGame_State.InsertState
         public void StateStart()
         {
             Debug.Log("Start Medal Insert");
-            
+
+            gameManager.Medal.HasMedalInsert += BetSound;
+
             // リプレイでなければINSERTランプ表示
-            if(!gameManager.Medal.Data.HasReplay)
+            if (!gameManager.Medal.Data.HasReplay)
             {
                 gameManager.Status.TurnOnInsertLamp();
+            }
+            // リプレイなら処理開始
+            else
+            {
+                gameManager.Medal.StartReplayInsert();
             }
         }
 
@@ -93,6 +100,7 @@ namespace ReelSpinGame_State.InsertState
         {
             Debug.Log("End Medal Insert");
             gameManager.Status.TurnOffInsertAndStartlamp();
+            gameManager.Medal.HasMedalInsert -= BetSound;
         }
 
         // フラッシュを止める
@@ -112,6 +120,12 @@ namespace ReelSpinGame_State.InsertState
                 gameManager.Reel.FlashManager.TurnOnAllReels();
                 Debug.Log("Turn On");
             }
+        }
+
+        // サウンド再生
+        private void BetSound()
+        {
+            gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Bet);
         }
     }
 }

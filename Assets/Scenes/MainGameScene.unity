@@ -820,6 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reelManagerObj: {fileID: 286284038}
+  soundManagerObj: {fileID: 907204459}
   medalUI: {fileID: 938366606}
   lotsUI: {fileID: 341618353}
   waitUI: {fileID: 2088607537}
@@ -878,8 +879,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 0
-  instantFlagID: 2
+  useInstant: 1
+  instantFlagID: 7
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1868,6 +1869,8 @@ MonoBehaviour:
     blackEnd: {fileID: 8300000, guid: d20d0611bcaa8594ebf3be146c8829d9, type: 3}
     regStart: {fileID: 8300000, guid: 53ac3ff7954a4af4caf7b84e36059e24, type: 3}
     regJac: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
+  soundEffectPlayer: {fileID: 1187044818}
+  bgmPlayer: {fileID: 656534617}
 --- !u!1001 &913272569
 PrefabInstance:
   m_ObjectHideFlags: 0

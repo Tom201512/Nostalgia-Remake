@@ -148,6 +148,9 @@ namespace ReelSpinGame_State.PayoutState
             // フラッシュを開始させる
             if (gameManager.Payout.LastPayoutResult.Payouts != 0)
             {
+                // 払い出し音再生
+                PayoutSound();
+                // フラッシュさせる
                 gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines, 
                     gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
             }
@@ -156,6 +159,9 @@ namespace ReelSpinGame_State.PayoutState
             else if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone &&
                 gameManager.Payout.LastPayoutResult.IsReplayOrJacIn)
             {
+                //音再生
+                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Replay);
+                // フラッシュさせる
                 gameManager.Reel.FlashManager.StartPayoutFlash(gameManager.Payout.LastPayoutResult.PayoutLines,
                     gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
             }
@@ -173,8 +179,6 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Lots.Data.CurrentFlag == FlagId.FlagReplayJacIn)
             {
                 // 11番、17番を押した場合はフラッシュ
-
-                Debug.Log(gameManager.Reel.Data.LastStopped.LastPos[(int)ReelID.ReelLeft]);
                 if (gameManager.Reel.Data.LastStopped.LastPos[(int)ReelID.ReelLeft] + 1 == 11 ||
                         gameManager.Reel.Data.LastStopped.LastPos[(int)ReelID.ReelLeft] + 1 == 17)
                 {
@@ -225,6 +229,8 @@ namespace ReelSpinGame_State.PayoutState
 
             // ボーナス中のランプ処理
             gameManager.Bonus.UpdateSegments();
+            // ループサウンド停止
+            gameManager.Sound.StopLoopSound();
         }
 
         private void StartCheckPayout(int betAmounts)
@@ -267,6 +273,25 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Payout.LastPayoutResult.Payouts);
             gameManager.Lots.Data.FlagCounter.ResetCounter();
             gameManager.PlayerData.SetLastBonusStart();
+        }
+
+        // 払い出し音
+        private void PayoutSound()
+        {
+            // JAC中の払い出し音
+            if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
+            {
+                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.JacPayout);
+            }
+            // 15枚の払い出し音
+            else if(gameManager.Payout.LastPayoutResult.Payouts >= 15)
+            {
+                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.MaxPayout);
+            }
+            else
+            {
+                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.NormalPayout);
+            }
         }
     }
 }
