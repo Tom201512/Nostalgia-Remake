@@ -26,9 +26,9 @@ public class ReelTestUI : MonoBehaviour
         buffer += "RightPos:" + reel.GetCurrentReelPos((int)ReelID.ReelRight) + "\n" + "\n";
 
         // 停止した位置
-        buffer += "LeftStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelLeft) + 1) + "\n";
-        buffer += "MiddleStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelMiddle) + 1) + "\n";
-        buffer += "RightStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelRight) + 1) + "\n" + "\n";
+        buffer += "LeftStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelLeft)) + "\n";
+        buffer += "MiddleStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelMiddle)) + "\n";
+        buffer += "RightStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelRight)) + "\n" + "\n";
 
         // スベリコマ数
         buffer += "LeftDelay:" + reel.GetLastDelay((int)ReelID.ReelLeft) + "\n";
