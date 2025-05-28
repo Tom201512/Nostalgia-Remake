@@ -17,12 +17,12 @@ namespace ReelSpinGame_Medal
         // 払い出し結果
         public class PayoutResultBuffer
         {
-            public int Payouts { get; private set; }
-            public int BonusID { get; private set; }
-            public bool IsReplayOrJacIn { get; private set; }
+            public int Payouts { get; set; }
+            public int BonusID { get; set; }
+            public bool IsReplayOrJacIn { get; set; }
 
             // 払い出しのあったライン
-            public List<PayoutLineData> PayoutLines { get; private set; }
+            public List<PayoutLineData> PayoutLines { get; set; }
 
             public PayoutResultBuffer(int payouts, int bonusID, bool isReplayOrJac)
             {
@@ -31,33 +31,30 @@ namespace ReelSpinGame_Medal
                 IsReplayOrJacIn = isReplayOrJac;
                 PayoutLines = new List<PayoutLineData>();
             }
-
-            public void SetPayout(int payouts) => Payouts = payouts;
-            public void SetBonusID(int bonusID) => BonusID = bonusID;
-            public void SetReplayStatus(bool isReplayOrJac) => IsReplayOrJacIn = isReplayOrJac;
-            public void SetPayoutLines(List<PayoutLineData> PayoutLines) => this.PayoutLines = PayoutLines;
         }
 
         // 払い出しデータベース
         [SerializeField] private PayoutDatabase payoutDatabase;
 
         // 最後に当たった結果
-        public PayoutResultBuffer LastPayoutResult { get; private set; }
-        public PayoutDatabase PayoutDatabase { get {return payoutDatabase; } }
+        public PayoutResultBuffer lastPayoutResult { get; private set; }
 
         // 選択中のテーブル
-        public PayoutCheckMode CheckMode { get; private set; }
+        private PayoutCheckMode checkMode;
 
         private void Awake()
         {
             // 最後に判定した時の結果
-            CheckMode = PayoutCheckMode.PayoutNormal;
-            LastPayoutResult = new PayoutResultBuffer(0, 0, false);
+            checkMode = PayoutCheckMode.PayoutNormal;
+            lastPayoutResult = new PayoutResultBuffer(0, 0, false);
         }
 
         // func
+        // 払い出しライン
+        public List<PayoutLineData> GetPayoutLines() => payoutDatabase.PayoutLines;
+
         //判定モード変更
-        public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => CheckMode = checkMode;
+        public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => this.checkMode = checkMode;
 
         // ライン判定
         public void CheckPayoutLines(int betAmount, LastStoppedReelData lastStoppedData)
@@ -91,24 +88,24 @@ namespace ReelSpinGame_Medal
 
                     // 図柄構成リストと見比べて該当するものがあれば当選。払い出し、ボーナス、リプレイ処理もする。
                     // ボーナスは非当選でもストックされる
-                    int foundIndex = CheckPayoutLines(lineResult, GetPayoutResultData(CheckMode));
+                    int foundIndex = CheckPayoutLines(lineResult, GetPayoutResultData(checkMode));
 
                     // データを追加(払い出しだけ当たった分追加する)
                     // 当たったデータがあれば記録(-1以外)
                     if (foundIndex != -1)
                     {
                         // 払い出しは常にカウント(15枚を超えても切り捨てられる)
-                        finalPayouts += GetPayoutResultData(CheckMode)[foundIndex].Payouts;
+                        finalPayouts += GetPayoutResultData(checkMode)[foundIndex].Payouts;
 
                         // ボーナス未成立なら当たった時に変更
                         if (bonusID == 0)
                         {
-                            bonusID = GetPayoutResultData(CheckMode)[foundIndex].BonusType;
+                            bonusID = GetPayoutResultData(checkMode)[foundIndex].BonusType;
                         }
                         // リプレイでなければ当たった時に変更
                         if (replayStatus == false)
                         {
-                            replayStatus = GetPayoutResultData(CheckMode)[foundIndex].HasReplayOrJac;
+                            replayStatus = GetPayoutResultData(checkMode)[foundIndex].HasReplayOrJac;
                         }
 
                         // 当たったラインを記録
@@ -143,10 +140,10 @@ namespace ReelSpinGame_Medal
                 //Debug.Log("PayoutLines" + i + ":" + buffer);
             }
 
-            LastPayoutResult.SetPayout(finalPayouts);
-            LastPayoutResult.SetBonusID(bonusID);
-            LastPayoutResult.SetReplayStatus(replayStatus);
-            LastPayoutResult.SetPayoutLines(finalPayoutLine);
+            lastPayoutResult.Payouts = finalPayouts;
+            lastPayoutResult.BonusID = bonusID;
+            lastPayoutResult.IsReplayOrJacIn = replayStatus;
+            lastPayoutResult.PayoutLines = finalPayoutLine;
         }
 
         // 図柄の判定(配列を返す)

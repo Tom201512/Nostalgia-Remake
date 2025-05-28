@@ -109,6 +109,7 @@ namespace ReelSpinGame_State.PlayingState
 
                 // 停止音再生
                 PlayStopSound();
+
                 // 通常時,第二停止でリーチしていたら音を鳴らす
                 if (gameManager.Reel.GetStoppedCount() == 2 &&
                     gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone)
@@ -130,8 +131,7 @@ namespace ReelSpinGame_State.PlayingState
         private void PlayRiichiSound()
         {
             // リーチの色を記録
-            BigColor riichiValue = gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
-                            gameManager.Medal.GetLastBetAmounts());
+            BigColor riichiValue = gameManager.Reel.CheckRiichiStatus(gameManager.Payout.GetPayoutLines(),gameManager.Medal.GetLastBetAmounts());
 
             if(riichiValue == BigColor.Red)
             {

@@ -205,16 +205,16 @@ public class ReelManager : MonoBehaviour
             int blueCount = 0;
             int bb7Count = 0;
 
-           ////Debug.Log("BetCondition:" + line.BetCondition + "Bet:" + betAmounts);
+            //Debug.Log("BetCondition:" + line.BetCondition + "Bet:" + betAmounts);
             // ベット条件を満たしているか確認
             if(betAmounts >= line.BetCondition)
             {
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Length; i++)
                 {
-                    ////Debug.Log("WillStop Pos:" + reelObjects[i].GetWillStopPos());
-                    ////Debug.Log("Pos:" + line.PayoutLines[i]);
-                    ////Debug.Log("WillStop Symbol:" + reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]));
+                    //Debug.Log("WillStop Pos:" + reelObjects[i].GetWillStopPos());
+                    //Debug.Log("Pos:" + line.PayoutLines[i]);
+                    //Debug.Log("WillStop Symbol:" + reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]));
                     // 赤7をカウント
                     if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                     {
@@ -240,9 +240,9 @@ public class ReelManager : MonoBehaviour
                     }
                 }
 
-                ////Debug.Log("Red:" + redCount);
-                ////Debug.Log("Blue:" + blueCount);
-                ////Debug.Log("Black:" + bb7Count);
+                //Debug.Log("Red:" + redCount);
+                //Debug.Log("Blue:" + blueCount);
+                //Debug.Log("Black:" + bb7Count);
 
                 // 赤7がライン上に2つあれば赤7
                 if(redCount == 2)
