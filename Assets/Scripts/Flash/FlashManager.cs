@@ -206,8 +206,8 @@ public class FlashManager : MonoBehaviour
             foreach (ReelObject reel in ReelObjects)
             {
                 // 本体変更
-                int bodyBright = flashData[(int)FlashData.PropertyID.Body + reel.ReelData.ReelID * SeekOffset];
-                Debug.Log("Change Body:" + reel.ReelData.ReelID + "Bright:" + bodyBright);
+                int bodyBright = flashData[(int)FlashData.PropertyID.Body + reel.GetReelID() * SeekOffset];
+                Debug.Log("Change Body:" + reel.GetReelID() + "Bright:" + bodyBright);
                 if (bodyBright != NoChangeValue)
                 {
                     reel.SetReelBaseBrightness((byte)bodyBright);
@@ -221,7 +221,7 @@ public class FlashManager : MonoBehaviour
                 // 図柄の明るさ変更
                 for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
                 {
-                    int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.ReelData.ReelID * SeekOffset];
+                    int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.GetReelID() * SeekOffset];
 
                     Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
                     if(symbolBright != NoChangeValue)
@@ -287,7 +287,7 @@ public class FlashManager : MonoBehaviour
                 ReelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i],brightness, brightness, brightness);
 
                 // 左リールにチェリーがある場合はチェリーのみ点灯
-                if (ReelObjects[(int)ReelID.ReelLeft].ReelData.GetReelSymbol
+                if (ReelObjects[(int)ReelID.ReelLeft].GetReelSymbol
                     (payoutLine.PayoutLines[(int)ReelID.ReelLeft]) == ReelSymbols.Cherry)
                 {
                     break;

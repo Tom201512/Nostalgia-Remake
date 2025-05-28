@@ -36,7 +36,7 @@ namespace ReelSpinGame_Reels
             // リール図柄を作成する
             for (int i = 0; i < reelObjects.Length; i++)
             {
-                LastPos.Add(reelObjects[i].ReelData.GetReelPos((int)ReelPosID.Lower));
+                LastPos.Add(reelObjects[i].GetReelPos(ReelPosID.Lower));
                 posBuffer += LastPos[i];
 
                 Debug.Log("Position:" + LastPos[i]);
@@ -45,10 +45,10 @@ namespace ReelSpinGame_Reels
                 LastSymbols.Add(new List<ReelSymbols>());
 
                 // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
-                for (int j = (int)ReelPosID.Lower3rd; j < (int)ReelPosID.Upper3rd; j++)
+                for (sbyte j = (int)ReelPosID.Lower3rd; j < (int)ReelPosID.Upper3rd; j++)
                 {
-                    LastSymbols[i].Add(reelObjects[i].ReelData.GetReelSymbol(j));
-                    Debug.Log("Symbol:" + reelObjects[i].ReelData.GetReelSymbol(j));
+                    LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
+                    Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));
                 }
             }
             Debug.Log("Final ReelPosition" + posBuffer);

@@ -100,15 +100,15 @@ public class ReelManager : MonoBehaviour
 
     // リールオブジェクト
     // 指定したリールの現在位置を返す
-    public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].ReelData.GetReelPos((int)ReelPosID.Lower);
+    public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);
     // 指定したリールを止めた位置を返す
-    public int GetStoppedReelPos(ReelID reelID) => reelObjects[(int)reelID].ReelData.LastPressedPos;
+    public int GetStoppedReelPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedPos();
     // 指定リールの停止予定位置を返す
-    public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].ReelData.WillStopPos;
+    public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].GetWillStopPos();
     // 指定したリールのディレイ数を返す
-    public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].ReelData.LastDelay;
+    public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].GetLastDelay();
     // 指定リールが止められるか確認する
-    public bool GetCanReelStop(ReelID reelID) => reelObjects[(int)reelID].ReelData.CanStop;
+    public bool GetCanReelStop(ReelID reelID) => reelObjects[(int)reelID].GetCanStop();
 
     // リール出目データ
     // 最後に止めた出目
@@ -153,10 +153,10 @@ public class ReelManager : MonoBehaviour
         if(data.CanStopReels)
         {
             // 止められる状態なら
-            if (!reelObjects[(int)reelID].ReelData.HasStopped)
+            if (!reelObjects[(int)reelID].GetHasStopped())
             {
-                // 押した位置を得る
-                int pushedPos = reelObjects[(int)reelID].ReelData.GetStoppedPos();
+                // 中段の位置を得る
+                int pushedPos = reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
                 Debug.Log("Stopped:" + pushedPos);
 
                 // 第一停止なら押したところの停止位置を得る
@@ -171,11 +171,11 @@ public class ReelManager : MonoBehaviour
 
                 // ここでディレイ(スベリコマ)を得て転送
                 // 条件をチェック
-                int tableIndex = data.ReelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
+                int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase()
                     , flagID, data.FirstPushReel, betAmounts, (int)bonusID, data.RandomValue, data.FirstPushPos);
 
                 // ディレイ(スベリコマ)を得る
-                int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);
+                int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
                 Debug.Log("Stop:" + reelID + "Delay:" + delay);
 
                 // リールを止める
@@ -212,11 +212,11 @@ public class ReelManager : MonoBehaviour
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Length; i++)
                 {
-                    Debug.Log("WillStop Pos:" + reelObjects[i].ReelData.WillStopPos);
+                    Debug.Log("WillStop Pos:" + reelObjects[i].GetWillStopPos());
                     Debug.Log("Pos:" + line.PayoutLines[i]);
-                    Debug.Log("WillStop Symbol:" + reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]));
+                    Debug.Log("WillStop Symbol:" + reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]));
                     // 赤7をカウント
-                    if (reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
+                    if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                     {
                         redCount += 1;
 
@@ -227,14 +227,14 @@ public class ReelManager : MonoBehaviour
                         }
                     }
                     // 青7をカウント
-                    if (reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
+                    if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
                     {
                         blueCount += 1;
                     }
 
                     // BARをカウント(右以外)
                     if (i != (int)ReelID.ReelRight &&
-                        reelObjects[i].ReelData.GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
+                        reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
                     {
                         bb7Count += 1;
                     }
@@ -314,7 +314,7 @@ public class ReelManager : MonoBehaviour
         foreach (ReelObject obj in reelObjects)
         {
             // 止まっていないリールがまだあれば falseを返す
-            if (!obj.ReelData.HasStopped)
+            if (!obj.GetHasStopped())
             {
                 return false;
             }

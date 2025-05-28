@@ -11,6 +11,7 @@ public class ReelTableManager
     // リールテーブル管理用
 
     // const
+    // いずれかのボーナスが入っている条件を示す数字
     public const int BonusAnyValueID = 3;
 
     // var
@@ -25,7 +26,7 @@ public class ReelTableManager
 
     // func
     // 条件から使用するテーブル番号を探す
-    public int FindTableToUse(ReelData reel, FlagId flagID, ReelID firstPushReel, int bet, int bonus, int random, int firstPushPos)
+    public int FindTableToUse(ReelID reelID, ReelDatabase reelDatabase, FlagId flagID, ReelID firstPushReel, int bet, int bonus, int random, int firstPushPos)
     {
         // 条件文にする(第一停止は0だと判定しないので1を足す)
         int condition = ConvertConditionData((int)flagID, (int)firstPushReel + 1, bet, bonus, random);
@@ -41,7 +42,7 @@ public class ReelTableManager
         Debug.Log("Bonus:" + bonus);
         Debug.Log("Random:" + random);
 
-        foreach (ReelConditionsData data in reel.ReelDatabase.Conditions)
+        foreach (ReelConditionsData data in reelDatabase.Conditions)
         {
             Debug.Log("Search:" + currentIndex);
             // 条件が合っているか
@@ -100,14 +101,14 @@ public class ReelTableManager
         }
         // 見つけたリールテーブルを記録
         Debug.Log("Final Found:" + foundTable);
-        UsedReelTableID[(int)reel.ReelID] = foundTable;
+        UsedReelTableID[(int)reelID] = foundTable;
         return foundTable;
     }
 
     // 指定したリールのディレイ(スベリ)を返す
-    public byte GetDelayFromTable(ReelData reel, int pushedPos, int tableIndex)
+    public byte GetDelayFromTable(ReelDatabase reelDatabase, int pushedPos, int tableIndex)
     {
-        Debug.Log("Delay:" + reel.ReelDatabase.Tables[tableIndex].TableData[pushedPos]);
-        return reel.ReelDatabase.Tables[tableIndex].TableData[pushedPos];
+        Debug.Log("Delay:" + reelDatabase.Tables[tableIndex].TableData[pushedPos]);
+        return reelDatabase.Tables[tableIndex].TableData[pushedPos];
     }
 }

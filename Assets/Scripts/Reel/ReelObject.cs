@@ -32,7 +32,7 @@ public class ReelObject : MonoBehaviour
     private SymbolManager symbolManager;
 
     // リール情報
-    public ReelData ReelData { get; private set; }
+    private ReelData reelData;
 
     // リール情報
     [SerializeField] ReelDatabase reelDatabaseFile;
@@ -62,7 +62,7 @@ public class ReelObject : MonoBehaviour
 
     private void Start()
     {
-        symbolManager.SetReelData(ReelData);
+        symbolManager.SetReelData(reelData);
         symbolManager.UpdateSymbolsObjects();
         Debug.Log("StartDone");
     }
@@ -90,10 +90,43 @@ public class ReelObject : MonoBehaviour
     }
 
     // func
+
+    // 数値を得る
+    // リールのID
+    public int GetReelID() => reelData.ReelID;
+    // 停止可能か
+    public bool GetCanStop() => reelData.CanStop;
+    // 停止処理中か
+    public bool GetIsStopping() => reelData.IsStopping;
+    // 停止したか
+    public bool GetHasStopped() => reelData.HasStopped;
+    // 最後に止めた下段位置
+    public int GetLastPushedPos() => reelData.LastPushedPos;
+    // 停止予定位置
+    public int GetWillStopPos() => reelData.WillStopPos;
+    // 最後に止めたときのディレイ数
+    public int GetLastDelay() => reelData.LastDelay;
+
+    // 指定した位置にあるリールの番号を返す
+    public int GetReelPos(ReelPosID posID) => reelData.GetReelPos((sbyte)posID);
+    // sbyteで読む場合
+    public int GetReelPos(sbyte posID) => reelData.GetReelPos(posID);
+    // 指定した位置の図柄を返す
+    public ReelSymbols GetReelSymbol(ReelPosID posID) => reelData.GetReelSymbol((sbyte)posID);
+    // sbyteで読む場合
+    public ReelSymbols GetReelSymbol(sbyte posID) => reelData.GetReelSymbol(posID);
+    // 停止予定位置からリールの図柄を返す
+    public ReelSymbols GetSymbolFromWillStop(ReelPosID posID) => reelData.GetSymbolFromWillStop((sbyte)posID);
+    // sbyteで読む場合
+    public ReelSymbols GetSymbolFromWillStop(sbyte posID) => reelData.GetSymbolFromWillStop(posID);
+
+    // リール条件を渡す
+    public ReelDatabase GetReelDatabase() => reelDatabaseFile;
+
     // リールデータを渡す
     public void SetReelData(int reelID, int initialLowerPos)
     {
-        ReelData = new ReelData(reelID, initialLowerPos, reelDatabaseFile);
+        reelData = new ReelData(reelID, initialLowerPos, reelDatabaseFile);
     }
 
     // 最高速度が返す
@@ -103,13 +136,13 @@ public class ReelObject : MonoBehaviour
     public void StartReel(float maxSpeed)
     {
         this.maxSpeed = maxSpeed;
-        ReelData.BeginStartReel();
+        reelData.BeginStartReel();
     }
 
     // リール停止
     public void StopReel(int pushedPos, int delay)
     {
-        ReelData.BeginStopReel(pushedPos, delay);
+        reelData.BeginStopReel(pushedPos, delay);
     }
 
     // 速度加速
@@ -126,20 +159,20 @@ public class ReelObject : MonoBehaviour
             (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && Math.Sign(rotateSpeed) == 1)))
         {
             // 図柄位置変更
-            ReelData.ChangeReelPos(rotateSpeed);
+            reelData.ChangeReelPos(rotateSpeed);
             symbolManager.UpdateSymbolsObjects();
 
             // 図柄の場所だけ変更角度分回転を戻す
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
 
             // 停止する位置になったら
-            if (ReelData.IsStopping && ReelData.CheckReachedStop())
+            if (reelData.IsStopping && reelData.CheckReachedStop())
             {
                 // 再度リールの角度を調整して停止させる
                 transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));
                 rotateSpeed = 0;
                 maxSpeed = 0;
-                ReelData.FinishStopReel();
+                reelData.FinishStopReel();
 
                 Debug.Log("Stopped");
             }
