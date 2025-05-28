@@ -60,11 +60,9 @@ public class LampComponent : MonoBehaviour
     {
         StopCoroutine(nameof(TurnOffLamp));
         IsTurnedOn = true;
-        Debug.Log("Start TurnOn");
         // –¾‚é‚³‚ÌŒvŽZ(0.03•b‚¸‚Â‰º‚°‚é)
         int distance = TurnOnValue - TurnOffValue;
         float changeValue = (float)distance / FrameCount;
-        Debug.Log("ChangeValue:" + changeValue);
 
         while (brightness < TurnOnValue)
         {
@@ -77,14 +75,12 @@ public class LampComponent : MonoBehaviour
 
             yield return new WaitForSeconds(LampFlashTime);
         }
-        Debug.Log("Lamp turned on");
     }
 
     private IEnumerator TurnOffLamp()
     {
         StopCoroutine(nameof(TurnOnLamp));
         IsTurnedOn = false;
-        Debug.Log("Start TurnOff");
         // –¾‚é‚³‚ÌŒvŽZ(0.03•b‚¸‚Â‰º‚°‚é)
         int distance = TurnOnValue - TurnOffValue;
         float changeValue = (float)distance / FrameCount;
@@ -92,13 +88,9 @@ public class LampComponent : MonoBehaviour
         while (brightness > TurnOffValue)
         {
             brightness = (byte)Math.Clamp(brightness - changeValue, TurnOffValue, TurnOnValue);
-
-            Debug.Log("Brightness:" + brightness);
-
             image.color = new Color32(brightness, brightness, brightness, 255);
 
             yield return new WaitForSeconds(LampFlashTime);
         }
-        Debug.Log("Lamp turned on");
     }
 }

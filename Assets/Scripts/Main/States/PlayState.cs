@@ -99,7 +99,8 @@ namespace ReelSpinGame_State.PlayingState
         // リール停止
         private void StopReel(ReelID reelID)
         {
-            if (gameManager.Reel.GetCanStopReels() && gameManager.Reel.GetCanReelStop(reelID))
+            if (gameManager.Reel.GetCanStopReels() && 
+                gameManager.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
             {
                 gameManager.Reel.StopSelectedReel(reelID,
                     gameManager.Medal.GetLastBetAmounts(),

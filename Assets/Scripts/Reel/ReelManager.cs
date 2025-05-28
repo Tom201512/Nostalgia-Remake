@@ -107,8 +107,8 @@ public class ReelManager : MonoBehaviour
     public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].GetWillStopPos();
     // 指定したリールのディレイ数を返す
     public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].GetLastDelay();
-    // 指定リールが止められるか確認する
-    public bool GetCanReelStop(ReelID reelID) => reelObjects[(int)reelID].GetCanStop();
+    // 指定リールの状態を確認する
+    public ReelStatus GetReelStatus(ReelID reelID) => reelObjects[(int)reelID].GetCurrentReelStatus();
 
     // リール出目データ
     // 最後に止めた出目
@@ -153,7 +153,7 @@ public class ReelManager : MonoBehaviour
         if(data.CanStopReels)
         {
             // 止められる状態なら
-            if (!reelObjects[(int)reelID].GetHasStopped())
+            if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.WaitForStop)
             {
                 // 中段の位置を得る
                 int pushedPos = reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
@@ -314,7 +314,7 @@ public class ReelManager : MonoBehaviour
         foreach (ReelObject obj in reelObjects)
         {
             // 止まっていないリールがまだあれば falseを返す
-            if (!obj.GetHasStopped())
+            if (obj.GetCurrentReelStatus() != ReelStatus.Stopped)
             {
                 return false;
             }

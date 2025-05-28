@@ -26,8 +26,6 @@ public class ReelObject : MonoBehaviour
 
     // リール本体
     private ReelBase reelBase;
-    // リール内の図柄
-    //private SymbolChange[] symbolsObj;
     // 図柄マネージャー
     private SymbolManager symbolManager;
 
@@ -94,12 +92,8 @@ public class ReelObject : MonoBehaviour
     // 数値を得る
     // リールのID
     public int GetReelID() => reelData.ReelID;
-    // 停止可能か
-    public bool GetCanStop() => reelData.CanStop;
-    // 停止処理中か
-    public bool GetIsStopping() => reelData.IsStopping;
-    // 停止したか
-    public bool GetHasStopped() => reelData.HasStopped;
+    // 現在のリール状態
+    public ReelStatus GetCurrentReelStatus() => reelData.CurrentReelStatus;
     // 最後に止めた下段位置
     public int GetLastPushedPos() => reelData.LastPushedPos;
     // 停止予定位置
@@ -166,7 +160,7 @@ public class ReelObject : MonoBehaviour
             transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
 
             // 停止する位置になったら
-            if (reelData.IsStopping && reelData.CheckReachedStop())
+            if (reelData.CurrentReelStatus == ReelStatus.Stopping && reelData.CheckReachedStop())
             {
                 // 再度リールの角度を調整して停止させる
                 transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));

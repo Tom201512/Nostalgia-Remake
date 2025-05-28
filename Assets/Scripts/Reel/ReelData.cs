@@ -29,12 +29,8 @@ namespace ReelSpinGame_Reels
         // 現在の下段リール位置
         private int currentLower;
 
-        // 停止可能か
-        public bool CanStop { get; set; }
-        // 止まる予定か
-        public bool IsStopping { get; set; }
-        // 停止したか
-        public bool HasStopped { get; set; }
+        // 現在のリールステータス
+        public ReelStatus CurrentReelStatus { get; set; }
         // 最後に止めた位置(下段基準)
         public int LastPushedPos { get; set; }
         // 将来的に止まる位置(下段基準)
@@ -45,12 +41,10 @@ namespace ReelSpinGame_Reels
         // コンストラクタ
         public ReelData(int reelID, int lowerPos, ReelDatabase reelDatabase) 
         {
+            CurrentReelStatus = ReelStatus.WaitForStop;
             LastPushedPos = 0;
             LastDelay = 0;
             WillStopPos = 0;
-            IsStopping = false;
-            HasStopped = true;
-            CanStop = false;
 
             ReelID = reelID;
             // 位置設定
@@ -76,28 +70,27 @@ namespace ReelSpinGame_Reels
         }
 
         // func
-        // リール配列の番号を図柄へ変更
-        public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+
         // 指定したリールの位置番号を返す
         public int GetReelPos(sbyte posID) => OffsetReel(currentLower, posID);
         // リールの位置から図柄を返す
         public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
         // 停止予定の位置からリール図柄を返す
         public ReelSymbols GetSymbolFromWillStop(sbyte posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
-
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel(currentLower, (int)Mathf.Sign(rotateSpeed));
-        // リール位置を配列要素に置き換える
-        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
-
         // 停止位置になったか
         public bool CheckReachedStop() => currentLower == WillStopPos;
+
+        // リール配列の番号を図柄へ変更
+        public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+        // リール位置を配列要素に置き換える
+        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
 
         // 回転を開始させる
         public void BeginStartReel()
         {
-            CanStop = true;
-            HasStopped = false;
+            CurrentReelStatus = ReelStatus.WaitForStop;
             WillStopPos = 0;
             LastDelay = 0;
             WillStopPos = 0;
@@ -118,15 +111,13 @@ namespace ReelSpinGame_Reels
             WillStopPos = OffsetReel(LastPushedPos, delay);
             Debug.Log("WillStop:" + WillStopPos);
             LastDelay = delay;
-            IsStopping = true;
-            CanStop = false;
+            CurrentReelStatus = ReelStatus.Stopping;
         }
 
         // 停止処理を終了させる
         public void FinishStopReel()
         {
-            IsStopping = false;
-            HasStopped = true;
+            CurrentReelStatus = ReelStatus.Stopped;
         }
 
         // リール位置をオーバーフローしない数値で返す
