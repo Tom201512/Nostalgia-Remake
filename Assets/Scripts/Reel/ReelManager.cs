@@ -43,8 +43,6 @@ public class ReelManager : MonoBehaviour
         {
             reelObjects[i].SetReelData(i, 19);
         }
-        ////Debug.Log("ReelData load done");
-        ////Debug.Log("ReelManager awaken");
 
         data = new ReelManagerBehaviour();
         flashManager = GetComponent<FlashManager>();
@@ -68,7 +66,6 @@ public class ReelManager : MonoBehaviour
                 data.CanStopReels = false;
                 data.IsReelWorking = false;
                 data.IsReelFinished = true;
-                //Debug.Log("All Reels are stopped");
 
                 // リール停止位置記録
                 data.GenerateLastStopped(reelObjects);
@@ -79,7 +76,6 @@ public class ReelManager : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
-        //Debug.Log("Coroutines are stopped");
     }
 
     // func
@@ -130,12 +126,6 @@ public class ReelManager : MonoBehaviour
     // 払い出し判定モード変更
     public void ChangePayoutCheckMode(PayoutCheckMode mode) => payoutChecker.CheckMode = mode;
 
-    // 指定リール本体の明るさ変更
-    public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
-    // 指定したリールと図柄の明るさ変更
-    public void SetReelSymbolBrightness(int reelID, ReelPosID symbolPos, byte r, byte g, byte b) => 
-        reelObjects[reelID].SetSymbolBrightness(GetReelArrayIndex((int)symbolPos), r, g, b);
-
     // リール始動
     public void StartReels()
     {
@@ -182,13 +172,10 @@ public class ReelManager : MonoBehaviour
                 // 条件をチェック
                 int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase()
                     , flagID, data.FirstPushReel, betAmounts, (int)bonusID, data.RandomValue, data.FirstPushPos);
-
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
-
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);
-
                 // 停止したリール数を増やす
                 data.StoppedReelCount += 1;
             }
@@ -246,7 +233,6 @@ public class ReelManager : MonoBehaviour
                 }
             }
         }
-
         return highestCount;
     }
 
@@ -380,7 +366,6 @@ public class ReelManager : MonoBehaviour
         data.CanStopReels = false;
         yield return new WaitForSeconds(ReelWaitTime);
         data.CanStopReels = true;
-        ////Debug.Log("All reels are max speed");
     }
 
     // リールフラッシュのイベント
