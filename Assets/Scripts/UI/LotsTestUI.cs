@@ -18,9 +18,9 @@ public class LotsTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Lots-" + "\n";
-        buffer += "Flag:" + lots.Data.CurrentFlag + "\n";
-        buffer += "Table:" + lots.Data.CurrentTable + "\n";
-        buffer += "Counter:" + lots.Data.FlagCounter.Counter + "\n";
+        buffer += "Flag:" + lots.GetCurrentFlag() + "\n";
+        buffer += "Table:" + lots.GetCurrentTable() + "\n";
+        buffer += "Counter:" + lots.GetCounter() + "\n";
 
         text.text = buffer;
     }

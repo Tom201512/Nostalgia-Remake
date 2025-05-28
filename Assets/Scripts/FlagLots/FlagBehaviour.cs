@@ -21,9 +21,9 @@ namespace ReelSpinGame_Lots
 
         // var
         // 現在フラグ(プロパティ)
-        public FlagId CurrentFlag { get; private set; }
+        public FlagId CurrentFlag { get; set; }
         // 参照するテーブルID
-        public FlagLotMode CurrentTable { get; private set; }
+        public FlagLotMode CurrentTable { get; set; }
         // フラグカウンタ
         public FlagCounter.FlagCounter FlagCounter { get; private set; }
         // 強制役の設定
@@ -60,70 +60,41 @@ namespace ReelSpinGame_Lots
 
         // func
 
-        // 強制役の使用変更
-        public void ChangeInstantMode(bool isEnable) => UseInstant = isEnable;
-        // 使用する強制役
-        public void ChangeInstantFlag(FlagId flagId) => InstantFlagID = flagId;
-
-        // テーブル変更
-        public void ChangeTable(FlagLotMode mode)
-        {
-            Debug.Log("Changed mode:" + mode);
-            CurrentTable = mode;
-        }
-
         // フラグ抽選の開始
         public void GetFlagLots(int setting, int betAmounts, bool useInstant, FlagId instantFlagID, FlagDatabase flagDatabase)
         {
-            // ランダムテーブルを決める
-
-            // 強制役がある場合
-            if (useInstant)
+            // 現在の参照テーブルをもとに抽選
+            switch (CurrentTable)
             {
-                CurrentFlag = instantFlagID;
-            }
-            else
-            {
-                // 現在の参照テーブルをもとに抽選
-                switch (CurrentTable)
-                {
-                    case FlagLotMode.Normal:
+                case FlagLotMode.Normal:
 
-                        // カウンタが0より少ないなら高確率
-                        if (FlagCounter.Counter < 0)
-                        {
-                            CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalBTable, lotResultNormal);
-                        }
-                        // カウンタが0以上の場合は低確率
-                        else
-                        {
-                            CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalATable, lotResultNormal);
-                        }
+                    // カウンタが0より少ないなら高確率
+                    if (FlagCounter.Counter < 0)
+                    {
+                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalBTable, lotResultNormal);
+                    }
+                    // カウンタが0以上の場合は低確率
+                    else
+                    {
+                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalATable, lotResultNormal);
+                    }
 
-                        break;
+                    break;
 
-                    case FlagLotMode.BigBonus:
-                        CurrentFlag = CheckResultByTable(setting, flagDatabase.BigTable, lotResultBig);
-                        break;
+                case FlagLotMode.BigBonus:
+                    CurrentFlag = CheckResultByTable(setting, flagDatabase.BigTable, lotResultBig);
+                    break;
 
-                    case FlagLotMode.JacGame:
-                        CurrentFlag = BonusGameLots(flagDatabase.JacNonePoss);
-                        break;
+                case FlagLotMode.JacGame:
+                    CurrentFlag = BonusGameLots(flagDatabase.JacNonePoss);
+                    break;
 
-                    default:
-                        Debug.LogError("No table found");
-                        break;
+                default:
+                    Debug.LogError("No table found");
+                    break;
 
-                }
             }
             Debug.Log("Flag:" + CurrentFlag);
-        }
-
-        // 選択したフラグにする 強制役などでの使用
-        public void SelectFlag(FlagId flagID)
-        {
-            Debug.Log("Flag:" + CurrentFlag);
-            CurrentFlag = flagID;
         }
 
         // テーブルからフラグ判定

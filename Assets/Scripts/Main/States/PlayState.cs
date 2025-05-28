@@ -103,7 +103,7 @@ namespace ReelSpinGame_State.PlayingState
             {
                 gameManager.Reel.StopSelectedReel(reelID,
                     gameManager.Medal.GetLastBetAmounts(),
-                    gameManager.Lots.Data.CurrentFlag,
+                    gameManager.Lots.GetCurrentFlag(),
                     gameManager.Bonus.Data.HoldingBonusID);
 
                 // 停止音再生
