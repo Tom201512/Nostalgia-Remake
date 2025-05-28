@@ -879,8 +879,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
-  instantFlagID: 1
+  useInstant: 0
+  instantFlagID: 0
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,11 +2127,13 @@ MonoBehaviour:
 
     Bet:
 
-    Payout:
-
     MaxBet:
 
     LastBet:
+
+    Payout:
+
+    LastPayout:
 
     Replay:'
   m_isRightToLeft: 0
@@ -2196,7 +2198,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0.13641357}
+  m_margin: {x: 0, y: -56.66308, z: 0, w: 0.13641357}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

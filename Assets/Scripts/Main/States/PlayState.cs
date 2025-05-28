@@ -102,7 +102,7 @@ namespace ReelSpinGame_State.PlayingState
             if (gameManager.Reel.Data.CanStop && gameManager.Reel.GetCanReelStop((int)reelID))
             {
                 gameManager.Reel.StopSelectedReel(reelID,
-                    gameManager.Medal.Data.LastBetAmounts,
+                    gameManager.Medal.GetLastBetAmounts(),
                     gameManager.Lots.Data.CurrentFlag,
                     gameManager.Bonus.Data.HoldingBonusID);
 
@@ -130,7 +130,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             // リーチの色を記録
             BigColor riichiValue = gameManager.Reel.CheckRiichiStatus(gameManager.Payout.PayoutDatabase.PayoutLines,
-                            gameManager.Medal.Data.LastBetAmounts);
+                            gameManager.Medal.GetLastBetAmounts());
 
             if(riichiValue == BigColor.Red)
             {

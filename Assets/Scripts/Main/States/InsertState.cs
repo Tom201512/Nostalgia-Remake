@@ -1,7 +1,6 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_State.InsertState
@@ -30,7 +29,7 @@ namespace ReelSpinGame_State.InsertState
             gameManager.Medal.HasMedalInsert += BetSound;
 
             // リプレイでなければINSERTランプ表示
-            if (!gameManager.Medal.Data.HasReplay)
+            if (!gameManager.Medal.GetHasReplay())
             {
                 gameManager.Status.TurnOnInsertLamp();
             }
@@ -65,7 +64,7 @@ namespace ReelSpinGame_State.InsertState
             }
 
             // ベット枚数がある場合
-            if(gameManager.Medal.Data.CurrentBet > 0)
+            if(gameManager.Medal.GetCurrentBet() > 0)
             {
                 gameManager.Status.TurnOnStartLamp();
             }
@@ -74,21 +73,21 @@ namespace ReelSpinGame_State.InsertState
             if(OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
             {
                 // ベットが終了していたら
-                if(gameManager.Medal.Data.FinishedBet)
+                if(gameManager.Medal.GetBetFinished())
                 {
                     // 投入枚数を反映する
-                    gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.Data.LastBetAmounts);
-                    gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.Data.LastBetAmounts);
+                    gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.GetLastBetAmounts());
+                    gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.GetLastBetAmounts());
 
                     // すでにベットされている場合は抽選へ
-                    if (gameManager.Medal.Data.CurrentBet > 0)
+                    if (gameManager.Medal.GetCurrentBet() > 0)
                     {
                         gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
 
                         // ボーナス中なら払い出し枚数を減らす
                         if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
                         {
-                            gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.Data.LastBetAmounts);
+                            gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.GetLastBetAmounts());
                         }
                     }
                 }

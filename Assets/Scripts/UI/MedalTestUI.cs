@@ -20,12 +20,13 @@ public class MedalTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Medal-" + "\n";
-        buffer += "Credits:" + medal.Data.Credits + "\n";
-        buffer += "Bet:" + medal.Data.CurrentBet + "\n";
-        buffer += "Payout:" + medal.Data.PayoutAmounts + "\n";
-        buffer += "MaxBet:" + medal.Data.MaxBetAmounts + "\n";
-        buffer += "LastBet:" + medal.Data.LastBetAmounts + "\n";
-        buffer += "Replay:" + medal.Data.HasReplay;
+        buffer += "Credits:" + medal.GetCredits() + "\n";
+        buffer += "Bet:" + medal.GetCurrentBet() + "\n";
+        buffer += "MaxBet:" + medal.GetMaxBet() + "\n";
+        buffer += "LastBet:" + medal.GetLastBetAmounts() + "\n";
+        buffer += "Payout:" + medal.GetPayoutAmounts() + "\n";
+        buffer += "LastPayout:" + medal.GetLastPayout() + "\n";
+        buffer += "Replay:" + medal.GetHasReplay();
 
         text.text = buffer;
     }
