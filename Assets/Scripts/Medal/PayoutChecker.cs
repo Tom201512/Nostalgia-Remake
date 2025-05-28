@@ -39,7 +39,7 @@ namespace ReelSpinGame_Reels.Payout
         public PayoutResultBuffer LastPayoutResult { get; private set; }
 
         // 選択中のテーブル
-        public PayoutCheckMode CheckMode;
+        public PayoutCheckMode CheckMode { get; set; }
 
         // func
         private void Awake()

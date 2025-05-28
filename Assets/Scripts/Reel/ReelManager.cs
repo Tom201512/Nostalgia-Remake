@@ -374,7 +374,7 @@ public class ReelManager : MonoBehaviour
         while(flashManager.HasFlash)
         {
             flashManager.ReadFlashData(reelObjects);
-            yield return new WaitForSeconds(FlashManager.ReelFlashTime);
+            yield return new WaitForSeconds(ReelFlashTime);
         }
     }
 
@@ -396,6 +396,6 @@ public class ReelManager : MonoBehaviour
         ////Debug.Log("Replay Finished");
         flashManager.HasFlashWait = false;
         flashManager.HasFlash = false;
-        TurnOffAllReels();
+        TurnOnAllReels();
     }
 }
