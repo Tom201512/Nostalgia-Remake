@@ -66,28 +66,28 @@ public class GameManager : MonoBehaviour
         PlayerData = new PlayingDatabase();
 
         // 画面
-        Debug.Log("Screen:" + Screen.width + "," + Screen.height);
+        //Debug.Log("Screen:" + Screen.width + "," + Screen.height);
         Screen.SetResolution(960, 540, false);
 
         // メダル管理
         Medal = GetComponent<MedalManager>();
-        Debug.Log("Medal is launched");
+        ////Debug.Log("Medal is launched");
 
         // フラグ管理
         Lots = GetComponent<FlagLots>();
-        Debug.Log("Lots is launched");
+        ////Debug.Log("Lots is launched");
 
         // ウェイト管理
         Wait = new WaitManager(false);
-        Debug.Log("Wait is launched");
+        ////Debug.Log("Wait is launched");
 
         // 払い出し処理
         Payout = GetComponent<PayoutChecker>();
-        Debug.Log("Payout is launched");
+        ////Debug.Log("Payout is launched");
 
         // ボーナス
         Bonus = GetComponent<BonusManager>();
-        Debug.Log("Bonus is launched");
+        ////Debug.Log("Bonus is launched");
 
         // ボーナス設定
 
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         // ステータスパネル
         Status = statusPanel;
-        Debug.Log("StatusPanel is launched");
+        ////Debug.Log("StatusPanel is launched");
 
         // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         {
             setting = Random.Range(1, 6);
         }
-        Debug.Log("Setting:" + setting);
+        ////Debug.Log("Setting:" + setting);
 
         // 画面サイズ初期化
         Screen.SetResolution(1600, 900, false);
@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
         // 終了処理
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Game Closed");
+            //Debug.Log("Game Closed");
             Application.Quit();
         }
 

@@ -24,7 +24,7 @@ namespace ReelSpinGame_State.InsertState
         // func
         public void StateStart()
         {
-            Debug.Log("Start Medal Insert");
+            //Debug.Log("Start Medal Insert");
 
             gameManager.Medal.HasMedalInsert += BetSound;
 
@@ -102,7 +102,7 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateEnd()
         {
-            Debug.Log("End Medal Insert");
+            //Debug.Log("End Medal Insert");
             gameManager.Status.TurnOffInsertAndStartlamp();
             gameManager.Medal.HasMedalInsert -= BetSound;
             gameManager.Medal.FinishMedalInsert();
@@ -111,19 +111,19 @@ namespace ReelSpinGame_State.InsertState
         // フラッシュを止める
         private void StopReelFlash()
         {
-            Debug.Log("Stop Flash");
+            ////Debug.Log("Stop Flash");
             gameManager.Reel.FlashManager.StopFlash();
 
             // JAC GAME中なら点灯方法を少し変える
             if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
             {
                 gameManager.Reel.FlashManager.EnableJacGameLight();
-                Debug.Log("Jac Turn On");
+                ////Debug.Log("Jac Turn On");
             }
             else
             {
                 gameManager.Reel.FlashManager.TurnOnAllReels();
-                Debug.Log("Turn On");
+                ////Debug.Log("Turn On");
             }
         }
 

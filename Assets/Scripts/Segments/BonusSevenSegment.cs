@@ -21,7 +21,7 @@ public class BonusSevenSegment : MonoBehaviour
     void Awake()
     {
         segments = GetComponentsInChildren<Segment>();
-        Debug.Log("Counts:" + segments.Length);
+        ////Debug.Log("Counts:" + segments.Length);
     }
 
     // BIG中のボーナス表示

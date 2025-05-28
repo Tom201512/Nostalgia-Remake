@@ -58,8 +58,8 @@ public class MedalSevenSegment : MonoBehaviour
     // w’èŒ…”‚ğ‹‚ß‚é
     public static int GetDigits(int value, int digit)
     {
-        Debug.Log("Digit:" + digit);
-        Debug.Log("value:" + value);
+        ////Debug.Log("Digit:" + digit);
+        ////Debug.Log("value:" + value);
         int sum = 0;
         // w’èŒ…”‚Ü‚Å”š‚ğo‚·
         for (int i = 0; i < digit; i++)
@@ -67,7 +67,7 @@ public class MedalSevenSegment : MonoBehaviour
             sum = (value % 10);
             value = (value / 10);
 
-            Debug.Log("DigitResult" + i + ":" + sum);
+            ////Debug.Log("DigitResult" + i + ":" + sum);
         }
 
         return sum;

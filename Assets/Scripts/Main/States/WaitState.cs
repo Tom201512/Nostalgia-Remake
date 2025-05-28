@@ -21,7 +21,7 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateStart()
         {
-            Debug.Log("Start Wait State");
+            //Debug.Log("Start Wait State");
 
             // ウェイトランプ点灯
             if (gameManager.Wait.HasWait)
@@ -34,7 +34,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             // ウェイトが切れるまで待つ
-            Debug.Log("Update Wait State");
+            //Debug.Log("Update Wait State");
             if(!gameManager.Wait.HasWait)
             {
                 gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PlayingState);
@@ -43,7 +43,7 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateEnd()
         {
-            Debug.Log("End Wait State");
+            //Debug.Log("End Wait State");
             gameManager.Wait.SetWaitTimer();
 
             // ウェイトランプを切る

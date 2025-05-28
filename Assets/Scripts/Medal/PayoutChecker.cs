@@ -84,7 +84,7 @@ namespace ReelSpinGame_Medal
                         // マイナス数値を配列番号に変換
                         int lineIndex = ReelData.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
 
-                        Debug.Log("Symbol:" + reelResult[lineIndex]);
+                        //Debug.Log("Symbol:" + reelResult[lineIndex]);
                         lineResult.Add(reelResult[lineIndex]);
                         reelIndex += 1;
                     }
@@ -123,9 +123,9 @@ namespace ReelSpinGame_Medal
             }
             // 最終的な払い出し枚数をイベントに送る
 
-            Debug.Log("payout:" + finalPayouts);
-            Debug.Log("Bonus:" + bonusID);
-            Debug.Log("IsReplay:" + replayStatus);
+            //Debug.Log("payout:" + finalPayouts);
+            //Debug.Log("Bonus:" + bonusID);
+            //Debug.Log("IsReplay:" + replayStatus);
 
             // デバッグ用
             for(int i = 0; i < finalPayoutLine.Count; i++)
@@ -140,7 +140,7 @@ namespace ReelSpinGame_Medal
                         buffer += ",";
                     }
                 }
-                Debug.Log("PayoutLines" + i + ":" + buffer);
+                //Debug.Log("PayoutLines" + i + ":" + buffer);
             }
 
             LastPayoutResult.SetPayout(finalPayouts);
@@ -178,8 +178,7 @@ namespace ReelSpinGame_Medal
                 // 同じ図柄(ANY含め)がリールの数と合えば当選とみなす
                 if (sameSymbolCount == ReelAmounts)
                 {
-                    Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:"
-                     + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);
+                    //Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:" + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);
 
                     // 配列番号を送る
                     return indexNum;
@@ -194,7 +193,7 @@ namespace ReelSpinGame_Medal
         // 払い出し結果をテーブルごとに得る
         private List<PayoutResultData> GetPayoutResultData(PayoutCheckMode payoutCheckMode)
         {
-            Debug.Log(payoutCheckMode.ToString());
+            //Debug.Log(payoutCheckMode.ToString());
             switch (payoutCheckMode)
             {
                 case PayoutCheckMode.PayoutNormal:

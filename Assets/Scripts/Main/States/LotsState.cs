@@ -23,7 +23,7 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateStart()
         {
-            Debug.Log("Start Lots.FlagBehaviour.State");
+            //Debug.Log("Start Lots.FlagBehaviour.State");
 
             gameManager.Lots.StartFlagLots(gameManager.Setting, gameManager.Medal.GetLastBetAmounts());
 
@@ -53,12 +53,12 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateUpdate()
         {
-            Debug.Log("Update Lots.FlagBehaviour.State");
+            //Debug.Log("Update Lots.FlagBehaviour.State");
         }
 
         public void StateEnd()
         {
-            Debug.Log("End Lots.FlagBehaviour.State");
+            //Debug.Log("End Lots.FlagBehaviour.State");
             if (gameManager.Wait.HasWait)
             {
                 gameManager.Status.TurnOnWaitLamp();

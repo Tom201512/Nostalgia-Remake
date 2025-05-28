@@ -46,23 +46,23 @@ public class ReelObject : MonoBehaviour
 
         foreach (byte value in reelDatabaseFile.Array)
         {
-            Debug.Log(value + "Symbol:" + ReturnSymbol(value));
+            ////Debug.Log(value + "Symbol:" + ReturnSymbol(value));
         }
 
         for (int i = 0; i < reelDatabaseFile.Array.Length; i++)
         {
-            Debug.Log("No." + i + " Symbol:" + ReturnSymbol(reelDatabaseFile.Array[i]));
+            ////Debug.Log("No." + i + " Symbol:" + ReturnSymbol(reelDatabaseFile.Array[i]));
 
         }
-        Debug.Log("ReelArray Generated");
-        Debug.Log("ReelSpin AwakeDone");
+        ////Debug.Log("ReelArray Generated");
+        ////Debug.Log("ReelSpin AwakeDone");
     }
 
     private void Start()
     {
         symbolManager.SetReelData(reelData);
         symbolManager.UpdateSymbolsObjects();
-        Debug.Log("StartDone");
+        //Debug.Log("StartDone");
     }
 
     // ŽÀs’†(60FPS‚Å‚ÌXV)
@@ -168,7 +168,7 @@ public class ReelObject : MonoBehaviour
                 maxSpeed = 0;
                 reelData.FinishStopReel();
 
-                Debug.Log("Stopped");
+                //Debug.Log("Stopped");
             }
         }
     }

@@ -42,7 +42,7 @@ namespace ReelSpinGame_Medal
         public void SetMedalData(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
             data = new MedalBehaviour(credits, curretMaxBet, lastBetAmounts, hasReplay);
-            Debug.Log("Credits:" + credits);
+            //////Debug.Log("Credits:" + credits);
             creditSegments.ShowSegmentByNumber(credits);
         }
 
@@ -68,7 +68,7 @@ namespace ReelSpinGame_Medal
         // MAX_BET用の処理
         public void StartMAXBet()
         {
-            Debug.Log("Received MAX_BET");
+            ////Debug.Log("Received MAX_BET");
             StartBet(data.MaxBetAmounts);
         }
 
@@ -87,16 +87,16 @@ namespace ReelSpinGame_Medal
                     // メダルの投入を開始する(残りはフレーム処理)
                     StartCoroutine(nameof(UpdateInsert));
                 }
-                // ベットがすでに終わっている、またはMAXベットの場合(Debug)
+                // ベットがすでに終わっている、またはMAXベットの場合(////Debug)
                 else
                 {
                     if (amounts > data.MaxBetAmounts)
                     {
-                        Debug.Log("The MAX Bet is now :" + data.MaxBetAmounts);
+                        ////Debug.Log("The MAX Bet is now :" + data.MaxBetAmounts);
                     }
                     else
                     {
-                        Debug.Log("You already Bet:" + amounts);
+                        ////Debug.Log("You already Bet:" + amounts);
                     }
                 }
             }
@@ -106,11 +106,11 @@ namespace ReelSpinGame_Medal
             {
                 if (data.HasReplay)
                 {
-                    Debug.Log("Replay is enabled");
+                    ////Debug.Log("Replay is enabled");
                 }
                 else
                 {
-                    Debug.Log("Insert is enabled");
+                    ////Debug.Log("Insert is enabled");
                 }
             }
         }
@@ -129,19 +129,19 @@ namespace ReelSpinGame_Medal
                 }
                 else
                 {
-                    Debug.Log("No Payouts");
+                    ////Debug.Log("No Payouts");
                 }
             }
             else
             {
-                Debug.Log("Payout is enabled");
+                ////Debug.Log("Payout is enabled");
             }
         }
 
         // リプレイ状態にする(前回と同じメダル枚数をかける)
         public void EnableReplay()
         {
-            Debug.Log("Enable Replay" + data.LastBetAmounts);
+            ////Debug.Log("Enable Replay" + data.LastBetAmounts);
             data.HasReplay = true;
             data.RemainingBet = data.LastBetAmounts;
         }
@@ -170,7 +170,7 @@ namespace ReelSpinGame_Medal
         // コルーチン用
         private IEnumerator UpdateInsert()
         {
-            Debug.Log("StartBet");
+            ////Debug.Log("StartBet");
             HasMedalUpdate = true;
             // 残りベット枚数がなくなるまで処理
             while (data.RemainingBet > 0)
@@ -190,8 +190,8 @@ namespace ReelSpinGame_Medal
             }
 
             HasMedalUpdate = false;
-            Debug.Log("Bet Finished");
-            Debug.Log("CurrentBet:" + data.CurrentBet);
+            //////Debug.Log("Bet Finished");
+            //////Debug.Log("CurrentBet:" + data.CurrentBet);
         }
 
         private IEnumerator UpdatePayout()
@@ -205,14 +205,14 @@ namespace ReelSpinGame_Medal
                 HasMedalPayout.Invoke(1);
                 // クレジットと払い出しセグメント更新
                 creditSegments.ShowSegmentByNumber(data.Credits);
-                Debug.Log("LastPayoutAmounts:" + data.LastPayoutAmounts);
+                ////Debug.Log("LastPayoutAmounts:" + data.LastPayoutAmounts);
                 payoutSegments.ShowSegmentByNumber(data.LastPayoutAmounts);
 
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
             // 全て払い出したら処理終了
             HasMedalUpdate = false;
-            Debug.Log("Payout Finished");
+            ////Debug.Log("Payout Finished");
         }
     }
 }

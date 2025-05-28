@@ -44,7 +44,7 @@ namespace ReelSpinGame_Datas
             {
                 flagDataBySettings.Add(new FlagDataBySetting(loadedData));
             }
-            Debug.Log(flagDataBySettings.Count);
+            //Debug.Log(flagDataBySettings.Count);
         }
     }
 
@@ -69,7 +69,7 @@ namespace ReelSpinGame_Datas
             {
                 buffer += f + ",";
             }
-            Debug.Log("Flag:" + buffer);
+            //Debug.Log("Flag:" + buffer);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace ReelSpinGame_Datas
             payoutLines = new List<sbyte>();
             // デバッグ用
             string combinationBuffer = "";
-            Debug.Log(byteBuffer[0]);
+            //Debug.Log(byteBuffer[0]);
 
             betCondition = (byte)byteBuffer[(int)ReadPos.BetCondition];
             // 読み込み
@@ -68,7 +68,7 @@ namespace ReelSpinGame_Datas
             }
 
             //デバッグ用
-            Debug.Log("Condition:" + byteBuffer[(int)ReadPos.BetCondition] + "Lines" + combinationBuffer);
+            //Debug.Log("Condition:" + byteBuffer[(int)ReadPos.BetCondition] + "Lines" + combinationBuffer);
         }
     }
 
@@ -127,8 +127,8 @@ namespace ReelSpinGame_Datas
             hasReplayOrJac = byteBuffer[(int)ReadPos.IsReplay] == 1;
 
             //デバッグ用
-            Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payouts:" + payouts +
-                "Bonus:" + bonusType + "HasReplay:" + hasReplayOrJac);
+            //Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payouts:" + payouts +
+                //"Bonus:" + bonusType + "HasReplay:" + hasReplayOrJac);
         }
     }
 }

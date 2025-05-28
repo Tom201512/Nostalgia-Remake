@@ -23,14 +23,14 @@ namespace ReelSpinGame_Sound
         // 指定した音を1回再生
         public void PlaySoundOneShot(AudioClip sound)
         {
-            Debug.Log("Played");
+            ////Debug.Log("Played");
             soundEffectPlayer.PlayAudioOneShot(sound);
         }
 
         // 指定した音をループで再生
         public void PlaySoundLoop(AudioClip sound)
         {
-            Debug.Log("LoopPlayed");
+            ////Debug.Log("LoopPlayed");
             soundEffectPlayer.PlayAudio(sound, true);
         }
 

@@ -101,6 +101,6 @@ public class StatusPanel : MonoBehaviour
         startLamp.TurnOff();
         insertLamp.TurnOff();
 
-        Debug.Log("FlashStopped");
+        //Debug.Log("FlashStopped");
     }
 }

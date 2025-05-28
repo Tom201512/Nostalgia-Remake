@@ -69,7 +69,7 @@ public class LampComponent : MonoBehaviour
             // ”’l‚ğ’´‚¦‚È‚¢‚æ‚¤‚É’²®
             brightness = (byte)Math.Clamp(brightness + changeValue, TurnOffValue, TurnOnValue);
 
-            //Debug.Log("Brightness:" + brightness);
+            ////Debug.Log("Brightness:" + brightness);
 
             image.color = new Color32(brightness, brightness, brightness, 255);
 

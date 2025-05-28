@@ -65,7 +65,7 @@ namespace ReelSpinGame_Medal
             // 多い場合(1枚以上ベットされていること)
             if (amounts > CurrentBet && CurrentBet > 0)
             {
-                Debug.Log("You bet more than current bet");
+                ////Debug.Log("You bet more than current bet");
                 RemainingBet = Math.Clamp(amounts - CurrentBet, 0, MaxBetLimit);
             }
 
@@ -84,15 +84,15 @@ namespace ReelSpinGame_Medal
                 CurrentBet = 0;
             }
             LastBetAmounts = amounts;
-            Debug.Log("Bet Received:" + RemainingBet);
+            ////Debug.Log("Bet Received:" + RemainingBet);
         }
 
         // 投入処理
         public void InsertOneMedal()
         {
             RemainingBet -= 1;
-            Debug.Log("Remaining:" + RemainingBet);
-            Debug.Log("Bet Medal by 1");
+           //////Debug.Log("Remaining:" + RemainingBet);
+            //////Debug.Log("Bet Medal by 1");
             CurrentBet += 1;
            //HasMedalInserted.Invoke(1);
 
@@ -121,7 +121,7 @@ namespace ReelSpinGame_Medal
             LastPayoutAmounts += 1;
             // クレジット変更
             Credits = Math.Clamp(Credits += 1, MinCredit, MaxCredit);
-            Debug.Log("Payout Medal by:" + 1);
+            ////Debug.Log("Payout Medal by:" + 1);
         }
     }
 }

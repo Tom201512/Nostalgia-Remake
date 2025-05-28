@@ -81,7 +81,7 @@ namespace ReelSpinGame_Bonus
 
         public void StartBigChance(List<PayoutLineData> lastPayoutLines, LastStoppedReelData lastStopped)
         {
-            Debug.Log("BIG CHANCE start");
+            //Debug.Log("BIG CHANCE start");
             RemainingBigGames = BigGames;
             RemainingJacIn = JacInTimes;
             CurrentBonusStatus = BonusStatus.BonusBIGGames;
@@ -95,7 +95,7 @@ namespace ReelSpinGame_Bonus
             {
                 RemainingJacIn -= 1;
             }
-            Debug.Log("BONUS GAME start");
+            //Debug.Log("BONUS GAME start");
             RemainingJacGames = JacGames;
             RemainingJacHits = JacHits;
             CurrentBonusStatus = BonusStatus.BonusJACGames;
@@ -126,7 +126,7 @@ namespace ReelSpinGame_Bonus
             // 30ゲームを消化した場合
             else if (RemainingBigGames == 0)
             {
-                Debug.Log("BIG CHANCE end");
+                //Debug.Log("BIG CHANCE end");
                 EndBonusStatus();
             }
         }
@@ -142,7 +142,7 @@ namespace ReelSpinGame_Bonus
             // JACゲーム数が0, または入賞回数が0の場合は終了
             if (RemainingJacGames == 0 || RemainingJacHits == 0)
             {
-                Debug.Log("End Bonus Game");
+                //Debug.Log("End Bonus Game");
 
                 // BIG中なら残りJAC-INの数があれば小役ゲームへ移行
                 if (RemainingJacIn > 0)
@@ -163,7 +163,7 @@ namespace ReelSpinGame_Bonus
             RemainingJacGames = 0;
             RemainingJacHits = 0;
             CurrentBonusStatus = BonusStatus.BonusNone;
-            Debug.Log("Bonus Reset");
+            //Debug.Log("Bonus Reset");
         }
 
         private void CheckBonusColor(List<PayoutLineData> lastPayoutLines, LastStoppedReelData lastStopped)
@@ -182,17 +182,17 @@ namespace ReelSpinGame_Bonus
                     if(lastStopped.GetLastStoppedSymbol(i, payoutLine.PayoutLines[i]) == ReelData.ReelSymbols.RedSeven)
                     {
                         redCount += 1;
-                        Debug.Log("Red:" + redCount);
+                        //Debug.Log("Red:" + redCount);
                     }
                     if (lastStopped.GetLastStoppedSymbol(i, payoutLine.PayoutLines[i]) == ReelData.ReelSymbols.BlueSeven)
                     {
                         blueCount += 1;
-                        Debug.Log("Blue:" + blueCount);
+                        //Debug.Log("Blue:" + blueCount);
                     }
                     if (lastStopped.GetLastStoppedSymbol(i, payoutLine.PayoutLines[i]) == ReelData.ReelSymbols.BAR)
                     {
                         barCount += 1;
-                        Debug.Log("BAR:" + barCount);
+                        //Debug.Log("BAR:" + barCount);
                     }
                 }
 
@@ -213,7 +213,7 @@ namespace ReelSpinGame_Bonus
                 }
             }
 
-            Debug.Log("Bonus Color:" + BigBonusColor);
+            //Debug.Log("Bonus Color:" + BigBonusColor);
         }
 
         public void ResetBonusColor() => BigBonusColor = BigColor.None;

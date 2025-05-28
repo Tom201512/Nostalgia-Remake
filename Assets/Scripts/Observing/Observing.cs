@@ -26,13 +26,13 @@ namespace ReelSpinGame_Observing
         private void OnThingHappenedA()
         {
             // Aイベントに応答するロジックはここに置く
-            Debug.Log("Observer responds A");
+            //Debug.Log("Observer responds A");
         }
 
         private void OnThingHappenedB()
         {
             // Bイベントに応答するロジックはここに置く
-            Debug.Log("Observer responds B");
+            //Debug.Log("Observer responds B");
         }
     }
 }

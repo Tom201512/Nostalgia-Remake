@@ -16,7 +16,7 @@ public class Segment : MonoBehaviour
     private void Awake()
     {
         lamps = GetComponentsInChildren<LampComponent>();
-        Debug.Log("Lamp count:" + lamps.Length);
+        ////Debug.Log("Lamp count:" + lamps.Length);
     }
 
     public void TurnOffAll()
@@ -253,7 +253,7 @@ public class Segment : MonoBehaviour
             return;
         }
 
-        Debug.Log("Invalid Number");
+        ////Debug.Log("Invalid Number");
         TurnOffAll();
     }
 

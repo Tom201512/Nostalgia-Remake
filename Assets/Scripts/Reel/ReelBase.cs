@@ -18,6 +18,6 @@ public class ReelBase : MonoBehaviour
     public void ChangeColor(byte r, byte g, byte b)
     {
         render.material.SetColor("_Color", new Color32(r, g, b, 255));
-        Debug.Log("SetColor" + r + "," + g + "," + b);
+        ////Debug.Log("SetColor" + r + "," + g + "," + b);
     }
 }

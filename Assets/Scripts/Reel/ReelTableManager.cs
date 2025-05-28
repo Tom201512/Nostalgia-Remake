@@ -36,15 +36,15 @@ public class ReelTableManager
         // 検索中のテーブル
         int currentIndex = 0;
 
-        Debug.Log("Flag:" + flagID);
-        Debug.Log("FirstPush:" + firstPushReel);
-        Debug.Log("bet:" + bet);
-        Debug.Log("Bonus:" + bonus);
-        Debug.Log("Random:" + random);
+        //Debug.Log("Flag:" + flagID);
+        //Debug.Log("FirstPush:" + firstPushReel);
+        //Debug.Log("bet:" + bet);
+        //Debug.Log("Bonus:" + bonus);
+        //Debug.Log("Random:" + random);
 
         foreach (ReelConditionsData data in reelDatabase.Conditions)
         {
-            Debug.Log("Search:" + currentIndex);
+            //Debug.Log("Search:" + currentIndex);
             // 条件が合っているか
             bool conditionMet = true;
 
@@ -60,8 +60,8 @@ public class ReelTableManager
                     GetConditionData(data.MainConditions, i) == BonusAnyValueID &&
                     bonus != (int)BonusType.BonusNone)
                 {
-                    Debug.Log(GetConditionData(data.MainConditions, i) + "ANY BONUS");
-                    Debug.Log(bonus + "ANY BONUS");
+                    //Debug.Log(GetConditionData(data.MainConditions, i) + "ANY BONUS");
+                    //Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
                 // それ以外は受け取ったものと条件が合うか確認する
@@ -74,7 +74,7 @@ public class ReelTableManager
             // 条件が合っていれば
             if(conditionMet)
             {
-                Debug.Log("All conditions are met");
+                //Debug.Log("All conditions are met");
 
                 // 次は第一停止のリール停止位置を見る
                 // 停止位置条件が0なら無視
@@ -82,25 +82,25 @@ public class ReelTableManager
                 // 第一停止の位置の分だけ1を左シフトし、条件のビットとAND算して条件を見る(0にならなければ条件を満たす)
                 int checkValue = 1 << firstPushPos + 1;
 
-                Debug.Log(checkValue);
-                Debug.Log(data.FirstReelPosition);
-                Debug.Log(checkValue & data.FirstReelPosition);
+                //Debug.Log(checkValue);
+                //Debug.Log(data.FirstReelPosition);
+                //Debug.Log(checkValue & data.FirstReelPosition);
 
                 if (data.FirstReelPosition == 0 || (checkValue & data.FirstReelPosition) != 0)
                 {
                     if (data.FirstReelPosition == 0)
                     {
-                        Debug.Log("No condition");
+                        //Debug.Log("No condition");
                     }
                     // ここまできたらテーブル発見。すぐに更新する
-                    Debug.Log("Found:" + currentIndex);
+                    //Debug.Log("Found:" + currentIndex);
                     foundTable = data.ReelTableNumber;
                 }
             }
             currentIndex += 1;
         }
         // 見つけたリールテーブルを記録
-        Debug.Log("Final Found:" + foundTable);
+        //Debug.Log("Final Found:" + foundTable);
         UsedReelTableID[(int)reelID] = foundTable;
         return foundTable;
     }
@@ -108,7 +108,7 @@ public class ReelTableManager
     // 指定したリールのディレイ(スベリ)を返す
     public byte GetDelayFromTable(ReelDatabase reelDatabase, int pushedPos, int tableIndex)
     {
-        Debug.Log("Delay:" + reelDatabase.Tables[tableIndex].TableData[pushedPos]);
+        //Debug.Log("Delay:" + reelDatabase.Tables[tableIndex].TableData[pushedPos]);
         return reelDatabase.Tables[tableIndex].TableData[pushedPos];
     }
 }

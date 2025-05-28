@@ -14,7 +14,7 @@ public class GameCamera : MonoBehaviour
 
         if(!cam)
         {
-            Debug.Log("Loaded");
+            //Debug.Log("Loaded");
         }
     }
 }

@@ -39,7 +39,7 @@ namespace ReelSpinGame_Reels
                 LastPos.Add(reelObjects[i].GetReelPos(ReelPosID.Lower));
                 posBuffer += LastPos[i];
 
-                Debug.Log("Position:" + LastPos[i]);
+                //Debug.Log("Position:" + LastPos[i]);
 
                 // データ作成
                 LastSymbols.Add(new List<ReelSymbols>());
@@ -48,18 +48,18 @@ namespace ReelSpinGame_Reels
                 for (sbyte j = (int)ReelPosID.Lower3rd; j < (int)ReelPosID.Upper3rd; j++)
                 {
                     LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
-                    Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));
+                    //Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));
                 }
             }
-            Debug.Log("Final ReelPosition" + posBuffer);
+            //Debug.Log("Final ReelPosition" + posBuffer);
 
             // 各リールごとに表示(デバッグ)
             foreach (List<ReelSymbols> reelResult in LastSymbols)
             {
-                Debug.Log("Reel:");
+                //Debug.Log("Reel:");
                 for (int i = 0; i < reelResult.Count; i++)
                 {
-                    Debug.Log(reelResult[i]);
+                    //Debug.Log(reelResult[i]);
                 }
             }
         }

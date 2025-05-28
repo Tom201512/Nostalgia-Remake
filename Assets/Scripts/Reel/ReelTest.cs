@@ -68,26 +68,26 @@ public class ReelTest : MonoBehaviour
             if (Input.anyKey)
             {
                 hasInput = true;
-                //Debug.Log("Input true");
+                ////Debug.Log("Input true");
             }
             // 入力がなくすべてのリールが止まっていたら払い出し処理をする
             else if(manager.GetIsReelFinished() && !hasFinishedCheck)
             {
-                Debug.Log("Start Payout Check");
+                //Debug.Log("Start Payout Check");
 
                 StartCheckPayout(3);
-                Debug.Log("Payouts result" + payoutChecker.LastPayoutResult.Payouts);
-                Debug.Log("Bonus:" + payoutChecker.LastPayoutResult.BonusID + "ReplayOrJac" + payoutChecker.LastPayoutResult.IsReplayOrJacIn);
+                //Debug.Log("Payouts result" + payoutChecker.LastPayoutResult.Payouts);
+                //Debug.Log("Bonus:" + payoutChecker.LastPayoutResult.BonusID + "ReplayOrJac" + payoutChecker.LastPayoutResult.IsReplayOrJacIn);
             }
         }
 
         // 入力がある場合は離れたときの制御を行う
         else if (hasInput)
         {
-            //Debug.Log("Input still");
+            ////Debug.Log("Input still");
             if(!Input.anyKey)
             {
-                //Debug.Log("input end");
+                ////Debug.Log("input end");
                 hasInput = false;
             }
         }
@@ -103,7 +103,7 @@ public class ReelTest : MonoBehaviour
         }
         else
         {
-            Debug.Log("Failed to check payout because reels are spinning");
+            //Debug.Log("Failed to check payout because reels are spinning");
         }
     }
 } 

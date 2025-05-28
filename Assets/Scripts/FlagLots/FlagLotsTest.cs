@@ -26,7 +26,7 @@ public class FlagLotsTest : MonoBehaviour
             setting = UnityEngine.Random.Range(1, 6);
         }
 
-        Debug.Log("Setting:" + setting);
+        //Debug.Log("Setting:" + setting);
 
         if (jacNoneProb < 0) 
         { 

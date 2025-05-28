@@ -59,7 +59,7 @@ namespace ReelSpinGame_Sound
             }
 
             HasSoundStopped = true;
-            Debug.Log("Sound Stopped");
+            //Debug.Log("Sound Stopped");
         }
     }
 }

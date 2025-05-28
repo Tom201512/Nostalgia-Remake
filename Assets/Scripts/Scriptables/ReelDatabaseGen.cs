@@ -19,12 +19,12 @@ namespace ReelSpinGame_Datas
 
             foreach (byte value in result)
             {
-                Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
+                //Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
             }
 
             for (int i = 0; i < ReelData.MaxReelArray; i++)
             {
-                Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(result[i]));
+                //Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(result[i]));
             }
 
             return result;
@@ -50,7 +50,7 @@ namespace ReelSpinGame_Datas
                     ConditionDebug += GetConditionData(condition.MainConditions, i).ToString() + ",";
                 }
 
-                Debug.Log("Condition:" + condition.MainConditions + "Details:" + ConditionDebug + "FirstReel:" + condition.FirstReelPosition + "ReelTableNum" + condition.ReelTableNumber);
+                //Debug.Log("Condition:" + condition.MainConditions + "Details:" + ConditionDebug + "FirstReel:" + condition.FirstReelPosition + "ReelTableNum" + condition.ReelTableNumber);
             }
 
             return finalResult;

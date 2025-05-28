@@ -38,8 +38,8 @@ public class ReelManager : MonoBehaviour
         {
             reelObjects[i].SetReelData(i, 19);
         }
-        Debug.Log("ReelData load done");
-        Debug.Log("ReelManager awaken");
+        ////Debug.Log("ReelData load done");
+        ////Debug.Log("ReelManager awaken");
 
         data = new ReelManagerBehaviour();
 
@@ -64,7 +64,7 @@ public class ReelManager : MonoBehaviour
                 data.CanStopReels = false;
                 data.IsReelWorking = false;
                 data.IsReelFinished = true;
-                Debug.Log("All Reels are stopped");
+                //Debug.Log("All Reels are stopped");
 
                 // リール停止位置記録
                 data.GenerateLastStopped(reelObjects);
@@ -75,7 +75,7 @@ public class ReelManager : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
-        Debug.Log("Coroutines are stopped");
+        ////Debug.Log("Coroutines are stopped");
     }
 
     // func
@@ -141,9 +141,9 @@ public class ReelManager : MonoBehaviour
             }
 
             data.StoppedReelCount = 0;
-            Debug.Log("Reel start");
+            //Debug.Log("Reel start");
         }
-        else { Debug.Log("Reel is working now"); }
+        //else { //Debug.Log("Reel is working now"); }
     }
 
     // 各リール停止
@@ -157,7 +157,7 @@ public class ReelManager : MonoBehaviour
             {
                 // 中段の位置を得る
                 int pushedPos = reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
-                Debug.Log("Stopped:" + pushedPos);
+                //Debug.Log("Stopped:" + pushedPos);
 
                 // 第一停止なら押したところの停止位置を得る
                 if (!data.IsFirstReelPushed)
@@ -166,7 +166,7 @@ public class ReelManager : MonoBehaviour
                     data.FirstPushReel = reelID;
                     data.FirstPushPos = pushedPos;
 
-                    Debug.Log("FirstPush:" + reelID);
+                    //Debug.Log("FirstPush:" + reelID);
                 }
 
                 // ここでディレイ(スベリコマ)を得て転送
@@ -176,7 +176,7 @@ public class ReelManager : MonoBehaviour
 
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
-                Debug.Log("Stop:" + reelID + "Delay:" + delay);
+                //Debug.Log("Stop:" + reelID + "Delay:" + delay);
 
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);
@@ -186,12 +186,12 @@ public class ReelManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Failed to stop the " + reelID.ToString());
+                //Debug.Log("Failed to stop the " + reelID.ToString());
             }
         }
         else
         {
-            Debug.Log("ReelSpeed is not maximum speed");
+            //Debug.Log("ReelSpeed is not maximum speed");
         }
     }
 
@@ -205,16 +205,16 @@ public class ReelManager : MonoBehaviour
             int blueCount = 0;
             int bb7Count = 0;
 
-            Debug.Log("BetCondition:" + line.BetCondition + "Bet:" + betAmounts);
+           ////Debug.Log("BetCondition:" + line.BetCondition + "Bet:" + betAmounts);
             // ベット条件を満たしているか確認
             if(betAmounts >= line.BetCondition)
             {
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Length; i++)
                 {
-                    Debug.Log("WillStop Pos:" + reelObjects[i].GetWillStopPos());
-                    Debug.Log("Pos:" + line.PayoutLines[i]);
-                    Debug.Log("WillStop Symbol:" + reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]));
+                    ////Debug.Log("WillStop Pos:" + reelObjects[i].GetWillStopPos());
+                    ////Debug.Log("Pos:" + line.PayoutLines[i]);
+                    ////Debug.Log("WillStop Symbol:" + reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]));
                     // 赤7をカウント
                     if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                     {
@@ -240,32 +240,32 @@ public class ReelManager : MonoBehaviour
                     }
                 }
 
-                Debug.Log("Red:" + redCount);
-                Debug.Log("Blue:" + blueCount);
-                Debug.Log("Black:" + bb7Count);
+                ////Debug.Log("Red:" + redCount);
+                ////Debug.Log("Blue:" + blueCount);
+                ////Debug.Log("Black:" + bb7Count);
 
                 // 赤7がライン上に2つあれば赤7
                 if(redCount == 2)
                 {
-                    Debug.Log("Riichi:" + BigColor.Red);
+                    ////Debug.Log("Riichi:" + BigColor.Red);
                     return BigColor.Red;
                 }
                 // 青7がライン上に2つあれば青7
                 if (blueCount == 2)
                 {
-                    Debug.Log("Riichi:" + BigColor.Blue);
+                    ////Debug.Log("Riichi:" + BigColor.Blue);
                     return BigColor.Blue;
                 }
                 // BARが2つ、またはBAR1つ赤7一つなら
                 if (bb7Count == 2)
                 {
-                    Debug.Log("Riichi:" + BigColor.Black);
+                    ////Debug.Log("Riichi:" + BigColor.Black);
                     return BigColor.Black;
                 }
             }
         }
 
-        Debug.Log("Riichi:" + BigColor.None);
+        ////Debug.Log("Riichi:" + BigColor.None);
         return BigColor.None;
     }
 
@@ -305,7 +305,7 @@ public class ReelManager : MonoBehaviour
         data.CanStopReels = false;
         yield return new WaitForSeconds(ReelWaitTime);
         data.CanStopReels = true;
-        Debug.Log("All reels are max speed");
+        ////Debug.Log("All reels are max speed");
     }
 
     // 全リールが停止したか確認

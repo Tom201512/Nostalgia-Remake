@@ -30,7 +30,7 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateStart()
         {
-            Debug.Log("Start Playing State");
+            //Debug.Log("Start Playing State");
 
             // リール始動
             gameManager.Reel.StartReels();
@@ -82,10 +82,10 @@ namespace ReelSpinGame_State.PlayingState
             // 入力がある場合は離れたときの制御を行う
             else if (hasInput)
             {
-                //Debug.Log("Input still");
+                ////Debug.Log("Input still");
                 if (!Input.anyKey)
                 {
-                    //Debug.Log("input end");
+                    ////Debug.Log("input end");
                     hasInput = false;
                 }
             }
@@ -93,7 +93,7 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateEnd()
         {
-            Debug.Log("End Playing State");
+            //Debug.Log("End Playing State");
         }
 
         // リール停止

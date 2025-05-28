@@ -41,12 +41,12 @@ public class WaitManager
     {
         if (HasWaitCut)
         {
-            Debug.Log("WaitCut is enabled");
+            //Debug.Log("WaitCut is enabled");
         }
 
         else if (HasWait)
         {
-            Debug.Log("Wait is enabled already");
+            //Debug.Log("Wait is enabled already");
         }
 
         // ウェイトカット、または実行中のウェイトがなければ実行
@@ -57,7 +57,7 @@ public class WaitManager
             updateTimer.AutoReset = false;
             updateTimer.Start();
 
-            Debug.Log("Wait start");
+            //Debug.Log("Wait start");
         }
     }
 
@@ -68,6 +68,6 @@ public class WaitManager
     {
         HasWait = false;
         updateTimer.Elapsed -= WaitProcess;
-        Debug.Log("Wait disabled");
+        //Debug.Log("Wait disabled");
     }
 }

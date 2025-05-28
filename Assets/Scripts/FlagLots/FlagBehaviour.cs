@@ -90,11 +90,11 @@ namespace ReelSpinGame_Lots
                     break;
 
                 default:
-                    Debug.LogError("No table found");
+                    //Debug.LogError("No table found");
                     break;
 
             }
-            Debug.Log("Flag:" + CurrentFlag);
+            //Debug.Log("Flag:" + CurrentFlag);
         }
 
         // テーブルからフラグ判定
@@ -130,11 +130,11 @@ namespace ReelSpinGame_Lots
 
             // ベット枚数に合わせたテーブルを参照するようにする
             int offset = SeekNum * (betAmounts - 1);
-            Debug.Log(offset);
+            //Debug.Log(offset);
 
             int index = 0;
 
-            Debug.Log(setting + offset - 1);
+            //Debug.Log(setting + offset - 1);
             foreach (float f in flagTable.FlagDataBySettings[setting + offset - 1].FlagTable)
             {
                 //各役ごとに抽選
@@ -174,7 +174,7 @@ namespace ReelSpinGame_Lots
         {
             // 16384フラグを得る(0~16383)
             int flag = Random.Range(0, MaxFlagLots - 1);
-            Debug.Log("You get:" + flag);
+            //Debug.Log("You get:" + flag);
             return flag;
         }
     }

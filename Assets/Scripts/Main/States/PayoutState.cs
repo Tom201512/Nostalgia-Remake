@@ -30,12 +30,12 @@ namespace ReelSpinGame_State.PayoutState
         }
         public void StateStart()
         {
-            Debug.Log("Start Payout State");
-            Debug.Log("Start Payout Check");
+            //Debug.Log("Start Payout State");
+            //Debug.Log("Start Payout Check");
 
             StartCheckPayout(gameManager.Medal.GetLastBetAmounts());
-            Debug.Log("Payouts result" + gameManager.Payout.LastPayoutResult.Payouts);
-            Debug.Log("Bonus.Data." + gameManager.Payout.LastPayoutResult.BonusID + "ReplayOrJac" + gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
+            //Debug.Log("Payouts result" + gameManager.Payout.LastPayoutResult.Payouts);
+            //Debug.Log("Bonus.Data." + gameManager.Payout.LastPayoutResult.BonusID + "ReplayOrJac" + gameManager.Payout.LastPayoutResult.IsReplayOrJacIn);
 
             // 払い出しの為にプレイヤーのメダルをアタッチする
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
@@ -215,8 +215,8 @@ namespace ReelSpinGame_State.PayoutState
 
         public void StateEnd()
         {
-            Debug.Log("End Payout State");
-            Debug.Log("HasReplay:" + gameManager.Medal.GetHasReplay());
+            //Debug.Log("End Payout State");
+            //Debug.Log("HasReplay:" + gameManager.Medal.GetHasReplay());
 
             // リプレイの処理
             if(gameManager.Medal.GetHasReplay())
@@ -242,7 +242,7 @@ namespace ReelSpinGame_State.PayoutState
             }
             else
             {
-                Debug.Log("Failed to check payout because reels are spinning");
+                //Debug.Log("Failed to check payout because reels are spinning");
             }
         }
 
@@ -270,7 +270,7 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 15枚の払い出しを加算
-            Debug.Log(gameManager.Payout.LastPayoutResult.Payouts);
+            //Debug.Log(gameManager.Payout.LastPayoutResult.Payouts);
             gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Payout.LastPayoutResult.Payouts);
             gameManager.Lots.ResetCounter();
             gameManager.PlayerData.SetLastBonusStart();

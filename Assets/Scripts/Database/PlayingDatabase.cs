@@ -62,7 +62,7 @@ namespace ReelSpinGame_System
         // ボーナス履歴追加(成立時に使用)
         public void AddBonusResult(BonusBehaviour.BonusType bonusType)
         {
-            Debug.Log("BonusHit");
+            //Debug.Log("BonusHit");
             BonusHitData test = new BonusHitData(bonusType);
             BonusHitDatas.Add(test);
             BonusHitDatas[^1].SetBonusHitGame(CurrentGames);

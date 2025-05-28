@@ -31,7 +31,7 @@ namespace ReelSpinGame_Lots.FlagCounter
         public void IncreaseCounter(int payoutAmounts)
         {
             Counter += CounterDecrease * payoutAmounts;
-            Debug.Log("Increased Counter Current:" + Counter);
+            //Debug.Log("Increased Counter Current:" + Counter);
         }
 
         // 小役カウンタの減少
@@ -55,13 +55,13 @@ namespace ReelSpinGame_Lots.FlagCounter
                 Counter -= betAmounts * CounterIncreaseDefault;
             }
 
-            Debug.Log("Decreased Counter Current:" + Counter);
+            //Debug.Log("Decreased Counter Current:" + Counter);
         }
 
         // 小役カウンタリセット
         public void ResetCounter()
         {
-            Debug.Log("Reset counter");
+            //Debug.Log("Reset counter");
             Counter = 0;
         }
     }

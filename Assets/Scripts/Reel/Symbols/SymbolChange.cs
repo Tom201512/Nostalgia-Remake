@@ -36,13 +36,13 @@ public class SymbolChange : MonoBehaviour
     public void ChangeBrightness(byte r, byte g, byte b)
     {
         render.material.SetColor("_Color", new Color32(r, g, b, 255));
-        Debug.Log("SetColor" + r + "," + g + "," + b);
+        ////Debug.Log("SetColor" + r + "," + g + "," + b);
     }
 
     // }•¿‚ÌŒõ“x‚ğ•ÏX‚·‚é
     public void ChangeEmmision(byte r, byte g, byte b)
     {
         render.material.SetColor("_EmissionColor", new Color32(r, g, b, 255));
-        Debug.Log("_Emission" + r + "," + g + "," + b);
+        ////Debug.Log("_Emission" + r + "," + g + "," + b);
     }
 }

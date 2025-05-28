@@ -65,13 +65,13 @@ public class FlashManager : MonoBehaviour
             FlashDatabase.Add(new FlashData(buffer));
         }
 
-        Debug.Log("FlashManager awaken");
+        ////Debug.Log("FlashManager awaken");
     }
 
     public void OnDestroy()
     {
         StopAllCoroutines();
-        Debug.Log("Coroutines are stopped");
+        ////Debug.Log("Coroutines are stopped");
     }
 
     public void SetReelObjects(ReelObject[] reelObjects) => ReelObjects = reelObjects;
@@ -83,7 +83,7 @@ public class FlashManager : MonoBehaviour
         HasFlash = true;
         FlashDatabase[flashID].SetSeek(0);
         StartCoroutine("FlashUpdate");
-        Debug.Log("Flash started");
+        ////Debug.Log("Flash started");
     }
 
     // 払い出しフラッシュ開始
@@ -98,7 +98,7 @@ public class FlashManager : MonoBehaviour
         {
             StartCoroutine("EnableReplayTimer");
         }
-        Debug.Log("Flash started");
+        ////Debug.Log("Flash started");
     }
 
     // フラッシュ停止
@@ -118,7 +118,7 @@ public class FlashManager : MonoBehaviour
                 reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
             }
         }
-        Debug.Log("All reels are turned on");
+        ////Debug.Log("All reels are turned on");
     }
 
     // リールライトをすべて暗くする
@@ -129,11 +129,11 @@ public class FlashManager : MonoBehaviour
             reel.SetReelBaseBrightness(TurnOffBodyValue);
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
-                Debug.Log("PosID:" + i);
+                ////Debug.Log("PosID:" + i);
                 reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
             }
         }
-        Debug.Log("All reels are turned off");
+        ////Debug.Log("All reels are turned off");
     }
 
     // JAC GAME時のライト
@@ -156,35 +156,35 @@ public class FlashManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("turned on JACGAME lights");
+        ////Debug.Log("turned on JACGAME lights");
     }
 
     // フラッシュの更新処理
     public IEnumerator FlashUpdate()
     {
-        Debug.Log("Coroutine called");
+        ////Debug.Log("Coroutine called");
         while (HasFlash)
         {
             ReadFlashData();
-            Debug.Log("Flash:" + CurrentFrame);
+            ////Debug.Log("Flash:" + CurrentFrame);
             yield return new WaitForSeconds(ReelFlashTime);
         }
 
-        Debug.Log("Flash Stopped by Insert");
+        ////Debug.Log("Flash Stopped by Insert");
         yield break;
     }
 
     public IEnumerator PayoutFlashUpdate(List<PayoutLineData> lastPayoutLines)
     {
-        Debug.Log("Payout Coroutine called");
+        ////Debug.Log("Payout Coroutine called");
         while (HasFlash)
         {
             PayoutFlash(lastPayoutLines);
-            Debug.Log("Flash:" + CurrentFrame);
+            ////Debug.Log("Flash:" + CurrentFrame);
             yield return new WaitForSeconds(ReelFlashTime);
         }
 
-        Debug.Log("Flash Stopped by Insert");
+        ////Debug.Log("Flash Stopped by Insert");
         yield break;
     }
 
@@ -199,7 +199,7 @@ public class FlashManager : MonoBehaviour
         int[] flashData = FlashDatabase[CurrentFlashID].GetCurrentFlashData();
 
         // 現在のフレームと一致しなければ読み込まない
-        Debug.Log("Segment:" + flashData[(int)FlashData.PropertyID.FrameID]);
+        ////Debug.Log("Segment:" + flashData[(int)FlashData.PropertyID.FrameID]);
         if (CurrentFrame == flashData[(int)FlashData.PropertyID.FrameID])
         {
             // リール全て変更
@@ -207,30 +207,30 @@ public class FlashManager : MonoBehaviour
             {
                 // 本体変更
                 int bodyBright = flashData[(int)FlashData.PropertyID.Body + reel.GetReelID() * SeekOffset];
-                Debug.Log("Change Body:" + reel.GetReelID() + "Bright:" + bodyBright);
+                ////Debug.Log("Change Body:" + reel.GetReelID() + "Bright:" + bodyBright);
                 if (bodyBright != NoChangeValue)
                 {
                     reel.SetReelBaseBrightness((byte)bodyBright);
                 }
                 else
                 {
-                    Debug.Log("No changes");
+                    ////Debug.Log("No changes");
                 }
 
-                Debug.Log("Change Symbols");
+                ////Debug.Log("Change Symbols");
                 // 図柄の明るさ変更
                 for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
                 {
                     int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.GetReelID() * SeekOffset];
 
-                    Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
+                    ////Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
                     if(symbolBright != NoChangeValue)
                     {
                         reel.SetSymbolBrightness(i, (byte)symbolBright, (byte)symbolBright, (byte)symbolBright);
                     }
                     else
                     {
-                        Debug.Log("No changes");
+                        ////Debug.Log("No changes");
                     }
                 }
             }
@@ -240,8 +240,8 @@ public class FlashManager : MonoBehaviour
             {
                 CurrentFrame += 1;
                 FlashDatabase[CurrentFlashID].MoveNextSeek();
-                Debug.Log("SeekMoved");
-                Debug.Log("NextFrame");
+                ////Debug.Log("SeekMoved");
+                ////Debug.Log("NextFrame");
             }
             // ループさせるか(ループの場合は特定フレームまで移動させる)
             // しない場合は停止する。
@@ -249,19 +249,19 @@ public class FlashManager : MonoBehaviour
             {
                 CurrentFrame = flashData[(int)FlashData.PropertyID.LoopPosition];
                 FlashDatabase[CurrentFlashID].SetSeek(flashData[(int)FlashData.PropertyID.LoopPosition]);
-                Debug.Log("LoopFlash");
+                ////Debug.Log("LoopFlash");
             }
             // 最終行までよんでループがない場合は終了
             else if(FlashDatabase[CurrentFlashID].HasSeekReachedEnd())
             {
-                Debug.Log("Finish Flash");
+                ////Debug.Log("Finish Flash");
                 HasFlash = false;
             }
         }
         else
         {
             CurrentFrame += 1;
-            Debug.Log("NextFrame");
+            ////Debug.Log("NextFrame");
         }
     }
 
@@ -308,9 +308,9 @@ public class FlashManager : MonoBehaviour
     private IEnumerator EnableReplayTimer()
     {
         HasReplayWait = true;
-        Debug.Log("Replay Timer Start");
+        ////Debug.Log("Replay Timer Start");
         yield return new WaitForSeconds(ReplayWaitTime);
-        Debug.Log("Replay Finished");
+       ////Debug.Log("Replay Finished");
         HasReplayWait = false;
         HasFlash = false;
 

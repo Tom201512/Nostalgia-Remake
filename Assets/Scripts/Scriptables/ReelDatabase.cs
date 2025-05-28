@@ -110,7 +110,7 @@ namespace ReelSpinGame_Datas
                 // 第一リール停止
                 else if (indexNum < FirstReelPosMaxRead)
                 {
-                    Debug.Log(value);
+                    //Debug.Log(value);
                     firstReelPosition += ConvertToArrayBit(Convert.ToInt32(value));
                 }
 
@@ -173,7 +173,7 @@ namespace ReelSpinGame_Datas
             // 読み込み開始
             foreach (string value in values)
             {
-                Debug.Log(value);
+                //Debug.Log(value);
                 // リールデータを読み込む
                 if (indexNum < ReelData.MaxReelArray)
                 {
@@ -183,7 +183,7 @@ namespace ReelSpinGame_Datas
                 indexNum++;
             }
 
-            Debug.Log("Array:" + debugBuffer);
+            //Debug.Log("Array:" + debugBuffer);
         }
 
         // コンストラクタ
@@ -199,7 +199,7 @@ namespace ReelSpinGame_Datas
             // 読み込み開始
             foreach (string value in values)
             {
-                Debug.Log(value);
+                //Debug.Log(value);
                 // リールデータを読み込む
                 if (indexNum < ReelData.MaxReelArray)
                 {
@@ -215,7 +215,7 @@ namespace ReelSpinGame_Datas
                 indexNum++;
             }
 
-            Debug.Log("Array:" + debugBuffer);
+            //Debug.Log("Array:" + debugBuffer);
         }
     }
 }
