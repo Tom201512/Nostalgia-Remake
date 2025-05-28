@@ -1,5 +1,4 @@
-﻿using ReelSpinGame_Bonus;
-using ReelSpinGame_Datas;
+﻿using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +18,7 @@ public class ReelManager : MonoBehaviour
 
     // var
     // リールマネージャーのデータ
-    public ReelManagerBehaviour Data { get; private set; }
+    private ReelManagerBehaviour data;
 
     // リールのオブジェクト
     [SerializeField] private ReelObject[] reelObjects;
@@ -42,7 +41,7 @@ public class ReelManager : MonoBehaviour
         Debug.Log("ReelData load done");
         Debug.Log("ReelManager awaken");
 
-        Data = new ReelManagerBehaviour();
+        data = new ReelManagerBehaviour();
 
         FlashManager = GetComponent<FlashManager>();
         FlashManager.SetReelObjects(reelObjects);
@@ -51,10 +50,10 @@ public class ReelManager : MonoBehaviour
     void Update()
     {
         // リールが動いている時は
-        if (Data.IsWorking)
+        if (data.IsReelWorking)
         {
             // 全リールが等速かチェック(停止可能にする)
-            if (!Data.CanStop && CheckReelSpeedMaximum() && !IsInvoking())
+            if (!data.CanStopReels && CheckReelSpeedMaximum() && !IsInvoking())
             {
                 StartCoroutine(nameof(SetReelStopTimer));
             }
@@ -62,13 +61,13 @@ public class ReelManager : MonoBehaviour
             // 全リールが停止したかチェック
             if (CheckAllReelStopped())
             {
-                Data.SetCanStop(false);
-                Data.SetIsWorking(false);
-                Data.SetIsFinished(true);
+                data.CanStopReels = false;
+                data.IsReelWorking = false;
+                data.IsReelFinished = true;
                 Debug.Log("All Reels are stopped");
 
                 // リール停止位置記録
-                Data.GenerateLastStopped(reelObjects);
+                data.GenerateLastStopped(reelObjects);
             }
         }
     }
@@ -80,16 +79,42 @@ public class ReelManager : MonoBehaviour
     }
 
     // func
+
+    // 数値を得る
+    // マネージャー
+
+    // リールが動作中か
+    public bool GetIsReelWorking() => data.IsReelWorking;
+    // リールの動作が終了したか
+    public bool GetIsReelFinished() => data.IsReelFinished;
+    // 停止できる状態か
+    public bool GetCanStopReels() => data.CanStopReels;
+    // 第一停止をしたか
+    public bool GetIsFirstReelPushed() => data.IsFirstReelPushed;
+    // 第一停止したリールのID
+    public ReelID GetFirstPushReel() => data.FirstPushReel;
+    // 停止したリール数
+    public int GetStoppedCount() => data.StoppedReelCount;
+    // 得たランダム数値
+    public int GetRandomValue() => data.RandomValue;
+
+    // リールオブジェクト
     // 指定したリールの現在位置を返す
-    public int GetCurrentReelPos(int reelID) => reelObjects[reelID].ReelData.GetReelPos((int)ReelPosID.Lower);
+    public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].ReelData.GetReelPos((int)ReelPosID.Lower);
     // 指定したリールを止めた位置を返す
-    public int GetStoppedReelPos(int reelID) => reelObjects[reelID].ReelData.LastPressedPos;
+    public int GetStoppedReelPos(ReelID reelID) => reelObjects[(int)reelID].ReelData.LastPressedPos;
     // 指定リールの停止予定位置を返す
-    public int GetWillStopReelPos(int reelID) => reelObjects[reelID].ReelData.WillStopPos;
+    public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].ReelData.WillStopPos;
     // 指定したリールのディレイ数を返す
-    public int GetLastDelay(int reelID) => reelObjects[reelID].ReelData.LastDelay;
+    public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].ReelData.LastDelay;
     // 指定リールが止められるか確認する
-    public bool GetCanReelStop(int reelID) => reelObjects[reelID].ReelData.CanStop;
+    public bool GetCanReelStop(ReelID reelID) => reelObjects[(int)reelID].ReelData.CanStop;
+
+    // リール出目データ
+    // 最後に止めた出目
+    public LastStoppedReelData GetLastStopped() => data.LastStopped;
+    // 使用したリールテーブルID
+    public int GetUsedReelTableID(ReelID reelID) => data.ReelTableManager.UsedReelTableID[(int)reelID];
 
     // 指定リール本体の明るさ変更
     public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
@@ -101,21 +126,21 @@ public class ReelManager : MonoBehaviour
     public void StartReels()
     {
         // ランダム数値決定
-        Data.SetRandomValue(instantRandomMode, instantRandomValue);
+        SetRandomValue();
 
         // リールが回っていなければ回転
-        if (!Data.IsWorking)
+        if (!data.IsReelWorking)
         {
-            Data.SetIsFinished(false);
-            Data.SetIsWorking(true);
-            Data.SetIsFirstReelPushed(false);
+            data.IsReelFinished = false;
+            data.IsReelWorking = true;
+            data.IsFirstReelPushed = false;
 
             for (int i = 0; i < reelObjects.Length; i++)
             {
                 reelObjects[i].StartReel(1.0f);
             }
 
-            Data.ResetStoppedCount();
+            data.StoppedReelCount = 0;
             Debug.Log("Reel start");
         }
         else { Debug.Log("Reel is working now"); }
@@ -125,7 +150,7 @@ public class ReelManager : MonoBehaviour
     public void StopSelectedReel(ReelID reelID, int betAmounts, FlagId flagID, BonusType bonusID)
     {
         // 全リール速度が最高速度になっていれば
-        if(Data.CanStop)
+        if(data.CanStopReels)
         {
             // 止められる状態なら
             if (!reelObjects[(int)reelID].ReelData.HasStopped)
@@ -135,29 +160,29 @@ public class ReelManager : MonoBehaviour
                 Debug.Log("Stopped:" + pushedPos);
 
                 // 第一停止なら押したところの停止位置を得る
-                if (!Data.IsFirstReelPushed)
+                if (!data.IsFirstReelPushed)
                 {
-                    Data.SetIsFirstReelPushed(true);
-                    Data.SetFirstPushReel(reelID);
-                    Data.SetFirstPushPos(pushedPos);
+                    data.IsFirstReelPushed = true;
+                    data.FirstPushReel = reelID;
+                    data.FirstPushPos = pushedPos;
 
                     Debug.Log("FirstPush:" + reelID);
                 }
 
                 // ここでディレイ(スベリコマ)を得て転送
                 // 条件をチェック
-                int tableIndex = Data.ReelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
-                    , flagID, Data.FirstPushReel, betAmounts, (int)bonusID, Data.RandomValue, Data.FirstPushPos);
+                int tableIndex = data.ReelTableManager.FindTableToUse(reelObjects[(int)reelID].ReelData
+                    , flagID, data.FirstPushReel, betAmounts, (int)bonusID, data.RandomValue, data.FirstPushPos);
 
                 // ディレイ(スベリコマ)を得る
-                int delay = Data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);
+                int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].ReelData, pushedPos, tableIndex);
                 Debug.Log("Stop:" + reelID + "Delay:" + delay);
 
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);
 
                 // 停止したリール数を増やす
-                Data.IncreaseStoppedCount();
+                data.StoppedReelCount += 1;
             }
             else
             {
@@ -258,12 +283,28 @@ public class ReelManager : MonoBehaviour
         return true;
     }
 
+    // func
+    // ランダム数値の決定
+    private void SetRandomValue()
+    {
+
+        // 強制的に変更する場合は指定した数値に
+        if (instantRandomMode)
+        {
+            data.RandomValue = instantRandomValue;
+        }
+        else
+        {
+            data.RandomValue = Random.Range(1, MaxRandomLots);
+        }
+    }
+
     // リール停止可能にする(コルーチン用)
     private IEnumerator SetReelStopTimer()
     {
-        Data.SetCanStop(false);
+        data.CanStopReels = false;
         yield return new WaitForSeconds(ReelWaitTime);
-        Data.SetCanStop(true);
+        data.CanStopReels = true;
         Debug.Log("All reels are max speed");
     }
 

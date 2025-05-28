@@ -180,8 +180,8 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
             {
                 // 11番、17番を押した場合はフラッシュ
-                if (gameManager.Reel.Data.LastStopped.LastPos[(int)ReelID.ReelLeft] + 1 == 11 ||
-                        gameManager.Reel.Data.LastStopped.LastPos[(int)ReelID.ReelLeft] + 1 == 17)
+                if (gameManager.Reel.GetLastStopped().LastPos[(int)ReelID.ReelLeft] + 1 == 11 ||
+                        gameManager.Reel.GetLastStopped().LastPos[(int)ReelID.ReelLeft] + 1 == 17)
                 {
                     gameManager.Reel.FlashManager.StartFlash((int)FlashManager.FlashID.V_Flash);
                 }
@@ -236,9 +236,9 @@ namespace ReelSpinGame_State.PayoutState
 
         private void StartCheckPayout(int betAmounts)
         {
-            if (!gameManager.Reel.Data.IsWorking)
+            if (!gameManager.Reel.GetIsReelWorking())
             {
-                gameManager.Payout.CheckPayoutLines(betAmounts, gameManager.Reel.Data.LastStopped);
+                gameManager.Payout.CheckPayoutLines(betAmounts, gameManager.Reel.GetLastStopped());
             }
             else
             {
@@ -253,7 +253,7 @@ namespace ReelSpinGame_State.PayoutState
             if(gameManager.Payout.LastPayoutResult.BonusID == (int)BonusType.BonusBIG)
             {
                 // リールから揃ったボーナス図柄の色を得る
-                gameManager.Bonus.Data.StartBigChance(gameManager.Payout.LastPayoutResult.PayoutLines, gameManager.Reel.Data.LastStopped);
+                gameManager.Bonus.Data.StartBigChance(gameManager.Payout.LastPayoutResult.PayoutLines, gameManager.Reel.GetLastStopped());
                 gameManager.Lots.ChangeTable(FlagLotMode.BigBonus);
                 gameManager.Payout.ChangePayoutCheckMode(PayoutChecker.PayoutCheckMode.PayoutBIG);
                 gameManager.PlayerData.IncreaseBigChance();

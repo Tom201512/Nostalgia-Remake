@@ -48,7 +48,7 @@ namespace ReelSpinGame_State.PlayingState
             if (!hasInput)
             {
                 // リール停止処理
-                if (gameManager.Reel.Data.IsWorking)
+                if (gameManager.Reel.GetIsReelWorking())
                 {
                     // 左停止
                     if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StopLeft]))
@@ -73,7 +73,7 @@ namespace ReelSpinGame_State.PlayingState
                     hasInput = true;
                 }
                 // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-                else if (gameManager.Reel.Data.IsFinished)
+                else if (gameManager.Reel.GetIsReelFinished())
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PayoutState);
                 }
@@ -99,7 +99,7 @@ namespace ReelSpinGame_State.PlayingState
         // リール停止
         private void StopReel(ReelID reelID)
         {
-            if (gameManager.Reel.Data.CanStop && gameManager.Reel.GetCanReelStop((int)reelID))
+            if (gameManager.Reel.GetCanStopReels() && gameManager.Reel.GetCanReelStop(reelID))
             {
                 gameManager.Reel.StopSelectedReel(reelID,
                     gameManager.Medal.GetLastBetAmounts(),
@@ -109,7 +109,7 @@ namespace ReelSpinGame_State.PlayingState
                 // 停止音再生
                 PlayStopSound();
                 // 通常時,第二停止でリーチしていたら音を鳴らす
-                if (gameManager.Reel.Data.StoppedReelCount == 2 &&
+                if (gameManager.Reel.GetStoppedCount() == 2 &&
                     gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone)
                 {
                     // リーチがあれば再生

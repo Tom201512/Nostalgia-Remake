@@ -18,35 +18,34 @@ public class ReelTestUI : MonoBehaviour
         string buffer = "";
 
         buffer += "Reels-" + "\n";
-        buffer += "CanStop:" + reel.Data.CanStop + "\n";
+        buffer += "CanStop:" + reel.GetCanStopReels() + "\n";
 
         // 現在のリール位置
-        buffer += "LeftPos:" + reel.GetCurrentReelPos((int)ReelID.ReelLeft) + "\n";
-        buffer += "MiddlePos:" + reel.GetCurrentReelPos((int)ReelID.ReelMiddle) + "\n";
-        buffer += "RightPos:" + reel.GetCurrentReelPos((int)ReelID.ReelRight) + "\n" + "\n";
+        buffer += "LeftPos:" + reel.GetCurrentReelPos(ReelID.ReelLeft) + "\n";
+        buffer += "MiddlePos:" + reel.GetCurrentReelPos(ReelID.ReelMiddle) + "\n";
+        buffer += "RightPos:" + reel.GetCurrentReelPos(ReelID.ReelRight) + "\n" + "\n";
 
         // 停止予定位置
-        buffer += "LeftWillStopAt:" + (reel.GetWillStopReelPos((int)ReelID.ReelLeft)) + "\n";
-        buffer += "MiddleWillStopAt:" + (reel.GetWillStopReelPos((int)ReelID.ReelMiddle)) + "\n";
-        buffer += "RightWillStopAt:" + (reel.GetWillStopReelPos((int)ReelID.ReelRight)) + "\n" + "\n";
+        buffer += "LeftWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelLeft)) + "\n";
+        buffer += "MiddleWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelMiddle)) + "\n";
+        buffer += "RightWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelRight)) + "\n" + "\n";
 
         // 停止した位置
-        buffer += "LeftStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelLeft)) + "\n";
-        buffer += "MiddleStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelMiddle)) + "\n";
-        buffer += "RightStopped:" + (reel.GetStoppedReelPos((int)ReelID.ReelRight)) + "\n" + "\n";
+        buffer += "LeftStopped:" + (reel.GetStoppedReelPos(ReelID.ReelLeft)) + "\n";
+        buffer += "MiddleStopped:" + (reel.GetStoppedReelPos(ReelID.ReelMiddle)) + "\n";
+        buffer += "RightStopped:" + (reel.GetStoppedReelPos(ReelID.ReelRight)) + "\n" + "\n";
 
         // スベリコマ数
-        buffer += "LeftDelay:" + reel.GetLastDelay((int)ReelID.ReelLeft) + "\n";
-        buffer += "MiddleDelay:" + reel.GetLastDelay((int)ReelID.ReelMiddle) + "\n";
-        buffer += "RightDelay:" + reel.GetLastDelay((int)ReelID.ReelRight) + "\n" + "\n";
+        buffer += "LeftDelay:" + reel.GetLastDelay(ReelID.ReelLeft) + "\n";
+        buffer += "MiddleDelay:" + reel.GetLastDelay(ReelID.ReelMiddle) + "\n";
+        buffer += "RightDelay:" + reel.GetLastDelay(ReelID.ReelRight) + "\n" + "\n";
 
         // 使用されたテーブルID
-        buffer += "LeftTableID" + reel.Data.ReelTableManager.UsedReelTableID[(int)ReelID.ReelLeft] + "\n";
-        buffer += "MiddleTableID" + reel.Data.ReelTableManager.UsedReelTableID[(int)ReelID.ReelMiddle] + "\n";
-        buffer += "RightTableID" + reel.Data.ReelTableManager.UsedReelTableID[(int)ReelID.ReelRight] + "\n" + "\n";
-
+        buffer += "LeftTableID" + reel.GetUsedReelTableID(ReelID.ReelLeft) + "\n";
+        buffer += "MiddleTableID" + reel.GetUsedReelTableID(ReelID.ReelMiddle) + "\n";
+        buffer += "RightTableID" + reel.GetUsedReelTableID(ReelID.ReelRight) + "\n" + "\n";
         // ランダム値
-        buffer += "Random" + reel.Data.RandomValue + "\n" + "\n";
+        buffer += "Random" + reel.GetRandomValue() + "\n" + "\n";
 
         text.text = buffer;
     }

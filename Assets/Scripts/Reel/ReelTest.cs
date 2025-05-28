@@ -40,25 +40,25 @@ public class ReelTest : MonoBehaviour
         {
             // リール回転
             if (OriginalInput.CheckOneKeyInput(KeyCode.UpArrow) && 
-                !manager.Data.IsWorking && hasFinishedCheck)
+                !manager.GetIsReelWorking() && hasFinishedCheck)
             {
                 manager.StartReels();
                 hasFinishedCheck = false;
             }
             // 左停止
-            if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.Data.IsWorking)
+            if (OriginalInput.CheckOneKeyInput(keyToStopLeft) && manager.GetIsReelWorking())
             {
                 manager.StopSelectedReel(ReelID.ReelLeft, 3, 
                     FlagId.FlagNone, BonusType.BonusNone);
             }
             // 中停止
-            if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.Data.IsWorking)
+            if (OriginalInput.CheckOneKeyInput(keyToStopMiddle) && manager.GetIsReelWorking())
             {
                 manager.StopSelectedReel(ReelID.ReelMiddle, 3, 
                     FlagId.FlagNone, BonusType.BonusNone);
             }
             // 右停止
-            if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.Data.IsWorking)
+            if (OriginalInput.CheckOneKeyInput(keyToStopRight) && manager.GetIsReelWorking())
             {
                 manager.StopSelectedReel(ReelID.ReelRight, 3, 
                     FlagId.FlagNone, BonusType.BonusNone);
@@ -71,7 +71,7 @@ public class ReelTest : MonoBehaviour
                 //Debug.Log("Input true");
             }
             // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-            else if(manager.Data.IsFinished && !hasFinishedCheck)
+            else if(manager.GetIsReelFinished() && !hasFinishedCheck)
             {
                 Debug.Log("Start Payout Check");
 
@@ -96,9 +96,9 @@ public class ReelTest : MonoBehaviour
     // 払い出しの確認
     private void StartCheckPayout(int betAmounts)
     {
-        if (!manager.Data.IsWorking)
+        if (!manager.GetIsReelWorking())
         {
-            payoutChecker.CheckPayoutLines(betAmounts, manager.Data.LastStopped);
+            payoutChecker.CheckPayoutLines(betAmounts, manager.GetLastStopped());
             hasFinishedCheck = true;
         }
         else
