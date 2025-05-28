@@ -112,17 +112,17 @@ namespace ReelSpinGame_State.InsertState
         private void StopReelFlash()
         {
             ////Debug.Log("Stop Flash");
-            gameManager.Reel.FlashManager.StopFlash();
+            gameManager.Reel.StopFlash();
 
             // JAC GAME中なら点灯方法を少し変える
             if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
             {
-                gameManager.Reel.FlashManager.EnableJacGameLight();
+                gameManager.Reel.EnableJacGameLight();
                 ////Debug.Log("Jac Turn On");
             }
             else
             {
-                gameManager.Reel.FlashManager.TurnOnAllReels();
+                gameManager.Reel.TurnOnAllReels();
                 ////Debug.Log("Turn On");
             }
         }

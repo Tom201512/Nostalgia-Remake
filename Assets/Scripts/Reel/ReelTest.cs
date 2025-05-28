@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
-using ReelSpinGame_Medal;
+using ReelSpinGame_Reels.Payout;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;

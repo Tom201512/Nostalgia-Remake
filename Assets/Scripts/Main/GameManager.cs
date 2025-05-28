@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     public FlagLots Lots { get; private set; }
     public WaitManager Wait { get; private set; }
     public ReelManager Reel { get { return reelManagerObj; } }
-    public PayoutChecker Payout { get; private set; }
     public BonusManager Bonus { get; private set; }
     public SoundManager Sound { get { return soundManagerObj; } }
 
@@ -80,10 +79,6 @@ public class GameManager : MonoBehaviour
         // ウェイト管理
         Wait = new WaitManager(false);
         ////Debug.Log("Wait is launched");
-
-        // 払い出し処理
-        Payout = GetComponent<PayoutChecker>();
-        ////Debug.Log("Payout is launched");
 
         // ボーナス
         Bonus = GetComponent<BonusManager>();

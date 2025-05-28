@@ -1,10 +1,13 @@
 ﻿using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.Flash;
+using ReelSpinGame_Reels.Payout;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Reels.Flash.FlashManager;
+using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
@@ -24,7 +27,9 @@ public class ReelManager : MonoBehaviour
     [SerializeField] private ReelObject[] reelObjects;
 
     // フラッシュ機能
-    public FlashManager FlashManager { get; private set; }
+    private FlashManager flashManager;
+    // 払い出し確認機能
+    private PayoutChecker payoutChecker;
 
     // 強制ランダム数値
     [SerializeField] private bool instantRandomMode;
@@ -42,9 +47,8 @@ public class ReelManager : MonoBehaviour
         ////Debug.Log("ReelManager awaken");
 
         data = new ReelManagerBehaviour();
-
-        FlashManager = GetComponent<FlashManager>();
-        FlashManager.SetReelObjects(reelObjects);
+        flashManager = GetComponent<FlashManager>();
+        payoutChecker = GetComponent<PayoutChecker>();
     }
 
     void Update()
@@ -75,7 +79,7 @@ public class ReelManager : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
-        ////Debug.Log("Coroutines are stopped");
+        //Debug.Log("Coroutines are stopped");
     }
 
     // func
@@ -116,6 +120,16 @@ public class ReelManager : MonoBehaviour
     // 使用したリールテーブルID
     public int GetUsedReelTableID(ReelID reelID) => data.ReelTableManager.UsedReelTableID[(int)reelID];
 
+
+    //フラッシュ
+    // フラッシュで待機中か
+    public bool GetHasFlashWait() => flashManager.HasFlashWait;
+
+    // 払い出し結果データ表示
+    public PayoutResultBuffer GetPayoutResultData() => payoutChecker.LastPayoutResult;
+    // 払い出し判定モード変更
+    public void ChangePayoutCheckMode(PayoutCheckMode mode) => payoutChecker.CheckMode = mode;
+
     // 指定リール本体の明るさ変更
     public void SetReelBodyBrightness(int reelID, byte brightness) => reelObjects[reelID].SetReelBaseBrightness(brightness);
     // 指定したリールと図柄の明るさ変更
@@ -141,9 +155,7 @@ public class ReelManager : MonoBehaviour
             }
 
             data.StoppedReelCount = 0;
-            //Debug.Log("Reel start");
         }
-        //else { //Debug.Log("Reel is working now"); }
     }
 
     // 各リール停止
@@ -157,7 +169,6 @@ public class ReelManager : MonoBehaviour
             {
                 // 中段の位置を得る
                 int pushedPos = reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
-                //Debug.Log("Stopped:" + pushedPos);
 
                 // 第一停止なら押したところの停止位置を得る
                 if (!data.IsFirstReelPushed)
@@ -165,8 +176,6 @@ public class ReelManager : MonoBehaviour
                     data.IsFirstReelPushed = true;
                     data.FirstPushReel = reelID;
                     data.FirstPushPos = pushedPos;
-
-                    //Debug.Log("FirstPush:" + reelID);
                 }
 
                 // ここでディレイ(スベリコマ)を得て転送
@@ -176,7 +185,6 @@ public class ReelManager : MonoBehaviour
 
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
-                //Debug.Log("Stop:" + reelID + "Delay:" + delay);
 
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);
@@ -184,89 +192,143 @@ public class ReelManager : MonoBehaviour
                 // 停止したリール数を増やす
                 data.StoppedReelCount += 1;
             }
-            else
-            {
-                //Debug.Log("Failed to stop the " + reelID.ToString());
-            }
-        }
-        else
-        {
-            //Debug.Log("ReelSpeed is not maximum speed");
         }
     }
 
-    // リーチ状態か確認する
-    public BigColor CheckRiichiStatus(List<PayoutLineData> payoutLines, int betAmounts)
+    // ビッグチャンス図柄がいくつ揃っているか確認する
+    public int CountBonusSymbols(BigColor bigColor, int betAmounts)
     {
+        // 最も多かった個数を記録
+        int highestCount = 0;
         // 払い出しラインとベット枚数から確認
-        foreach(PayoutLineData line in payoutLines)
+        foreach (PayoutLineData line in payoutChecker.GetPayoutLines())
         {
-            int redCount = 0;
-            int blueCount = 0;
-            int bb7Count = 0;
-
-            //Debug.Log("BetCondition:" + line.BetCondition + "Bet:" + betAmounts);
             // ベット条件を満たしているか確認
             if(betAmounts >= line.BetCondition)
             {
+                int currentCount = 0;
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Length; i++)
                 {
-                    //Debug.Log("WillStop Pos:" + reelObjects[i].GetWillStopPos());
-                    //Debug.Log("Pos:" + line.PayoutLines[i]);
-                    //Debug.Log("WillStop Symbol:" + reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]));
-                    // 赤7をカウント
-                    if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
+                    // 赤7
+                    if (bigColor == BigColor.Red && 
+                        reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                     {
-                        redCount += 1;
+                        currentCount += 1;
+                    }
+                    // 青7
+                    if (bigColor == BigColor.Blue &&
+                        reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
+                    {
+                        currentCount += 1;
+                    }
 
-                        // 右リールの場合はBB7のカウントとしても増やす
-                        if(i == (int)ReelID.ReelRight)
+                    // BB7
+                    if(bigColor == BigColor.Black)
+                    {
+                        // 右リールは赤7があるか確認
+                        if (i == (int)ReelID.ReelRight &&
+                            reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                         {
-                            bb7Count += 1;
+                            currentCount += 1;
+                        }
+                        // 他のリールはBARがあるか確認
+                        else if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
+                        {
+                            currentCount += 1;
                         }
                     }
-                    // 青7をカウント
-                    if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
-                    {
-                        blueCount += 1;
-                    }
-
-                    // BARをカウント(右以外)
-                    if (i != (int)ReelID.ReelRight &&
-                        reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
-                    {
-                        bb7Count += 1;
-                    }
                 }
-
-                //Debug.Log("Red:" + redCount);
-                //Debug.Log("Blue:" + blueCount);
-                //Debug.Log("Black:" + bb7Count);
-
-                // 赤7がライン上に2つあれば赤7
-                if(redCount == 2)
+                // 最も多かったカウントを記録
+                if(currentCount > highestCount)
                 {
-                    ////Debug.Log("Riichi:" + BigColor.Red);
-                    return BigColor.Red;
-                }
-                // 青7がライン上に2つあれば青7
-                if (blueCount == 2)
-                {
-                    ////Debug.Log("Riichi:" + BigColor.Blue);
-                    return BigColor.Blue;
-                }
-                // BARが2つ、またはBAR1つ赤7一つなら
-                if (bb7Count == 2)
-                {
-                    ////Debug.Log("Riichi:" + BigColor.Black);
-                    return BigColor.Black;
+                    highestCount = currentCount;
                 }
             }
         }
 
-        ////Debug.Log("Riichi:" + BigColor.None);
-        return BigColor.None;
+        return highestCount;
+    }
+
+    // 払い出しのチェック
+    public void StartCheckPayouts(int betAmounts) => payoutChecker.CheckPayoutLines(betAmounts, data.LastStopped);
+
+    // リールフラッシュを再生させる
+    public void StartReelFlash(FlashID flashID)
+    {
+        flashManager.CurrentFrame = 0;
+        flashManager.HasFlash = true;
+        flashManager.FlashDatabase[(int)flashID].SetSeek(0);
+        StartCoroutine(nameof(UpdateFlash));
+    }
+
+    // 払い出しフラッシュの再生
+    public void StartPayoutFlash(float waitSeconds)
+    {
+        flashManager.CurrentFrame = 0;
+        flashManager.HasFlash = true;
+        StartCoroutine(nameof(UpdatePayoutFlash));
+
+        if(waitSeconds > 0)
+        {
+            flashManager.HasFlashWait = true;
+            StartCoroutine(nameof(SetTimeOut), waitSeconds);
+        }
+    }
+
+    // 払い出しフラッシュの停止
+    public void StopFlash()
+    {
+        flashManager.HasFlash = false;
+        flashManager.HasFlashWait = false;
+    }
+
+    // リールライトをすべて明るくする
+    public void TurnOnAllReels()
+    {
+        foreach (ReelObject reel in reelObjects)
+        {
+            reel.SetReelBaseBrightness(TurnOnValue);
+            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+            {
+                reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
+            }
+        }
+    }
+
+    // リールライトをすべて暗くする
+    public void TurnOffAllReels()
+    {
+        foreach (ReelObject reel in reelObjects)
+        {
+            reel.SetReelBaseBrightness(TurnOffBodyValue);
+            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+            {
+                reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
+            }
+        }
+    }
+
+    // JAC GAME時のライト点灯
+    public void EnableJacGameLight()
+    {
+        foreach (ReelObject reel in reelObjects)
+        {
+            reel.SetReelBaseBrightness(TurnOffSymbolValue);
+
+            // 真ん中以外点灯
+            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+            {
+                if (i == (int)ReelPosID.Center)
+                {
+                    reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
+                }
+                else
+                {
+                    reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
+                }
+            }
+        }
     }
 
     // 全リール速度が最高速度かチェック
@@ -283,11 +345,9 @@ public class ReelManager : MonoBehaviour
         return true;
     }
 
-    // func
     // ランダム数値の決定
     private void SetRandomValue()
     {
-
         // 強制的に変更する場合は指定した数値に
         if (instantRandomMode)
         {
@@ -297,15 +357,6 @@ public class ReelManager : MonoBehaviour
         {
             data.RandomValue = Random.Range(1, MaxRandomLots);
         }
-    }
-
-    // リール停止可能にする(コルーチン用)
-    private IEnumerator SetReelStopTimer()
-    {
-        data.CanStopReels = false;
-        yield return new WaitForSeconds(ReelWaitTime);
-        data.CanStopReels = true;
-        ////Debug.Log("All reels are max speed");
     }
 
     // 全リールが停止したか確認
@@ -320,5 +371,46 @@ public class ReelManager : MonoBehaviour
             }
         }
         return true;
+    }
+
+    // コルーチン用
+    // リール停止可能にする
+    private IEnumerator SetReelStopTimer()
+    {
+        data.CanStopReels = false;
+        yield return new WaitForSeconds(ReelWaitTime);
+        data.CanStopReels = true;
+        ////Debug.Log("All reels are max speed");
+    }
+
+    // リールフラッシュのイベント
+    private IEnumerator UpdateFlash()
+    {
+        while(flashManager.HasFlash)
+        {
+            flashManager.ReadFlashData(reelObjects);
+            yield return new WaitForSeconds(FlashManager.ReelFlashTime);
+        }
+    }
+
+    // 払い出しフラッシュのイベント
+    private IEnumerator UpdatePayoutFlash()
+    {
+        while (flashManager.HasFlash)
+        {
+            flashManager.PayoutFlash(payoutChecker.LastPayoutResult.PayoutLines, reelObjects);
+            yield return new WaitForSeconds(ReelFlashTime);
+        }
+        yield break;
+    }
+
+    // タイムアウト用イベント
+    private IEnumerator SetTimeOut(float waitSeconds)
+    {
+        yield return new WaitForSeconds(waitSeconds);
+        ////Debug.Log("Replay Finished");
+        flashManager.HasFlashWait = false;
+        flashManager.HasFlash = false;
+        TurnOffAllReels();
     }
 }
