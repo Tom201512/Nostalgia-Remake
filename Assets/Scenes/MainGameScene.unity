@@ -848,7 +848,7 @@ MonoBehaviour:
   keyToStopLeft: 276
   keyToStopMiddle: 274
   keyToStopRight: 275
-  setting: 1
+  setting: 6
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
