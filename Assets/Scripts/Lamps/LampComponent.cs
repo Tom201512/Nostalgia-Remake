@@ -42,6 +42,7 @@ public class LampComponent : MonoBehaviour
     {
         if(!IsTurnedOn)
         {
+            StopCoroutine(nameof(TurnOffLamp));
             StartCoroutine(nameof(TurnOnLamp));
         }
     }
@@ -51,6 +52,7 @@ public class LampComponent : MonoBehaviour
     {
         if(IsTurnedOn)
         {
+            StopCoroutine(nameof(TurnOnLamp));
             StartCoroutine(nameof(TurnOffLamp));
         }
     }

@@ -53,10 +53,11 @@ public class StatusPanel : MonoBehaviour
     {
         hasInsertTurnOn = false;
         hasStartTurnOn = false;
-        if (hasAnimation)
-        {
-            CancelAnimation();
-        }
+        hasAnimation = false;
+        StopCoroutine(nameof(FlashInsertAndStart));
+
+        startLamp.TurnOff();
+        insertLamp.TurnOff();
     }
 
     public void TurnOnWaitLamp() => waitLamp.TurnOn();
@@ -92,15 +93,5 @@ public class StatusPanel : MonoBehaviour
             }
             yield return new WaitForSeconds(flashBetweenTime);
         }
-    }
-
-    public void CancelAnimation()
-    {
-        StopCoroutine(nameof(FlashInsertAndStart));
-        hasAnimation = false;
-        startLamp.TurnOff();
-        insertLamp.TurnOff();
-
-        //Debug.Log("FlashStopped");
     }
 }
