@@ -24,13 +24,18 @@ public class BonusTestUI : MonoBehaviour
         buffer += "Status:" + bonusManager.GetCurrentBonusStatus() + "\n";
 
         // BIG’†‚Ìó‘Ô
+        buffer += "BIG_Color:" + bonusManager.GetBigChangeColor() + "\n";
         buffer += "BIG_Games:" + bonusManager.GetRemainingBigGames() + "\n";
         buffer += "BIG_JACIN:" + bonusManager.GetRemainingJacIn() + "\n";
 
         // JAC’†‚Ìó‘Ô
         buffer += "JAC_Games:" + bonusManager.GetRemainingJacGames() + "\n";
-        buffer += "JAC_Hits:" + bonusManager.GetRemainingJacHits()+ "\n";
+        buffer += "JAC_Hits:" + bonusManager.GetRemainingJacHits()+ "\n" + "\n";
 
-        text.text = buffer;
+        // Šl“¾–‡”•\¦
+        buffer += "TotalPayouts:" + bonusManager.GetCurrentBonusPayouts()+ "\n";
+        buffer += "ZonePayouts:" + bonusManager.GetCurrentZonePayouts()+ "\n";
+
+    text.text = buffer;
     }
 }

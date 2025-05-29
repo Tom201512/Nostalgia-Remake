@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static MedalSevenSegment;
@@ -23,7 +22,6 @@ public class BonusSevenSegment : MonoBehaviour
     void Awake()
     {
         segments = GetComponentsInChildren<Segment>();
-        ////Debug.Log("Counts:" + segments.Length);
     }
 
     // BIG中のボーナス表示
@@ -47,9 +45,9 @@ public class BonusSevenSegment : MonoBehaviour
 
         // ゲーム数表示(BIG残りゲーム数/JAC残り当選回数)
         // 10の桁を得る
-        int SecondDigit = GetDigits(rightSegmentsValue, 2);
+        int SecondDigit = GetDigitValue(rightSegmentsValue, 2);
         // 1の桁を得る
-        int FirstDigit = GetDigits(rightSegmentsValue, 1);
+        int FirstDigit = GetDigitValue(rightSegmentsValue, 1);
 
         // セグメントに反映
         segments[(int)DigitID.GamesFirstDigit].TurnOnLampByNumber(FirstDigit);
@@ -63,12 +61,13 @@ public class BonusSevenSegment : MonoBehaviour
 
         List<int> digits = new List<int>();
 
-        // 一から万までの桁数を得る
-        for(int i = 0; i < 5; i++)
+        // 見つかった桁数分数値を得る
+        for(int i = 0; i < GetDigitCounts(totalPayouts); i++)
         {
-            digits.Add(GetDigits(result, i));
+            digits.Add(GetDigitValue(result, i + 1));
         }
 
+        //Debug.Log("Digit Count:" + digits.Count);
         // 桁数に合わせて表示
         // 4桁以上の場合は右詰めで表示し、0埋めはしない
         if(digits.Count >= 4)
@@ -82,6 +81,7 @@ public class BonusSevenSegment : MonoBehaviour
             {
                 segments[(int)DigitID.JacDigit].TurnOffAll();
             }
+
             segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Fourth]);
             segments[(int)DigitID.BarDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Third]);
             segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Second]);
@@ -90,7 +90,7 @@ public class BonusSevenSegment : MonoBehaviour
         // 3桁の場合は真ん中3桁に表示(ない場合は0埋めをする)
         else
         {
-            segments[(int)DigitID.JacDigit].TurnOffAll();
+            segments[(int)DigitID.JacDigit].TurnOnBar();
 
             // 3桁ない場合は0を表示
             if (digits.Count >= 3)
@@ -113,7 +113,7 @@ public class BonusSevenSegment : MonoBehaviour
             }
 
             segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(digits[(int)DigitNumID.First]);
-            segments[(int)DigitID.GamesFirstDigit].TurnOffAll();
+            segments[(int)DigitID.GamesFirstDigit].TurnOnBar();
         }
     }
 

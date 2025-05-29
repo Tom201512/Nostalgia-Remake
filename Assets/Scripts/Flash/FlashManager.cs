@@ -95,7 +95,7 @@ namespace ReelSpinGame_Reels.Flash
                     {
                         int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.GetReelID() * SeekOffset];
 
-                        Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
+                        //Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
                             reel.SetSymbolBrightness(i, (byte)symbolBright, (byte)symbolBright, (byte)symbolBright);

@@ -39,7 +39,7 @@ namespace ReelSpinGame_Datas
         [MenuItem("ScriptableGen/Scriptable Generator")]
         private static void OpenWindow()
         {
-            //Debug.Log("Open ScriptableGen Generator");
+            Debug.Log("Open ScriptableGen Generator");
             ScriptableGen window = GetWindow<ScriptableGen>();
             window.titleContent = new GUIContent("Scriptable Generator");
         }
@@ -57,8 +57,6 @@ namespace ReelSpinGame_Datas
 
             if (GUILayout.Button("全リールデータ作成"))
             {
-                //Debug.Log("Pressed");
-                //MakeReelData(fileName, arrayFile, conditionsFile, delaysData);
                 MakeReelDataAll();
             }
 
@@ -89,7 +87,6 @@ namespace ReelSpinGame_Datas
 
             if (GUILayout.Button("フラグデータ作成"))
             {
-                //Debug.Log("Pressed");
                 MakeFlagData();
             }
 
@@ -97,7 +94,6 @@ namespace ReelSpinGame_Datas
 
             if (GUILayout.Button("払い出しデータベース作成"))
             {
-                //Debug.Log("Pressed");
                 MakePayoutData();
             }
         }
@@ -112,7 +108,7 @@ namespace ReelSpinGame_Datas
                 MakeReelData(pathOrder[i]);
             }
 
-            //Debug.Log("All ReelData is generated");
+            Debug.Log("All ReelData is generated");
         }
 
         private void MakeReelData(string filePath)
@@ -125,7 +121,7 @@ namespace ReelSpinGame_Datas
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
-                //Debug.Log("Directory is created");
+                Debug.Log("Directory is created");
             }
 
             // スクリプタブルオブジェクト作成
@@ -160,7 +156,7 @@ namespace ReelSpinGame_Datas
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
-                //Debug.Log("Directory is created");
+                Debug.Log("Directory is created");
             }
 
             // スクリプタブルオブジェクト作成
@@ -197,7 +193,7 @@ namespace ReelSpinGame_Datas
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
-                //Debug.Log("Directory is created");
+                Debug.Log("Directory is created");
             }
 
             // スクリプタブルオブジェクト作成
@@ -234,7 +230,7 @@ namespace ReelSpinGame_Datas
                 string temporaryPath = "Assets/Temp";
 
                 Directory.CreateDirectory(temporaryPath);
-                //Debug.Log("Temporary Directory is created");
+                Debug.Log("Temporary Directory is created");
 
                 // 書き換え用の仮ファイルを作成
                 AssetDatabase.CreateAsset(scriptableObject, Path.Combine(temporaryPath, fileName) + ".asset");
@@ -243,12 +239,12 @@ namespace ReelSpinGame_Datas
 
                 // 仮ファイルを削除
                 AssetDatabase.DeleteAsset(temporaryPath);
-                //Debug.Log(fileName + " is replaced");
+                Debug.Log(fileName + " is replaced");
             }
             else
             {
                 AssetDatabase.CreateAsset(scriptableObject, Path.Combine(path, fileName) + ".asset");
-                //Debug.Log(fileName + " is generated");
+                Debug.Log(fileName + " is generated");
             }
 
             AssetDatabase.Refresh();

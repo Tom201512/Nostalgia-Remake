@@ -27,10 +27,10 @@ public class MedalSevenSegment : MonoBehaviour
         num = Math.Clamp(num, 0, 99);
 
         // 10の桁を得る
-        int SecondDigit = GetDigits(num, 2);
+        int SecondDigit = GetDigitValue(num, 2);
 
         // 1の桁を得る
-        int FirstDigit = GetDigits(num, 1);
+        int FirstDigit = GetDigitValue(num, 1);
 
         // セグメントに反映
         segments[(int)DigitID.FirstDigit].TurnOnLampByNumber(FirstDigit);
@@ -55,8 +55,30 @@ public class MedalSevenSegment : MonoBehaviour
         }
     }
 
-    // 指定桁数を求める
-    public static int GetDigits(int value, int digit)
+    // 桁数を計算する
+    public static int GetDigitCounts(int value)
+    {
+        int sum = 0;
+        int digitsCount = 0;
+
+        // 0の場合は1桁を返す
+        if(value == 0)
+        {
+            return 1;
+        }
+        // 指定桁数まで数字を出す
+        while(value != 0)
+        {
+            sum = (value % 10);
+            value = (value / 10);
+            digitsCount += 1;
+        }
+
+        return digitsCount;
+    }
+
+    // 指定した桁にある数字を求める
+    public static int GetDigitValue(int value, int digit)
     {
         int sum = 0;
         // 指定桁数まで数字を出す
@@ -68,4 +90,5 @@ public class MedalSevenSegment : MonoBehaviour
 
         return sum;
     }
+
 }

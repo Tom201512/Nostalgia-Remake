@@ -36,11 +36,13 @@ public class ReelTableManager
         // 検索中のテーブル
         int currentIndex = 0;
 
-        //Debug.Log("Flag:" + flagID);
+       // Debug.Log("Flag:" + flagID);
         //Debug.Log("FirstPush:" + firstPushReel);
         //Debug.Log("bet:" + bet);
         //Debug.Log("Bonus:" + bonus);
         //Debug.Log("Random:" + random);
+        //Debug.Log("Pressed:" + firstPushPos);
+        //Debug.Log("Condition:" + condition);
 
         foreach (ReelConditionsData data in reelDatabase.Conditions)
         {
@@ -50,6 +52,8 @@ public class ReelTableManager
 
             for (int i = 0; i < ConditionMaxRead; i++)
             {
+                //Debug.Log("Condition1:" + GetConditionData(condition, i));
+                //Debug.Log("Condition2:" + GetConditionData(data.MainConditions, i));
                 // フラグID以外の条件で0があった場合はパスする
                 if (i != (int)ConditionID.Flag && GetConditionData(data.MainConditions,i) == 0)
                 {
@@ -60,7 +64,6 @@ public class ReelTableManager
                     GetConditionData(data.MainConditions, i) == BonusAnyValueID &&
                     bonus != (int)BonusType.BonusNone)
                 {
-                    //Debug.Log(GetConditionData(data.MainConditions, i) + "ANY BONUS");
                     //Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
@@ -74,23 +77,19 @@ public class ReelTableManager
             // 条件が合っていれば
             if(conditionMet)
             {
-                //Debug.Log("All conditions are met");
-
+               // Debug.Log("All conditions are met");
+                //Debug.Log("FirstReelPosition:" + data.FirstReelPosition);
                 // 次は第一停止のリール停止位置を見る
                 // 停止位置条件が0なら無視
 
                 // 第一停止の位置の分だけ1を左シフトし、条件のビットとAND算して条件を見る(0にならなければ条件を満たす)
                 int checkValue = 1 << firstPushPos + 1;
 
-                //Debug.Log(checkValue);
-                //Debug.Log(data.FirstReelPosition);
-                //Debug.Log(checkValue & data.FirstReelPosition);
-
                 if (data.FirstReelPosition == 0 || (checkValue & data.FirstReelPosition) != 0)
                 {
                     if (data.FirstReelPosition == 0)
                     {
-                        //Debug.Log("No condition");
+                       // Debug.Log("No condition");
                     }
                     // ここまできたらテーブル発見。すぐに更新する
                     //Debug.Log("Found:" + currentIndex);

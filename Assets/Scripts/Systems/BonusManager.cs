@@ -126,7 +126,7 @@ namespace ReelSpinGame_Bonus
             // 通常時に戻った場合は獲得枚数表示
             else if(DisplayingTotalCount)
             {
-                bonusSegments.ShowTotalPayouts(data.CurrentBonusPayouts);
+                bonusSegments.ShowTotalPayouts(data.CurrentZonePayouts);
             }
         }
 
@@ -270,8 +270,11 @@ namespace ReelSpinGame_Bonus
                 yield return new WaitForEndOfFrame();
             }
 
-            // ファンファーレを鳴らす
-            PlayEndFanfare();
+            // BIGの時のみファンファーレを鳴らす
+            if(GetBigChangeColor() != BigColor.None)
+            {
+                PlayBigEndFanfare();
+            }
 
             // 今鳴らしている効果音が止まるのを待つ
             while (!soundManager.GetBGMStopped())
@@ -343,8 +346,8 @@ namespace ReelSpinGame_Bonus
             }
         }
 
-        // 終了ジングル再生
-        private void PlayEndFanfare()
+        // 終了ジングル再生(BIGのみ)
+        private void PlayBigEndFanfare()
         {
             switch (data.BigChanceColor)
             {
@@ -355,9 +358,6 @@ namespace ReelSpinGame_Bonus
                     soundManager.PlayBGM(soundManager.BGMList.BlueEnd, false);
                     break;
                 case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackEnd, false);
-                    break;
-                default:
                     soundManager.PlayBGM(soundManager.BGMList.BlackEnd, false);
                     break;
             }

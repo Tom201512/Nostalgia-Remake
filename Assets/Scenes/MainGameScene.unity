@@ -605,7 +605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -697.83984}
+  m_AnchoredPosition: {x: 212.6211, y: -657}
   m_SizeDelta: {x: 425.23, y: 94.4738}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &341618351
@@ -879,8 +879,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 0
-  instantFlagID: 0
+  useInstant: 1
+  instantFlagID: 2
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1408,7 +1408,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660297967}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1416,7 +1416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -916.83984}
+  m_AnchoredPosition: {x: 372, y: -60}
   m_SizeDelta: {x: 425.23, y: 184.7757}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &660297970
@@ -1445,13 +1445,21 @@ MonoBehaviour:
 
     Type:
 
+    BIG_Color
+
     BIG_Games:
 
     BIG_JACIN:
 
     JAC_Games:
 
-    JAC_Hits:'
+    JAC_Hits:
+
+    TotalPayouts:
+
+    ZonePayouts:
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1514,7 +1522,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.79888916, y: 37.367176, z: -0.5303345, w: -49.621864}
+  m_margin: {x: -0.79888916, y: 37.367176, z: -0.5303345, w: -137.10217}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2136,6 +2144,8 @@ MonoBehaviour:
 
     LastPayout:
 
+    BetFinished:
+
     Replay:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2199,7 +2209,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -56.66308, z: 0, w: 0.13641357}
+  m_margin: {x: 0, y: -56.66308, z: 0, w: -54.981262}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2229,7 +2239,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -519}
+  m_AnchoredPosition: {x: 212.6211, y: -477}
   m_SizeDelta: {x: 425.23486, y: 146.31952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &963194225
@@ -4428,7 +4438,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -859.83984}
+  m_AnchoredPosition: {x: 212.6211, y: -827}
   m_SizeDelta: {x: 425.23, y: 184.7757}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088607535

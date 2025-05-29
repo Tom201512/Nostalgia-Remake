@@ -26,6 +26,7 @@ public class MedalTestUI : MonoBehaviour
         buffer += "LastBet:" + medal.GetLastBetAmounts() + "\n";
         buffer += "Payout:" + medal.GetPayoutAmounts() + "\n";
         buffer += "LastPayout:" + medal.GetLastPayout() + "\n";
+        buffer += "BetFinished:" + medal.GetBetFinished() + "\n";
         buffer += "Replay:" + medal.GetHasReplay();
 
         text.text = buffer;

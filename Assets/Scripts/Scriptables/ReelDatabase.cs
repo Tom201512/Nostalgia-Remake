@@ -135,7 +135,7 @@ namespace ReelSpinGame_Datas
             // ”z—ñ‚É‚·‚é
             int[] conditionArray = { flagID, firstPush, bet, bonus, random };
 
-            for (int i = 0; i < (int)ConditionID.Random; i++)
+            for (int i = 0; i < conditionArray.Length; i++)
             {
                 conditions |= conditionArray[i] << ConditionBitOffset * i;
             }

@@ -126,7 +126,7 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
 
             // ボーナス状態の処理
-            ChangeDataByBonus();
+            BonusStatusUpdate();
             // リプレイ処理
             UpdateReplay();
 
@@ -226,9 +226,9 @@ namespace ReelSpinGame_State.PayoutState
 
             // 15枚の払い出しを加算
             //Debug.Log(gameManager.Payout.LastPayoutResult.Payouts);
-
-            ChangeDataByBonus();
             gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Reel.GetPayoutResultData().Payouts);
+            gameManager.Bonus.ChangeBonusPayouts(gameManager.Reel.GetPayoutResultData().Payouts);
+            gameManager.Bonus.ChangeZonePayouts(gameManager.Reel.GetPayoutResultData().Payouts);
             gameManager.Lots.ResetCounter();
             gameManager.PlayerData.SetLastBonusStart();
             gameManager.Bonus.PlayBonusFanfare();
@@ -255,7 +255,7 @@ namespace ReelSpinGame_State.PayoutState
         }
 
         // ボーナス状態によるデータ変更
-        private void ChangeDataByBonus()
+        private void BonusStatusUpdate()
         {
             if(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
             {
@@ -270,7 +270,7 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Lots.ChangeTable(FlagLotMode.JacGame);
                 gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
             }
-            else
+            else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 gameManager.Lots.ChangeTable(FlagLotMode.Normal);
                 gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);

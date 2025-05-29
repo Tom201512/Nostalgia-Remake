@@ -58,7 +58,6 @@ public class LampComponent : MonoBehaviour
     // コルーチン用
     private IEnumerator TurnOnLamp()
     {
-        StopCoroutine(nameof(TurnOffLamp));
         IsTurnedOn = true;
         // 明るさの計算(0.03秒ずつ下げる)
         int distance = TurnOnValue - TurnOffValue;
@@ -79,7 +78,6 @@ public class LampComponent : MonoBehaviour
 
     private IEnumerator TurnOffLamp()
     {
-        StopCoroutine(nameof(TurnOnLamp));
         IsTurnedOn = false;
         // 明るさの計算(0.03秒ずつ下げる)
         int distance = TurnOnValue - TurnOffValue;

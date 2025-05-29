@@ -38,12 +38,6 @@ namespace ReelSpinGame_State.InsertState
             {
                 gameManager.Medal.StartReplayInsert();
             }
-
-            // 獲得枚数を表示している場合はセグメントを消す
-            if(gameManager.Bonus.DisplayingTotalCount)
-            {
-                gameManager.Bonus.TurnOffSegments();
-            }
         }
 
         public void StateUpdate()
@@ -73,6 +67,12 @@ namespace ReelSpinGame_State.InsertState
             if(gameManager.Medal.GetCurrentBet() > 0)
             {
                 gameManager.Status.TurnOnStartLamp();
+
+                // 獲得枚数を表示している場合はセグメントを消す
+                if (gameManager.Bonus.DisplayingTotalCount)
+                {
+                    gameManager.Bonus.TurnOffSegments();
+                }
             }
 
             // ベット終了 または MAXBET
