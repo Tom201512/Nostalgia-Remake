@@ -92,12 +92,13 @@ namespace ReelSpinGame_Bonus
         {
             // 対応したボーナスの演出を開始
             //Debug.Log("BIG CHANCE start");
+            data.CurrentBonusPayouts = 0;
             data.RemainingBigGames = BigGames;
             data.RemainingJacIn = JacInTimes;
             data.CurrentBonusStatus = BonusStatus.BonusBIGGames;
             data.HoldingBonusID = BonusType.BonusNone;
             data.BigChanceColor = bigColor;
-            data.CurrentBonusPayouts = 0;
+
 
             data.HasZone = true;
         }
@@ -110,12 +111,16 @@ namespace ReelSpinGame_Bonus
                 data.RemainingJacIn -= 1;
             }
             //Debug.Log("BONUS GAME start");
+            // BIG中でない場合はボーナス払い出し枚数リセット
+            if (data.CurrentBonusStatus != BonusStatus.BonusBIGGames)
+            {
+                data.CurrentBonusPayouts = 0;
+            }
+
             data.RemainingJacGames = JacGames;
             data.RemainingJacHits = JacHits;
             data.CurrentBonusStatus = BonusStatus.BonusJACGames;
             data.HoldingBonusID = BonusType.BonusNone;
-            data.CurrentBonusPayouts = 0;
-
             data.HasZone = true;
         }
 
