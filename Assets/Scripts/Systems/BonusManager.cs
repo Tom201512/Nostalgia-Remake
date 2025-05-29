@@ -250,7 +250,7 @@ namespace ReelSpinGame_Bonus
             // ファンファーレを鳴らす
             PlayFanfare();
 
-            // 今鳴らしているBGMが止まるのを待つ
+            // 今鳴らしているファンファーレが止まるのを待つ
             while (!soundManager.GetBGMStopped())
             {
                 yield return new WaitForEndOfFrame();
@@ -274,12 +274,11 @@ namespace ReelSpinGame_Bonus
             if(GetBigChangeColor() != BigColor.None)
             {
                 PlayBigEndFanfare();
-            }
-
-            // 今鳴らしている効果音が止まるのを待つ
-            while (!soundManager.GetBGMStopped())
-            {
-                yield return new WaitForEndOfFrame();
+                // 今鳴らしているファンファーレが止まるのを待つ
+                while (!soundManager.GetBGMStopped())
+                {
+                    yield return new WaitForEndOfFrame();
+                }
             }
 
             HasFanfareUpdate = false;
