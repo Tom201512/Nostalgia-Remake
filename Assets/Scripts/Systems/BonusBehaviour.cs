@@ -18,12 +18,16 @@
         public const int BigGames = 30;
         // 残りJACIN
         public const int JacInTimes = 3;
-
         // JACゲーム中
         // 残りJACゲーム数
         public const int JacGames = 12;
         // 残り当選回数
         public const int JacHits = 8;
+
+        // 最高で記録できる獲得枚数
+        public const int MaxRecordPayouts = 99999;
+        // 連チャン区間であるゲーム数
+        public const int MaxZoneGames = 50;
 
         // var
         // 現在ストックしているボーナス
@@ -47,6 +51,11 @@
         // 残り当選回数
         public int RemainingJacHits { get; set; }
 
+        // このボーナスでの獲得枚数
+        public int CurrentBonusPayouts { get; set; }
+        // 連チャン区間中のボーナス枚数
+        public int CurrentZonePayouts { get; set; }
+
         // コンストラクタ
         public BonusBehaviour()
         {
@@ -57,21 +66,8 @@
             RemainingJacIn = 0;
             RemainingJacHits = 0;
             RemainingJacGames = 0;
+            CurrentBonusPayouts = 0;
+            CurrentZonePayouts = 0;
         }
-
-        // func
-
-        // ビッグチャンス開始
-        public void StartBigChance(BigColor bigColor)
-        {
-            //Debug.Log("BIG CHANCE start");
-            RemainingBigGames = BigGames;
-            RemainingJacIn = JacInTimes;
-            CurrentBonusStatus = BonusStatus.BonusBIGGames;
-            HoldingBonusID = BonusType.BonusNone;
-        }
-
-        public void SetBonusColor(BigColor bigColor) => BigChanceColor = bigColor;
-        public void ResetBonusColor() => BigChanceColor = BigColor.None;
     }
 }

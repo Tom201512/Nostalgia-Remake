@@ -176,9 +176,9 @@ public class ReelObject : MonoBehaviour
     // リール本体そのものの明るさを変更
     public void SetReelBaseBrightness(byte brightness) => reelBase.SetBrightness(brightness);
     // 指定位置リール図柄の明るさを変更
-    public void SetSymbolBrightness(int posID, byte r, byte g, byte b) => symbolManager.SymbolObj[ReelData.GetReelArrayIndex(posID)].ChangeBrightness(r,g,b);
+    public void SetSymbolBrightness(int posID, byte r, byte g, byte b) => symbolManager.SymbolObj[GetReelArrayIndex(posID)].ChangeBrightness(r,g,b);
     // 指定位置リール図柄の光度を変更
-    public void SetSymbolEmission(int posID, byte r, byte g, byte b) => symbolManager.SymbolObj[ReelData.GetReelArrayIndex(posID)].ChangeEmmision(r,g,b);
+    public void SetSymbolEmission(int posID, byte r, byte g, byte b) => symbolManager.SymbolObj[GetReelArrayIndex(posID)].ChangeEmmision(r,g,b);
 
     // 回転率計算
     private float ReturnAngularVelocity(float rpsValue)

@@ -38,6 +38,12 @@ namespace ReelSpinGame_State.InsertState
             {
                 gameManager.Medal.StartReplayInsert();
             }
+
+            // 獲得枚数を表示している場合はセグメントを消す
+            if(gameManager.Bonus.DisplayingTotalCount)
+            {
+                gameManager.Bonus.TurnOffSegments();
+            }
         }
 
         public void StateUpdate()
@@ -87,6 +93,8 @@ namespace ReelSpinGame_State.InsertState
                         // ボーナス中なら払い出し枚数を減らす
                         if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
                         {
+                            gameManager.Bonus.ChangeBonusPayouts(-gameManager.Medal.GetLastBetAmounts());
+                            gameManager.Bonus.ChangeZonePayouts(-gameManager.Medal.GetLastBetAmounts());
                             gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.GetLastBetAmounts());
                         }
                     }

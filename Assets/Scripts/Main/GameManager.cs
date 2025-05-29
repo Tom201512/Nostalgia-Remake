@@ -70,26 +70,16 @@ public class GameManager : MonoBehaviour
 
         // メダル管理
         Medal = GetComponent<MedalManager>();
-        ////Debug.Log("Medal is launched");
-
         // フラグ管理
         Lots = GetComponent<FlagLots>();
-        ////Debug.Log("Lots is launched");
-
         // ウェイト管理
         Wait = new WaitManager(false);
-        ////Debug.Log("Wait is launched");
-
         // ボーナス
         Bonus = GetComponent<BonusManager>();
-        ////Debug.Log("Bonus is launched");
-
         // メインフロー作成
         MainFlow = new MainGameFlow(this);
-
         // ステータスパネル
         Status = statusPanel;
-        ////Debug.Log("StatusPanel is launched");
 
         // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
@@ -101,7 +91,6 @@ public class GameManager : MonoBehaviour
         {
             setting = Random.Range(1, 6);
         }
-        ////Debug.Log("Setting:" + setting);
 
         // 画面サイズ初期化
         Screen.SetResolution(1600, 900, false);

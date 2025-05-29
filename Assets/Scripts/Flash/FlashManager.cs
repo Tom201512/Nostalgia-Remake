@@ -76,26 +76,26 @@ namespace ReelSpinGame_Reels.Flash
             int[] flashData = FlashDatabase[CurrentFlashID].GetCurrentFlashData();
 
             // 現在のフレームと一致しなければ読み込まない
-            ////Debug.Log("Segment:" + flashData[(int)FlashData.PropertyID.FrameID]);
             if (CurrentFrame == flashData[(int)FlashData.PropertyID.FrameID])
             {
                 // リール全て変更
                 foreach (ReelObject reel in reelObjects)
                 {
-                    // 本体変更
+                    // 本体と枠下枠上の図柄変更
                     int bodyBright = flashData[(int)FlashData.PropertyID.Body + reel.GetReelID() * SeekOffset];
-                    ////Debug.Log("Change Body:" + reel.GetReelID() + "Bright:" + bodyBright);
                     if (bodyBright != NoChangeValue)
                     {
                         reel.SetReelBaseBrightness((byte)bodyBright);
+                        reel.SetSymbolBrightness((int)ReelPosID.Lower2nd, (byte)bodyBright, (byte)bodyBright, (byte)bodyBright);
+                        reel.SetSymbolBrightness((int)ReelPosID.Upper2nd, (byte)bodyBright, (byte)bodyBright, (byte)bodyBright);
                     }
 
                     // 図柄の明るさ変更
-                    for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                    for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper3rd; i++)
                     {
                         int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.GetReelID() * SeekOffset];
 
-                        ////Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
+                        Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
                             reel.SetSymbolBrightness(i, (byte)symbolBright, (byte)symbolBright, (byte)symbolBright);

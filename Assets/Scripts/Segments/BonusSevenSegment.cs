@@ -11,6 +11,8 @@ public class BonusSevenSegment : MonoBehaviour
     // const
     // セグメント位置のID
     public enum DigitID { JacDigit, JacHitDigit, BarDigit, GamesSecondDigit, GamesFirstDigit}
+    // 数字位置のID
+    public enum DigitNumID { First, Second, Third, Fourth, Fifth}
 
     // var
     // 7セグ
@@ -52,6 +54,67 @@ public class BonusSevenSegment : MonoBehaviour
         // セグメントに反映
         segments[(int)DigitID.GamesFirstDigit].TurnOnLampByNumber(FirstDigit);
         segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(SecondDigit);
+    }
+
+    // 獲得枚数を表示
+    public void ShowTotalPayouts(int totalPayouts)
+    {
+        int result = Math.Clamp(totalPayouts, 0, 99999);
+
+        List<int> digits = new List<int>();
+
+        // 一から万までの桁数を得る
+        for(int i = 0; i < 5; i++)
+        {
+            digits.Add(GetDigits(result, i));
+        }
+
+        // 桁数に合わせて表示
+        // 4桁以上の場合は右詰めで表示し、0埋めはしない
+        if(digits.Count >= 4)
+        {
+            // 5桁目がある場合
+            if(digits.Count == 5)
+            {
+                segments[(int)DigitID.JacDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Fifth]);
+            }
+            else
+            {
+                segments[(int)DigitID.JacDigit].TurnOffAll();
+            }
+            segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Fourth]);
+            segments[(int)DigitID.BarDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Third]);
+            segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Second]);
+            segments[(int)DigitID.GamesFirstDigit].TurnOnLampByNumber(digits[(int)DigitNumID.First]);
+        }
+        // 3桁の場合は真ん中3桁に表示(ない場合は0埋めをする)
+        else
+        {
+            segments[(int)DigitID.JacDigit].TurnOffAll();
+
+            // 3桁ない場合は0を表示
+            if (digits.Count >= 3)
+            {
+                segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Third]);
+            }
+            else
+            {
+                segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(0);
+            }
+
+            // 2桁ない場合は0を表示
+            if (digits.Count >= 2)
+            {
+                segments[(int)DigitID.BarDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Second]);
+            }
+            else
+            {
+                segments[(int)DigitID.BarDigit].TurnOnLampByNumber(0);
+            }
+
+            segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(digits[(int)DigitNumID.First]);
+            segments[(int)DigitID.GamesFirstDigit].TurnOffAll();
+        }
     }
 
     // セグメントをすべて消す

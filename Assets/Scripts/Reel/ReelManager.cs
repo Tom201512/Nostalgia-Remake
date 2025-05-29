@@ -116,13 +116,14 @@ public class ReelManager : MonoBehaviour
     // 使用したリールテーブルID
     public int GetUsedReelTableID(ReelID reelID) => data.ReelTableManager.UsedReelTableID[(int)reelID];
 
-
     //フラッシュ
     // フラッシュで待機中か
     public bool GetHasFlashWait() => flashManager.HasFlashWait;
 
     // 払い出し結果データ表示
     public PayoutResultBuffer GetPayoutResultData() => payoutChecker.LastPayoutResult;
+    // 払い出し判定モード表示
+    public PayoutCheckMode GetPayoutCheckMode() => payoutChecker.CheckMode;
     // 払い出し判定モード変更
     public void ChangePayoutCheckMode(PayoutCheckMode mode) => payoutChecker.CheckMode = mode;
 
