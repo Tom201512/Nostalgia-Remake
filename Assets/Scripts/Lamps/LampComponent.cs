@@ -37,6 +37,11 @@ public class LampComponent : MonoBehaviour
         StopAllCoroutines();
     }
 
+    public void Update()
+    {
+        image.color = new Color32(brightness, brightness, brightness, 255);
+    }
+
     // “_“”
     public void TurnOn()
     {
@@ -69,11 +74,7 @@ public class LampComponent : MonoBehaviour
         {
             // ”’l‚ð’´‚¦‚È‚¢‚æ‚¤‚É’²®
             brightness = (byte)Math.Clamp(brightness + changeValue, TurnOffValue, TurnOnValue);
-
             ////Debug.Log("Brightness:" + brightness);
-
-            image.color = new Color32(brightness, brightness, brightness, 255);
-
             yield return new WaitForSeconds(LampFlashTime);
         }
     }
@@ -88,8 +89,6 @@ public class LampComponent : MonoBehaviour
         while (brightness > TurnOffValue)
         {
             brightness = (byte)Math.Clamp(brightness - changeValue, TurnOffValue, TurnOnValue);
-            image.color = new Color32(brightness, brightness, brightness, 255);
-
             yield return new WaitForSeconds(LampFlashTime);
         }
     }

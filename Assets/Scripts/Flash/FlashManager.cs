@@ -18,13 +18,6 @@ namespace ReelSpinGame_Reels.Flash
         public const float ReelFlashTime = 0.01f;
         // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
         public const int PayoutFlashFrames = 15;
-
-        // デフォルトの明るさ(点灯時)
-        public const int TurnOnValue = 255;
-        // デフォルトの暗さ(消灯時)
-        public const int TurnOffSymbolValue = 120;
-        // デフォルトの暗さ(リール本体消灯時)
-        public const int TurnOffBodyValue = 80;
         // シーク位置オフセット用
         const int SeekOffset = 4;
         // 変更しないときの数値
@@ -86,8 +79,8 @@ namespace ReelSpinGame_Reels.Flash
                     if (bodyBright != NoChangeValue)
                     {
                         reel.SetReelBaseBrightness((byte)bodyBright);
-                        reel.SetSymbolBrightness((int)ReelPosID.Lower2nd, (byte)bodyBright, (byte)bodyBright, (byte)bodyBright);
-                        reel.SetSymbolBrightness((int)ReelPosID.Upper2nd, (byte)bodyBright, (byte)bodyBright, (byte)bodyBright);
+                        reel.SetSymbolBrightness((int)ReelPosID.Lower2nd, (byte)bodyBright);
+                        reel.SetSymbolBrightness((int)ReelPosID.Upper2nd, (byte)bodyBright);
                     }
 
                     // 図柄の明るさ変更
@@ -98,7 +91,7 @@ namespace ReelSpinGame_Reels.Flash
                         //Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
-                            reel.SetSymbolBrightness(i, (byte)symbolBright, (byte)symbolBright, (byte)symbolBright);
+                            reel.SetSymbolBrightness(i, (byte)symbolBright);
                         }
                     }
                 }
@@ -132,14 +125,14 @@ namespace ReelSpinGame_Reels.Flash
         public void PayoutFlash(List<PayoutLineData> lastPayoutLines, ReelObject[] reelObjects)
         {
             // 暗くする量を計算
-            byte brightness = CalculateBrightness(TurnOffSymbolValue, PayoutFlashFrames);
+            byte brightness = CalculateBrightness(SymbolChange.TurnOffValue, PayoutFlashFrames);
             //全ての払い出しのあったラインをフラッシュさせる
             foreach (PayoutLineData payoutLine in lastPayoutLines)
             {
                 for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
                 {
                     // 図柄点灯
-                    reelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i], brightness, brightness, brightness);
+                    reelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i], brightness);
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
                     if (reelObjects[(int)ReelID.ReelLeft].GetReelSymbol
@@ -161,12 +154,12 @@ namespace ReelSpinGame_Reels.Flash
         private byte CalculateBrightness(int turnOffValue, int frame)
         {
             // 明るさの計算(0.01秒で25下げる)
-            int distance = TurnOnValue - turnOffValue;
+            int distance = SymbolChange.TurnOnValue - turnOffValue;
             float changeValue = distance / frame;
             // 0.01秒で下げる明るさの量(0.08秒でもとに戻る)
-            float result = TurnOnValue - CurrentFrame * changeValue;
+            float result = SymbolChange.TurnOnValue - CurrentFrame * changeValue;
             // 数値を超えないように調整
-            result = Math.Clamp(result, TurnOffSymbolValue, TurnOnValue);
+            result = Math.Clamp(result, SymbolChange.TurnOffValue, SymbolChange.TurnOnValue);
             // byte型に変換
             return (byte)Math.Round(result);
         }

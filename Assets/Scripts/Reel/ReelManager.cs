@@ -6,8 +6,8 @@ using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
+using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
@@ -275,10 +275,10 @@ public class ReelManager : MonoBehaviour
     {
         foreach (ReelObject reel in reelObjects)
         {
-            reel.SetReelBaseBrightness(TurnOnValue);
+            reel.SetReelBaseBrightness(ReelBase.TurnOnValue);
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
-                reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
+                reel.SetSymbolBrightness(i, ReelBase.TurnOnValue);
             }
         }
     }
@@ -288,10 +288,10 @@ public class ReelManager : MonoBehaviour
     {
         foreach (ReelObject reel in reelObjects)
         {
-            reel.SetReelBaseBrightness(TurnOffBodyValue);
+            reel.SetReelBaseBrightness(ReelBase.TurnOffValue);
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
-                reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
+                reel.SetSymbolBrightness(i, ReelBase.TurnOffValue);
             }
         }
     }
@@ -301,18 +301,18 @@ public class ReelManager : MonoBehaviour
     {
         foreach (ReelObject reel in reelObjects)
         {
-            reel.SetReelBaseBrightness(TurnOffSymbolValue);
+            reel.SetReelBaseBrightness(SymbolChange.TurnOffValue);
 
             // 真ん中以外点灯
             for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
             {
                 if (i == (int)ReelPosID.Center)
                 {
-                    reel.SetSymbolBrightness(i, TurnOnValue, TurnOnValue, TurnOnValue);
+                    reel.SetSymbolBrightness(i, SymbolChange.TurnOnValue);
                 }
                 else
                 {
-                    reel.SetSymbolBrightness(i, TurnOffSymbolValue, TurnOffSymbolValue, TurnOffSymbolValue);
+                    reel.SetSymbolBrightness(i, SymbolChange.TurnOffValue);
                 }
             }
         }
