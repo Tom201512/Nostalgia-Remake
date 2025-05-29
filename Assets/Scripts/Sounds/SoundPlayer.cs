@@ -14,6 +14,8 @@ namespace ReelSpinGame_Sound
         private AudioSource audioSource;
         // Ä¶‚ªI—¹‚µ‚½‚©
         public bool HasSoundStopped { get; private set; }
+        // ƒ‹[ƒv‚µ‚Ä‚¢‚é‰¹‚ª‚ ‚é‚©
+        public bool HasLoop { get; private set; }
 
 
         void Awake()
@@ -37,12 +39,15 @@ namespace ReelSpinGame_Sound
             audioSource.Play();
             StartCoroutine(nameof(CheckAudioStopped));
 
+            HasLoop = hasLoop;
+
         }
 
         // ‰¹’â~
         public void StopAudio()
         {
             audioSource.Stop();
+            HasLoop = false;
         }
 
         // ˆê‰ñ‚¾‚¯Ä¶

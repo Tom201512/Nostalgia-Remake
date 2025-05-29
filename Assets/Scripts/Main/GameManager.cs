@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour
         Bonus = GetComponent<BonusManager>();
         ////Debug.Log("Bonus is launched");
 
-        // ボーナス設定
-
         // メインフロー作成
         MainFlow = new MainGameFlow(this);
 

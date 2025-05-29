@@ -19,17 +19,17 @@ public class BonusTestUI : MonoBehaviour
 
         buffer += "Bonus-" + "\n";
         // ストック中のボーナス
-        buffer += "Holding:" + bonusManager.Data.HoldingBonusID + "\n";
+        buffer += "Holding:" + bonusManager.GetHoldingBonusID() + "\n";
         // ボーナス状態
-        buffer += "Status:" + bonusManager.Data.CurrentBonusStatus + "\n";
+        buffer += "Status:" + bonusManager.GetCurrentBonusStatus() + "\n";
 
         // BIG中の状態
-        buffer += "BIG_Games:" + bonusManager.Data.RemainingBigGames + "\n";
-        buffer += "BIG_JACIN:" + bonusManager.Data.RemainingJacIn + "\n";
+        buffer += "BIG_Games:" + bonusManager.GetRemainingBigGames() + "\n";
+        buffer += "BIG_JACIN:" + bonusManager.GetRemainingJacIn() + "\n";
 
         // JAC中の状態
-        buffer += "JAC_Games:" + bonusManager.Data.RemainingJacGames + "\n";
-        buffer += "JAC_Hits:" + bonusManager.Data.RemainingJacHits + "\n";
+        buffer += "JAC_Games:" + bonusManager.GetRemainingJacGames() + "\n";
+        buffer += "JAC_Hits:" + bonusManager.GetRemainingJacHits()+ "\n";
 
         text.text = buffer;
     }

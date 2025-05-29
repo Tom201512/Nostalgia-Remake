@@ -38,9 +38,9 @@ namespace ReelSpinGame_State.LotsState
             }
 
             // ボーナス中ならここでゲーム数を減らす
-            if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
+            if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
-                gameManager.Bonus.Data.DecreaseGames();
+                gameManager.Bonus.DecreaseGames();
             }
             // そうでない場合は通常時のゲーム数を加算
             else

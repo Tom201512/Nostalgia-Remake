@@ -514,7 +514,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   payoutDatabase: {fileID: 11400000, guid: a47c33de0358c1840b1d8c65c3d18d0a, type: 2}
-  CheckMode: 0
 --- !u!1 &326547720
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusSegments: {fileID: 1944429048}
+  soundManager: {fileID: 907204459}
 --- !u!1001 &470524867
 PrefabInstance:
   m_ObjectHideFlags: 0

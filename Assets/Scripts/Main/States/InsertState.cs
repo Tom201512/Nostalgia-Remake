@@ -85,7 +85,7 @@ namespace ReelSpinGame_State.InsertState
                         gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
 
                         // ボーナス中なら払い出し枚数を減らす
-                        if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
+                        if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
                         {
                             gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.GetLastBetAmounts());
                         }
@@ -115,7 +115,7 @@ namespace ReelSpinGame_State.InsertState
             gameManager.Reel.StopFlash();
 
             // JAC GAME中なら点灯方法を少し変える
-            if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
+            if(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
             {
                 gameManager.Reel.EnableJacGameLight();
                 ////Debug.Log("Jac Turn On");

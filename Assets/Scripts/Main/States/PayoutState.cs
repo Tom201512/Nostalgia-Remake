@@ -1,4 +1,7 @@
-﻿using ReelSpinGame_Interface;
+﻿using JetBrains.Annotations;
+using ReelSpinGame_Bonus;
+using ReelSpinGame_Interface;
+using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
@@ -51,29 +54,29 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // ボーナス中なら各ボーナスの払い出しを増やす
-            if (gameManager.Bonus.Data.CurrentBonusStatus != BonusStatus.BonusNone)
+            if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Reel.GetPayoutResultData().Payouts);
             }
 
             // ボーナスごとに処理を変える
-            switch (gameManager.Bonus.Data.CurrentBonusStatus)
+            switch (gameManager.Bonus.GetCurrentBonusStatus())
             {
                 // 小役ゲーム中
                 case BonusStatus.BonusBIGGames:
 
                     // 状態確認
-                    gameManager.Bonus.Data.CheckBigGameStatus(gameManager.Reel.GetPayoutResultData().IsReplayOrJacIn);
+                    gameManager.Bonus.CheckBigGameStatus(gameManager.Reel.GetPayoutResultData().IsReplayOrJacIn);
 
                     // JAC-INまたは小役ゲームが終わったら抽選テーブル変更
-                    if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
+                    if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
                     {
                         gameManager.Lots.ChangeTable(FlagLotMode.JacGame);
                         gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
                         gameManager.Medal.ChangeMaxBet(1);
                     }
                     //　ボーナスが終了していたら
-                    else if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone)
+                    else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
                     {
                         gameManager.Lots.ChangeTable(FlagLotMode.Normal);
                         gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
@@ -86,17 +89,17 @@ namespace ReelSpinGame_State.PayoutState
                 case BonusStatus.BonusJACGames:
 
                     // 状態確認
-                    gameManager.Bonus.Data.CheckBonusGameStatus(gameManager.Reel.GetPayoutResultData().Payouts > 0);
+                    gameManager.Bonus.CheckBonusGameStatus(gameManager.Reel.GetPayoutResultData().Payouts > 0);
 
                     // ボーナスゲームが終わったら抽選テーブル変更
-                    if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusBIGGames)
+                    if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
                     {
                         gameManager.Lots.ChangeTable(FlagLotMode.BigBonus);
                         gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
                         gameManager.Medal.ChangeMaxBet(3);
                     }
                     //　ボーナスが終了していたら
-                    else if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone)
+                    else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
                     {
                         gameManager.Lots.ChangeTable(FlagLotMode.Normal);
                         gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
@@ -107,7 +110,6 @@ namespace ReelSpinGame_State.PayoutState
 
                 // 通常時はリプレイの処理
                 // またフラグテーブルの更新
-
                 default:
                     // ボーナスがあればボーナス開始
                     if (gameManager.Reel.GetPayoutResultData().BonusID != (int)BonusType.BonusNone)
@@ -119,17 +121,17 @@ namespace ReelSpinGame_State.PayoutState
                     {
                         // いずれかのボーナスが引かれた場合はストック(BIGまたはREGのどちらかをストックする)
                         // これにより常に成立後出目が出るようになる。
-                        if (gameManager.Bonus.Data.HoldingBonusID == BonusType.BonusNone)
+                        if (gameManager.Bonus.GetHoldingBonusID() == BonusType.BonusNone)
                         {
                             // BIG
                             if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagBig)
                             {
-                                gameManager.Bonus.Data.SetBonusStock(BonusType.BonusBIG);
+                                gameManager.Bonus.SetBonusStock(BonusType.BonusBIG);
                             }
                             // REG
                             if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagReg)
                             {
-                                gameManager.Bonus.Data.SetBonusStock(BonusType.BonusREG);
+                                gameManager.Bonus.SetBonusStock(BonusType.BonusREG);
                             }
                         }
                     }
@@ -158,7 +160,7 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 通常時のリプレイだった場合は1秒待たせる。
-            else if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone &&
+            else if(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
                 gameManager.Reel.GetPayoutResultData().IsReplayOrJacIn)
             {
                 //音再生
@@ -168,15 +170,15 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 通常時はずれの場合は一定確率(1/6)でフラッシュさせる
-            else if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone &&
-                gameManager.Bonus.Data.HoldingBonusID != BonusType.BonusNone &&
+            else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
+                gameManager.Bonus.GetHoldingBonusID() != BonusType.BonusNone &&
                 Random.Range(0, 5) == 0)
             {
                 gameManager.Reel.StartReelFlash(FlashID.V_Flash);
             }
 
             // ボーナス中はビタハズシかでフラッシュさせる
-            else if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusBIGGames &&
+            else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
                 gameManager.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
             {
                 // 11番、17番を押した場合はフラッシュ
@@ -190,14 +192,15 @@ namespace ReelSpinGame_State.PayoutState
 
         public void StateUpdate()
         {
-            // 払い出し、リプレイの待機処理が終わっていたら投入状態へ
-            if(gameManager.Medal.GetPayoutAmounts() == 0 && !gameManager.Reel.GetHasFlashWait())
+            // 払い出し、各種演出(フラッシュ、BGMなど)の待機処理が終わっていたら投入状態へ
+            if(gameManager.Medal.GetPayoutAmounts() == 0 && !gameManager.Reel.GetHasFlashWait() &&
+                gameManager.Sound.GetBGMStopped())
             {
                 gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
                 gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
 
                 // リプレイ処理
-                if (gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone &&
+                if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
                     gameManager.Reel.GetPayoutResultData().IsReplayOrJacIn)
                 {
                     // 最後に賭けた枚数をOUTに反映
@@ -250,7 +253,7 @@ namespace ReelSpinGame_State.PayoutState
             if(gameManager.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusBIG)
             {
                 // リールから揃ったボーナス図柄の色を得る
-                gameManager.Bonus.Data.StartBigChance(CheckBigChacneColor(gameManager.Medal.GetLastBetAmounts()));
+                gameManager.Bonus.StartBigChance(CheckBigChanceColor(gameManager.Medal.GetLastBetAmounts()));
                 gameManager.Lots.ChangeTable(FlagLotMode.BigBonus);
                 gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
                 gameManager.PlayerData.IncreaseBigChance();
@@ -259,7 +262,7 @@ namespace ReelSpinGame_State.PayoutState
             // ボーナスゲーム
             else if (gameManager.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusREG)
             {
-                gameManager.Bonus.Data.StartBonusGame();
+                gameManager.Bonus.StartBonusGame();
                 gameManager.Medal.ChangeMaxBet(1);
                 gameManager.Lots.ChangeTable(FlagLotMode.JacGame);
                 gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
@@ -277,12 +280,12 @@ namespace ReelSpinGame_State.PayoutState
         private void PayoutSound()
         {
             // JAC中の払い出し音
-            if(gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusJACGames)
+            if(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
             {
                 gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.JacPayout);
             }
             // 15枚の払い出し音
-            else if(gameManager.Reel.GetPayoutResultData().Payouts >= 15)
+            else if (gameManager.Reel.GetPayoutResultData().Payouts >= 15)
             {
                 gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.MaxPayout);
             }
@@ -294,7 +297,7 @@ namespace ReelSpinGame_State.PayoutState
         }
 
         // 当選したBIGの種類を調べる
-        private BigColor CheckBigChacneColor(int betAmounts)
+        private BigColor CheckBigChanceColor(int betAmounts)
         {
             // 赤7
             if (gameManager.Reel.CountBonusSymbols(BigColor.Red, betAmounts) == 3)

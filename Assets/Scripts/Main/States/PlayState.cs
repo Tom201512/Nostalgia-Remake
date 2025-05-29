@@ -105,14 +105,14 @@ namespace ReelSpinGame_State.PlayingState
                 gameManager.Reel.StopSelectedReel(reelID,
                     gameManager.Medal.GetLastBetAmounts(),
                     gameManager.Lots.GetCurrentFlag(),
-                    gameManager.Bonus.Data.HoldingBonusID);
+                    gameManager.Bonus.GetHoldingBonusID());
 
                 // 停止音再生
                 PlayStopSound();
 
                 // 通常時,第二停止でリーチしていたら音を鳴らす
                 if (gameManager.Reel.GetStoppedCount() == 2 &&
-                    gameManager.Bonus.Data.CurrentBonusStatus == BonusStatus.BonusNone)
+                    gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
                 {
                     // リーチがあれば再生
                     CheckRiichi(gameManager.Medal.GetLastBetAmounts());
