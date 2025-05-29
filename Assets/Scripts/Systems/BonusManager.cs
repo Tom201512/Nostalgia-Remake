@@ -1,4 +1,6 @@
-﻿using ReelSpinGame_Sound;
+﻿using ReelSpinGame_Flash;
+using ReelSpinGame_Reels.Flash;
+using ReelSpinGame_Sound;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -9,6 +11,8 @@ namespace ReelSpinGame_Bonus
     public class BonusManager : MonoBehaviour
     {
         // ボーナス処理
+
+        // const
 
         // var
         // ボーナス処理のデータ
@@ -126,13 +130,14 @@ namespace ReelSpinGame_Bonus
             // 通常時に戻った場合は獲得枚数表示
             else if(DisplayingTotalCount)
             {
-                bonusSegments.ShowTotalPayouts(data.CurrentZonePayouts);
+                StartCoroutine(nameof(UpdateShowPayouts));
             }
         }
 
         // セグメントをすべて消す
         public void TurnOffSegments()
         {
+            StopCoroutine(nameof(UpdateShowPayouts));
             bonusSegments.TurnOffAllSegments();
             DisplayingTotalCount = false;
         }
@@ -235,6 +240,20 @@ namespace ReelSpinGame_Bonus
             data.CurrentBonusStatus = BonusStatus.BonusNone;
             DisplayingTotalCount = true;
             PlayEndBonusFanfare();
+        }
+
+        // 獲得枚数を点滅させる
+        private IEnumerator UpdateShowPayouts()
+        {
+            while(DisplayingTotalCount)
+            {
+                bonusSegments.ShowTotalPayouts(data.CurrentZonePayouts);
+                yield return new WaitForSeconds(0.5f);
+                bonusSegments.TurnOffAllSegments();
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            bonusSegments.TurnOffAllSegments();
         }
 
         // ボーナス当選ファンファーレ再生処理
