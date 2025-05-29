@@ -35,7 +35,8 @@ public class BonusTestUI : MonoBehaviour
         // Šl“¾–‡”•\¦
         buffer += "TotalPayouts:" + bonusManager.GetCurrentBonusPayouts()+ "\n";
         buffer += "ZonePayouts:" + bonusManager.GetCurrentZonePayouts()+ "\n";
+        buffer += "HasZone:" + bonusManager.GetHasZone() + "\n";
 
-    text.text = buffer;
+        text.text = buffer;
     }
 }

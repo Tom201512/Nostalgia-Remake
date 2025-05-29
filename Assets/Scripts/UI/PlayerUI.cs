@@ -41,16 +41,6 @@ public class PlayerUI : MonoBehaviour
         // ボーナスゲーム当選回数
         buffer += "REG:" + playingDatabase.RegTimes + "\n";
 
-        // 最後に獲得した枚数
-        if (playingDatabase.BonusHitDatas.Count > 0)
-        {
-            buffer += "LastBonusPayout:" + playingDatabase.BonusHitDatas[^1].BonusPayouts + "\n";
-        }
-        else
-        {
-            buffer += "LastBonusPayout:0" + "\n";
-        }
-
         text.text = buffer;
     }
 

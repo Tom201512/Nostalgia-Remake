@@ -55,6 +55,8 @@
         public int CurrentBonusPayouts { get; set; }
         // 連チャン区間中のボーナス枚数
         public int CurrentZonePayouts { get; set; }
+        // 連チャン区間にいるか
+        public bool HasZone { get; set; }
 
         // コンストラクタ
         public BonusBehaviour()
@@ -68,6 +70,7 @@
             RemainingJacGames = 0;
             CurrentBonusPayouts = 0;
             CurrentZonePayouts = 0;
+            HasZone = false;
         }
     }
 }

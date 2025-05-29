@@ -94,8 +94,13 @@ namespace ReelSpinGame_State.InsertState
                         if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
                         {
                             gameManager.Bonus.ChangeBonusPayouts(-gameManager.Medal.GetLastBetAmounts());
-                            gameManager.Bonus.ChangeZonePayouts(-gameManager.Medal.GetLastBetAmounts());
                             gameManager.PlayerData.ChangeBonusPayoutToLast(-gameManager.Medal.GetLastBetAmounts());
+                        }
+
+                        // 連チャン区間にいる場合は連チャン区間枚数を減らす
+                        if(gameManager.Bonus.GetHasZone())
+                        {
+                            gameManager.Bonus.ChangeZonePayouts(-gameManager.Medal.GetLastBetAmounts());
                         }
                     }
                 }

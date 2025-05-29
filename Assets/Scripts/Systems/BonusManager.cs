@@ -1,7 +1,4 @@
-﻿using ReelSpinGame_Flash;
-using ReelSpinGame_Reels.Flash;
-using ReelSpinGame_Sound;
-using System;
+﻿using ReelSpinGame_Sound;
 using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
@@ -61,13 +58,19 @@ namespace ReelSpinGame_Bonus
         public int GetCurrentBonusPayouts() => data.CurrentBonusPayouts;
         // 連チャン区間中の枚数を表示
         public int GetCurrentZonePayouts() => data.CurrentZonePayouts;
+        // 連チャン区間にいるか
+        public bool GetHasZone() => data.HasZone;
 
         // 獲得枚数の増減
-        public int ChangeBonusPayouts(int amounts) => data.CurrentBonusPayouts = Math.Clamp(data.CurrentBonusPayouts + amounts, 0, MaxRecordPayouts);
-        public int ChangeZonePayouts(int amounts) => data.CurrentZonePayouts = Math.Clamp(data.CurrentZonePayouts + amounts, 0, MaxRecordPayouts);
+        public int ChangeBonusPayouts(int amounts) => data.CurrentBonusPayouts += amounts;
+        public int ChangeZonePayouts(int amounts) => data.CurrentZonePayouts += amounts;
 
         // 連チャン区間枚数を消す
-        public void ResetZonePayouts() => data.CurrentZonePayouts = 0;
+        public void ResetZonePayouts()
+        {
+            data.HasZone = false;
+            data.CurrentZonePayouts = 0;
+        }
 
         // ボーナス情報を読み込む
         public void SetBonusData(BonusType holdingBonusID, BonusStatus bonusStatus, int remainingBIGGames, int remainingJACIN,
@@ -95,6 +98,8 @@ namespace ReelSpinGame_Bonus
             data.HoldingBonusID = BonusType.BonusNone;
             data.BigChanceColor = bigColor;
             data.CurrentBonusPayouts = 0;
+
+            data.HasZone = true;
         }
 
         // ボーナスゲームの開始
@@ -110,6 +115,8 @@ namespace ReelSpinGame_Bonus
             data.CurrentBonusStatus = BonusStatus.BonusJACGames;
             data.HoldingBonusID = BonusType.BonusNone;
             data.CurrentBonusPayouts = 0;
+
+            data.HasZone = true;
         }
 
         // ボーナス状態のセグメント更新
