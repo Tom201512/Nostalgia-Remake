@@ -1,9 +1,4 @@
-﻿using ReelSpinGame_Datas;
-using ReelSpinGame_Reels;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace ReelSpinGame_Bonus
+﻿namespace ReelSpinGame_Bonus
 {
 	public class BonusBehaviour
 	{

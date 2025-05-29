@@ -63,7 +63,7 @@ namespace ReelSpinGame_Medal
         public bool GetHasReplay() => data.HasReplay;
 
         // ”’l‚ğ•Ï‚¦‚é
-        public int ChangeMaxBet(int amounts) => data.MaxBetAmounts = Math.Clamp(data.MaxBetAmounts + amounts, 0, MaxBetLimit);
+        public int ChangeMaxBet(int amounts) => data.MaxBetAmounts = Math.Clamp(amounts, 0, MaxBetLimit);
 
         // MAX_BET—p‚Ìˆ—
         public void StartMAXBet()

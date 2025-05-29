@@ -29,8 +29,12 @@ namespace ReelSpinGame_Sound
         // func
         // 効果音が停止したか確認
         public bool GetSoundEffectStopped() => soundEffectPlayer.HasSoundStopped;
+        // 効果音がループしているか確認
+        public bool GetSoundEffectHasLoop() => soundEffectPlayer.HasLoop;
         // 音楽が停止したか確認
         public bool GetBGMStopped() => bgmPlayer.HasSoundStopped;
+        // 音楽がループしているか確認
+        public bool GetBGMHasLoop() => bgmPlayer.HasLoop;
 
         // 指定した音を1回再生
         public void PlaySoundOneShot(AudioClip sound)
