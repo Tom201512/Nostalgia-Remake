@@ -221,7 +221,8 @@ public class ReelManager : MonoBehaviour
                             currentCount += 1;
                         }
                         // 他のリールはBARがあるか確認
-                        else if (reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
+                        else if (i != (int)ReelID.ReelRight &&
+                            reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BAR)
                         {
                             currentCount += 1;
                         }
