@@ -72,6 +72,7 @@ namespace ReelSpinGame_State.InsertState
                 if (gameManager.Bonus.DisplayingTotalCount)
                 {
                     gameManager.Bonus.TurnOffSegments();
+                    gameManager.PlayerData.ResetCurrentGame();
                 }
             }
 

@@ -131,8 +131,9 @@ namespace ReelSpinGame_State.PayoutState
             UpdateReplay();
 
             // 連チャン区間の処理
-            // 50Gを迎えた場合は連チャン区間を終了させる
-            if(gameManager.PlayerData.CurrentGames == MaxZoneGames)
+            // 50Gを迎えた場合は連チャン区間を終了させる(但しボーナス非成立時のみ)
+            if(gameManager.PlayerData.CurrentGames == MaxZoneGames && 
+                gameManager.Bonus.GetHoldingBonusID() == BonusType.BonusNone)
             {
                 gameManager.Bonus.ResetZonePayouts();
             }
