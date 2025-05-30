@@ -139,7 +139,7 @@ namespace ReelSpinGame_Bonus
                 bonusSegments.ShowJacStatus(data.RemainingJacIn + 1, data.RemainingJacHits);
             }
 
-            // 通常時に戻った場合は獲得枚数表示
+            // 通常時に戻った場合は獲得枚数表示とリセット
             else if(DisplayingTotalCount)
             {
                 StartCoroutine(nameof(UpdateShowPayouts));
@@ -313,6 +313,7 @@ namespace ReelSpinGame_Bonus
             }
 
             HasFanfareUpdate = false;
+            data.BigChanceColor = BigColor.None;
             soundManager.StopBGM();
         }
 
