@@ -1,6 +1,7 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Flash;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -29,8 +30,13 @@ namespace ReelSpinGame_Reels.Flash
         public enum PayoutLineID { PayoutMiddle, PayoutLower, PayoutUpper, PayoutDiagonalA, PayoutDiagonalB };
 
         // var
+        // リールオブジェクト
+        private ReelObject[] reelObjects;
+        // 最後にあった払い出しライン
+        private List<PayoutLineData> lastPayoutLines;
+
         // 現在のフレーム数(1フレーム0.1秒)
-        public int CurrentFrame { get; set; }
+        private int currentFrame;
         // フラッシュ中か
         public bool HasFlash { get; set; }
         // フラッシュで待機中か
@@ -44,6 +50,9 @@ namespace ReelSpinGame_Reels.Flash
         // func
         public void Awake()
         {
+            reelObjects = new ReelObject[0];
+            lastPayoutLines = new List<PayoutLineData>();
+
             HasFlash = false;
             HasFlashWait = false;
             CurrentFlashID = 0;
@@ -58,8 +67,98 @@ namespace ReelSpinGame_Reels.Flash
             ////Debug.Log("FlashManager awaken");
         }
 
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
+        // func
+        // データを渡す
+        // リールオブジェクト
+        public void SetReelObjects(ReelObject[] reelObjects) => this.reelObjects = reelObjects;
+
+        // リールフラッシュを再生させる
+        public void StartReelFlash(FlashID flashID)
+        {
+            currentFrame = 0;
+            HasFlash = true;
+            FlashDatabase[(int)flashID].SetSeek(0);
+            StartCoroutine(nameof(UpdateFlash));
+        }
+
+        // 払い出しフラッシュの再生
+        public void StartPayoutFlash(float waitSeconds, List<PayoutLineData> lastPayoutLines)
+        {
+            this.lastPayoutLines.Clear();
+            this.lastPayoutLines = lastPayoutLines;
+            currentFrame = 0;
+            HasFlash = true;
+            StartCoroutine(nameof(UpdatePayoutFlash));
+
+            if (waitSeconds > 0)
+            {
+                HasFlashWait = true;
+                StartCoroutine(nameof(SetTimeOut), waitSeconds);
+            }
+        }
+
+        // 払い出しフラッシュの停止
+        public void StopFlash()
+        {
+            HasFlash = false;
+            HasFlashWait = false;
+        }
+
+        // リールライトをすべて明るくする
+        public void TurnOnAllReels()
+        {
+            foreach (ReelObject reel in reelObjects)
+            {
+                reel.SetReelBaseBrightness(ReelBase.TurnOnValue);
+                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                {
+                    reel.SetSymbolBrightness(i, ReelBase.TurnOnValue);
+                }
+            }
+        }
+
+        // リールライトをすべて暗くする
+        public void TurnOffAllReels()
+        {
+            foreach (ReelObject reel in reelObjects)
+            {
+                reel.SetReelBaseBrightness(ReelBase.TurnOffValue);
+                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                {
+                    reel.SetSymbolBrightness(i, ReelBase.TurnOffValue);
+                }
+            }
+        }
+
+        // JAC GAME時のライト点灯
+        public void EnableJacGameLight()
+        {
+            foreach (ReelObject reel in reelObjects)
+            {
+                reel.SetReelBaseBrightness(SymbolChange.TurnOffValue);
+
+                // 真ん中以外点灯
+                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                {
+                    if (i == (int)ReelPosID.Center)
+                    {
+                        reel.SetSymbolBrightness(i, SymbolChange.TurnOnValue);
+                    }
+                    else
+                    {
+                        reel.SetSymbolBrightness(i, SymbolChange.TurnOffValue);
+                    }
+                }
+            }
+        }
+
         // フラッシュデータの処理を反映する
-        public void ReadFlashData(ReelObject[] reelObjects)
+        private void ReadFlashData()
         {
             if (CurrentFlashID >= FlashDatabase.Count)
             {
@@ -69,7 +168,7 @@ namespace ReelSpinGame_Reels.Flash
             int[] flashData = FlashDatabase[CurrentFlashID].GetCurrentFlashData();
 
             // 現在のフレームと一致しなければ読み込まない
-            if (CurrentFrame == flashData[(int)FlashData.PropertyID.FrameID])
+            if (currentFrame == flashData[(int)FlashData.PropertyID.FrameID])
             {
                 // リール全て変更
                 foreach (ReelObject reel in reelObjects)
@@ -99,14 +198,14 @@ namespace ReelSpinGame_Reels.Flash
                 // データのシーク位置変更
                 if (!FlashDatabase[CurrentFlashID].HasSeekReachedEnd())
                 {
-                    CurrentFrame += 1;
+                    currentFrame += 1;
                     FlashDatabase[CurrentFlashID].MoveNextSeek();
                 }
                 // ループさせるか(ループの場合は特定フレームまで移動させる)
                 // しない場合は停止する。
                 if (flashData[(int)FlashData.PropertyID.LoopPosition] != NoChangeValue)
                 {
-                    CurrentFrame = flashData[(int)FlashData.PropertyID.LoopPosition];
+                    currentFrame = flashData[(int)FlashData.PropertyID.LoopPosition];
                     FlashDatabase[CurrentFlashID].SetSeek(flashData[(int)FlashData.PropertyID.LoopPosition]);
                 }
                 // 最終行までよんでループがない場合は終了
@@ -117,12 +216,12 @@ namespace ReelSpinGame_Reels.Flash
             }
             else
             {
-                CurrentFrame += 1;
+                currentFrame += 1;
             }
         }
 
         // 払い出し時のフラッシュ
-        public void PayoutFlash(List<PayoutLineData> lastPayoutLines, ReelObject[] reelObjects)
+        private void PayoutFlash()
         {
             // 暗くする量を計算
             byte brightness = CalculateBrightness(SymbolChange.TurnOffValue, PayoutFlashFrames);
@@ -143,11 +242,11 @@ namespace ReelSpinGame_Reels.Flash
                 }
             }
             // ループさせる
-            CurrentFrame += 1;
+            currentFrame += 1;
 
-            if (CurrentFrame == PayoutFlashFrames)
+            if (currentFrame == PayoutFlashFrames)
             {
-                CurrentFrame = 0;
+                currentFrame = 0;
             }
         }
 
@@ -157,12 +256,42 @@ namespace ReelSpinGame_Reels.Flash
             int distance = SymbolChange.TurnOnValue - turnOffValue;
             float changeValue = distance / frame;
             // 0.01秒で下げる明るさの量(0.08秒でもとに戻る)
-            float result = SymbolChange.TurnOnValue - CurrentFrame * changeValue;
+            float result = SymbolChange.TurnOnValue - currentFrame * changeValue;
             // 数値を超えないように調整
             result = Math.Clamp(result, SymbolChange.TurnOffValue, SymbolChange.TurnOnValue);
             // byte型に変換
             return (byte)Math.Round(result);
         }
-    }
 
+        // リールフラッシュのイベント
+        private IEnumerator UpdateFlash()
+        {
+            while (HasFlash)
+            {
+                ReadFlashData();
+                yield return new WaitForSeconds(ReelFlashTime);
+            }
+        }
+
+        // 払い出しフラッシュのイベント
+        private IEnumerator UpdatePayoutFlash()
+        {
+            while (HasFlash)
+            {
+                PayoutFlash();
+                yield return new WaitForSeconds(ReelFlashTime);
+            }
+            yield break;
+        }
+
+        // タイムアウト用イベント
+        private IEnumerator SetTimeOut(float waitSeconds)
+        {
+            yield return new WaitForSeconds(waitSeconds);
+            ////Debug.Log("Replay Finished");
+            HasFlashWait = false;
+            HasFlash = false;
+            TurnOnAllReels();
+        }
+    }
 }

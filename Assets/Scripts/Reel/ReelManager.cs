@@ -49,6 +49,12 @@ public class ReelManager : MonoBehaviour
         payoutChecker = GetComponent<PayoutChecker>();
     }
 
+    private void Start()
+    {
+        flashManager.SetReelObjects(reelObjects);
+        //flashManager.StartReelFlash(FlashID.V_Flash);
+    }
+
     void Update()
     {
         // リールが動いている時は
@@ -241,83 +247,32 @@ public class ReelManager : MonoBehaviour
     // 払い出しのチェック
     public void StartCheckPayouts(int betAmounts) => payoutChecker.CheckPayoutLines(betAmounts, data.LastStopped);
 
-    // リールフラッシュを再生させる
-    public void StartReelFlash(FlashID flashID)
+    // フラッシュ関連
+    // リール全点灯
+    public void TurnOnAllReels(bool isJacGame)
     {
-        flashManager.CurrentFrame = 0;
-        flashManager.HasFlash = true;
-        flashManager.FlashDatabase[(int)flashID].SetSeek(0);
-        StartCoroutine(nameof(UpdateFlash));
-    }
-
-    // 払い出しフラッシュの再生
-    public void StartPayoutFlash(float waitSeconds)
-    {
-        flashManager.CurrentFrame = 0;
-        flashManager.HasFlash = true;
-        StartCoroutine(nameof(UpdatePayoutFlash));
-
-        if(waitSeconds > 0)
+        // JAC GAME中は中段のみ光らせる
+        if(isJacGame)
         {
-            flashManager.HasFlashWait = true;
-            StartCoroutine(nameof(SetTimeOut), waitSeconds);
+            flashManager.EnableJacGameLight();
+        }
+        else
+        {
+            flashManager.TurnOnAllReels();
         }
     }
 
-    // 払い出しフラッシュの停止
-    public void StopFlash()
-    {
-        flashManager.HasFlash = false;
-        flashManager.HasFlashWait = false;
-    }
+    // リールライト全消灯
+    public void TurnOffAllReels() => flashManager.TurnOffAllReels();
 
-    // リールライトをすべて明るくする
-    public void TurnOnAllReels()
-    {
-        foreach (ReelObject reel in reelObjects)
-        {
-            reel.SetReelBaseBrightness(ReelBase.TurnOnValue);
-            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
-            {
-                reel.SetSymbolBrightness(i, ReelBase.TurnOnValue);
-            }
-        }
-    }
+    // リールフラッシュを開始させる
+    public void StartReelFlash(FlashID flashID) => flashManager.StartReelFlash(flashID);
 
-    // リールライトをすべて暗くする
-    public void TurnOffAllReels()
-    {
-        foreach (ReelObject reel in reelObjects)
-        {
-            reel.SetReelBaseBrightness(ReelBase.TurnOffValue);
-            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
-            {
-                reel.SetSymbolBrightness(i, ReelBase.TurnOffValue);
-            }
-        }
-    }
+    // 払い出しのリールフラッシュを開始させる
+    public void StartPayoutReelFlash(float waitSeconds) => flashManager.StartPayoutFlash(waitSeconds, payoutChecker.LastPayoutResult.PayoutLines);
 
-    // JAC GAME時のライト点灯
-    public void EnableJacGameLight()
-    {
-        foreach (ReelObject reel in reelObjects)
-        {
-            reel.SetReelBaseBrightness(SymbolChange.TurnOffValue);
-
-            // 真ん中以外点灯
-            for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
-            {
-                if (i == (int)ReelPosID.Center)
-                {
-                    reel.SetSymbolBrightness(i, SymbolChange.TurnOnValue);
-                }
-                else
-                {
-                    reel.SetSymbolBrightness(i, SymbolChange.TurnOffValue);
-                }
-            }
-        }
-    }
+    // フラッシュ停止
+    public void StopReelFlash() => flashManager.StopFlash();
 
     // 全リール速度が最高速度かチェック
     private bool CheckReelSpeedMaximum()
@@ -368,36 +323,5 @@ public class ReelManager : MonoBehaviour
         data.CanStopReels = false;
         yield return new WaitForSeconds(ReelWaitTime);
         data.CanStopReels = true;
-    }
-
-    // リールフラッシュのイベント
-    private IEnumerator UpdateFlash()
-    {
-        while(flashManager.HasFlash)
-        {
-            flashManager.ReadFlashData(reelObjects);
-            yield return new WaitForSeconds(ReelFlashTime);
-        }
-    }
-
-    // 払い出しフラッシュのイベント
-    private IEnumerator UpdatePayoutFlash()
-    {
-        while (flashManager.HasFlash)
-        {
-            flashManager.PayoutFlash(payoutChecker.LastPayoutResult.PayoutLines, reelObjects);
-            yield return new WaitForSeconds(ReelFlashTime);
-        }
-        yield break;
-    }
-
-    // タイムアウト用イベント
-    private IEnumerator SetTimeOut(float waitSeconds)
-    {
-        yield return new WaitForSeconds(waitSeconds);
-        ////Debug.Log("Replay Finished");
-        flashManager.HasFlashWait = false;
-        flashManager.HasFlash = false;
-        TurnOnAllReels();
     }
 }

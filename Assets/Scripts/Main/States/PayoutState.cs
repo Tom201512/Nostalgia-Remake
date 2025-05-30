@@ -173,7 +173,7 @@ namespace ReelSpinGame_State.PayoutState
             if (gameManager.Reel.GetPayoutResultData().Payouts != 0)
             {
                 // フラッシュさせる
-                gameManager.Reel.StartPayoutFlash(0);
+                gameManager.Reel.StartPayoutReelFlash(0);
             }
 
             // 通常時のリプレイだった場合は1秒待たせる。
@@ -183,7 +183,7 @@ namespace ReelSpinGame_State.PayoutState
                 //音再生
                 gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Replay);
                 // フラッシュさせる
-                gameManager.Reel.StartPayoutFlash(1.0f);
+                gameManager.Reel.StartPayoutReelFlash(1.0f);
             }
 
             // 通常時はずれの場合は一定確率(1/6)でフラッシュさせる
