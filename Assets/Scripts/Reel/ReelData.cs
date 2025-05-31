@@ -17,7 +17,7 @@ namespace ReelSpinGame_Reels
         // 図柄
         public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
         // リール位置識別用
-        public enum ReelPosID { Lower3rd = -2, Lower2nd, Lower, Center, Upper, Upper2nd, Upper3rd }
+        public enum ReelPosID { Lower2nd = -1, Lower, Center, Upper, Upper2nd }
         // リールの状態
         public enum ReelStatus { WaitForStop, Stopping, Stopped}
 
@@ -85,7 +85,7 @@ namespace ReelSpinGame_Reels
         // リール配列の番号を図柄へ変更
         public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
         // リール位置を配列要素に置き換える
-        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower3rd * -1;
+        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower2nd * -1;
 
         // 回転を開始させる
         public void BeginStartReel()

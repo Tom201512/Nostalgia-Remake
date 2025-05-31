@@ -12,7 +12,7 @@ public class LampComponent : MonoBehaviour
     // デフォルトの暗さ(消灯時)
     const byte TurnOffValue = 60;
     // 点灯させるために必要なフレーム数
-    const byte FrameCount = 5;
+    const byte FrameCount = 3;
     // ランプ点灯の間隔(秒間隔)
     const float LampFlashTime = 0.01f;
 
@@ -21,15 +21,16 @@ public class LampComponent : MonoBehaviour
     private Image image;
     // 点灯しているか
     public bool IsTurnedOn { get; private set; }
-    // 現在の明るさ
-    private byte brightness;
+    // 最終フレーム時の明るさ
+    private byte lastBrightness;
 
     // func
     void Awake()
     {
-        brightness = TurnOffValue;
         IsTurnedOn = false;
         image = GetComponent<Image>();
+        lastBrightness = 0;
+        ChangeBrightness(TurnOffValue);
     }
 
     public void OnDestroy()
@@ -37,9 +38,13 @@ public class LampComponent : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public void Update()
+    public void ChangeBrightness(byte brightness)
     {
-        image.color = new Color32(brightness, brightness, brightness, 255);
+        if(lastBrightness != brightness)
+        {
+            image.color = new Color32(brightness, brightness, brightness, 255);
+            lastBrightness = brightness;
+        }
     }
 
     // 点灯
@@ -70,10 +75,10 @@ public class LampComponent : MonoBehaviour
         int distance = TurnOnValue - TurnOffValue;
         float changeValue = (float)distance / FrameCount;
 
-        while (brightness < TurnOnValue)
+        while (lastBrightness < TurnOnValue)
         {
             // 数値を超えないように調整
-            brightness = (byte)Math.Clamp(brightness + changeValue, TurnOffValue, TurnOnValue);
+            ChangeBrightness((byte)Math.Clamp(lastBrightness + changeValue, TurnOffValue, TurnOnValue));
             ////Debug.Log("Brightness:" + brightness);
             yield return new WaitForSeconds(LampFlashTime);
         }
@@ -86,9 +91,9 @@ public class LampComponent : MonoBehaviour
         int distance = TurnOnValue - TurnOffValue;
         float changeValue = (float)distance / FrameCount;
 
-        while (brightness > TurnOffValue)
+        while (lastBrightness > TurnOffValue)
         {
-            brightness = (byte)Math.Clamp(brightness - changeValue, TurnOffValue, TurnOnValue);
+            ChangeBrightness((byte)Math.Clamp(lastBrightness - changeValue, TurnOffValue, TurnOnValue));
             yield return new WaitForSeconds(LampFlashTime);
         }
     }

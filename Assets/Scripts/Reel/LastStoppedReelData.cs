@@ -43,7 +43,7 @@ namespace ReelSpinGame_Reels
                 LastSymbols.Add(new List<ReelSymbols>());
 
                 // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
-                for (sbyte j = (int)ReelPosID.Lower3rd; j < (int)ReelPosID.Upper3rd; j++)
+                for (sbyte j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd; j++)
                 {
                     LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
                     //Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));

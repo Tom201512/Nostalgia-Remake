@@ -11,35 +11,36 @@ public class SymbolChange : MonoBehaviour
 
     // var
     // 図柄の表示用
-    [SerializeField] private Texture[] symbolImages;
+    [SerializeField] private Sprite[] symbolImages;
     [SerializeField] private ReelData.ReelSymbols currentSymbol = ReelData.ReelSymbols.RedSeven;
 
     // 明るさ
-    public byte Brightness { get; set; }
+    private byte lastBrightness { get; set; }
 
     // 表示部分
-    private Renderer render;
+    private SpriteRenderer sprite;
 
     // リール位置識別ID
     [SerializeField] private ReelData.ReelPosID posID;
 
     void Awake()
     {
-        Brightness = TurnOffValue;
-        render = GetComponent<Renderer>();
-        render.material.mainTexture = symbolImages[(int)currentSymbol];
-        render.material.EnableKeyword("_EMISSION");
-    }
-
-    private void Update()
-    {
-        render.material.SetColor("_Color", new Color32(Brightness, Brightness, Brightness, 255));
+        sprite = GetComponent<SpriteRenderer>();
+        lastBrightness = 0;
+        ChangeBrightness(TurnOffValue);
     }
 
     // 図柄変更
-    public void ChangeSymbol(ReelData.ReelSymbols symbolID)
+    public void ChangeSymbol(ReelData.ReelSymbols symbolID) => sprite.sprite = symbolImages[(int)symbolID];
+
+    // 色変更
+    public void ChangeBrightness(byte brightness)
     {
-        render.material.mainTexture = symbolImages[(int)symbolID];
+        if(lastBrightness != brightness)
+        {
+            sprite.material.SetColor("_Color", new Color32(brightness, brightness, brightness, 255));
+            lastBrightness = brightness;
+        }
     }
 
     // 位置IDを返す

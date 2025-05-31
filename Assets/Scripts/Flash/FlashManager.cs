@@ -115,7 +115,7 @@ namespace ReelSpinGame_Reels.Flash
             foreach (ReelObject reel in reelObjects)
             {
                 reel.SetReelBaseBrightness(ReelBase.TurnOnValue);
-                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
                 {
                     reel.SetSymbolBrightness(i, ReelBase.TurnOnValue);
                 }
@@ -128,7 +128,7 @@ namespace ReelSpinGame_Reels.Flash
             foreach (ReelObject reel in reelObjects)
             {
                 reel.SetReelBaseBrightness(ReelBase.TurnOffValue);
-                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper2nd; i++)
                 {
                     reel.SetSymbolBrightness(i, ReelBase.TurnOffValue);
                 }
@@ -143,7 +143,7 @@ namespace ReelSpinGame_Reels.Flash
                 reel.SetReelBaseBrightness(SymbolChange.TurnOffValue);
 
                 // 真ん中以外点灯
-                for (int i = (int)ReelPosID.Lower3rd; i < (int)ReelPosID.Upper3rd; i++)
+                for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper2nd; i++)
                 {
                     if (i == (int)ReelPosID.Center)
                     {
@@ -183,7 +183,7 @@ namespace ReelSpinGame_Reels.Flash
                     }
 
                     // 図柄の明るさ変更
-                    for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper3rd; i++)
+                    for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper2nd; i++)
                     {
                         int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.GetReelID() * SeekOffset];
 

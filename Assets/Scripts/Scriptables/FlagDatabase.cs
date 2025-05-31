@@ -55,7 +55,6 @@ namespace ReelSpinGame_Datas
         // var
         // ƒtƒ‰ƒOŠm—¦
         [SerializeField] private float[] flagTable;
-
         public float[] FlagTable { get { return flagTable; } }
 
         public FlagDataBySetting(StreamReader loadedData)

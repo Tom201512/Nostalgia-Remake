@@ -21,11 +21,6 @@ namespace ReelSpinGame_Sound
         public SoundEffectPack SoundEffectList { get { return soundEffectList; } }
         public MusicPack BGMList { get { return bgmList; } }
 
-        public void Start()
-        {
-            //PlayBGM(bgmList.RedBGM, true);
-        }
-
         // func
         // Œø‰Ê‰¹‚ª’âŽ~‚µ‚½‚©Šm”F
         public bool GetSoundEffectStopped() => soundEffectPlayer.HasSoundStopped;
