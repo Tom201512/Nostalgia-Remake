@@ -260,6 +260,15 @@ public class ReelManager : MonoBehaviour
         {
             flashManager.TurnOnAllReels();
         }
+
+        // JAC中のライト処理をする
+        foreach (ReelObject reel in reelObjects)
+        {
+            if(reel.HasJacModeLight != isJacGame)
+            {
+                reel.HasJacModeLight = isJacGame;
+            }
+        }
     }
 
     // リールライト全消灯
