@@ -128,7 +128,7 @@ namespace ReelSpinGame_Reels.Flash
             foreach (ReelObject reel in reelObjects)
             {
                 reel.SetReelBaseBrightness(ReelBase.TurnOffValue);
-                for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper2nd; i++)
+                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
                 {
                     reel.SetSymbolBrightness(i, ReelBase.TurnOffValue);
                 }
@@ -143,7 +143,7 @@ namespace ReelSpinGame_Reels.Flash
                 reel.SetReelBaseBrightness(SymbolChange.TurnOffValue);
 
                 // 真ん中以外点灯
-                for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper2nd; i++)
+                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
                 {
                     if (i == (int)ReelPosID.Center)
                     {
@@ -156,6 +156,8 @@ namespace ReelSpinGame_Reels.Flash
                 }
             }
         }
+
+        // 真ん中に近くなったリールを徐々に光らせる
 
         // フラッシュデータの処理を反映する
         private void ReadFlashData()

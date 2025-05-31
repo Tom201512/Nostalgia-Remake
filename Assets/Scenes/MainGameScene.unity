@@ -198,6 +198,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28782338}
   m_CullTransparentMesh: 1
+--- !u!1 &88549230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6008243228970633874, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 6297900694069576971}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &88549234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88549230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 78dbc20b47b7a0843a5d4f1fb7d16f28, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &122881644
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
   useInstant: 1
-  instantFlagID: 1
+  instantFlagID: 2
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2310,7 +2332,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 41
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2392,7 +2414,7 @@ MonoBehaviour:
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
   m_ShowToolkit: 1
-  m_ShowCustomSorter: 0
+  m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
@@ -4844,7 +4866,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6008243228970633874, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 88549234}
   m_SourcePrefab: {fileID: 100100000, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
 --- !u!1001 &7971434692843571151
 PrefabInstance:

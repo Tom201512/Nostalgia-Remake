@@ -82,7 +82,7 @@ namespace ReelSpinGame_Lots
                     break;
 
                 case FlagLotMode.BigBonus:
-                    CurrentFlag = CheckResultByTable(setting, flagDatabase.BigTable, lotResultBig);
+                    CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.BigTable, lotResultBig);
                     break;
 
                 case FlagLotMode.JacGame:
@@ -95,30 +95,6 @@ namespace ReelSpinGame_Lots
 
             }
             //Debug.Log("Flag:" + CurrentFlag);
-        }
-
-        // テーブルからフラグ判定
-        private FlagId CheckResultByTable(int setting, FlagDataSets flagTable, FlagId[] lotResult)
-        {
-            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
-            int flagCheckNum = 0;
-            int flag = GetFlag();
-
-            int index = 0;
-            foreach (float f in flagTable.FlagDataBySettings[setting - 1].FlagTable)
-            {
-                //各役ごとに抽選
-                flagCheckNum += Mathf.RoundToInt((float)MaxFlagLots / f);
-
-                if (flag < flagCheckNum)
-                {
-                    return lotResult[index];
-                }
-                index += 1;
-            }
-
-            // 何も当たらなければ"はずれ"を返す
-            return FlagId.FlagNone;
         }
 
         // テーブル、設定値とベット枚数からフラグ判定

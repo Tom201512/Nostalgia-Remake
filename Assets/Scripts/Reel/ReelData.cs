@@ -55,18 +55,6 @@ namespace ReelSpinGame_Reels
             }
             currentLower = lowerPos;
             ReelDatabase = reelDatabase;
-
-            //foreach (byte value in ReelDatabase.Array)
-            //{
-                ////Debug.Log(value + "Symbol:" + ReturnSymbol(value));
-            //}
-
-            ////Debug.Log("ReelGenerated Position at:" + lowerPos);
-
-           // for(int i = 0; i < ReelDatabase.Array.Length; i++)
-            //{
-                ////Debug.Log("No." + i + " Symbol:" + ReturnSymbol(ReelDatabase.Array[i]));
-           // }
         }
 
         // func

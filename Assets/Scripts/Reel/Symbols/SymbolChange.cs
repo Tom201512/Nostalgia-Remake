@@ -5,18 +5,16 @@ public class SymbolChange : MonoBehaviour
 {
     // const
     // デフォルトの明るさ(点灯時)
-    public const int TurnOnValue = 255;
+    public const byte TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
-    public const int TurnOffValue = 120;
+    public const byte TurnOffValue = 120;
 
     // var
     // 図柄の表示用
     [SerializeField] private Sprite[] symbolImages;
-    [SerializeField] private ReelData.ReelSymbols currentSymbol = ReelData.ReelSymbols.RedSeven;
 
     // 明るさ
-    private byte lastBrightness { get; set; }
-
+    private byte lastBrightness;
     // 表示部分
     private SpriteRenderer sprite;
 

@@ -5,9 +5,9 @@ public class ReelBase : MonoBehaviour
     // リール本体
     // const
     // デフォルトの明るさ(点灯時)
-    public const int TurnOnValue = 255;
+    public const byte TurnOnValue = 255;
     // デフォルトの暗さ(消灯時)
-    public const int TurnOffValue = 200;
+    public const byte TurnOffValue = 200;
 
     // 表示部分
     private Renderer render;
