@@ -2,7 +2,6 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 using static ReelSpinGame_Reels.ReelData;
 
 public class ReelObject : MonoBehaviour
@@ -12,6 +11,8 @@ public class ReelObject : MonoBehaviour
     // const
     // 図柄変更時の角度 (360度を21分割)
     const float ChangeAngle = 360.0f / 21.0f;
+    // 停止最大有効範囲
+    const float ChangeOffset = 0.8f;
     // 回転速度 (Rotate Per Second)
     public const float RotateRPS = 79.8f / 60.0f;
     // リール重さ(kg)
@@ -66,27 +67,24 @@ public class ReelObject : MonoBehaviour
         symbolManager.SetReelData(reelData);
         symbolManager.UpdateSymbolsObjects();
         //Debug.Log("StartDone");
-    }
-
-    // 実行中(60FPSでの更新)
-    private void FixedUpdate()
-    {
-        if (maxSpeed != 0)
-        {
-            //止まっていないときは加速
-            if (rotateSpeed <= maxSpeed)
-            {
-                SpeedUpReel();
-            }
-        }
+        Debug.Log("RPS:" + RotateRPS);
     }
 
     // 実行中(常時更新)
     private void Update()
     {
-        if(maxSpeed != 0 && rotateSpeed != 0)
+        if (maxSpeed != 0)
         {
-            RotateReel();
+            //止まっていないときは加速
+            if (rotateSpeed < maxSpeed)
+            {
+                SpeedUpReel();
+            }
+
+            if (rotateSpeed != 0)
+            {
+                RotateReel();
+            }
         }
     }
 
@@ -145,8 +143,11 @@ public class ReelObject : MonoBehaviour
     // 速度加速
     private void SpeedUpReel()
     {
-        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
+        //rotateSpeed = maxSpeed;
+        rotateSpeed = Mathf.Clamp(rotateSpeed += 79.8f * Math.Sign(maxSpeed) * Time.deltaTime, -1 * maxSpeed, maxSpeed);
         Debug.Log("Speed:" + rotateSpeed);
+        rotateSpeed = 1;
+        //Debug.Log("Time:" + Time.deltaTime);
     }
 
     // JAC時の明るさ計算(
@@ -167,47 +168,66 @@ public class ReelObject : MonoBehaviour
             CenterBright = Math.Clamp(SymbolChange.TurnOffValue + distance * brightnessTest, 0, 255);
         }
         Debug.Log("Center:" + CenterBright);
-        return (byte)Math.Clamp(CenterBright,0,255);
+        return (byte)Math.Clamp(CenterBright, 0, 255);
     }
 
     // リール回転
     private void RotateReel()
     {
-        float rotation = ReturnAngularVelocity(RotateRPS) * rotateSpeed * Time.deltaTime;
-        transform.Rotate(rotation * Vector3.left);
+        float rotation = ReturnRadPerSecond(RotateRPS);
+        Debug.Log("Rotation:" + rotation);
+        transform.rotation = Quaternion.AngleAxis(rotation, Vector3.left) * transform.rotation;
         //symbolManager.SymbolObj[(int)ReelPosID.Upper].ChangeBrightness(CalculateJACBrightness(false));
         //symbolManager.SymbolObj[(int)ReelPosID.Center].ChangeBrightness(CalculateJACBrightness(true));
 
         Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
 
-        // 一定角度に達したら図柄の更新(17.14286度)
-        if (transform.rotation.eulerAngles.x > 0 && 
-            transform.rotation.eulerAngles.x <= 360.0f - ChangeAngle && Math.Sign(rotateSpeed) == 1 && rotateSpeed > 0)
-        {
-            // 図柄位置変更
+         // 一定角度に達したら図柄の更新(17.14286度)
+         if ((Math.Abs(transform.rotation.eulerAngles.x) <= 360.0f - ChangeAngle && Math.Sign(maxSpeed) == 1 ||
+                 (Math.Abs(transform.rotation.eulerAngles.x) >= ChangeAngle && Math.Sign(maxSpeed) == -1)))
+         {
+             // 図柄位置変更
 
-            Debug.Log("Changed");
-            reelData.ChangeReelPos(rotateSpeed);
-            symbolManager.UpdateSymbolsObjects();
+             Debug.Log("Changed");
+             reelData.ChangeReelPos(rotateSpeed);
+             symbolManager.UpdateSymbolsObjects();
 
             // 図柄の場所だけ変更角度分回転を戻す
-            transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
+            //transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
+            Debug.Log("Change Angle" + (360.0f - ChangeAngle));
+
+            float dif = 360.0f - ChangeAngle + ChangeOffset - transform.rotation.eulerAngles.x;
+            Debug.Log("Difference" + dif);
+
+            //transform.rotation = Quaternion.identity;
+
+            Debug.Log("New Euler:" + transform.rotation.eulerAngles.x);
+
+            if (dif != 0)
+            {
+                transform.rotation = Quaternion.AngleAxis(dif, Vector3.left);
+            }
+
+            Debug.Log("Fixed Euler:" + transform.rotation.eulerAngles.x);
 
             //symbolManager.SymbolObj[(int)ReelPosID.Upper].ChangeBrightness(SymbolChange.TurnOffValue);
             //symbolManager.SymbolObj[(int)ReelPosID.Center].ChangeBrightness(SymbolChange.TurnOnValue);
 
             // 停止する位置になったら
             if (reelData.CurrentReelStatus == ReelStatus.Stopping && reelData.CheckReachedStop())
-            {
-                // 再度リールの角度を調整して停止させる
-                transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));
-                rotateSpeed = 0;
-                maxSpeed = 0;
-                reelData.FinishStopReel();
+             {
+                 // 再度リールの角度を調整して停止させる
+                 //transform.Rotate(Vector3.left, Math.Abs(transform.rotation.eulerAngles.x));
 
-                //Debug.Log("Stopped");
-            }
-        }
+                 transform.rotation = Quaternion.AngleAxis(ChangeAngle, Vector3.left) * transform.rotation;
+
+                 rotateSpeed = 0;
+                 maxSpeed = 0;
+                 reelData.FinishStopReel();
+
+                 //Debug.Log("Stopped");
+             }
+         }
     }
 
     // リール本体そのものの明るさを変更
@@ -215,16 +235,16 @@ public class ReelObject : MonoBehaviour
     // 指定位置リール図柄の明るさを変更
     public void SetSymbolBrightness(int posID, byte brightness) => symbolManager.SymbolObj[GetReelArrayIndex(posID)].ChangeBrightness(brightness);
 
-    // 回転率計算
-    private float ReturnAngularVelocity(float rpsValue)
+    // 角速度(rad/s)を求める
+    private float ReturnRadPerSecond(float rpsValue)
     {
-        // ラジアンを求める
-        float radian = rpsValue * 2.0f * MathF.PI;
-
-        // ラジアンから毎秒動かす角度を計算
-        return radian * 180.0f / MathF.PI;
+        float radian = 2f * MathF.PI * rpsValue;
+        return radian;
     }
 
     // 加速度を返す
-    private float ReturnReelAccerateSpeed(float rpsValue) => ReelRadius / 80f * ReturnAngularVelocity(rpsValue) / 1000.0f;
+    private float ReturnReelAccerateSpeed(float rpsValue)
+    {
+        return ReelRadius / 80f * ReturnRadPerSecond(rpsValue) / 1000.0f;
+    }
 }

@@ -4829,15 +4829,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4859,6 +4859,14 @@ PrefabInstance:
       propertyPath: reelDatabaseFile
       value: 
       objectReference: {fileID: 11400000, guid: 5e0103a395971e94b8db84a44f66c812, type: 2}
+    - target: {fileID: 4206557707271383368, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6c0a491af40ebfb4c99a4fd26b5cc5a0, type: 3}
+    - target: {fileID: 4248025171943339932, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6c0a491af40ebfb4c99a4fd26b5cc5a0, type: 3}
     - target: {fileID: 4698204694510346898, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_IsActive
       value: 1

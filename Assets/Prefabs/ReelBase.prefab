@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JacMode: 0
   reelDatabaseFile: {fileID: 11400000, guid: 3e4745ce543247f41831242aae0ad29a, type: 2}
 --- !u!114 &-8310782498088753725
 MonoBehaviour:
@@ -118,7 +119,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b2336242314472e4ca194011356d7d99, type: 3}
   - {fileID: 21300000, guid: c9a7bfc607bda8b4b8b5b1be3133bd11, type: 3}
   - {fileID: 21300000, guid: 9c543f18504dd694f9adb6f15513e1cf, type: 3}
-  currentSymbol: 0
   posID: 1
 --- !u!212 &5218879112950893076
 SpriteRenderer:
@@ -225,7 +225,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b2336242314472e4ca194011356d7d99, type: 3}
   - {fileID: 21300000, guid: c9a7bfc607bda8b4b8b5b1be3133bd11, type: 3}
   - {fileID: 21300000, guid: 9c543f18504dd694f9adb6f15513e1cf, type: 3}
-  currentSymbol: 0
   posID: 2
 --- !u!212 &4248025171943339932
 SpriteRenderer:
@@ -332,7 +331,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b2336242314472e4ca194011356d7d99, type: 3}
   - {fileID: 21300000, guid: c9a7bfc607bda8b4b8b5b1be3133bd11, type: 3}
   - {fileID: 21300000, guid: 9c543f18504dd694f9adb6f15513e1cf, type: 3}
-  currentSymbol: 0
   posID: 0
 --- !u!212 &4206557707271383368
 SpriteRenderer:
@@ -620,7 +618,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b2336242314472e4ca194011356d7d99, type: 3}
   - {fileID: 21300000, guid: c9a7bfc607bda8b4b8b5b1be3133bd11, type: 3}
   - {fileID: 21300000, guid: 9c543f18504dd694f9adb6f15513e1cf, type: 3}
-  currentSymbol: 0
   posID: -1
 --- !u!212 &8499991397729587479
 SpriteRenderer:
@@ -861,7 +858,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b2336242314472e4ca194011356d7d99, type: 3}
   - {fileID: 21300000, guid: c9a7bfc607bda8b4b8b5b1be3133bd11, type: 3}
   - {fileID: 21300000, guid: 9c543f18504dd694f9adb6f15513e1cf, type: 3}
-  currentSymbol: 0
   posID: 3
 --- !u!212 &3144280265459081524
 SpriteRenderer:
