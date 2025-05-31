@@ -14,7 +14,7 @@ public class ReelObject : MonoBehaviour
     // í‚é~ç≈ëÂóLå¯îÕàÕ
     const float ChangeOffset = 0.8f;
     // âÒì]ë¨ìx (Rotate Per Second)
-    public const float RotateRPS = 79.8f / 60.0f;
+    public const float RotateRPS = 1f / 60.0f;
     // ÉäÅ[ÉãèdÇ≥(kg)
     public const float ReelWeight = 25.5f;
     // ÉäÅ[Éãîºåa(cm)
@@ -153,19 +153,25 @@ public class ReelObject : MonoBehaviour
     // JACéûÇÃñæÇÈÇ≥åvéZ(
     private byte CalculateJACBrightness(bool isNegative)
     {
-        float brightnessTest = Math.Clamp(transform.rotation.eulerAngles.x / ChangeAngle, 0f, 1f);
+        float brightnessTest = 0;
+        float distanceRotation = 360 - (360 - ChangeAngle);
+        float currentDistance = Math.Clamp((360 - transform.rotation.eulerAngles.x), 0, distanceRotation);
+
+        brightnessTest = currentDistance / distanceRotation;
+        Debug.Log("Bright:" + brightnessTest);
+
         int distance = SymbolChange.TurnOnValue - SymbolChange.TurnOffValue;
-        Debug.Log(brightnessTest);
+
 
         float CenterBright;
 
         if (isNegative)
         {
-            CenterBright = Math.Clamp(SymbolChange.TurnOnValue - distance * brightnessTest, 0, 255);
+            CenterBright = Math.Clamp(SymbolChange.TurnOnValue - (distance * brightnessTest), 0, 255);
         }
         else
         {
-            CenterBright = Math.Clamp(SymbolChange.TurnOffValue + distance * brightnessTest, 0, 255);
+            CenterBright = Math.Clamp(SymbolChange.TurnOffValue + (distance * brightnessTest), 0, 255);
         }
         Debug.Log("Center:" + CenterBright);
         return (byte)Math.Clamp(CenterBright, 0, 255);
@@ -177,8 +183,8 @@ public class ReelObject : MonoBehaviour
         float rotation = ReturnRadPerSecond(RotateRPS);
         Debug.Log("Rotation:" + rotation);
         transform.rotation = Quaternion.AngleAxis(rotation, Vector3.left) * transform.rotation;
-        //symbolManager.SymbolObj[(int)ReelPosID.Upper].ChangeBrightness(CalculateJACBrightness(false));
-        //symbolManager.SymbolObj[(int)ReelPosID.Center].ChangeBrightness(CalculateJACBrightness(true));
+        symbolManager.SymbolObj[(int)ReelPosID.Upper + 1].ChangeBrightness(CalculateJACBrightness(false));
+        symbolManager.SymbolObj[(int)ReelPosID.Center + 1].ChangeBrightness(CalculateJACBrightness(true));
 
         Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
 
@@ -210,8 +216,8 @@ public class ReelObject : MonoBehaviour
 
             Debug.Log("Fixed Euler:" + transform.rotation.eulerAngles.x);
 
-            //symbolManager.SymbolObj[(int)ReelPosID.Upper].ChangeBrightness(SymbolChange.TurnOffValue);
-            //symbolManager.SymbolObj[(int)ReelPosID.Center].ChangeBrightness(SymbolChange.TurnOnValue);
+            symbolManager.SymbolObj[(int)ReelPosID.Upper + 1].ChangeBrightness(SymbolChange.TurnOffValue);
+            symbolManager.SymbolObj[(int)ReelPosID.Center + 1].ChangeBrightness(SymbolChange.TurnOnValue);
 
             // í‚é~Ç∑ÇÈà íuÇ…Ç»Ç¡ÇΩÇÁ
             if (reelData.CurrentReelStatus == ReelStatus.Stopping && reelData.CheckReachedStop())
