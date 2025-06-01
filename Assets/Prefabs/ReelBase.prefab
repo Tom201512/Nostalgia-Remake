@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JacMode: 0
+  JacLightOffset: 1
   reelDatabaseFile: {fileID: 11400000, guid: 3e4745ce543247f41831242aae0ad29a, type: 2}
 --- !u!114 &-8310782498088753725
 MonoBehaviour:

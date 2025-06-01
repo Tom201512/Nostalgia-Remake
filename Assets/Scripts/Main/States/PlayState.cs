@@ -1,9 +1,8 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
-using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
 using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -30,14 +29,10 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateStart()
         {
-            //Debug.Log("Start Playing State");
-
             // リール始動
             gameManager.Reel.StartReels();
-
             // ボーナス中のランプ処理
             gameManager.Bonus.UpdateSegments();
-
             // スタートサウンド再生
             gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Start);
         }
@@ -82,10 +77,8 @@ namespace ReelSpinGame_State.PlayingState
             // 入力がある場合は離れたときの制御を行う
             else if (hasInput)
             {
-                ////Debug.Log("Input still");
                 if (!Input.anyKey)
                 {
-                    ////Debug.Log("input end");
                     hasInput = false;
                 }
             }

@@ -1,6 +1,5 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
-using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_State.InsertState
@@ -130,8 +129,8 @@ namespace ReelSpinGame_State.InsertState
 
             // リール点灯
             // JAC GAME中なら点灯方法を少し変える
-            //gameManager.Reel.TurnOnAllReels(true);
             gameManager.Reel.TurnOnAllReels(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
+            //gameManager.Reel.TurnOnAllReels(true);
 
         }
 

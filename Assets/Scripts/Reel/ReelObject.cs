@@ -2,6 +2,7 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.ReelData;
 
 public class ReelObject : MonoBehaviour
@@ -9,16 +10,16 @@ public class ReelObject : MonoBehaviour
     // リールオブジェクト
 
     // const
-    // 図柄変更時の角度 (360度を21分割)
-    const float ChangeAngle = 360.0f / 21.0f;
+    // 回転時図柄変更の角度 (360度を21分割) (回転は下方向)
+    const float ChangeAngle = 360.0f - 360.0f / 21.0f;
+    // 逆回転時図柄変更の角度
+    const float ReversedChangeAngle = 360.0f / 21.0f;
     // 停止最大有効範囲
-    const float ChangeOffset = 0.8f;
+    const float ChangeOffset = 0f;
     // 回転速度 (Rotate Per Second)
-    public const float RotateRPS = 79.8f / 60.0f;
-    // リール重さ(kg)
-    public const float ReelWeight = 25.5f;
-    // リール半径(cm)
-    public const float ReelRadius = 12.75f;
+    const float RotateRPS = 79.8f / 60.0f;
+    // JAC時の光度調整数値
+    [Range(0f, 1.0f), SerializeField] float JacLightOffset;
 
     // var
     // 現在の回転速度
@@ -33,6 +34,8 @@ public class ReelObject : MonoBehaviour
     private ReelData reelData;
     // JAC中の点灯をするか
     public bool HasJacModeLight { get; set; }
+    // モーションブラー
+    private PostProcessVolume postVolume;
 
     // リール情報
     [SerializeField] ReelDatabase reelDatabaseFile;
@@ -46,6 +49,8 @@ public class ReelObject : MonoBehaviour
 
         reelBase = GetComponentInChildren<ReelBase>();
         symbolManager = GetComponentInChildren<SymbolManager>();
+        postVolume = GetComponent<PostProcessVolume>();
+        postVolume.enabled = false;
 
         foreach (byte value in reelDatabaseFile.Array)
         {
@@ -66,7 +71,7 @@ public class ReelObject : MonoBehaviour
         symbolManager.SetReelData(reelData);
         symbolManager.UpdateSymbolsObjects();
         //Debug.Log("StartDone");
-        Debug.Log("RPS:" + RotateRPS);
+        //Debug.Log("RPS:" + RotateRPS);
     }
 
     // 実行中(常時更新)
@@ -75,11 +80,13 @@ public class ReelObject : MonoBehaviour
         if (maxSpeed != 0)
         {
             //止まっていないときは加速
-            if (rotateSpeed < maxSpeed)
+            if (rotateSpeed < maxSpeed && Math.Sign(maxSpeed) == 1 ||
+                rotateSpeed > maxSpeed && Math.Sign(maxSpeed) == -1)
             {
                 SpeedUpReel();
             }
 
+            // リールの回転
             if (rotateSpeed != 0)
             {
                 RotateReel();
@@ -134,15 +141,21 @@ public class ReelObject : MonoBehaviour
     }
 
     // リール停止
-    public void StopReel(int pushedPos, int delay)
-    {
-        reelData.BeginStopReel(pushedPos, delay);
-    }
+    public void StopReel(int pushedPos, int delay) => reelData.BeginStopReel(pushedPos, delay);
 
     // 速度加速
     private void SpeedUpReel()
     {
-        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
+        rotateSpeed = rotateSpeed += ReturnRadPerSecond(RotateRPS) * Time.deltaTime * Math.Sign(maxSpeed);
+
+        if(Math.Sign(maxSpeed) == -1)
+        {
+            rotateSpeed = Math.Clamp(rotateSpeed, maxSpeed, 0);
+        }
+        else
+        {
+            rotateSpeed = Math.Clamp(rotateSpeed, 0, maxSpeed);
+        }
         Debug.Log("Speed:" + rotateSpeed);
     }
 
@@ -150,21 +163,28 @@ public class ReelObject : MonoBehaviour
     private byte CalculateJACBrightness(bool isNegative)
     {
         float brightnessTest = 0;
-        float distanceRotation = 360 - (360 - ChangeAngle);
         float currentDistance = 0;
 
-        if (transform.rotation.eulerAngles.x > 0)
-        {
-           currentDistance = Math.Clamp((360 - transform.rotation.eulerAngles.x), 0, distanceRotation);
-        }
+        // 少し早めに光らせるため距離は短くする
+        float distanceRotation = (360.0f - ChangeAngle) * JacLightOffset;
 
-        brightnessTest = currentDistance / distanceRotation;
-        Debug.Log("Bright:" + brightnessTest);
+        // 符号に合わせて距離を計算
+        if(transform.rotation.eulerAngles.x > 0f)
+        {
+            if (Math.Sign(maxSpeed) == -1)
+            {
+                currentDistance = transform.rotation.eulerAngles.x;
+            }
+            else
+            {
+                currentDistance = 360.0f - transform.rotation.eulerAngles.x;
+            }
+        }
+        brightnessTest = Math.Clamp(currentDistance / distanceRotation, 0, 1);
 
         int distance = SymbolChange.TurnOnValue - SymbolChange.TurnOffValue;
 
-
-        float CenterBright;
+        float CenterBright = 0;
 
         if (isNegative)
         {
@@ -175,7 +195,7 @@ public class ReelObject : MonoBehaviour
             CenterBright = Math.Clamp(SymbolChange.TurnOffValue + (distance * brightnessTest), 0, 255);
         }
 
-        Debug.Log("Center:" + CenterBright);
+        //Debug.Log("Center:" + CenterBright);
         return (byte)Math.Clamp(CenterBright, 0, 255);
     }
 
@@ -183,47 +203,61 @@ public class ReelObject : MonoBehaviour
     private void RotateReel()
     {
         float rotation = ReturnRadPerSecond(RotateRPS) * rotateSpeed;
-        Debug.Log("Rotation:" + rotation);
-
         transform.rotation = Quaternion.AngleAxis(rotation, Vector3.left) * transform.rotation;
 
-        if(HasJacModeLight)
+        if (HasJacModeLight)
         {
-            symbolManager.SymbolObj[(int)ReelPosID.Upper + 1].ChangeBrightness(CalculateJACBrightness(false));
-            symbolManager.SymbolObj[(int)ReelPosID.Center + 1].ChangeBrightness(CalculateJACBrightness(true));
+            if(Math.Sign(maxSpeed) == -1)
+            {
+                symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Center)].ChangeBrightness(CalculateJACBrightness(false));
+                symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Lower)].ChangeBrightness(CalculateJACBrightness(true));
+            }
+            else
+            {
+                symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Upper)].ChangeBrightness(CalculateJACBrightness(false));
+                symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Center)].ChangeBrightness(CalculateJACBrightness(true));
+            }
         }
-
-        Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
 
         // 一定角度に達したら図柄の更新(17.14286度)
         if (transform.rotation.eulerAngles.x > 0 &&
-            (Math.Abs(transform.rotation.eulerAngles.x) < 360.0f - ChangeAngle + ChangeOffset && Math.Sign(maxSpeed) == 1))
+            (Math.Abs(transform.rotation.eulerAngles.x) <= ChangeAngle + ChangeOffset && Math.Sign(maxSpeed) == 1) ||
+            (Math.Abs(transform.rotation.eulerAngles.x) >= ReversedChangeAngle + ChangeOffset && Math.Sign(maxSpeed) == -1))
         {
             // 図柄位置変更
-
-            Debug.Log("Changed");
             reelData.ChangeReelPos(rotateSpeed);
             symbolManager.UpdateSymbolsObjects();
 
             // 図柄の場所だけ変更角度分回転を戻す
-            Debug.Log("Change Angle" + (360.0f - ChangeAngle));
+            float dif = 0f;
 
-            float dif = 360.0f - ChangeAngle + ChangeOffset - transform.rotation.eulerAngles.x;
-            Debug.Log("Difference" + dif);
-
-            Debug.Log("New Euler:" + transform.rotation.eulerAngles.x);
+            if(Math.Sign(maxSpeed) == -1)
+            {
+                dif = ReversedChangeAngle - ChangeOffset - transform.rotation.eulerAngles.x;
+            }
+            else
+            {
+                dif = ChangeAngle + ChangeOffset - transform.rotation.eulerAngles.x;
+            }
 
             if (dif != 0)
             {
-                transform.rotation = Quaternion.AngleAxis(dif, Vector3.left);
+                transform.rotation = Quaternion.identity;
+                transform.rotation = Quaternion.AngleAxis(dif, Vector3.right) * transform.rotation;
             }
-
-            Debug.Log("Fixed Euler:" + transform.rotation.eulerAngles.x);
 
             if (HasJacModeLight)
             {
-                symbolManager.SymbolObj[(int)ReelPosID.Upper + 1].ChangeBrightness(SymbolChange.TurnOffValue);
-                symbolManager.SymbolObj[(int)ReelPosID.Center + 1].ChangeBrightness(SymbolChange.TurnOnValue);
+                if (Math.Sign(maxSpeed) == -1)
+                {
+                    symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Center)].ChangeBrightness(SymbolChange.TurnOffValue);
+                    symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Lower)].ChangeBrightness(SymbolChange.TurnOnValue);
+                }
+                else
+                {
+                    symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Upper)].ChangeBrightness(SymbolChange.TurnOffValue);
+                    symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Center)].ChangeBrightness(SymbolChange.TurnOnValue);
+                }
             }
 
             // 停止する位置になったら
@@ -237,6 +271,14 @@ public class ReelObject : MonoBehaviour
 
                 //Debug.Log("Stopped");
             }
+
+            // 変更後はポストエフェクトを切る
+            postVolume.enabled = false;
+        }
+        // 回転動作中はポストエフェクトを有効にする
+        else
+        {
+            postVolume.enabled = true;
         }
     }
 
@@ -250,13 +292,5 @@ public class ReelObject : MonoBehaviour
     {
         float radian = 2f * MathF.PI * rpsValue;
         return radian;
-    }
-
-    // 加速度を返す
-    private float ReturnReelAccerateSpeed(float rpsValue)
-    {
-        float speedAcceration = ReturnRadPerSecond(rpsValue) * Time.deltaTime;
-        Debug.Log("Speed:" + speedAcceration);
-        return Math.Clamp(speedAcceration, 0, maxSpeed);
     }
 }

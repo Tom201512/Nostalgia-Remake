@@ -60,11 +60,11 @@ namespace ReelSpinGame_Reels
         // func
 
         // 指定したリールの位置番号を返す
-        public int GetReelPos(sbyte posID) => OffsetReel(currentLower, posID);
+        public int GetReelPos(int posID) => OffsetReel(currentLower, posID);
         // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(sbyte posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
+        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
         // 停止予定の位置からリール図柄を返す
-        public ReelSymbols GetSymbolFromWillStop(sbyte posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
+        public ReelSymbols GetSymbolFromWillStop(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel(currentLower, (int)Mathf.Sign(rotateSpeed));
         // 停止位置になったか
@@ -93,11 +93,9 @@ namespace ReelSpinGame_Reels
             {
                 throw new Exception("Invalid Delay. Must be within 0~4");
             }
-            ////Debug.Log("Received Stop Delay:" + delay);
 
             // テーブルから得たディレイを記録し、その分リールの停止を遅らせる。
             WillStopPos = OffsetReel(LastPushedPos, delay);
-            ////Debug.Log("WillStop:" + WillStopPos);
             LastDelay = delay;
             CurrentReelStatus = ReelStatus.Stopping;
         }
@@ -111,20 +109,16 @@ namespace ReelSpinGame_Reels
         // リール位置をオーバーフローしない数値で返す
         private int OffsetReel(int reelPos, int offset)
         {
-            ////Debug.Log("ReelPos:" + reelPos);
             if (reelPos + offset < 0)
             {
-                ////Debug.Log("Offset:" + (MaxReelArray + reelPos + offset));
                 return MaxReelArray + reelPos + offset;
             }
 
             else if (reelPos + offset > MaxReelArray - 1)
             {
-                ////Debug.Log("Offset:" + (reelPos + offset - MaxReelArray));
                 return reelPos + offset - MaxReelArray;
             }
             // オーバーフローがないならそのまま返す
-            ////Debug.Log("Offset:" + (reelPos + offset));
             return reelPos + offset;
         }
     }
