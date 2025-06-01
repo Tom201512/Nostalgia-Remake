@@ -12,8 +12,6 @@ public class ReelObject : MonoBehaviour
     // const
     // 図柄変更時の角度 (360度を21分割)
     const float ChangeAngle = 360.0f / 21.0f;
-    // 停止最大有効範囲
-    const float ChangeOffset = 0.8f;
     // リール半径(cm)
     const float ReelRadius = 12.75f;
     // JAC時の光度調整数値
@@ -219,21 +217,21 @@ public class ReelObject : MonoBehaviour
             }
         }
 
-        Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
-        Debug.Log("ChangeAngle:" + (360f - ChangeAngle + ChangeOffset));
+        //Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
+        //Debug.Log("ChangeAngle:" + (360f - ChangeAngle));
 
         // 一定角度に達したら図柄の更新(17.14286度)
         if (transform.rotation.eulerAngles.x > 0 &&
-            (transform.rotation.eulerAngles.x < 360f - ChangeAngle + ChangeOffset && Math.Sign(rotateSpeed) == 1) ||
-            (transform.rotation.eulerAngles.x > ChangeAngle - ChangeOffset && Math.Sign(rotateSpeed) == -1))
+            (transform.rotation.eulerAngles.x < 360f - ChangeAngle && Math.Sign(rotateSpeed) == 1) ||
+            (transform.rotation.eulerAngles.x > ChangeAngle && Math.Sign(rotateSpeed) == -1))
         {
-            Debug.Log("Symbol changed");
+            //Debug.Log("Symbol changed");
             // 図柄位置変更
             reelData.ChangeReelPos(rotateSpeed);
             symbolManager.UpdateSymbolsObjects();
 
             // 角度をもとに戻す
-            transform.Rotate(Vector3.right, (ChangeAngle - ChangeOffset) * Math.Sign(rotateSpeed));
+            transform.Rotate(Vector3.right, (ChangeAngle) * Math.Sign(rotateSpeed));
 
             if (HasJacModeLight)
             {
