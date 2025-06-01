@@ -31,8 +31,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8337703540314114183}
   - {fileID: 2848023357844898931}
+  - {fileID: 8337703540314114183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1933351381960056272
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JacLightOffset: 0.4
+  rotateRPM: 0
   reelDatabaseFile: {fileID: 11400000, guid: 3e4745ce543247f41831242aae0ad29a, type: 2}
 --- !u!114 &-8310782498088753725
 MonoBehaviour:
