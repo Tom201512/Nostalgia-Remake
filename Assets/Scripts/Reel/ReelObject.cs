@@ -2,7 +2,6 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.ReelData;
 
@@ -11,16 +10,10 @@ public class ReelObject : MonoBehaviour
     // リールオブジェクト
 
     // const
-    // 回転時図柄変更の角度 (360度を21分割) (回転は下方向)
-    //const float ChangeAngle = 360.0f - 360.0f / 21.0f;
-    // 逆回転時図柄変更の角度
-    //const float ReversedChangeAngle = 360.0f / 21.0f;
     // 図柄変更時の角度 (360度を21分割)
     const float ChangeAngle = 360.0f / 21.0f;
     // 停止最大有効範囲
-    const float ChangeOffset = 0f;
-    // 回転速度 (Rotate Per Second)
-    const float RotateRPS = 79.8f / 60.0f;
+    const float ChangeOffset = 0.8f;
     // リール半径(cm)
     const float ReelRadius = 12.75f;
     // JAC時の光度調整数値
@@ -41,6 +34,13 @@ public class ReelObject : MonoBehaviour
     public bool HasJacModeLight { get; set; }
     // モーションブラー
     private PostProcessVolume postVolume;
+    // ブラー部分のプロファイル
+    private MotionBlur motionBlur;
+
+    // 回転速度 (Rotate Per Minute)
+    [Range(0f, 80f), SerializeField] private float rotateRPM;
+    // 回転速度 (Rotate Per Second)
+    private float rotateRPS;
 
     // リール情報
     [SerializeField] ReelDatabase reelDatabaseFile;
@@ -50,12 +50,15 @@ public class ReelObject : MonoBehaviour
     {
         rotateSpeed = 0.0f;
         maxSpeed = 0.0f;
+        rotateRPS = rotateRPM / 60.0f;
         HasJacModeLight = false;
 
         reelBase = GetComponentInChildren<ReelBase>();
         symbolManager = GetComponentInChildren<SymbolManager>();
+
+        // ブラーの取得
         postVolume = GetComponent<PostProcessVolume>();
-        postVolume.enabled = false;
+        postVolume.profile.TryGetSettings(out motionBlur);
 
         foreach (byte value in reelDatabaseFile.Array)
         {
@@ -77,9 +80,10 @@ public class ReelObject : MonoBehaviour
         symbolManager.UpdateSymbolsObjects();
         //Debug.Log("StartDone");
         //Debug.Log("RPS:" + RotateRPS);
+        ChangeBlurSetting(false);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         //止まっていないときは加速
         if (rotateSpeed < maxSpeed && Math.Sign(maxSpeed) == 1 ||
@@ -87,11 +91,6 @@ public class ReelObject : MonoBehaviour
         {
             SpeedUpReel();
         }
-    }
-
-    // 実行中(常時更新)
-    private void Update()
-    {
         if (maxSpeed != 0)
         {
             RotateReel();
@@ -101,6 +100,11 @@ public class ReelObject : MonoBehaviour
     // func
 
     // 数値を得る
+    // 現在のスピード
+    public float GetCurrentSpeed() => rotateSpeed;
+    // 現在の角度
+    public float GetCurrentDegree() => transform.rotation.eulerAngles.x;
+
     // リールのID
     public int GetReelID() => reelData.ReelID;
     // 現在のリール状態
@@ -142,6 +146,7 @@ public class ReelObject : MonoBehaviour
     {
         this.maxSpeed = maxSpeed;
         reelData.BeginStartReel();
+        ChangeBlurSetting(true);
     }
 
     // リール停止
@@ -149,7 +154,10 @@ public class ReelObject : MonoBehaviour
 
     // 速度加速
     private void SpeedUpReel() =>
-        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(RotateRPS) * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
+        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(rotateRPS) * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
+
+    // ブラーを切るか
+    private void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
 
     // JAC時の明るさ計算(
     private byte CalculateJACBrightness(bool isNegative)
@@ -194,7 +202,7 @@ public class ReelObject : MonoBehaviour
     // リール回転
     private void RotateReel()
     {
-        float rotationAngle = Math.Clamp((ReturnAngularVelocity(RotateRPS)) * Time.deltaTime * rotateSpeed, 0, 360);
+        float rotationAngle = Math.Clamp((ReturnDegreePerSecond(rotateRPS)) * Time.deltaTime * rotateSpeed, 0, 360);
         transform.Rotate(rotationAngle * Vector3.left);
 
         if (HasJacModeLight)
@@ -212,38 +220,20 @@ public class ReelObject : MonoBehaviour
         }
 
         Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
-        Debug.Log("ChangeAngle:" + ChangeAngle);
+        Debug.Log("ChangeAngle:" + (360f - ChangeAngle + ChangeOffset));
 
         // 一定角度に達したら図柄の更新(17.14286度)
         if (transform.rotation.eulerAngles.x > 0 &&
-            (transform.rotation.eulerAngles.x < 360f - ChangeAngle && Math.Sign(rotateSpeed) == 1))
+            (transform.rotation.eulerAngles.x < 360f - ChangeAngle + ChangeOffset && Math.Sign(rotateSpeed) == 1) ||
+            (transform.rotation.eulerAngles.x > ChangeAngle - ChangeOffset && Math.Sign(rotateSpeed) == -1))
         {
             Debug.Log("Symbol changed");
             // 図柄位置変更
             reelData.ChangeReelPos(rotateSpeed);
             symbolManager.UpdateSymbolsObjects();
 
-            // 図柄の場所だけ変更角度分回転を戻す
-            float dif = 0f;
-
-            if (Math.Sign(maxSpeed) == -1)
-            {
-                //dif = ReversedChangeAngle - transform.rotation.eulerAngles.x;
-                dif = ChangeAngle - transform.rotation.eulerAngles.x;
-            }
-            else
-            {
-                dif = ChangeAngle - transform.rotation.eulerAngles.x;
-            }
-
-            if (dif != 0)
-            {
-                //transform.rotation = Quaternion.identity;
-                //transform.Rotate(ReversedChangeAngle * Vector3.right);
-            }
-
-            // 図柄の場所だけ変更角度分回転を戻す
-            transform.Rotate(Vector3.right, ChangeAngle * Math.Sign(rotateSpeed));
+            // 角度をもとに戻す
+            transform.Rotate(Vector3.right, (ChangeAngle - ChangeOffset) * Math.Sign(rotateSpeed));
 
             if (HasJacModeLight)
             {
@@ -267,17 +257,7 @@ public class ReelObject : MonoBehaviour
                 rotateSpeed = 0;
                 maxSpeed = 0;
                 reelData.FinishStopReel();
-
-                //Debug.Log("Stopped");
             }
-
-            // 変更後はポストエフェクトを切る
-            postVolume.enabled = false;
-        }
-        // 回転動作中はポストエフェクトを有効にする
-        else
-        {
-            postVolume.enabled = true;
         }
     }
 
@@ -286,16 +266,29 @@ public class ReelObject : MonoBehaviour
     // 指定位置リール図柄の明るさを変更
     public void SetSymbolBrightness(int posID, byte brightness) => symbolManager.SymbolObj[GetReelArrayIndex(posID)].ChangeBrightness(brightness);
 
-    // 回転角計算
-    private float ReturnAngularVelocity(float rpsValue)
+    // 1秒に何度回転させるか計算
+    private float ReturnDegreePerSecond(float rpsValue)
     {
         // ラジアンを求める
         float radian = rpsValue * 2.0f * MathF.PI;
 
         // ラジアンから毎秒動かす角度を計算
-        return radian * 180.0f / MathF.PI;
+
+        float result = 180.0f / MathF.PI * radian;
+        Debug.Log("deg/s:" + result);
+        return result;
     }
 
     // 加速度を返す
-    private float ReturnReelAccerateSpeed(float rpsValue) => ReelRadius / 80f * ReturnAngularVelocity(rpsValue) / 1000.0f;
+    private float ReturnReelAccerateSpeed(float rpsValue)
+    {
+        // 接線速度(m/s)を求める
+        float tangentalVelocity = ReelRadius * rotateRPS;
+        Debug.Log("TangentalVelocity:" + tangentalVelocity);
+
+        // 経過時間から速度を割り出す
+        float speed = tangentalVelocity * Time.deltaTime;
+        Debug.Log("Speed:" + speed);
+        return speed;
+    }
 }

@@ -115,6 +115,10 @@ public class ReelManager : MonoBehaviour
     public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].GetLastDelay();
     // 指定リールの状態を確認する
     public ReelStatus GetReelStatus(ReelID reelID) => reelObjects[(int)reelID].GetCurrentReelStatus();
+    // 指定リールの速度を得る
+    public float GetReelSpeed(ReelID reelID) => reelObjects[(int)reelID].GetCurrentSpeed();
+    // 指定リールの回転角を得る
+    public float GetReelDegree(ReelID reelID) => reelObjects[(int)reelID].GetCurrentDegree();
 
     // リール出目データ
     // 最後に止めた出目
