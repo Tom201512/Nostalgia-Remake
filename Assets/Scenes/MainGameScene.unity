@@ -4788,7 +4788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: rotateRPM
-      value: 78.9
+      value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: JacLightOffset
@@ -4877,7 +4877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: rotateRPM
-      value: 78.9
+      value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: JacLightOffset
@@ -4981,7 +4981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: rotateRPM
-      value: 78.9
+      value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: JacLightOffset

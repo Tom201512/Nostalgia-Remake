@@ -16,6 +16,8 @@ public class ReelObject : MonoBehaviour
     const float ReelRadius = 12.75f;
     // JAC時の光度調整数値
     const float JacLightOffset = 0.4f;
+    // 最高速度までの経過時間(秒)
+    const float MaxSpeedReelTime = 0.3f;
 
     // var
     // 現在の回転速度
@@ -77,7 +79,7 @@ public class ReelObject : MonoBehaviour
         symbolManager.SetReelData(reelData);
         symbolManager.UpdateSymbolsObjects();
         //Debug.Log("StartDone");
-        //Debug.Log("RPS:" + RotateRPS);
+        //Debug.Log("RPS:" + rotateRPS);
         ChangeBlurSetting(false);
     }
 
@@ -152,7 +154,7 @@ public class ReelObject : MonoBehaviour
 
     // 速度加速
     private void SpeedUpReel() =>
-        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(rotateRPS) * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
+        rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(rotateRPS) * Time.deltaTime * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
 
     // ブラーを切るか
     private void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
@@ -167,7 +169,7 @@ public class ReelObject : MonoBehaviour
         float distanceRotation = ChangeAngle * JacLightOffset;
 
         // 符号に合わせて距離を計算
-        Debug.Log("Current Euler:" + transform.rotation.eulerAngles.x);
+        //Debug.Log("Current Euler:" + transform.rotation.eulerAngles.x);
         if (transform.rotation.eulerAngles.x > 0f)
         {
             if (Math.Sign(maxSpeed) == -1)
@@ -180,7 +182,7 @@ public class ReelObject : MonoBehaviour
             }
         }
         brightnessTest = Math.Clamp(currentDistance / distanceRotation, 0, 1);
-        Debug.Log("Brightness:" + brightnessTest);
+        //ebug.Log("Brightness:" + brightnessTest);
 
         int distance = SymbolChange.TurnOnValue - SymbolChange.TurnOffValue;
 
@@ -273,19 +275,21 @@ public class ReelObject : MonoBehaviour
         // ラジアンから毎秒動かす角度を計算
 
         float result = 180.0f / MathF.PI * radian;
-        Debug.Log("deg/s:" + result);
+        //Debug.Log("deg/s:" + result);
         return result;
     }
 
     // 加速度を返す
     private float ReturnReelAccerateSpeed(float rpsValue)
     {
+        // ラジアンを求める
+        float radian = rpsValue * 2.0f * MathF.PI;
         // 接線速度(m/s)を求める
-        float tangentalVelocity = ReelRadius * rotateRPS;
+        float tangentalVelocity = ReelRadius * radian / 100f;
         Debug.Log("TangentalVelocity:" + tangentalVelocity);
 
-        // 経過時間から速度を割り出す
-        float speed = tangentalVelocity * Time.deltaTime;
+        // 必要経過時間から速度を出す
+        float speed = tangentalVelocity / MaxSpeedReelTime;
         Debug.Log("Speed:" + speed);
         return speed;
     }
