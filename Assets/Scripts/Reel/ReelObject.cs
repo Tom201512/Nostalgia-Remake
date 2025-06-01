@@ -286,11 +286,11 @@ public class ReelObject : MonoBehaviour
         float radian = rpsValue * 2.0f * MathF.PI;
         // 接線速度(m/s)を求める
         float tangentalVelocity = ReelRadius * radian / 100f;
-        Debug.Log("TangentalVelocity:" + tangentalVelocity);
+        //Debug.Log("TangentalVelocity:" + tangentalVelocity);
 
         // 必要経過時間から速度を出す
         float speed = tangentalVelocity / MaxSpeedReelTime;
-        Debug.Log("Speed:" + speed);
+        //Debug.Log("Speed:" + speed);
         return speed;
     }
 }
