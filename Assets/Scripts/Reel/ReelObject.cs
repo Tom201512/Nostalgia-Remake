@@ -2,6 +2,7 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.ReelData;
 
@@ -77,20 +78,16 @@ public class ReelObject : MonoBehaviour
     // é¿çsíÜ(èÌéûçXêV)
     private void Update()
     {
+        //é~Ç‹Ç¡ÇƒÇ¢Ç»Ç¢Ç∆Ç´ÇÕâ¡ë¨
+        if (rotateSpeed < maxSpeed && Math.Sign(maxSpeed) == 1 ||
+        rotateSpeed > maxSpeed && Math.Sign(maxSpeed) == -1)
+        {
+            SpeedUpReel();
+        }
+
         if (maxSpeed != 0)
         {
-            //é~Ç‹Ç¡ÇƒÇ¢Ç»Ç¢Ç∆Ç´ÇÕâ¡ë¨
-            if (rotateSpeed < maxSpeed && Math.Sign(maxSpeed) == 1 ||
-                rotateSpeed > maxSpeed && Math.Sign(maxSpeed) == -1)
-            {
-                SpeedUpReel();
-            }
-
-            // ÉäÅ[ÉãÇÃâÒì]
-            if (rotateSpeed != 0)
-            {
-                RotateReel();
-            }
+            RotateReel();
         }
     }
 
@@ -146,9 +143,9 @@ public class ReelObject : MonoBehaviour
     // ë¨ìxâ¡ë¨
     private void SpeedUpReel()
     {
-        rotateSpeed = rotateSpeed += ReturnRadPerSecond(RotateRPS) * Time.deltaTime * Math.Sign(maxSpeed);
+        rotateSpeed += ReturnRadPerSecond(RotateRPS) * Math.Sign(maxSpeed) * Time.deltaTime;
 
-        if(Math.Sign(maxSpeed) == -1)
+        if (Math.Sign(maxSpeed) == -1)
         {
             rotateSpeed = Math.Clamp(rotateSpeed, maxSpeed, 0);
         }
@@ -202,8 +199,9 @@ public class ReelObject : MonoBehaviour
     // ÉäÅ[ÉãâÒì]
     private void RotateReel()
     {
-        float rotation = ReturnRadPerSecond(RotateRPS) * rotateSpeed;
-        transform.rotation = Quaternion.AngleAxis(rotation, Vector3.left) * transform.rotation;
+        float rotation = 180.0f / Mathf.PI * ReturnRadPerSecond(RotateRPS) * 1 * Time.deltaTime;
+        Debug.Log("rotation:" + rotation);
+        transform.Rotate(Vector3.left, rotation);
 
         if (HasJacModeLight)
         {
@@ -243,7 +241,7 @@ public class ReelObject : MonoBehaviour
             if (dif != 0)
             {
                 transform.rotation = Quaternion.identity;
-                transform.rotation = Quaternion.AngleAxis(dif, Vector3.right) * transform.rotation;
+                transform.Rotate(Vector3.right, dif);
             }
 
             if (HasJacModeLight)
