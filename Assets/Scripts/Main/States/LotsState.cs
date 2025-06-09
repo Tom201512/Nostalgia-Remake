@@ -27,16 +27,6 @@ namespace ReelSpinGame_State.LotsState
 
             gameManager.Lots.StartFlagLots(gameManager.Setting, gameManager.Medal.GetLastBetAmounts());
 
-            // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if(gameManager.Lots.GetCurrentFlag() == FlagId.FlagBig)
-            {
-                gameManager.PlayerData.AddBonusResult(BonusType.BonusBIG);
-            }
-            else if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagReg)
-            {
-                gameManager.PlayerData.AddBonusResult(BonusType.BonusREG);
-            }
-
             // ボーナス中ならここでゲーム数を減らす
             if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
@@ -46,6 +36,16 @@ namespace ReelSpinGame_State.LotsState
             else
             {
                 gameManager.PlayerData.IncreaseGameValue();
+            }
+
+            // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
+            if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagBig)
+            {
+                gameManager.PlayerData.AddBonusResult(BonusType.BonusBIG);
+            }
+            else if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagReg)
+            {
+                gameManager.PlayerData.AddBonusResult(BonusType.BonusREG);
             }
 
             gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.WaitState);

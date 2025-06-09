@@ -27,7 +27,7 @@ public class PlayerUI : MonoBehaviour
 
         // 差枚数
         buffer += "Dif:" + (playingDatabase.PlayerMedalData.CurrentInMedal -
-            playingDatabase.PlayerMedalData.CurrentOutMedal);
+            playingDatabase.PlayerMedalData.CurrentOutMedal) + "\n";
 
         // 機械割
         if (playingDatabase.PlayerMedalData.CurrentInMedal > 0 && playingDatabase.PlayerMedalData.CurrentOutMedal > 0)
@@ -49,7 +49,7 @@ public class PlayerUI : MonoBehaviour
         if (playingDatabase.BonusHitDatas.Count > 0 && playingDatabase.BonusHitDatas[^1].BonusStartGame > 0)
         {
             // 当選ボーナス
-            buffer += "BonusPayouts:" + playingDatabase.BonusHitDatas[^1].BonusID + "\n";
+            buffer += "BonusType:" + playingDatabase.BonusHitDatas[^1].BonusID + "\n";
             // 当選時ゲーム
             buffer += "BonusHitGame:" + playingDatabase.BonusHitDatas[^1].BonusHitGame + "\n";
             // 入賞時ゲーム
@@ -63,7 +63,7 @@ public class PlayerUI : MonoBehaviour
         else if (playingDatabase.BonusHitDatas.Count > 1 && playingDatabase.BonusHitDatas[^1].BonusStartGame == 0)
         {
             // 当選ボーナス
-            buffer += "BonusPayouts:" + playingDatabase.BonusHitDatas[^2].BonusID + "\n";
+            buffer += "BonusType:" + playingDatabase.BonusHitDatas[^2].BonusID + "\n";
             // 当選時ゲーム
             buffer += "BonusHitGame:" + playingDatabase.BonusHitDatas[^2].BonusHitGame + "\n";
             // 入賞時ゲーム
@@ -76,7 +76,7 @@ public class PlayerUI : MonoBehaviour
         else
         {
             // 当選ボーナス
-            buffer += "BonusPayouts:" + "\n";
+            buffer += "BonusType:" + "\n";
             // 当選時ゲーム
             buffer += "BonusHitGame:" + "\n";
             // 入賞時ゲーム

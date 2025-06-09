@@ -627,7 +627,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -657}
+  m_AnchoredPosition: {x: 225, y: -905}
   m_SizeDelta: {x: 425.23, y: 94.4738}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &341618351
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 0
+  useInstant: 1
   instantFlagID: 1
 --- !u!114 &460868896
 MonoBehaviour:
@@ -1438,7 +1438,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 396.9, y: -60}
+  m_AnchoredPosition: {x: 481, y: -60}
   m_SizeDelta: {x: 425.23, y: 184.7757}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &660297970
@@ -2263,7 +2263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -477}
+  m_AnchoredPosition: {x: 225, y: -675}
   m_SizeDelta: {x: 425.23486, y: 146.31952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &963194225
@@ -2953,7 +2953,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1804.8945, y: -95.55859}
+  m_AnchoredPosition: {x: 1780, y: -95.55859}
   m_SizeDelta: {x: 230.14, y: 191.1178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1227000792
@@ -3752,7 +3752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -73.16016}
+  m_AnchoredPosition: {x: 225, y: -73.16016}
   m_SizeDelta: {x: 425.23486, y: 146.31952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615228409
@@ -3788,12 +3788,27 @@ MonoBehaviour:
 
     OUT:
 
+    Dif:
+
     Payout:
 
 
     BIG:
 
     REG:
+
+
+    BonusType:
+
+    BonusHitGame:
+
+    BonusStartGame:
+
+    BigColor:
+
+    BonusPayouts:
+
+
 
 '
   m_isRightToLeft: 0
@@ -3858,7 +3873,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0.13641357}
+  m_margin: {x: 0, y: 0, z: 0, w: -382.63068}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4460,7 +4475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 212.6211, y: -827}
+  m_AnchoredPosition: {x: 225, y: -1063}
   m_SizeDelta: {x: 425.23, y: 184.7757}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088607535
