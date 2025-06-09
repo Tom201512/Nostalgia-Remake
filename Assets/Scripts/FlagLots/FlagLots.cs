@@ -40,7 +40,9 @@ namespace ReelSpinGame_Lots.Flag
         {
             if (useInstant)
             {
+                // ‹­§–ğ‚ğ”­“®‚³‚¹‚éB‚»‚ÌŒã‚Í‹­§–ğ‚ğØ‚é
                 data.CurrentFlag = instantFlagID;
+                useInstant = false;
             }
             else
             {

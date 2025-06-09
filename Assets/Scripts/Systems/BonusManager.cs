@@ -10,11 +10,12 @@ namespace ReelSpinGame_Bonus
         // ボーナス処理
 
         // const
+        // 獲得枚数の点滅時に点滅させる時間(秒)
+        const float PayoutSegFlashTime = 0.5f;
 
         // var
         // ボーナス処理のデータ
         private BonusBehaviour data;
-
         // ボーナス状態のセグメント
         [SerializeField] private BonusSevenSegment bonusSegments;
         // サウンド
@@ -90,22 +91,22 @@ namespace ReelSpinGame_Bonus
         // ビッグチャンスの開始
         public void StartBigChance(BigColor bigColor)
         {
-            // 対応したボーナスの演出を開始
             //Debug.Log("BIG CHANCE start");
+            // ビッグチャンスの初期化
             data.CurrentBonusPayouts = 0;
             data.RemainingBigGames = BigGames;
             data.RemainingJacIn = JacInTimes;
             data.CurrentBonusStatus = BonusStatus.BonusBIGGames;
             data.HoldingBonusID = BonusType.BonusNone;
             data.BigChanceColor = bigColor;
-
-
+            // 連チャン区間の記録開始
             data.HasZone = true;
         }
 
         // ボーナスゲームの開始
         public void StartBonusGame()
         {
+            // 残りJAC-INがあれば減らす
             if (data.RemainingJacIn > 0)
             {
                 data.RemainingJacIn -= 1;
@@ -117,10 +118,12 @@ namespace ReelSpinGame_Bonus
                 data.CurrentBonusPayouts = 0;
             }
 
+            // ボーナスゲームの初期化
             data.RemainingJacGames = JacGames;
             data.RemainingJacHits = JacHits;
             data.CurrentBonusStatus = BonusStatus.BonusJACGames;
             data.HoldingBonusID = BonusType.BonusNone;
+            // 連チャン区間の記録開始
             data.HasZone = true;
         }
 
@@ -132,13 +135,11 @@ namespace ReelSpinGame_Bonus
             {
                 bonusSegments.ShowBigStatus(data.RemainingJacIn, data.RemainingBigGames);
             }
-
             // JAC中
             else if (data.CurrentBonusStatus == BonusStatus.BonusJACGames)
             {
                 bonusSegments.ShowJacStatus(data.RemainingJacIn + 1, data.RemainingJacHits);
             }
-
             // 通常時に戻った場合は獲得枚数表示とリセット
             else if(DisplayingTotalCount)
             {
@@ -154,7 +155,7 @@ namespace ReelSpinGame_Bonus
             DisplayingTotalCount = false;
         }
 
-        // ゲーム数を減らす
+        // 小役ゲーム数、JACゲーム数を減らす
         public void DecreaseGames()
         {
             if (data.CurrentBonusStatus == BonusStatus.BonusBIGGames)
@@ -175,7 +176,6 @@ namespace ReelSpinGame_Bonus
             {
                 StartBonusGame();
             }
-
             // 30ゲームを消化した場合
             else if (data.RemainingBigGames == 0)
             {
@@ -186,16 +186,15 @@ namespace ReelSpinGame_Bonus
         // ボーナスゲームの状態遷移
         public void CheckBonusGameStatus(bool hasPayout)
         {
+            // JAC役が当選(払い出しがあった)場合は残り入賞回数を減らす
             if (hasPayout)
             {
                 data.RemainingJacHits -= 1;
             }
-
             // JACゲーム数が0, または入賞回数が0の場合は終了
             if (data.RemainingJacGames == 0 || data.RemainingJacHits == 0)
             {
                 //Debug.Log("End Bonus Game");
-
                 // BIG中なら残りJAC-INの数があれば小役ゲームへ移行
                 if (data.RemainingJacIn > 0)
                 {
@@ -209,10 +208,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // ファンファーレ再生
-        public void PlayBonusFanfare()
-        {
-            StartCoroutine(nameof(UpdateBonusFanfare));
-        }
+        public void PlayBonusFanfare() => StartCoroutine(nameof(UpdateBonusFanfare));
 
         // BGMを再生
         public void PlayBGM()
@@ -237,10 +233,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // 終了ファンファーレ再生(現状BIGのみ)
-        public void PlayEndBonusFanfare()
-        {
-            StartCoroutine(nameof(UpdateEndFanfare));
-        }
+        public void PlayEndBonusFanfare() => StartCoroutine(nameof(UpdateEndFanfare));
 
         // ボーナスの終了処理
         private void EndBonusStatus()
@@ -260,11 +253,10 @@ namespace ReelSpinGame_Bonus
             while(DisplayingTotalCount)
             {
                 bonusSegments.ShowTotalPayouts(data.CurrentZonePayouts);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(PayoutSegFlashTime);
                 bonusSegments.TurnOffAllSegments();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(PayoutSegFlashTime);
             }
-
             bonusSegments.TurnOffAllSegments();
         }
 
@@ -277,16 +269,13 @@ namespace ReelSpinGame_Bonus
             {
                 yield return new WaitForEndOfFrame();
             }
-
             // ファンファーレを鳴らす
             PlayFanfare();
-
             // 今鳴らしているファンファーレが止まるのを待つ
             while (!soundManager.GetBGMStopped())
             {
                 yield return new WaitForEndOfFrame();
             }
-
             HasFanfareUpdate = false;
         }
 
@@ -294,13 +283,11 @@ namespace ReelSpinGame_Bonus
         private IEnumerator UpdateEndFanfare()
         {
             HasFanfareUpdate = true;
-
             // 今鳴らしている効果音が止まるのを待つ
             while (!soundManager.GetSoundEffectStopped())
             {
                 yield return new WaitForEndOfFrame();
             }
-
             // BIGの時のみファンファーレを鳴らす
             if(GetBigChangeColor() != BigColor.None)
             {
@@ -311,15 +298,14 @@ namespace ReelSpinGame_Bonus
                     yield return new WaitForEndOfFrame();
                 }
             }
-
             HasFanfareUpdate = false;
             data.BigChanceColor = BigColor.None;
             soundManager.StopBGM();
         }
 
+        // ファンファーレ再生
         private void PlayFanfare()
         {
-            // ファンファーレ再生
             switch (data.BigChanceColor)
             {
                 case BigColor.Red:

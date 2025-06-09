@@ -25,6 +25,10 @@ public class PlayerUI : MonoBehaviour
         buffer += "IN:" + playingDatabase.PlayerMedalData.CurrentInMedal + "\n";
         buffer += "OUT:" + playingDatabase.PlayerMedalData.CurrentOutMedal + "\n";
 
+        // 差枚数
+        buffer += "Dif:" + (playingDatabase.PlayerMedalData.CurrentInMedal -
+            playingDatabase.PlayerMedalData.CurrentOutMedal);
+
         // 機械割
         if (playingDatabase.PlayerMedalData.CurrentInMedal > 0 && playingDatabase.PlayerMedalData.CurrentOutMedal > 0)
         {
@@ -39,7 +43,49 @@ public class PlayerUI : MonoBehaviour
         // ビッグチャンス当選回数
         buffer += "BIG:" + playingDatabase.BigTimes + "\n";
         // ボーナスゲーム当選回数
-        buffer += "REG:" + playingDatabase.RegTimes + "\n";
+        buffer += "REG:" + playingDatabase.RegTimes + "\n" + "\n";
+
+        // ボーナス履歴(ボーナス開始ゲーム数が記録されているか)
+        if (playingDatabase.BonusHitDatas.Count > 0 && playingDatabase.BonusHitDatas[^1].BonusStartGame > 0)
+        {
+            // 当選ボーナス
+            buffer += "BonusPayouts:" + playingDatabase.BonusHitDatas[^1].BonusID + "\n";
+            // 当選時ゲーム
+            buffer += "BonusHitGame:" + playingDatabase.BonusHitDatas[^1].BonusHitGame + "\n";
+            // 入賞時ゲーム
+            buffer += "BonusStartGame:" + playingDatabase.BonusHitDatas[^1].BonusStartGame + "\n";
+            // BIG時の色
+            buffer += "BigColor:" + playingDatabase.BonusHitDatas[^1].BigColor + "\n";
+            // 獲得枚数
+            buffer += "BonusPayouts:" + playingDatabase.BonusHitDatas[^1].BonusPayouts + "\n" + "\n";
+        }
+        // ボーナス履歴(ボーナス開始ゲーム数がまだ記録されていない場合は一つ前を表示)
+        else if (playingDatabase.BonusHitDatas.Count > 1 && playingDatabase.BonusHitDatas[^1].BonusStartGame == 0)
+        {
+            // 当選ボーナス
+            buffer += "BonusPayouts:" + playingDatabase.BonusHitDatas[^2].BonusID + "\n";
+            // 当選時ゲーム
+            buffer += "BonusHitGame:" + playingDatabase.BonusHitDatas[^2].BonusHitGame + "\n";
+            // 入賞時ゲーム
+            buffer += "BonusStartGame:" + playingDatabase.BonusHitDatas[^2].BonusStartGame + "\n";
+            // BIG時の色
+            buffer += "BigColor:" + playingDatabase.BonusHitDatas[^2].BigColor + "\n";
+            // 獲得枚数
+            buffer += "BonusPayouts:" + playingDatabase.BonusHitDatas[^2].BonusPayouts + "\n" + "\n";
+        }
+        else
+        {
+            // 当選ボーナス
+            buffer += "BonusPayouts:" + "\n";
+            // 当選時ゲーム
+            buffer += "BonusHitGame:" + "\n";
+            // 入賞時ゲーム
+            buffer += "BonusStartGame:" + "\n";
+            // BIG時の色
+            buffer += "BigColor:" + "\n";
+            // 獲得枚数
+            buffer += "BonusPayouts:" + "\n" + "\n";
+        }
 
         text.text = buffer;
     }

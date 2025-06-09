@@ -15,6 +15,8 @@ namespace ReelSpinGame_Datas
         public int BonusStartGame { get; private set; }
         // ボーナス獲得枚数
         public int BonusPayouts { get; private set; }
+        // BIG当選時の色
+        public BigColor BigColor { get; private set; }
 
         // コンストラクタ
         public BonusHitData(BonusType bonusID)
@@ -23,14 +25,16 @@ namespace ReelSpinGame_Datas
             BonusHitGame = 0;
             BonusStartGame = 0;
             BonusPayouts = 0;
+            BigColor = BigColor.None;
         }
 
         // セーブから読み込む場合
-        public BonusHitData(BonusType bonusID, int bonusHitGame, int bonusStartGame, int bonusPayouts) : this(bonusID)
+        public BonusHitData(BonusType bonusID, int bonusHitGame, int bonusStartGame, int bonusPayouts, BigColor bigColor) : this(bonusID)
         {
             BonusHitGame = bonusHitGame;
             BonusStartGame = bonusStartGame;
             BonusPayouts = bonusPayouts;
+            BigColor = bigColor;
         }
 
         // func
@@ -40,5 +44,7 @@ namespace ReelSpinGame_Datas
         public void SetBonusStartGame(int game) => BonusStartGame = game;
         // ボーナス獲得枚数変更
         public void ChangeBonusPayouts(int amounts) => BonusPayouts += amounts;
+        // ビッグチャンス時の色セット
+        public void SetBigChanceColor(BigColor color) => BigColor = color;
     }
 }
