@@ -864,8 +864,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
-  instantFlagID: 2
+  useInstant: 0
+  instantFlagID: 0
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,7 +894,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusSegments: {fileID: 1944429048}
-  soundManager: {fileID: 1787737428}
 --- !u!1001 &470524867
 PrefabInstance:
   m_ObjectHideFlags: 0
