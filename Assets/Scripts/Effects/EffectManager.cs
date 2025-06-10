@@ -1,4 +1,6 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Lots;
+using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
@@ -93,6 +95,15 @@ namespace ReelSpinGame_Effect
         public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundEffectList.Wait);
         // スタート音
         public void StartLeverOnEffect() => soundManager.PlaySoundOneShot(soundManager.SoundEffectList.Start);
+        // テスト用??
+        public void StartLeverOnEffect(FlagBehaviour.FlagId flag, BonusType holding)
+        {
+            // ボーナスがある場合
+            if(holding != BonusType.BonusNone)
+            {
+
+            }
+        }
         // 停止音
         public void StartReelStopEffect() => soundManager.PlaySoundOneShot(soundManager.SoundEffectList.Stop);
 
@@ -141,7 +152,7 @@ namespace ReelSpinGame_Effect
         public void StartReplayEffect(List<PayoutLineData> lastPayoutLines)
         {
             //音再生
-            soundManager.PlaySoundLoop(soundManager.SoundEffectList.Replay);
+            soundManager.PlaySoundAndWait(soundManager.SoundEffectList.Replay);
             // フラッシュさせる
             flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
         }
@@ -164,13 +175,11 @@ namespace ReelSpinGame_Effect
         }
 
         // ボーナス終了時の演出
-        public void StartBonusEndEffect(BigColor color)
+        public void StartBonusEndEffect()
         {
             // ビッグチャンス時は対応した色のファンファーレを再生
-            BigChanceColor = color;
             StartCoroutine(nameof(UpdateEndFanfare));
         }
-
 
         // フラッシュ停止
         public void StopReelFlash() => flashManager.StopFlash();

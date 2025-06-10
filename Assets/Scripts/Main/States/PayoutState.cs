@@ -45,7 +45,7 @@ namespace ReelSpinGame_State.PayoutState
 
             // フラッシュ演出開始
             StartFlash();
-
+            
             // ボーナスごとに処理を変える
             switch (gameManager.Bonus.GetCurrentBonusStatus())
             {
@@ -53,12 +53,26 @@ namespace ReelSpinGame_State.PayoutState
                 case BonusStatus.BonusBIGGames:
                     // 状態確認
                     gameManager.Bonus.CheckBigGameStatus(gameManager.Reel.GetPayoutResultData().IsReplayOrJacIn);
+
+                    // ボーナスが終了していればファンファーレ再生
+                    if(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+                    {
+                        Debug.Log("Bonus END");
+                        gameManager.Effect.StartBonusEndEffect();
+                    }
                     break;
 
                 // ボーナスゲーム中
                 case BonusStatus.BonusJACGames:
                     // 状態確認
                     gameManager.Bonus.CheckBonusGameStatus(gameManager.Reel.GetPayoutResultData().Payouts > 0);
+
+                    // ボーナスが終了していればファンファーレ再生
+                    if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+                    {
+                        Debug.Log("Bonus END");
+                        gameManager.Effect.StartBonusEndEffect();
+                    }
                     break;
 
                 // 通常時はリプレイの処理、またはフラグテーブルの更新
