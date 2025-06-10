@@ -1,5 +1,6 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels.Flash;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.Flash.FlashManager;
@@ -15,6 +16,13 @@ namespace ReelSpinGame_Effect
         // var
         // フラッシュ機能
         private FlashManager flashManager;
+        // フラッシュ中か
+        public bool HasFlash { get; set; }
+        // フラッシュで待機中か
+        public bool HasFlashWait { get; set; }
+        // 現在のフラッシュID
+        public int CurrentFlashID { get; set; }
+
         // リールのオブジェクト
         [SerializeField] private List<ReelObject> reelObjects;
 

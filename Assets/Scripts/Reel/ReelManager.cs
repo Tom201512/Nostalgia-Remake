@@ -281,6 +281,7 @@ public class ReelManager : MonoBehaviour
         if (instantRandomMode)
         {
             data.RandomValue = instantRandomValue;
+            instantRandomMode = false;
         }
         else
         {
