@@ -1,5 +1,6 @@
 ﻿using ReelSpinGame_Datas;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ReelSpinGame_Reels
 {
@@ -58,6 +59,6 @@ namespace ReelSpinGame_Reels
         }
 
         // 最後に止めたリールデータを作る
-        public void GenerateLastStopped(ReelObject[] reelObjects) => LastStopped.GenerateLastStopped(reelObjects);
+        public void GenerateLastStopped(List<ReelObject> reelObjects) => LastStopped.GenerateLastStopped(reelObjects);
     }
 }

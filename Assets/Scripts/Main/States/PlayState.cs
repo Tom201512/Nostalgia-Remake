@@ -73,7 +73,6 @@ namespace ReelSpinGame_State.PlayingState
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PayoutState);
                 }
             }
-
             // 入力がある場合は離れたときの制御を行う
             else if (hasInput)
             {
@@ -95,20 +94,18 @@ namespace ReelSpinGame_State.PlayingState
             if (gameManager.Reel.GetCanStopReels() && 
                 gameManager.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
             {
-                gameManager.Reel.StopSelectedReel(reelID,
-                    gameManager.Medal.GetLastBetAmounts(),
-                    gameManager.Lots.GetCurrentFlag(),
-                    gameManager.Bonus.GetHoldingBonusID());
+                // リールを止める
+                gameManager.Reel.StopSelectedReel(reelID,gameManager.Medal.GetLastBetAmounts(),
+                    gameManager.Lots.GetCurrentFlag(),gameManager.Bonus.GetHoldingBonusID());
 
                 // 停止音再生
                 PlayStopSound();
 
-                // 通常時,第二停止でリーチしていたら音を鳴らす
+                // 通常時,第二停止でBIG図柄がリーチしていたら音を鳴らす
                 if (gameManager.Reel.GetStoppedCount() == 2 &&
                     gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
                 {
-                    // リーチがあれば再生
-                    CheckRiichi(gameManager.Medal.GetLastBetAmounts());
+                    PlayRiichiSound();
                 }
             }
         }
@@ -121,24 +118,19 @@ namespace ReelSpinGame_State.PlayingState
         }
 
         // リーチの確認
-        private void CheckRiichi(int betAmounts)
+        private void PlayRiichiSound()
         {
-            // 赤7
-            if(gameManager.Reel.CountBonusSymbols(BigColor.Red, betAmounts) == 2)
+            switch(gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 2))
             {
-                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
-            }
-
-            // 青7
-            else if (gameManager.Reel.CountBonusSymbols(BigColor.Blue, betAmounts) == 2)
-            {
-                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.BlueRiichiSound);
-            }
-
-            // BB7
-            else if (gameManager.Reel.CountBonusSymbols(BigColor.Black, betAmounts) == 2)
-            {
-                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.BB7RiichiSound);
+                case BigColor.Red:
+                    gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
+                    break;
+                case BigColor.Blue:
+                    gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
+                    break;
+                case BigColor.Black:
+                    gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
+                    break;
             }
         }
     }

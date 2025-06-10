@@ -31,7 +31,7 @@ namespace ReelSpinGame_Reels.Flash
 
         // var
         // リールオブジェクト
-        private ReelObject[] reelObjects;
+        private List<ReelObject> reelObjects;
         // 最後にあった払い出しライン
         private List<PayoutLineData> lastPayoutLines;
 
@@ -50,7 +50,7 @@ namespace ReelSpinGame_Reels.Flash
         // func
         public void Awake()
         {
-            reelObjects = new ReelObject[0];
+            reelObjects = new List<ReelObject>();
             lastPayoutLines = new List<PayoutLineData>();
 
             HasFlash = false;
@@ -75,7 +75,7 @@ namespace ReelSpinGame_Reels.Flash
         // func
         // データを渡す
         // リールオブジェクト
-        public void SetReelObjects(ReelObject[] reelObjects) => this.reelObjects = reelObjects;
+        public void SetReelObjects(List<ReelObject> reelObjects) => this.reelObjects = reelObjects;
 
         // リールフラッシュを再生させる
         public void StartReelFlash(FlashID flashID)

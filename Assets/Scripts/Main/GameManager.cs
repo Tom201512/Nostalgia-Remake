@@ -1,4 +1,5 @@
 using ReelSpinGame_Bonus;
+using ReelSpinGame_Effect;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Sound;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     // 各種機能
     [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] private SoundManager soundManagerObj;
+    [SerializeField] private EffectManager effectManagerObj;
     [SerializeField] MedalTestUI medalUI;
     [SerializeField] LotsTestUI lotsUI;
     [SerializeField] WaitTestUI waitUI;
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     public ReelManager Reel { get { return reelManagerObj; } }
     public BonusManager Bonus { get; private set; }
     public SoundManager Sound { get { return soundManagerObj; } }
+    public EffectManager Effect { get { return effectManagerObj; } }
 
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }
@@ -63,7 +66,6 @@ public class GameManager : MonoBehaviour
     {
         // プレイヤーデータ作成
         PlayerData = new PlayingDatabase();
-
         // 画面
         //Debug.Log("Screen:" + Screen.width + "," + Screen.height);
         Screen.SetResolution(960, 540, false);

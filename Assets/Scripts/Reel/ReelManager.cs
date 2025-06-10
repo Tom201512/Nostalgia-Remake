@@ -1,13 +1,13 @@
 ﻿using ReelSpinGame_Datas;
+using ReelSpinGame_Effect;
 using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Reels.Payout;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
-using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
@@ -22,15 +22,10 @@ public class ReelManager : MonoBehaviour
     // var
     // リールマネージャーのデータ
     private ReelManagerBehaviour data;
-
     // リールのオブジェクト
-    [SerializeField] private ReelObject[] reelObjects;
-
-    // フラッシュ機能
-    private FlashManager flashManager;
+    [SerializeField] private List<ReelObject> reelObjects;
     // 払い出し確認機能
     private PayoutChecker payoutChecker;
-
     // 強制ランダム数値
     [SerializeField] private bool instantRandomMode;
     // 強制時のランダム数値
@@ -39,20 +34,13 @@ public class ReelManager : MonoBehaviour
     // 初期化
     void Awake()
     {
-        for (int i = 0; i < reelObjects.Length; i++)
+        for (int i = 0; i < reelObjects.Count; i++)
         {
             reelObjects[i].SetReelData(i, 19);
         }
 
         data = new ReelManagerBehaviour();
-        flashManager = GetComponent<FlashManager>();
         payoutChecker = GetComponent<PayoutChecker>();
-    }
-
-    private void Start()
-    {
-        flashManager.SetReelObjects(reelObjects);
-        //flashManager.StartReelFlash(FlashID.V_Flash);
     }
 
     void Update()
@@ -125,11 +113,8 @@ public class ReelManager : MonoBehaviour
     public LastStoppedReelData GetLastStopped() => data.LastStopped;
     // 使用したリールテーブルID
     public int GetUsedReelTableID(ReelID reelID) => data.ReelTableManager.UsedReelTableID[(int)reelID];
-
-    //フラッシュ
-    // フラッシュで待機中か
-    public bool GetHasFlashWait() => flashManager.HasFlashWait;
-
+    // 払い出しのあったラインを返す
+    public List<PayoutLineData> GetLastPayoutLines() => payoutChecker.LastPayoutResult.PayoutLines;
     // 払い出し結果データ表示
     public PayoutResultBuffer GetPayoutResultData() => payoutChecker.LastPayoutResult;
     // 払い出し判定モード表示
@@ -150,7 +135,7 @@ public class ReelManager : MonoBehaviour
             data.IsReelWorking = true;
             data.IsFirstReelPushed = false;
 
-            for (int i = 0; i < reelObjects.Length; i++)
+            for (int i = 0; i < reelObjects.Count; i++)
             {
                 reelObjects[i].StartReel(1.0f);
             }
@@ -193,8 +178,32 @@ public class ReelManager : MonoBehaviour
         }
     }
 
+    // 指定した数のBIG図柄が揃っているかを返す
+    public BigColor GetBigLinedUpCounts(int betAmounts, int checkAmounts)
+    {
+        // 赤7
+        if (CountBonusSymbols(BigColor.Red, betAmounts) == checkAmounts)
+        {
+            return BigColor.Red;
+        }
+
+        // 青7
+        if (CountBonusSymbols(BigColor.Blue, betAmounts) == checkAmounts)
+        {
+            return BigColor.Blue;
+        }
+
+        // BB7
+        if (CountBonusSymbols(BigColor.Black, betAmounts) == checkAmounts)
+        {
+            return BigColor.Black;
+        }
+
+        return BigColor.None;
+    }
+
     // ビッグチャンス図柄がいくつ揃っているか確認する
-    public int CountBonusSymbols(BigColor bigColor, int betAmounts)
+    private int CountBonusSymbols(BigColor bigColor, int betAmounts)
     {
         // 最も多かった個数を記録
         int highestCount = 0;
@@ -206,7 +215,7 @@ public class ReelManager : MonoBehaviour
             {
                 int currentCount = 0;
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
-                for (int i = 0; i < reelObjects.Length; i++)
+                for (int i = 0; i < reelObjects.Count; i++)
                 {
                     // 赤7
                     if (bigColor == BigColor.Red && 
@@ -250,42 +259,6 @@ public class ReelManager : MonoBehaviour
 
     // 払い出しのチェック
     public void StartCheckPayouts(int betAmounts) => payoutChecker.CheckPayoutLines(betAmounts, data.LastStopped);
-
-    // フラッシュ関連
-    // リール全点灯
-    public void TurnOnAllReels(bool isJacGame)
-    {
-        // JAC GAME中は中段のみ光らせる
-        if(isJacGame)
-        {
-            flashManager.EnableJacGameLight();
-        }
-        else
-        {
-            flashManager.TurnOnAllReels();
-        }
-
-        // JAC中のライト処理をする
-        foreach (ReelObject reel in reelObjects)
-        {
-            if(reel.HasJacModeLight != isJacGame)
-            {
-                reel.HasJacModeLight = isJacGame;
-            }
-        }
-    }
-
-    // リールライト全消灯
-    public void TurnOffAllReels() => flashManager.TurnOffAllReels();
-
-    // リールフラッシュを開始させる
-    public void StartReelFlash(FlashID flashID) => flashManager.StartReelFlash(flashID);
-
-    // 払い出しのリールフラッシュを開始させる
-    public void StartPayoutReelFlash(float waitSeconds) => flashManager.StartPayoutFlash(waitSeconds, payoutChecker.LastPayoutResult.PayoutLines);
-
-    // フラッシュ停止
-    public void StopReelFlash() => flashManager.StopFlash();
 
     // 全リール速度が最高速度かチェック
     private bool CheckReelSpeedMaximum()

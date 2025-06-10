@@ -23,7 +23,7 @@ namespace ReelSpinGame_Reels
         }
 
         // 最後に止めた結果を作る
-        public void GenerateLastStopped(ReelObject[] reelObjects)
+        public void GenerateLastStopped(List<ReelObject> reelObjects)
         {
             // 初期化
             LastPos.Clear();
@@ -32,7 +32,7 @@ namespace ReelSpinGame_Reels
             string posBuffer = "";
 
             // リール図柄を作成する
-            for (int i = 0; i < reelObjects.Length; i++)
+            for (int i = 0; i < reelObjects.Count; i++)
             {
                 LastPos.Add(reelObjects[i].GetReelPos(ReelPosID.Lower));
                 posBuffer += LastPos[i];

@@ -11,16 +11,14 @@ namespace ReelSpinGame_State.PayoutState
     public class PayoutState : IGameStatement
     {
         // const
+        // リプレイ時に待機させる時間(秒)
+        const float ReplayWaitTime = 1.0f;
         // Vフラッシュ確率(1/n)
-        public const int VFlashProb = 6;
+        const int VFlashProb = 6;
 
         // var
         // このゲームの状態
         public MainGameFlow.GameStates State { get; }
-
-        //test
-        public bool TestFlag = false;
-
         // ゲームマネージャ
         private GameManager gameManager;
 
@@ -35,10 +33,9 @@ namespace ReelSpinGame_State.PayoutState
         {
             StartCheckPayout(gameManager.Medal.GetLastBetAmounts());
 
-            // 払い出しの為にプレイヤーのメダルをアタッチする
+            // 払い出しのコルーチンでプレイヤーのメダル情報を更新できるようにする
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
-
             // 払い出し開始
             gameManager.Medal.StartPayout(gameManager.Reel.GetPayoutResultData().Payouts);
             // 1枚でも払い出しがあれば音再生
@@ -52,7 +49,7 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gameManager.Bonus.ChangeBonusPayouts(gameManager.Reel.GetPayoutResultData().Payouts);
                 gameManager.Bonus.ChangeZonePayouts(gameManager.Reel.GetPayoutResultData().Payouts);
-                gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Reel.GetPayoutResultData().Payouts);
+                gameManager.PlayerData.ChangeLastBonusPayouts(gameManager.Reel.GetPayoutResultData().Payouts);
             }
 
             // ボーナスごとに処理を変える
@@ -98,7 +95,6 @@ namespace ReelSpinGame_State.PayoutState
                     }
                     break;
             }
-
             StartFlash();
         }
 
@@ -110,7 +106,7 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Sound.StopLoopSound();
 
                 // 払い出し、各種演出(フラッシュ、BGMなど)の待機処理が終わっていたら投入状態へ
-                if (!gameManager.Sound.GetSoundEffectHasLoop() && !gameManager.Reel.GetHasFlashWait() &&
+                if (!gameManager.Sound.GetSoundEffectHasLoop() && !gameManager.Effect.GetHasFlashWait() &&
                     !gameManager.Bonus.HasFanfareUpdate)
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
@@ -171,7 +167,7 @@ namespace ReelSpinGame_State.PayoutState
             if (gameManager.Reel.GetPayoutResultData().Payouts != 0)
             {
                 // フラッシュさせる
-                gameManager.Reel.StartPayoutReelFlash(0);
+                gameManager.Effect.StartPayoutReelFlash(0, gameManager.Reel.GetLastPayoutLines());
             }
 
             // 通常時のリプレイだった場合は1秒待たせる。
@@ -181,7 +177,7 @@ namespace ReelSpinGame_State.PayoutState
                 //音再生
                 gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Replay);
                 // フラッシュさせる
-                gameManager.Reel.StartPayoutReelFlash(1.0f);
+                gameManager.Effect.StartPayoutReelFlash(ReplayWaitTime, gameManager.Reel.GetLastPayoutLines());
             }
 
             // 通常時はずれの場合、ボーナスが当選していたら1/6でフラッシュ
@@ -189,7 +185,7 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Bonus.GetHoldingBonusID() != BonusType.BonusNone &&
                 Random.Range(0, VFlashProb - 1) == 0)
             {
-                gameManager.Reel.StartReelFlash(FlashID.V_Flash);
+                gameManager.Effect.StartReelFlash(FlashID.V_Flash);
             }
 
             // ボーナス中はビタハズシ成功でフラッシュ
@@ -200,7 +196,7 @@ namespace ReelSpinGame_State.PayoutState
                 if (gameManager.Reel.GetLastStopped().LastPos[(int)ReelID.ReelLeft] + 1 == 11 ||
                         gameManager.Reel.GetLastStopped().LastPos[(int)ReelID.ReelLeft] + 1 == 17)
                 {
-                    gameManager.Reel.StartReelFlash(FlashID.V_Flash);
+                    gameManager.Effect.StartReelFlash(FlashID.V_Flash);
                 }
             }
         }
@@ -212,11 +208,11 @@ namespace ReelSpinGame_State.PayoutState
             if(gameManager.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusBIG)
             {
                 // リールから揃ったボーナス図柄の色を得る
-                BigColor color = CheckBigChanceColor(gameManager.Medal.GetLastBetAmounts());
+                BigColor color = gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 3);
                 gameManager.Bonus.StartBigChance(color);
                 // ビッグチャンス回数、入賞時の色を記録
                 gameManager.PlayerData.IncreaseBigChance();
-                gameManager.PlayerData.BonusHitDatas[^1].SetBigChanceColor(color);
+                gameManager.PlayerData.SetLastBigChanceColor(color);
             }
 
             // ボーナスゲーム
@@ -227,7 +223,7 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 15枚の払い出しを記録
-            gameManager.PlayerData.ChangeBonusPayoutToLast(gameManager.Reel.GetPayoutResultData().Payouts);
+            gameManager.PlayerData.ChangeLastBonusPayouts(gameManager.Reel.GetPayoutResultData().Payouts);
             gameManager.Bonus.ChangeBonusPayouts(gameManager.Reel.GetPayoutResultData().Payouts);
             gameManager.Bonus.ChangeZonePayouts(gameManager.Reel.GetPayoutResultData().Payouts);
             // カウンタリセット
@@ -285,7 +281,6 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gameManager.Medal.ChangeMaxBet(3);
             }
-
             // ボーナス中のランプ処理
             gameManager.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
@@ -310,30 +305,6 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.NormalPayout);
             }
-        }
-
-        // 当選したBIGの種類を調べる
-        private BigColor CheckBigChanceColor(int betAmounts)
-        {
-            // 赤7
-            if (gameManager.Reel.CountBonusSymbols(BigColor.Red, betAmounts) == 3)
-            {
-                return BigColor.Red;
-            }
-
-            // 青7
-            if (gameManager.Reel.CountBonusSymbols(BigColor.Blue, betAmounts) == 3)
-            {
-                return BigColor.Blue;
-            }
-
-            // BB7
-            if (gameManager.Reel.CountBonusSymbols(BigColor.Black, betAmounts) == 3)
-            {
-                return BigColor.Black;
-            }
-
-            return BigColor.None;
         }
     }
 }

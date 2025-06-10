@@ -1,7 +1,7 @@
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Datas;
 using System.Collections.Generic;
-using UnityEngine;
+using static ReelSpinGame_Bonus.BonusBehaviour;
 
 namespace ReelSpinGame_System
 {
@@ -69,13 +69,11 @@ namespace ReelSpinGame_System
         }
 
         // 直近のボーナス履歴の入賞を記録
-        public void SetLastBonusStart()
-        {
-            BonusHitDatas[^1].SetBonusStartGame(CurrentGames);
-        }
-
+        public void SetLastBonusStart() => BonusHitDatas[^1].SetBonusStartGame(CurrentGames);
+        // 直近のビッグチャンス時の色を記録
+        public void SetLastBigChanceColor(BigColor color) => BonusHitDatas[^1].SetBigChanceColor(color);
         // 現在のボーナス履歴に払い出しを追加する
-        public void ChangeBonusPayoutToLast(int payouts) => BonusHitDatas[^1].ChangeBonusPayouts(payouts);
+        public void ChangeLastBonusPayouts(int payouts) => BonusHitDatas[^1].ChangeBonusPayouts(payouts);
 
         // ビッグチャンス回数の増加
         public void IncreaseBigChance() => BigTimes += 1;
