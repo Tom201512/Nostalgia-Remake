@@ -113,8 +113,6 @@ public class ReelManager : MonoBehaviour
     public LastStoppedReelData GetLastStopped() => data.LastStopped;
     // 使用したリールテーブルID
     public int GetUsedReelTableID(ReelID reelID) => data.ReelTableManager.UsedReelTableID[(int)reelID];
-    // 払い出しのあったラインを返す
-    public List<PayoutLineData> GetLastPayoutLines() => payoutChecker.LastPayoutResult.PayoutLines;
     // 払い出し結果データ表示
     public PayoutResultBuffer GetPayoutResultData() => payoutChecker.LastPayoutResult;
     // 払い出し判定モード表示

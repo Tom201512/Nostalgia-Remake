@@ -2,7 +2,6 @@ using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
-using ReelSpinGame_Sound;
 using ReelSpinGame_System;
 using UnityEngine;
 
@@ -16,7 +15,6 @@ public class GameManager : MonoBehaviour
     // var
     // ŠeŽí‹@”\
     [SerializeField] private ReelManager reelManagerObj;
-    [SerializeField] private SoundManager soundManagerObj;
     [SerializeField] private EffectManager effectManagerObj;
     [SerializeField] MedalTestUI medalUI;
     [SerializeField] LotsTestUI lotsUI;
@@ -30,7 +28,6 @@ public class GameManager : MonoBehaviour
     public WaitManager Wait { get; private set; }
     public ReelManager Reel { get { return reelManagerObj; } }
     public BonusManager Bonus { get; private set; }
-    public SoundManager Sound { get { return soundManagerObj; } }
     public EffectManager Effect { get { return effectManagerObj; } }
 
     [SerializeField] StatusPanel statusPanel;

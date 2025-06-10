@@ -134,7 +134,7 @@ namespace ReelSpinGame_State.InsertState
         // サウンド再生
         private void BetSound()
         {
-            gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Bet);
+            gameManager.Effect.StartBetEffect();
         }
     }
 }

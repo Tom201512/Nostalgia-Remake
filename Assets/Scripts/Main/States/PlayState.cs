@@ -34,7 +34,7 @@ namespace ReelSpinGame_State.PlayingState
             // ボーナス中のランプ処理
             gameManager.Bonus.UpdateSegments();
             // スタートサウンド再生
-            gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Start);
+            gameManager.Effect.StartLeverOnEffect();
         }
 
         public void StateUpdate()
@@ -99,38 +99,14 @@ namespace ReelSpinGame_State.PlayingState
                     gameManager.Lots.GetCurrentFlag(),gameManager.Bonus.GetHoldingBonusID());
 
                 // 停止音再生
-                PlayStopSound();
+                gameManager.Effect.StartReelStopEffect();
 
                 // 通常時,第二停止でBIG図柄がリーチしていたら音を鳴らす
                 if (gameManager.Reel.GetStoppedCount() == 2 &&
                     gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
                 {
-                    PlayRiichiSound();
+                    gameManager.Effect.StartRiichiEffect(gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 2));
                 }
-            }
-        }
-
-        // 停止音再生
-        private void PlayStopSound()
-        {
-            // 停止音サウンド再生
-            gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Stop);
-        }
-
-        // リーチの確認
-        private void PlayRiichiSound()
-        {
-            switch(gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 2))
-            {
-                case BigColor.Red:
-                    gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
-                    break;
-                case BigColor.Blue:
-                    gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
-                    break;
-                case BigColor.Black:
-                    gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.RedRiichiSound);
-                    break;
             }
         }
     }

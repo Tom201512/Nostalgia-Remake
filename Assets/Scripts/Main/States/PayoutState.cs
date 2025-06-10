@@ -11,10 +11,6 @@ namespace ReelSpinGame_State.PayoutState
     public class PayoutState : IGameStatement
     {
         // const
-        // リプレイ時に待機させる時間(秒)
-        const float ReplayWaitTime = 1.0f;
-        // Vフラッシュ確率(1/n)
-        const int VFlashProb = 6;
 
         // var
         // このゲームの状態
@@ -38,11 +34,6 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
             // 払い出し開始
             gameManager.Medal.StartPayout(gameManager.Reel.GetPayoutResultData().Payouts);
-            // 1枚でも払い出しがあれば音再生
-            if(gameManager.Reel.GetPayoutResultData().Payouts > 0)
-            {
-                PayoutSound();
-            }
 
             // ボーナス中なら各ボーナスの払い出しを増やす
             if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
@@ -51,6 +42,9 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Bonus.ChangeZonePayouts(gameManager.Reel.GetPayoutResultData().Payouts);
                 gameManager.PlayerData.ChangeLastBonusPayouts(gameManager.Reel.GetPayoutResultData().Payouts);
             }
+
+            // フラッシュ演出開始
+            StartFlash();
 
             // ボーナスごとに処理を変える
             switch (gameManager.Bonus.GetCurrentBonusStatus())
@@ -95,7 +89,6 @@ namespace ReelSpinGame_State.PayoutState
                     }
                     break;
             }
-            StartFlash();
         }
 
         public void StateUpdate()
@@ -103,11 +96,10 @@ namespace ReelSpinGame_State.PayoutState
             // 払い出しが終わったら停止
             if (gameManager.Medal.GetPayoutAmounts() == 0)
             {
-                gameManager.Sound.StopLoopSound();
+                gameManager.Effect.StopLoopSound();
 
                 // 払い出し、各種演出(フラッシュ、BGMなど)の待機処理が終わっていたら投入状態へ
-                if (!gameManager.Sound.GetSoundEffectHasLoop() && !gameManager.Effect.GetHasFlashWait() &&
-                    !gameManager.Bonus.HasFanfareUpdate)
+                if (gameManager.Effect.HasEffectFinished() && !gameManager.Bonus.HasFanfareUpdate)
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
                 }
@@ -166,26 +158,22 @@ namespace ReelSpinGame_State.PayoutState
             // 払い出しがあったらフラッシュを開始させる
             if (gameManager.Reel.GetPayoutResultData().Payouts != 0)
             {
-                // フラッシュさせる
-                gameManager.Effect.StartPayoutReelFlash(0, gameManager.Reel.GetLastPayoutLines());
+                gameManager.Effect.StartPayoutReelFlash(gameManager.Reel.GetPayoutResultData().PayoutLines,
+                    gameManager.Bonus.GetCurrentBonusStatus(), gameManager.Reel.GetPayoutResultData().Payouts);
             }
 
             // 通常時のリプレイだった場合は1秒待たせる。
             else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
                 gameManager.Reel.GetPayoutResultData().IsReplayOrJacIn)
             {
-                //音再生
-                gameManager.Sound.PlaySoundOneShot(gameManager.Sound.SoundEffectList.Replay);
-                // フラッシュさせる
-                gameManager.Effect.StartPayoutReelFlash(ReplayWaitTime, gameManager.Reel.GetLastPayoutLines());
+                gameManager.Effect.StartReplayEffect(gameManager.Reel.GetPayoutResultData().PayoutLines);
             }
 
             // 通常時はずれの場合、ボーナスが当選していたら1/6でフラッシュ
             else if (gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
-                gameManager.Bonus.GetHoldingBonusID() != BonusType.BonusNone &&
-                Random.Range(0, VFlashProb - 1) == 0)
+                gameManager.Bonus.GetHoldingBonusID() != BonusType.BonusNone)
             {
-                gameManager.Effect.StartReelFlash(FlashID.V_Flash);
+                gameManager.Effect.StartRiichiPatternEffect();
             }
 
             // ボーナス中はビタハズシ成功でフラッシュ
@@ -285,26 +273,6 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
             gameManager.Bonus.PlayBGM();
-        }
-
-        // 払い出し音
-        private void PayoutSound()
-        {
-            // JAC中の払い出し音
-            if(gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
-            {
-                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.JacPayout);
-            }
-            // 15枚の払い出し音
-            else if (gameManager.Reel.GetPayoutResultData().Payouts >= 15)
-            {
-                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.MaxPayout);
-            }
-            //　それ以外は通常の払い出し音
-            else
-            {
-                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.NormalPayout);
-            }
         }
     }
 }

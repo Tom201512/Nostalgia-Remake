@@ -27,7 +27,7 @@ namespace ReelSpinGame_State.LotsState
             if (gameManager.Wait.HasWait)
             {
                 gameManager.Status.TurnOnWaitLamp();
-                gameManager.Sound.PlaySoundLoop(gameManager.Sound.SoundEffectList.Wait);
+                gameManager.Effect.StartWaitEffect();
             }
         }
 
@@ -48,7 +48,7 @@ namespace ReelSpinGame_State.LotsState
 
             // ウェイトランプを切る
             gameManager.Status.TurnOffWaitLamp();
-            gameManager.Sound.StopLoopSound();
+            gameManager.Effect.StopLoopSound();
         }
     }
 }
