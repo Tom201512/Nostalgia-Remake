@@ -1,7 +1,9 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
@@ -24,11 +26,17 @@ namespace ReelSpinGame_Effect
         // サウンド機能
         private SoundManager soundManager;
         // フラッシュ中か
-        public bool HasFlash { get; set; }
+        public bool HasFlash { get; private set; }
         // フラッシュで待機中か
-        public bool HasFlashWait { get; set; }
+        public bool HasFlashWait { get; private set; }
         // 現在のフラッシュID
-        public int CurrentFlashID { get; set; }
+        public int CurrentFlashID { get; private set; }
+        // ボーナス処理で待機中か
+        public bool HasFanfareUpdate { get; private set; }
+        // ビッグチャンス時の色
+        public BigColor BigChanceColor { get; private set; }
+        // 直前のボーナス状態(同じBGMが再生されていないかチェック用)
+        private BonusStatus lastBonusStatus;
 
         // リールのオブジェクト
         [SerializeField] private List<ReelObject> reelObjects;
@@ -47,7 +55,7 @@ namespace ReelSpinGame_Effect
         }
 
         // 演出が終了しているか(サウンド、フラッシュ、ボーナスファンファーレのすべてが停止中)
-        public bool HasEffectFinished() => !flashManager.HasFlashWait && !soundManager.GetSoundEffectHasLoop();
+        public bool HasEffectFinished() => !flashManager.HasFlashWait && !soundManager.GetSoundEffectHasLoop() && !HasFanfareUpdate;
 
         // フラッシュ関連
         // リール全点灯
@@ -147,10 +155,170 @@ namespace ReelSpinGame_Effect
             }
         }
 
+        // ボーナス開始時の演出
+        public void StartBonusStartEffect(BigColor color)
+        {
+            // ビッグチャンス時は対応した色のファンファーレを再生
+            BigChanceColor = color;
+            StartCoroutine(nameof(UpdateBonusFanfare));
+        }
+
+        // ボーナス終了時の演出
+        public void StartBonusEndEffect(BigColor color)
+        {
+            // ビッグチャンス時は対応した色のファンファーレを再生
+            BigChanceColor = color;
+            StartCoroutine(nameof(UpdateEndFanfare));
+        }
+
+
         // フラッシュ停止
         public void StopReelFlash() => flashManager.StopFlash();
 
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSound();
+
+        // BGMを再生
+        public void PlayBonusBGM(BonusStatus status)
+        {
+            if(lastBonusStatus != status)
+            {
+                switch(status)
+                {
+                    case BonusStatus.BonusBIGGames:
+                        PlayBigGameBGM();
+                        break;
+                    case BonusStatus.BonusJACGames:
+                        PlayBonusGameBGM();
+                        break;
+                    case BonusStatus.BonusNone:
+                        soundManager.StopBGM();
+                        break;
+                }
+                lastBonusStatus = status;
+            }
+        }
+
+        // ファンファーレ再生
+        private void PlayFanfare()
+        {
+            switch (BigChanceColor)
+            {
+                case BigColor.Red:
+                    soundManager.PlayBGM(soundManager.BGMList.RedStart, false);
+                    break;
+                case BigColor.Blue:
+                    soundManager.PlayBGM(soundManager.BGMList.BlueStart, false);
+                    break;
+                case BigColor.Black:
+                    soundManager.PlayBGM(soundManager.BGMList.BlackStart, false);
+                    break;
+                default:
+                    soundManager.PlayBGM(soundManager.BGMList.RegStart, false);
+                    break;
+            }
+        }
+
+        // 小役ゲーム中のBGM再生
+        private void PlayBigGameBGM()
+        {
+            switch (BigChanceColor)
+            {
+                case BigColor.Red:
+                    soundManager.PlayBGM(soundManager.BGMList.RedBGM, true);
+                    break;
+                case BigColor.Blue:
+                    soundManager.PlayBGM(soundManager.BGMList.BlueBGM, true);
+                    break;
+                case BigColor.Black:
+                    soundManager.PlayBGM(soundManager.BGMList.BlackBGM, true);
+                    break;
+                default:
+                    soundManager.PlayBGM(soundManager.BGMList.RegJAC, true);
+                    break;
+            }
+        }
+
+        // ボーナスゲーム中のBGM再生
+        private void PlayBonusGameBGM()
+        {
+            switch (BigChanceColor)
+            {
+                case BigColor.Red:
+                    soundManager.PlayBGM(soundManager.BGMList.RedJAC, true);
+                    break;
+                case BigColor.Blue:
+                    soundManager.PlayBGM(soundManager.BGMList.BlueJAC, true);
+                    break;
+                case BigColor.Black:
+                    soundManager.PlayBGM(soundManager.BGMList.BlackJAC, true);
+                    break;
+                default:
+                    soundManager.PlayBGM(soundManager.BGMList.RegJAC, true);
+                    break;
+            }
+        }
+
+        // 終了ジングル再生(BIGのみ)
+        private void PlayBigEndFanfare()
+        {
+            switch (BigChanceColor)
+            {
+                case BigColor.Red:
+                    soundManager.PlayBGM(soundManager.BGMList.RedEnd, false);
+                    break;
+                case BigColor.Blue:
+                    soundManager.PlayBGM(soundManager.BGMList.BlueEnd, false);
+                    break;
+                case BigColor.Black:
+                    soundManager.PlayBGM(soundManager.BGMList.BlackEnd, false);
+                    break;
+            }
+        }
+
+        // コルーチン
+
+        // ボーナス当選ファンファーレ再生処理
+        private IEnumerator UpdateBonusFanfare()
+        {
+            HasFanfareUpdate = true;
+            // 今鳴らしている効果音が止まるのを待つ
+            while (!soundManager.GetSoundEffectStopped())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            // ファンファーレを鳴らす
+            PlayFanfare();
+            // 今鳴らしているファンファーレが止まるのを待つ
+            while (!soundManager.GetBGMStopped())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            HasFanfareUpdate = false;
+        }
+
+        // ボーナス終了ファンファーレ再生処理
+        private IEnumerator UpdateEndFanfare()
+        {
+            HasFanfareUpdate = true;
+            // 今鳴らしている効果音が止まるのを待つ
+            while (!soundManager.GetSoundEffectStopped())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            // BIGの時のみファンファーレを鳴らす
+            if (BigChanceColor != BigColor.None)
+            {
+                PlayBigEndFanfare();
+                // 今鳴らしているファンファーレが止まるのを待つ
+                while (!soundManager.GetBGMStopped())
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+            HasFanfareUpdate = false;
+            BigChanceColor = BigColor.None;
+            soundManager.StopBGM();
+        }
     }
 }

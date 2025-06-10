@@ -99,7 +99,7 @@ namespace ReelSpinGame_State.PayoutState
                 gameManager.Effect.StopLoopSound();
 
                 // 払い出し、各種演出(フラッシュ、BGMなど)の待機処理が終わっていたら投入状態へ
-                if (gameManager.Effect.HasEffectFinished() && !gameManager.Bonus.HasFanfareUpdate)
+                if (gameManager.Effect.HasEffectFinished())
                 {
                     gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.InsertState);
                 }
@@ -192,11 +192,12 @@ namespace ReelSpinGame_State.PayoutState
         //　ボーナス開始
         private void StartBonus()
         {
+            // リールから揃ったボーナス図柄の色を得る
+            BigColor color = gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 3);
+
             // ビッグチャンス
-            if(gameManager.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusBIG)
+            if (gameManager.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusBIG)
             {
-                // リールから揃ったボーナス図柄の色を得る
-                BigColor color = gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 3);
                 gameManager.Bonus.StartBigChance(color);
                 // ビッグチャンス回数、入賞時の色を記録
                 gameManager.PlayerData.IncreaseBigChance();
@@ -218,8 +219,8 @@ namespace ReelSpinGame_State.PayoutState
             gameManager.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
             gameManager.PlayerData.SetLastBonusStart();
-            // ファンファーレ再生
-            gameManager.Bonus.PlayBonusFanfare();
+            // ファンファーレ演出スタート
+            gameManager.Effect.StartBonusStartEffect(color);
         }
 
         // ボーナスをストックさせる
@@ -272,7 +273,7 @@ namespace ReelSpinGame_State.PayoutState
             // ボーナス中のランプ処理
             gameManager.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
-            gameManager.Bonus.PlayBGM();
+            gameManager.Effect.PlayBonusBGM(gameManager.Bonus.GetCurrentBonusStatus());
         }
     }
 }

@@ -18,24 +18,14 @@ namespace ReelSpinGame_Bonus
         private BonusBehaviour data;
         // ボーナス状態のセグメント
         [SerializeField] private BonusSevenSegment bonusSegments;
-        // サウンド
-        [SerializeField] private SoundManager soundManager;
-
-        // ボーナスファンファーレ処理をしているか
-        public bool HasFanfareUpdate { get; private set; }
         // 獲得枚数を表示しているか
         public bool DisplayingTotalCount { get; private set; }
-
-        // 直前のボーナス状態(同じBGMが再生されていないかチェック用)
-        private BonusStatus lastBonusStatus;
 
         // func
         private void Awake()
         {
             data = new BonusBehaviour();
-            HasFanfareUpdate = false;
             DisplayingTotalCount = false;
-            lastBonusStatus = BonusStatus.BonusNone;
         }
 
         // 各種数値を得る
@@ -207,34 +197,6 @@ namespace ReelSpinGame_Bonus
             }
         }
 
-        // ファンファーレ再生
-        public void PlayBonusFanfare() => StartCoroutine(nameof(UpdateBonusFanfare));
-
-        // BGMを再生
-        public void PlayBGM()
-        {
-            // 状態が変わっていたら変更
-            if(GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
-                lastBonusStatus != GetCurrentBonusStatus())
-            {
-                PlayBigGameBGM();
-            }
-            else if(GetCurrentBonusStatus() == BonusStatus.BonusJACGames &&
-                lastBonusStatus != GetCurrentBonusStatus())
-            {
-                PlayBonusGameBGM();
-            }
-            else if(GetCurrentBonusStatus() == BonusStatus.BonusNone)
-            {
-                soundManager.StopBGM();
-            }
-
-            lastBonusStatus = GetCurrentBonusStatus();
-        }
-
-        // 終了ファンファーレ再生(現状BIGのみ)
-        public void PlayEndBonusFanfare() => StartCoroutine(nameof(UpdateEndFanfare));
-
         // ボーナスの終了処理
         private void EndBonusStatus()
         {
@@ -244,7 +206,6 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacHits = 0;
             data.CurrentBonusStatus = BonusStatus.BonusNone;
             DisplayingTotalCount = true;
-            PlayEndBonusFanfare();
         }
 
         // 獲得枚数を点滅させる
@@ -258,126 +219,6 @@ namespace ReelSpinGame_Bonus
                 yield return new WaitForSeconds(PayoutSegFlashTime);
             }
             bonusSegments.TurnOffAllSegments();
-        }
-
-        // ボーナス当選ファンファーレ再生処理
-        private IEnumerator UpdateBonusFanfare()
-        {
-            HasFanfareUpdate = true;
-            // 今鳴らしている効果音が止まるのを待つ
-            while (!soundManager.GetSoundEffectStopped())
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            // ファンファーレを鳴らす
-            PlayFanfare();
-            // 今鳴らしているファンファーレが止まるのを待つ
-            while (!soundManager.GetBGMStopped())
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            HasFanfareUpdate = false;
-        }
-
-        // ボーナス終了ファンファーレ再生処理
-        private IEnumerator UpdateEndFanfare()
-        {
-            HasFanfareUpdate = true;
-            // 今鳴らしている効果音が止まるのを待つ
-            while (!soundManager.GetSoundEffectStopped())
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            // BIGの時のみファンファーレを鳴らす
-            if(GetBigChangeColor() != BigColor.None)
-            {
-                PlayBigEndFanfare();
-                // 今鳴らしているファンファーレが止まるのを待つ
-                while (!soundManager.GetBGMStopped())
-                {
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-            HasFanfareUpdate = false;
-            data.BigChanceColor = BigColor.None;
-            soundManager.StopBGM();
-        }
-
-        // ファンファーレ再生
-        private void PlayFanfare()
-        {
-            switch (data.BigChanceColor)
-            {
-                case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedStart, false);
-                    break;
-                case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueStart, false);
-                    break;
-                case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackStart, false);
-                    break;
-                default:
-                    soundManager.PlayBGM(soundManager.BGMList.RegStart, false);
-                    break;
-            }
-        }
-
-        // 小役ゲーム中のBGM再生
-        private void PlayBigGameBGM()
-        {
-            switch (data.BigChanceColor)
-            {
-                case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedBGM, true);
-                    break;
-                case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueBGM, true);
-                    break;
-                case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackBGM, true);
-                    break;
-                default:
-                    soundManager.PlayBGM(soundManager.BGMList.RegJAC, true);
-                    break;
-            }
-        }
-
-        // ボーナスゲーム中のBGM再生
-        private void PlayBonusGameBGM()
-        {
-            switch (data.BigChanceColor)
-            {
-                case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedJAC, true);
-                    break;
-                case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueJAC, true);
-                    break;
-                case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackJAC, true);
-                    break;
-                default:
-                    soundManager.PlayBGM(soundManager.BGMList.RegJAC, true);
-                    break;
-            }
-        }
-
-        // 終了ジングル再生(BIGのみ)
-        private void PlayBigEndFanfare()
-        {
-            switch (data.BigChanceColor)
-            {
-                case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedEnd, false);
-                    break;
-                case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueEnd, false);
-                    break;
-                case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackEnd, false);
-                    break;
-            }
         }
     }
 }
