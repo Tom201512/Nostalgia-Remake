@@ -26,8 +26,8 @@ public class PlayerUI : MonoBehaviour
         buffer += "OUT:" + playingDatabase.PlayerMedalData.CurrentOutMedal + "\n";
 
         // ·–‡”
-        buffer += "Dif:" + (playingDatabase.PlayerMedalData.CurrentInMedal -
-            playingDatabase.PlayerMedalData.CurrentOutMedal) + "\n";
+        buffer += "Dif:" + (playingDatabase.PlayerMedalData.CurrentOutMedal -
+            playingDatabase.PlayerMedalData.CurrentInMedal) + "\n";
 
         // ‹@ŠBŠ„
         if (playingDatabase.PlayerMedalData.CurrentInMedal > 0 && playingDatabase.PlayerMedalData.CurrentOutMedal > 0)
