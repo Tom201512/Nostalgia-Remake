@@ -257,7 +257,7 @@ MonoBehaviour:
   - mainConditions: 401411
     firstReelPosition: 0
     reelTableNumber: 6
-  - mainConditions: 12547
+  - mainConditions: 259
     firstReelPosition: 0
     reelTableNumber: 14
   - mainConditions: 201219
@@ -296,7 +296,7 @@ MonoBehaviour:
   - mainConditions: 401412
     firstReelPosition: 0
     reelTableNumber: 6
-  - mainConditions: 12548
+  - mainConditions: 260
     firstReelPosition: 0
     reelTableNumber: 14
   - mainConditions: 201220
