@@ -84,27 +84,34 @@ namespace ReelSpinGame_Reels
             WillStopPos = 0;
         }
 
-        // 停止させる
-        public void BeginStopReel(int pushedPos, int delay)
+        // 停止させる(強制的に止めることも可能)
+        public void BeginStopReel(int pushedPos, int delay, bool stopImmediately)
         {
-            LastPushedPos = pushedPos;
-
             if (delay < 0 || delay > MaxDelay)
             {
                 throw new Exception("Invalid Delay. Must be within 0~4");
             }
 
+            // 停止位置記録
+            LastPushedPos = pushedPos;
             // テーブルから得たディレイを記録し、その分リールの停止を遅らせる。
             WillStopPos = OffsetReel(LastPushedPos, delay);
             LastDelay = delay;
-            CurrentReelStatus = ReelStatus.Stopping;
+
+            // 強制停止をオンにした場合は即座にリール位置を変更する。
+            if(stopImmediately)
+            {
+                currentLower = WillStopPos;
+                FinishStopReel();
+            }
+            else
+            {
+                CurrentReelStatus = ReelStatus.Stopping;
+            }
         }
 
         // 停止処理を終了させる
-        public void FinishStopReel()
-        {
-            CurrentReelStatus = ReelStatus.Stopped;
-        }
+        public void FinishStopReel() => CurrentReelStatus = ReelStatus.Stopped;
 
         // リール位置をオーバーフローしない数値で返す
         private int OffsetReel(int reelPos, int offset)

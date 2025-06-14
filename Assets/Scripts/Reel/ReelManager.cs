@@ -1,5 +1,4 @@
 ﻿using ReelSpinGame_Datas;
-using ReelSpinGame_Effect;
 using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Payout;
 using System.Collections;
@@ -19,6 +18,7 @@ public class ReelManager : MonoBehaviour
     // リール速度が一定になってから停止できるようになるまでの秒数
     public const float ReelWaitTime = 0.5f;
 
+    [SerializeField] bool CanStopImmediately;
     // var
     // リールマネージャーのデータ
     private ReelManagerBehaviour data;
@@ -169,7 +169,15 @@ public class ReelManager : MonoBehaviour
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
                 // リールを止める
-                reelObjects[(int)reelID].StopReel(pushedPos, delay);
+
+                if(CanStopImmediately)
+                {
+                    reelObjects[(int)reelID].StopReelFast(pushedPos, delay);
+                }
+                else
+                {
+                    reelObjects[(int)reelID].StopReel(pushedPos, delay);
+                }
                 // 停止したリール数を増やす
                 data.StoppedReelCount += 1;
             }

@@ -150,7 +150,26 @@ public class ReelObject : MonoBehaviour
     }
 
     // リール停止
-    public void StopReel(int pushedPos, int delay) => reelData.BeginStopReel(pushedPos, delay);
+    public void StopReel(int pushedPos, int delay) => reelData.BeginStopReel(pushedPos, delay, false);
+
+    // リール停止(高速版)
+    public void StopReelFast(int pushedPos, int delay)
+    {
+        // 強制停止
+        reelData.BeginStopReel(pushedPos, delay, true);
+        // 図柄位置変更
+        symbolManager.UpdateSymbolsObjects();
+
+        // JAC中ならライトも調整
+        if(HasJacModeLight)
+        {
+            symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Center)].ChangeBrightness(SymbolChange.TurnOnValue);
+            symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Lower)].ChangeBrightness(SymbolChange.TurnOffValue);
+            symbolManager.SymbolObj[GetReelArrayIndex((int)ReelPosID.Upper)].ChangeBrightness(SymbolChange.TurnOffValue);
+        }
+
+        StopReelSpeed();
+    }
 
     // 速度加速
     private void SpeedUpReel() =>
@@ -205,6 +224,7 @@ public class ReelObject : MonoBehaviour
         float rotationAngle = Math.Clamp((ReturnDegreePerSecond(rotateRPS)) * Time.deltaTime * rotateSpeed, 0, 360);
         transform.Rotate(rotationAngle * Vector3.left);
 
+        // JAC中であればライトの調整をする
         if (HasJacModeLight)
         {
             if (Math.Sign(maxSpeed) == -1)
@@ -252,13 +272,19 @@ public class ReelObject : MonoBehaviour
             // 停止する位置になったら
             if (reelData.CurrentReelStatus == ReelStatus.Stopping && reelData.CheckReachedStop())
             {
-                // 再度リールの角度を調整して停止させる
-                transform.rotation = Quaternion.identity;
-                rotateSpeed = 0;
-                maxSpeed = 0;
-                reelData.FinishStopReel();
+                StopReelSpeed();
             }
         }
+    }
+
+    // リールの回転を停止させる
+    private void StopReelSpeed()
+    {
+        // 再度リールの角度を調整して停止させる
+        transform.rotation = Quaternion.identity;
+        rotateSpeed = 0;
+        maxSpeed = 0;
+        reelData.FinishStopReel();
     }
 
     // リール本体そのものの明るさを変更

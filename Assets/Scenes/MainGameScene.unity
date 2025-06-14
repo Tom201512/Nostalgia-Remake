@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5787d13652097f4498666a1bc1bb1ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanStopImmediately: 0
   reelObjects:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
