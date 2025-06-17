@@ -28,12 +28,12 @@ namespace ReelSpinGame_State.PayoutState
         public void StateStart()
         {
             StartCheckPayout(gameManager.Medal.GetLastBetAmounts());
-
-            // 払い出しのコルーチンでプレイヤーのメダル情報を更新できるようにする
-            gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
-            gameManager.Medal.HasMedalPayout += gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
             // 払い出し開始
             gameManager.Medal.StartPayout(gameManager.Reel.GetPayoutResultData().Payouts);
+
+            // プレイヤーメダルの増加、OUT枚数の増加(データのみ変更)
+            gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal(gameManager.Reel.GetPayoutResultData().Payouts);
+            gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal(gameManager.Reel.GetPayoutResultData().Payouts);
 
             // ボーナス中なら各ボーナスの払い出しを増やす
             if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
@@ -108,7 +108,7 @@ namespace ReelSpinGame_State.PayoutState
         public void StateUpdate()
         {
             // 払い出しが終わったら停止
-            if (gameManager.Medal.GetPayoutAmounts() == 0)
+            if (gameManager.Medal.GetRemainingPayouts() == 0)
             {
                 gameManager.Effect.StopLoopSound();
 

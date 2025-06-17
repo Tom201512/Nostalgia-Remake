@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
         // UI 設定
         waitUI.SetWaitManager(Wait);
         playerUI.SetPlayerData(PlayerData);
+        playerUI.SetMedalManager(Medal);
 
         // ステート開始
         MainFlow.stateManager.StartState();

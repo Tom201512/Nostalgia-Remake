@@ -55,7 +55,7 @@ namespace ReelSpinGame_Medal
         // 数値を得る
         public int GetCredits() => data.Credits;
         public int GetCurrentBet() => data.CurrentBet;
-        public int GetPayoutAmounts() => data.PayoutAmounts;
+        public int GetRemainingPayouts() => data.RemainingPayouts;
         public int GetMaxBet() => data.MaxBetAmounts;
         public int GetLastBetAmounts() => data.LastBetAmounts;
         public int GetLastPayout() => data.LastPayoutAmounts;
@@ -121,10 +121,15 @@ namespace ReelSpinGame_Medal
             // 払い出しをしていないかチェック
             if (!HasMedalUpdate)
             {
-                // メダルの払い出しを開始する(残りはフレーム処理
+                // メダルの払い出しを開始する(メダルが増えるのは演出で、データ上ではすでに増えている)
                 if (amounts > 0)
                 {
-                    data.PayoutAmounts = Math.Clamp(data.PayoutAmounts + amounts, 0, MaxPayout);
+                    // 払い出し枚数の設定
+                    data.RemainingPayouts = Math.Clamp(data.RemainingPayouts + amounts, 0, MaxPayout);
+                    // クレジットの増加
+                    data.ChangeCredits(amounts);
+
+                    // 払い出しの演出開始
                     StartCoroutine(nameof(UpdatePayout));
                 }
                 else
@@ -198,13 +203,13 @@ namespace ReelSpinGame_Medal
         {
             HasMedalUpdate = true;
             // 払い出し処理
-            while (data.PayoutAmounts > 0)
+            while (data.RemainingPayouts > 0)
             {
                 // メダル払い出し
                 data.PayoutOneMedal();
-                HasMedalPayout.Invoke(1);
+                //HasMedalPayout.Invoke(1);
                 // クレジットと払い出しセグメント更新
-                creditSegments.ShowSegmentByNumber(data.Credits);
+                creditSegments.ShowSegmentByNumber(data.Credits - data.RemainingPayouts);
                 ////Debug.Log("LastPayoutAmounts:" + data.LastPayoutAmounts);
                 payoutSegments.ShowSegmentByNumber(data.LastPayoutAmounts);
 

@@ -1,11 +1,15 @@
 using ReelSpinGame_System;
+using ReelSpinGame_Medal;
 using TMPro;
 using UnityEngine;
 
 public class PlayerUI : MonoBehaviour
 {
+    // var
     TextMeshProUGUI text;
     PlayingDatabase playingDatabase;
+    MedalManager medalManager;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,17 +21,22 @@ public class PlayerUI : MonoBehaviour
     {
         string buffer = "";
 
+        // メダルが増える演出用
+        int playerMedal = playingDatabase.PlayerMedalData.CurrentPlayerMedal - medalManager.GetRemainingPayouts();
+        int outMedal = playingDatabase.PlayerMedalData.CurrentOutMedal - medalManager.GetRemainingPayouts();
+
         buffer += "Player-" + "\n";
         buffer += "Total:" + playingDatabase.TotalGames + "\n";
         buffer += "Games:" + playingDatabase.CurrentGames + "\n" + "\n";
 
         buffer += "Medal:" + playingDatabase.PlayerMedalData.CurrentPlayerMedal + "\n";
+        buffer += "Medal(Effect):" + playerMedal + "\n";
         buffer += "IN:" + playingDatabase.PlayerMedalData.CurrentInMedal + "\n";
-        buffer += "OUT:" + playingDatabase.PlayerMedalData.CurrentOutMedal + "\n";
+        buffer += "OUT:" + playingDatabase.PlayerMedalData.CurrentOutMedal+ "\n";
+        buffer += "Out(Effect):" + outMedal + "\n";
 
         // 差枚数
-        buffer += "Dif:" + (playingDatabase.PlayerMedalData.CurrentOutMedal -
-            playingDatabase.PlayerMedalData.CurrentInMedal) + "\n";
+        buffer += "Dif:" + (playingDatabase.PlayerMedalData.CurrentOutMedal - playingDatabase.PlayerMedalData.CurrentInMedal) + "\n";
 
         // 機械割
         if (playingDatabase.PlayerMedalData.CurrentInMedal > 0 && playingDatabase.PlayerMedalData.CurrentOutMedal > 0)
@@ -91,5 +100,6 @@ public class PlayerUI : MonoBehaviour
     }
 
     public void SetPlayerData(PlayingDatabase playingDatabase) => this.playingDatabase = playingDatabase;
+    public void SetMedalManager(MedalManager medalManager) => this.medalManager = medalManager;
 }
 
