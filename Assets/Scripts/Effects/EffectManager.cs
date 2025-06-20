@@ -1,11 +1,9 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Lots;
-using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;

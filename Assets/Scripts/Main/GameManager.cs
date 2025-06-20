@@ -1,5 +1,6 @@
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
+using ReelSpinGame_Interface;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
     public ReelManager Reel { get { return reelManagerObj; } }
     public BonusManager Bonus { get; private set; }
     public EffectManager Effect { get { return effectManagerObj; } }
+
+    // セーブ機能
+    private SaveManager save;
 
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }
@@ -80,6 +84,9 @@ public class GameManager : MonoBehaviour
         // ステータスパネル
         Status = statusPanel;
 
+        // セーブ機能
+        save = new SaveManager();
+
         // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
@@ -100,6 +107,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // セーブ読み込み。セーブがない場合は新規作成
+        if(!save.LoadSaveFile())
+        {
+            // セーブフォルダの作成
+            save.GenerateSaveFolder();
+        }
+
         // メダル設定
         Medal.SetMedalData(0, 3, 0, false);
 
@@ -126,10 +140,15 @@ public class GameManager : MonoBehaviour
         MainFlow.UpdateState();
     }
 
-    // タイマーを持つ機能の廃棄
+    // 終了時の処理
     private void OnDestroy()
     {
         Wait.DisposeWait();
+
+        // セーブ
+        save.GenerateSaveFolder();
+        // テスト
+        save.GenerateSaveFile(setting);
     }
 
     // func
