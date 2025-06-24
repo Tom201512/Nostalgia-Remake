@@ -1115,9 +1115,6 @@ MonoBehaviour:
   - mainConditions: 196614
     firstReelPosition: 0
     reelTableNumber: 29
-  - mainConditions: 262150
-    firstReelPosition: 0
-    reelTableNumber: 29
   - mainConditions: 262
     firstReelPosition: 0
     reelTableNumber: 30

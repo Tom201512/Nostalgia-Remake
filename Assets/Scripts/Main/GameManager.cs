@@ -107,12 +107,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        /*
         // セーブ読み込み。セーブがない場合は新規作成
         if(!save.LoadSaveFile())
         {
             // セーブフォルダの作成
             save.GenerateSaveFolder();
-        }
+        }*/
 
         // メダル設定
         Medal.SetMedalData(0, 3, 0, false);
@@ -145,10 +146,12 @@ public class GameManager : MonoBehaviour
     {
         Wait.DisposeWait();
 
+        /*
         // セーブ
         save.GenerateSaveFolder();
         // テスト
         save.GenerateSaveFile(setting);
+        */
     }
 
     // func
