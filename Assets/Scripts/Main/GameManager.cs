@@ -1,3 +1,4 @@
+using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
 using ReelSpinGame_Interface;
@@ -5,6 +6,7 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +33,9 @@ public class GameManager : MonoBehaviour
     public BonusManager Bonus { get; private set; }
     public EffectManager Effect { get { return effectManagerObj; } }
 
+    // オートプレイ機能
+    public AutoPlayFunction Auto { get; private set; }
+
     // セーブ機能
     private SaveManager save;
 
@@ -50,6 +55,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode keyToStopLeft;
     [SerializeField] private KeyCode keyToStopMiddle;
     [SerializeField] private KeyCode keyToStopRight;
+
+    // オート開始/停止ボタン
+    [SerializeField] private KeyCode keyToAutoToggle;
 
     // 設定
     [Range(0,6), SerializeField] private int setting;
@@ -83,7 +91,16 @@ public class GameManager : MonoBehaviour
         MainFlow = new MainGameFlow(this);
         // ステータスパネル
         Status = statusPanel;
+        // オート機能
 
+        ReelID[] test = new ReelID[]
+        {
+            ReelID.ReelLeft,
+            ReelID.ReelRight,
+            ReelID.ReelMiddle
+        };
+
+        Auto = new AutoPlayFunction(AutoPlayFunction.AutoPlaySpeed.Normal, test);
         // セーブ機能
         save = new SaveManager();
 
@@ -136,6 +153,12 @@ public class GameManager : MonoBehaviour
         {
             //Debug.Log("Game Closed");
             Application.Quit();
+        }
+
+        // オートプレイ機能ボタン
+        if (Input.GetKeyDown(keyToAutoToggle))
+        {
+            Auto.ChangeAutoMode();
         }
 
         MainFlow.UpdateState();

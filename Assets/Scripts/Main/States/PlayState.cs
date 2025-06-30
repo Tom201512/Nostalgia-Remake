@@ -42,6 +42,64 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateUpdate()
         {
+            if(gameManager.Auto.HasAuto)
+            {
+                AutoControl();
+            }
+            else
+            {
+                PlayerControl();
+            }
+        }
+
+        public void StateEnd()
+        {
+            // リール停止時の音を外すようにする
+            gameManager.Reel.HasSomeReelStopped -= StopReelSound;
+        }
+
+        // リール停止
+        private void StopReel(ReelID reelID)
+        {
+            if (gameManager.Reel.GetCanStopReels() && 
+                gameManager.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+            {
+                // リールを止める
+                gameManager.Reel.StopSelectedReel(reelID,gameManager.Medal.GetLastBetAmounts(),
+                    gameManager.Lots.GetCurrentFlag(),gameManager.Bonus.GetHoldingBonusID());
+            }
+        }
+
+        // オート時の挙動
+        private void AutoControl()
+        {
+            // すべてのリールが止まっていたら払い出し処理をする
+            if (gameManager.Reel.GetIsReelFinished())
+            {
+                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PayoutState);
+            }
+            // オート中は指定した押し順で押すようにする
+            else
+            {
+                // 停止待機中のリールから止めるようにする。
+                if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[0]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                {
+                    StopReel(gameManager.Auto.AutoStopOrders[0]);
+                }
+                else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[1]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                {
+                    StopReel(gameManager.Auto.AutoStopOrders[1]);
+                }
+                else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[2]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                {
+                    StopReel(gameManager.Auto.AutoStopOrders[2]);
+                }
+            }
+        }
+
+        // プレイヤー操作時の挙動
+        private void PlayerControl()
+        {
             // 何も入力が入っていなければ実行
             if (!hasInput)
             {
@@ -83,24 +141,6 @@ namespace ReelSpinGame_State.PlayingState
                 {
                     hasInput = false;
                 }
-            }
-        }
-
-        public void StateEnd()
-        {
-            // リール停止時の音を外すようにする
-            gameManager.Reel.HasSomeReelStopped -= StopReelSound;
-        }
-
-        // リール停止
-        private void StopReel(ReelID reelID)
-        {
-            if (gameManager.Reel.GetCanStopReels() && 
-                gameManager.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
-            {
-                // リールを止める
-                gameManager.Reel.StopSelectedReel(reelID,gameManager.Medal.GetLastBetAmounts(),
-                    gameManager.Lots.GetCurrentFlag(),gameManager.Bonus.GetHoldingBonusID());
             }
         }
 

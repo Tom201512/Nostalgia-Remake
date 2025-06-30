@@ -834,6 +834,7 @@ MonoBehaviour:
   keyToStopLeft: 276
   keyToStopMiddle: 274
   keyToStopRight: 275
+  keyToAutoToggle: 97
   setting: 6
 --- !u!4 &460868893
 Transform:

@@ -39,58 +39,14 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateUpdate()
         {
-            // MAX BET
-            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.MaxBet]))
+            // オートの有無に合わせて操作受付を変える
+            if (gameManager.Auto.HasAuto)
             {
-                BetAction(gameManager.Medal.GetMaxBet());
+                BetAndStartFunction();
             }
-
-            // BET2
-            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
+            else
             {
-                BetAction(2);
-            }
-
-            // BET1
-            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetOne]))
-            {
-                BetAction(1);
-            }
-
-            // ベット終了 または MAXBET
-            if(OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
-            {
-                // ベットが終了していたら
-                if(gameManager.Medal.GetBetFinished())
-                {
-                    // 投入枚数を反映する
-                    gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.GetLastBetAmounts());
-                    gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.GetLastBetAmounts());
-
-                    // すでにベットされている場合は抽選へ
-                    if (gameManager.Medal.GetCurrentBet() > 0)
-                    {
-                        gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
-
-                        // ボーナス中なら払い出し枚数を減らす
-                        if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
-                        {
-                            gameManager.Bonus.ChangeBonusPayouts(-gameManager.Medal.GetLastBetAmounts());
-                            gameManager.PlayerData.ChangeLastBonusPayouts(-gameManager.Medal.GetLastBetAmounts());
-                        }
-
-                        // 連チャン区間にいる場合は連チャン区間枚数を減らす
-                        if(gameManager.Bonus.GetHasZone())
-                        {
-                            gameManager.Bonus.ChangeZonePayouts(-gameManager.Medal.GetLastBetAmounts());
-                        }
-                    }
-                }
-                // そうでない場合はMAX BET
-                else
-                {
-                    BetAction(gameManager.Medal.GetMaxBet());
-                }
+                PlayerControl();
             }
         }
 
@@ -135,6 +91,70 @@ namespace ReelSpinGame_State.InsertState
         private void BetSound()
         {
             gameManager.Effect.StartBetEffect();
+        }
+
+        // ベット終了とMAXBETを押したときの制御
+        private void BetAndStartFunction()
+        {
+            // ベットが終了していたら
+            if (gameManager.Medal.GetBetFinished())
+            {
+                // 投入枚数を反映する
+                gameManager.PlayerData.PlayerMedalData.DecreasePlayerMedal(gameManager.Medal.GetLastBetAmounts());
+                gameManager.PlayerData.PlayerMedalData.IncreaseInMedal(gameManager.Medal.GetLastBetAmounts());
+
+                // すでにベットされている場合は抽選へ
+                if (gameManager.Medal.GetCurrentBet() > 0)
+                {
+                    gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.LotsState);
+
+                    // ボーナス中なら払い出し枚数を減らす
+                    if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
+                    {
+                        gameManager.Bonus.ChangeBonusPayouts(-gameManager.Medal.GetLastBetAmounts());
+                        gameManager.PlayerData.ChangeLastBonusPayouts(-gameManager.Medal.GetLastBetAmounts());
+                    }
+
+                    // 連チャン区間にいる場合は連チャン区間枚数を減らす
+                    if (gameManager.Bonus.GetHasZone())
+                    {
+                        gameManager.Bonus.ChangeZonePayouts(-gameManager.Medal.GetLastBetAmounts());
+                    }
+                }
+            }
+            // そうでない場合はMAX BET
+            else
+            {
+                BetAction(gameManager.Medal.GetMaxBet());
+            }
+        }
+
+        // プレイヤー操作の管理
+        private void PlayerControl()
+        {
+            // MAX BET
+            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.MaxBet]))
+            {
+                BetAction(gameManager.Medal.GetMaxBet());
+            }
+
+            // BET2
+            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
+            {
+                BetAction(2);
+            }
+
+            // BET1
+            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.BetOne]))
+            {
+                BetAction(1);
+            }
+
+            // ベット終了 または MAXBET
+            if (OriginalInput.CheckOneKeyInput(gameManager.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
+            {
+                BetAndStartFunction();
+            }
         }
     }
 }
