@@ -31,12 +31,17 @@ public class ReelManager : MonoBehaviour
     // 強制時のランダム数値
     [Range(1,6),SerializeField] private int instantRandomValue;
 
+    // いずれかのリールが停止したかのイベント
+    public delegate void ReelStoppedEvent();
+    public event ReelStoppedEvent HasSomeReelStopped;
+
     // 初期化
     void Awake()
     {
         for (int i = 0; i < reelObjects.Count; i++)
         {
             reelObjects[i].SetReelData(i, 19);
+            reelObjects[i].HasReelStopped += SendReelStoppedEvent;
         }
 
         data = new ReelManagerBehaviour();
@@ -183,6 +188,9 @@ public class ReelManager : MonoBehaviour
             }
         }
     }
+
+    // 何かしらのリールが止まった時のイベントを起こす
+    private void SendReelStoppedEvent() => HasSomeReelStopped.Invoke();
 
     // 指定した数のBIG図柄が揃っているかを返す
     public BigColor GetBigLinedUpCounts(int betAmounts, int checkAmounts)

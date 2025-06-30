@@ -37,6 +37,10 @@ public class ReelObject : MonoBehaviour
     // ブラー部分のプロファイル
     private MotionBlur motionBlur;
 
+    // リールが停止したかのイベント(個別ごとのリール)
+    public delegate void ReelStoppedEvent();
+    public event ReelStoppedEvent HasReelStopped;
+
     // 回転速度 (Rotate Per Minute)
     [Range(0f, 80f), SerializeField] private float rotateRPM;
     // 回転速度 (Rotate Per Second)
@@ -285,6 +289,7 @@ public class ReelObject : MonoBehaviour
         rotateSpeed = 0;
         maxSpeed = 0;
         reelData.FinishStopReel();
+        HasReelStopped.Invoke();
     }
 
     // リール本体そのものの明るさを変更

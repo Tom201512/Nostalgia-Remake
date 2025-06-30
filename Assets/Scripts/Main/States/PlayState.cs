@@ -35,6 +35,9 @@ namespace ReelSpinGame_State.PlayingState
             gameManager.Bonus.UpdateSegments();
             // スタートサウンド再生
             gameManager.Effect.StartLeverOnEffect();
+
+            // リール停止時に音を鳴らすよう変更
+            gameManager.Reel.HasSomeReelStopped += StopReelSound;
         }
 
         public void StateUpdate()
@@ -85,7 +88,8 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateEnd()
         {
-            //Debug.Log("End Playing State");
+            // リール停止時の音を外すようにする
+            gameManager.Reel.HasSomeReelStopped -= StopReelSound;
         }
 
         // リール停止
@@ -97,16 +101,20 @@ namespace ReelSpinGame_State.PlayingState
                 // リールを止める
                 gameManager.Reel.StopSelectedReel(reelID,gameManager.Medal.GetLastBetAmounts(),
                     gameManager.Lots.GetCurrentFlag(),gameManager.Bonus.GetHoldingBonusID());
+            }
+        }
 
-                // 停止音再生
-                gameManager.Effect.StartReelStopEffect();
+        // リール停止のサウンド
+        private void StopReelSound()
+        {
+            // 停止音再生
+            gameManager.Effect.StartReelStopEffect();
 
-                // 通常時,第二停止でBIG図柄がリーチしていたら音を鳴らす
-                if (gameManager.Reel.GetStoppedCount() == 2 &&
-                    gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
-                {
-                    gameManager.Effect.StartRiichiEffect(gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 2));
-                }
+            // 通常時,第二停止でBIG図柄がリーチしていたら音を鳴らす
+            if (gameManager.Reel.GetStoppedCount() == 2 &&
+                gameManager.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            {
+                gameManager.Effect.StartRiichiEffect(gameManager.Reel.GetBigLinedUpCounts(gameManager.Medal.GetLastBetAmounts(), 2));
             }
         }
     }

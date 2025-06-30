@@ -122,9 +122,6 @@ namespace ReelSpinGame_State.PayoutState
 
         public void StateEnd()
         {
-            gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreasePlayerMedal;
-            gameManager.Medal.HasMedalPayout -= gameManager.PlayerData.PlayerMedalData.IncreaseOutMedal;
-
             // ボーナス状態の処理
             BonusStatusUpdate();
             // リプレイ処理

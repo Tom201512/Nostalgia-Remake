@@ -29,9 +29,6 @@ namespace ReelSpinGame_Medal
         // メダルが投入されたか
         public delegate void MedalHasInsertEvent();
         public event MedalHasInsertEvent HasMedalInsert;
-        // メダルが払い出されたか
-        public delegate void MedalHasPayoutEvent(int payout);
-        public event MedalHasPayoutEvent HasMedalPayout;
 
         void Awake()
         {
@@ -42,7 +39,7 @@ namespace ReelSpinGame_Medal
         public void SetMedalData(int credits, int curretMaxBet, int lastBetAmounts, bool hasReplay)
         {
             data = new MedalBehaviour(credits, curretMaxBet, lastBetAmounts, hasReplay);
-            //////Debug.Log("Credits:" + credits);
+            //Debug.Log("Credits:" + credits);
             creditSegments.ShowSegmentByNumber(credits);
         }
 
@@ -129,7 +126,7 @@ namespace ReelSpinGame_Medal
                     // クレジットの増加
                     data.ChangeCredits(amounts);
 
-                    // 払い出しの演出開始
+                    // 払い出し開始
                     StartCoroutine(nameof(UpdatePayout));
                 }
                 else
