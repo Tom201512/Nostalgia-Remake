@@ -98,9 +98,11 @@ public class ReelManager : MonoBehaviour
     public int GetRandomValue() => data.RandomValue;
 
     // リールオブジェクト
-    // 指定したリールの現在位置を返す
+    // 指定したリールの現在位置(下段)を返す
     public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);
-    // 指定したリールを止めた位置を返す
+    // 指定したリールの停止可能位置(中段)を返す
+    public int GetReelCenterPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
+    // 指定したリールの最後に押した位置を返す
     public int GetStoppedReelPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedPos();
     // 指定リールの停止予定位置を返す
     public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].GetWillStopPos();
@@ -157,7 +159,7 @@ public class ReelManager : MonoBehaviour
             if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.WaitForStop)
             {
                 // 中段の位置を得る
-                int pushedPos = reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
+                int pushedPos = GetReelCenterPos(reelID);
 
                 // 第一停止なら押したところの停止位置を得る
                 if (!data.IsFirstReelPushed)
@@ -175,10 +177,12 @@ public class ReelManager : MonoBehaviour
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
                 // リールを止める
 
+                // オートなどで高速停止が有効の場合はすぐ指定位置まで停止させる。
                 if(CanStopImmediately)
                 {
                     reelObjects[(int)reelID].StopReelFast(pushedPos, delay);
                 }
+                // 通常のリール停止(ディレイを伴って停止)
                 else
                 {
                     reelObjects[(int)reelID].StopReel(pushedPos, delay);

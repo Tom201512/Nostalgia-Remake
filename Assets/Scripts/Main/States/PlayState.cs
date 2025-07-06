@@ -81,18 +81,30 @@ namespace ReelSpinGame_State.PlayingState
             // オート中は指定した押し順で押すようにする
             else
             {
-                // 停止待機中のリールから止めるようにする。
+                // 停止待機中のリールがあれば、指定位置になった時に停止させる。(最速モードでは無視)
                 if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[0]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
                 {
-                    StopReel(gameManager.Auto.AutoStopOrders[0]);
+                    if(gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[0]) == 
+                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[0]])
+                    {
+                        StopReel(gameManager.Auto.AutoStopOrders[0]);
+                    }
                 }
                 else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[1]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
                 {
-                    StopReel(gameManager.Auto.AutoStopOrders[1]);
+                    if (gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[1]) == 
+                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[1]])
+                    {
+                        StopReel(gameManager.Auto.AutoStopOrders[1]);
+                    }
                 }
                 else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[2]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
                 {
-                    StopReel(gameManager.Auto.AutoStopOrders[2]);
+                    if (gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[2]) == 
+                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[2]])
+                    {
+                        StopReel(gameManager.Auto.AutoStopOrders[2]);
+                    }
                 }
             }
         }
