@@ -49,6 +49,13 @@ namespace ReelSpinGame_State.LotsState
             }
 
             gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.WaitState);
+
+            // オートモードがある場合、ここでオート停止位置の設定
+            if(gameManager.Auto.HasAuto)
+            {
+                gameManager.Auto.GetAutoStopPos(gameManager.Lots.GetCurrentFlag(),
+                    gameManager.Bonus.GetHoldingBonusID(), gameManager.Bonus.GetCurrentBonusStatus());
+            }
         }
 
         public void StateUpdate()

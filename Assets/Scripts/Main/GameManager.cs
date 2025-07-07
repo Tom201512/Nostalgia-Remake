@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ReelTestUI reelUI;
     [SerializeField] BonusTestUI bonusUI;
     [SerializeField] PlayerUI playerUI;
+    [SerializeField] AutoTestUI AutoUI;
 
     public MedalManager Medal { get; private set; }
     public FlagLots Lots { get; private set; }
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         waitUI.SetWaitManager(Wait);
         playerUI.SetPlayerData(PlayerData);
         playerUI.SetMedalManager(Medal);
+        AutoUI.SetAutoFunction(Auto);
 
         // ステート開始
         MainFlow.stateManager.StartState();

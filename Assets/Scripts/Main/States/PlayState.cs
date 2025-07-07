@@ -3,6 +3,7 @@ using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction.AutoStopOrder;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -73,6 +74,13 @@ namespace ReelSpinGame_State.PlayingState
         // オート時の挙動
         private void AutoControl()
         {
+            // オート停止位置が決まっているかチェック。決まっていなければすぐ決める
+            if(!gameManager.Auto.HasStopPosDecided)
+            {
+                gameManager.Auto.GetAutoStopPos(gameManager.Lots.GetCurrentFlag(),
+                    gameManager.Bonus.GetHoldingBonusID(), gameManager.Bonus.GetCurrentBonusStatus());
+            }
+
             // すべてのリールが止まっていたら払い出し処理をする
             if (gameManager.Reel.GetIsReelFinished())
             {
@@ -82,28 +90,28 @@ namespace ReelSpinGame_State.PlayingState
             else
             {
                 // 停止待機中のリールがあれば、指定位置になった時に停止させる。(最速モードでは無視)
-                if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[0]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[(int)First]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
                 {
-                    if(gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[0]) == 
-                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[0]])
+                    if(gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[(int)First]) == 
+                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[(int)First]])
                     {
-                        StopReel(gameManager.Auto.AutoStopOrders[0]);
+                        StopReel(gameManager.Auto.AutoStopOrders[(int)First]);
                     }
                 }
-                else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[1]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[(int)Second]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
                 {
-                    if (gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[1]) == 
-                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[1]])
+                    if (gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[(int)Second]) == 
+                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[(int)Second]])
                     {
-                        StopReel(gameManager.Auto.AutoStopOrders[1]);
+                        StopReel(gameManager.Auto.AutoStopOrders[(int)Second]);
                     }
                 }
-                else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[2]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                else if (gameManager.Reel.GetReelStatus(gameManager.Auto.AutoStopOrders[(int)Third]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
                 {
-                    if (gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[2]) == 
-                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[2]])
+                    if (gameManager.Reel.GetReelCenterPos(gameManager.Auto.AutoStopOrders[(int)Third]) == 
+                        gameManager.Auto.AutoStopPos[(int)gameManager.Auto.AutoStopOrders[(int)Third]])
                     {
-                        StopReel(gameManager.Auto.AutoStopOrders[2]);
+                        StopReel(gameManager.Auto.AutoStopOrders[(int)Third]);
                     }
                 }
             }

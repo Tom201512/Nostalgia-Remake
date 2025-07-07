@@ -1,7 +1,9 @@
-using Unity.VisualScripting;
+using ReelSpinGame_AutoPlay.AI;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_AutoPlay
 {
@@ -10,6 +12,8 @@ namespace ReelSpinGame_AutoPlay
         // オートプレイ機能
 
         // const
+        // オート押し順の識別用
+        public enum AutoStopOrder { First, Second, Third}
         // オート速度
         public enum AutoPlaySpeed { Normal, Fast, Quick}
         // 現在のオートモード
@@ -24,11 +28,17 @@ namespace ReelSpinGame_AutoPlay
         public ReelID[] AutoStopOrders { get; private set; }
         // オート時の停止位置
         public int[] AutoStopPos { get; private set; }
+        // オートの停止位置を決めたか
+        public bool HasStopPosDecided { get; private set; }
+
+        // オート時の停止位置選択AI
+        private AutoPlayAI autoAI;
 
 
         // コンストラクタ
         public AutoPlayFunction()
         {
+            autoAI = new AutoPlayAI();
             Debug.Log("Base Constructor");
             HasAuto = false;
             // 停止順番の配列作成(デフォルトは順押し)
@@ -65,17 +75,41 @@ namespace ReelSpinGame_AutoPlay
         {
             HasAuto = !HasAuto;
             Debug.Log("AutoMode:" + HasAuto);
+            HasStopPosDecided = false;
+        }
+        
+        // オート停止位置をリセット
+        public void ResetAutoStopPos()
+        {
+            HasStopPosDecided = false;
+            AutoStopOrders[(int)AutoStopOrder.First] = 0;
+            AutoStopOrders[(int)AutoStopOrder.Second] = 0;
+            AutoStopOrders[(int)AutoStopOrder.Third] = 0;
+
+            Debug.Log("AutoPos Reset");
+        }
+
+        // オート押し順をフラグ、条件から得る
+        public void GetAutoStopPos(FlagId flag, BonusType holdingBonus, BonusStatus bonusStatus)
+        {
+            Debug.Log("GetPos");
+
+            AutoStopPos = autoAI.GetStopPos(flag, holdingBonus);
+            Debug.Log("Pos created");
+
+            HasStopPosDecided = true;
+            Debug.Log("AutoPos Decided");
         }
 
         // オート押し順の変更
-        public void ChangeAutoStopOrder(ReelID first, ReelID second, ReelID third)
+        private void ChangeAutoStopOrder(ReelID first, ReelID second, ReelID third)
         {
             // 同じ押し順がないかチェック
             if(first != second && second != third)
             {
-                AutoStopOrders[0] = first;
-                AutoStopOrders[1] = second;
-                AutoStopOrders[2] = third;
+                AutoStopOrders[(int)AutoStopOrder.First] = first;
+                AutoStopOrders[(int)AutoStopOrder.Second] = second;
+                AutoStopOrders[(int)AutoStopOrder.Third] = third;
             }
             else
             {
