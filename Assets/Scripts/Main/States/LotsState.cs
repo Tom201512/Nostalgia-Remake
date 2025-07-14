@@ -12,49 +12,49 @@ namespace ReelSpinGame_State.LotsState
         public MainGameFlow.GameStates State { get; }
 
         // ゲームマネージャ
-        private GameManager gameManager;
+        private GameManager gM;
 
         // コンストラクタ
         public LotsState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.FlagLots;
-            this.gameManager = gameManager;
+            gM = gameManager;
         }
 
         public void StateStart()
         {
             //Debug.Log("Start Lots.FlagBehaviour.State");
 
-            gameManager.Lots.StartFlagLots(gameManager.Setting, gameManager.Medal.GetLastBetAmounts());
+            gM.Lots.StartFlagLots(gM.Setting, gM.Medal.GetLastBetAmounts());
 
             // ボーナス中ならここでゲーム数を減らす
-            if (gameManager.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
+            if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
-                gameManager.Bonus.DecreaseGames();
+                gM.Bonus.DecreaseGames();
             }
             // そうでない場合は通常時のゲーム数を加算
             else
             {
-                gameManager.PlayerData.IncreaseGameValue();
+                gM.PlayerData.IncreaseGameValue();
             }
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagBig)
+            if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
             {
-                gameManager.PlayerData.AddBonusResult(BonusType.BonusBIG);
+                gM.PlayerData.AddBonusResult(BonusType.BonusBIG);
             }
-            else if (gameManager.Lots.GetCurrentFlag() == FlagId.FlagReg)
+            else if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
             {
-                gameManager.PlayerData.AddBonusResult(BonusType.BonusREG);
+                gM.PlayerData.AddBonusResult(BonusType.BonusREG);
             }
 
-            gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.WaitState);
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
 
             // オートモードがある場合、ここでオート停止位置の設定
-            if(gameManager.Auto.HasAuto)
+            if(gM.Auto.HasAuto)
             {
-                gameManager.Auto.GetAutoStopPos(gameManager.Lots.GetCurrentFlag(),
-                    gameManager.Bonus.GetHoldingBonusID(), gameManager.Bonus.GetCurrentBonusStatus());
+                gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(),gM.Bonus.GetHoldingBonusID(), 
+                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn());
             }
         }
 
@@ -66,9 +66,9 @@ namespace ReelSpinGame_State.LotsState
         public void StateEnd()
         {
             //Debug.Log("End Lots.FlagBehaviour.State");
-            if (gameManager.Wait.HasWait)
+            if (gM.Wait.HasWait)
             {
-                gameManager.Status.TurnOnWaitLamp();
+                gM.Status.TurnOnWaitLamp();
             }
         }
     }

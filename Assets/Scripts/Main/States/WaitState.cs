@@ -10,13 +10,13 @@ namespace ReelSpinGame_State.LotsState
         public MainGameFlow.GameStates State { get; }
 
         // ゲームマネージャ
-        private GameManager gameManager;
+        private GameManager gM;
 
         // コンストラクタ
         public WaitState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Wait;
-            this.gameManager = gameManager;
+            this.gM = gameManager;
         }
 
         public void StateStart()
@@ -24,10 +24,10 @@ namespace ReelSpinGame_State.LotsState
             //Debug.Log("Start Wait State");
 
             // ウェイトランプ点灯
-            if (gameManager.Wait.HasWait)
+            if (gM.Wait.HasWait)
             {
-                gameManager.Status.TurnOnWaitLamp();
-                gameManager.Effect.StartWaitEffect();
+                gM.Status.TurnOnWaitLamp();
+                gM.Effect.StartWaitEffect();
             }
         }
 
@@ -35,20 +35,20 @@ namespace ReelSpinGame_State.LotsState
         {
             // ウェイトが切れるまで待つ
             //Debug.Log("Update Wait State");
-            if(!gameManager.Wait.HasWait)
+            if(!gM.Wait.HasWait)
             {
-                gameManager.MainFlow.stateManager.ChangeState(gameManager.MainFlow.PlayingState);
+                gM.MainFlow.stateManager.ChangeState(gM.MainFlow.PlayingState);
             }
         }
 
         public void StateEnd()
         {
             //Debug.Log("End Wait State");
-            gameManager.Wait.SetWaitTimer();
+            gM.Wait.SetWaitTimer();
 
             // ウェイトランプを切る
-            gameManager.Status.TurnOffWaitLamp();
-            gameManager.Effect.StopLoopSound();
+            gM.Status.TurnOffWaitLamp();
+            gM.Effect.StopLoopSound();
         }
     }
 }

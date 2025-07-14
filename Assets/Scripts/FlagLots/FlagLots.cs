@@ -15,6 +15,7 @@ namespace ReelSpinGame_Lots.Flag
 
         // デバッグ用(強制役)
         [SerializeField] private bool useInstant;
+        [SerializeField] private bool useInfinityInstant;
         [SerializeField] private FlagId instantFlagID;
 
         // func
@@ -42,7 +43,12 @@ namespace ReelSpinGame_Lots.Flag
             {
                 // 強制役を発動させる。その後は強制役を切る
                 data.CurrentFlag = instantFlagID;
-                useInstant = false;
+
+                // デバッグ用
+                if(!useInfinityInstant)
+                {
+                    useInstant = false;
+                }
             }
             else
             {
