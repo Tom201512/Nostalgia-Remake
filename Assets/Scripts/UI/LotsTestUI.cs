@@ -2,7 +2,7 @@ using ReelSpinGame_Lots.Flag;
 using TMPro;
 using UnityEngine;
 
-public class LotsTestUI : MonoBehaviour
+public class LotsTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
     [SerializeField] private FlagLots lots;

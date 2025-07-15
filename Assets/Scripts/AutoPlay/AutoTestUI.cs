@@ -23,7 +23,7 @@ public class AutoTestUI : MonoBehaviour
         buffer += "Auto-" + "\n";
         buffer += "AutoEnabled:" + auto.HasAuto + "\n";
         buffer += "AutoSpeed:" + auto.AutoSpeed + "\n";
-        buffer += "AutoOrder: 1:" + auto.AutoStopOrders[(int)First] + " 2:" + auto.AutoStopOrders[(int)Second] + " 3:" + auto.AutoStopOrders[(int)Third] + "\n";
+        buffer += "AutoOrderOption:" + auto.AutoStopOrderOption.ToString() + "\n";
         buffer += "AutoPos: L:" + auto.AutoStopPos[(int)ReelLeft] + " M:" + auto.AutoStopPos[(int)ReelMiddle] + " R:" + auto.AutoStopPos[(int)ReelRight] + "\n";
         buffer += "AutoPosDecided:" + auto.HasStopPosDecided + "\n";
 

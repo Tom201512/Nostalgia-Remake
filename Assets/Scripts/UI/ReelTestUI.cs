@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
-public class ReelTestUI : MonoBehaviour
+public class ReelTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
     [SerializeField] private ReelManager reel;

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class WaitTestUI : MonoBehaviour
+public class WaitTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
     WaitManager wait;

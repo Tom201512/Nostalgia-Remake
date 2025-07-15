@@ -1,12 +1,11 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
-using ReelSpinGame_Interface;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,13 +18,17 @@ public class GameManager : MonoBehaviour
     // 各種機能
     [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] private EffectManager effectManagerObj;
+
+    [SerializeField] PlayerUI playerUI;
+
+    // デバッグ用
     [SerializeField] MedalTestUI medalUI;
     [SerializeField] LotsTestUI lotsUI;
     [SerializeField] WaitTestUI waitUI;
     [SerializeField] ReelTestUI reelUI;
     [SerializeField] BonusTestUI bonusUI;
-    [SerializeField] PlayerUI playerUI;
     [SerializeField] AutoTestUI AutoUI;
+
 
     public MedalManager Medal { get; private set; }
     public FlagLots Lots { get; private set; }
@@ -60,6 +63,12 @@ public class GameManager : MonoBehaviour
     // オート開始/停止ボタン
     [SerializeField] private KeyCode keyToAutoToggle;
 
+    // <デバッグ用> デバッグUI表示用
+    [SerializeField] private KeyCode keyToDebugToggle;
+
+    // <デバッグ用> デバッグUI表示するか
+    private bool hasDebugUI;
+
     // 設定
     [Range(0,6), SerializeField] private int setting;
     // 入力用キーコード
@@ -92,16 +101,9 @@ public class GameManager : MonoBehaviour
         MainFlow = new MainGameFlow(this);
         // ステータスパネル
         Status = statusPanel;
+
         // オート機能
-
-        ReelID[] test = new ReelID[]
-        {
-            ReelID.ReelLeft,
-            ReelID.ReelRight,
-            ReelID.ReelMiddle
-        };
-
-        Auto = new AutoPlayFunction(AutoPlayFunction.AutoPlaySpeed.Normal, test);
+        Auto = new AutoPlayFunction(AutoPlaySpeed.Normal, AutoStopOrderOptions.LMR);
         // セーブ機能
         save = new SaveManager();
 
@@ -121,6 +123,9 @@ public class GameManager : MonoBehaviour
 
         // FPS固定
         Application.targetFrameRate = 60;
+
+        // デバッグUIの表示
+        hasDebugUI = false;
     }
 
     void Start()
@@ -144,6 +149,9 @@ public class GameManager : MonoBehaviour
 
         // ステート開始
         MainFlow.stateManager.StartState();
+
+        // デバッグをすべて非表示
+        ToggleDebugUI(false);
     }
 
     void Update()
@@ -161,6 +169,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(keyToAutoToggle))
         {
             Auto.ChangeAutoMode();
+        }
+
+        // デバッグ表示
+        if(Input.GetKeyDown(keyToDebugToggle))
+        {
+            DebugButtonBehavior();
         }
 
         MainFlow.UpdateState();
@@ -182,4 +196,22 @@ public class GameManager : MonoBehaviour
     // func
     // キー設定変更
     public void ChangeKeyBinds(ControlSets controlSets, KeyCode changeKey) => KeyCodes[(int)controlSets] = changeKey;
+
+    // デバッグをつける機能
+    private void DebugButtonBehavior()
+    {
+        hasDebugUI = !hasDebugUI;
+        Debug.Log("Debug:" + hasDebugUI);
+        ToggleDebugUI(hasDebugUI);
+    }
+
+    // デバッグUIの表示非表示
+    private void ToggleDebugUI(bool value)
+    {
+        medalUI.ToggleUI(value);
+        lotsUI.ToggleUI(value);
+        waitUI.ToggleUI(value);
+        reelUI.ToggleUI(value);
+        bonusUI.ToggleUI(value);
+    }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using ReelSpinGame_Bonus;
 
-public class BonusTestUI : MonoBehaviour
+public class BonusTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
     [SerializeField] private BonusManager bonusManager;

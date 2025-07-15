@@ -2,7 +2,7 @@ using ReelSpinGame_Medal;
 using TMPro;
 using UnityEngine;
 
-public class MedalTestUI : MonoBehaviour
+public class MedalTestUI : UIBaseClass
 {
     // var
     TextMeshProUGUI text;

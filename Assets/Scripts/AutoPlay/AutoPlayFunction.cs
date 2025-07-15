@@ -1,5 +1,6 @@
 using ReelSpinGame_AutoPlay.AI;
 using UnityEngine;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
@@ -14,6 +15,8 @@ namespace ReelSpinGame_AutoPlay
         // const
         // オート押し順の識別用
         public enum AutoStopOrder { First, Second, Third}
+        // オート押し順指定用(左:L, 中:M, 右:R)
+        public enum AutoStopOrderOptions { LMR, LRM, MLR, MRL, RLM, RML}
         // オート速度
         public enum AutoPlaySpeed { Normal, Fast, Quick}
         // 現在のオートモード
@@ -26,6 +29,8 @@ namespace ReelSpinGame_AutoPlay
         public AutoPlaySpeed AutoSpeed { get; private set; }
         // オート時の押し順
         public ReelID[] AutoStopOrders { get; private set; }
+        // オート押し順のオプション数値
+        public AutoStopOrderOptions AutoStopOrderOption { get; private set; }
         // オート時の停止位置
         public int[] AutoStopPos { get; private set; }
         // オートの停止位置を決めたか
@@ -39,33 +44,35 @@ namespace ReelSpinGame_AutoPlay
         public AutoPlayFunction()
         {
             autoAI = new AutoPlayAI();
-            Debug.Log("Base Constructor");
             HasAuto = false;
             // 停止順番の配列作成(デフォルトは順押し)
             AutoStopOrders = new ReelID[] { ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
+            AutoStopOrderOption = AutoStopOrderOptions.LMR;
             AutoSpeed = AutoPlaySpeed.Normal;
 
             // 停止位置の配列作成(テスト用に0で止めるように)
             AutoStopPos = new int[] { 0, 0, 0 };
 
+            /*
             Debug.Log("Speed:" + AutoSpeed);
             foreach(ReelID order in AutoStopOrders)
             {
                 Debug.Log("Order:" + order.ToString());
-            }
+            }*/
         }
 
         // 設定から読み込む場合
-        public AutoPlayFunction(AutoPlaySpeed speed, ReelID[] order):this()
+        public AutoPlayFunction(AutoPlaySpeed speed, AutoStopOrderOptions autoStopOrder):this()
         {
             AutoSpeed = speed;
-            AutoStopOrders = order;
+            SetAutoStopOrder(autoStopOrder);
 
+            /*
             Debug.Log("Speed:" + AutoSpeed);
             foreach (ReelID newOrder in AutoStopOrders)
             {
                 Debug.Log("Order:" + newOrder.ToString());
-            }
+            }*/
         }
 
         // func
@@ -74,7 +81,7 @@ namespace ReelSpinGame_AutoPlay
         public void ChangeAutoMode()
         {
             HasAuto = !HasAuto;
-            Debug.Log("AutoMode:" + HasAuto);
+            //Debug.Log("AutoMode:" + HasAuto);
             HasStopPosDecided = false;
         }
         
@@ -86,19 +93,52 @@ namespace ReelSpinGame_AutoPlay
             AutoStopOrders[(int)AutoStopOrder.Second] = 0;
             AutoStopOrders[(int)AutoStopOrder.Third] = 0;
 
-            Debug.Log("AutoPos Reset");
+            //Debug.Log("AutoPos Reset");
         }
 
         // オート押し順をフラグ、条件から得る
         public void GetAutoStopPos(FlagId flag, BonusType holdingBonus, int bigChanceGames, int remainingJac)
         {
-            Debug.Log("GetPos");
+            //Debug.Log("GetPos");
 
             AutoStopPos = autoAI.GetStopPos(flag, AutoStopOrders[(int)AutoStopOrder.First], holdingBonus, bigChanceGames, remainingJac);
-            Debug.Log("Pos created");
+            //Debug.Log("Pos created");
 
             HasStopPosDecided = true;
-            Debug.Log("AutoPos Decided");
+            //Debug.Log("AutoPos Decided");
+        }
+
+        // オート押し順の設定反映
+        public void SetAutoStopOrder(AutoStopOrderOptions order)
+        {       
+            switch(order)
+            {
+                case AutoStopOrderOptions.LMR:
+                    ChangeAutoStopOrder(ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight);
+                    break;
+
+                case AutoStopOrderOptions.LRM:
+                    ChangeAutoStopOrder(ReelID.ReelLeft, ReelID.ReelRight, ReelID.ReelMiddle);
+                    break;
+
+                case AutoStopOrderOptions.MLR:
+                    ChangeAutoStopOrder(ReelID.ReelMiddle, ReelID.ReelLeft, ReelID.ReelRight);
+                    break;
+
+                case AutoStopOrderOptions.MRL:
+                    ChangeAutoStopOrder(ReelID.ReelMiddle, ReelID.ReelRight, ReelID.ReelLeft);
+                    break;
+
+                case AutoStopOrderOptions.RLM:
+                    ChangeAutoStopOrder(ReelID.ReelRight, ReelID.ReelLeft, ReelID.ReelMiddle);
+                    break;
+
+                case AutoStopOrderOptions.RML:
+                    ChangeAutoStopOrder(ReelID.ReelRight, ReelID.ReelMiddle, ReelID.ReelLeft);
+                    break;
+            }
+
+            AutoStopOrderOption = order;
         }
 
         // オート押し順の変更
@@ -130,7 +170,7 @@ namespace ReelSpinGame_AutoPlay
             }
             else
             {
-                Debug.Log("Failed to change because there are duplicated orders");
+                //Debug.Log("Failed to change because there are duplicated orders");
             }
         }
     }
