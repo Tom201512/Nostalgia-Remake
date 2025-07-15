@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight}
 
     // var
+
+    // メインカメラ
+    [SerializeField] private SlotCamera camera;
+
     // 各種機能
     [SerializeField] private ReelManager reelManagerObj;
     [SerializeField] private EffectManager effectManagerObj;
@@ -65,6 +69,9 @@ public class GameManager : MonoBehaviour
 
     // <デバッグ用> デバッグUI表示用
     [SerializeField] private KeyCode keyToDebugToggle;
+
+    // カメラの視点変更
+    [SerializeField] private KeyCode keyCameraModeChange;
 
     // <デバッグ用> デバッグUI表示するか
     private bool hasDebugUI;
@@ -171,8 +178,14 @@ public class GameManager : MonoBehaviour
             Auto.ChangeAutoMode();
         }
 
+        // カメラ表示方法変更
+        if (Input.GetKeyDown(keyCameraModeChange))
+        {
+            camera.ChangeCameraMode();
+        }
+
         // デバッグ表示
-        if(Input.GetKeyDown(keyToDebugToggle))
+        if (Input.GetKeyDown(keyToDebugToggle))
         {
             DebugButtonBehavior();
         }
