@@ -10,7 +10,7 @@ namespace ReelSpinGame_Datas
     public class ScriptableGen : EditorWindow
     {
         // const
-        // デフォルトで使うファイルパス
+        // 読み込み時のファイルパス
         private const string DataPath = "Assets/DataFile";
 
         // リールのファイル

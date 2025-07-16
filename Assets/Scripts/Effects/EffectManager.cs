@@ -93,11 +93,16 @@ namespace ReelSpinGame_Effect
         public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundEffectList.Wait);
         // スタート音
         public void StartLeverOnEffect() => soundManager.PlaySoundOneShot(soundManager.SoundEffectList.Start);
+
         // テスト用??
         public void StartLeverOnEffect(FlagBehaviour.FlagId flag, BonusType holding)
         {
-            // ボーナスがある場合
+            // ボーナスがある場合は1/8で再生
             if(holding != BonusType.BonusNone)
+            {
+
+            }
+            else
             {
 
             }
