@@ -14,7 +14,7 @@ namespace ReelSpinGame_Datas
         // var
         // 作成中のサウンドパック
         private SoundEffectPack sound;
-        private MusicPack music;
+        private BGMPack music;
 
         // サウンドパックの名前
         private string soundPackName;
@@ -35,7 +35,7 @@ namespace ReelSpinGame_Datas
         {
             soundPackName = "";
             sound = new SoundEffectPack();
-            music = new MusicPack();
+            music = new BGMPack();
         }
 
         private void OnGUI()

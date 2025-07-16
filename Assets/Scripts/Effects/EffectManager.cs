@@ -88,11 +88,11 @@ namespace ReelSpinGame_Effect
 
         // サウンド
         // ベット音再生
-        public void StartBetEffect() => soundManager.PlaySoundOneShot(soundManager.SoundEffectList.Bet);
+        public void StartBetEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Bet);
         // ウェイト音再生
-        public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundEffectList.Wait);
+        public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundDB.SE.Wait);
         // スタート音
-        public void StartLeverOnEffect() => soundManager.PlaySoundOneShot(soundManager.SoundEffectList.Start);
+        public void StartLeverOnEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
 
         // テスト用??
         public void StartLeverOnEffect(FlagBehaviour.FlagId flag, BonusType holding)
@@ -108,7 +108,7 @@ namespace ReelSpinGame_Effect
             }
         }
         // 停止音
-        public void StartReelStopEffect() => soundManager.PlaySoundOneShot(soundManager.SoundEffectList.Stop);
+        public void StartReelStopEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Stop);
 
         // リーチ時演出
         public void StartRiichiEffect(BigColor color)
@@ -116,13 +116,13 @@ namespace ReelSpinGame_Effect
             switch (color)
             {
                 case BigColor.Red:
-                    soundManager.PlaySoundOneShot(soundManager.SoundEffectList.RedRiichiSound);
+                    soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.RedRiichiSound);
                     break;
                 case BigColor.Blue:
-                    soundManager.PlaySoundOneShot(soundManager.SoundEffectList.BlueRiichiSound);
+                    soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.BlueRiichiSound);
                     break;
                 case BigColor.Black:
-                    soundManager.PlaySoundOneShot(soundManager.SoundEffectList.BB7RiichiSound);
+                    soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.BB7RiichiSound);
                     break;
             }
         }
@@ -137,17 +137,17 @@ namespace ReelSpinGame_Effect
             // JAC中の払い出し音
             if (status == BonusStatus.BonusJACGames)
             {
-                soundManager.PlaySoundLoop(soundManager.SoundEffectList.JacPayout);
+                soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
             }
             // 15枚の払い出し音
             else if (payouts >= 15)
             {
-                soundManager.PlaySoundLoop(soundManager.SoundEffectList.MaxPayout);
+                soundManager.PlaySoundLoop(soundManager.SoundDB.SE.MaxPayout);
             }
             //　それ以外は通常の払い出し音
             else
             {
-                soundManager.PlaySoundLoop(soundManager.SoundEffectList.NormalPayout);
+                soundManager.PlaySoundLoop(soundManager.SoundDB.SE.NormalPayout);
             }
         }
 
@@ -155,7 +155,7 @@ namespace ReelSpinGame_Effect
         public void StartReplayEffect(List<PayoutLineData> lastPayoutLines)
         {
             //音再生
-            soundManager.PlaySoundAndWait(soundManager.SoundEffectList.Replay);
+            soundManager.PlaySoundAndWait(soundManager.SoundDB.SE.Replay);
             // フラッシュさせる
             flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
         }
@@ -217,16 +217,16 @@ namespace ReelSpinGame_Effect
             switch (BigChanceColor)
             {
                 case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedStart, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RedStart, false);
                     break;
                 case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueStart, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlueStart, false);
                     break;
                 case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackStart, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlackStart, false);
                     break;
                 default:
-                    soundManager.PlayBGM(soundManager.BGMList.RegStart, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RegStart, false);
                     break;
             }
         }
@@ -237,16 +237,16 @@ namespace ReelSpinGame_Effect
             switch (BigChanceColor)
             {
                 case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedBGM, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RedBGM, true);
                     break;
                 case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueBGM, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlueBGM, true);
                     break;
                 case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackBGM, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlackBGM, true);
                     break;
                 default:
-                    soundManager.PlayBGM(soundManager.BGMList.RegJAC, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RegJAC, true);
                     break;
             }
         }
@@ -257,16 +257,16 @@ namespace ReelSpinGame_Effect
             switch (BigChanceColor)
             {
                 case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedJAC, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RedJAC, true);
                     break;
                 case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueJAC, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlueJAC, true);
                     break;
                 case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackJAC, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlackJAC, true);
                     break;
                 default:
-                    soundManager.PlayBGM(soundManager.BGMList.RegJAC, true);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RegJAC, true);
                     break;
             }
         }
@@ -277,13 +277,13 @@ namespace ReelSpinGame_Effect
             switch (BigChanceColor)
             {
                 case BigColor.Red:
-                    soundManager.PlayBGM(soundManager.BGMList.RedEnd, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.RedEnd, false);
                     break;
                 case BigColor.Blue:
-                    soundManager.PlayBGM(soundManager.BGMList.BlueEnd, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlueEnd, false);
                     break;
                 case BigColor.Black:
-                    soundManager.PlayBGM(soundManager.BGMList.BlackEnd, false);
+                    soundManager.PlayBGM(soundManager.SoundDB.BGM.BlackEnd, false);
                     break;
             }
         }

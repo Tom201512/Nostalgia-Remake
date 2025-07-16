@@ -113,7 +113,7 @@ namespace ReelSpinGame_Sound
 
     // BGMのデータセット
     [Serializable]
-    public class MusicPack
+    public class BGMPack
     {
         // var
 

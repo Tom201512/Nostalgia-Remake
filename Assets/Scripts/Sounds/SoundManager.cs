@@ -1,3 +1,6 @@
+using JetBrains.Annotations;
+using ReelSpinGame_Datas;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReelSpinGame_Sound
@@ -6,18 +9,26 @@ namespace ReelSpinGame_Sound
     {
         // 音管理
 
+        // const
+        // サウンドパック識別用ID
+        public enum SoundDatabaseID { DefaultSound, ArrangeSound };
+
         // var
-        // 効果音リスト
-        [SerializeField] private SoundEffectPack soundEffectList;
-        [SerializeField] private MusicPack bgmList;
+        // 使用候補のサウンドパック]
+        [SerializeField] private List<SoundDatabase> SoundDatabases;
 
         // SE再生
         [SerializeField] private SoundPlayer soundEffectPlayer;
         // BGM再生
         [SerializeField] private SoundPlayer bgmPlayer;
 
-        public SoundEffectPack SoundEffectList { get { return soundEffectList; } }
-        public MusicPack BGMList { get { return bgmList; } }
+        // 使用中のサウンドパック
+        public SoundDatabase SoundDB { get; private set; }
+
+        private void Awake()
+        {
+            ChangeSoundPack((int)SoundDatabaseID.DefaultSound);
+        }
 
         // func
         // 効果音が停止したか確認
@@ -28,6 +39,17 @@ namespace ReelSpinGame_Sound
         public bool GetBGMStopped() => bgmPlayer.HasSoundStopped;
         // 音楽がループしているか確認
         public bool GetBGMHasLoop() => bgmPlayer.HasLoop;
+
+        // サウンドパックの差し替え
+        public void ChangeSoundPack(int databaseID)
+        {
+            if (databaseID >= SoundDatabases.Count && databaseID < 0)
+            {
+                Debug.LogError("Selected sound data is not found");
+            }
+
+            SoundDB = SoundDatabases[databaseID];
+        }
 
         // 指定した音を1回再生
         public void PlaySoundOneShot(AudioClip sound)

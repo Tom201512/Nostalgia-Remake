@@ -10,15 +10,15 @@ namespace ReelSpinGame_Datas
     {
         // var
         // 効果音データ
-        [SerializeField] private SoundEffectPack sound;
+        [SerializeField] private SoundEffectPack se;
         // 音楽データ
-        [SerializeField] private MusicPack music;
+        [SerializeField] private BGMPack bgm;
 
-        public SoundEffectPack Sound { get { return sound; } }
-        public MusicPack Music { get { return music; } }
+        public SoundEffectPack SE { get { return se; } }
+        public BGMPack BGM { get { return bgm; } }
 
         // func
-        public void SetSoundEffectPack(SoundEffectPack sound) => this.sound = sound;
-        public void SetMusicPack(MusicPack music) => this.music = music;
+        public void SetSoundEffectPack(SoundEffectPack sound) => this.se = sound;
+        public void SetMusicPack(BGMPack music) => this.bgm = music;
     }
 }

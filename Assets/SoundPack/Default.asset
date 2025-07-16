@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2893986e5504b848baabf1d30ee33e1, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  sound:
+  se:
     bet: {fileID: 8300000, guid: 36436fa7ee5d9824f8b51baeb5a7366c, type: 3}
     wait: {fileID: 8300000, guid: a9ae3d4fbb810714cada510958b1b403, type: 3}
     start: {fileID: 8300000, guid: a59dca87916edc24e8727f5031588ada, type: 3}
@@ -24,7 +24,7 @@ MonoBehaviour:
     normalPayout: {fileID: 8300000, guid: 569ea9fca0932e54abb92777d431faa7, type: 3}
     maxpayout: {fileID: 8300000, guid: 8343db427e33012489c8c1e617b9115c, type: 3}
     jacPayout: {fileID: 8300000, guid: 85654bdff9fbcee488461992d9db9240, type: 3}
-  music:
+  bgm:
     redStart: {fileID: 8300000, guid: 02288b728f39f9643a2bb545ef5dca14, type: 3}
     redBGM: {fileID: 8300000, guid: 48d47c8b934190a4aa5a9c5630933ac3, type: 3}
     redJAC: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
