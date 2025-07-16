@@ -18,20 +18,16 @@ namespace ReelSpinGame_Effect
         // const
         // リプレイ時に待機させる時間(秒)
         const float ReplayWaitTime = 1.0f;
-        // Vフラッシュ確率(1/n)
-        const int VFlashProb = 6;
+
+        // Vフラッシュ時の待機時間(秒)
+        const float VFlashWaitTime = 2.0f;
 
         // var
         // フラッシュ機能
         private FlashManager flashManager;
         // サウンド機能
         private SoundManager soundManager;
-        // フラッシュ中か
-        public bool HasFlash { get; private set; }
-        // フラッシュで待機中か
-        public bool HasFlashWait { get; private set; }
-        // 現在のフラッシュID
-        public int CurrentFlashID { get; private set; }
+
         // ボーナス処理で待機中か
         public bool HasFanfareUpdate { get; private set; }
         // ビッグチャンス時の色
@@ -84,8 +80,6 @@ namespace ReelSpinGame_Effect
 
         // リールライト全消灯
         public void TurnOffAllReels() => flashManager.TurnOffAllReels();
-        // リールフラッシュを開始させる
-        public void StartReelFlash(FlashID flashID) => flashManager.StartReelFlash(flashID);
 
         // サウンド
         // ベット音再生
@@ -169,26 +163,6 @@ namespace ReelSpinGame_Effect
             }
         }
 
-        // 指定した確率で再生音の抽選をする
-        private void LotStartSound(int probability)
-        {
-            // 確率が0以下は通常スタート音
-            if(probability <= 0)
-            {
-                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
-            }
-            // 確率が1以上なら抽選
-            else if (Random.Range(0, probability - 1) == 0)
-            {
-                //Debug.Log("SP SOUND PLAYED");
-                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.SpStart);
-            }
-            else
-            {
-                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
-            }
-        }
-
         // 停止音
         public void StartReelStopEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Stop);
 
@@ -242,12 +216,13 @@ namespace ReelSpinGame_Effect
             flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
         }
 
-        // リーチ目出現時の演出
-        public void StartRiichiPatternEffect()
+        // Vフラッシュ演出
+        public void StartVFlash(int probability)
         {
-            if (Random.Range(0, VFlashProb - 1) == 0)
+            // 確率が0以上ならフラッシュ抽選
+            if (probability > 0 && Random.Range(0, probability - 1) == 0)
             {
-                flashManager.StartReelFlash(FlashID.V_Flash);
+                flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
             }
         }
 
@@ -290,6 +265,26 @@ namespace ReelSpinGame_Effect
                         break;
                 }
                 lastBonusStatus = status;
+            }
+        }
+
+        // 指定した確率で再生音の抽選をする
+        private void LotStartSound(int probability)
+        {
+            // 確率が0以下は通常スタート音
+            if (probability <= 0)
+            {
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
+            }
+            // 確率が1以上なら抽選
+            else if (Random.Range(0, probability - 1) == 0)
+            {
+                //Debug.Log("SP SOUND PLAYED");
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.SpStart);
+            }
+            else
+            {
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
             }
         }
 

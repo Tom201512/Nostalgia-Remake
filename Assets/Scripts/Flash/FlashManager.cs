@@ -78,12 +78,18 @@ namespace ReelSpinGame_Reels.Flash
         public void SetReelObjects(List<ReelObject> reelObjects) => this.reelObjects = reelObjects;
 
         // リールフラッシュを再生させる
-        public void StartReelFlash(FlashID flashID)
+        public void StartReelFlash(float waitSeconds, FlashID flashID)
         {
             currentFrame = 0;
             HasFlash = true;
             FlashDatabase[(int)flashID].SetSeek(0);
             StartCoroutine(nameof(UpdateFlash));
+
+            if (waitSeconds > 0)
+            {
+                HasFlashWait = true;
+                StartCoroutine(nameof(SetFlashWait), waitSeconds);
+            }
         }
 
         // 払い出しフラッシュの再生
@@ -286,7 +292,7 @@ namespace ReelSpinGame_Reels.Flash
             yield break;
         }
 
-        // タイムアウト用イベント
+        // タイムアウト用イベント(時間経過でフラッシュ終了)
         private IEnumerator SetTimeOut(float waitSeconds)
         {
             yield return new WaitForSeconds(waitSeconds);
@@ -294,6 +300,14 @@ namespace ReelSpinGame_Reels.Flash
             HasFlashWait = false;
             HasFlash = false;
             TurnOnAllReels();
+        }
+
+        // フラッシュ用ウェイトイベント
+        private IEnumerator SetFlashWait(float waitSeconds)
+        {
+            yield return new WaitForSeconds(waitSeconds);
+            ////Debug.Log("Replay Finished");
+            HasFlashWait = false;
         }
     }
 }

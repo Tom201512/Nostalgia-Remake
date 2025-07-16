@@ -2,7 +2,6 @@
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
@@ -173,20 +172,6 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Bonus.GetCurrentBonusStatus(), gM.Reel.GetPayoutResultData().Payouts);
             }
 
-            // 通常時のリプレイだった場合は1秒待たせる。
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
-                gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
-            {
-                gM.Effect.StartReplayEffect(gM.Reel.GetPayoutResultData().PayoutLines);
-            }
-
-            // 通常時はずれの場合、ボーナスが当選していたら1/6でフラッシュ
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
-                gM.Bonus.GetHoldingBonusID() != BonusType.BonusNone)
-            {
-                gM.Effect.StartRiichiPatternEffect();
-            }
-
             // ボーナス中はビタハズシ成功でフラッシュ
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
                 gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
@@ -195,7 +180,29 @@ namespace ReelSpinGame_State.PayoutState
                 if (gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 10 ||
                         gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 16)
                 {
-                    gM.Effect.StartReelFlash(FlashID.V_Flash);
+                    gM.Effect.StartVFlash(1);
+                }
+            }
+
+            // 通常時
+            else if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            {
+                // リプレイなら1秒待機させてフラッシュ
+                if (gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
+                {
+                    gM.Effect.StartReplayEffect(gM.Reel.GetPayoutResultData().PayoutLines);
+                }
+
+                // 通常時BIG, REG成立時に1/6でフラッシュ
+                else if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig || gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
+                {
+                    gM.Effect.StartVFlash(6);
+                }
+
+                // 通常時はずれの場合、すでにボーナスが当選していたら1/6でフラッシュ
+                else if (gM.Bonus.GetHoldingBonusID() != BonusType.BonusNone)
+                {
+                    gM.Effect.StartVFlash(6);
                 }
             }
         }
