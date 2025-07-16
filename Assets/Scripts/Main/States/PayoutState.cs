@@ -192,8 +192,8 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
             {
                 // 11番、17番を押した場合はフラッシュ
-                if (gM.Reel.GetLastStopped().LastPos[(int)ReelID.ReelLeft] + 1 == 11 ||
-                        gM.Reel.GetLastStopped().LastPos[(int)ReelID.ReelLeft] + 1 == 17)
+                if (gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 10 ||
+                        gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 16)
                 {
                     gM.Effect.StartReelFlash(FlashID.V_Flash);
                 }

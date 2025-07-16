@@ -101,10 +101,10 @@ namespace ReelSpinGame_Effect
             // BIG中
             if (bonusStatus == BonusStatus.BonusBIGGames)
             {
-                // リプレイ、はずれ時に1/6で再生
+                // リプレイ、はずれ時に1/4で再生
                 if(flag == FlagId.FlagNone || flag == FlagId.FlagReplayJacIn)
                 {
-                    LotStartSound(6);
+                    LotStartSound(4);
                 }
                 else
                 {
@@ -115,9 +115,10 @@ namespace ReelSpinGame_Effect
             else if (bonusStatus == BonusStatus.BonusNone)
             {
                 // 以下の確率で告知音で再生
-                // BIG/REG成立時、成立後小役条件不問で1/6
+                // BIG/REG成立時、成立後小役条件不問で1/2
                 // スイカ、1/8
-                // ベル、チェリー、1/16
+                // チェリー、1/16
+                // ベル、1/32
                 // リプレイ、発生しない
                 // はずれ、1/128
 
@@ -128,7 +129,7 @@ namespace ReelSpinGame_Effect
                     {
                         case FlagId.FlagBig:
                         case FlagId.FlagReg:
-                            LotStartSound(6);
+                            LotStartSound(2);
                             break;
 
                         case FlagId.FlagMelon:
@@ -137,8 +138,11 @@ namespace ReelSpinGame_Effect
 
                         case FlagId.FlagCherry2:
                         case FlagId.FlagCherry4:
-                        case FlagId.FlagBell:
                             LotStartSound(16);
+                            break;
+
+                        case FlagId.FlagBell:
+                            LotStartSound(32);
                             break;
 
                         case FlagId.FlagReplayJacIn:
@@ -151,10 +155,10 @@ namespace ReelSpinGame_Effect
                     }
                 }
 
-                // 成立後は1/6で再生
+                // 成立後は1/2で再生
                 else
                 {
-                    LotStartSound(6);
+                    LotStartSound(2);
                 }
 
             }
@@ -168,15 +172,15 @@ namespace ReelSpinGame_Effect
         // 指定した確率で再生音の抽選をする
         private void LotStartSound(int probability)
         {
-            // 確率が0より低い場合は通常スタート音
-            if(probability > 0)
+            // 確率が0以下は通常スタート音
+            if(probability <= 0)
             {
                 soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
             }
             // 確率が1以上なら抽選
             else if (Random.Range(0, probability - 1) == 0)
             {
-                Debug.Log("SP SOUND PLAYED");
+                //Debug.Log("SP SOUND PLAYED");
                 soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.SpStart);
             }
             else

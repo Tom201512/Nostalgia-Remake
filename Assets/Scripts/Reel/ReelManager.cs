@@ -103,7 +103,7 @@ public class ReelManager : MonoBehaviour
     // 指定したリールの停止可能位置(中段)を返す
     public int GetReelCenterPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
     // 指定したリールの最後に押した位置を返す
-    public int GetStoppedReelPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedPos();
+    public int GetPushedPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedPos();
     // 指定リールの停止予定位置を返す
     public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].GetWillStopPos();
     // 指定したリールのディレイ数を返す

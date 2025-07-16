@@ -35,10 +35,10 @@ namespace ReelSpinGame_State.PlayingState
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
             // スタートサウンド再生
-            //gM.Effect.StartLeverOnEffect();
+            gM.Effect.StartLeverOnEffect();
 
             // 予告音バージョン(試験的導入)
-            gM.Effect.StartLeverOnEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Bonus.GetCurrentBonusStatus());
+            //gM.Effect.StartLeverOnEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Bonus.GetCurrentBonusStatus());
 
             // リール停止時に音を鳴らすよう変更
             gM.Reel.HasSomeReelStopped += StopReelSound;

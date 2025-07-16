@@ -46,9 +46,9 @@ public class ReelTestUI : UIBaseClass
         buffer += "RightWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelRight)) + "\n" + "\n";
 
         // 停止した位置
-        buffer += "LeftStopped:" + (reel.GetStoppedReelPos(ReelID.ReelLeft)) + "\n";
-        buffer += "MiddleStopped:" + (reel.GetStoppedReelPos(ReelID.ReelMiddle)) + "\n";
-        buffer += "RightStopped:" + (reel.GetStoppedReelPos(ReelID.ReelRight)) + "\n" + "\n";
+        buffer += "LeftStopped:" + (reel.GetPushedPos(ReelID.ReelLeft)) + "\n";
+        buffer += "MiddleStopped:" + (reel.GetPushedPos(ReelID.ReelMiddle)) + "\n";
+        buffer += "RightStopped:" + (reel.GetPushedPos(ReelID.ReelRight)) + "\n" + "\n";
 
         // スベリコマ数
         buffer += "LeftDelay:" + reel.GetLastDelay(ReelID.ReelLeft) + "\n";
