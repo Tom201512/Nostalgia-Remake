@@ -214,7 +214,7 @@ public class GameManager : MonoBehaviour
     private void DebugButtonBehavior()
     {
         hasDebugUI = !hasDebugUI;
-        Debug.Log("Debug:" + hasDebugUI);
+        //Debug.Log("Debug:" + hasDebugUI);
         ToggleDebugUI(hasDebugUI);
     }
 
