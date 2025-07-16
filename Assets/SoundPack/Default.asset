@@ -16,6 +16,7 @@ MonoBehaviour:
     bet: {fileID: 8300000, guid: 36436fa7ee5d9824f8b51baeb5a7366c, type: 3}
     wait: {fileID: 8300000, guid: a9ae3d4fbb810714cada510958b1b403, type: 3}
     start: {fileID: 8300000, guid: a59dca87916edc24e8727f5031588ada, type: 3}
+    spStart: {fileID: 8300000, guid: a59dca87916edc24e8727f5031588ada, type: 3}
     stop: {fileID: 8300000, guid: 229678cf824055d44a685c36b2df2979, type: 3}
     redRiichiSound: {fileID: 8300000, guid: c8d6c9bc18254d14095f70d43c874281, type: 3}
     blueRiichiSound: {fileID: 8300000, guid: c8d6c9bc18254d14095f70d43c874281, type: 3}

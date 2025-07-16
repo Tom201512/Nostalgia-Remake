@@ -51,6 +51,7 @@ namespace ReelSpinGame_Datas
                     sound.Bet = (AudioClip)EditorGUILayout.ObjectField("ベット:", sound.Bet, typeof(AudioClip), true);
                     sound.Wait = (AudioClip)EditorGUILayout.ObjectField("ウェイト:", sound.Wait, typeof(AudioClip), true);
                     sound.Start = (AudioClip)EditorGUILayout.ObjectField("スタート:", sound.Start, typeof(AudioClip), true);
+                    sound.SpStart = (AudioClip)EditorGUILayout.ObjectField("告知音スタート:", sound.SpStart, typeof(AudioClip), true);
                     sound.Stop = (AudioClip)EditorGUILayout.ObjectField("停止:", sound.Stop, typeof(AudioClip), true);
                     sound.RedRiichiSound = (AudioClip)EditorGUILayout.ObjectField("赤7リーチ:", sound.RedRiichiSound, typeof(AudioClip), true);
                     sound.BlueRiichiSound = (AudioClip)EditorGUILayout.ObjectField("青7リーチ:", sound.BlueRiichiSound, typeof(AudioClip), true);
@@ -130,6 +131,7 @@ namespace ReelSpinGame_Datas
             if(sound.Bet == null) { return false; }
             if(sound.Wait == null) { return false; }
             if(sound.Start == null) { return false; }
+            if(sound.SpStart == null) { return false; }
             if(sound.Stop == null) { return false; }
             if(sound.RedRiichiSound == null) { return false; }
             if(sound.BlueRiichiSound == null) { return false; }

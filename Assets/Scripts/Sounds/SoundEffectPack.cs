@@ -13,6 +13,7 @@ namespace ReelSpinGame_Sound
         [SerializeField] private AudioClip bet;
 		[SerializeField] private AudioClip wait;
 		[SerializeField] private AudioClip start;
+		[SerializeField] private AudioClip spStart;
 		[SerializeField] private AudioClip stop;
 		[SerializeField] private AudioClip redRiichiSound;
 		[SerializeField] private AudioClip blueRiichiSound;
@@ -43,6 +44,14 @@ namespace ReelSpinGame_Sound
             get { return start; }
 #if UNITY_EDITOR
             set { start = value; }
+#endif
+        }
+
+        public AudioClip SpStart
+        {
+            get { return spStart; }
+#if UNITY_EDITOR
+            set { spStart = value; }
 #endif
         }
 

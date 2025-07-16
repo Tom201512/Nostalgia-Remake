@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
+using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_Effect
 {
@@ -94,19 +95,96 @@ namespace ReelSpinGame_Effect
         // スタート音
         public void StartLeverOnEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
 
-        // テスト用??
-        public void StartLeverOnEffect(FlagBehaviour.FlagId flag, BonusType holding)
+        // テスト用(特殊スタート機能)
+        public void StartLeverOnEffect(FlagId flag, BonusType holding, BonusStatus bonusStatus)
         {
-            // ボーナスがある場合は1/8で再生
-            if(holding != BonusType.BonusNone)
+            // BIG中
+            if (bonusStatus == BonusStatus.BonusBIGGames)
             {
+                // リプレイ、はずれ時に1/6で再生
+                if(flag == FlagId.FlagNone || flag == FlagId.FlagReplayJacIn)
+                {
+                    LotStartSound(6);
+                }
+                else
+                {
+                    LotStartSound(0);
+                }
+            }
+            // 通常時
+            else if (bonusStatus == BonusStatus.BonusNone)
+            {
+                // 以下の確率で告知音で再生
+                // BIG/REG成立時、成立後小役条件不問で1/6
+                // スイカ、1/8
+                // ベル、チェリー、1/16
+                // リプレイ、発生しない
+                // はずれ、1/128
 
+                if(holding != BonusType.BonusNone)
+                {
+                    // BIG, REG
+                    switch(flag)
+                    {
+                        case FlagId.FlagBig:
+                        case FlagId.FlagReg:
+                            LotStartSound(6);
+                            break;
+
+                        case FlagId.FlagMelon:
+                            LotStartSound(8);
+                            break;
+
+                        case FlagId.FlagCherry2:
+                        case FlagId.FlagCherry4:
+                        case FlagId.FlagBell:
+                            LotStartSound(16);
+                            break;
+
+                        case FlagId.FlagReplayJacIn:
+                            LotStartSound(0);
+                            break;
+
+                        default:
+                            LotStartSound(128);
+                            break;
+                    }
+                }
+
+                // 成立後は1/6で再生
+                else
+                {
+                    LotStartSound(6);
+                }
+
+            }
+            // JAC中(鳴らさない)
+            else
+            {
+                LotStartSound(0);
+            }
+        }
+
+        // 指定した確率で再生音の抽選をする
+        private void LotStartSound(int probability)
+        {
+            // 確率が0より低い場合は通常スタート音
+            if(probability > 0)
+            {
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
+            }
+            // 確率が1以上なら抽選
+            else if (Random.Range(0, probability - 1) == 0)
+            {
+                Debug.Log("SP SOUND PLAYED");
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.SpStart);
             }
             else
             {
-
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
             }
         }
+
         // 停止音
         public void StartReelStopEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Stop);
 
