@@ -73,17 +73,23 @@ public class GameManager : MonoBehaviour
     // カメラの視点変更
     [SerializeField] private KeyCode keyCameraModeChange;
 
+    // <デバッグ用>セーブの読み込み、書き込みをするか
+    [SerializeField] private bool useSaveFunciton;
+
     // <デバッグ用> デバッグUI表示するか
     private bool hasDebugUI;
 
-    // 設定
-    [Range(0,6), SerializeField] private int setting;
+    // 設定値
+    public int Setting { get; private set; }
+    // デバッグ用設定値
+    [Range(0, 6), SerializeField] private int debugSetting;
+
     // 入力用キーコード
     public KeyCode[] KeyCodes { get; private set; }
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
-    public int Setting { get { return setting; } }
+
 
     // プレイヤーデータ用
     public PlayingDatabase PlayerData { get; private set; }
@@ -92,6 +98,7 @@ public class GameManager : MonoBehaviour
     {
         // プレイヤーデータ作成
         PlayerData = new PlayingDatabase();
+
         // 画面
         //Debug.Log("Screen:" + Screen.width + "," + Screen.height);
         Screen.SetResolution(960, 540, false);
@@ -118,11 +125,11 @@ public class GameManager : MonoBehaviour
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey ,betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight};
 
         // 例外処理
-        if (setting < 0 && setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
+        if (Setting < 0 && Setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
         // 0ならランダムを選ぶ
-        else if (setting == 0)
+        else if (Setting == 0)
         {
-            setting = Random.Range(1, 6);
+            Setting = Random.Range(1, 6);
         }
 
         // 画面サイズ初期化
@@ -137,13 +144,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        /*
-        // セーブ読み込み。セーブがない場合は新規作成
-        if(!save.LoadSaveFile())
+        if(useSaveFunciton)
         {
-            // セーブフォルダの作成
-            save.GenerateSaveFolder();
-        }*/
+            // セーブ読み込み。セーブがない場合は新規作成
+            if (!save.LoadSaveFile())
+            {
+                // セーブフォルダの作成
+                save.GenerateSaveFolder();
+            }
+        }
 
         // メダル設定
         Medal.SetMedalData(0, 3, 0, false);
@@ -159,6 +168,20 @@ public class GameManager : MonoBehaviour
 
         // デバッグをすべて非表示
         ToggleDebugUI(false);
+
+        // 設定反映
+
+        if(useSaveFunciton)
+        {
+            save.CurrentSave.SetSetting(debugSetting);
+            Setting = save.CurrentSave.Setting;
+            Debug.Log("Setting:" + save.CurrentSave.Setting);
+        }
+        else
+        {
+            Setting = debugSetting;
+            Debug.Log("Setting:" + debugSetting);
+        }
     }
 
     void Update()
@@ -168,7 +191,6 @@ public class GameManager : MonoBehaviour
         // 終了処理
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //Debug.Log("Game Closed");
             Application.Quit();
         }
 
@@ -198,12 +220,13 @@ public class GameManager : MonoBehaviour
     {
         Wait.DisposeWait();
 
-        /*
-        // セーブ
-        save.GenerateSaveFolder();
-        // テスト
-        save.GenerateSaveFile(setting);
-        */
+        if (useSaveFunciton)
+        {
+            // セーブ開始
+            save.GenerateSaveFolder();
+            // ファイルセーブを行う
+            save.GenerateSaveFile();
+        }
     }
 
     // func
@@ -214,7 +237,6 @@ public class GameManager : MonoBehaviour
     private void DebugButtonBehavior()
     {
         hasDebugUI = !hasDebugUI;
-        //Debug.Log("Debug:" + hasDebugUI);
         ToggleDebugUI(hasDebugUI);
     }
 

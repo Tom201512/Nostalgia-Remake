@@ -839,7 +839,8 @@ MonoBehaviour:
   keyToAutoToggle: 97
   keyToDebugToggle: 100
   keyCameraModeChange: 99
-  setting: 6
+  useSaveFunciton: 1
+  debugSetting: 6
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
