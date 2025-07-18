@@ -8,6 +8,7 @@ using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using UnityEditor.XR;
 
 namespace ReelSpinGame_Effect
 {
@@ -20,7 +21,7 @@ namespace ReelSpinGame_Effect
         const float ReplayWaitTime = 1.0f;
 
         // Vフラッシュ時の待機時間(秒)
-        const float VFlashWaitTime = 2.0f;
+        const float VFlashWaitTime = 1.0f;
 
         // var
         // フラッシュ機能
@@ -28,6 +29,8 @@ namespace ReelSpinGame_Effect
         // サウンド機能
         private SoundManager soundManager;
 
+        // スタート音に予告音をつけるか
+        [SerializeField] private bool hasSPStartSound;
         // ボーナス処理で待機中か
         public bool HasFanfareUpdate { get; private set; }
         // ビッグチャンス時の色
@@ -86,80 +89,82 @@ namespace ReelSpinGame_Effect
         public void StartBetEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Bet);
         // ウェイト音再生
         public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundDB.SE.Wait);
-        // スタート音
-        public void StartLeverOnEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
 
-        // テスト用(特殊スタート機能)
+        // スタート音
         public void StartLeverOnEffect(FlagId flag, BonusType holding, BonusStatus bonusStatus)
         {
-            // BIG中
-            if (bonusStatus == BonusStatus.BonusBIGGames)
+            if(hasSPStartSound)
             {
-                // リプレイ、はずれ時に1/4で再生
-                if(flag == FlagId.FlagNone || flag == FlagId.FlagReplayJacIn)
+                // BIG中
+                if (bonusStatus == BonusStatus.BonusBIGGames)
                 {
-                    LotStartSound(4);
+                    // リプレイ時に1/6で再生
+                    if (flag == FlagId.FlagReplayJacIn)
+                    {
+                        LotStartSound(6);
+                    }
+                    else
+                    {
+                        LotStartSound(0);
+                    }
                 }
+                // 通常時
+                else if (bonusStatus == BonusStatus.BonusNone)
+                {
+                    // 以下の確率で告知音で再生
+                    // BIG/REG成立時、成立後小役条件不問で1/4
+                    // スイカ、1/8
+                    // チェリー、発生しない
+                    // ベル、1/32
+                    // リプレイ、発生しない
+                    // はずれ、1/128
+
+                    if (holding != BonusType.BonusNone)
+                    {
+                        // BIG, REG
+                        switch (flag)
+                        {
+                            case FlagId.FlagBig:
+                            case FlagId.FlagReg:
+                                LotStartSound(4);
+                                break;
+
+                            case FlagId.FlagMelon:
+                                LotStartSound(8);
+                                break;
+
+                            case FlagId.FlagBell:
+                                LotStartSound(32);
+                                break;
+
+                            case FlagId.FlagCherry2:
+                            case FlagId.FlagCherry4:
+                            case FlagId.FlagReplayJacIn:
+                                LotStartSound(0);
+                                break;
+
+                            default:
+                                LotStartSound(128);
+                                break;
+                        }
+                    }
+
+                    // 成立後は1/4で再生
+                    else
+                    {
+                        LotStartSound(4);
+                    }
+
+                }
+                // JAC中(鳴らさない)
                 else
                 {
                     LotStartSound(0);
                 }
             }
-            // 通常時
-            else if (bonusStatus == BonusStatus.BonusNone)
-            {
-                // 以下の確率で告知音で再生
-                // BIG/REG成立時、成立後小役条件不問で1/2
-                // スイカ、1/8
-                // チェリー、1/16
-                // ベル、1/32
-                // リプレイ、発生しない
-                // はずれ、1/128
-
-                if(holding != BonusType.BonusNone)
-                {
-                    // BIG, REG
-                    switch(flag)
-                    {
-                        case FlagId.FlagBig:
-                        case FlagId.FlagReg:
-                            LotStartSound(2);
-                            break;
-
-                        case FlagId.FlagMelon:
-                            LotStartSound(8);
-                            break;
-
-                        case FlagId.FlagCherry2:
-                        case FlagId.FlagCherry4:
-                            LotStartSound(16);
-                            break;
-
-                        case FlagId.FlagBell:
-                            LotStartSound(32);
-                            break;
-
-                        case FlagId.FlagReplayJacIn:
-                            LotStartSound(0);
-                            break;
-
-                        default:
-                            LotStartSound(128);
-                            break;
-                    }
-                }
-
-                // 成立後は1/2で再生
-                else
-                {
-                    LotStartSound(2);
-                }
-
-            }
-            // JAC中(鳴らさない)
             else
             {
-                LotStartSound(0);
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
             }
         }
 

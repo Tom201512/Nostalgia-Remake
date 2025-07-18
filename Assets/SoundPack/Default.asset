@@ -13,30 +13,30 @@ MonoBehaviour:
   m_Name: Default
   m_EditorClassIdentifier: 
   se:
-    bet: {fileID: 8300000, guid: 36436fa7ee5d9824f8b51baeb5a7366c, type: 3}
-    wait: {fileID: 8300000, guid: a9ae3d4fbb810714cada510958b1b403, type: 3}
-    start: {fileID: 8300000, guid: a59dca87916edc24e8727f5031588ada, type: 3}
-    spStart: {fileID: 8300000, guid: a59dca87916edc24e8727f5031588ada, type: 3}
-    stop: {fileID: 8300000, guid: 229678cf824055d44a685c36b2df2979, type: 3}
-    redRiichiSound: {fileID: 8300000, guid: c8d6c9bc18254d14095f70d43c874281, type: 3}
-    blueRiichiSound: {fileID: 8300000, guid: c8d6c9bc18254d14095f70d43c874281, type: 3}
-    bb7RiichiSound: {fileID: 8300000, guid: c8d6c9bc18254d14095f70d43c874281, type: 3}
-    replay: {fileID: 8300000, guid: a4d9b0699cd6c07438e2b34b0e088366, type: 3}
-    normalPayout: {fileID: 8300000, guid: 569ea9fca0932e54abb92777d431faa7, type: 3}
-    maxpayout: {fileID: 8300000, guid: 8343db427e33012489c8c1e617b9115c, type: 3}
-    jacPayout: {fileID: 8300000, guid: 85654bdff9fbcee488461992d9db9240, type: 3}
+    bet: {fileID: 8300000, guid: 23f62c7b96c86d442a1e40adcee872f3, type: 3}
+    wait: {fileID: 8300000, guid: 03a62290991468b43ab219ac55c41511, type: 3}
+    start: {fileID: 8300000, guid: dc994dada5406ee4eacd66e6fc716aac, type: 3}
+    spStart: {fileID: 8300000, guid: 3a12968d56f0cdc48821a25731ed55d4, type: 3}
+    stop: {fileID: 8300000, guid: 5b67ef9399d298848aa1dfd2be67c06d, type: 3}
+    redRiichiSound: {fileID: 8300000, guid: 76427b040cb44fb46abb8e5df3c021cb, type: 3}
+    blueRiichiSound: {fileID: 8300000, guid: 76427b040cb44fb46abb8e5df3c021cb, type: 3}
+    bb7RiichiSound: {fileID: 8300000, guid: 76427b040cb44fb46abb8e5df3c021cb, type: 3}
+    replay: {fileID: 8300000, guid: 3ec5c3245491052438e8f32929b0fcd2, type: 3}
+    normalPayout: {fileID: 8300000, guid: a50d99562481ed040884a46e014c91c4, type: 3}
+    maxpayout: {fileID: 8300000, guid: 0207cf4fc6da79342b781a9826549565, type: 3}
+    jacPayout: {fileID: 8300000, guid: 10309dfdbc6fe7e45b74a63a5eeab838, type: 3}
   bgm:
-    redStart: {fileID: 8300000, guid: 02288b728f39f9643a2bb545ef5dca14, type: 3}
-    redBGM: {fileID: 8300000, guid: 48d47c8b934190a4aa5a9c5630933ac3, type: 3}
-    redJAC: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
-    redEnd: {fileID: 8300000, guid: ef08b194580de724b9286efba483beb0, type: 3}
-    blueStart: {fileID: 8300000, guid: c509136196603b9468fcd7208ba9d336, type: 3}
-    blueBGM: {fileID: 8300000, guid: 97eaf1c4875c3d4478184afa5870d74e, type: 3}
-    blueJAC: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
-    blueEnd: {fileID: 8300000, guid: ef08b194580de724b9286efba483beb0, type: 3}
-    blackStart: {fileID: 8300000, guid: 60e3dadfaeebd6e43bdc40a1cc4732a3, type: 3}
-    blackBGM: {fileID: 8300000, guid: ce18224f0d073b042aeb4868e1c754ac, type: 3}
-    blackJAC: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
-    blackEnd: {fileID: 8300000, guid: ef08b194580de724b9286efba483beb0, type: 3}
-    regStart: {fileID: 8300000, guid: 53ac3ff7954a4af4caf7b84e36059e24, type: 3}
-    regJac: {fileID: 8300000, guid: 5ba2804044d3f1941a19ba6450cae58f, type: 3}
+    redStart: {fileID: 8300000, guid: 6bc672e9a30b25140bddfc6b47fddc26, type: 3}
+    redBGM: {fileID: 8300000, guid: ffcabafb082c35340abcfbb47f7b0420, type: 3}
+    redJAC: {fileID: 8300000, guid: 4fc1fa29ab703fe4ab12bd142e5561f5, type: 3}
+    redEnd: {fileID: 8300000, guid: a74c9f8692d1f0149a9dfb4a35d4dea6, type: 3}
+    blueStart: {fileID: 8300000, guid: 96d5ef5fb0590e2459dcb47fe8888891, type: 3}
+    blueBGM: {fileID: 8300000, guid: 960b70622d706764d9d3b5a3a67c25e8, type: 3}
+    blueJAC: {fileID: 8300000, guid: 4fc1fa29ab703fe4ab12bd142e5561f5, type: 3}
+    blueEnd: {fileID: 8300000, guid: a74c9f8692d1f0149a9dfb4a35d4dea6, type: 3}
+    blackStart: {fileID: 8300000, guid: ddf9ee3549f99cf4da04bd04c2b58dbf, type: 3}
+    blackBGM: {fileID: 8300000, guid: 5c83181f44794dc468d37ae95f994c8d, type: 3}
+    blackJAC: {fileID: 8300000, guid: 4fc1fa29ab703fe4ab12bd142e5561f5, type: 3}
+    blackEnd: {fileID: 8300000, guid: a74c9f8692d1f0149a9dfb4a35d4dea6, type: 3}
+    regStart: {fileID: 8300000, guid: b5eecfd18fe99eb46a7d64c73eb048a1, type: 3}
+    regJac: {fileID: 8300000, guid: 4fc1fa29ab703fe4ab12bd142e5561f5, type: 3}

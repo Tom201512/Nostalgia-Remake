@@ -2174,7 +2174,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2223,7 +2223,7 @@ Camera:
   far clip plane: 35
   field of view: 35.922634
   orthographic: 0
-  orthographic size: 7.6
+  orthographic size: 7.59
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3860,6 +3860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f8f3e346aaa6d4b83bd845be001ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasSPStartSound: 0
   reelObjects:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
@@ -3877,7 +3878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundDatabases:
-  - {fileID: 11400000, guid: de0790dfb44ffe04e8bbb54727eb17cc, type: 2}
+  - {fileID: 11400000, guid: 07c0647506e242048bad4adb74ae26af, type: 2}
   soundEffectPlayer: {fileID: 1187044818}
   bgmPlayer: {fileID: 656534617}
 --- !u!1001 &1843185184
