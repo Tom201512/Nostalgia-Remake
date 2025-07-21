@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using static ReelSpinGame_Bonus.BonusBehaviour;
+using UnityEngine;
 
 namespace ReelSpinGame_State.InsertState
 {
@@ -29,11 +30,14 @@ namespace ReelSpinGame_State.InsertState
             if (!gM.Medal.GetHasReplay())
             {
                 gM.Status.TurnOnInsertLamp();
+                gM.Status.TurnOffReplayLamp();
             }
-            // リプレイなら処理開始
+            // リプレイなら処理を開始し、ランプ点灯
             else
             {
+                gM.Effect.TurnOnAllReels(false);
                 gM.Medal.StartReplayInsert();
+                gM.Status.TurnOnReplayLamp();
             }
         }
 
@@ -72,7 +76,7 @@ namespace ReelSpinGame_State.InsertState
                 if (gM.Bonus.DisplayingTotalCount)
                 {
                     gM.Bonus.TurnOffSegments();
-                    gM.PlayerData.ResetCurrentGame();
+                    gM.Save.Player.ResetCurrentGame();
                 }
             }
         }
@@ -100,8 +104,8 @@ namespace ReelSpinGame_State.InsertState
             if (gM.Medal.GetBetFinished())
             {
                 // 投入枚数を反映する
-                gM.PlayerData.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
-                gM.PlayerData.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
+                gM.Save.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
+                gM.Save.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
 
                 // すでにベットされている場合は抽選へ
                 if (gM.Medal.GetCurrentBet() > 0)
@@ -112,7 +116,7 @@ namespace ReelSpinGame_State.InsertState
                     if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
                     {
                         gM.Bonus.ChangeBonusPayouts(-gM.Medal.GetLastBetAmounts());
-                        gM.PlayerData.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
+                        gM.Save.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
                     }
 
                     // 連チャン区間にいる場合は連チャン区間枚数を減らす

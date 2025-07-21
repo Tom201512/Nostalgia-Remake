@@ -1,4 +1,7 @@
-﻿namespace ReelSpinGame_Interface
+﻿using System.Collections.Generic;
+using System.IO;
+
+namespace ReelSpinGame_Interface
 {
     // ゲーム状態のインターフェース
     public interface IGameStatement
@@ -10,9 +13,9 @@
         void StateEnd();
     }
 
-    public interface ISave
+    public interface ISavable
     {
-        void SaveFile();
-        void LoadSave();
+        List<int> SaveData();
+        bool LoadData(BinaryReader bStream);
     }
 }

@@ -8,7 +8,6 @@ using UnityEngine;
 using static ReelSpinGame_Bonus.BonusBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using UnityEditor.XR;
 
 namespace ReelSpinGame_Effect
 {
@@ -46,10 +45,6 @@ namespace ReelSpinGame_Effect
         {
             flashManager = GetComponent<FlashManager>();
             soundManager = GetComponent<SoundManager>();
-        }
-
-        private void Start()
-        {
             // リールオブジェクト割り当て
             flashManager.SetReelObjects(reelObjects);
         }

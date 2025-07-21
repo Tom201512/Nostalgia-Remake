@@ -8,11 +8,11 @@ public class MedalTest : MonoBehaviour
     // メダル処理のテスト用
 
     [SerializeField] private MedalManager medalManager;
-    private MedalData medalData;
+    private PlayerMedalData medalData;
 
     void Awake()
     {
-        medalData = new MedalData();
+        medalData = new PlayerMedalData();
     }
 
     void Update()

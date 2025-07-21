@@ -839,7 +839,7 @@ MonoBehaviour:
   keyToAutoToggle: 97
   keyToDebugToggle: 100
   keyCameraModeChange: 99
-  useSaveFunciton: 1
+  deleteSave: 0
   debugSetting: 6
 --- !u!4 &460868893
 Transform:

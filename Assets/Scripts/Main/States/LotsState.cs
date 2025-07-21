@@ -35,17 +35,17 @@ namespace ReelSpinGame_State.LotsState
             // そうでない場合は通常時のゲーム数を加算
             else
             {
-                gM.PlayerData.IncreaseGameValue();
+                gM.Save.Player.IncreaseGameValue();
             }
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
             if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
             {
-                gM.PlayerData.AddBonusResult(BonusType.BonusBIG);
+                gM.Save.Player.AddBonusResult(BonusType.BonusBIG);
             }
             else if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
             {
-                gM.PlayerData.AddBonusResult(BonusType.BonusREG);
+                gM.Save.Player.AddBonusResult(BonusType.BonusREG);
             }
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);

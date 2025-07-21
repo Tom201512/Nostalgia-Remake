@@ -29,6 +29,7 @@ public class ReelBase : MonoBehaviour
         {
             render.material.SetColor("_Color", new Color32(brightness, brightness, brightness, 255));
             lastBrightness = brightness;
+            Debug.Log("Bright:" + brightness);
         }
     }
 

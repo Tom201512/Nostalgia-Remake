@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Medal.MedalBehaviour;
 
 namespace ReelSpinGame_System
 {
@@ -9,6 +11,8 @@ namespace ReelSpinGame_System
         // セーブ機能
 
         // const
+        // アドレス番地
+        private enum AddressID { Setting, Player, Medal, Reel, Bonus}
 
         // var
         // 現在のセーブデータ
@@ -23,12 +27,16 @@ namespace ReelSpinGame_System
             public int Setting { get; private set; }
 
             // プレイヤー情報
+            public PlayingDatabase Player { get; private set; }
 
             // メダル情報
+            public MedalSystemSave Medal { get; private set; }
 
             public SaveDatabase()
             {
                 Setting = 6;
+                Player = new PlayingDatabase();
+                Medal = new MedalSystemSave();
             }
 
             // func
@@ -72,7 +80,16 @@ namespace ReelSpinGame_System
                 using (FileStream file = File.OpenWrite(path))
                 {
                     // ここにセーブファイルを書き込む
+                    // 台設定
                     file.Write(BitConverter.GetBytes(CurrentSave.Setting));
+
+                    // プレイヤーデータ
+                    byte[] test = GetBytesFromList(CurrentSave.Player.SaveData());
+                    file.Write(test);
+
+                    // メダルデータ
+                    test = GetBytesFromList(CurrentSave.Medal.SaveData());
+                    file.Write(test);
                 }
             }
             catch (Exception e)
@@ -101,17 +118,14 @@ namespace ReelSpinGame_System
             {
                 using (FileStream file = File.OpenRead(path))
                 {
+                    int index = 0;
                     BinaryReader stream = new BinaryReader(file);
                     Stream baseStream = stream.BaseStream;
 
                     while (baseStream.Position != baseStream.Length)
                     {
-                        // int型に変換
-                        int value = stream.ReadInt32();
-                        Debug.Log(value);
-
-                        // インデックスごとにデータの割り振り(仮)
-                        CurrentSave.SetSetting(value);
+                        SetValueFromData(stream, index);
+                        index += 1;
                     }
                     Debug.Log("EOF");
                 }
@@ -122,6 +136,57 @@ namespace ReelSpinGame_System
             }
 
             return true;
+        }
+
+        // データ番地ごとに数字をセット
+        private void SetValueFromData(BinaryReader bStream, int addressID)
+        {
+            switch(addressID)
+            {
+                case (int)AddressID.Setting:
+                    CurrentSave.SetSetting(bStream.ReadInt32());
+                    Debug.Log("Setting:" + CurrentSave.Setting);
+
+                    break;
+
+                case (int)AddressID.Player:
+                    Debug.Log("Player");
+                    CurrentSave.Player.LoadData(bStream);
+                    break;
+
+                case (int)AddressID.Medal:
+                    Debug.Log("Medal");
+                    CurrentSave.Medal.LoadData(bStream);
+                    break;
+            }
+        }
+
+        // int型ListからByte配列を得る
+        private byte[] GetBytesFromList(List<int> lists)
+        {
+            List<byte> bytes = new List<byte>();
+
+            Debug.Log("Byte Data Gen Start");
+
+            // int型Listから数値を取る
+            foreach (int i in lists)
+            {
+                Debug.Log("Int:" + i);
+                // 全ての数値をbyte変換
+                foreach(byte b in BitConverter.GetBytes(i))
+                {
+                    bytes.Add(b);
+                }
+
+                // デバッグ用、アドレス表示
+                string[] datas = BitConverter.ToString(BitConverter.GetBytes(i)).Split("-");
+                foreach (string d in datas)
+                {
+                    Debug.Log(d);
+                }
+            }
+
+            return bytes.ToArray();
         }
 
         // チェックサムを得る
