@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Medal.MedalBehaviour;
+using static ReelSpinGame_Medal.MedalBehavior;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 
 namespace ReelSpinGame_System
 {
@@ -32,17 +34,24 @@ namespace ReelSpinGame_System
             // メダル情報
             public MedalSystemSave Medal { get; private set; }
 
+            // 最後に止まったリール位置
+            public List<int> LastReelPos {  get; private set; }
+
             public SaveDatabase()
             {
                 Setting = 6;
                 Player = new PlayingDatabase();
                 Medal = new MedalSystemSave();
+                LastReelPos = new List<int> { 19, 19, 19 };
             }
 
             // func
 
             // 台設定設定
             public void SetSetting(int setting) => Setting = setting;
+
+            // リール位置設定
+            public void SetReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
         }
 
         // コンストラクタ
@@ -89,6 +98,10 @@ namespace ReelSpinGame_System
 
                     // メダルデータ
                     test = GetBytesFromList(CurrentSave.Medal.SaveData());
+                    file.Write(test);
+
+                    // リール停止位置
+                    test = GetBytesFromList(CurrentSave.LastReelPos);
                     file.Write(test);
                 }
             }
@@ -157,6 +170,23 @@ namespace ReelSpinGame_System
                 case (int)AddressID.Medal:
                     Debug.Log("Medal");
                     CurrentSave.Medal.LoadData(bStream);
+                    break;
+
+                case (int)AddressID.Reel:
+                    Debug.Log("Reel");
+
+                    // 左
+                    CurrentSave.LastReelPos[(int)ReelLeft] = bStream.ReadInt32();
+                    Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
+
+                    // 中
+                    CurrentSave.LastReelPos[(int)ReelMiddle] = bStream.ReadInt32();
+                    Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
+
+                    // 右
+                    CurrentSave.LastReelPos[(int)ReelRight] = bStream.ReadInt32();
+                    Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
+
                     break;
             }
         }

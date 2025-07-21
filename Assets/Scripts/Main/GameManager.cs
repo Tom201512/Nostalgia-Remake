@@ -183,6 +183,9 @@ public class GameManager : MonoBehaviour
         // メダル情報反映
         Medal.SetMedalData(save.CurrentSave.Medal);
 
+        // リール位置反映
+        Reel.SetReelPos(save.CurrentSave.LastReelPos);
+
         // ステート開始
         MainFlow.stateManager.StartState();
     }

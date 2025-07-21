@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Medal.MedalBehaviour;
+using static ReelSpinGame_Medal.MedalBehavior;
 
 namespace ReelSpinGame_Medal
 {
@@ -17,7 +17,7 @@ namespace ReelSpinGame_Medal
 
         // var
         // メダル処理のデータ
-        private MedalBehaviour data;
+        private MedalBehavior data;
 
         // メダルのUI
         [SerializeField] private MedalPanel medalPanel;
@@ -35,7 +35,7 @@ namespace ReelSpinGame_Medal
 
         void Awake()
         {
-            data = new MedalBehaviour();
+            data = new MedalBehavior();
             HasMedalUpdate = false;
         }
 

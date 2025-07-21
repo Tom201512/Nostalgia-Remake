@@ -26,6 +26,10 @@ namespace ReelSpinGame_State.PayoutState
         }
         public void StateStart()
         {
+
+            // 最終リール位置を記録
+            gM.Save.SetReelPos(gM.Reel.GetLastStopped().LastPos);
+
             StartCheckPayout(gM.Medal.GetLastBetAmounts());
             // 払い出し開始
             gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts);

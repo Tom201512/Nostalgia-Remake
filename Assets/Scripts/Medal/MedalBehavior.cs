@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ReelSpinGame_Medal
 {
-	public class MedalBehaviour
+	public class MedalBehavior
 	{
         // メダルの処理
 
@@ -108,7 +108,7 @@ namespace ReelSpinGame_Medal
         }
 
         // コンストラクタ
-        public MedalBehaviour()
+        public MedalBehavior()
         {
             CurrentBet = 0;
             RemainingPayouts = 0;

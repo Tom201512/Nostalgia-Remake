@@ -59,6 +59,8 @@ namespace ReelSpinGame_Reels
 
         // func
 
+        // 指定したリール位置にする
+        public void SetReelPos(int lowerPos) => currentLower = lowerPos;
         // 指定したリールの位置番号を返す
         public int GetReelPos(int posID) => OffsetReel(currentLower, posID);
         // リールの位置から図柄を返す

@@ -142,7 +142,10 @@ public class ReelObject : MonoBehaviour
         reelData = new ReelData(reelID, initialLowerPos, reelDatabaseFile);
     }
 
-    // 最高速度が返す
+    // リール位置変更(セーブデータ読み込み用)
+    public void SetReelPos(int lowerPos) => reelData.SetReelPos(lowerPos);
+
+    // 最高速度状態か返す
     public bool IsMaximumSpeed() => rotateSpeed == maxSpeed;
 
     //　リール始動

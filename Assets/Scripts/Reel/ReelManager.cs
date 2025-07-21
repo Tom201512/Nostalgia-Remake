@@ -127,6 +127,19 @@ public class ReelManager : MonoBehaviour
     // 払い出し判定モード変更
     public void ChangePayoutCheckMode(PayoutCheckMode mode) => payoutChecker.CheckMode = mode;
 
+    // リール位置設定
+    public void SetReelPos(List<int> lastReelPos)
+    {
+        int index = 0;
+        foreach(int pos  in lastReelPos)
+        {
+            reelObjects[index].SetReelPos(pos);
+
+            Debug.Log((ReelID) System.Enum.ToObject(typeof(ReelID), index) + ":" + pos);
+            index += 1;
+        }
+    }
+
     // リール始動
     public void StartReels()
     {
