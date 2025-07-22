@@ -15,9 +15,8 @@ public class GameManager : MonoBehaviour
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight }
 
     // var
-
     // メインカメラ
-    [SerializeField] private SlotCamera camera;
+    [SerializeField] private SlotCamera slotCam;
 
     // 各種機能
     [SerializeField] private ReelManager reelManagerObj;
@@ -45,10 +44,10 @@ public class GameManager : MonoBehaviour
     public AutoPlayFunction Auto { get; private set; }
 
     // セーブ機能
-    private SaveManager save;
+    private SaveManager saveManager;
 
     // セーブデータベース
-    public SaveManager.SaveDatabase Save { get { return save.CurrentSave; } }
+    public SaveManager.SaveDatabase Save { get { return saveManager.CurrentSave; } }
 
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }
@@ -115,20 +114,12 @@ public class GameManager : MonoBehaviour
         // オート機能
         Auto = new AutoPlayFunction(AutoPlaySpeed.Normal, AutoStopOrderOptions.LMR);
         // セーブ機能
-        save = new SaveManager();
+        saveManager = new SaveManager();
 
         // セーブデータベース
 
         // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey, betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight };
-
-        // 例外処理
-        if (Setting < 0 && Setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
-        // 0ならランダムを選ぶ
-        else if (Setting == 0)
-        {
-            Setting = Random.Range(1, 6);
-        }
 
         // 画面サイズ初期化
         Screen.SetResolution(1600, 900, false);
@@ -144,10 +135,14 @@ public class GameManager : MonoBehaviour
     {
         // セーブ読み込み。セーブがない場合は新規作成
         // デバッグ用(セーブ消去がtrueなら読み込まず新規データ作成)
+
+        // セーブフォルダの作成
+        saveManager.GenerateSaveFolder();
+
         if (deleteSave)
         {
-            // セーブフォルダの作成
-            save.GenerateSaveFolder();
+            // セーブ削除
+            saveManager.DeleteSaveFile();
 
             // 設定値の作成
             Save.SetSetting(debugSetting);
@@ -156,11 +151,8 @@ public class GameManager : MonoBehaviour
             deleteSave = false;
         }
 
-        else if (!save.LoadSaveFile())
+        else if (!saveManager.LoadSaveFile())
         {
-            // セーブフォルダの作成
-            save.GenerateSaveFolder();
-
             // 設定値の作成
             Save.SetSetting(debugSetting);
 
@@ -169,22 +161,12 @@ public class GameManager : MonoBehaviour
 
         // UI 設定
         waitUI.SetWaitManager(Wait);
-        playerUI.SetPlayerData(save.CurrentSave.Player);
+        playerUI.SetPlayerData(saveManager.CurrentSave.Player);
         playerUI.SetMedalManager(Medal);
         AutoUI.SetAutoFunction(Auto);
 
         // デバッグをすべて非表示
         ToggleDebugUI(false);
-
-        // 設定反映
-        Setting = save.CurrentSave.Setting;
-        Debug.Log("Setting:" + save.CurrentSave.Setting);
-
-        // メダル情報反映
-        Medal.SetMedalData(save.CurrentSave.Medal);
-
-        // リール位置反映
-        Reel.SetReelPos(save.CurrentSave.LastReelPos);
 
         // ステート開始
         MainFlow.stateManager.StartState();
@@ -209,7 +191,7 @@ public class GameManager : MonoBehaviour
         // カメラ表示方法変更
         if (Input.GetKeyDown(keyCameraModeChange))
         {
-            camera.ChangeCameraMode();
+            slotCam.ChangeCameraMode();
         }
 
         // デバッグ表示
@@ -226,17 +208,33 @@ public class GameManager : MonoBehaviour
         Wait.DisposeWait();
 
         // セーブ開始
-        save.GenerateSaveFolder();
+        saveManager.GenerateSaveFolder();
         // ファイルセーブを行う
-        save.GenerateSaveFile();
+        saveManager.GenerateSaveFile();
     }
 
     // func
+    // 設定値変更
+    public void ChangeSetting(int setting)
+    {
+        // 例外処理
+        if (setting < 0 && setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
+        // 0ならランダムを選ぶ
+        else if (setting == 0)
+        {
+            Setting = Random.Range(1, 6);
+        }
+        else
+        {
+            Setting = setting;
+        }
+    }
+
     // キー設定変更
     public void ChangeKeyBinds(ControlSets controlSets, KeyCode changeKey) => KeyCodes[(int)controlSets] = changeKey;
 
     // セーブ参照
-    public SaveManager.SaveDatabase GetSave() => save.CurrentSave;
+    public SaveManager.SaveDatabase GetSave() => saveManager.CurrentSave;
 
     // デバッグをつける機能
     private void DebugButtonBehavior()

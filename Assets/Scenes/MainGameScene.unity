@@ -818,7 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186d082776b5e544ad495d9fe50947d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 963194230}
+  slotCam: {fileID: 963194230}
   reelManagerObj: {fileID: 286284038}
   effectManagerObj: {fileID: 1787737427}
   playerUI: {fileID: 1615228411}
@@ -871,9 +871,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
+  useInstant: 0
   useInfinityInstant: 0
-  instantFlagID: 7
+  instantFlagID: 0
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Medal.MedalBehavior;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
+using ReelSpinGame_Bonus;
+using System.Linq.Expressions;
+using System.Collections;
 
 namespace ReelSpinGame_System
 {
@@ -14,7 +16,7 @@ namespace ReelSpinGame_System
 
         // const
         // アドレス番地
-        private enum AddressID { Setting, Player, Medal, Reel, Bonus}
+        private enum AddressID { Setting, Player, Medal, FlagC, Reel, Bonus}
 
         // var
         // 現在のセーブデータ
@@ -34,21 +36,32 @@ namespace ReelSpinGame_System
             // メダル情報
             public MedalSystemSave Medal { get; private set; }
 
+            // フラグカウンタ数値
+            public int FlagCounter { get; private set; }
+
             // 最後に止まったリール位置
             public List<int> LastReelPos {  get; private set; }
+
+            // ボーナス情報
+            public BonusSaveData Bonus { get; private set; }
 
             public SaveDatabase()
             {
                 Setting = 6;
                 Player = new PlayingDatabase();
                 Medal = new MedalSystemSave();
+                FlagCounter = 0;
                 LastReelPos = new List<int> { 19, 19, 19 };
+                Bonus = new BonusSaveData();
             }
 
             // func
 
             // 台設定設定
             public void SetSetting(int setting) => Setting = setting;
+            
+            // フラグカウンタ設定
+            public void SetFlagCounter(int flagCounter) => FlagCounter = flagCounter;
 
             // リール位置設定
             public void SetReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
@@ -84,6 +97,13 @@ namespace ReelSpinGame_System
         {
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
 
+            // 前のセーブを消去
+            if (Directory.Exists(path))
+            {
+                Debug.Log("Overwrite file");
+                File.Delete(path);
+            }
+
             try
             {
                 using (FileStream file = File.OpenWrite(path))
@@ -92,26 +112,47 @@ namespace ReelSpinGame_System
                     // 台設定
                     file.Write(BitConverter.GetBytes(CurrentSave.Setting));
 
+                    // デバッグ用
+                    Debug.Log("Setting:");
+                    foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.Setting)).Split("-"))
+                    {
+                        Debug.Log(d);
+                    }
+
                     // プレイヤーデータ
-                    byte[] test = GetBytesFromList(CurrentSave.Player.SaveData());
-                    file.Write(test);
+                    file.Write(GetBytesFromList(CurrentSave.Player.SaveData()));
 
                     // メダルデータ
-                    test = GetBytesFromList(CurrentSave.Medal.SaveData());
-                    file.Write(test);
+                    file.Write(GetBytesFromList(CurrentSave.Medal.SaveData()));
 
-                    // リール停止位置
-                    test = GetBytesFromList(CurrentSave.LastReelPos);
-                    file.Write(test);
+                    // フラグカウンタ
+                    file.Write(BitConverter.GetBytes(CurrentSave.FlagCounter));
+
+                    // デバッグ用
+                    Debug.Log("FlagCounter:");
+                    foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.FlagCounter)).Split("-"))
+                    {
+                        Debug.Log(d);
+                    }
+
+                    //リール停止位置
+                    Debug.Log("ReelPos");
+                    file.Write(GetBytesFromList(CurrentSave.LastReelPos));
+
+                    // ボーナス情報
+                    Debug.Log("Bonus");
+                    file.Write(GetBytesFromList(CurrentSave.Bonus.SaveData()));
                 }
             }
             catch (Exception e)
             {
+                Debug.Log(e.ToString());
+                Application.Quit();
                 throw new Exception(e.ToString());
             }
             finally
             {
-                Debug.Log("Save is successed");
+                Debug.Log("Save is succeeded");
             }
             return true;
         }
@@ -145,49 +186,94 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
+                Debug.Log(e.ToString());
+                Application.Quit();
                 throw new Exception(e.ToString());
             }
 
             return true;
         }
 
+        // セーブ削除
+        public void DeleteSaveFile()
+        {
+            string path = Application.persistentDataPath + "/Nostalgia/save.sv";
+
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+                Application.Quit();
+                throw new Exception(e.ToString());
+            }
+        }
+
         // データ番地ごとに数字をセット
         private void SetValueFromData(BinaryReader bStream, int addressID)
         {
-            switch(addressID)
+            try
             {
-                case (int)AddressID.Setting:
-                    CurrentSave.SetSetting(bStream.ReadInt32());
-                    Debug.Log("Setting:" + CurrentSave.Setting);
+                switch (addressID)
+                {
+                    case (int)AddressID.Setting:
+                        CurrentSave.SetSetting(bStream.ReadInt32());
+                        Debug.Log("Setting:" + CurrentSave.Setting);
 
-                    break;
+                        break;
 
-                case (int)AddressID.Player:
-                    Debug.Log("Player");
-                    CurrentSave.Player.LoadData(bStream);
-                    break;
+                    case (int)AddressID.Player:
+                        Debug.Log("Player");
+                        CurrentSave.Player.LoadData(bStream);
+                        break;
 
-                case (int)AddressID.Medal:
-                    Debug.Log("Medal");
-                    CurrentSave.Medal.LoadData(bStream);
-                    break;
+                    case (int)AddressID.Medal:
+                        Debug.Log("Medal");
+                        CurrentSave.Medal.LoadData(bStream);
+                        break;
 
-                case (int)AddressID.Reel:
-                    Debug.Log("Reel");
+                    case (int)AddressID.FlagC:
+                        Debug.Log("FlagCounter");
+                        CurrentSave.SetFlagCounter(bStream.ReadInt32());
+                        Debug.Log("FlagCounter Loaded");
+                        break;
 
-                    // 左
-                    CurrentSave.LastReelPos[(int)ReelLeft] = bStream.ReadInt32();
-                    Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
+                    case (int)AddressID.Reel:
+                        Debug.Log("Reel");
 
-                    // 中
-                    CurrentSave.LastReelPos[(int)ReelMiddle] = bStream.ReadInt32();
-                    Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
+                        // 左
+                        CurrentSave.LastReelPos[(int)ReelLeft] = bStream.ReadInt32();
+                        Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
 
-                    // 右
-                    CurrentSave.LastReelPos[(int)ReelRight] = bStream.ReadInt32();
-                    Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
+                        // 中
+                        CurrentSave.LastReelPos[(int)ReelMiddle] = bStream.ReadInt32();
+                        Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
 
-                    break;
+                        // 右
+                        CurrentSave.LastReelPos[(int)ReelRight] = bStream.ReadInt32();
+                        Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
+
+                        Debug.Log("Reel Loaded");
+                        break;
+
+                    // ボーナス情報
+                    case (int)AddressID.Bonus:
+                        Debug.Log("Bonus");
+                        CurrentSave.Bonus.LoadData(bStream);
+                        break;
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.Log(e.ToString());
+                Application.Quit();
+                throw new Exception(e.ToString());
+            }
+            finally
+            {
+
             }
         }
 

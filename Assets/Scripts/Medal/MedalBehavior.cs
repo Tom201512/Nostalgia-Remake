@@ -70,6 +70,13 @@ namespace ReelSpinGame_Medal
                 data.Add(LastBetAmounts);
                 data.Add(HasReplay ?  1 : 0);
 
+                // デバッグ用
+                Debug.Log("MedalData:");
+                foreach (int i in data)
+                {
+                    Debug.Log(i);
+                }
+
                 return data;
             }
 
@@ -96,7 +103,7 @@ namespace ReelSpinGame_Medal
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    throw new Exception(e.ToString());
                 }
                 finally
                 {

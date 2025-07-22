@@ -5,7 +5,7 @@ using ReelSpinGame_Sound;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Bonus.BonusSaveData;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Lots.FlagBehaviour;
 
@@ -184,14 +184,14 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し演出開始
-        public void StartPayoutReelFlash(List<PayoutLineData> lastPayoutLines, BonusStatus status, int payouts)
+        public void StartPayoutReelFlash(List<PayoutLineData> lastPayoutLines, bool isJacFlag, int payouts)
         {
             // フラッシュ再生
             flashManager.StartPayoutFlash(0f, lastPayoutLines);
 
             // サウンド再生(状態に合わせて変更)
             // JAC中の払い出し音
-            if (status == BonusStatus.BonusJACGames)
+            if (isJacFlag)
             {
                 soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
             }
@@ -225,6 +225,9 @@ namespace ReelSpinGame_Effect
                 flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
             }
         }
+
+        // ビッグ時の色を割り当てる
+        public void SetBigColor(BigColor color) => BigChanceColor = color;
 
         // ボーナス開始時の演出
         public void StartBonusStartEffect(BigColor color)
@@ -395,6 +398,7 @@ namespace ReelSpinGame_Effect
             {
                 yield return new WaitForEndOfFrame();
             }
+
             // BIGの時のみファンファーレを鳴らす
             if (BigChanceColor != BigColor.None)
             {
@@ -405,6 +409,8 @@ namespace ReelSpinGame_Effect
                     yield return new WaitForEndOfFrame();
                 }
             }
+
+            Debug.Log("Event End");
             HasFanfareUpdate = false;
             BigChanceColor = BigColor.None;
             soundManager.StopBGM();

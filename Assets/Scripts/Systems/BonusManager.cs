@@ -1,7 +1,6 @@
-﻿using ReelSpinGame_Sound;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Bonus.BonusSaveData;
 
 namespace ReelSpinGame_Bonus
 {
@@ -15,7 +14,7 @@ namespace ReelSpinGame_Bonus
 
         // var
         // ボーナス処理のデータ
-        private BonusBehaviour data;
+        private BonusSaveData data;
         // ボーナス状態のセグメント
         [SerializeField] private BonusSevenSegment bonusSegments;
         // 獲得枚数を表示しているか
@@ -24,7 +23,7 @@ namespace ReelSpinGame_Bonus
         // func
         private void Awake()
         {
-            data = new BonusBehaviour();
+            data = new BonusSaveData();
             DisplayingTotalCount = false;
         }
 
@@ -34,7 +33,7 @@ namespace ReelSpinGame_Bonus
         // ボーナス状態
         public BonusStatus GetCurrentBonusStatus() => data.CurrentBonusStatus;
         // BIGボーナス当選時の色
-        public BigColor GetBigChangeColor() => data.BigChanceColor;
+        public BigColor GetBigChanceColor() => data.BigChanceColor;
 
         // 残り小役ゲーム数
         public int GetRemainingBigGames() => data.RemainingBigGames;
@@ -64,16 +63,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // ボーナス情報を読み込む
-        public void SetBonusData(BonusType holdingBonusID, BonusStatus bonusStatus, int remainingBIGGames, int remainingJACIN,
-            int remainingJACGames, int remainingJACHits)
-        {
-            data.HoldingBonusID = holdingBonusID;
-            data.CurrentBonusStatus = bonusStatus;
-            data.RemainingBigGames = remainingBIGGames;
-            data.RemainingJacIn = remainingJACIN;
-            data.RemainingJacGames = remainingJACGames;
-            data.RemainingJacHits = remainingJACHits;
-        }
+        public void SetBonusData(BonusSaveData bonusSaveData) => data = bonusSaveData;
 
         // ボーナスストック状態の更新
         public void SetBonusStock(BonusType bonusType) => data.HoldingBonusID = bonusType;

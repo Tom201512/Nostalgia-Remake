@@ -1,7 +1,7 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Interface;
 using System.Collections.Generic;
-using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Bonus.BonusSaveData;
 using UnityEngine;
 using System.IO;
 using System;
@@ -162,7 +162,9 @@ namespace ReelSpinGame_System
             }
             catch(Exception e)
             {
-                throw e;
+                Debug.Log(e.ToString());
+                Application.Quit();
+                throw new Exception(e.ToString());
             }
             finally
             {

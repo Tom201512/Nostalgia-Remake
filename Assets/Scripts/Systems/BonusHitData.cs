@@ -3,7 +3,7 @@ using ReelSpinGame_Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Bonus.BonusSaveData;
 using UnityEngine;
 
 namespace ReelSpinGame_Datas

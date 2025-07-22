@@ -33,6 +33,8 @@ namespace ReelSpinGame_Lots.Flag
         public int GetCounter() => data.FlagCounter.Counter;
 
         // 数値変更
+        public void SetCounterValue(int value) => data.FlagCounter.SetCounter(value);
+
         // テーブル変更
         public void ChangeTable(FlagLotMode mode) => data.CurrentTable = mode;
 

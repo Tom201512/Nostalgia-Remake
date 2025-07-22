@@ -24,7 +24,7 @@ public class BonusTestUI : UIBaseClass
         buffer += "Status:" + bonusManager.GetCurrentBonusStatus() + "\n";
 
         // BIGíÜÇÃèÛë‘
-        buffer += "BIG_Color:" + bonusManager.GetBigChangeColor() + "\n";
+        buffer += "BIG_Color:" + bonusManager.GetBigChanceColor() + "\n";
         buffer += "BIG_Games:" + bonusManager.GetRemainingBigGames() + "\n";
         buffer += "BIG_JACIN:" + bonusManager.GetRemainingJacIn() + "\n";
 

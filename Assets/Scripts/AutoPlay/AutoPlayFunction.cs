@@ -1,7 +1,7 @@
 using ReelSpinGame_AutoPlay.AI;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
-using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Bonus.BonusSaveData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;

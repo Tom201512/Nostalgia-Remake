@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
-using static ReelSpinGame_Bonus.BonusBehaviour;
+using static ReelSpinGame_Bonus.BonusSaveData;
 using UnityEngine;
 
 namespace ReelSpinGame_State.InsertState
@@ -26,18 +26,17 @@ namespace ReelSpinGame_State.InsertState
 
             gM.Medal.HasMedalInsert += BetSound;
 
+            // リプレイなら処理を開始しリプレイランプ点灯
+            if (gM.Medal.GetHasReplay())
+            {
+                gM.Medal.StartReplayInsert();
+                gM.Status.TurnOnReplayLamp();
+            }
             // リプレイでなければINSERTランプ表示
-            if (!gM.Medal.GetHasReplay())
+            else
             {
                 gM.Status.TurnOnInsertLamp();
                 gM.Status.TurnOffReplayLamp();
-            }
-            // リプレイなら処理を開始し、ランプ点灯
-            else
-            {
-                gM.Effect.TurnOnAllReels(false);
-                gM.Medal.StartReplayInsert();
-                gM.Status.TurnOnReplayLamp();
             }
         }
 

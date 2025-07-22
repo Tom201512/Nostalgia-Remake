@@ -21,12 +21,15 @@ namespace ReelSpinGame_Lots.FlagCounter
         public int Counter { get; private set; }
 
         // コンストラクタ
-        public FlagCounter(int Counter)
+        public FlagCounter()
         {
-            this.Counter = Counter;
+            Counter = 0;
         }
 
         // func
+        // カウンタ値のセット
+        public void SetCounter(int value) => Counter = value;
+
         // 小役カウンタの増加
         public void IncreaseCounter(int payoutAmounts)
         {

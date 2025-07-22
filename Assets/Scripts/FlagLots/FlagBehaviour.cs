@@ -55,7 +55,7 @@ namespace ReelSpinGame_Lots
         // コンストラクタ
         public FlagBehaviour()
         {
-            FlagCounter = new FlagCounter.FlagCounter(0);
+            FlagCounter = new FlagCounter.FlagCounter();
         }
 
         // func
