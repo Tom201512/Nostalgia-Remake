@@ -52,11 +52,11 @@ namespace ReelSpinGame_Save.Medal
             data.Add(HasReplay ? 1 : 0);
 
             // デバッグ用
-            Debug.Log("MedalData:");
-            foreach (int i in data)
-            {
-                Debug.Log(i);
-            }
+            //Debug.Log("MedalData:");
+            //foreach (int i in data)
+            //{
+            //    Debug.Log(i);
+            //}
 
             return data;
         }

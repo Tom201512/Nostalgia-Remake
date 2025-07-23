@@ -154,11 +154,11 @@ namespace ReelSpinGame_System
                     file.Write(BitConverter.GetBytes(CurrentSave.Setting));
 
                     // デバッグ用
-                    Debug.Log("Setting:");
-                    foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.Setting)).Split("-"))
-                    {
-                        Debug.Log(d);
-                    }
+                    //Debug.Log("Setting:");
+                    //foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.Setting)).Split("-"))
+                    //{
+                    //    Debug.Log(d);
+                    //}
 
                     // プレイヤーデータ
                     file.Write(GetBytesFromList(CurrentSave.Player.SaveData()));
@@ -170,18 +170,18 @@ namespace ReelSpinGame_System
                     file.Write(BitConverter.GetBytes(CurrentSave.FlagCounter));
 
                     // デバッグ用
-                    Debug.Log("FlagCounter:");
-                    foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.FlagCounter)).Split("-"))
-                    {
-                        Debug.Log(d);
-                    }
+                    //Debug.Log("FlagCounter:");
+                    //foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.FlagCounter)).Split("-"))
+                    //{
+                    //    Debug.Log(d);
+                    //}
 
                     //リール停止位置
-                    Debug.Log("ReelPos");
+                    //Debug.Log("ReelPos");
                     file.Write(GetBytesFromList(CurrentSave.LastReelPos));
 
                     // ボーナス情報
-                    Debug.Log("Bonus");
+                    //Debug.Log("Bonus");
                     file.Write(GetBytesFromList(CurrentSave.Bonus.SaveData()));
                 }
             }
@@ -191,7 +191,7 @@ namespace ReelSpinGame_System
             }
             finally
             {
-                Debug.Log("Save is succeeded");
+                //Debug.Log("Save is succeeded");
             }
             return true;
         }
@@ -315,12 +315,12 @@ namespace ReelSpinGame_System
         {
             List<byte> bytes = new List<byte>();
 
-            Debug.Log("Byte Data Gen Start");
+            //Debug.Log("Byte Data Gen Start");
 
             // int型Listから数値を取る
             foreach (int i in lists)
             {
-                Debug.Log("Int:" + i);
+                //Debug.Log("Int:" + i);
                 // 全ての数値をbyte変換
                 foreach(byte b in BitConverter.GetBytes(i))
                 {
@@ -328,11 +328,11 @@ namespace ReelSpinGame_System
                 }
 
                 // デバッグ用、アドレス表示
-                string[] datas = BitConverter.ToString(BitConverter.GetBytes(i)).Split("-");
-                foreach (string d in datas)
-                {
-                    Debug.Log(d);
-                }
+                //string[] datas = BitConverter.ToString(BitConverter.GetBytes(i)).Split("-");
+                //foreach (string d in datas)
+                //{
+                    //Debug.Log(d);
+                //}
             }
 
             return bytes.ToArray();

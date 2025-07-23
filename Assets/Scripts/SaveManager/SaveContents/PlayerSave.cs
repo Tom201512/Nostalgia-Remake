@@ -87,11 +87,11 @@ namespace ReelSpinGame_Save.Player
                 data.Add(RegTimes);
 
                 // デバッグ用
-                Debug.Log("PlayerData:");
-                foreach (int i in data)
-                {
-                    Debug.Log(i);
-                }
+                //Debug.Log("PlayerData:");
+                //foreach (int i in data)
+                //{
+                //    Debug.Log(i);
+                //}
 
                 return data;
             }

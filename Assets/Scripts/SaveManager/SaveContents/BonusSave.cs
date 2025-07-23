@@ -85,11 +85,11 @@ namespace ReelSpinGame_Save.Bonus
             data.Add(HasZone ? 1 : 0);
 
             // デバッグ用
-            Debug.Log("BonusData:");
-            foreach (int i in data)
-            {
-                Debug.Log(i);
-            }
+            //Debug.Log("BonusData:");
+            //foreach (int i in data)
+            //{
+            //    Debug.Log(i);
+            //}
 
             return data;
         }
