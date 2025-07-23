@@ -1,6 +1,5 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Save.Bonus;
-using ReelSpinGame_Save.Medal;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -205,12 +204,12 @@ namespace ReelSpinGame_Bonus
             {
                 data.RemainingJacHits -= 1;
             }
-            // JACゲーム数が0, または入賞回数が0の場合は終了
+            // JACゲーム数が0, または入賞回数が0の場合は終了(BIG中なら残りゲーム数0で終了)
             if (data.RemainingJacGames == 0 || data.RemainingJacHits == 0)
             {
                 //Debug.Log("End Bonus Game");
                 // BIG中なら残りJAC-INの数があれば小役ゲームへ移行
-                if (data.RemainingJacIn > 0)
+                if (data.RemainingJacIn > 0 && data.RemainingBigGames > 0)
                 {
                     data.CurrentBonusStatus = BonusStatus.BonusBIGGames;
                 }

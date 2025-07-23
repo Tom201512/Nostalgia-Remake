@@ -29,7 +29,6 @@ namespace ReelSpinGame_State.InsertState
             // リプレイなら処理を開始しリプレイランプ点灯
             if (gM.Medal.GetHasReplay())
             {
-                Debug.Log("HasReplay");
                 gM.Medal.StartReplayInsert();
                 gM.Status.TurnOnReplayLamp();
             }

@@ -24,4 +24,11 @@ namespace ReelSpinGame_Util.OriginalInputs
             return false;
         }
     }
+
+    // オリジナルの乱数判定機
+    public static class OriginalRandomLot
+    {
+        // 1/nの確率を抽選する
+        public static bool LotRandomByNum(int probability) => Random.Range(0, probability + 1) == 0;
+    }
 }

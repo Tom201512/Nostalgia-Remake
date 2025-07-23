@@ -50,7 +50,6 @@ namespace ReelSpinGame_System
         public ISavable MakeSaveData()
         {
             PlayerSave save = new PlayerSave();
-            Debug.Log("Medal:" + PlayerMedalData.CurrentPlayerMedal);
             save.RecordData(this);
 
             return save;

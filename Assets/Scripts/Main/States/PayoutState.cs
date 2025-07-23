@@ -53,13 +53,6 @@ namespace ReelSpinGame_State.PayoutState
             // 状態遷移
             CheckGameModeStatusChange();
 
-            // ボーナス状態更新
-
-            if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
-            {
-                BonusStatusUpdate();
-            }
-
             // 連チャン区間の処理
             // 50Gを迎えた場合は連チャン区間を終了させる(但しボーナス非成立時のみ)
             if (gM.Player.CurrentGames == MaxZoneGames &&
@@ -75,8 +68,6 @@ namespace ReelSpinGame_State.PayoutState
             SaveData();
 
             // ここから下は演出
-
-
 
             // 演出開始
             StartEffect();
@@ -116,8 +107,6 @@ namespace ReelSpinGame_State.PayoutState
             gM.Save.RecordReelPos(gM.Reel.GetLastStopped().LastPos);
             // ボーナス情報記録
             gM.Save.RecordBonusData(gM.Bonus.MakeSaveData());
-
-            Debug.Log("Save recorded");
         }
 
         // 払い出し確認
@@ -184,6 +173,7 @@ namespace ReelSpinGame_State.PayoutState
             // 通常時に移行した場合
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
+                Debug.Log("BonusEnd");
                 gM.Lots.ChangeTable(FlagLotMode.Normal);
                 gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gM.Medal.ChangeMaxBet(3);
@@ -201,17 +191,17 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gM.Effect.StartPayoutReelFlash(gM.Reel.GetPayoutResultData().PayoutLines,
                     gM.Lots.GetCurrentFlag() == FlagId.FlagJac, gM.Reel.GetPayoutResultData().Payouts);
+            }
 
-                // ファンファーレの再生
-                if(HasBonusStarted)
-                {
-                    gM.Effect.StartBonusStartEffect(gM.Bonus.GetBigChanceColor());
-                }
-                else if(HasBonusFinished)
-                {
-                    Debug.Log("BonusEND");
-                    gM.Effect.StartBonusEndEffect();
-                }
+            // ファンファーレの再生
+            if (HasBonusStarted)
+            {
+                gM.Effect.StartBonusStartEffect(gM.Bonus.GetBigChanceColor());
+            }
+            else if (HasBonusFinished)
+            {
+                Debug.Log("BonusEND");
+                gM.Effect.StartBonusEndEffect();
             }
 
             // ボーナス中はビタハズシ成功でフラッシュ

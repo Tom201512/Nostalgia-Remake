@@ -5,14 +5,14 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
-using ReelSpinGame_Save;
-using ReelSpinGame_Save.Player;
 
 public class GameManager : MonoBehaviour
 {
     // ゲームの管理
     // const
+    // 最高設定値
+    public const int MaxSlotSetting = 6;
+
     // 各種操作のシリアライズ
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight }
 
@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviour
         // 0ならランダムを選ぶ
         else if (setting == 0)
         {
-            Setting = Random.Range(1, 6);
+            Setting = Random.Range(1, MaxSlotSetting + 1);
         }
         else
         {

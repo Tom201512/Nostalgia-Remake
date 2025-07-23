@@ -1,6 +1,7 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
+using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -219,7 +220,7 @@ namespace ReelSpinGame_Effect
         public void StartVFlash(int probability)
         {
             // 確率が0以上ならフラッシュ抽選
-            if (probability > 0 && Random.Range(0, probability - 1) == 0)
+            if (probability > 0 && OriginalRandomLot.LotRandomByNum(probability))
             {
                 flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
             }
@@ -279,7 +280,7 @@ namespace ReelSpinGame_Effect
                 soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
             }
             // 確率が1以上なら抽選
-            else if (Random.Range(0, probability - 1) == 0)
+            else if (OriginalRandomLot.LotRandomByNum(probability))
             {
                 //Debug.Log("SP SOUND PLAYED");
                 soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.SpStart);

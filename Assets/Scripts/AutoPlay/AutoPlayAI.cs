@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ReelSpinGame_Util.OriginalInputs;
+using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
@@ -97,12 +98,12 @@ namespace ReelSpinGame_AutoPlay.AI
             int[] stopPos = new int[] { 0, 0, 0 };
 
             // 1/3で赤7, 青7, BB7のいずれかを選択(左制御のみ)
-            switch (Random.Range((int)BigColor.Red, (int)BigColor.Black))
+            switch (Random.Range((int)BigColor.Red, (int)BigColor.Black + 1))
             {
                 case (int)BigColor.Red:
 
                     // 1/2でチェリーのない赤7を選択
-                    if (Random.Range(0, 1) == 1)
+                    if (OriginalRandomLot.LotRandomByNum(2))
                     {
                         stopPos[(int)ReelID.ReelLeft] = 10;
                     }
@@ -120,7 +121,7 @@ namespace ReelSpinGame_AutoPlay.AI
                     stopPos[(int)ReelID.ReelLeft] = 3;
 
                     // 1/2でBAR上の青7を停止させる
-                    if (Random.Range(0, 1) == 1)
+                    if (OriginalRandomLot.LotRandomByNum(2))
                     {
                         stopPos[(int)ReelID.ReelMiddle] = 6;
                     }
@@ -134,7 +135,7 @@ namespace ReelSpinGame_AutoPlay.AI
                 case (int)BigColor.Black:
 
                     // 1/2で上にチェリーのあるBARを停止
-                    if (Random.Range(0, 1) == 1)
+                    if (OriginalRandomLot.LotRandomByNum(2))
                     {
                         stopPos[(int)ReelID.ReelLeft] = 8;
                     }
@@ -157,7 +158,7 @@ namespace ReelSpinGame_AutoPlay.AI
             int[] stopPos = new int[] { 0, 0, 0 };
 
             // 1/2で上にチェリーのあるBARを停止
-            if (Random.Range(0, 1) == 1)
+            if (OriginalRandomLot.LotRandomByNum(2))
             {
                 stopPos[(int)ReelID.ReelLeft] = 8;
             }
@@ -169,7 +170,7 @@ namespace ReelSpinGame_AutoPlay.AI
             stopPos[(int)ReelID.ReelMiddle] = 9;
 
             // 1/2で狙うBARを変える
-            if (Random.Range(0, 1) == 1)
+            if (OriginalRandomLot.LotRandomByNum(2))
             {
                 stopPos[(int)ReelID.ReelRight] = 2;
             }
@@ -187,7 +188,7 @@ namespace ReelSpinGame_AutoPlay.AI
             int[] stopPos = new int[] { 0, 0, 0 };
 
             // 1/2で狙うチェリーを変える
-            if (Random.Range(0, 1) == 1)
+            if (OriginalRandomLot.LotRandomByNum(2))
             {
                 stopPos[(int)ReelID.ReelLeft] = 4;
             }
@@ -198,8 +199,8 @@ namespace ReelSpinGame_AutoPlay.AI
 
             // その他は適当押し
 
-            stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray - 1);
-            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray - 1);
+            stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray);
+            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray);
 
             return stopPos;
         }
@@ -215,9 +216,9 @@ namespace ReelSpinGame_AutoPlay.AI
             int[] melonPosR = new int[] {0, 4, 12, 16};
 
             // 候補に入れた数字からランダムで狙う
-            stopPos[(int)ReelID.ReelLeft] = melonPosL[Random.Range(0, melonPosL.Length - 1)];
-            stopPos[(int)ReelID.ReelMiddle] = melonPosM[Random.Range(0, melonPosM.Length - 1)];
-            stopPos[(int)ReelID.ReelRight] = melonPosR[Random.Range(0, melonPosR.Length - 1)];
+            stopPos[(int)ReelID.ReelLeft] = melonPosL[Random.Range(0, melonPosL.Length)];
+            stopPos[(int)ReelID.ReelMiddle] = melonPosM[Random.Range(0, melonPosM.Length)];
+            stopPos[(int)ReelID.ReelRight] = melonPosR[Random.Range(0, melonPosR.Length)];
 
             return stopPos;
         }
@@ -238,14 +239,14 @@ namespace ReelSpinGame_AutoPlay.AI
             }
             else
             {
-                stopPos[(int)ReelID.ReelLeft] = Random.Range(0, MaxReelArray - 1);
+                stopPos[(int)ReelID.ReelLeft] = Random.Range(0, MaxReelArray);
             }
 
             // 中は取りこぼし位置があるので候補から狙う
-            stopPos[(int)ReelID.ReelMiddle] = bellPosM[Random.Range(0, bellPosM.Length - 1)];
+            stopPos[(int)ReelID.ReelMiddle] = bellPosM[Random.Range(0, bellPosM.Length)];
 
             // 右は取りこぼさないのでランダム
-            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray - 1);
+            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray);
 
             return stopPos;
         }
@@ -260,7 +261,7 @@ namespace ReelSpinGame_AutoPlay.AI
             if (remainingJac == 1 && bigChanceGames > 8)
             {
                 // 1/2で狙う位置を変える
-                if (Random.Range(0, 1) == 1)
+                if (OriginalRandomLot.LotRandomByNum(2))
                 {
                     stopPos[(int)ReelID.ReelLeft] = 10;
                 }
@@ -271,11 +272,11 @@ namespace ReelSpinGame_AutoPlay.AI
             }
             else
             {
-                stopPos[(int)ReelID.ReelLeft] = Random.Range(0, MaxReelArray - 1);
+                stopPos[(int)ReelID.ReelLeft] = Random.Range(0, MaxReelArray);
             }
 
-            stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray - 1);
-            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray - 1);
+            stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray);
+            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray);
 
             return stopPos;
         }
@@ -285,9 +286,9 @@ namespace ReelSpinGame_AutoPlay.AI
         {
             int[] stopPos = new int[] { 0, 0, 0 };
 
-            stopPos[(int)ReelID.ReelLeft] = Random.Range(0, MaxReelArray - 1);
-            stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray - 1);
-            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray - 1);
+            stopPos[(int)ReelID.ReelLeft] = Random.Range(0, MaxReelArray);
+            stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray);
+            stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray);
 
             return stopPos;
         }

@@ -65,10 +65,6 @@ namespace ReelSpinGame_Medal
         {
             MedalSave save = new MedalSave();
             save.RecordData(data.system);
-
-            Debug.Log("Test" + data.system.Credits);
-            Debug.Log("Test" + save.Credits);
-
             return save;
         }
 
@@ -141,7 +137,6 @@ namespace ReelSpinGame_Medal
         // リプレイ状態にする(前回と同じメダル枚数をかける)
         public void EnableReplay()
         {
-            Debug.Log("Enable Replay" + data.system.LastBetAmounts);
             data.system.HasReplay = true;
             data.RemainingBet = data.system.LastBetAmounts;
         }

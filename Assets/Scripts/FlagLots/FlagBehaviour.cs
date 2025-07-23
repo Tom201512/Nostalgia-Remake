@@ -149,7 +149,7 @@ namespace ReelSpinGame_Lots
         private int GetFlag()
         {
             // 16384フラグを得る(0~16383)
-            int flag = Random.Range(0, MaxFlagLots - 1);
+            int flag = Random.Range(0, MaxFlagLots);
             //Debug.Log("You get:" + flag);
             return flag;
         }
