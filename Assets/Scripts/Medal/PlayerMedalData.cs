@@ -29,15 +29,22 @@ namespace ReelSpinGame_Datas
             CurrentOutMedal = 0;
         }
 
-        // セーブから読み込む場合
-        public PlayerMedalData(int currentPlayerMedal, int currentInMedal, int currentOutMedal)
-        {
-            CurrentPlayerMedal = currentPlayerMedal;
-            CurrentInMedal = currentInMedal;
-            CurrentOutMedal = currentOutMedal;
-        }
-
         // func
+        // データからセットする
+        public void SetData(ISavable playerMedalData)
+        {
+            if(playerMedalData.GetType() == typeof(PlayerMedalData))
+            {
+                PlayerMedalData data = playerMedalData as PlayerMedalData;
+                CurrentPlayerMedal = data.CurrentPlayerMedal;
+                CurrentInMedal = data.CurrentInMedal;
+                CurrentOutMedal = data.CurrentOutMedal;
+            }
+            else
+            {
+                throw new Exception("Data is not PlayerMedalData");
+            }
+        }
 
         // プレイヤーメダル増加
         public void IncreasePlayerMedal(int amounts) => CurrentPlayerMedal += amounts;

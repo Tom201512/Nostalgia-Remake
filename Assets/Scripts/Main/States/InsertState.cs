@@ -16,7 +16,7 @@ namespace ReelSpinGame_State.InsertState
         public InsertState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Insert;
-            this.gM = gameManager;
+            gM = gameManager;
         }
 
         // func
@@ -104,8 +104,8 @@ namespace ReelSpinGame_State.InsertState
             if (gM.Medal.GetBetFinished())
             {
                 // 投入枚数を反映する
-                gM.Save.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
-                gM.Save.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
+                gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
+                gM.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
 
                 // すでにベットされている場合は抽選へ
                 if (gM.Medal.GetCurrentBet() > 0)

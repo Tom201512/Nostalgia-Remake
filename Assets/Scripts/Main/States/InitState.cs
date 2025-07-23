@@ -60,18 +60,16 @@ namespace ReelSpinGame_State.LotsState
             gM.ChangeSetting(gM.Save.Setting);
             Debug.Log("Setting:" + gM.Setting);
 
+            // プレイヤー情報反映
+            gM.Player.LoadSaveData(gM.Save.Player);
             // メダル情報反映
             gM.Medal.LoadSaveData(gM.Save.Medal);
-
             // フラグ数値反映
             gM.Lots.SetCounterValue(gM.Save.FlagCounter);
-
             // リール位置反映
             gM.Reel.SetReelPos(gM.Save.LastReelPos);
-
             // ボーナス状態反映
             gM.Bonus.LoadSaveData(gM.Save.Bonus);
-
             // 演出マネージャーにボーナスの色を割り当てる
             gM.Effect.SetBigColor(gM.Save.Bonus.BigChanceColor);
         }

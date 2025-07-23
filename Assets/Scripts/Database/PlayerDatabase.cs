@@ -1,9 +1,9 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Interface;
-using ReelSpinGame_Save.Bonus;
 using ReelSpinGame_Save.Player.ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_System
@@ -50,6 +50,7 @@ namespace ReelSpinGame_System
         public ISavable MakeSaveData()
         {
             PlayerSave save = new PlayerSave();
+            Debug.Log("Medal:" + PlayerMedalData.CurrentPlayerMedal);
             save.RecordData(this);
 
             return save;
@@ -60,11 +61,13 @@ namespace ReelSpinGame_System
         {
             if (loadData.GetType() == typeof(PlayerSave))
             {
-                PlayerSave save = loadData as PlayerSave;
+                PlayerSave save = new PlayerSave();
+                save = loadData as PlayerSave;
+
                 TotalGames = save.TotalGames;
                 CurrentGames = save.CurrentGames;
-                PlayerMedalData = save.PlayerMedalData;
-                BonusHitRecord = save.BonusHitRecord;
+                PlayerMedalData.SetData(save.PlayerMedalData);
+                SetBonusRecord(save);
                 BigTimes = save.BigTimes;
                 RegTimes = save.RegTimes;
             }
@@ -105,5 +108,14 @@ namespace ReelSpinGame_System
         public void IncreaseBigChance() => BigTimes += 1;
         // ボーナスゲーム回数の増加
         public void IncreaseBonusGame() => RegTimes += 1;
+
+        // ボーナス履歴情報を読み込む
+        private void SetBonusRecord(PlayerSave save)
+        {
+            foreach(BonusHitData b in save.BonusHitRecord)
+            {
+                BonusHitRecord.Add(b);
+            }
+        }
     }
 }
