@@ -93,7 +93,7 @@ namespace ReelSpinGame_Effect
                 // 通常時のみ特殊効果音再生
                 if (bonusStatus == BonusStatus.BonusNone)
                 {
-                    // 以下の確率で告知音で再生
+                    // 以下の確率で告知音で再生(成立前)
                     // BIG/REG成立時、成立後小役条件不問で1/4
                     // スイカ、1/8
                     // チェリー、発生しない
@@ -101,7 +101,7 @@ namespace ReelSpinGame_Effect
                     // リプレイ、発生しない
                     // はずれ、1/128
 
-                    if (holding != BonusType.BonusNone)
+                    if (holding == BonusType.BonusNone)
                     {
                         // BIG, REG
                         switch (flag)
@@ -119,18 +119,15 @@ namespace ReelSpinGame_Effect
                                 LotStartSound(32);
                                 break;
 
-                            case FlagId.FlagCherry2:
-                            case FlagId.FlagCherry4:
-                            case FlagId.FlagReplayJacIn:
-                                LotStartSound(0);
+                            case FlagId.FlagNone:
+                                LotStartSound(128);
                                 break;
 
                             default:
-                                LotStartSound(128);
+                                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
                                 break;
                         }
                     }
-
                     // 成立後は1/4で再生
                     else
                     {
@@ -138,10 +135,10 @@ namespace ReelSpinGame_Effect
                     }
 
                 }
-                // JAC中(鳴らさない)
+                // その他の状態では鳴らさない
                 else
                 {
-                    LotStartSound(0);
+                    soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Start);
                 }
             }
             else
