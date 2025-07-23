@@ -25,7 +25,7 @@ namespace ReelSpinGame_State.PlayingState
             hasInput = false;
 
             State = MainGameFlow.GameStates.Playing;
-            this.gM = gameManager;
+            gM = gameManager;
         }
 
         public void StateStart()
@@ -34,10 +34,8 @@ namespace ReelSpinGame_State.PlayingState
             gM.Reel.StartReels();
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
-
             // スタート音再生
             gM.Effect.StartLeverOnEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Bonus.GetCurrentBonusStatus());
-
             // リール停止時に音を鳴らすよう変更
             gM.Reel.HasSomeReelStopped += StopReelSound;
         }
@@ -47,6 +45,10 @@ namespace ReelSpinGame_State.PlayingState
             if(gM.Auto.HasAuto)
             {
                 AutoControl();
+            }
+            else if(gM.Reel.HasForceStop())
+            {
+                ForceAutoStop();
             }
             else
             {
@@ -223,6 +225,24 @@ namespace ReelSpinGame_State.PlayingState
                 {
                     StopReel(gM.Auto.AutoStopOrders[(int)Third]);
                 }
+            }
+        }
+
+        // 強制的に止めるオート
+        private void ForceAutoStop()
+        {
+            // 左->中->右から強制停止
+            if (gM.Reel.GetReelStatus(ReelID.ReelLeft) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+            {
+                StopReel(ReelID.ReelLeft);
+            }
+            else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+            {
+                StopReel(ReelID.ReelMiddle);
+            }
+            else if (gM.Reel.GetReelStatus(ReelID.ReelRight) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+            {
+                StopReel(ReelID.ReelRight);
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿using ReelSpinGame_Datas;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ReelSpinGame_Reels
 {
@@ -23,6 +21,8 @@ namespace ReelSpinGame_Reels
         public bool IsReelFinished { get; set; }
         // 停止可能になったか(リール速度が一定になって0.5秒後)
         public bool CanStopReels { get; set; }
+        // 強制停止が発動しているか
+        public bool HasForceStop { get; set; }
         // 第一停止をしたか
         public bool IsFirstReelPushed { get; set; }
         // 最初に止めたリール番号
@@ -47,6 +47,7 @@ namespace ReelSpinGame_Reels
             IsReelFinished = true;
             IsReelWorking = false;
             CanStopReels = false;
+            HasForceStop = false;
 
             IsFirstReelPushed = false;
             FirstPushReel = ReelID.ReelLeft;

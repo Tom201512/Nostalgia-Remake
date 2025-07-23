@@ -19,6 +19,7 @@ public class ReelTestUI : UIBaseClass
 
         buffer += "Reels-" + "\n";
         buffer += "CanStop:" + reel.GetCanStopReels() + "\n";
+        buffer += "HasForceStop:" + reel.HasForceStop() + "\n";
 
         // åªç›ÇÃÉäÅ[Éãà íu
         buffer += "LeftPos:" + reel.GetCurrentReelPos(ReelID.ReelLeft) + "\n";

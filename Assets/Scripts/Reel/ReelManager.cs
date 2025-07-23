@@ -17,6 +17,8 @@ public class ReelManager : MonoBehaviour
     // const
     // リール速度が一定になってから停止できるようになるまでの秒数
     public const float ReelWaitTime = 0.5f;
+    // 操作が何もない状態で自動停止させる時間(秒)
+    public const float ReelAutoStopTime = 60.0f;
 
     [SerializeField] bool CanStopImmediately;
     // var
@@ -57,6 +59,8 @@ public class ReelManager : MonoBehaviour
             if (!data.CanStopReels && CheckReelSpeedMaximum() && !IsInvoking())
             {
                 StartCoroutine(nameof(SetReelStopTimer));
+                // 1分間経過で自動停止にする
+                StartCoroutine(nameof(AutoStopByTime));
             }
 
             // 全リールが停止したかチェック
@@ -68,6 +72,9 @@ public class ReelManager : MonoBehaviour
 
                 // リール停止位置記録
                 data.GenerateLastStopped(reelObjects);
+
+                // コルーチン停止
+                StopAutoTime();
             }
         }
     }
@@ -88,6 +95,8 @@ public class ReelManager : MonoBehaviour
     public bool GetIsReelFinished() => data.IsReelFinished;
     // 停止できる状態か
     public bool GetCanStopReels() => data.CanStopReels;
+    // オートストップ状態
+    public bool HasForceStop() => data.HasForceStop;
     // 第一停止をしたか
     public bool GetIsFirstReelPushed() => data.IsFirstReelPushed;
     // 第一停止したリールのID
@@ -341,5 +350,19 @@ public class ReelManager : MonoBehaviour
         data.CanStopReels = false;
         yield return new WaitForSeconds(ReelWaitTime);
         data.CanStopReels = true;
+    }
+
+    // リールを自動停止させる
+    private IEnumerator AutoStopByTime()
+    {
+        yield return new WaitForSeconds(ReelAutoStopTime);
+        data.HasForceStop = true;
+    }
+
+    // リール自動停止のコルーチンストップ
+    private void StopAutoTime()
+    {
+        StopCoroutine(nameof(AutoStopByTime));
+        data.HasForceStop = false;
     }
 }
