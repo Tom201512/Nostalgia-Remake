@@ -1,11 +1,13 @@
-using ReelSpinGame_Bonus;
-using ReelSpinGame_Save.Player;
+using ReelSpinGame_Interface;
+using ReelSpinGame_Save.Bonus;
+using ReelSpinGame_Save.Medal;
+using ReelSpinGame_Save.Player.ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Medal.MedalBehavior;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace ReelSpinGame_System
 {
@@ -30,10 +32,10 @@ namespace ReelSpinGame_System
             public int Setting { get; private set; }
 
             // プレイヤー情報
-            public PlayerDatabase Player { get; private set; }
+            public PlayerSave Player { get; private set; }
 
             // メダル情報
-            public MedalSystemSave Medal { get; private set; }
+            public MedalSave Medal { get; private set; }
 
             // フラグカウンタ数値
             public int FlagCounter { get; private set; }
@@ -42,28 +44,70 @@ namespace ReelSpinGame_System
             public List<int> LastReelPos {  get; private set; }
 
             // ボーナス情報
-            public BonusBehavior Bonus { get; private set; }
+            public BonusSave Bonus { get; private set; }
 
             public SaveDatabase()
             {
                 Setting = 6;
-                Player = new PlayerDatabase();
-                Medal = new MedalSystemSave();
+                Player = new PlayerSave();
+                Medal = new MedalSave();
                 FlagCounter = 0;
                 LastReelPos = new List<int> { 19, 19, 19 };
-                Bonus = new BonusBehavior();
+                Bonus = new BonusSave();
             }
 
             // func
 
-            // 台設定設定
-            public void SetSetting(int setting) => Setting = setting;
-            
-            // フラグカウンタ設定
-            public void SetFlagCounter(int flagCounter) => FlagCounter = flagCounter;
+            // 各種情報記録
+            // 台設定
+            public void RecordSlotSetting(int setting) => Setting = setting;
 
-            // リール位置設定
-            public void SetReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
+            // プレイヤー情報
+            public void RecordSaveData(ISavable player)
+            {
+                if (player.GetType() == typeof(PlayerSave))
+                {
+                    Player = player as PlayerSave;
+                }
+                else
+                {
+                    throw new Exception("Save data is not PlayerSave");
+                }
+            }
+
+            // メダル情報
+            public void RecordMedalSave(ISavable medal)
+            {
+                if(medal.GetType() == typeof(MedalSave))
+                {
+                    Medal = medal as MedalSave;
+                }
+                else
+                {
+                    throw new Exception("Save data is not MedalData");
+                }
+            }
+            
+            // フラグカウンタ
+            public void RecordFlagCounter(int flagCounter) => FlagCounter = flagCounter;
+
+            // リール位置
+            public void RecordReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
+
+            // ボーナス情報
+            public void RecordBonusData(ISavable bonus)
+            {
+                {
+                    if (bonus.GetType() == typeof(BonusSave))
+                    {
+                        Bonus = bonus as BonusSave;
+                    }
+                    else
+                    {
+                        throw new Exception("Save data is not BonusSave");
+                    }
+                }
+            }
         }
 
         // コンストラクタ
@@ -73,7 +117,6 @@ namespace ReelSpinGame_System
         }
 
         // func
-
         // セーブフォルダ作成
         public bool GenerateSaveFolder()
         {
@@ -218,7 +261,7 @@ namespace ReelSpinGame_System
                 switch (addressID)
                 {
                     case (int)AddressID.Setting:
-                        CurrentSave.SetSetting(bStream.ReadInt32());
+                        CurrentSave.RecordSlotSetting(bStream.ReadInt32());
                         Debug.Log("Setting:" + CurrentSave.Setting);
 
                         break;
@@ -235,7 +278,7 @@ namespace ReelSpinGame_System
 
                     case (int)AddressID.FlagC:
                         Debug.Log("FlagCounter");
-                        CurrentSave.SetFlagCounter(bStream.ReadInt32());
+                        CurrentSave.RecordFlagCounter(bStream.ReadInt32());
                         Debug.Log("FlagCounter Loaded");
                         break;
 

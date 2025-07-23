@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using ReelSpinGame_Interface;
+﻿using ReelSpinGame_Interface;
+using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Bonus.BonusBehavior;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -35,17 +34,17 @@ namespace ReelSpinGame_State.LotsState
             // そうでない場合は通常時のゲーム数を加算
             else
             {
-                gM.Save.Player.IncreaseGameValue();
+                gM.Player.IncreaseGameValue();
             }
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
             if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
             {
-                gM.Save.Player.AddBonusResult(BonusType.BonusBIG);
+                gM.Player.AddBonusResult(BonusType.BonusBIG);
             }
             else if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
             {
-                gM.Save.Player.AddBonusResult(BonusType.BonusREG);
+                gM.Player.AddBonusResult(BonusType.BonusREG);
             }
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);

@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
-using static ReelSpinGame_Bonus.BonusBehavior;
+using static ReelSpinGame_Bonus.BonusSystemData;
 using UnityEngine;
 
 namespace ReelSpinGame_State.InsertState
@@ -75,7 +75,7 @@ namespace ReelSpinGame_State.InsertState
                 if (gM.Bonus.DisplayingTotalCount)
                 {
                     gM.Bonus.TurnOffSegments();
-                    gM.Save.Player.ResetCurrentGame();
+                    gM.Player.ResetCurrentGame();
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace ReelSpinGame_State.InsertState
                     if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
                     {
                         gM.Bonus.ChangeBonusPayouts(-gM.Medal.GetLastBetAmounts());
-                        gM.Save.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
+                        gM.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
                     }
 
                     // 連チャン区間にいる場合は連チャン区間枚数を減らす

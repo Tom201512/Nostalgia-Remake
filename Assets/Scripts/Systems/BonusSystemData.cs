@@ -1,12 +1,11 @@
-﻿using ReelSpinGame_Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 namespace ReelSpinGame_Bonus
 {
-	public class BonusBehavior
+	public class BonusSystemData
 	{
         // ボーナス情報
         // const
@@ -62,7 +61,7 @@ namespace ReelSpinGame_Bonus
         // 連チャン区間にいるか
         public bool HasZone { get; set; }
 
-        public BonusBehavior()
+        public BonusSystemData()
         {
             HoldingBonusID = BonusType.BonusNone;
             CurrentBonusStatus = BonusStatus.BonusNone;

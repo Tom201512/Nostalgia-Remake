@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
             saveManager.DeleteSaveFile();
 
             // İ’è’l‚Ìì¬
-            Save.SetSetting(debugSetting);
+            Save.RecordSlotSetting(debugSetting);
 
             Debug.Log("Save deleted");
             deleteSave = false;
@@ -162,14 +162,14 @@ public class GameManager : MonoBehaviour
         else if (!saveManager.LoadSaveFile())
         {
             // İ’è’l‚Ìì¬
-            Save.SetSetting(debugSetting);
+            Save.RecordSlotSetting(debugSetting);
 
             Debug.Log("Save is newly generated");
         }
 
         // UI İ’è
         waitUI.SetWaitManager(Wait);
-        playerUI.SetPlayerData(saveManager.CurrentSave.Player);
+        playerUI.SetPlayerData(Player);
         playerUI.SetMedalManager(Medal);
         AutoUI.SetAutoFunction(Auto);
 

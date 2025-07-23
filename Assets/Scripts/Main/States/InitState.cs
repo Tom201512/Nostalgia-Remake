@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Interface;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehavior;
+using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 
@@ -58,7 +58,7 @@ namespace ReelSpinGame_State.LotsState
             Debug.Log("Setting:" + gM.Setting);
 
             // メダル情報反映
-            //gM.Medal.SetMedalData(gM.Save.Medal);
+            gM.Medal.LoadSaveData(gM.Save.Medal);
 
             // フラグ数値反映
             gM.Lots.SetCounterValue(gM.Save.FlagCounter);
@@ -67,7 +67,7 @@ namespace ReelSpinGame_State.LotsState
             gM.Reel.SetReelPos(gM.Save.LastReelPos);
 
             // ボーナス状態反映
-            gM.Bonus.SetBonusData(gM.Save.Bonus);
+            gM.Bonus.LoadSaveData(gM.Save.Bonus);
 
             // 演出マネージャーにボーナスの色を割り当てる
             gM.Effect.SetBigColor(gM.Save.Bonus.BigChanceColor);

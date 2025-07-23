@@ -13,9 +13,18 @@ namespace ReelSpinGame_Interface
         void StateEnd();
     }
 
+
+    // セーブできるデータ
     public interface ISavable
     {
         List<int> SaveData();
         bool LoadData(BinaryReader bStream);
+    }
+
+    // セーブ機能を持つ
+    public interface IHasSave
+    {
+        ISavable MakeSaveData();
+        void LoadSaveData(ISavable save);
     }
 }

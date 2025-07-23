@@ -1,8 +1,4 @@
-﻿using ReelSpinGame_Interface;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+﻿using System;
 
 namespace ReelSpinGame_Medal
 {
@@ -32,20 +28,10 @@ namespace ReelSpinGame_Medal
         public int LastPayoutAmounts { get; set; }
         // ベット完了しているか
         public bool FinishedBet { get;  set; }
-        // クレジット枚数
-        public int Credits { get; set; }
-        // 最高ベット枚数
-        public int MaxBetAmounts { get; set; }
-        // 最後にかけたメダル枚数
-        public int LastBetAmounts { get; set; }
-        // リプレイ状態か
-        public bool HasReplay { get; set; }
 
-        // セーブをする情報
-        public class MedalSystemSave : ISavable
+        // セーブ用のデータ
+        public class MedalSystemData
         {
-            // const
-
             // var
             // クレジット枚数
             public int Credits { get; set; }
@@ -56,67 +42,17 @@ namespace ReelSpinGame_Medal
             // リプレイ状態か
             public bool HasReplay { get; set; }
 
-            public MedalSystemSave()
+            public MedalSystemData()
             {
                 Credits = 0;
                 MaxBetAmounts = MaxBetLimit;
                 LastBetAmounts = 0;
                 HasReplay = false;
             }
-
-            // データ書き込み
-            public List<int> SaveData()
-            {
-                // 変数を格納
-                List<int> data = new List<int>();
-                data.Add(Credits);
-                data.Add(MaxBetAmounts);
-                data.Add(LastBetAmounts);
-                data.Add(HasReplay ?  1 : 0);
-
-                // デバッグ用
-                Debug.Log("MedalData:");
-                foreach (int i in data)
-                {
-                    Debug.Log(i);
-                }
-
-                return data;
-            }
-
-            // データ読み込み
-            public bool LoadData(BinaryReader bStream)
-            {
-                try
-                {
-                    // クレジット枚数
-                    Credits = bStream.ReadInt32();
-                    Debug.Log("Credits:" + Credits);
-
-                    // 最大ベット枚数
-                    MaxBetAmounts = bStream.ReadInt32();
-                    Debug.Log("MaxBetAmounts:" + MaxBetAmounts);
-
-                    // 最後に掛けた枚数
-                    LastBetAmounts = bStream.ReadInt32();
-                    Debug.Log("LastBetAmounts:" + LastBetAmounts);
-
-                    // リプレイ状態
-                    HasReplay = (bStream.ReadInt32() == 1 ? true : false);
-                    Debug.Log("HasReplay:" + HasReplay);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception(e.ToString());
-                }
-                finally
-                {
-                    Debug.Log("MedalSystem Loaded");
-                }
-
-                return true;
-            }
         }
+
+        // メダル情報(セーブに使う)
+        public MedalSystemData system { get; set; }
 
         // コンストラクタ
         public MedalBehavior()
@@ -124,17 +60,10 @@ namespace ReelSpinGame_Medal
             CurrentBet = 0;
             RemainingPayouts = 0;
             LastPayoutAmounts = 0;
-
-            Credits = 0;
-            MaxBetAmounts = MaxBetLimit;
-            LastBetAmounts = 0;
-            HasReplay = false;
             FinishedBet = false;
         }
 
         // func
-        // セーブデータのメダル情報を読み込む
-        //public void LoadMedalSystemSave(MedalSystemSave save) => MedalSave = save;
 
         // 残りベット枚数を設定
         public void SetRemainingBet(int amounts)
@@ -164,10 +93,10 @@ namespace ReelSpinGame_Medal
             if (amounts < CurrentBet)
             {
                 // ベットで使ったクレジット分を返す
-                Credits = Math.Clamp(Credits += CurrentBet, MinCredit, MaxCredit);
+                system.Credits = Math.Clamp(system.Credits += CurrentBet, MinCredit, MaxCredit);
                 CurrentBet = 0;
             }
-            LastBetAmounts = amounts;
+            system.LastBetAmounts = amounts;
             ////Debug.Log("Bet Received:" + RemainingBet);
         }
 
@@ -181,9 +110,9 @@ namespace ReelSpinGame_Medal
            //HasMedalInserted.Invoke(1);
 
             // リプレイでなければクレジットを減らす
-            if (!HasReplay)
+            if (!system.HasReplay)
             {
-                Credits = Math.Clamp(Credits -= 1, MinCredit, MaxCredit);
+                system.Credits = Math.Clamp(system.Credits -= 1, MinCredit, MaxCredit);
             }
 
             // 残り枚数が0になったら終了
@@ -204,11 +133,11 @@ namespace ReelSpinGame_Medal
         public void ChangeCredits(int value)
         {
             // クレジット枚数を0枚にする(負数の場合)
-            if (Credits < 0)
+            if (system.Credits < 0)
             {
-                Credits = 0;
+                system.Credits = 0;
             }
-            Credits = Math.Clamp(Credits += value, MinCredit, MaxCredit);
+            system.Credits = Math.Clamp(system.Credits += value, MinCredit, MaxCredit);
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using ReelSpinGame_Bonus;
-using ReelSpinGame_Interface;
+﻿using ReelSpinGame_Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static ReelSpinGame_Bonus.BonusBehavior;
 using UnityEngine;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Datas
 {

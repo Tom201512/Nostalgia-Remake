@@ -1,19 +1,18 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Save.Bonus;
+using ReelSpinGame_Save.Player.ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehavior;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_System
 {
-    public class PlayerDatabase : ISavable
+    public class PlayerDatabase : IHasSave
     {
         // プレイヤー情報
 
         // const
-
         // 記録可能ゲーム数
         public const int MaximumTotalGames = 99999;
 
@@ -47,6 +46,33 @@ namespace ReelSpinGame_System
         }
 
         // func
+        // セーブデータにする
+        public ISavable MakeSaveData()
+        {
+            PlayerSave save = new PlayerSave();
+            save.RecordData(this);
+
+            return save;
+        }
+
+        // セーブを読み込む
+        public void LoadSaveData(ISavable loadData)
+        {
+            if (loadData.GetType() == typeof(PlayerSave))
+            {
+                PlayerSave save = loadData as PlayerSave;
+                TotalGames = save.TotalGames;
+                CurrentGames = save.CurrentGames;
+                PlayerMedalData = save.PlayerMedalData;
+                BonusHitRecord = save.BonusHitRecord;
+                BigTimes = save.BigTimes;
+                RegTimes = save.RegTimes;
+            }
+            else
+            {
+                throw new Exception("Loaded data is not PlayerData");
+            }
+        }
 
         // 各種データ数値変更
 
@@ -79,99 +105,5 @@ namespace ReelSpinGame_System
         public void IncreaseBigChance() => BigTimes += 1;
         // ボーナスゲーム回数の増加
         public void IncreaseBonusGame() => RegTimes += 1;
-
-        // セーブ書き込み
-        public List<int> SaveData()
-        {
-            // 変数データをすべて格納
-            List<int> data = new List<int>();
-
-            data.Add(TotalGames);
-            data.Add(CurrentGames);
-            
-            // メダル情報
-            foreach(int list in PlayerMedalData.SaveData())
-            {
-                data.Add(list);
-            }
-
-            // ボーナス情報の数
-            data.Add(BonusHitRecord.Count);
-
-            // ボーナス情報
-            for(int i = 0; i < BonusHitRecord.Count; i++)
-            {
-                foreach (int list in BonusHitRecord[i].SaveData())
-                {
-                    data.Add(list);
-                }
-            }
-
-            // BIG/REG回数
-            data.Add(BigTimes);
-            data.Add(RegTimes);
-
-            // デバッグ用
-            Debug.Log("PlayerData:");
-            foreach(int i in data)
-            {
-                Debug.Log(i);
-            }
-
-            return data;
-        }
-
-        // セーブ読み込み
-        public bool LoadData(BinaryReader bStream)
-        {
-            try
-            {
-                // ゲーム数読み込み
-                TotalGames = bStream.ReadInt32();
-                Debug.Log("TotalGames:" + TotalGames);
-
-                CurrentGames = bStream.ReadInt32();
-                Debug.Log("CurrentGames:" + CurrentGames);
-
-                // メダル情報読み込み
-                PlayerMedalData.LoadData(bStream);
-
-                // ボーナス履歴読み込み
-                // ボーナス履歴数
-
-                int bonusResultCounts = bStream.ReadInt32();
-                Debug.Log("BonusResultCounts:" + bonusResultCounts);
-
-                // 履歴分読み込む
-                for (int i = 0; i < bonusResultCounts; i++)
-                {
-                    BonusHitData buffer = new BonusHitData();
-                    BonusHitRecord.Add(buffer);
-                    buffer.LoadData(bStream);
-                }
-
-                Debug.Log("BonusLoad END");
-
-                // BIG回数
-                BigTimes = bStream.ReadInt32();
-                Debug.Log("BigTimes:" + BigTimes);
-
-                // REG回数
-                RegTimes = bStream.ReadInt32();
-                Debug.Log("RegTimes:" + RegTimes);
-            }
-            catch(Exception e)
-            {
-                Debug.Log(e.ToString());
-                Application.Quit();
-                throw new Exception(e.ToString());
-            }
-            finally
-            {
-                Debug.Log("PlayerData Read is done");
-            }
-
-            return true;
-        }
     }
 }

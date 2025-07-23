@@ -1,10 +1,8 @@
 using ReelSpinGame_Datas;
-using ReelSpinGame_Reels;
-using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehavior;
+using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Datas.ReelConditionsData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
-using static ReelSpinGame_Datas.ReelConditionsData;
 
 public class ReelTableManager
 {

@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using ReelSpinGame_Interface;
+using ReelSpinGame_Save.Bonus;
+using ReelSpinGame_Save.Medal;
+using System;
+using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehavior;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Bonus
 {
-    public class BonusManager : MonoBehaviour
+    public class BonusManager : MonoBehaviour, IHasSave
     {
         // ボーナス処理
 
@@ -14,7 +18,7 @@ namespace ReelSpinGame_Bonus
 
         // var
         // ボーナス処理のデータ
-        private BonusBehavior data;
+        private BonusSystemData data;
         // ボーナス状態のセグメント
         [SerializeField] private BonusSevenSegment bonusSegments;
         // 獲得枚数を表示しているか
@@ -23,7 +27,7 @@ namespace ReelSpinGame_Bonus
         // func
         private void Awake()
         {
-            data = new BonusBehavior();
+            data = new BonusSystemData();
             DisplayingTotalCount = false;
         }
 
@@ -62,8 +66,38 @@ namespace ReelSpinGame_Bonus
             data.CurrentZonePayouts = 0;
         }
 
-        // ボーナス情報を読み込む
-        public void SetBonusData(BonusBehavior bonusSaveData) => data = bonusSaveData;
+        // セーブデータにする
+        public ISavable MakeSaveData()
+        {
+            BonusSave save = new BonusSave();
+            save.RecordData(data);
+
+            return save;
+        }
+
+        // セーブを読み込む
+        public void LoadSaveData(ISavable loadData)
+        {
+            if (loadData.GetType() == typeof(BonusSave))
+            {
+                BonusSave save = loadData as BonusSave;
+
+                data.HoldingBonusID = save.HoldingBonusID;
+                data.CurrentBonusStatus = save.CurrentBonusStatus;
+                data.BigChanceColor = save.BigChanceColor;
+                data.RemainingBigGames = save.RemainingBigGames;
+                data.RemainingJacIn = save.RemainingJacIn;
+                data.RemainingJacHits = save.RemainingJacHits;
+                data.RemainingJacGames = save.RemainingJacGames;
+                data.CurrentBonusPayouts = save.CurrentBonusPayouts;
+                data.CurrentZonePayouts = save.CurrentZonePayouts;
+                data.HasZone = save.HasZone;
+            }
+            else
+            {
+                throw new Exception("Loaded data is not BonusData");
+            }
+        }
 
         // ボーナスストック状態の更新
         public void SetBonusStock(BonusType bonusType) => data.HoldingBonusID = bonusType;

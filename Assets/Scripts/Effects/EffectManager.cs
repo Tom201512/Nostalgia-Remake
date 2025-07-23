@@ -1,13 +1,12 @@
 using ReelSpinGame_Datas;
-using ReelSpinGame_Lots;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusBehavior;
-using static ReelSpinGame_Reels.Flash.FlashManager;
+using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Reels.Flash.FlashManager;
 
 namespace ReelSpinGame_Effect
 {
