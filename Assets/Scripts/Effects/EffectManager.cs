@@ -394,7 +394,7 @@ namespace ReelSpinGame_Effect
                 }
             }
 
-            Debug.Log("Event End");
+            //Debug.Log("Event End");
             HasFanfareUpdate = false;
             BigChanceColor = BigColor.None;
             soundManager.StopBGM();

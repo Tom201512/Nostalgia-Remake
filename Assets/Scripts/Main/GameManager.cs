@@ -220,11 +220,6 @@ public class GameManager : MonoBehaviour
         MainFlow.UpdateState();
     }
 
-    private void Dispose()
-    {
-
-    }
-
     private void OnApplicationQuit()
     {
         Wait.DisposeWait();

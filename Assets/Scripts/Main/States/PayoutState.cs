@@ -173,7 +173,7 @@ namespace ReelSpinGame_State.PayoutState
             // 通常時に移行した場合
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                Debug.Log("BonusEnd");
+                //Debug.Log("BonusEnd");
                 gM.Lots.ChangeTable(FlagLotMode.Normal);
                 gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gM.Medal.ChangeMaxBet(3);
@@ -234,7 +234,7 @@ namespace ReelSpinGame_State.PayoutState
             }
             else if (HasBonusFinished)
             {
-                Debug.Log("BonusEND");
+                //Debug.Log("BonusEND");
                 gM.Effect.StartBonusEndEffect();
             }
         }
@@ -312,6 +312,7 @@ namespace ReelSpinGame_State.PayoutState
                 if (gM.Reel.GetPayoutResultData().BonusID != (int)BonusType.BonusNone)
                 {
                     StartBonus();
+                    BonusStatusUpdate();
                 }
                 // 取りこぼした場合はストックさせる
                 else
