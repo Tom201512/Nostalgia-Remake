@@ -68,19 +68,19 @@ namespace ReelSpinGame_Save.Medal
             {
                 // クレジット枚数
                 Credits = bStream.ReadInt32();
-                Debug.Log("Credits:" + Credits);
+                //Debug.Log("Credits:" + Credits);
 
                 // 最大ベット枚数
                 MaxBetAmounts = bStream.ReadInt32();
-                Debug.Log("MaxBetAmounts:" + MaxBetAmounts);
+                //Debug.Log("MaxBetAmounts:" + MaxBetAmounts);
 
                 // 最後に掛けた枚数
                 LastBetAmounts = bStream.ReadInt32();
-                Debug.Log("LastBetAmounts:" + LastBetAmounts);
+                //Debug.Log("LastBetAmounts:" + LastBetAmounts);
 
                 // リプレイ状態
                 HasReplay = (bStream.ReadInt32() == 1 ? true : false);
-                Debug.Log("HasReplay:" + HasReplay);
+                //Debug.Log("HasReplay:" + HasReplay);
             }
             catch (Exception e)
             {
@@ -88,7 +88,7 @@ namespace ReelSpinGame_Save.Medal
             }
             finally
             {
-                Debug.Log("MedalSystem Loaded");
+                //Debug.Log("MedalSystem Loaded");
             }
 
             return true;

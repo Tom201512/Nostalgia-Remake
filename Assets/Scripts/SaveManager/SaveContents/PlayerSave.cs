@@ -103,10 +103,10 @@ namespace ReelSpinGame_Save.Player
                 {
                     // ゲーム数読み込み
                     TotalGames = bStream.ReadInt32();
-                    Debug.Log("TotalGames:" + TotalGames);
+                    //Debug.Log("TotalGames:" + TotalGames);
 
                     CurrentGames = bStream.ReadInt32();
-                    Debug.Log("CurrentGames:" + CurrentGames);
+                    //Debug.Log("CurrentGames:" + CurrentGames);
 
                     // メダル情報読み込み
                     PlayerMedalData.LoadData(bStream);
@@ -115,7 +115,7 @@ namespace ReelSpinGame_Save.Player
                     // ボーナス履歴数
 
                     int bonusResultCounts = bStream.ReadInt32();
-                    Debug.Log("BonusResultCounts:" + bonusResultCounts);
+                    //Debug.Log("BonusResultCounts:" + bonusResultCounts);
 
                     // 履歴分読み込む
                     for (int i = 0; i < bonusResultCounts; i++)
@@ -125,25 +125,23 @@ namespace ReelSpinGame_Save.Player
                         buffer.LoadData(bStream);
                     }
 
-                    Debug.Log("BonusLoad END");
+                    //Debug.Log("BonusLoad END");
 
                     // BIG回数
                     BigTimes = bStream.ReadInt32();
-                    Debug.Log("BigTimes:" + BigTimes);
+                    //Debug.Log("BigTimes:" + BigTimes);
 
                     // REG回数
                     RegTimes = bStream.ReadInt32();
-                    Debug.Log("RegTimes:" + RegTimes);
+                    //Debug.Log("RegTimes:" + RegTimes);
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e.ToString());
-                    Application.Quit();
                     throw new Exception(e.ToString());
                 }
                 finally
                 {
-                    Debug.Log("PlayerData Read is done");
+                    //Debug.Log("PlayerData Read is done");
                 }
 
                 return true;

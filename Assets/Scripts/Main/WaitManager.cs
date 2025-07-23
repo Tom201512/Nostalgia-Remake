@@ -1,5 +1,4 @@
 using System.Timers;
-using UnityEngine;
 
 public class WaitManager
 {
@@ -39,25 +38,13 @@ public class WaitManager
     // ウェイトをかける
     public void SetWaitTimer()
     {
-        if (HasWaitCut)
-        {
-            //Debug.Log("WaitCut is enabled");
-        }
-
-        else if (HasWait)
-        {
-            //Debug.Log("Wait is enabled already");
-        }
-
         // ウェイトカット、または実行中のウェイトがなければ実行
-        else
+        if (!HasWaitCut && !HasWait)
         {
             HasWait = true;
             updateTimer.Elapsed += WaitProcess;
             updateTimer.AutoReset = false;
             updateTimer.Start();
-
-            //Debug.Log("Wait start");
         }
     }
 
@@ -68,6 +55,5 @@ public class WaitManager
     {
         HasWait = false;
         updateTimer.Elapsed -= WaitProcess;
-        //Debug.Log("Wait disabled");
     }
 }

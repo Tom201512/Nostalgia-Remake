@@ -84,23 +84,23 @@ namespace ReelSpinGame_Datas
             {
                 // プレイヤー所持枚数
                 CurrentPlayerMedal = bStream.ReadInt32();
-                Debug.Log("CurrentPlayerMedal:" + CurrentPlayerMedal);
+                //Debug.Log("CurrentPlayerMedal:" + CurrentPlayerMedal);
 
                 // IN枚数
                 CurrentInMedal = bStream.ReadInt32();
-                Debug.Log("CurrentInMedal:" + CurrentInMedal);
+                //Debug.Log("CurrentInMedal:" + CurrentInMedal);
 
                 // OUT枚数
                 CurrentOutMedal = bStream.ReadInt32();
-                Debug.Log("CurrentOutMedal:" + CurrentOutMedal);
+                //Debug.Log("CurrentOutMedal:" + CurrentOutMedal);
             }
             catch (Exception e)
             {
-                throw e;
+                throw new Exception(e.ToString());
             }
             finally
             {
-                Debug.Log("MedalData Loaded");
+                //Debug.Log("MedalData Loaded");
             }
 
             return true;

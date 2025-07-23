@@ -101,34 +101,34 @@ namespace ReelSpinGame_Save.Bonus
             {
                 // ストック中のボーナス
                 HoldingBonusID = (BonusType)Enum.ToObject(typeof(BonusType), bStream.ReadInt32());
-                Debug.Log("HoldingBonusID:" + HoldingBonusID);
+                //Debug.Log("HoldingBonusID:" + HoldingBonusID);
                 // 現在のボーナス状態
                 CurrentBonusStatus = (BonusStatus)Enum.ToObject(typeof(BonusStatus), bStream.ReadInt32());
-                Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
+                //Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
                 // ビッグチャンス時の色
                 BigChanceColor = (BigColor)Enum.ToObject(typeof(BigColor), bStream.ReadInt32());
-                Debug.Log("BigChanceColor:" + BigChanceColor);
+                //Debug.Log("BigChanceColor:" + BigChanceColor);
                 // 残りBIGゲーム数
                 RemainingBigGames = bStream.ReadInt32();
-                Debug.Log("RemainingBigGames:" + RemainingBigGames);
+                //Debug.Log("RemainingBigGames:" + RemainingBigGames);
                 // 残りJACIN
                 RemainingJacIn = bStream.ReadInt32();
-                Debug.Log("RemainingJacIn:" + RemainingJacIn);
+                //Debug.Log("RemainingJacIn:" + RemainingJacIn);
                 // 残りJACゲーム中当選回数
                 RemainingJacHits = bStream.ReadInt32();
-                Debug.Log("RemainingJacHits:" + RemainingJacHits);
+                //Debug.Log("RemainingJacHits:" + RemainingJacHits);
                 // 残りJACゲーム数
                 RemainingJacGames = bStream.ReadInt32();
-                Debug.Log("RemainingJacGames:" + RemainingJacGames);
+                //Debug.Log("RemainingJacGames:" + RemainingJacGames);
                 // 現在のボーナス獲得枚数
                 CurrentBonusPayouts = bStream.ReadInt32();
-                Debug.Log("CurrentBonusPayouts:" + CurrentBonusPayouts);
+                //Debug.Log("CurrentBonusPayouts:" + CurrentBonusPayouts);
                 // 連チャン区間中のボーナス枚数
                 CurrentZonePayouts = bStream.ReadInt32();
-                Debug.Log("CurrentZonePayouts:" + CurrentZonePayouts);
+                //Debug.Log("CurrentZonePayouts:" + CurrentZonePayouts);
                 // 連チャン区間中か
                 HasZone = (bStream.ReadInt32() == 1 ? true : false);
-                Debug.Log("HasZone:" + HasZone);
+                //Debug.Log("HasZone:" + HasZone);
 
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace ReelSpinGame_Save.Bonus
             }
             finally
             {
-                Debug.Log("BonusData end");
+                //Debug.Log("BonusData end");
             }
 
             return true;

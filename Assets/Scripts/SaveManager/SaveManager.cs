@@ -187,8 +187,6 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                Debug.Log(e.ToString());
-                Application.Quit();
                 throw new Exception(e.ToString());
             }
             finally
@@ -222,13 +220,11 @@ namespace ReelSpinGame_System
                         SetValueFromData(stream, index);
                         index += 1;
                     }
-                    Debug.Log("EOF");
+                    //Debug.Log("EOF");
                 }
             }
             catch (Exception e)
             {
-                Debug.Log(e.ToString());
-                Application.Quit();
                 throw new Exception(e.ToString());
             }
 
@@ -246,8 +242,6 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                Debug.Log(e.ToString());
-                Application.Quit();
                 throw new Exception(e.ToString());
             }
         }
@@ -261,55 +255,53 @@ namespace ReelSpinGame_System
                 {
                     case (int)AddressID.Setting:
                         CurrentSave.RecordSlotSetting(bStream.ReadInt32());
-                        Debug.Log("Setting:" + CurrentSave.Setting);
+                        //Debug.Log("Setting:" + CurrentSave.Setting);
 
                         break;
 
                     case (int)AddressID.Player:
-                        Debug.Log("Player");
+                        //Debug.Log("Player");
                         CurrentSave.Player.LoadData(bStream);
                         break;
 
                     case (int)AddressID.Medal:
-                        Debug.Log("Medal");
+                        //Debug.Log("Medal");
                         CurrentSave.Medal.LoadData(bStream);
                         break;
 
                     case (int)AddressID.FlagC:
-                        Debug.Log("FlagCounter");
+                        //Debug.Log("FlagCounter");
                         CurrentSave.RecordFlagCounter(bStream.ReadInt32());
-                        Debug.Log("FlagCounter Loaded");
+                        //Debug.Log("FlagCounter Loaded");
                         break;
 
                     case (int)AddressID.Reel:
-                        Debug.Log("Reel");
+                        //Debug.Log("Reel");
 
                         // 左
                         CurrentSave.LastReelPos[(int)ReelLeft] = bStream.ReadInt32();
-                        Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
+                        //Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
 
                         // 中
                         CurrentSave.LastReelPos[(int)ReelMiddle] = bStream.ReadInt32();
-                        Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
+                        //Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
 
                         // 右
                         CurrentSave.LastReelPos[(int)ReelRight] = bStream.ReadInt32();
-                        Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
+                        //Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
 
-                        Debug.Log("Reel Loaded");
+                        //Debug.Log("Reel Loaded");
                         break;
 
                     // ボーナス情報
                     case (int)AddressID.Bonus:
-                        Debug.Log("Bonus");
+                        //Debug.Log("Bonus");
                         CurrentSave.Bonus.LoadData(bStream);
                         break;
                 }
             }
             catch(Exception e)
             {
-                Debug.Log(e.ToString());
-                Application.Quit();
                 throw new Exception(e.ToString());
             }
             finally

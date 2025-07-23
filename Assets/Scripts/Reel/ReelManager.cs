@@ -135,7 +135,7 @@ public class ReelManager : MonoBehaviour
         {
             reelObjects[index].SetReelPos(pos);
 
-            Debug.Log((ReelID) System.Enum.ToObject(typeof(ReelID), index) + ":" + pos);
+            //Debug.Log((ReelID) System.Enum.ToObject(typeof(ReelID), index) + ":" + pos);
             index += 1;
         }
     }

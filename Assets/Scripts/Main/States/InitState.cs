@@ -24,7 +24,7 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateStart()
         {
-            Debug.Log("Start Init State");
+            //Debug.Log("Start Init State");
 
             // スロット情報初期化
             InitializeSlot();
@@ -58,7 +58,7 @@ namespace ReelSpinGame_State.LotsState
         {
             // 設定反映
             gM.ChangeSetting(gM.Save.Setting);
-            Debug.Log("Setting:" + gM.Setting);
+            //Debug.Log("Setting:" + gM.Setting);
 
             // プレイヤー情報反映
             gM.Player.LoadSaveData(gM.Save.Player);

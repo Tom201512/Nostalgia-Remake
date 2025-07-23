@@ -5,6 +5,7 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using UnityEngine;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -167,7 +168,7 @@ public class GameManager : MonoBehaviour
             // 設定値の作成
             Save.RecordSlotSetting(debugSetting);
 
-            Debug.Log("Save is newly generated");
+            //Debug.Log("Save is newly generated");
         }
 
         // UI 設定
@@ -220,10 +221,14 @@ public class GameManager : MonoBehaviour
         MainFlow.UpdateState();
     }
 
+    private void Dispose()
+    {
+
+    }
+
     private void OnApplicationQuit()
     {
         Wait.DisposeWait();
-
         // セーブ開始
         saveManager.GenerateSaveFolder();
         // ファイルセーブを行う
@@ -235,7 +240,10 @@ public class GameManager : MonoBehaviour
     public void ChangeSetting(int setting)
     {
         // 例外処理
-        if (setting < 0 && setting > 6) { throw new System.Exception("Invalid Setting, must be within 0~6"); }
+        if (setting < 0 && setting > 6) 
+        { 
+            throw new System.Exception("Invalid Setting, must be within 0~6");
+        }
         // 0ならランダムを選ぶ
         else if (setting == 0)
         {
