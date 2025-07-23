@@ -55,8 +55,8 @@ namespace ReelSpinGame_Bonus
         public bool GetHasZone() => data.HasZone;
 
         // 獲得枚数の増減
-        public int ChangeBonusPayouts(int amounts) => data.CurrentBonusPayouts += amounts;
-        public int ChangeZonePayouts(int amounts) => data.CurrentZonePayouts += amounts;
+        public void ChangeBonusPayouts(int amounts) => data.CurrentBonusPayouts += amounts;
+        public void ChangeZonePayouts(int amounts) => data.CurrentZonePayouts += amounts;
 
         // 連チャン区間枚数を消す
         public void ResetZonePayouts()
@@ -228,6 +228,7 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacGames = 0;
             data.RemainingJacHits = 0;
             data.CurrentBonusStatus = BonusStatus.BonusNone;
+            data.BigChanceColor = BigColor.None;
             DisplayingTotalCount = true;
         }
 

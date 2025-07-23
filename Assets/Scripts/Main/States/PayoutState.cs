@@ -1,9 +1,10 @@
 ﻿using ReelSpinGame_Interface;
-using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using UnityEngine;
+using System.Reflection;
 
 namespace ReelSpinGame_State.PayoutState
 {
@@ -47,9 +48,6 @@ namespace ReelSpinGame_State.PayoutState
                 ChangeFlagCounter();
             }
 
-            // リプレイ処理
-            UpdateReplay();
-
             // 状態遷移
             CheckGameModeStatusChange();
 
@@ -63,6 +61,9 @@ namespace ReelSpinGame_State.PayoutState
 
             // 払い出し開始
             gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts);
+
+            // リプレイ処理
+            UpdateReplay();
 
             // セーブ処理
             SaveData();

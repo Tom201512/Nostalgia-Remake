@@ -1,4 +1,5 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Medal;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
@@ -120,7 +121,7 @@ namespace ReelSpinGame_Reels.Payout
             //Debug.Log("IsReplay:" + replayStatus);
 
             // デバッグ用
-            for(int i = 0; i < finalPayoutLine.Count; i++)
+            /*for(int i = 0; i < finalPayoutLine.Count; i++)
             {
                 string buffer = "";
                 for(int j = 0; j < finalPayoutLine[i].PayoutLines.Count; j++)
@@ -133,6 +134,12 @@ namespace ReelSpinGame_Reels.Payout
                     }
                 }
                 //Debug.Log("PayoutLines" + i + ":" + buffer);
+            }*/
+
+            // 最大払い出しを超える枚数だった場合は切り捨てる
+            if(finalPayouts > MedalBehavior.MaxPayout)
+            {
+                finalPayouts = MedalBehavior.MaxPayout;
             }
 
             LastPayoutResult.Payouts = finalPayouts;

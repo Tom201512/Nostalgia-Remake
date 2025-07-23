@@ -29,6 +29,14 @@ namespace ReelSpinGame_Util.OriginalInputs
     public static class OriginalRandomLot
     {
         // 1/nの確率を抽選する
-        public static bool LotRandomByNum(int probability) => Random.Range(0, probability + 1) == 0;
+        public static bool LotRandomByNum(int probability)
+        {
+            if(probability < 0)
+            {
+                return false;
+            }
+
+            return Random.Range(0, probability) == 0;
+        }
     }
 }

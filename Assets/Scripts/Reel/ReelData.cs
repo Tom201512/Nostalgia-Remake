@@ -83,7 +83,6 @@ namespace ReelSpinGame_Reels
             CurrentReelStatus = ReelStatus.WaitForStop;
             WillStopPos = 0;
             LastDelay = 0;
-            WillStopPos = 0;
         }
 
         // 停止させる(強制的に止めることも可能)

@@ -1,5 +1,6 @@
 ﻿using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
@@ -98,7 +99,8 @@ namespace ReelSpinGame_AutoPlay.AI
             int[] stopPos = new int[] { 0, 0, 0 };
 
             // 1/3で赤7, 青7, BB7のいずれかを選択(左制御のみ)
-            switch (Random.Range((int)BigColor.Red, (int)BigColor.Black + 1))
+            int color = Random.Range((int)BigColor.Red, (int)BigColor.Black + 1);
+            switch (color)
             {
                 case (int)BigColor.Red:
 

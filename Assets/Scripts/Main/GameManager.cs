@@ -157,8 +157,6 @@ public class GameManager : MonoBehaviour
 
             // İ’è’l‚Ìì¬
             Save.RecordSlotSetting(debugSetting);
-
-            Debug.Log("Save deleted");
             deleteSave = false;
         }
 

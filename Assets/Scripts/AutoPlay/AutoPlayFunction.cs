@@ -144,10 +144,6 @@ namespace ReelSpinGame_AutoPlay
                 AutoStopOrders[(int)AutoStopOrder.Second] = second;
                 AutoStopOrders[(int)AutoStopOrder.Third] = third;
             }
-            else
-            {
-                Debug.Log("Failed to change because there are duplicated orders");
-            }
         }
 
         // オート押し位置の変更
