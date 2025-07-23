@@ -38,6 +38,12 @@ namespace ReelSpinGame_Medal
             HasMedalUpdate = false;
         }
 
+        void Start()
+        {
+            // クレジット更新
+            creditSegments.ShowSegmentByNumber(data.system.Credits);
+        }
+
         // タイマー処理の破棄
         private void OnDestroy() 
         {
@@ -59,6 +65,9 @@ namespace ReelSpinGame_Medal
         {
             MedalSave save = new MedalSave();
             save.RecordData(data.system);
+
+            Debug.Log("Test" + data.system.Credits);
+            Debug.Log("Test" + save.Credits);
 
             return save;
         }

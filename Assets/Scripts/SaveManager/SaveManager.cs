@@ -62,7 +62,7 @@ namespace ReelSpinGame_System
             public void RecordSlotSetting(int setting) => Setting = setting;
 
             // ƒvƒŒƒCƒ„[î•ñ
-            public void RecordSaveData(ISavable player)
+            public void RecordPlayerSave(ISavable player)
             {
                 if (player.GetType() == typeof(PlayerSave))
                 {

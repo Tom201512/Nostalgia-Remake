@@ -68,13 +68,15 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Bonus.ResetZonePayouts();
             }
 
+            // 払い出し開始
+            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts);
+
             // セーブ処理
             SaveData();
 
             // ここから下は演出
 
-            // 払い出し開始
-            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts);
+
 
             // 演出開始
             StartEffect();
@@ -105,7 +107,7 @@ namespace ReelSpinGame_State.PayoutState
         private void SaveData()
         {
             // プレイヤー情報記録
-            gM.Save.RecordSaveData(gM.Player.MakeSaveData());
+            gM.Save.RecordPlayerSave(gM.Player.MakeSaveData());
             // メダル情報記録
             gM.Save.RecordMedalSave(gM.Medal.MakeSaveData());
             // フラグ情報記録
