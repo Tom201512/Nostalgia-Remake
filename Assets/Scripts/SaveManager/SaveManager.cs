@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace ReelSpinGame_System
 {

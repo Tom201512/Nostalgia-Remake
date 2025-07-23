@@ -1,8 +1,7 @@
 using ReelSpinGame_AutoPlay;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction.AutoStopOrder;
-using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 using TMPro;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 
 public class AutoTestUI : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class AutoTestUI : MonoBehaviour
         buffer += "Auto-" + "\n";
         buffer += "AutoEnabled:" + auto.HasAuto + "\n";
         buffer += "AutoSpeed:" + auto.AutoSpeed + "\n";
-        buffer += "AutoOrderOption:" + auto.AutoStopOrderOption.ToString() + "\n";
+        buffer += "AutoOrderOption:" + auto.GetOrderName() + "\n";
         buffer += "AutoPos: L:" + auto.AutoStopPos[(int)ReelLeft] + " M:" + auto.AutoStopPos[(int)ReelMiddle] + " R:" + auto.AutoStopPos[(int)ReelRight] + "\n";
         buffer += "AutoPosDecided:" + auto.HasStopPosDecided + "\n";
 

@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour
     // カメラの視点変更
     [SerializeField] private KeyCode keyCameraModeChange;
 
+    // <デバッグ用> オートの押し順設定
+    [SerializeField] private KeyCode keyToAutoOrderChange;
+
     // <デバッグ用>セーブを消去するか
     [SerializeField] private bool deleteSave;
 
@@ -120,7 +123,7 @@ public class GameManager : MonoBehaviour
         Player = new PlayerDatabase();
 
         // オート機能
-        Auto = new AutoPlayFunction(AutoPlaySpeed.Normal, AutoStopOrderOptions.LMR);
+        Auto = new AutoPlayFunction();
         // セーブ機能
         saveManager = new SaveManager();
 
@@ -194,6 +197,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(keyToAutoToggle))
         {
             Auto.ChangeAutoMode();
+        }
+
+        // オート押し順変更
+        if (Input.GetKeyDown(keyToAutoOrderChange))
+        {
+            Auto.ChangeAutoOrder();
         }
 
         // カメラ表示方法変更

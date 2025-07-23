@@ -5,16 +5,15 @@ public class SlotCamera : MonoBehaviour
     // カメラ機能
 
     // var
-    // 従来の2D描画にするか
-    private Camera camera;
+    private Camera slotCam;
 
     private void Awake()
     {
-        camera = GetComponent<Camera>();
+        slotCam = GetComponent<Camera>();
     }
 
     // func
     
     // カメラの表示方式の変更
-    public void ChangeCameraMode() => camera.orthographic = !camera.orthographic;
+    public void ChangeCameraMode() => slotCam.orthographic = !slotCam.orthographic;
 }
