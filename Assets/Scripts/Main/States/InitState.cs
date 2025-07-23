@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Interface;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSaveData;
+using static ReelSpinGame_Bonus.BonusBehavior;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 
@@ -58,7 +58,7 @@ namespace ReelSpinGame_State.LotsState
             Debug.Log("Setting:" + gM.Setting);
 
             // メダル情報反映
-            gM.Medal.SetMedalData(gM.Save.Medal);
+            //gM.Medal.SetMedalData(gM.Save.Medal);
 
             // フラグ数値反映
             gM.Lots.SetCounterValue(gM.Save.FlagCounter);

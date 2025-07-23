@@ -1,12 +1,11 @@
+using ReelSpinGame_Bonus;
+using ReelSpinGame_Save.Player;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Medal.MedalBehavior;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
-using ReelSpinGame_Bonus;
-using System.Linq.Expressions;
-using System.Collections;
 
 namespace ReelSpinGame_System
 {
@@ -31,7 +30,7 @@ namespace ReelSpinGame_System
             public int Setting { get; private set; }
 
             // プレイヤー情報
-            public PlayingDatabase Player { get; private set; }
+            public PlayerDatabase Player { get; private set; }
 
             // メダル情報
             public MedalSystemSave Medal { get; private set; }
@@ -43,16 +42,16 @@ namespace ReelSpinGame_System
             public List<int> LastReelPos {  get; private set; }
 
             // ボーナス情報
-            public BonusSaveData Bonus { get; private set; }
+            public BonusBehavior Bonus { get; private set; }
 
             public SaveDatabase()
             {
                 Setting = 6;
-                Player = new PlayingDatabase();
+                Player = new PlayerDatabase();
                 Medal = new MedalSystemSave();
                 FlagCounter = 0;
                 LastReelPos = new List<int> { 19, 19, 19 };
-                Bonus = new BonusSaveData();
+                Bonus = new BonusBehavior();
             }
 
             // func

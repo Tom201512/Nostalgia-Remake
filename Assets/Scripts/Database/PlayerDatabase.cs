@@ -1,16 +1,16 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Interface;
-using System.Collections.Generic;
-using static ReelSpinGame_Bonus.BonusSaveData;
-using UnityEngine;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using static ReelSpinGame_Bonus.BonusBehavior;
 
 namespace ReelSpinGame_System
 {
-    public class PlayingDatabase : ISavable
+    public class PlayerDatabase : ISavable
     {
-        // プレイ中情報
+        // プレイヤー情報
 
         // const
 
@@ -28,7 +28,7 @@ namespace ReelSpinGame_System
         public PlayerMedalData PlayerMedalData { get; private set; }
 
         // 当選させたボーナス(IDごとに)
-        public List<BonusHitData> BonusHitDatas { get; private set; }
+        public List<BonusHitData> BonusHitRecord { get; private set; }
 
         // ビッグチャンス成立回数
         public int BigTimes { get; private set; }
@@ -36,12 +36,12 @@ namespace ReelSpinGame_System
         public int RegTimes { get; private set; }
 
         // コンストラクタ
-        public PlayingDatabase()
+        public PlayerDatabase()
         {
             TotalGames = 0;
             CurrentGames = 0;
             PlayerMedalData = new PlayerMedalData();
-            BonusHitDatas = new List<BonusHitData>();
+            BonusHitRecord = new List<BonusHitData>();
             BigTimes = 0;
             RegTimes = 0;
         }
@@ -63,17 +63,17 @@ namespace ReelSpinGame_System
         public void AddBonusResult(BonusType bonusType)
         {
             BonusHitData buffer = new BonusHitData();
-            BonusHitDatas.Add(buffer);
-            BonusHitDatas[^1].SetBonusType(bonusType);
-            BonusHitDatas[^1].SetBonusHitGame(CurrentGames);
+            BonusHitRecord.Add(buffer);
+            BonusHitRecord[^1].SetBonusType(bonusType);
+            BonusHitRecord[^1].SetBonusHitGame(CurrentGames);
         }
 
         // 直近のボーナス履歴の入賞を記録
-        public void SetLastBonusStart() => BonusHitDatas[^1].SetBonusStartGame(CurrentGames);
+        public void SetLastBonusStart() => BonusHitRecord[^1].SetBonusStartGame(CurrentGames);
         // 直近のビッグチャンス時の色を記録
-        public void SetLastBigChanceColor(BigColor color) => BonusHitDatas[^1].SetBigChanceColor(color);
+        public void SetLastBigChanceColor(BigColor color) => BonusHitRecord[^1].SetBigChanceColor(color);
         // 現在のボーナス履歴に払い出しを追加する
-        public void ChangeLastBonusPayouts(int payouts) => BonusHitDatas[^1].ChangeBonusPayouts(payouts);
+        public void ChangeLastBonusPayouts(int payouts) => BonusHitRecord[^1].ChangeBonusPayouts(payouts);
 
         // ビッグチャンス回数の増加
         public void IncreaseBigChance() => BigTimes += 1;
@@ -96,12 +96,12 @@ namespace ReelSpinGame_System
             }
 
             // ボーナス情報の数
-            data.Add(BonusHitDatas.Count);
+            data.Add(BonusHitRecord.Count);
 
             // ボーナス情報
-            for(int i = 0; i < BonusHitDatas.Count; i++)
+            for(int i = 0; i < BonusHitRecord.Count; i++)
             {
-                foreach (int list in BonusHitDatas[i].SaveData())
+                foreach (int list in BonusHitRecord[i].SaveData())
                 {
                     data.Add(list);
                 }
@@ -146,7 +146,7 @@ namespace ReelSpinGame_System
                 for (int i = 0; i < bonusResultCounts; i++)
                 {
                     BonusHitData buffer = new BonusHitData();
-                    BonusHitDatas.Add(buffer);
+                    BonusHitRecord.Add(buffer);
                     buffer.LoadData(bStream);
                 }
 

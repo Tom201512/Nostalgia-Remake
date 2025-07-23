@@ -6,6 +6,8 @@ using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using ReelSpinGame_Save;
+using ReelSpinGame_Save.Player;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +41,9 @@ public class GameManager : MonoBehaviour
     public ReelManager Reel { get { return reelManagerObj; } }
     public BonusManager Bonus { get; private set; }
     public EffectManager Effect { get { return effectManagerObj; } }
+
+    // プレイヤー情報
+    public PlayerDatabase Player;
 
     // オートプレイ機能
     public AutoPlayFunction Auto { get; private set; }
@@ -110,6 +115,9 @@ public class GameManager : MonoBehaviour
         MainFlow = new MainGameFlow(this);
         // ステータスパネル
         Status = statusPanel;
+
+        // プレイヤー情報
+        Player = new PlayerDatabase();
 
         // オート機能
         Auto = new AutoPlayFunction(AutoPlaySpeed.Normal, AutoStopOrderOptions.LMR);

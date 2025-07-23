@@ -22,7 +22,6 @@ namespace ReelSpinGame_Medal
 
         // var
 
-        // セーブ不要な情報
         // 残りベット枚数
         public int RemainingBet { get; set; }
         // ベット枚数
@@ -30,12 +29,17 @@ namespace ReelSpinGame_Medal
         // 払い出し枚数
         public int RemainingPayouts { get; set; }
         // 最後に払い出したメダル枚数
-        public int LastPayoutAmounts {get; set; }
+        public int LastPayoutAmounts { get; set; }
         // ベット完了しているか
         public bool FinishedBet { get;  set; }
-
-        // セーブ必要な情報(セーブデータからアドレスをもらう)
-        public MedalSystemSave MedalSave { get; set; }
+        // クレジット枚数
+        public int Credits { get; set; }
+        // 最高ベット枚数
+        public int MaxBetAmounts { get; set; }
+        // 最後にかけたメダル枚数
+        public int LastBetAmounts { get; set; }
+        // リプレイ状態か
+        public bool HasReplay { get; set; }
 
         // セーブをする情報
         public class MedalSystemSave : ISavable
@@ -121,13 +125,16 @@ namespace ReelSpinGame_Medal
             RemainingPayouts = 0;
             LastPayoutAmounts = 0;
 
-            MedalSave = new MedalSystemSave();
+            Credits = 0;
+            MaxBetAmounts = MaxBetLimit;
+            LastBetAmounts = 0;
+            HasReplay = false;
             FinishedBet = false;
         }
 
         // func
         // セーブデータのメダル情報を読み込む
-        public void LoadMedalSystemSave(MedalSystemSave save) => MedalSave = save;
+        //public void LoadMedalSystemSave(MedalSystemSave save) => MedalSave = save;
 
         // 残りベット枚数を設定
         public void SetRemainingBet(int amounts)
@@ -157,10 +164,10 @@ namespace ReelSpinGame_Medal
             if (amounts < CurrentBet)
             {
                 // ベットで使ったクレジット分を返す
-                MedalSave.Credits = Math.Clamp(MedalSave.Credits += CurrentBet, MinCredit, MaxCredit);
+                Credits = Math.Clamp(Credits += CurrentBet, MinCredit, MaxCredit);
                 CurrentBet = 0;
             }
-            MedalSave.LastBetAmounts = amounts;
+            LastBetAmounts = amounts;
             ////Debug.Log("Bet Received:" + RemainingBet);
         }
 
@@ -174,9 +181,9 @@ namespace ReelSpinGame_Medal
            //HasMedalInserted.Invoke(1);
 
             // リプレイでなければクレジットを減らす
-            if (!MedalSave.HasReplay)
+            if (!HasReplay)
             {
-                MedalSave.Credits = Math.Clamp(MedalSave.Credits -= 1, MinCredit, MaxCredit);
+                Credits = Math.Clamp(Credits -= 1, MinCredit, MaxCredit);
             }
 
             // 残り枚数が0になったら終了
@@ -197,11 +204,11 @@ namespace ReelSpinGame_Medal
         public void ChangeCredits(int value)
         {
             // クレジット枚数を0枚にする(負数の場合)
-            if (MedalSave.Credits < 0)
+            if (Credits < 0)
             {
-                MedalSave.Credits = 0;
+                Credits = 0;
             }
-            MedalSave.Credits = Math.Clamp(MedalSave.Credits += value, MinCredit, MaxCredit);
+            Credits = Math.Clamp(Credits += value, MinCredit, MaxCredit);
         }
     }
 }

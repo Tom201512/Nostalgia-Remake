@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace ReelSpinGame_Bonus
 {
-	public class BonusSaveData : ISavable
+	public class BonusBehavior
 	{
-        // ボーナス情報のセーブ
+        // ボーナス情報
         // const
 
         // ボーナスの種類
@@ -62,7 +62,7 @@ namespace ReelSpinGame_Bonus
         // 連チャン区間にいるか
         public bool HasZone { get; set; }
 
-        public BonusSaveData()
+        public BonusBehavior()
         {
             HoldingBonusID = BonusType.BonusNone;
             CurrentBonusStatus = BonusStatus.BonusNone;

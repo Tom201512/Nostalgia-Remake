@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
-using static ReelSpinGame_Bonus.BonusSaveData;
+using static ReelSpinGame_Bonus.BonusBehavior;
 using UnityEngine;
 
 namespace ReelSpinGame_State.InsertState

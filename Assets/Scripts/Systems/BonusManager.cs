@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSaveData;
+using static ReelSpinGame_Bonus.BonusBehavior;
 
 namespace ReelSpinGame_Bonus
 {
@@ -14,7 +14,7 @@ namespace ReelSpinGame_Bonus
 
         // var
         // ボーナス処理のデータ
-        private BonusSaveData data;
+        private BonusBehavior data;
         // ボーナス状態のセグメント
         [SerializeField] private BonusSevenSegment bonusSegments;
         // 獲得枚数を表示しているか
@@ -23,7 +23,7 @@ namespace ReelSpinGame_Bonus
         // func
         private void Awake()
         {
-            data = new BonusSaveData();
+            data = new BonusBehavior();
             DisplayingTotalCount = false;
         }
 
@@ -63,7 +63,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // ボーナス情報を読み込む
-        public void SetBonusData(BonusSaveData bonusSaveData) => data = bonusSaveData;
+        public void SetBonusData(BonusBehavior bonusSaveData) => data = bonusSaveData;
 
         // ボーナスストック状態の更新
         public void SetBonusStock(BonusType bonusType) => data.HoldingBonusID = bonusType;
