@@ -3862,7 +3862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f8f3e346aaa6d4b83bd845be001ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasSPStartSound: 0
+  hasSPStartSound: 1
   reelObjects:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}

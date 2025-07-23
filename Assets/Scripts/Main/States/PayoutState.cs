@@ -193,17 +193,6 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Lots.GetCurrentFlag() == FlagId.FlagJac, gM.Reel.GetPayoutResultData().Payouts);
             }
 
-            // ファンファーレの再生
-            if (HasBonusStarted)
-            {
-                gM.Effect.StartBonusStartEffect(gM.Bonus.GetBigChanceColor());
-            }
-            else if (HasBonusFinished)
-            {
-                Debug.Log("BonusEND");
-                gM.Effect.StartBonusEndEffect();
-            }
-
             // ボーナス中はビタハズシ成功でフラッシュ
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
                 gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
@@ -236,6 +225,17 @@ namespace ReelSpinGame_State.PayoutState
                 {
                     gM.Effect.StartVFlash(6);
                 }
+            }
+
+            // ファンファーレの再生
+            if (HasBonusStarted)
+            {
+                gM.Effect.StartBonusStartEffect(gM.Bonus.GetBigChanceColor());
+            }
+            else if (HasBonusFinished)
+            {
+                Debug.Log("BonusEND");
+                gM.Effect.StartBonusEndEffect();
             }
         }
 

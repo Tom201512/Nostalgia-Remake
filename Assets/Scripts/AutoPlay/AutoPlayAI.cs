@@ -44,12 +44,12 @@ namespace ReelSpinGame_AutoPlay.AI
 
                 // はずれ、JAC中などははずれ制御
                 default:
-                    return AINoneBehaviour(BonusType.BonusNone);
+                    return AINoneBehavior(holdingBonus);
             }
 		}
 
 		// はずれ時
-		private int[] AINoneBehaviour(BonusType holdingBonus)
+		private int[] AINoneBehavior(BonusType holdingBonus)
 		{
             // ボーナスがある場合はそのボーナスを狙うように
             if (holdingBonus == BonusType.BonusBIG)

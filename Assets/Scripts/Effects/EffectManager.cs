@@ -90,21 +90,8 @@ namespace ReelSpinGame_Effect
         {
             if(hasSPStartSound)
             {
-                // BIG中
-                if (bonusStatus == BonusStatus.BonusBIGGames)
-                {
-                    // リプレイ時に1/6で再生
-                    if (flag == FlagId.FlagReplayJacIn)
-                    {
-                        LotStartSound(6);
-                    }
-                    else
-                    {
-                        LotStartSound(0);
-                    }
-                }
-                // 通常時
-                else if (bonusStatus == BonusStatus.BonusNone)
+                // 通常時のみ特殊効果音再生
+                if (bonusStatus == BonusStatus.BonusNone)
                 {
                     // 以下の確率で告知音で再生
                     // BIG/REG成立時、成立後小役条件不問で1/4
