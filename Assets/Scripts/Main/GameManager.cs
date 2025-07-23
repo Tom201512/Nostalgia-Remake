@@ -5,7 +5,6 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using UnityEngine;
-using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
