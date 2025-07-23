@@ -29,6 +29,9 @@ namespace ReelSpinGame_State.LotsState
             // スロット情報初期化
             InitializeSlot();
 
+            // リプレイ状態割り当て
+            ApplyReplay();
+
             // ボーナス状態割り当て
             ApplyBonusStatus();
 
@@ -71,6 +74,15 @@ namespace ReelSpinGame_State.LotsState
 
             // 演出マネージャーにボーナスの色を割り当てる
             gM.Effect.SetBigColor(gM.Save.Bonus.BigChanceColor);
+        }
+
+        // リプレイ状態の反映
+        private void ApplyReplay()
+        {
+            if(gM.Medal.GetHasReplay())
+            {
+                gM.Medal.EnableReplay();
+            }
         }
 
         // リールバックライトの点灯

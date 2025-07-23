@@ -61,6 +61,8 @@ namespace ReelSpinGame_Medal
             RemainingPayouts = 0;
             LastPayoutAmounts = 0;
             FinishedBet = false;
+
+            system = new MedalSystemData();
         }
 
         // func
