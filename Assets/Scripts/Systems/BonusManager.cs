@@ -136,8 +136,6 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacHits = JacHits;
             data.CurrentBonusStatus = BonusStatus.BonusJACGames;
             data.HoldingBonusID = BonusType.BonusNone;
-            // 連チャン区間の記録開始
-            data.HasZone = true;
         }
 
         // ボーナス状態のセグメント更新

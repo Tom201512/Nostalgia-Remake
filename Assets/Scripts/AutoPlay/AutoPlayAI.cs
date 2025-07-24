@@ -12,7 +12,7 @@ namespace ReelSpinGame_AutoPlay.AI
 	{
 		// func
 		// 停止位置を小役、第一停止、現在の状態に合わせて返す
-		public int[] GetStopPos(FlagId flag, ReelID firstPush, BonusType holdingBonus, int bigChanceGames, int remainingJac)
+		public int[] GetStopPos(FlagId flag, ReelID firstPush, BonusType holdingBonus, int bigChanceGames, int remainingJacIn)
 		{
 			// 小役ごとに挙動を変える
             switch(flag)
@@ -36,11 +36,11 @@ namespace ReelSpinGame_AutoPlay.AI
 
                 // ベル時(BIG中は変則押し
                 case FlagId.FlagBell:
-                    return AimBell(firstPush);
+                    return AimBell(firstPush, remainingJacIn);
 
                 // リプレイ時(BIG中はJAC-INまたはハズシ)
                 case FlagId.FlagReplayJacIn:
-                    return AimReplay(bigChanceGames, remainingJac);
+                    return AimReplay(bigChanceGames, remainingJacIn);
 
                 // はずれ、JAC中などははずれ制御
                 default:
@@ -224,7 +224,7 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // ベルを狙う
-        private int[] AimBell(ReelID firstPushReel)
+        private int[] AimBell(ReelID firstPushReel, int remainingJacIn)
         {
             int[] stopPos = new int[] { 0, 0, 0 };
 
@@ -232,8 +232,9 @@ namespace ReelSpinGame_AutoPlay.AI
             int[] bellPosM = new int[] {4,11,16,20};
 
             // 左は第一停止が左でない場合、常に12番のベルを狙う(下段受け対策)
+            // BIG中はJACIN回数が1回の場合に狙う
 
-            if (firstPushReel != ReelID.ReelLeft)
+            if (firstPushReel != ReelID.ReelLeft || remainingJacIn == 1)
             {
                 stopPos[(int)ReelID.ReelLeft] = 11;
             }
