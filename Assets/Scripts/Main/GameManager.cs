@@ -83,6 +83,9 @@ public class GameManager : MonoBehaviour
     // <デバッグ用> オートの押し順設定
     [SerializeField] private KeyCode keyToAutoOrderChange;
 
+    // <デバッグ用> ウェイトカットの有無設定
+    [SerializeField] private KeyCode keyToWaitCutToggle;
+
     // <デバッグ用>セーブを消去するか
     [SerializeField] private bool deleteSave;
 
@@ -201,6 +204,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(keyToAutoOrderChange))
         {
             Auto.ChangeAutoOrder();
+        }
+
+        // ウェイトカット
+        if (Input.GetKeyDown(keyToWaitCutToggle))
+        {
+            Wait.SetWaitCutSetting(!Wait.HasWaitCut);
         }
 
         // カメラ表示方法変更

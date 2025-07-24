@@ -840,6 +840,7 @@ MonoBehaviour:
   keyToDebugToggle: 100
   keyCameraModeChange: 99
   keyToAutoOrderChange: 111
+  keyToWaitCutToggle: 119
   deleteSave: 0
   debugSetting: 6
 --- !u!4 &460868893

@@ -4,7 +4,6 @@ using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 using UnityEngine;
-using System.Reflection;
 
 namespace ReelSpinGame_State.PayoutState
 {
@@ -27,7 +26,7 @@ namespace ReelSpinGame_State.PayoutState
         public PayoutState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Payout;
-            this.gM = gameManager;
+            gM = gameManager;
 
         }
         public void StateStart()
@@ -42,7 +41,7 @@ namespace ReelSpinGame_State.PayoutState
             // 払い出しの結果をデータに反映
             PayoutUpdate();
 
-            // フラグ増減
+            // フラグ増減(通常時)
             if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 ChangeFlagCounter();

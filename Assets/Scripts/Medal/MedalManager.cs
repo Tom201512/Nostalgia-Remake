@@ -142,11 +142,7 @@ namespace ReelSpinGame_Medal
         }
 
         // リプレイ状態を消す
-        public void DisableReplay()
-        {
-            data.system.HasReplay = false;
-            data.system.LastBetAmounts = 0;
-        }
+        public void DisableReplay() => data.system.HasReplay = false;
 
         // リプレイ投入を開始
         public void StartReplayInsert()
