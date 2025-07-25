@@ -5,6 +5,7 @@ using ReelSpinGame_Save.Player.ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 
@@ -21,6 +22,9 @@ namespace ReelSpinGame_System
         // var
         // 現在のセーブデータ
         public SaveDatabase CurrentSave { get; private set; }
+
+        // 暗号化のバイト配列
+        private static byte[] cryptBytes;
 
         // セーブデータ
         public class SaveDatabase
@@ -113,6 +117,7 @@ namespace ReelSpinGame_System
         public SaveManager()
         {
             CurrentSave = new SaveDatabase();
+            cryptBytes = new byte[] { 0x00, 0x00, 0x00, 0x00 };
         }
 
         // func
@@ -199,6 +204,11 @@ namespace ReelSpinGame_System
         // セーブファイル読み込み
         public bool LoadSaveFile()
         {
+            // 暗号化数値の読み込み
+
+            //デバッグ用
+            GenerateCryptBytes(5929843);
+
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
 
             // ファイルがない場合は読み込まない
@@ -339,6 +349,52 @@ namespace ReelSpinGame_System
         }
 
         // チェックサムを得る
-        public int GetCheckSum(int dataNum) => dataNum & 0xFF;
+        private int GetCheckSum(int dataNum) => dataNum & 0xFF;
+
+        // 暗号化バイト数値作成
+        private void GenerateCryptBytes(int dateNum)
+        {
+            System.Random rand = new System.Random(dateNum);
+            // シード値より乱数を得る
+            for(int i = 0; i < sizeof(int); i++)
+            {
+                cryptBytes[i] = (byte)rand.Next(0xFF);
+                Debug.Log("Byte:" + cryptBytes[i]);
+            }
+        }
+
+        // int型Listの暗号化
+        private byte[] EncryptData(List<int> intLists)
+        {
+            // 暗号化したバイト配列
+            List<byte> encryptedBytes = new List<byte>();
+
+            // 各数値の暗号化
+            foreach(int value in intLists)
+            {
+                byte[] bytes = BitConverter.GetBytes(value);
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    encryptedBytes.Add(bytes[i] |= cryptBytes[i]);
+                }
+            }
+
+            return encryptedBytes.ToArray();
+        }
+
+        // 整数値の復号化
+        public static int DecryptIntData(int value)
+        {
+            // 復号化された時のバイト
+            byte[] decryptedBytes = BitConverter.GetBytes(value);
+
+            // 復号化
+            for (int i = 0; i <  decryptedBytes.Length; i++)
+            {
+                decryptedBytes[i] |= cryptBytes[i];
+            }
+
+            return BitConverter.ToInt32(decryptedBytes);
+        }
     }
 }
