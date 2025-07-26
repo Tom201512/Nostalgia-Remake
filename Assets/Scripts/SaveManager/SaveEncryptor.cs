@@ -85,18 +85,12 @@ namespace ReelSpinGame_Save.Encryption
                     {
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
-                            // Read the decrypted bytes from the decrypting stream
-                            // and place them in a string.
                             plainText = srDecrypt.ReadToEnd();
                             Debug.Log("Text:" + plainText);
                         }
                     }
                 }
             }
-
-            // デバッグ用
-            //string buffer = BitConverter.ToString(decryptedBytes.ToArray());
-            //Debug.Log("Data:" + buffer);
 
             return plainText;
         }

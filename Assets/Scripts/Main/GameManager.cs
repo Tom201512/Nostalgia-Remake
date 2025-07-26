@@ -173,10 +173,10 @@ public class GameManager : MonoBehaviour
         }
 
         // デバッグ用
-        if(!saveManager.LoadSaveFileWithDecryption())
-        {
-            Debug.Log("No decryptedFile found");
-        }
+        //if(!saveManager.LoadSaveFileWithDecryption())
+        //{
+        //    Debug.Log("No decryptedFile found");
+        //}
 
         saveManager.DecrpytionTest();
 

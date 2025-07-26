@@ -1,11 +1,10 @@
+using ReelSpinGame_Save.Database;
+using ReelSpinGame_Save.Encryption;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
-using ReelSpinGame_Save.Database;
-using ReelSpinGame_Save.Encryption;
-using System.Text;
 
 namespace ReelSpinGame_System
 {
@@ -69,8 +68,6 @@ namespace ReelSpinGame_System
                 using (FileStream file = File.OpenWrite(path))
                 {
                     // セーブファイルを作成するための整数型List作成
-                    BinaryWriter bWriter = new BinaryWriter(file);
-
                     List<int> dataBuffer = new List<int>();
 
                     // 台設定
@@ -106,7 +103,7 @@ namespace ReelSpinGame_System
                     }
 
                     // 書き込み
-                    bWriter.Write(GetBytesFromList(dataBuffer));
+                    file.Write(GetBytesFromList(dataBuffer));
                 }
             }
             catch (Exception e)
@@ -136,44 +133,45 @@ namespace ReelSpinGame_System
             {
                 using (FileStream file = File.OpenWrite(path))
                 {
-                    StreamWriter sw = new StreamWriter(file);
-
-                    // セーブファイルを作成するための整数型List作成
-                    List<int> dataBuffer = new List<int>();
-
-                    // 台設定
-                    dataBuffer.Add(CurrentSave.Setting);
-
-                    /*
-                    // プレイヤーデータ
-                    foreach (int i in CurrentSave.Player.SaveData())
+                    using (StreamWriter sw = new StreamWriter(file))
                     {
-                        dataBuffer.Add(i);
+                        // セーブファイルを作成するための整数型List作成
+                        List<int> dataBuffer = new List<int>();
+
+                        // 台設定
+                        dataBuffer.Add(CurrentSave.Setting);
+
+                        /*
+                        // プレイヤーデータ
+                        foreach (int i in CurrentSave.Player.SaveData())
+                        {
+                            dataBuffer.Add(i);
+                        }
+
+                        // メダルデータ
+                        foreach (int i in CurrentSave.Medal.SaveData())
+                        {
+                            dataBuffer.Add(i);
+                        }
+
+                        // フラグカウンタ
+                        dataBuffer.Add(CurrentSave.FlagCounter);
+
+                        //リール停止位置
+                        foreach (int i in CurrentSave.LastReelPos)
+                        {
+                            dataBuffer.Add(i);
+                        }
+
+                        // ボーナス情報
+                        foreach (int i in CurrentSave.Bonus.SaveData())
+                        {
+                            dataBuffer.Add(i);
+                        }*/
+
+                        // すべての数値を書き込んだら暗号化して書き込む
+                        sw.Write(saveEncryptor.EncryptData("TEST"));
                     }
-
-                    // メダルデータ
-                    foreach (int i in CurrentSave.Medal.SaveData())
-                    {
-                        dataBuffer.Add(i);
-                    }
-
-                    // フラグカウンタ
-                    dataBuffer.Add(CurrentSave.FlagCounter);
-
-                    //リール停止位置
-                    foreach (int i in CurrentSave.LastReelPos)
-                    {
-                        dataBuffer.Add(i);
-                    }
-
-                    // ボーナス情報
-                    foreach (int i in CurrentSave.Bonus.SaveData())
-                    {
-                        dataBuffer.Add(i);
-                    }*/
-
-                    // すべての数値を書き込んだら暗号化して書き込む
-                    sw.Write(saveEncryptor.EncryptData("TEST"));
                 }
             }
             catch (Exception e)
@@ -204,15 +202,20 @@ namespace ReelSpinGame_System
                 using (FileStream file = File.OpenRead(path))
                 {
                     int index = 0;
-                    BinaryReader stream = new BinaryReader(file);
-                    Stream baseStream = stream.BaseStream;
 
-                    while (baseStream.Position != baseStream.Length)
+                    using (BinaryReader stream = new BinaryReader(file))
                     {
-                        SetValueFromData(stream, index);
-                        index += 1;
+                        using (Stream baseStream = stream.BaseStream)
+                        {
+                            while (baseStream.Position != baseStream.Length)
+                            {
+                                SetValueFromData(stream, index);
+                                index += 1;
+                            }
+
+                            Debug.Log("EOF");
+                        }
                     }
-                    //Debug.Log("EOF");
                 }
             }
             catch (Exception e)
@@ -239,22 +242,25 @@ namespace ReelSpinGame_System
                 using (FileStream file = File.OpenRead(path))
                 {
                     int index = 0;
-                    StreamReader stream = new StreamReader(file);
-                    Stream baseStream = stream.BaseStream;
-
-                    // 復号
-                    string data = stream.ReadToEnd();
-                    Debug.Log("Cipher:" + data);
-
-                    saveEncryptor.DecryptData(data);
-                    /*
-                    while (baseStream.Position != baseStream.Length)
+                    using (StreamReader stream = new StreamReader(file))
                     {
-                        SetValueFromData(stream, index);
-                        index += 1;
-                    }*/
-                    
-                    //Debug.Log("EOF");
+                        using (Stream baseStream = stream.BaseStream)
+                        {
+                            // 復号
+                            string data = stream.ReadToEnd();
+                            Debug.Log("Cipher:" + data);
+
+                            saveEncryptor.DecryptData(data);
+                            /*
+                            while (baseStream.Position != baseStream.Length)
+                            {
+                                SetValueFromData(stream, index);
+                                index += 1;
+                            }*/
+
+                            Debug.Log("EOF");
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -378,8 +384,5 @@ namespace ReelSpinGame_System
 
             return bytes.ToArray();
         }
-
-        // チェックサム作成
-        private int MakeCheckSum(int dataNum) => dataNum & 0xFF;
     }
 }
