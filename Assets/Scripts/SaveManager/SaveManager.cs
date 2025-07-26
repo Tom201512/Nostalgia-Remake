@@ -69,6 +69,8 @@ namespace ReelSpinGame_System
                 using (FileStream file = File.OpenWrite(path))
                 {
                     // セーブファイルを作成するための整数型List作成
+                    BinaryWriter bWriter = new BinaryWriter(file);
+
                     List<int> dataBuffer = new List<int>();
 
                     // 台設定
@@ -104,7 +106,7 @@ namespace ReelSpinGame_System
                     }
 
                     // 書き込み
-                    file.Write(GetBytesFromList(dataBuffer));
+                    bWriter.Write(GetBytesFromList(dataBuffer));
                 }
             }
             catch (Exception e)
@@ -134,12 +136,15 @@ namespace ReelSpinGame_System
             {
                 using (FileStream file = File.OpenWrite(path))
                 {
+                    StreamWriter sw = new StreamWriter(file);
+
                     // セーブファイルを作成するための整数型List作成
                     List<int> dataBuffer = new List<int>();
 
                     // 台設定
                     dataBuffer.Add(CurrentSave.Setting);
 
+                    /*
                     // プレイヤーデータ
                     foreach (int i in CurrentSave.Player.SaveData())
                     {
@@ -165,14 +170,10 @@ namespace ReelSpinGame_System
                     foreach (int i in CurrentSave.Bonus.SaveData())
                     {
                         dataBuffer.Add(i);
-                    }
+                    }*/
 
-                    // すべての数値を書き込んだら暗号化
-                    Encoding encoding = Encoding.UTF8;
-                    byte[] data = encoding.GetBytes(saveEncryptor.EncryptData(dataBuffer));
-
-                    // 書き込み
-                    file.Write(data);
+                    // すべての数値を書き込んだら暗号化して書き込む
+                    sw.Write(saveEncryptor.EncryptData("TEST"));
                 }
             }
             catch (Exception e)
@@ -189,8 +190,7 @@ namespace ReelSpinGame_System
         // セーブファイル読み込み
         public bool LoadSaveFile()
         {
-            // 現在日時、時刻をセーブから読み込む
-
+            // セーブを読み込む
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
 
             // ファイルがない場合は読み込まない
@@ -221,6 +221,65 @@ namespace ReelSpinGame_System
             }
 
             return true;
+        }
+
+        // セーブ読み込み(暗号化あり)
+        public bool LoadSaveFileWithDecryption()
+        {
+            string path = Application.persistentDataPath + "/Nostalgia/save.sav";
+
+            // ファイルがない場合は読み込まない
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
+            try
+            {
+                using (FileStream file = File.OpenRead(path))
+                {
+                    int index = 0;
+                    StreamReader stream = new StreamReader(file);
+                    Stream baseStream = stream.BaseStream;
+
+                    // 復号
+                    string data = stream.ReadToEnd();
+                    Debug.Log("Cipher:" + data);
+
+                    saveEncryptor.DecryptData(data);
+                    /*
+                    while (baseStream.Position != baseStream.Length)
+                    {
+                        SetValueFromData(stream, index);
+                        index += 1;
+                    }*/
+                    
+                    //Debug.Log("EOF");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Load failed");
+                throw new Exception(e.ToString());
+            }
+            finally
+            {
+                //Debug.Log("Load is succeeded");
+            }
+            return true;
+        }
+
+        // デバッグ用
+        public void DecrpytionTest()
+        {
+            string data = "Test";
+            Debug.Log("Plain:" + data);
+            Debug.Log("Encrypting start");
+            data = saveEncryptor.EncryptData(data);
+            Debug.Log("Cipher:" + data);
+            Debug.Log("Decrypting start");
+            data = saveEncryptor.DecryptData(data);
+            Debug.Log("Decrypted:" + data);
         }
 
         // セーブ削除

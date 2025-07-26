@@ -1,6 +1,4 @@
-﻿using ReelSpinGame_System;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,22 +13,14 @@ namespace ReelSpinGame_Save.Encryption
 
         // AES 初期化ベクトル16文字
         private const string AES_IV = "bjnXjx1BvuRwie9D";
-        // AES 暗号鍵
+        // AES 暗号鍵32文字
         private const string AES_Key = "fzdqUCx36u7ctl9njUUSo14Ocvg5wh70";
 
         // func
 
-        // 暗号化
-
-        // int型Listの暗号化
-        public string EncryptData(List<int> intLists)
+        // セーブデータ(byte配列)の暗号化
+        public string EncryptData(string plainText)
         {
-            // 暗号化されたバイト配列
-            byte[] encryptedBytes;
-
-            // 暗号文
-            string encryptedString = "";
-
             using (Aes aes = Aes.Create())
             {
                 // 暗号化作成
@@ -40,29 +30,39 @@ namespace ReelSpinGame_Save.Encryption
                 aes.Mode = CipherMode.CBC;
                 aes.Padding = PaddingMode.PKCS7;
 
-                aes.GenerateIV();
+                aes.IV = Encoding.UTF8.GetBytes(AES_IV);
+                aes.Key = Encoding.UTF8.GetBytes(AES_Key);
 
-                using ICryptoTransform encryptor =
-                    aes.CreateEncryptor(Encoding.UTF8.GetBytes(AES_Key), Encoding.UTF8.GetBytes(AES_IV));
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
-                // 整数型リストをbyte配列へ変換
-                encryptedBytes = SaveManager.GetBytesFromList(intLists);
-                // 文字に変換
+                // 暗号化されたバイト配列
+                byte[] encryptedBytes;
 
-                encryptedString = Convert.ToBase64String(encryptedBytes);
-                Debug.Log("Data:" + encryptedString);
-
-                return (encryptedString);
+                using (MemoryStream mStream = new MemoryStream())
+                {
+                    using (CryptoStream ctStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter sw = new StreamWriter(ctStream))
+                        {
+                            sw.Write(plainText);
+                        }
+                        encryptedBytes = mStream.ToArray();
+                    }
+                }
+                 // Base64文字列に変換
+                return (Convert.ToBase64String(encryptedBytes));
             }
         }
 
         // 復号
-
-        // 暗号化されたバイト配列を読み込む
-        public byte[] DecryptData(byte[] encryptedBytes)
+        
+        public string DecryptData(string cipherText)
         {
+            // 復号されたテキスト
+            string plainText = null;
+
             // 復号されたバイト配列
-            List<byte> decryptedBytes = new List<byte>();
+            byte[] decryptedBytes = new byte[] {0};
 
             using (Aes aes = Aes.Create())
             {
@@ -73,33 +73,32 @@ namespace ReelSpinGame_Save.Encryption
                 aes.Mode = CipherMode.CBC;
                 aes.Padding = PaddingMode.PKCS7;
 
-                aes.GenerateIV();
+                aes.IV = Encoding.UTF8.GetBytes(AES_IV);
+                aes.Key = Encoding.UTF8.GetBytes(AES_Key);
 
-                using ICryptoTransform decryptor =
-                    aes.CreateDecryptor(Encoding.UTF8.GetBytes(AES_Key), Encoding.UTF8.GetBytes(AES_IV));
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-                // 出力用のストリーム
-                using MemoryStream inStream = new MemoryStream(encryptedBytes);
-
-                // 復号する
-                using CryptoStream cStream = new CryptoStream(inStream, decryptor, CryptoStreamMode.Read);
-                using BinaryReader bReader = new BinaryReader(cStream);
-                Stream baseStream = bReader.BaseStream;
-
-                // 復号用のbyteリスト
-                List<byte> decriptingBytes = new List<byte>();
-
-                while (baseStream.Position != baseStream.Length)
+                // 出力作成
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
                 {
-                    decryptedBytes.Add(bReader.ReadByte());
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plainText = srDecrypt.ReadToEnd();
+                            Debug.Log("Text:" + plainText);
+                        }
+                    }
                 }
             }
 
             // デバッグ用
-            string buffer = BitConverter.ToString(decryptedBytes.ToArray());
-            Debug.Log("Data:" + buffer);
+            //string buffer = BitConverter.ToString(decryptedBytes.ToArray());
+            //Debug.Log("Data:" + buffer);
 
-            return decryptedBytes.ToArray();
+            return plainText;
         }
     }
 }

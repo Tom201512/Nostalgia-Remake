@@ -172,6 +172,14 @@ public class GameManager : MonoBehaviour
             //Debug.Log("Save is newly generated");
         }
 
+        // デバッグ用
+        if(!saveManager.LoadSaveFileWithDecryption())
+        {
+            Debug.Log("No decryptedFile found");
+        }
+
+        saveManager.DecrpytionTest();
+
         // UI 設定
         waitUI.SetWaitManager(Wait);
         playerUI.SetPlayerData(Player);
@@ -235,6 +243,9 @@ public class GameManager : MonoBehaviour
         saveManager.GenerateSaveFolder();
         // ファイルセーブを行う
         saveManager.GenerateSaveFile();
+
+        // 暗号化セーブ(デバッグ用)
+        //saveManager.GenerateSaveFileWithEncrypt();
     }
 
     // func
