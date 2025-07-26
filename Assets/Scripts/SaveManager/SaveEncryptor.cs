@@ -39,17 +39,15 @@ namespace ReelSpinGame_Save.Encryption
                 byte[] encryptedBytes;
 
                 using (MemoryStream mStream = new MemoryStream())
+                using (CryptoStream ctStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
                 {
-                    using (CryptoStream ctStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
+                    using (StreamWriter sw = new StreamWriter(ctStream))
                     {
-                        using (StreamWriter sw = new StreamWriter(ctStream))
-                        {
-                            sw.Write(plainText);
-                        }
-                        encryptedBytes = mStream.ToArray();
+                        sw.Write(plainText);
                     }
+                    encryptedBytes = mStream.ToArray();
                 }
-                 // Base64文字列に変換
+                // Base64文字列に変換
                 return (Convert.ToBase64String(encryptedBytes));
             }
         }
@@ -80,15 +78,11 @@ namespace ReelSpinGame_Save.Encryption
 
                 // 出力作成
                 using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
+                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                 {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            plainText = srDecrypt.ReadToEnd();
-                            Debug.Log("Text:" + plainText);
-                        }
-                    }
+                    plainText = srDecrypt.ReadToEnd();
+                    Debug.Log("Text:" + plainText);
                 }
             }
 
