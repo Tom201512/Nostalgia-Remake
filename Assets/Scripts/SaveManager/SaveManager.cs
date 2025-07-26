@@ -5,6 +5,7 @@ using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_Save.Encryption;
+using System.Text;
 
 namespace ReelSpinGame_System
 {
@@ -54,7 +55,7 @@ namespace ReelSpinGame_System
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
 
             // 暗号化機能の初期化
-            saveEncryptor.GenerateCryptBytes();
+            //saveEncryptor.GenerateCryptBytes();
 
             // 前のセーブを消去
             if (Directory.Exists(path))
@@ -72,25 +73,21 @@ namespace ReelSpinGame_System
 
                     // 台設定
                     dataBuffer.Add(CurrentSave.Setting);
-                    //file.Write(BitConverter.GetBytes(CurrentSave.Setting));
 
                     // プレイヤーデータ
                     foreach(int i in CurrentSave.Player.SaveData())
                     {
                         dataBuffer.Add(i);
                     }
-                    //file.Write(GetBytesFromList(CurrentSave.Player.SaveData()));
 
                     // メダルデータ
                     foreach (int i in CurrentSave.Medal.SaveData())
                     {
                         dataBuffer.Add(i);
                     }
-                    //file.Write(GetBytesFromList(CurrentSave.Medal.SaveData()));
 
                     // フラグカウンタ
                     dataBuffer.Add(CurrentSave.FlagCounter);
-                    //file.Write(BitConverter.GetBytes(CurrentSave.FlagCounter));
 
                     //リール停止位置
                     //Debug.Log("ReelPos");
@@ -98,7 +95,6 @@ namespace ReelSpinGame_System
                     {
                         dataBuffer.Add(i);
                     }
-                    //file.Write(GetBytesFromList(CurrentSave.LastReelPos));
 
                     // ボーナス情報
                     //Debug.Log("Bonus");
@@ -106,12 +102,77 @@ namespace ReelSpinGame_System
                     {
                         dataBuffer.Add(i);
                     }
-                    //file.Write(GetBytesFromList(CurrentSave.Bonus.SaveData()));
-
-                    // すべての数値を書き込んだら暗号化
 
                     // 書き込み
-                    WriteSave(file, dataBuffer);
+                    file.Write(GetBytesFromList(dataBuffer));
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.ToString());
+            }
+            finally
+            {
+                Debug.Log("Save is succeeded");
+            }
+            return true;
+        }
+
+        // セーブファイル作成(暗号化)
+        public bool GenerateSaveFileWithEncrypt()
+        {
+            string path = Application.persistentDataPath + "/Nostalgia/save.sav";
+
+            // 前のセーブを消去
+            if (Directory.Exists(path))
+            {
+                Debug.Log("Overwrite file");
+                File.Delete(path);
+            }
+
+            try
+            {
+                using (FileStream file = File.OpenWrite(path))
+                {
+                    // セーブファイルを作成するための整数型List作成
+                    List<int> dataBuffer = new List<int>();
+
+                    // 台設定
+                    dataBuffer.Add(CurrentSave.Setting);
+
+                    // プレイヤーデータ
+                    foreach (int i in CurrentSave.Player.SaveData())
+                    {
+                        dataBuffer.Add(i);
+                    }
+
+                    // メダルデータ
+                    foreach (int i in CurrentSave.Medal.SaveData())
+                    {
+                        dataBuffer.Add(i);
+                    }
+
+                    // フラグカウンタ
+                    dataBuffer.Add(CurrentSave.FlagCounter);
+
+                    //リール停止位置
+                    foreach (int i in CurrentSave.LastReelPos)
+                    {
+                        dataBuffer.Add(i);
+                    }
+
+                    // ボーナス情報
+                    foreach (int i in CurrentSave.Bonus.SaveData())
+                    {
+                        dataBuffer.Add(i);
+                    }
+
+                    // すべての数値を書き込んだら暗号化
+                    Encoding encoding = Encoding.UTF8;
+                    byte[] data = encoding.GetBytes(saveEncryptor.EncryptData(dataBuffer));
+
+                    // 書き込み
+                    file.Write(data);
                 }
             }
             catch (Exception e)
@@ -175,12 +236,6 @@ namespace ReelSpinGame_System
             {
                 throw new Exception(e.ToString());
             }
-        }
-
-        // セーブデータ書き込み
-        private void WriteSave(FileStream file, List<int> data)
-        {
-            file.Write(GetBytesFromList(data));
         }
 
         // データ番地ごとに数字をセット
@@ -248,7 +303,7 @@ namespace ReelSpinGame_System
         }
 
         // int型ListからByte配列を得る
-        private byte[] GetBytesFromList(List<int> lists)
+        public static byte[] GetBytesFromList(List<int> lists)
         {
             List<byte> bytes = new List<byte>();
 
