@@ -1,13 +1,10 @@
-using ReelSpinGame_Interface;
-using ReelSpinGame_Save.Bonus;
-using ReelSpinGame_Save.Medal;
-using ReelSpinGame_Save.Player.ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
+using ReelSpinGame_Save.Database;
+using ReelSpinGame_Save.Encryption;
 
 namespace ReelSpinGame_System
 {
@@ -23,101 +20,14 @@ namespace ReelSpinGame_System
         // 現在のセーブデータ
         public SaveDatabase CurrentSave { get; private set; }
 
-        // 暗号化のバイト配列
-        private static byte[] cryptBytes;
-
-        // セーブデータ
-        public class SaveDatabase
-        {
-            // システム
-
-            // 台設定
-            public int Setting { get; private set; }
-
-            // プレイヤー情報
-            public PlayerSave Player { get; private set; }
-
-            // メダル情報
-            public MedalSave Medal { get; private set; }
-
-            // フラグカウンタ数値
-            public int FlagCounter { get; private set; }
-
-            // 最後に止まったリール位置
-            public List<int> LastReelPos {  get; private set; }
-
-            // ボーナス情報
-            public BonusSave Bonus { get; private set; }
-
-            public SaveDatabase()
-            {
-                Setting = 6;
-                Player = new PlayerSave();
-                Medal = new MedalSave();
-                FlagCounter = 0;
-                LastReelPos = new List<int> { 19, 19, 19 };
-                Bonus = new BonusSave();
-            }
-
-            // func
-
-            // 各種情報記録
-            // 台設定
-            public void RecordSlotSetting(int setting) => Setting = setting;
-
-            // プレイヤー情報
-            public void RecordPlayerSave(ISavable player)
-            {
-                if (player.GetType() == typeof(PlayerSave))
-                {
-                    Player = player as PlayerSave;
-                }
-                else
-                {
-                    throw new Exception("Save data is not PlayerSave");
-                }
-            }
-
-            // メダル情報
-            public void RecordMedalSave(ISavable medal)
-            {
-                if(medal.GetType() == typeof(MedalSave))
-                {
-                    Medal = medal as MedalSave;
-                }
-                else
-                {
-                    throw new Exception("Save data is not MedalData");
-                }
-            }
-            
-            // フラグカウンタ
-            public void RecordFlagCounter(int flagCounter) => FlagCounter = flagCounter;
-
-            // リール位置
-            public void RecordReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
-
-            // ボーナス情報
-            public void RecordBonusData(ISavable bonus)
-            {
-                {
-                    if (bonus.GetType() == typeof(BonusSave))
-                    {
-                        Bonus = bonus as BonusSave;
-                    }
-                    else
-                    {
-                        throw new Exception("Save data is not BonusSave");
-                    }
-                }
-            }
-        }
+        // 暗号化機能
+        private SaveEncryptor saveEncryptor;
 
         // コンストラクタ
         public SaveManager()
         {
             CurrentSave = new SaveDatabase();
-            cryptBytes = new byte[] { 0x00, 0x00, 0x00, 0x00 };
+            saveEncryptor = new SaveEncryptor();
         }
 
         // func
@@ -143,6 +53,9 @@ namespace ReelSpinGame_System
         {
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
 
+            // 暗号化機能の初期化
+            saveEncryptor.GenerateCryptBytes();
+
             // 前のセーブを消去
             if (Directory.Exists(path))
             {
@@ -154,40 +67,51 @@ namespace ReelSpinGame_System
             {
                 using (FileStream file = File.OpenWrite(path))
                 {
-                    // ここにセーブファイルを書き込む
-                    // 台設定
-                    file.Write(BitConverter.GetBytes(CurrentSave.Setting));
+                    // セーブファイルを作成するための整数型List作成
+                    List<int> dataBuffer = new List<int>();
 
-                    // デバッグ用
-                    //Debug.Log("Setting:");
-                    //foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.Setting)).Split("-"))
-                    //{
-                    //    Debug.Log(d);
-                    //}
+                    // 台設定
+                    dataBuffer.Add(CurrentSave.Setting);
+                    //file.Write(BitConverter.GetBytes(CurrentSave.Setting));
 
                     // プレイヤーデータ
-                    file.Write(GetBytesFromList(CurrentSave.Player.SaveData()));
+                    foreach(int i in CurrentSave.Player.SaveData())
+                    {
+                        dataBuffer.Add(i);
+                    }
+                    //file.Write(GetBytesFromList(CurrentSave.Player.SaveData()));
 
                     // メダルデータ
-                    file.Write(GetBytesFromList(CurrentSave.Medal.SaveData()));
+                    foreach (int i in CurrentSave.Medal.SaveData())
+                    {
+                        dataBuffer.Add(i);
+                    }
+                    //file.Write(GetBytesFromList(CurrentSave.Medal.SaveData()));
 
                     // フラグカウンタ
-                    file.Write(BitConverter.GetBytes(CurrentSave.FlagCounter));
-
-                    // デバッグ用
-                    //Debug.Log("FlagCounter:");
-                    //foreach (string d in BitConverter.ToString(BitConverter.GetBytes(CurrentSave.FlagCounter)).Split("-"))
-                    //{
-                    //    Debug.Log(d);
-                    //}
+                    dataBuffer.Add(CurrentSave.FlagCounter);
+                    //file.Write(BitConverter.GetBytes(CurrentSave.FlagCounter));
 
                     //リール停止位置
                     //Debug.Log("ReelPos");
-                    file.Write(GetBytesFromList(CurrentSave.LastReelPos));
+                    foreach (int i in CurrentSave.LastReelPos)
+                    {
+                        dataBuffer.Add(i);
+                    }
+                    //file.Write(GetBytesFromList(CurrentSave.LastReelPos));
 
                     // ボーナス情報
                     //Debug.Log("Bonus");
-                    file.Write(GetBytesFromList(CurrentSave.Bonus.SaveData()));
+                    foreach (int i in CurrentSave.Bonus.SaveData())
+                    {
+                        dataBuffer.Add(i);
+                    }
+                    //file.Write(GetBytesFromList(CurrentSave.Bonus.SaveData()));
+
+                    // すべての数値を書き込んだら暗号化
+
+                    // 書き込み
+                    WriteSave(file, dataBuffer);
                 }
             }
             catch (Exception e)
@@ -196,7 +120,7 @@ namespace ReelSpinGame_System
             }
             finally
             {
-                //Debug.Log("Save is succeeded");
+                Debug.Log("Save is succeeded");
             }
             return true;
         }
@@ -204,10 +128,7 @@ namespace ReelSpinGame_System
         // セーブファイル読み込み
         public bool LoadSaveFile()
         {
-            // 暗号化数値の読み込み
-
-            //デバッグ用
-            GenerateCryptBytes(5929843);
+            // 現在日時、時刻をセーブから読み込む
 
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
 
@@ -254,6 +175,12 @@ namespace ReelSpinGame_System
             {
                 throw new Exception(e.ToString());
             }
+        }
+
+        // セーブデータ書き込み
+        private void WriteSave(FileStream file, List<int> data)
+        {
+            file.Write(GetBytesFromList(data));
         }
 
         // データ番地ごとに数字をセット
@@ -325,76 +252,20 @@ namespace ReelSpinGame_System
         {
             List<byte> bytes = new List<byte>();
 
-            //Debug.Log("Byte Data Gen Start");
-
             // int型Listから数値を取る
             foreach (int i in lists)
             {
-                //Debug.Log("Int:" + i);
                 // 全ての数値をbyte変換
                 foreach(byte b in BitConverter.GetBytes(i))
                 {
                     bytes.Add(b);
                 }
-
-                // デバッグ用、アドレス表示
-                //string[] datas = BitConverter.ToString(BitConverter.GetBytes(i)).Split("-");
-                //foreach (string d in datas)
-                //{
-                    //Debug.Log(d);
-                //}
             }
 
             return bytes.ToArray();
         }
 
-        // チェックサムを得る
-        private int GetCheckSum(int dataNum) => dataNum & 0xFF;
-
-        // 暗号化バイト数値作成
-        private void GenerateCryptBytes(int dateNum)
-        {
-            System.Random rand = new System.Random(dateNum);
-            // シード値より乱数を得る
-            for(int i = 0; i < sizeof(int); i++)
-            {
-                cryptBytes[i] = (byte)rand.Next(0xFF);
-                Debug.Log("Byte:" + cryptBytes[i]);
-            }
-        }
-
-        // int型Listの暗号化
-        private byte[] EncryptData(List<int> intLists)
-        {
-            // 暗号化したバイト配列
-            List<byte> encryptedBytes = new List<byte>();
-
-            // 各数値の暗号化
-            foreach(int value in intLists)
-            {
-                byte[] bytes = BitConverter.GetBytes(value);
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    encryptedBytes.Add(bytes[i] |= cryptBytes[i]);
-                }
-            }
-
-            return encryptedBytes.ToArray();
-        }
-
-        // 整数値の復号化
-        public static int DecryptIntData(int value)
-        {
-            // 復号化された時のバイト
-            byte[] decryptedBytes = BitConverter.GetBytes(value);
-
-            // 復号化
-            for (int i = 0; i <  decryptedBytes.Length; i++)
-            {
-                decryptedBytes[i] |= cryptBytes[i];
-            }
-
-            return BitConverter.ToInt32(decryptedBytes);
-        }
+        // チェックサム作成
+        private int MakeCheckSum(int dataNum) => dataNum & 0xFF;
     }
 }

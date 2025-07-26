@@ -4,6 +4,7 @@ using ReelSpinGame_Effect;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
+using ReelSpinGame_Save.Database;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     private SaveManager saveManager;
 
     // セーブデータベース
-    public SaveManager.SaveDatabase Save { get { return saveManager.CurrentSave; } }
+    public SaveDatabase Save { get { return saveManager.CurrentSave; } }
 
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }
@@ -259,8 +260,8 @@ public class GameManager : MonoBehaviour
     // キー設定変更
     public void ChangeKeyBinds(ControlSets controlSets, KeyCode changeKey) => KeyCodes[(int)controlSets] = changeKey;
 
-    // セーブ参照
-    public SaveManager.SaveDatabase GetSave() => saveManager.CurrentSave;
+    // セーブデータ参照
+    public SaveDatabase GetSave() => saveManager.CurrentSave;
 
     // デバッグをつける機能
     private void DebugButtonBehavior()
