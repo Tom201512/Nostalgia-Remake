@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        saveManager.DecrpytionTest();
+        //saveManager.DecrpytionTest();
 
         // UI İ’è
         waitUI.SetWaitManager(Wait);

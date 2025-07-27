@@ -120,6 +120,7 @@ namespace ReelSpinGame_System
             // ƒtƒ@ƒCƒ‹‚ª‚È‚¢ê‡‚Í“Ç‚İ‚Ü‚È‚¢
             if (!File.Exists(path))
             {
+                Debug.Log("No old save file");
                 return false;
             }
 
