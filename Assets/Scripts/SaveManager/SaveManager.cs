@@ -244,14 +244,14 @@ namespace ReelSpinGame_System
                         // ïúçÜ
                         string data = stream.ReadToEnd();
                         Debug.Log("Cipher:" + data);
-
-                        saveEncryptor.DecryptData(data);
                         /*
                         while (baseStream.Position != baseStream.Length)
                         {
                             SetValueFromData(stream, index);
                             index += 1;
                         }*/
+
+                        Debug.Log(saveEncryptor.DecryptData(data));
 
                         Debug.Log("EOF");
                     }
@@ -273,13 +273,16 @@ namespace ReelSpinGame_System
         public void DecrpytionTest()
         {
             string data = "Test";
-            Debug.Log("Plain:" + data);
             Debug.Log("Encrypting start");
             data = saveEncryptor.EncryptData(data);
-            Debug.Log("Cipher:" + data);
             Debug.Log("Decrypting start");
             data = saveEncryptor.DecryptData(data);
             Debug.Log("Decrypted:" + data);
+
+            data = "t34y2GKpvvBLEIiPrK9/gQ=";
+            //Debug.Log("Decrypting start");
+            //data = saveEncryptor.DecryptData(data);
+            //Debug.Log("Decrypted:" + data);
         }
 
         // ÉZÅ[ÉuçÌèú

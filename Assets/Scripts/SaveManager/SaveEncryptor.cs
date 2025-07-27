@@ -21,6 +21,8 @@ namespace ReelSpinGame_Save.Encryption
         // セーブデータ(byte配列)の暗号化
         public string EncryptData(string plainText)
         {
+            Debug.Log("Plain:" + plainText);
+
             using (Aes aes = Aes.Create())
             {
                 // 暗号化作成
@@ -47,6 +49,9 @@ namespace ReelSpinGame_Save.Encryption
                     }
                     encryptedBytes = mStream.ToArray();
                 }
+
+                Debug.Log("Cipher:" + Convert.ToBase64String(encryptedBytes));
+
                 // Base64文字列に変換
                 return (Convert.ToBase64String(encryptedBytes));
             }
@@ -56,6 +61,8 @@ namespace ReelSpinGame_Save.Encryption
         
         public string DecryptData(string cipherText)
         {
+            Debug.Log("Cipher:" + Convert.FromBase64String(cipherText));
+
             // 復号されたテキスト
             string plainText = null;
 
@@ -82,10 +89,10 @@ namespace ReelSpinGame_Save.Encryption
                 using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                 {
                     plainText = srDecrypt.ReadToEnd();
-                    Debug.Log("Text:" + plainText);
                 }
             }
 
+            Debug.Log("Plain:" + plainText);
             return plainText;
         }
     }

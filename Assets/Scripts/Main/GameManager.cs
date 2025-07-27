@@ -173,10 +173,10 @@ public class GameManager : MonoBehaviour
         }
 
         // デバッグ用
-        //if(!saveManager.LoadSaveFileWithDecryption())
-        //{
-        //    Debug.Log("No decryptedFile found");
-        //}
+        if(!saveManager.LoadSaveFileWithDecryption())
+        {
+           Debug.Log("No decryptedFile found");
+        }
 
         saveManager.DecrpytionTest();
 
@@ -245,7 +245,7 @@ public class GameManager : MonoBehaviour
         saveManager.GenerateSaveFile();
 
         // 暗号化セーブ(デバッグ用)
-        //saveManager.GenerateSaveFileWithEncrypt();
+        saveManager.GenerateSaveFileWithEncrypt();
     }
 
     // func
