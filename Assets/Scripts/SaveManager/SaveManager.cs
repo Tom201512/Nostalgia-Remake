@@ -166,8 +166,8 @@ namespace ReelSpinGame_System
                         dataBuffer.Add(i);
                     }*/
 
-                    // すべての数値を書き込んだら暗号化して書き込む
-                    sw.Write(saveEncryptor.EncryptData("TEST"));
+                    // すべての数値を書き込んだらバイト配列にし、暗号化して保存
+                    sw.Write(saveEncryptor.EncryptData(BitConverter.ToString(GetBytesFromList(dataBuffer))));
                 }
             }
             catch (Exception e)
@@ -197,12 +197,12 @@ namespace ReelSpinGame_System
                 {
                     int index = 0;
 
-                    using (BinaryReader stream = new BinaryReader(file))
-                    using (Stream baseStream = stream.BaseStream)
+                    using (BinaryReader br = new BinaryReader(file))
+                    using (Stream baseStream = br.BaseStream)
                     {
                         while (baseStream.Position != baseStream.Length)
                         {
-                            SetValueFromData(stream, index);
+                            SetValueFromData(br, index);
                             index += 1;
                         }
 
@@ -232,19 +232,39 @@ namespace ReelSpinGame_System
 
             try
             {
+                // ファイルの復号化をする
                 using (FileStream file = File.OpenRead(path))
                 {
+                    string data;
                     int index = 0;
+
+                    // ファイル読み込みをして復号する
                     using (StreamReader stream = new StreamReader(file))
                     using (Stream baseStream = stream.BaseStream)
                     {
                         // 復号
-                        string data = stream.ReadToEnd();
-                        Debug.Log("Cipher:" + data);
+                        data = stream.ReadToEnd();
+                        data = saveEncryptor.DecryptData(data);
+                        Debug.Log("File EOF");
+                    }
 
-                        Debug.Log(saveEncryptor.DecryptData(data));
+                    // 文字列をバイト配列に戻し復元開始
+                    using (MemoryStream ms = new MemoryStream(GetBytesFromString(data)))
+                    {
+                        using (BinaryReader br = new BinaryReader(ms))
+                        using (Stream baseStream = br.BaseStream)
+                        {
+                            /*
+                            while (baseStream.Position != baseStream.Length)
+                            {
+                                SetValueFromData(stream, index);
+                                index += 1;
+                            }*/
 
-                        Debug.Log("EOF");
+                            Debug.Log("Setting:" + br.ReadInt32());
+
+                            Debug.Log("Binary EOF");
+                        }
                     }
                 }
             }
@@ -368,6 +388,20 @@ namespace ReelSpinGame_System
                 {
                     bytes.Add(b);
                 }
+            }
+
+            return bytes.ToArray();
+        }
+
+        // 文字列からバイト配列を作成
+        private byte[] GetBytesFromString(string byteString)
+        {
+            List<byte> bytes = new List<byte>();
+            string[] buffer = byteString.Split("-");
+            
+            foreach(string s in buffer)
+            {
+                bytes.Add(Convert.ToByte(s, 16));
             }
 
             return bytes.ToArray();
