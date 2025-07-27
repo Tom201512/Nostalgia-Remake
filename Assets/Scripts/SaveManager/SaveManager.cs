@@ -48,73 +48,6 @@ namespace ReelSpinGame_System
             return true;
         }
 
-        // セーブファイル作成
-        public bool GenerateSaveFile()
-        {
-            string path = Application.persistentDataPath + "/Nostalgia/save.sv";
-
-            // 暗号化機能の初期化
-            //saveEncryptor.GenerateCryptBytes();
-
-            // 前のセーブを消去
-            if (Directory.Exists(path))
-            {
-                Debug.Log("Overwrite file");
-                File.Delete(path);
-            }
-
-            try
-            {
-                using (FileStream file = File.OpenWrite(path))
-                {
-                    // セーブファイルを作成するための整数型List作成
-                    List<int> dataBuffer = new List<int>();
-
-                    // 台設定
-                    dataBuffer.Add(CurrentSave.Setting);
-
-                    // プレイヤーデータ
-                    foreach(int i in CurrentSave.Player.SaveData())
-                    {
-                        dataBuffer.Add(i);
-                    }
-
-                    // メダルデータ
-                    foreach (int i in CurrentSave.Medal.SaveData())
-                    {
-                        dataBuffer.Add(i);
-                    }
-
-                    // フラグカウンタ
-                    dataBuffer.Add(CurrentSave.FlagCounter);
-
-                    //リール停止位置
-                    //Debug.Log("ReelPos");
-                    foreach (int i in CurrentSave.LastReelPos)
-                    {
-                        dataBuffer.Add(i);
-                    }
-
-                    // ボーナス情報
-                    //Debug.Log("Bonus");
-                    foreach (int i in CurrentSave.Bonus.SaveData())
-                    {
-                        dataBuffer.Add(i);
-                    }
-
-                    // 書き込み
-                    file.Write(GetBytesFromList(dataBuffer));
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.ToString());
-            }
-
-            Debug.Log("Save is succeeded");
-            return true;
-        }
-
         // セーブファイル作成(暗号化)
         public bool GenerateSaveFileWithEncrypt()
         {
@@ -138,7 +71,6 @@ namespace ReelSpinGame_System
                     // 台設定
                     dataBuffer.Add(CurrentSave.Setting);
 
-                    /*
                     // プレイヤーデータ
                     foreach (int i in CurrentSave.Player.SaveData())
                     {
@@ -164,7 +96,7 @@ namespace ReelSpinGame_System
                     foreach (int i in CurrentSave.Bonus.SaveData())
                     {
                         dataBuffer.Add(i);
-                    }*/
+                    }
 
                     // すべての数値を書き込んだらバイト配列にし、暗号化して保存
                     sw.Write(saveEncryptor.EncryptData(BitConverter.ToString(GetBytesFromList(dataBuffer))));
@@ -179,8 +111,8 @@ namespace ReelSpinGame_System
             return true;
         }
 
-        // セーブファイル読み込み
-        public bool LoadSaveFile()
+        // セーブファイル読み込み(旧バージョンの読み込み)
+        public bool LoadOldSaveFile()
         {
             // セーブを読み込む
             string path = Application.persistentDataPath + "/Nostalgia/save.sv";
@@ -215,7 +147,10 @@ namespace ReelSpinGame_System
                 throw new Exception(e.ToString());
             }
 
-            Debug.Log("Load Done");
+            // 古いファイルは消す
+            File.Delete(path);
+
+            Debug.Log("Load Done. Old file is deleted");
             return true;
         }
 
@@ -235,9 +170,11 @@ namespace ReelSpinGame_System
                 // ファイルの復号化をする
                 using (FileStream file = File.OpenRead(path))
                 {
-                    string data;
+                    // 読み込み位置
                     int index = 0;
 
+                    // データ
+                    string data;
                     // ファイル読み込みをして復号する
                     using (StreamReader stream = new StreamReader(file))
                     using (Stream baseStream = stream.BaseStream)
@@ -254,15 +191,11 @@ namespace ReelSpinGame_System
                         using (BinaryReader br = new BinaryReader(ms))
                         using (Stream baseStream = br.BaseStream)
                         {
-                            /*
                             while (baseStream.Position != baseStream.Length)
                             {
-                                SetValueFromData(stream, index);
+                                SetValueFromData(br, index);
                                 index += 1;
-                            }*/
-
-                            Debug.Log("Setting:" + br.ReadInt32());
-
+                            }
                             Debug.Log("Binary EOF");
                         }
                     }
@@ -273,10 +206,8 @@ namespace ReelSpinGame_System
                 Debug.Log("Load failed");
                 throw new Exception(e.ToString());
             }
-            finally
-            {
-                //Debug.Log("Load is succeeded");
-            }
+
+            Debug.Log("Load with Decryption done");
             return true;
         }
 
@@ -299,7 +230,7 @@ namespace ReelSpinGame_System
         // セーブ削除
         public void DeleteSaveFile()
         {
-            string path = Application.persistentDataPath + "/Nostalgia/save.sv";
+            string path = Application.persistentDataPath + "/Nostalgia/save.sav";
 
             try
             {
@@ -320,47 +251,32 @@ namespace ReelSpinGame_System
                 {
                     case (int)AddressID.Setting:
                         CurrentSave.RecordSlotSetting(br.ReadInt32());
-                        //Debug.Log("Setting:" + CurrentSave.Setting);
 
                         break;
 
                     case (int)AddressID.Player:
-                        //Debug.Log("Player");
                         CurrentSave.Player.LoadData(br);
                         break;
 
                     case (int)AddressID.Medal:
-                        //Debug.Log("Medal");
                         CurrentSave.Medal.LoadData(br);
                         break;
 
                     case (int)AddressID.FlagC:
-                        //Debug.Log("FlagCounter");
                         CurrentSave.RecordFlagCounter(br.ReadInt32());
-                        //Debug.Log("FlagCounter Loaded");
                         break;
 
                     case (int)AddressID.Reel:
-                        //Debug.Log("Reel");
-
                         // 左
                         CurrentSave.LastReelPos[(int)ReelLeft] = br.ReadInt32();
-                        //Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
-
                         // 中
                         CurrentSave.LastReelPos[(int)ReelMiddle] = br.ReadInt32();
-                        //Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
-
                         // 右
                         CurrentSave.LastReelPos[(int)ReelRight] = br.ReadInt32();
-                        //Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
-
-                        //Debug.Log("Reel Loaded");
                         break;
 
                     // ボーナス情報
                     case (int)AddressID.Bonus:
-                        //Debug.Log("Bonus");
                         CurrentSave.Bonus.LoadData(br);
                         break;
                 }

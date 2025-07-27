@@ -164,18 +164,15 @@ public class GameManager : MonoBehaviour
             deleteSave = false;
         }
 
-        else if (!saveManager.LoadSaveFile())
+        // 古いファイルがあるなら読み込んで削除
+        else if (!saveManager.LoadOldSaveFile())
         {
-            // 設定値の作成
-            Save.RecordSlotSetting(debugSetting);
-
-            //Debug.Log("Save is newly generated");
-        }
-
-        // デバッグ用
-        if(!saveManager.LoadSaveFileWithDecryption())
-        {
-           Debug.Log("No decryptedFile found");
+            if (!saveManager.LoadSaveFileWithDecryption())
+            {
+                // 設定値の作成
+                Save.RecordSlotSetting(debugSetting);
+                Debug.Log("Save is newly generated");
+            }
         }
 
         saveManager.DecrpytionTest();
@@ -241,10 +238,6 @@ public class GameManager : MonoBehaviour
         Wait.DisposeWait();
         // セーブ開始
         saveManager.GenerateSaveFolder();
-        // ファイルセーブを行う
-        saveManager.GenerateSaveFile();
-
-        // 暗号化セーブ(デバッグ用)
         saveManager.GenerateSaveFileWithEncrypt();
     }
 
