@@ -98,6 +98,16 @@ namespace ReelSpinGame_System
                         dataBuffer.Add(i);
                     }
 
+                    // ハッシュ値書き込み
+                    Debug.Log("ListLength:" +  dataBuffer.Count);
+
+                    // 文字列にしてハッシュコードにする
+                    int hash = BitConverter.ToString(GetBytesFromList(dataBuffer)).GetHashCode();
+                    Debug.Log("Hash:" + hash);
+                    Debug.Log("HashBytes:" + BitConverter.ToString(BitConverter.GetBytes(hash)));
+
+                    dataBuffer.Add(hash);
+
                     // すべての数値を書き込んだらバイト配列にし、暗号化して保存
                     sw.Write(saveEncryptor.EncryptData(BitConverter.ToString(GetBytesFromList(dataBuffer))));
                 }
@@ -171,12 +181,12 @@ namespace ReelSpinGame_System
                 // ファイルの復号化をする
                 using (FileStream file = File.OpenRead(path))
                 {
-                    // 読み込み位置
+                    // データ読み込み位置
                     int index = 0;
 
                     // データ
                     string data;
-                    // ファイル読み込みをして復号する
+                    // ファイル読み込みをして復号
                     using (StreamReader stream = new StreamReader(file))
                     using (Stream baseStream = stream.BaseStream)
                     {
@@ -186,13 +196,43 @@ namespace ReelSpinGame_System
                         Debug.Log("File EOF");
                     }
 
-                    // 文字列をバイト配列に戻し復元開始
+                    // 文字列をバイト配列に戻し復元開始。ハッシュ値参照も行う
                     using (MemoryStream ms = new MemoryStream(GetBytesFromString(data)))
                     {
                         using (BinaryReader br = new BinaryReader(ms))
                         using (Stream baseStream = br.BaseStream)
                         {
-                            while (baseStream.Position != baseStream.Length)
+                            // ハッシュ値の参照
+                            baseStream.Seek(-4, SeekOrigin.End);
+                            int previousHash = br.ReadInt32();
+                            Debug.Log("Previous HashData:" + previousHash);
+
+                            List<int> intData = new List<int>();
+
+                            baseStream.Seek(0, SeekOrigin.Begin);
+
+                            // ハッシュ値以外を読み込みリストファイルを作る
+                            while (baseStream.Position != baseStream.Length - sizeof(int))
+                            {
+                                intData.Add(br.ReadInt32());
+                            }
+
+                            int newHash = BitConverter.ToString(GetBytesFromList(intData)).GetHashCode();
+                            Debug.Log("FileHash:" + newHash);
+
+                            Debug.Log("ListLength:" + intData.Count);
+                            // ハッシュ値が合わない場合は読み込まない
+                            if (previousHash != newHash)
+                            {
+                                throw new Exception("Hash code is wrong");
+                            }
+
+                            Debug.Log("Hash is correct");
+
+                            baseStream.Position = 0;
+
+                            // ハッシュ値以外を読み込む
+                            while (baseStream.Position != baseStream.Length - sizeof(int))
                             {
                                 SetValueFromData(br, index);
                                 index += 1;
@@ -210,22 +250,6 @@ namespace ReelSpinGame_System
 
             Debug.Log("Load with Decryption done");
             return true;
-        }
-
-        // デバッグ用
-        public void DecrpytionTest()
-        {
-            string data = "Test";
-            Debug.Log("Encrypting start");
-            data = saveEncryptor.EncryptData(data);
-            Debug.Log("Decrypting start");
-            data = saveEncryptor.DecryptData(data);
-            Debug.Log("Decrypted:" + data);
-
-            data = "t34y2GKpvvBLEIiPrK9/gQ=";
-            //Debug.Log("Decrypting start");
-            //data = saveEncryptor.DecryptData(data);
-            //Debug.Log("Decrypted:" + data);
         }
 
         // セーブ削除
@@ -293,7 +317,7 @@ namespace ReelSpinGame_System
         }
 
         // int型ListからByte配列を得る
-        public static byte[] GetBytesFromList(List<int> lists)
+        private byte[] GetBytesFromList(List<int> lists)
         {
             List<byte> bytes = new List<byte>();
 

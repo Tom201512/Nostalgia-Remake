@@ -3,7 +3,6 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 namespace ReelSpinGame_Save.Encryption
 {
@@ -11,11 +10,6 @@ namespace ReelSpinGame_Save.Encryption
     public class SaveEncryptor
     {
         // const
-
-        // AES 初期化ベクトル16文字
-        private const string AES_IV = "bjnXjx1BvuRwie9D";
-        // AES 暗号鍵32文字
-        private const string AES_Key = "fzdqUCx36u7ctl9njUUSo14Ocvg5wh70";
 
         // AES設定
         private const int BlockSize = 128;
@@ -39,8 +33,8 @@ namespace ReelSpinGame_Save.Encryption
                 aes.Mode = Mode;
                 aes.Padding = Padding;
 
-                aes.IV = Encoding.UTF8.GetBytes(AES_IV);
-                aes.Key = Encoding.UTF8.GetBytes(AES_Key);
+                aes.GenerateIV();
+                aes.GenerateKey();
 
                 GenerateKeyFile(aes.Key, aes.IV);
 
@@ -192,19 +186,19 @@ namespace ReelSpinGame_Save.Encryption
         // 復号
         private byte[] DecryptBytesBySeed(byte[] data, int seed)
         {
-            byte[] cryptedByte = data;
+            byte[] decryptedByte = data;
             System.Random rand = new System.Random(seed);
 
-            Debug.Log("Plain:" + BitConverter.ToString(cryptedByte));
+            Debug.Log("Cipher:" + BitConverter.ToString(decryptedByte));
 
-            for (int i = 0; i < cryptedByte.Length; i++)
+            for (int i = 0; i < decryptedByte.Length; i++)
             {
-                cryptedByte[i] ^= (byte)rand.Next(255);
+                decryptedByte[i] ^= (byte)rand.Next(255);
             }
 
-            Debug.Log("Cipher:" + BitConverter.ToString(cryptedByte));
+            Debug.Log("Plain:" + BitConverter.ToString(decryptedByte));
 
-            return cryptedByte;
+            return decryptedByte;
         }
     }
 }
