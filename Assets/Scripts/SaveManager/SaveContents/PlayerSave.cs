@@ -90,24 +90,24 @@ namespace ReelSpinGame_Save.Player
             }
 
             // セーブ読み込み
-            public bool LoadData(BinaryReader bStream)
+            public bool LoadData(BinaryReader br)
             {
                 try
                 {
                     // ゲーム数読み込み
-                    TotalGames = bStream.ReadInt32();
+                    TotalGames = br.ReadInt32();
                     //Debug.Log("TotalGames:" + TotalGames);
 
-                    CurrentGames = bStream.ReadInt32();
+                    CurrentGames = br.ReadInt32();
                     //Debug.Log("CurrentGames:" + CurrentGames);
 
                     // メダル情報読み込み
-                    PlayerMedalData.LoadData(bStream);
+                    PlayerMedalData.LoadData(br);
 
                     // ボーナス履歴読み込み
                     // ボーナス履歴数
 
-                    int bonusResultCounts = bStream.ReadInt32();
+                    int bonusResultCounts = br.ReadInt32();
                     //Debug.Log("BonusResultCounts:" + bonusResultCounts);
 
                     // 履歴分読み込む
@@ -115,17 +115,17 @@ namespace ReelSpinGame_Save.Player
                     {
                         BonusHitData buffer = new BonusHitData();
                         BonusHitRecord.Add(buffer);
-                        buffer.LoadData(bStream);
+                        buffer.LoadData(br);
                     }
 
                     //Debug.Log("BonusLoad END");
 
                     // BIG回数
-                    BigTimes = bStream.ReadInt32();
+                    BigTimes = br.ReadInt32();
                     //Debug.Log("BigTimes:" + BigTimes);
 
                     // REG回数
-                    RegTimes = bStream.ReadInt32();
+                    RegTimes = br.ReadInt32();
                     //Debug.Log("RegTimes:" + RegTimes);
                 }
                 catch (Exception e)

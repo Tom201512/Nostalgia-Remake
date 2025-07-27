@@ -95,39 +95,39 @@ namespace ReelSpinGame_Save.Bonus
         }
 
         // 読み込み
-        public bool LoadData(BinaryReader bStream)
+        public bool LoadData(BinaryReader br)
         {
             try
             {
                 // ストック中のボーナス
-                HoldingBonusID = (BonusType)Enum.ToObject(typeof(BonusType), bStream.ReadInt32());
+                HoldingBonusID = (BonusType)Enum.ToObject(typeof(BonusType), br.ReadInt32());
                 //Debug.Log("HoldingBonusID:" + HoldingBonusID);
                 // 現在のボーナス状態
-                CurrentBonusStatus = (BonusStatus)Enum.ToObject(typeof(BonusStatus), bStream.ReadInt32());
+                CurrentBonusStatus = (BonusStatus)Enum.ToObject(typeof(BonusStatus), br.ReadInt32());
                 //Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
                 // ビッグチャンス時の色
-                BigChanceColor = (BigColor)Enum.ToObject(typeof(BigColor), bStream.ReadInt32());
+                BigChanceColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
                 //Debug.Log("BigChanceColor:" + BigChanceColor);
                 // 残りBIGゲーム数
-                RemainingBigGames = bStream.ReadInt32();
+                RemainingBigGames = br.ReadInt32();
                 //Debug.Log("RemainingBigGames:" + RemainingBigGames);
                 // 残りJACIN
-                RemainingJacIn = bStream.ReadInt32();
+                RemainingJacIn = br.ReadInt32();
                 //Debug.Log("RemainingJacIn:" + RemainingJacIn);
                 // 残りJACゲーム中当選回数
-                RemainingJacHits = bStream.ReadInt32();
+                RemainingJacHits = br.ReadInt32();
                 //Debug.Log("RemainingJacHits:" + RemainingJacHits);
                 // 残りJACゲーム数
-                RemainingJacGames = bStream.ReadInt32();
+                RemainingJacGames = br.ReadInt32();
                 //Debug.Log("RemainingJacGames:" + RemainingJacGames);
                 // 現在のボーナス獲得枚数
-                CurrentBonusPayouts = bStream.ReadInt32();
+                CurrentBonusPayouts = br.ReadInt32();
                 //Debug.Log("CurrentBonusPayouts:" + CurrentBonusPayouts);
                 // 連チャン区間中のボーナス枚数
-                CurrentZonePayouts = bStream.ReadInt32();
+                CurrentZonePayouts = br.ReadInt32();
                 //Debug.Log("CurrentZonePayouts:" + CurrentZonePayouts);
                 // 連チャン区間中か
-                HasZone = (bStream.ReadInt32() == 1 ? true : false);
+                HasZone = (br.ReadInt32() == 1 ? true : false);
                 //Debug.Log("HasZone:" + HasZone);
 
             }

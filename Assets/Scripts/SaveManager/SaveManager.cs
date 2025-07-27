@@ -110,10 +110,8 @@ namespace ReelSpinGame_System
             {
                 throw new Exception(e.ToString());
             }
-            finally
-            {
-                Debug.Log("Save is succeeded");
-            }
+
+            Debug.Log("Save is succeeded");
             return true;
         }
 
@@ -176,10 +174,8 @@ namespace ReelSpinGame_System
             {
                 throw new Exception(e.ToString());
             }
-            finally
-            {
-                Debug.Log("Save is succeeded");
-            }
+
+            Debug.Log("Save Encryption is succeeded");
             return true;
         }
 
@@ -219,6 +215,7 @@ namespace ReelSpinGame_System
                 throw new Exception(e.ToString());
             }
 
+            Debug.Log("Load Done");
             return true;
         }
 
@@ -244,12 +241,6 @@ namespace ReelSpinGame_System
                         // 復号
                         string data = stream.ReadToEnd();
                         Debug.Log("Cipher:" + data);
-                        /*
-                        while (baseStream.Position != baseStream.Length)
-                        {
-                            SetValueFromData(stream, index);
-                            index += 1;
-                        }*/
 
                         Debug.Log(saveEncryptor.DecryptData(data));
 
@@ -301,31 +292,31 @@ namespace ReelSpinGame_System
         }
 
         // データ番地ごとに数字をセット
-        private void SetValueFromData(BinaryReader bStream, int addressID)
+        private void SetValueFromData(BinaryReader br, int addressID)
         {
             try
             {
                 switch (addressID)
                 {
                     case (int)AddressID.Setting:
-                        CurrentSave.RecordSlotSetting(bStream.ReadInt32());
+                        CurrentSave.RecordSlotSetting(br.ReadInt32());
                         //Debug.Log("Setting:" + CurrentSave.Setting);
 
                         break;
 
                     case (int)AddressID.Player:
                         //Debug.Log("Player");
-                        CurrentSave.Player.LoadData(bStream);
+                        CurrentSave.Player.LoadData(br);
                         break;
 
                     case (int)AddressID.Medal:
                         //Debug.Log("Medal");
-                        CurrentSave.Medal.LoadData(bStream);
+                        CurrentSave.Medal.LoadData(br);
                         break;
 
                     case (int)AddressID.FlagC:
                         //Debug.Log("FlagCounter");
-                        CurrentSave.RecordFlagCounter(bStream.ReadInt32());
+                        CurrentSave.RecordFlagCounter(br.ReadInt32());
                         //Debug.Log("FlagCounter Loaded");
                         break;
 
@@ -333,15 +324,15 @@ namespace ReelSpinGame_System
                         //Debug.Log("Reel");
 
                         // 左
-                        CurrentSave.LastReelPos[(int)ReelLeft] = bStream.ReadInt32();
+                        CurrentSave.LastReelPos[(int)ReelLeft] = br.ReadInt32();
                         //Debug.Log("ReelL:" + CurrentSave.LastReelPos[(int)ReelLeft]);
 
                         // 中
-                        CurrentSave.LastReelPos[(int)ReelMiddle] = bStream.ReadInt32();
+                        CurrentSave.LastReelPos[(int)ReelMiddle] = br.ReadInt32();
                         //Debug.Log("ReelM:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
 
                         // 右
-                        CurrentSave.LastReelPos[(int)ReelRight] = bStream.ReadInt32();
+                        CurrentSave.LastReelPos[(int)ReelRight] = br.ReadInt32();
                         //Debug.Log("ReelR:" + CurrentSave.LastReelPos[(int)ReelRight]);
 
                         //Debug.Log("Reel Loaded");
@@ -350,7 +341,7 @@ namespace ReelSpinGame_System
                     // ボーナス情報
                     case (int)AddressID.Bonus:
                         //Debug.Log("Bonus");
-                        CurrentSave.Bonus.LoadData(bStream);
+                        CurrentSave.Bonus.LoadData(br);
                         break;
                 }
             }

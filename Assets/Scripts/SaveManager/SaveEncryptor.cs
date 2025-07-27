@@ -40,14 +40,14 @@ namespace ReelSpinGame_Save.Encryption
                 // 暗号化されたバイト配列
                 byte[] encryptedBytes;
 
-                using (MemoryStream mStream = new MemoryStream())
-                using (CryptoStream ctStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
+                using (MemoryStream ms = new MemoryStream())
+                using (CryptoStream cts = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
                 {
-                    using (StreamWriter sw = new StreamWriter(ctStream))
+                    using (StreamWriter sw = new StreamWriter(cts))
                     {
                         sw.Write(plainText);
                     }
-                    encryptedBytes = mStream.ToArray();
+                    encryptedBytes = ms.ToArray();
                 }
 
                 Debug.Log("Cipher:" + Convert.ToBase64String(encryptedBytes));
@@ -61,7 +61,7 @@ namespace ReelSpinGame_Save.Encryption
         
         public string DecryptData(string cipherText)
         {
-            Debug.Log("Cipher:" + Convert.FromBase64String(cipherText));
+            Debug.Log("Cipher:" + cipherText);
 
             // 復号されたテキスト
             string plainText = null;
@@ -84,11 +84,11 @@ namespace ReelSpinGame_Save.Encryption
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
                 // 出力作成
-                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(cipherText)))
+                using (CryptoStream cts = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (StreamReader sr = new StreamReader(cts))
                 {
-                    plainText = srDecrypt.ReadToEnd();
+                    plainText = sr.ReadToEnd();
                 }
             }
 

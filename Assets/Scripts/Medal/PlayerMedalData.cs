@@ -78,20 +78,20 @@ namespace ReelSpinGame_Datas
         }
 
         // データ読み込み
-        public bool LoadData(BinaryReader bStream)
+        public bool LoadData(BinaryReader br)
         {
             try
             {
                 // プレイヤー所持枚数
-                CurrentPlayerMedal = bStream.ReadInt32();
+                CurrentPlayerMedal = br.ReadInt32();
                 //Debug.Log("CurrentPlayerMedal:" + CurrentPlayerMedal);
 
                 // IN枚数
-                CurrentInMedal = bStream.ReadInt32();
+                CurrentInMedal = br.ReadInt32();
                 //Debug.Log("CurrentInMedal:" + CurrentInMedal);
 
                 // OUT枚数
-                CurrentOutMedal = bStream.ReadInt32();
+                CurrentOutMedal = br.ReadInt32();
                 //Debug.Log("CurrentOutMedal:" + CurrentOutMedal);
             }
             catch (Exception e)

@@ -62,24 +62,24 @@ namespace ReelSpinGame_Save.Medal
         }
 
         // 読み込み
-        public bool LoadData(BinaryReader bStream)
+        public bool LoadData(BinaryReader br)
         {
             try
             {
                 // クレジット枚数
-                Credits = bStream.ReadInt32();
+                Credits = br.ReadInt32();
                 //Debug.Log("Credits:" + Credits);
 
                 // 最大ベット枚数
-                MaxBetAmounts = bStream.ReadInt32();
+                MaxBetAmounts = br.ReadInt32();
                 //Debug.Log("MaxBetAmounts:" + MaxBetAmounts);
 
                 // 最後に掛けた枚数
-                LastBetAmounts = bStream.ReadInt32();
+                LastBetAmounts = br.ReadInt32();
                 //Debug.Log("LastBetAmounts:" + LastBetAmounts);
 
                 // リプレイ状態
-                HasReplay = (bStream.ReadInt32() == 1 ? true : false);
+                HasReplay = (br.ReadInt32() == 1 ? true : false);
                 //Debug.Log("HasReplay:" + HasReplay);
             }
             catch (Exception e)

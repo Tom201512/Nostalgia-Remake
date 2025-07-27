@@ -59,26 +59,26 @@ namespace ReelSpinGame_Datas
         }
 
         // 読み込み
-        public bool LoadData(BinaryReader bStream)
+        public bool LoadData(BinaryReader br)
         {
             // ボーナス当選履歴(1つずつ読み込み。5バイトで読み込み)
 
             try
             {
                 // ボーナス履歴
-                BonusID = (BonusType)Enum.ToObject(typeof(BonusType), bStream.ReadInt32());
+                BonusID = (BonusType)Enum.ToObject(typeof(BonusType), br.ReadInt32());
                 //Debug.Log("BonusID:" + BonusID);
                 // ボーナス成立時G
-                BonusHitGame = bStream.ReadInt32();
+                BonusHitGame = br.ReadInt32();
                 //Debug.Log("BonusHit:" + BonusHitGame);
                 // ボーナス当選G
-                BonusStartGame = bStream.ReadInt32();
+                BonusStartGame = br.ReadInt32();
                 //Debug.Log("BonusStartGame:" + BonusStartGame);
                 // ボーナス払い出し枚数
-                BonusPayouts = bStream.ReadInt32();
+                BonusPayouts = br.ReadInt32();
                 //Debug.Log("BonusPayouts:" + BonusPayouts);
                 // BIG時の色
-                BigColor = (BigColor)Enum.ToObject(typeof(BigColor), bStream.ReadInt32());
+                BigColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
                 //Debug.Log("BigColor:" + BigColor);
             }
             catch (Exception e)
