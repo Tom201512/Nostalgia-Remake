@@ -234,6 +234,16 @@ namespace ReelSpinGame_Effect
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSound();
 
+        // SEボリューム変更 (0.0 ~ 1.0)
+        public void ChangeSEVolume(float volume) => soundManager.ChangeSEVolume(volume);
+        // BGMボリューム変更(0.0 ~ 1.0)
+        public void ChangeBGMVolume(float volume) => soundManager.ChangeBGMVolume(volume);
+
+        // SEミュート切り替え
+        public void ChangeMuteSE(bool value) => soundManager.ChangeMuteSEPlayer(value);
+        // BGMミュート切り替え
+        public void ChangeMuteBGM(bool value) => soundManager.ChangeMuteBGMPlayer(value);
+
         // BGMを再生
         public void PlayBonusBGM(BonusStatus status)
         {

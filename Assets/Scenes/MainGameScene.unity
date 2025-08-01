@@ -1099,8 +1099,9 @@ MonoBehaviour:
   keyToDebugToggle: 100
   keyCameraModeChange: 99
   keyToAutoOrderChange: 111
+  keyToAutoSpeedChange: 115
   keyToWaitCutToggle: 119
-  deleteSave: 0
+  deleteSave: 1
   debugSetting: 6
 --- !u!4 &460868893
 Transform:
@@ -1132,9 +1133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
+  useInstant: 0
   useInfinityInstant: 0
-  instantFlagID: 2
+  instantFlagID: 0
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3498,7 +3499,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5297311660865560637, guid: 6a27fe484f80dae4fb869db1cf9a94de, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4550,7 +4551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoundDatabases:
   - {fileID: 11400000, guid: 07c0647506e242048bad4adb74ae26af, type: 2}
-  soundEffectPlayer: {fileID: 1187044818}
+  sePlayer: {fileID: 1187044818}
   bgmPlayer: {fileID: 656534617}
 --- !u!1 &1836313121
 GameObject:

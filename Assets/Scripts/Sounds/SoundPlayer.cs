@@ -66,5 +66,11 @@ namespace ReelSpinGame_Sound
             HasSoundStopped = true;
             //Debug.Log("Sound Stopped");
         }
+
+        // ボリューム調整
+        public void AdjustVolume(float volume) => audioSource.volume = volume;
+
+        // ミュート切り替え
+        public void ChangeMute(bool value) => audioSource.mute = value;
     }
 }

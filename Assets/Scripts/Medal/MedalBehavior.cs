@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace ReelSpinGame_Medal
 {
@@ -99,17 +100,13 @@ namespace ReelSpinGame_Medal
                 CurrentBet = 0;
             }
             system.LastBetAmounts = amounts;
-            ////Debug.Log("Bet Received:" + RemainingBet);
         }
 
         // 投入処理
         public void InsertOneMedal()
         {
             RemainingBet -= 1;
-           //////Debug.Log("Remaining:" + RemainingBet);
-            //////Debug.Log("Bet Medal by 1");
             CurrentBet += 1;
-           //HasMedalInserted.Invoke(1);
 
             // リプレイでなければクレジットを減らす
             if (!system.HasReplay)

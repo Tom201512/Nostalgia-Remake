@@ -17,7 +17,7 @@ namespace ReelSpinGame_AutoPlay
         public enum AutoStopOrder { First, Second, Third}
         // オート押し順指定用(左:L, 中:M, 右:R)
         public enum AutoStopOrderOptions { LMR, LRM, MLR, MRL, RLM, RML}
-        // オート速度
+        // オート速度(通常、高速、超高速)
         public enum AutoPlaySpeed { Normal, Fast, Quick}
         // 現在のオートモード
         public enum AutoPlaySequence { AutoInsert, AutoStopReel}
@@ -26,7 +26,9 @@ namespace ReelSpinGame_AutoPlay
         // オートプレイ中か
         public bool HasAuto { get; private set; }
         // オート速度
-        public AutoPlaySpeed AutoSpeed { get; private set; }
+        public int AutoSpeedID { get; private set; }
+        // 高速オート解除待ちか
+        public bool HasWaitingCancel { get; private set; }
         // オート時の押し順
         public ReelID[] AutoStopOrders { get; private set; }
         // オート押し順のオプション数値
@@ -48,10 +50,11 @@ namespace ReelSpinGame_AutoPlay
             // 停止順番の配列作成(デフォルトは順押し)
             AutoStopOrders = new ReelID[] { ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
             AutoOrderID = (int)AutoStopOrderOptions.LMR;
-            AutoSpeed = AutoPlaySpeed.Normal;
+            AutoSpeedID = (int)AutoPlaySpeed.Normal;
 
             // 停止位置の配列作成(テスト用に0で止めるように)
             AutoStopPos = new int[] { 0, 0, 0 };
+            HasWaitingCancel = false;
         }
 
         // func
@@ -59,25 +62,79 @@ namespace ReelSpinGame_AutoPlay
         // オート名を返す
         public string GetOrderName() => Enum.ToObject(typeof(AutoStopOrderOptions), AutoOrderID).ToString();
 
-        // オート仕様番号の変更(デバッグ用
+        // スピード名を返す
+        public string GetSpeedName() => Enum.ToObject(typeof(AutoPlaySpeed), AutoSpeedID).ToString();
+
+        // オート仕様番号の変更(デバッグ用)
         public void ChangeAutoOrder()
         {
-            if(AutoOrderID + 1 > (int)AutoStopOrderOptions.RML)
+            if (!HasAuto)
             {
-                AutoOrderID = (int)AutoStopOrderOptions.LMR;
+                if (AutoOrderID + 1 > (int)AutoStopOrderOptions.RML)
+                {
+                    AutoOrderID = (int)AutoStopOrderOptions.LMR;
+                }
+                else
+                {
+                    AutoOrderID += 1;
+                }
             }
-            else
+        }
+
+        // オートスピード番号変更
+        public void ChangeAutoSpeed()
+        {
+            if(!HasAuto)
             {
-                AutoOrderID += 1;
+                if (AutoSpeedID + 1 > (int)AutoPlaySpeed.Quick)
+                {
+                    AutoSpeedID = (int)AutoPlaySpeed.Normal;
+                }
+                else
+                {
+                    AutoSpeedID += 1;
+                }
             }
         }
 
         // オート機能の切り替え
         public void ChangeAutoMode()
         {
-            HasAuto = !HasAuto;
-            //Debug.Log("AutoMode:" + HasAuto);
+            // スピードモードが高速なら払い出しフェーズになるまで実行(処理の不具合を抑えるため)
+            if(AutoSpeedID > (int)AutoPlaySpeed.Normal)
+            {
+                if(!HasAuto)
+                {
+                    HasAuto = true;
+                }
+                else
+                {
+                    Debug.Log("Fast Auto will end when payout is done");
+                    HasWaitingCancel = true;
+                }
+            }
+            // 通常スピード時はいつでも切れる
+            else
+            {
+                HasAuto = !HasAuto;
+            }
+
             HasStopPosDecided = false;
+        }
+
+        // 高速オート終了チェック
+        public bool CheckEndFastAuto()
+        {
+            if(HasWaitingCancel)
+            {
+                HasAuto = false;
+                HasWaitingCancel = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         
         // オート停止位置をリセット

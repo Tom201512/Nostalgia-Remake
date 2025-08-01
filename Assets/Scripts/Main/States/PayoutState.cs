@@ -31,6 +31,12 @@ namespace ReelSpinGame_State.PayoutState
         }
         public void StateStart()
         {
+            // 高速オートが解除されたかチェック
+            if(gM.Auto.CheckEndFastAuto())
+            {
+                FastAutoEndBehavior();
+            }
+
             // ボーナス開始されたかリセット
             HasBonusStarted = false;
             HasBonusFinished = false;
@@ -59,7 +65,7 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 払い出し開始
-            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts);
+            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts, false);
 
             // リプレイ処理
             UpdateReplay();
@@ -350,6 +356,14 @@ namespace ReelSpinGame_State.PayoutState
             gM.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
             gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus());
+        }
+
+        // 高速オート処理終了時の動作
+        private void FastAutoEndBehavior()
+        {
+            // BGM, SEのミュート解除
+            gM.Effect.ChangeMuteSE(false);
+            gM.Effect.ChangeMuteBGM(false);
         }
     }
 }

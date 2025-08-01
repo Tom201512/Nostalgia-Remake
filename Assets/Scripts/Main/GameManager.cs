@@ -88,6 +88,9 @@ public class GameManager : MonoBehaviour
     // <デバッグ用> オートの押し順設定
     [SerializeField] private KeyCode keyToAutoOrderChange;
 
+    // <デバッグ用> オートスピード変更
+    [SerializeField] private KeyCode keyToAutoSpeedChange;
+
     // <デバッグ用> ウェイトカットの有無設定
     [SerializeField] private KeyCode keyToWaitCutToggle;
 
@@ -214,6 +217,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(keyToAutoOrderChange))
         {
             Auto.ChangeAutoOrder();
+        }
+
+        // オートスピード変更
+        if(Input.GetKeyDown(keyToAutoSpeedChange))
+        {
+            Auto.ChangeAutoSpeed();
         }
 
         // ウェイトカット

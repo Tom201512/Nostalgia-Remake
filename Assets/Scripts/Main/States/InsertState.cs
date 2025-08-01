@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine;
 
 namespace ReelSpinGame_State.InsertState
@@ -45,7 +46,7 @@ namespace ReelSpinGame_State.InsertState
             // オートの有無に合わせて操作受付を変える
             if (gM.Auto.HasAuto)
             {
-                BetAndStartFunction();
+                AutoBetBehavior();
             }
             else
             {
@@ -62,9 +63,9 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // ベット処理
-        private void BetAction(int amounts)
+        private void BetAction(int amounts, bool cutCoroutine)
         {
-            gM.Medal.StartBet(amounts);
+            gM.Medal.StartBet(amounts, cutCoroutine);
             StopReelFlash();
             // ベットがある場合はランプを消す
             if (gM.Medal.GetCurrentBet() > 0)
@@ -97,39 +98,36 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // ベット終了とMAXBETを押したときの制御
-        private void BetAndStartFunction()
+        private void BetAndStartFunction(bool cutCoroutine)
         {
             // ベットが終了していたら
             if (gM.Medal.GetBetFinished())
             {
-                // 投入枚数を反映する
-                gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
-                gM.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
-
-                // すでにベットされている場合は抽選へ
-                if (gM.Medal.GetCurrentBet() > 0)
-                {
-                    gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);
-
-                    // ボーナス中なら払い出し枚数を減らす
-                    if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
-                    {
-                        gM.Bonus.ChangeBonusPayouts(-gM.Medal.GetLastBetAmounts());
-                        gM.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
-                    }
-
-                    // 連チャン区間にいる場合は連チャン区間枚数を減らす
-                    if (gM.Bonus.GetHasZone())
-                    {
-                        gM.Bonus.ChangeZonePayouts(-gM.Medal.GetLastBetAmounts());
-                    }
-                }
+                EndInsertState();
             }
             // そうでない場合はMAX BET
             else
             {
-                BetAction(gM.Medal.GetMaxBet());
+                BetAction(gM.Medal.GetMaxBet(), cutCoroutine);
             }
+        }
+
+        // オート中の制御
+        private void AutoBetBehavior()
+        {
+            if (gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal)
+            {
+                // SEを切る
+                gM.Effect.ChangeMuteSE(true);
+
+                // 超高速オートならBGMも切る
+                if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
+                {
+                    gM.Effect.ChangeMuteBGM(true);
+                }
+            }
+
+            BetAndStartFunction(gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
         }
 
         // プレイヤー操作の管理
@@ -138,26 +136,49 @@ namespace ReelSpinGame_State.InsertState
             // MAX BET
             if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.MaxBet]))
             {
-                BetAction(gM.Medal.GetMaxBet());
+                BetAction(gM.Medal.GetMaxBet(), false);
             }
 
             // BET2
             if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
             {
-                BetAction(2);
+                BetAction(2, false);
             }
 
             // BET1
             if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.BetOne]))
             {
-                BetAction(1);
+                BetAction(1, false);
             }
 
             // ベット終了 または MAXBET
             if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
             {
-                BetAndStartFunction();
+                BetAndStartFunction(false);
             }
+        }
+
+        // ベット終了処理
+        private void EndInsertState()
+        {
+            // 投入枚数を反映する
+            gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
+            gM.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
+
+            // ボーナス中なら払い出し枚数を減らす
+            if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
+            {
+                gM.Bonus.ChangeBonusPayouts(-gM.Medal.GetLastBetAmounts());
+                gM.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
+            }
+
+            // 連チャン区間にいる場合は連チャン区間枚数を減らす
+            if (gM.Bonus.GetHasZone())
+            {
+                gM.Bonus.ChangeZonePayouts(-gM.Medal.GetLastBetAmounts());
+            }
+
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);
         }
     }
 }

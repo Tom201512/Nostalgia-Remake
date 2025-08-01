@@ -20,6 +20,9 @@ public class ReelObject : MonoBehaviour
     const float MaxSpeedReelTime = 0.3f;
 
     // var
+    // 1分間の回転数 (Rotate Per Minute)
+    [Range(0f, 80f), SerializeField] private float rotateRPM;
+
     // 現在の回転速度
     private float rotateSpeed;
     // 最高速度
@@ -37,14 +40,12 @@ public class ReelObject : MonoBehaviour
     // ブラー部分のプロファイル
     private MotionBlur motionBlur;
 
+    // 1秒間の回転数 (Rotate Per Second)
+    private float rotateRPS;
+
     // リールが停止したかのイベント(個別ごとのリール)
     public delegate void ReelStoppedEvent();
     public event ReelStoppedEvent HasReelStopped;
-
-    // 回転速度 (Rotate Per Minute)
-    [Range(0f, 80f), SerializeField] private float rotateRPM;
-    // 回転速度 (Rotate Per Second)
-    private float rotateRPS;
 
     // リール情報
     [SerializeField] ReelDatabase reelDatabaseFile;
@@ -95,6 +96,7 @@ public class ReelObject : MonoBehaviour
         {
             SpeedUpReel();
         }
+
         if (maxSpeed != 0)
         {
             RotateReel();

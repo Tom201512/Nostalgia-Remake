@@ -93,11 +93,11 @@ namespace ReelSpinGame_Medal
         public void StartMAXBet()
         {
             ////Debug.Log("Received MAX_BET");
-            StartBet(data.system.MaxBetAmounts);
+            StartBet(data.system.MaxBetAmounts, false);
         }
 
         // ベット処理開始
-        public void StartBet(int amounts)
+        public void StartBet(int amounts, bool cutCoroutine)
         {
             // 処理ををしていないか、またはリプレイでないかチェック
             if (!data.system.HasReplay && !HasMedalUpdate)
@@ -108,14 +108,32 @@ namespace ReelSpinGame_Medal
                 {
                     // ベット枚数設定
                     data.SetRemainingBet(amounts);
-                    // メダルの投入を開始する(残りはフレーム処理)
-                    StartCoroutine(nameof(UpdateInsert));
+
+                    // コルーチンを無視する場合
+                    if (cutCoroutine)
+                    {
+                        for(int i = 0; i < data.RemainingBet; i++)
+                        {
+                            data.InsertOneMedal();
+                            // ランプ、セグメント更新
+                            medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
+                            // クレジット更新
+                            creditSegments.ShowSegmentByNumber(data.system.Credits);
+                            // 払い出しセグメントを消す
+                            payoutSegments.TurnOffAllSegments();
+                        }
+                    }
+                    else
+                    {
+                        // メダルの投入を開始する(残りはフレーム処理)
+                        StartCoroutine(nameof(UpdateInsert));
+                    }
                 }
             }
         }
 
         // 払い出し開始
-        public void StartPayout(int amounts)
+        public void StartPayout(int amounts, bool cutCoroutine)
         {
             // 払い出しをしていないかチェック
             if (!HasMedalUpdate)
@@ -128,8 +146,19 @@ namespace ReelSpinGame_Medal
                     // クレジットの増加
                     data.ChangeCredits(amounts);
 
-                    // 払い出し開始
-                    StartCoroutine(nameof(UpdatePayout));
+                    // コルーチンを無視する場合
+                    if (cutCoroutine)
+                    {
+                        for (int i = 0; i > amounts; i++)
+                        {
+                            data.PayoutOneMedal();
+                        }
+                    }
+                    else
+                    {
+                        // 払い出し開始
+                        StartCoroutine(nameof(UpdatePayout));
+                    }
                 }
             }
         }
