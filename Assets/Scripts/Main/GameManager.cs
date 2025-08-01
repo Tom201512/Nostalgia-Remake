@@ -5,6 +5,7 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using ReelSpinGame_Save.Database;
+using ReelSpinGame_UI.Player;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -33,9 +34,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] WaitTestUI waitUI;
     [SerializeField] ReelTestUI reelUI;
     [SerializeField] BonusTestUI bonusUI;
-    [SerializeField] AutoTestUI AutoUI;
+    [SerializeField] AutoTestUI autoUI;
 
-
+    // 各種機能
     public MedalManager Medal { get; private set; }
     public FlagLots Lots { get; private set; }
     public WaitManager Wait { get; private set; }
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour
 
     // プレイヤー情報
     public PlayerDatabase Player;
+
+    // プレイヤーUI
+    public PlayerUI PlayerUI { get { return playerUI; } }
 
     // オートプレイ機能
     public AutoPlayFunction Auto { get; private set; }
@@ -179,9 +183,9 @@ public class GameManager : MonoBehaviour
 
         // UI 設定
         waitUI.SetWaitManager(Wait);
-        playerUI.SetPlayerData(Player);
-        playerUI.SetMedalManager(Medal);
-        AutoUI.SetAutoFunction(Auto);
+        //playerUI.SetPlayerData(Player);
+        //playerUI.SetMedalManager(Medal);
+        autoUI.SetAutoFunction(Auto);
 
         // デバッグをすべて非表示
         ToggleDebugUI(false);
@@ -277,6 +281,7 @@ public class GameManager : MonoBehaviour
     // デバッグUIの表示非表示
     private void ToggleDebugUI(bool value)
     {
+        autoUI.ToggleUI(value);
         medalUI.ToggleUI(value);
         lotsUI.ToggleUI(value);
         waitUI.ToggleUI(value);

@@ -1,9 +1,8 @@
 using ReelSpinGame_AutoPlay;
 using TMPro;
-using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 
-public class AutoTestUI : MonoBehaviour
+public class AutoTestUI : UIBaseClass
 {
     // オートプレイUI用
     TextMeshProUGUI text;

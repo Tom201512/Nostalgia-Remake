@@ -41,6 +41,9 @@ namespace ReelSpinGame_State.LotsState
             // ボーナス演出の反映
             BonusEffectUpdate();
 
+            // UI反映
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
+
         }
 
         public void StateUpdate()

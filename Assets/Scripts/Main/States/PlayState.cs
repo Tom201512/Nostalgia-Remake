@@ -38,6 +38,8 @@ namespace ReelSpinGame_State.PlayingState
             gM.Effect.StartLeverOnEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Bonus.GetCurrentBonusStatus());
             // リール停止時に音を鳴らすよう変更
             gM.Reel.HasSomeReelStopped += StopReelSound;
+            // UI更新
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
         }
 
         public void StateUpdate()

@@ -75,6 +75,9 @@ namespace ReelSpinGame_State.PayoutState
 
         public void StateUpdate()
         {
+            // UI更新
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
+
             // 払い出しが終わったら停止
             if (gM.Medal.GetRemainingPayouts() == 0)
             {
@@ -90,6 +93,8 @@ namespace ReelSpinGame_State.PayoutState
 
         public void StateEnd()
         {
+            // UI更新
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
             // ボーナス演出更新
             BonusEffectUpdate();
         }
