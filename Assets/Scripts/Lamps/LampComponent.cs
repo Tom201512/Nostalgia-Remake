@@ -8,15 +8,24 @@ public class LampComponent : MonoBehaviour
     // ランプ用
     // const
     // デフォルトの明るさ(点灯時)
-    const byte TurnOnValue = 255;
+    const byte DefaultTurnOn = 255;
     // デフォルトの暗さ(消灯時)
-    const byte TurnOffValue = 60;
-    // 点灯させるために必要なフレーム数
-    const byte FrameCount = 3;
+    const byte DefaultTurnOff = 60;
+    // デフォルトの点滅時フレーム数
+    const byte DefaultFlashFrames = 3;
     // ランプ点灯の間隔(秒間隔)
     const float LampFlashTime = 0.01f;
 
     // var
+    // 点灯時の明るさ
+    [SerializeField] private byte turnOnValue = DefaultTurnOn;
+    // 消灯時の明るさ
+    [SerializeField] private byte turnOffValue = DefaultTurnOff;
+
+    // 点滅時のフレーム数(0.01秒)
+    [SerializeField] private byte flashFrames = DefaultFlashFrames;
+
+
     // Image
     private Image image;
     // 点灯しているか
@@ -30,7 +39,7 @@ public class LampComponent : MonoBehaviour
         IsTurnedOn = false;
         image = GetComponent<Image>();
         lastBrightness = 0;
-        ChangeBrightness(TurnOffValue);
+        ChangeBrightness(turnOffValue);
     }
 
     public void OnDestroy()
@@ -71,14 +80,13 @@ public class LampComponent : MonoBehaviour
     private IEnumerator TurnOnLamp()
     {
         IsTurnedOn = true;
-        // 明るさの計算(0.03秒ずつ下げる)
-        int distance = TurnOnValue - TurnOffValue;
-        float changeValue = (float)distance / FrameCount;
+        // 明るくなるまでの変化量を求める
+        float changeValue = (float)(turnOnValue - turnOffValue) / flashFrames;
 
-        while (lastBrightness < TurnOnValue)
+        while (lastBrightness < turnOnValue)
         {
             // 数値を超えないように調整
-            ChangeBrightness((byte)Math.Clamp(lastBrightness + changeValue, TurnOffValue, TurnOnValue));
+            ChangeBrightness((byte)Math.Clamp(lastBrightness + changeValue, turnOffValue, turnOnValue));
             ////Debug.Log("Brightness:" + brightness);
             yield return new WaitForSeconds(LampFlashTime);
         }
@@ -87,13 +95,12 @@ public class LampComponent : MonoBehaviour
     private IEnumerator TurnOffLamp()
     {
         IsTurnedOn = false;
-        // 明るさの計算(0.03秒ずつ下げる)
-        int distance = TurnOnValue - TurnOffValue;
-        float changeValue = (float)distance / FrameCount;
+        // 暗くなるまでの変化量を求める
+        float changeValue = (float)(turnOnValue - turnOffValue) / flashFrames;
 
-        while (lastBrightness > TurnOffValue)
+        while (lastBrightness > turnOffValue)
         {
-            ChangeBrightness((byte)Math.Clamp(lastBrightness - changeValue, TurnOffValue, TurnOnValue));
+            ChangeBrightness((byte)Math.Clamp(lastBrightness - changeValue, turnOffValue, turnOnValue));
             yield return new WaitForSeconds(LampFlashTime);
         }
     }
