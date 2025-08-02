@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Wait.DisposeWait();
+        Wait.DisposeWaitTimer();
         // セーブ開始
         saveManager.GenerateSaveFolder();
         saveManager.GenerateSaveFileWithEncrypt();

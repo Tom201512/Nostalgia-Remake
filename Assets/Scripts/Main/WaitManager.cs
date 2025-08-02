@@ -24,8 +24,8 @@ public class WaitManager
     }
 
     // func
-    // タイマー処理の破棄
-    public void DisposeWait()
+    // タイマー処理の破棄(終了時に使う)
+    public void DisposeWaitTimer()
     {
         // Timerのストップ
         updateTimer.Stop();
@@ -48,12 +48,18 @@ public class WaitManager
         }
     }
 
+    // ウェイト状態を強制解除する(オート用)
+    public void DisableWaitTimer()
+    {
+        if(HasWait)
+        {
+            HasWait = false;
+            updateTimer.Elapsed -= WaitProcess;
+        }
+    }
+
     // コルーチン用
 
     // ウェイト管理
-    private void WaitProcess(object sender, ElapsedEventArgs e)
-    {
-        HasWait = false;
-        updateTimer.Elapsed -= WaitProcess;
-    }
+    private void WaitProcess(object sender, ElapsedEventArgs e) => DisableWaitTimer();
 }

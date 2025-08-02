@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using ReelSpinGame_Interface;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -22,6 +23,16 @@ namespace ReelSpinGame_State.LotsState
         public void StateStart()
         {
             //Debug.Log("Start Wait State");
+            // 高速オート時はウェイトを即無効にする
+            // ウェイトカットがある場合も即無効にする
+            if(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal)
+            {
+                gM.Wait.DisableWaitTimer();
+            }
+            else if(gM.Wait.HasWaitCut)
+            {
+                gM.Wait.DisableWaitTimer();
+            }
 
             // ウェイトランプ点灯
             if (gM.Wait.HasWait)
@@ -44,7 +55,20 @@ namespace ReelSpinGame_State.LotsState
         public void StateEnd()
         {
             //Debug.Log("End Wait State");
-            gM.Wait.SetWaitTimer();
+
+            // オートの有無で条件を変える
+            if(gM.Auto.HasAuto)
+            {
+                // オート速度が通常ならウェイトタイマーを起動(ウェイトカットあり時は無効)
+                if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal)
+                {
+                    gM.Wait.SetWaitTimer();
+                }
+            }
+            else
+            {
+                gM.Wait.SetWaitTimer();
+            }
 
             // ウェイトランプを切る
             gM.Status.TurnOffWaitLamp();
