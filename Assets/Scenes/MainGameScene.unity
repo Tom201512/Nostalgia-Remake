@@ -739,7 +739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5787d13652097f4498666a1bc1bb1ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanStopImmediately: 0
   reelObjects:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
@@ -1101,7 +1100,7 @@ MonoBehaviour:
   keyToAutoOrderChange: 111
   keyToAutoSpeedChange: 115
   keyToWaitCutToggle: 119
-  deleteSave: 1
+  deleteSave: 0
   debugSetting: 6
 --- !u!4 &460868893
 Transform:
@@ -1729,6 +1728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b3e3c9d836fda4383b934d94d0f4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasLockPlaying: 0
 --- !u!1 &660297967
 GameObject:
   m_ObjectHideFlags: 0
@@ -3499,7 +3499,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5297311660865560637, guid: 6a27fe484f80dae4fb869db1cf9a94de, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3595,6 +3595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b3e3c9d836fda4383b934d94d0f4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasLockPlaying: 0
 --- !u!1 &1227000790
 GameObject:
   m_ObjectHideFlags: 0

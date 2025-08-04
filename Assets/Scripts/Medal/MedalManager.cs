@@ -115,13 +115,14 @@ namespace ReelSpinGame_Medal
                         for(int i = 0; i < data.RemainingBet; i++)
                         {
                             data.InsertOneMedal();
-                            // ランプ、セグメント更新
-                            medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
-                            // クレジット更新
-                            creditSegments.ShowSegmentByNumber(data.system.Credits);
-                            // 払い出しセグメントを消す
-                            payoutSegments.TurnOffAllSegments();
                         }
+
+                        // ランプ、セグメント更新
+                        medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
+                        // クレジット更新
+                        creditSegments.ShowSegmentByNumber(data.system.Credits);
+                        // 払い出しセグメントを消す
+                        payoutSegments.TurnOffAllSegments();
                     }
                     else
                     {
@@ -135,6 +136,7 @@ namespace ReelSpinGame_Medal
         // 払い出し開始
         public void StartPayout(int amounts, bool cutCoroutine)
         {
+            Debug.Log("CutCoroutine:" + cutCoroutine);
             // 払い出しをしていないかチェック
             if (!HasMedalUpdate)
             {
@@ -149,10 +151,17 @@ namespace ReelSpinGame_Medal
                     // コルーチンを無視する場合
                     if (cutCoroutine)
                     {
-                        for (int i = 0; i > amounts; i++)
+                        Debug.Log("Remaining:" +  data.RemainingPayouts);
+                        while(data.RemainingPayouts > 0)
                         {
                             data.PayoutOneMedal();
                         }
+
+                        // クレジットと払い出しセグメント更新
+                        creditSegments.ShowSegmentByNumber(data.system.Credits);
+                        Debug.Log("Payout:" + data.LastPayoutAmounts);
+                        payoutSegments.ShowSegmentByNumber(data.LastPayoutAmounts);
+
                     }
                     else
                     {

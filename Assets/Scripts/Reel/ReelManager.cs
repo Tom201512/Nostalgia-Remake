@@ -20,7 +20,6 @@ public class ReelManager : MonoBehaviour
     // 操作が何もない状態で自動停止させる時間(秒)
     public const float ReelAutoStopTime = 60.0f;
 
-    [SerializeField] bool CanStopImmediately;
     // var
     // リールマネージャーのデータ
     private ReelManagerBehaviour data;
@@ -55,14 +54,6 @@ public class ReelManager : MonoBehaviour
         // リールが動いている時は
         if (data.IsReelWorking)
         {
-            // 全リールが等速かチェック(停止可能にする)
-            if (!data.CanStopReels && CheckReelSpeedMaximum() && !IsInvoking())
-            {
-                StartCoroutine(nameof(SetReelStopTimer));
-                // 1分間経過で自動停止にする
-                StartCoroutine(nameof(AutoStopByTime));
-            }
-
             // 全リールが停止したかチェック
             if (CheckAllReelStopped())
             {
@@ -143,14 +134,12 @@ public class ReelManager : MonoBehaviour
         foreach(int pos  in lastReelPos)
         {
             reelObjects[index].SetReelPos(pos);
-
-            //Debug.Log((ReelID) System.Enum.ToObject(typeof(ReelID), index) + ":" + pos);
             index += 1;
         }
     }
 
     // リール始動
-    public void StartReels()
+    public void StartReels(bool usingFastAuto)
     {
         // ランダム数値決定
         SetRandomValue();
@@ -161,13 +150,27 @@ public class ReelManager : MonoBehaviour
             data.IsReelFinished = false;
             data.IsReelWorking = true;
             data.IsFirstReelPushed = false;
+            data.StoppedReelCount = 0;
 
             for (int i = 0; i < reelObjects.Count; i++)
             {
-                reelObjects[i].StartReel(1.0f);
+                // 高速オートの有無で最高速度を変える
+                float speed = usingFastAuto ? 1.5f : 1.0f;
+                reelObjects[i].StartReel(speed, usingFastAuto);
             }
 
-            data.StoppedReelCount = 0;
+            // 高速オートの場合はすぐに停止可能にする
+            if (usingFastAuto)
+            {
+                data.CanStopReels = true;
+            }
+            // リール停止可能タイマーをつける(高速オートでない場合)
+            else
+            {
+                StartCoroutine(nameof(SetReelStopTimer));
+            }
+            // 1分間経過で自動停止にする
+            StartCoroutine(nameof(AutoStopByTime));
         }
     }
 
@@ -198,17 +201,40 @@ public class ReelManager : MonoBehaviour
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
                 // リールを止める
+                reelObjects[(int)reelID].StopReel(pushedPos, delay);
+                // 停止したリール数を増やす
+                data.StoppedReelCount += 1;
+            }
+        }
+    }
 
-                // オートなどで高速停止が有効の場合はすぐ指定位置まで停止させる。
-                if(CanStopImmediately)
+    // 指定したリールの高速停止(位置指定が必要)
+    public void StopSelectedReelFast(ReelID reelID, int betAmounts, FlagId flagID, BonusType bonusID, int pushedPos)
+    {
+        // 全リール速度が最高速度になっていれば
+        if (data.CanStopReels)
+        {
+            // 止められる状態なら
+            if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.WaitForStop)
+            {
+                // 第一停止なら押したところの停止位置を得る
+                if (!data.IsFirstReelPushed)
                 {
-                    reelObjects[(int)reelID].StopReelFast(pushedPos, delay);
+                    data.IsFirstReelPushed = true;
+                    data.FirstPushReel = reelID;
+                    data.FirstPushPos = pushedPos;
                 }
-                // 通常のリール停止(ディレイを伴って停止)
-                else
-                {
-                    reelObjects[(int)reelID].StopReel(pushedPos, delay);
-                }
+
+                // ここでディレイ(スベリコマ)を得て転送
+                // 条件をチェック
+                int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
+                    flagID, data.FirstPushReel, betAmounts, (int)bonusID, data.RandomValue, data.FirstPushPos);
+                // ディレイ(スベリコマ)を得る
+                int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
+                // リールを止める
+
+                // すぐ指定位置まで停止させる。
+                reelObjects[(int)reelID].StopReelFast(pushedPos, delay);
                 // 停止したリール数を増やす
                 data.StoppedReelCount += 1;
             }
@@ -299,20 +325,6 @@ public class ReelManager : MonoBehaviour
 
     // 払い出しのチェック
     public void StartCheckPayouts(int betAmounts) => payoutChecker.CheckPayoutLines(betAmounts, data.LastStopped);
-
-    // 全リール速度が最高速度かチェック
-    private bool CheckReelSpeedMaximum()
-    {
-        foreach (ReelObject obj in reelObjects)
-        {
-            // 一部リールが最高速度でなければ falseを返す
-            if (!obj.IsMaximumSpeed())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
 
     // ランダム数値の決定
     private void SetRandomValue()

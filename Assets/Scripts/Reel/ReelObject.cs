@@ -64,27 +64,12 @@ public class ReelObject : MonoBehaviour
         // ブラーの取得
         postVolume = GetComponent<PostProcessVolume>();
         postVolume.profile.TryGetSettings(out motionBlur);
-
-        foreach (byte value in reelDatabaseFile.Array)
-        {
-            ////Debug.Log(value + "Symbol:" + ReturnSymbol(value));
-        }
-
-        for (int i = 0; i < reelDatabaseFile.Array.Length; i++)
-        {
-            ////Debug.Log("No." + i + " Symbol:" + ReturnSymbol(reelDatabaseFile.Array[i]));
-
-        }
-        ////Debug.Log("ReelArray Generated");
-        ////Debug.Log("ReelSpin AwakeDone");
     }
 
     private void Start()
     {
         symbolManager.SetReelData(reelData);
         symbolManager.UpdateSymbolsObjects();
-        //Debug.Log("StartDone");
-        //Debug.Log("RPS:" + rotateRPS);
         ChangeBlurSetting(false);
     }
 
@@ -110,7 +95,6 @@ public class ReelObject : MonoBehaviour
     public float GetCurrentSpeed() => rotateSpeed;
     // 現在の角度
     public float GetCurrentDegree() => transform.rotation.eulerAngles.x;
-
     // リールのID
     public int GetReelID() => reelData.ReelID;
     // 現在のリール状態
@@ -121,7 +105,6 @@ public class ReelObject : MonoBehaviour
     public int GetWillStopPos() => reelData.WillStopPos;
     // 最後に止めたときのディレイ数
     public int GetLastDelay() => reelData.LastDelay;
-
     // 指定した位置にあるリールの番号を返す
     public int GetReelPos(ReelPosID posID) => reelData.GetReelPos((sbyte)posID);
     // sbyteで読む場合
@@ -151,9 +134,15 @@ public class ReelObject : MonoBehaviour
     public bool IsMaximumSpeed() => rotateSpeed == maxSpeed;
 
     //　リール始動
-    public void StartReel(float maxSpeed)
+    public void StartReel(float maxSpeed, bool cutAccelerate)
     {
         this.maxSpeed = maxSpeed;
+
+        // 加速をカットする場合はすぐに速度を上げる
+        if(cutAccelerate)
+        {
+            rotateSpeed = maxSpeed;
+        }
         reelData.BeginStartReel();
         ChangeBlurSetting(true);
     }
@@ -210,7 +199,6 @@ public class ReelObject : MonoBehaviour
             }
         }
         brightnessTest = Math.Clamp(currentDistance / distanceRotation, 0, 1);
-        //ebug.Log("Brightness:" + brightnessTest);
 
         int distance = SymbolChange.TurnOnValue - SymbolChange.TurnOffValue;
 

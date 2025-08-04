@@ -3,6 +3,7 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine;
 
 namespace ReelSpinGame_State.PayoutState
@@ -65,7 +66,9 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 払い出し開始
-            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts, false);
+            // オートがあり速度が高速以上なら払い出し演出はカット
+            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts, 
+                gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
 
             // リプレイ処理
             UpdateReplay();
@@ -75,8 +78,13 @@ namespace ReelSpinGame_State.PayoutState
 
             // ここから下は演出
 
-            // 演出開始
-            StartEffect();
+            // 演出開始(高速オートが無効であることが条件)
+
+            if(!gM.Auto.HasAuto ||
+                (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
+            {
+                StartEffect();
+            }
         }
 
         public void StateUpdate()

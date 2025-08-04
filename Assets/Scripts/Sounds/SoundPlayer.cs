@@ -16,11 +16,14 @@ namespace ReelSpinGame_Sound
         public bool HasSoundStopped { get; private set; }
         // ループしている音があるか
         public bool HasLoop { get; private set; }
+        // 鳴らさないようにするか
+        public bool HasLockPlaying;
 
 
         void Awake()
         {
             HasSoundStopped = true;
+            HasLockPlaying = false;
             audioSource = GetComponent<AudioSource>();
         }
 
@@ -34,13 +37,15 @@ namespace ReelSpinGame_Sound
         // 音再生
         public void PlayAudio(AudioClip soundSource, bool hasLoop)
         {
-            audioSource.loop = hasLoop;
-            audioSource.clip = soundSource;
-            audioSource.Play();
-            StartCoroutine(nameof(CheckAudioStopped));
+            if(!HasLockPlaying)
+            {
+                audioSource.loop = hasLoop;
+                audioSource.clip = soundSource;
+                audioSource.Play();
+                StartCoroutine(nameof(CheckAudioStopped));
 
-            HasLoop = hasLoop;
-
+                HasLoop = hasLoop;
+            }
         }
 
         // 音停止
@@ -51,7 +56,13 @@ namespace ReelSpinGame_Sound
         }
 
         // 一回だけ再生
-        public void PlayAudioOneShot(AudioClip soundSource) => audioSource.PlayOneShot(soundSource);
+        public void PlayAudioOneShot(AudioClip soundSource)
+        {
+            if(!HasLockPlaying)
+            {
+                audioSource.PlayOneShot(soundSource);
+            }
+        }
 
         // 音声が止まったかの処理
         public IEnumerator CheckAudioStopped()
@@ -70,7 +81,7 @@ namespace ReelSpinGame_Sound
         // ボリューム調整
         public void AdjustVolume(float volume) => audioSource.volume = volume;
 
-        // ミュート切り替え
-        public void ChangeMute(bool value) => audioSource.mute = value;
+        // 再生ロックをかけるか
+        public void ChangeLockPlaying(bool value) => HasLockPlaying = value;
     }
 }
