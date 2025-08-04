@@ -30,7 +30,7 @@ namespace ReelSpinGame_State.InsertState
             // リプレイなら処理を開始しリプレイランプ点灯
             if (gM.Medal.GetHasReplay())
             {
-                gM.Medal.StartReplayInsert();
+                gM.Medal.StartReplayInsert(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
                 gM.Status.TurnOnReplayLamp();
             }
             // リプレイでなければINSERTランプ表示
@@ -161,8 +161,13 @@ namespace ReelSpinGame_State.InsertState
         // ベット終了処理
         private void EndInsertState()
         {
-            // 投入枚数を反映する
-            gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
+            // 投入枚数を反映する(リプレイ時以外)
+            if(!gM.Medal.GetHasReplay())
+            {
+                gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmounts());
+            }
+
+            // IN枚数反映
             gM.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmounts());
 
             // ボーナス中なら払い出し枚数を減らす

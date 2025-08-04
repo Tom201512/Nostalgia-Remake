@@ -183,9 +183,27 @@ namespace ReelSpinGame_Medal
         public void DisableReplay() => data.system.HasReplay = false;
 
         // リプレイ投入を開始
-        public void StartReplayInsert()
+        public void StartReplayInsert(bool hasCoroutineCut)
         {
-            StartCoroutine(nameof(UpdateInsert));
+            // コルーチンを無視する場合
+            if(hasCoroutineCut)
+            {
+                for (int i = 0; i < data.system.LastBetAmounts; i++)
+                {
+                    data.InsertOneMedal();
+                }
+
+                // ランプ、セグメント更新
+                medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
+                // クレジット更新
+                creditSegments.ShowSegmentByNumber(data.system.Credits);
+                // 払い出しセグメントを消す
+                payoutSegments.TurnOffAllSegments();
+            }
+            else
+            {
+                StartCoroutine(nameof(UpdateInsert));
+            }
         }
 
         // メダル処理終了
