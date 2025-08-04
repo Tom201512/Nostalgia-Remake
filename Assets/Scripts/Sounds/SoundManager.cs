@@ -99,7 +99,5 @@ namespace ReelSpinGame_Sound
 
         // SEÄ¶•s‰ÂØ‚è‘Ö‚¦
         public void ChangeLockSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
-        // BGMÄ¶•s‰ÂØ‚è‘Ö‚¦
-        public void ChangeLockBGMPlayer(bool value) => bgmPlayer.ChangeLockPlaying(value);
     }
 }

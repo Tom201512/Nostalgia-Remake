@@ -240,11 +240,10 @@ namespace ReelSpinGame_Effect
                 soundManager.ChangeMuteSEPlayer(true);
                 soundManager.ChangeLockSEPlayer(true);
 
-                // オート速度が超高速ならBGMも再生不可能に
+                // オート速度が超高速ならBGMはミュート
                 if (autoSpeedID == (int)AutoPlaySpeed.Quick)
                 {
                     soundManager.ChangeMuteBGMPlayer(true);
-                    soundManager.ChangeLockBGMPlayer(true);
                 }
             }
             else
@@ -252,15 +251,14 @@ namespace ReelSpinGame_Effect
                 soundManager.ChangeMuteSEPlayer(false);
                 soundManager.ChangeMuteBGMPlayer(false);
                 soundManager.ChangeLockSEPlayer(false);
-                soundManager.ChangeLockBGMPlayer(false);
             }
         }
 
         // BGMを再生
-        public void PlayBonusBGM(BonusStatus status, bool hasQuickAuto)
+        public void PlayBonusBGM(BonusStatus status, bool hasAutoFinished)
         {
-            // 超高速オートだったか、または前回とボーナス状態が変わっていればBGM再生
-            if(hasQuickAuto || lastBonusStatus != status)
+            // 前回とボーナス状態が変わっていればBGM再生(オート終了時も再生)
+            if(hasAutoFinished || lastBonusStatus != status)
             {
                 switch(status)
                 {

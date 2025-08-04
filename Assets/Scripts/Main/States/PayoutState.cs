@@ -33,10 +33,7 @@ namespace ReelSpinGame_State.PayoutState
         public void StateStart()
         {
             // 高速オートが解除されたかチェック
-            if(gM.Auto.CheckEndFastAuto())
-            {
-                FastAutoEndBehavior();
-            }
+            gM.Auto.CheckFastAutoCancelled();
 
             // ボーナス開始されたかリセット
             HasBonusStarted = false;
@@ -72,6 +69,18 @@ namespace ReelSpinGame_State.PayoutState
 
             // リプレイ処理
             UpdateReplay();
+
+            // オート残りゲーム数が0になったかチェック(ボーナス中以外)
+            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            {
+                gM.Auto.CheckRemainingAuto();
+            }
+
+            // オートが切れたら音声を有効にする
+            if (!gM.Auto.HasAuto)
+            {
+                EnableSounds();
+            }
 
             // セーブ処理
             SaveData();
@@ -339,6 +348,12 @@ namespace ReelSpinGame_State.PayoutState
                 {
                     StockBonus();
                 }
+
+                // オートがあり、条件がボーナス成立なら終了判定
+                if (gM.Auto.HasAuto)
+                {
+                    gM.Auto.CheckAutoEndByBonus(gM.Reel.GetPayoutResultData().BonusID);
+                }
             }
         }
 
@@ -367,13 +382,11 @@ namespace ReelSpinGame_State.PayoutState
             gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), false);
         }
 
-        // 高速オート処理終了時の動作
-        private void FastAutoEndBehavior()
+        // 高速オート処理終了時のSE,BGMの再生
+        private void EnableSounds()
         {
             // BGM, SEのミュート解除
             gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
-            // BGMを再生
-            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick);
         }
     }
 }

@@ -1,6 +1,7 @@
 using ReelSpinGame_AutoPlay.AI;
 using System;
 using UnityEngine;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
@@ -21,6 +22,9 @@ namespace ReelSpinGame_AutoPlay
         public enum AutoPlaySpeed { Normal, Fast, Quick}
         // 現在のオートモード
         public enum AutoPlaySequence { AutoInsert, AutoStopReel}
+        // オート終了条件で使う条件ID
+        // 条件(無制限, BIG成立, REG成立, ボーナス成立, リーチ目, 指定ゲーム数消費)
+        public enum AutoEndConditionID { None, BIG, REG, AnyBonus, RiichiPattern, Games}
 
         // var
         // オートプレイ中か
@@ -38,6 +42,12 @@ namespace ReelSpinGame_AutoPlay
         // オートの停止位置を決めたか
         public bool HasStopPosDecided { get; private set; }
 
+        // 終了条件
+        // 残りオート回数
+        public int RemainingAutoGames { get; private set; }
+        // 終了条件
+        public int autoEndConditionID { get; private set; }
+
         // オート時の停止位置選択AI
         private AutoPlayAI autoAI;
 
@@ -51,6 +61,8 @@ namespace ReelSpinGame_AutoPlay
             AutoStopOrders = new ReelID[] { ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
             AutoOrderID = (int)AutoStopOrderOptions.LMR;
             AutoSpeedID = (int)AutoPlaySpeed.Normal;
+            RemainingAutoGames = 0;
+            autoEndConditionID = (int)AutoEndConditionID.None;
 
             // 停止位置の配列作成(テスト用に0で止めるように)
             AutoStopPos = new int[] { 0, 0, 0 };
@@ -64,6 +76,9 @@ namespace ReelSpinGame_AutoPlay
 
         // スピード名を返す
         public string GetSpeedName() => Enum.ToObject(typeof(AutoPlaySpeed), AutoSpeedID).ToString();
+
+        // オート終了条件名を返す
+        public string GetConditionName() => Enum.ToObject(typeof(AutoEndConditionID), autoEndConditionID).ToString();
 
         // オート仕様番号の変更(デバッグ用)
         public void ChangeAutoOrder()
@@ -98,7 +113,7 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // オート機能の切り替え
-        public void ChangeAutoMode()
+        public void ChangeAutoMode(AutoEndConditionID conditionID, int conditionGames)
         {
             // スピードモードが高速なら払い出しフェーズになるまで実行(処理の不具合を抑えるため)
             if(AutoSpeedID > (int)AutoPlaySpeed.Normal)
@@ -109,7 +124,6 @@ namespace ReelSpinGame_AutoPlay
                 }
                 else
                 {
-                    Debug.Log("Fast Auto will end when payout is done");
                     HasWaitingCancel = true;
                 }
             }
@@ -119,22 +133,83 @@ namespace ReelSpinGame_AutoPlay
                 HasAuto = !HasAuto;
             }
 
+            // 停止位置リセット
             HasStopPosDecided = false;
+
+            // 指定したオート終了条件を付与
+            autoEndConditionID = (int)conditionID;
+            RemainingAutoGames = conditionGames;
         }
 
         // 高速オート終了チェック
-        public bool CheckEndFastAuto()
+        public void CheckFastAutoCancelled()
         {
             if(HasWaitingCancel)
             {
                 HasAuto = false;
                 HasWaitingCancel = false;
-                return true;
             }
-            else
+        }
+
+       // 残りオートゲーム数チェック
+        public void CheckRemainingAuto()
+        {
+            if(autoEndConditionID == (int)AutoEndConditionID.Games)
             {
-                return false;
+                RemainingAutoGames -= 1;
+
+                if(RemainingAutoGames == 0)
+                {
+                    FinishAutoForce();
+                }
             }
+        }
+
+        // ボーナス条件によるオート終了チェック
+        public void CheckAutoEndByBonus(int bonusTypeID)
+        {
+            switch(autoEndConditionID)
+            {
+                // BIG当選
+                case (int)AutoEndConditionID.BIG:
+
+                    if(bonusTypeID == (int)BonusType.BonusBIG)
+                    {
+                        FinishAutoForce();
+                    }
+                    break;
+
+                // REG当選
+                case (int)AutoEndConditionID.REG:
+                    if (bonusTypeID == (int)BonusType.BonusREG)
+                    {
+                        FinishAutoForce();
+                    }
+                    break;
+
+                // どちらか当選
+                case (int)AutoEndConditionID.AnyBonus:
+                    if (bonusTypeID == (int)BonusType.BonusBIG || bonusTypeID == (int)BonusType.BonusREG)
+                    {
+                        FinishAutoForce();
+                    }
+                    break;
+
+                // リーチ目(条件不問でTrue)
+                case (int)AutoEndConditionID.RiichiPattern:
+                    FinishAutoForce();
+                    break;
+            }
+        }
+
+        // オートの強制終了
+        public void FinishAutoForce()
+        {
+            HasAuto = false;
+            HasWaitingCancel = false;
+            HasStopPosDecided = false;
+            RemainingAutoGames = 0;
+            Debug.Log("Auto finished by condition");
         }
         
         // オート停止位置をリセット

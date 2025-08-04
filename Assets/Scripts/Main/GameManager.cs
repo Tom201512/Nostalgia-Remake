@@ -6,6 +6,7 @@ using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_UI.Player;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -210,7 +211,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (Input.GetKeyDown(keyToAutoToggle))
         {
-            Auto.ChangeAutoMode();
+            Auto.ChangeAutoMode(AutoEndConditionID.None, 0);
         }
 
         // オート押し順変更

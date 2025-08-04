@@ -1132,9 +1132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
+  useInstant: 0
   useInfinityInstant: 0
-  instantFlagID: 1
+  instantFlagID: 0
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5256,7 +5256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 225, y: -328}
+  m_AnchoredPosition: {x: 225, y: -296}
   m_SizeDelta: {x: 425.23486, y: 146.31952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1956132309
@@ -5295,6 +5295,8 @@ MonoBehaviour:
 
     AutoEnabled:
 
+    AutoEndCondition:
+
     AutoSpeed:
 
     AutoOrderOption:
@@ -5302,6 +5304,8 @@ MonoBehaviour:
     AutoPos:
 
     AutoPosDecided:
+
+    RemainingG:
 
 '
   m_isRightToLeft: 0
