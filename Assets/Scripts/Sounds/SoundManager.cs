@@ -93,8 +93,13 @@ namespace ReelSpinGame_Sound
         public void ChangeBGMVolume(float volume) => bgmPlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
 
         // SEミュート切り替え
-        public void ChangeMuteSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
+        public void ChangeMuteSEPlayer(bool value) => sePlayer.ChangeMute(value);
         // BGMミュート切り替え
-        public void ChangeMuteBGMPlayer(bool value) => bgmPlayer.ChangeLockPlaying(value);
+        public void ChangeMuteBGMPlayer(bool value) => bgmPlayer.ChangeMute(value);
+
+        // SE再生不可切り替え
+        public void ChangeLockSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
+        // BGM再生不可切り替え
+        public void ChangeLockBGMPlayer(bool value) => bgmPlayer.ChangeLockPlaying(value);
     }
 }

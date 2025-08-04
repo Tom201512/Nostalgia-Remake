@@ -115,18 +115,7 @@ namespace ReelSpinGame_State.InsertState
         // オート中の制御
         private void AutoBetBehavior()
         {
-            if (gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal)
-            {
-                // SEを切る
-                gM.Effect.ChangeMuteSE(true);
-
-                // 超高速オートならBGMも切る
-                if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
-                {
-                    gM.Effect.ChangeMuteBGM(true);
-                }
-            }
-
+            gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
             BetAndStartFunction(gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
         }
 

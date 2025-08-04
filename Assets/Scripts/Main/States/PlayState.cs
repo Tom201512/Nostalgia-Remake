@@ -185,7 +185,7 @@ namespace ReelSpinGame_State.PlayingState
         private void AutoJacAvoid()
         {
             // 押し順は右->中->左になる。
-            // オート速度が最速の場合はすぐに止める
+            // 超高速オートなら即座に止めて払い出し状態へ
             if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
             {
                 StopReelQuick(gM.Auto.AutoStopOrders[(int)ReelID.ReelRight], gM.Auto.AutoStopPos[(int)ReelID.ReelRight]);
@@ -226,6 +226,7 @@ namespace ReelSpinGame_State.PlayingState
         // JACハズシ以外のオート制御
         private void AutoStopBehavior()
         {
+            // 超高速オートなら即座に止めて払い出し状態へ
             if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
             {
                 StopReelQuick(gM.Auto.AutoStopOrders[(int)First], gM.Auto.AutoStopPos[(int)First]);

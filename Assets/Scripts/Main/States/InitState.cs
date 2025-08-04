@@ -136,7 +136,7 @@ namespace ReelSpinGame_State.LotsState
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
-            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus());
+            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), false);
         }
     }
 }

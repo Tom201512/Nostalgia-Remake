@@ -8,6 +8,7 @@ using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 
 namespace ReelSpinGame_Effect
 {
@@ -213,20 +214,11 @@ namespace ReelSpinGame_Effect
         // ビッグ時の色を割り当てる
         public void SetBigColor(BigColor color) => BigChanceColor = color;
 
-        // ボーナス開始時の演出
-        public void StartBonusStartEffect(BigColor color)
-        {
-            // ビッグチャンス時は対応した色のファンファーレを再生
-            BigChanceColor = color;
-            StartCoroutine(nameof(UpdateBonusFanfare));
-        }
+        // ボーナス開始時の演出開始
+        public void StartBonusStartEffect() => StartCoroutine(nameof(UpdateBonusFanfare));
 
-        // ボーナス終了時の演出
-        public void StartBonusEndEffect()
-        {
-            // ビッグチャンス時は対応した色のファンファーレを再生
-            StartCoroutine(nameof(UpdateEndFanfare));
-        }
+        // ボーナス終了時の演出開始
+        public void StartBonusEndEffect() => StartCoroutine(nameof(UpdateEndFanfare));
 
         // フラッシュ停止
         public void StopReelFlash() => flashManager.StopFlash();
@@ -239,15 +231,36 @@ namespace ReelSpinGame_Effect
         // BGMボリューム変更(0.0 ~ 1.0)
         public void ChangeBGMVolume(float volume) => soundManager.ChangeBGMVolume(volume);
 
-        // SEミュート切り替え
-        public void ChangeMuteSE(bool value) => soundManager.ChangeMuteSEPlayer(value);
-        // BGMミュート切り替え
-        public void ChangeMuteBGM(bool value) => soundManager.ChangeMuteBGMPlayer(value);
+        // オート機能時の効果音、音楽解除
+        public void ChangeSoundSettingByAuto(bool hasAuto, int autoSpeedID) 
+        {
+            if(hasAuto && autoSpeedID > (int)AutoPlaySpeed.Normal)
+            {
+                // 高速以上でSE再生不可能に
+                soundManager.ChangeMuteSEPlayer(true);
+                soundManager.ChangeLockSEPlayer(true);
+
+                // オート速度が超高速ならBGMも再生不可能に
+                if (autoSpeedID == (int)AutoPlaySpeed.Quick)
+                {
+                    soundManager.ChangeMuteBGMPlayer(true);
+                    soundManager.ChangeLockBGMPlayer(true);
+                }
+            }
+            else
+            {
+                soundManager.ChangeMuteSEPlayer(false);
+                soundManager.ChangeMuteBGMPlayer(false);
+                soundManager.ChangeLockSEPlayer(false);
+                soundManager.ChangeLockBGMPlayer(false);
+            }
+        }
 
         // BGMを再生
-        public void PlayBonusBGM(BonusStatus status)
+        public void PlayBonusBGM(BonusStatus status, bool hasQuickAuto)
         {
-            if(lastBonusStatus != status)
+            // 超高速オートだったか、または前回とボーナス状態が変わっていればBGM再生
+            if(hasQuickAuto || lastBonusStatus != status)
             {
                 switch(status)
                 {

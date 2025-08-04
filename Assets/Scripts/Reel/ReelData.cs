@@ -23,20 +23,20 @@ namespace ReelSpinGame_Reels
 
         // var
         // リール識別ID
-        public int ReelID{ get; set; }
+        public int ReelID{ get; private set; }
         // リールのデータベース
         public ReelDatabase ReelDatabase { get; private set; }
         // 現在の下段リール位置
         private int currentLower;
 
         // 現在のリールステータス
-        public ReelStatus CurrentReelStatus { get; set; }
+        public ReelStatus CurrentReelStatus { get; private set; }
         // 最後に止めた位置(下段基準)
-        public int LastPushedPos { get; set; }
+        public int LastPushedPos { get; private set; }
         // 将来的に止まる位置(下段基準)
-        public int WillStopPos { get; set; }
+        public int WillStopPos { get; private set; }
         // 最後に止めたときのディレイ数
-        public int LastDelay { get; set; }
+        public int LastDelay { get; private set; }
 
         // コンストラクタ
         public ReelData(int reelID, int lowerPos, ReelDatabase reelDatabase) 
@@ -103,7 +103,7 @@ namespace ReelSpinGame_Reels
             if(stopImmediately)
             {
                 currentLower = WillStopPos;
-                FinishStopReel();
+                CurrentReelStatus = ReelStatus.Stopped;
             }
             else
             {

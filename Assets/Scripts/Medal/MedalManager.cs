@@ -136,7 +136,6 @@ namespace ReelSpinGame_Medal
         // 払い出し開始
         public void StartPayout(int amounts, bool cutCoroutine)
         {
-            Debug.Log("CutCoroutine:" + cutCoroutine);
             // 払い出しをしていないかチェック
             if (!HasMedalUpdate)
             {
@@ -151,7 +150,6 @@ namespace ReelSpinGame_Medal
                     // コルーチンを無視する場合
                     if (cutCoroutine)
                     {
-                        Debug.Log("Remaining:" +  data.RemainingPayouts);
                         while(data.RemainingPayouts > 0)
                         {
                             data.PayoutOneMedal();
@@ -159,7 +157,6 @@ namespace ReelSpinGame_Medal
 
                         // クレジットと払い出しセグメント更新
                         creditSegments.ShowSegmentByNumber(data.system.Credits);
-                        Debug.Log("Payout:" + data.LastPayoutAmounts);
                         payoutSegments.ShowSegmentByNumber(data.LastPayoutAmounts);
 
                     }

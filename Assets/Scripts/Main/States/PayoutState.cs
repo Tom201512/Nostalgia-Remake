@@ -249,7 +249,7 @@ namespace ReelSpinGame_State.PayoutState
             // ファンファーレの再生
             if (HasBonusStarted)
             {
-                gM.Effect.StartBonusStartEffect(gM.Bonus.GetBigChanceColor());
+                gM.Effect.StartBonusStartEffect();
             }
             else if (HasBonusFinished)
             {
@@ -332,6 +332,7 @@ namespace ReelSpinGame_State.PayoutState
                 {
                     StartBonus();
                     BonusStatusUpdate();
+                    gM.Effect.SetBigColor(gM.Bonus.GetBigChanceColor());
                 }
                 // 取りこぼした場合はストックさせる
                 else
@@ -363,15 +364,16 @@ namespace ReelSpinGame_State.PayoutState
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
-            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus());
+            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), false);
         }
 
         // 高速オート処理終了時の動作
         private void FastAutoEndBehavior()
         {
             // BGM, SEのミュート解除
-            gM.Effect.ChangeMuteSE(false);
-            gM.Effect.ChangeMuteBGM(false);
+            gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
+            // BGMを再生
+            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick);
         }
     }
 }

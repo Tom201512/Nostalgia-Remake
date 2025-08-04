@@ -81,7 +81,10 @@ namespace ReelSpinGame_Sound
         // ボリューム調整
         public void AdjustVolume(float volume) => audioSource.volume = volume;
 
-        // 再生ロックをかけるか
+        // ミュートにするか
+        public void ChangeMute(bool value) => audioSource.mute = value;
+
+        // 再生不能にするか(いかなる場合でも音を鳴らせなくする)
         public void ChangeLockPlaying(bool value) => HasLockPlaying = value;
     }
 }

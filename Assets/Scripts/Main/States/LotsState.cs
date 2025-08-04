@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine;
 
 namespace ReelSpinGame_State.LotsState
@@ -48,14 +49,14 @@ namespace ReelSpinGame_State.LotsState
                 gM.Player.AddBonusResult(BonusType.BonusREG);
             }
 
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
-
             // オートモードがある場合、ここでオート停止位置の設定
             if(gM.Auto.HasAuto)
             {
                 gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(),gM.Bonus.GetHoldingBonusID(), 
                     gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn());
             }
+
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
         }
 
         public void StateUpdate()
