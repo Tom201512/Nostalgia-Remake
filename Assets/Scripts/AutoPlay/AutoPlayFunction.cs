@@ -1,7 +1,6 @@
 using ReelSpinGame_AutoPlay.AI;
 using System;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
@@ -15,16 +14,16 @@ namespace ReelSpinGame_AutoPlay
 
         // const
         // オート押し順の識別用
-        public enum AutoStopOrder { First, Second, Third}
+        public enum AutoStopOrder { First, Second, Third }
         // オート押し順指定用(左:L, 中:M, 右:R)
-        public enum AutoStopOrderOptions { LMR, LRM, MLR, MRL, RLM, RML}
+        public enum AutoStopOrderOptions { LMR, LRM, MLR, MRL, RLM, RML }
         // オート速度(通常、高速、超高速)
-        public enum AutoPlaySpeed { Normal, Fast, Quick}
+        public enum AutoPlaySpeed { Normal, Fast, Quick }
         // 現在のオートモード
-        public enum AutoPlaySequence { AutoInsert, AutoStopReel}
+        public enum AutoPlaySequence { AutoInsert, AutoStopReel }
         // オート終了条件で使う条件ID
-        // 条件(無制限, BIG成立, REG成立, ボーナス成立, リーチ目, 指定ゲーム数消費)
-        public enum AutoEndConditionID { None, BIG, REG, AnyBonus, RiichiPattern, Games}
+        // 条件(無制限, BIG成立, REG成立, ボーナス成立, ボーナス終了(どちらか), リーチ目, 指定ゲーム数消費)
+        public enum AutoEndConditionID { None, BIG, REG, AnyBonus, EndBonus, RiichiPattern, Games }
 
         // var
         // オートプレイ中か
@@ -51,7 +50,6 @@ namespace ReelSpinGame_AutoPlay
         // オート時の停止位置選択AI
         private AutoPlayAI autoAI;
 
-
         // コンストラクタ
         public AutoPlayFunction()
         {
@@ -64,7 +62,7 @@ namespace ReelSpinGame_AutoPlay
             RemainingAutoGames = 0;
             autoEndConditionID = (int)AutoEndConditionID.None;
 
-            // 停止位置の配列作成(テスト用に0で止めるように)
+            // 停止位置の配列作成
             AutoStopPos = new int[] { 0, 0, 0 };
             HasWaitingCancel = false;
         }
@@ -79,6 +77,12 @@ namespace ReelSpinGame_AutoPlay
 
         // オート終了条件名を返す
         public string GetConditionName() => Enum.ToObject(typeof(AutoEndConditionID), autoEndConditionID).ToString();
+
+        // 技術介入の有無を返す
+        public bool GetHasTechnicalPlay() => autoAI.HasTechnicalPlay;
+
+        // リーチ目優先制御の有無を返す
+        public bool GetHasRiichiStop() => autoAI.HasRiichiStop;
 
         // オート仕様番号の変更(デバッグ用)
         public void ChangeAutoOrder()
@@ -96,10 +100,10 @@ namespace ReelSpinGame_AutoPlay
             }
         }
 
-        // オートスピード番号変更
+        // オートスピード番号変更(デバッグ用)
         public void ChangeAutoSpeed()
         {
-            if(!HasAuto)
+            if (!HasAuto)
             {
                 if (AutoSpeedID + 1 > (int)AutoPlaySpeed.Quick)
                 {
@@ -113,12 +117,12 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // オート機能の切り替え
-        public void ChangeAutoMode(AutoEndConditionID conditionID, int conditionGames)
+        public void ChangeAutoMode(AutoEndConditionID conditionID, int conditionGames, bool hasTechnicalPlay, bool hasRiichiStop)
         {
             // スピードモードが高速なら払い出しフェーズになるまで実行(処理の不具合を抑えるため)
-            if(AutoSpeedID > (int)AutoPlaySpeed.Normal)
+            if (AutoSpeedID > (int)AutoPlaySpeed.Normal)
             {
-                if(!HasAuto)
+                if (!HasAuto)
                 {
                     HasAuto = true;
                 }
@@ -139,6 +143,12 @@ namespace ReelSpinGame_AutoPlay
             // 指定したオート終了条件を付与
             autoEndConditionID = (int)conditionID;
             RemainingAutoGames = conditionGames;
+
+            // AI設定
+            autoAI.HasTechnicalPlay = hasTechnicalPlay;
+            // リーチ目をとめる設定がある場合は(条件がリーチ目停止、または任意の設定)
+            autoAI.HasRiichiStop = (autoEndConditionID == (int)AutoEndConditionID.RiichiPattern || hasRiichiStop);
+            autoAI.HasStoppedRiichiPtn = false;
         }
 
         // 高速オート終了チェック
@@ -146,8 +156,7 @@ namespace ReelSpinGame_AutoPlay
         {
             if(HasWaitingCancel)
             {
-                HasAuto = false;
-                HasWaitingCancel = false;
+                FinishAutoForce();
             }
         }
 
@@ -173,7 +182,7 @@ namespace ReelSpinGame_AutoPlay
                 // BIG当選
                 case (int)AutoEndConditionID.BIG:
 
-                    if(bonusTypeID == (int)BonusType.BonusBIG)
+                    if(bonusTypeID == (int)BonusTypeID.BonusBIG)
                     {
                         FinishAutoForce();
                     }
@@ -181,7 +190,7 @@ namespace ReelSpinGame_AutoPlay
 
                 // REG当選
                 case (int)AutoEndConditionID.REG:
-                    if (bonusTypeID == (int)BonusType.BonusREG)
+                    if (bonusTypeID == (int)BonusTypeID.BonusREG)
                     {
                         FinishAutoForce();
                     }
@@ -189,7 +198,7 @@ namespace ReelSpinGame_AutoPlay
 
                 // どちらか当選
                 case (int)AutoEndConditionID.AnyBonus:
-                    if (bonusTypeID == (int)BonusType.BonusBIG || bonusTypeID == (int)BonusType.BonusREG)
+                    if (bonusTypeID == (int)BonusTypeID.BonusBIG || bonusTypeID == (int)BonusTypeID.BonusREG)
                     {
                         FinishAutoForce();
                     }
@@ -202,6 +211,16 @@ namespace ReelSpinGame_AutoPlay
             }
         }
 
+        // ボーナス終了によるオート終了チェック
+        public void CheckAutoEndByBonusFinish(int bonusStatusID)
+        {
+            // 通常時に戻った場合はオート終了
+            if(bonusStatusID == (int)BonusStatus.BonusNone)
+            {
+                FinishAutoForce();
+            }
+        }
+
         // オートの強制終了
         public void FinishAutoForce()
         {
@@ -209,6 +228,7 @@ namespace ReelSpinGame_AutoPlay
             HasWaitingCancel = false;
             HasStopPosDecided = false;
             RemainingAutoGames = 0;
+            autoAI.HasStoppedRiichiPtn = false;
             Debug.Log("Auto finished by condition");
         }
         
@@ -219,20 +239,14 @@ namespace ReelSpinGame_AutoPlay
             AutoStopOrders[(int)AutoStopOrder.First] = 0;
             AutoStopOrders[(int)AutoStopOrder.Second] = 0;
             AutoStopOrders[(int)AutoStopOrder.Third] = 0;
-
-            //Debug.Log("AutoPos Reset");
         }
 
         // オート押し順をフラグ、条件から得る
-        public void GetAutoStopPos(FlagId flag, BonusType holdingBonus, int bigChanceGames, int remainingJac)
+        public void GetAutoStopPos(FlagId flag, BonusTypeID holdingBonus, int bigChanceGames, int remainingJac)
         {
-            //Debug.Log("GetPos");
             SetAutoStopOrder();
             AutoStopPos = autoAI.GetStopPos(flag, AutoStopOrders[(int)AutoStopOrder.First], holdingBonus, bigChanceGames, remainingJac);
-            //Debug.Log("Pos created");
-
             HasStopPosDecided = true;
-            //Debug.Log("AutoPos Decided");
         }
 
         // オート押し順の設定反映
@@ -288,10 +302,6 @@ namespace ReelSpinGame_AutoPlay
                 AutoStopPos[(int)ReelID.ReelLeft] = left;
                 AutoStopPos[(int)ReelID.ReelMiddle] = middle;
                 AutoStopPos[(int)ReelID.ReelRight] = right;
-            }
-            else
-            {
-                //Debug.Log("Failed to change because there are duplicated orders");
             }
         }
     }

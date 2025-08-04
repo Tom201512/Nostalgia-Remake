@@ -12,7 +12,7 @@ namespace ReelSpinGame_Datas
     {
         // var
         // 当選ボーナスID
-        public BonusType BonusID { get; private set; }
+        public BonusTypeID BonusID { get; private set; }
         // 成立時ゲーム数(成立時点でのゲーム数)
         public int BonusHitGame { get; private set; }
         // 入賞時ゲーム数(ボーナスを入賞させたゲーム)
@@ -25,7 +25,7 @@ namespace ReelSpinGame_Datas
         // コンストラクタ
         public BonusHitData()
         {
-            BonusID = BonusType.BonusNone;
+            BonusID = BonusTypeID.BonusNone;
             BonusHitGame = 0;
             BonusStartGame = 0;
             BonusPayouts = 0;
@@ -34,7 +34,7 @@ namespace ReelSpinGame_Datas
 
         // func
         // 成立ボーナスセット
-        public void SetBonusType(BonusType bonusID) => BonusID = bonusID;
+        public void SetBonusType(BonusTypeID bonusID) => BonusID = bonusID;
         // 成立時ゲーム数セット
         public void SetBonusHitGame(int game) => BonusHitGame = game;
         // 入賞時ゲーム数セット
@@ -66,7 +66,7 @@ namespace ReelSpinGame_Datas
             try
             {
                 // ボーナス履歴
-                BonusID = (BonusType)Enum.ToObject(typeof(BonusType), br.ReadInt32());
+                BonusID = (BonusTypeID)Enum.ToObject(typeof(BonusTypeID), br.ReadInt32());
                 //Debug.Log("BonusID:" + BonusID);
                 // ボーナス成立時G
                 BonusHitGame = br.ReadInt32();

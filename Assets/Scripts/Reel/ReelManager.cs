@@ -175,7 +175,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID, int betAmounts, FlagId flagID, BonusType bonusID)
+    public void StopSelectedReel(ReelID reelID, int betAmounts, FlagId flagID, BonusTypeID bonusID)
     {
         // 全リール速度が最高速度になっていれば
         if(data.CanStopReels)
@@ -209,7 +209,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 指定したリールの高速停止(位置指定が必要)
-    public void StopSelectedReelFast(ReelID reelID, int betAmounts, FlagId flagID, BonusType bonusID, int pushedPos)
+    public void StopSelectedReelFast(ReelID reelID, int betAmounts, FlagId flagID, BonusTypeID bonusID, int pushedPos)
     {
         // 全リール速度が最高速度になっていれば
         if (data.CanStopReels)

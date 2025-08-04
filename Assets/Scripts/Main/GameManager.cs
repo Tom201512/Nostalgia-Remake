@@ -114,9 +114,11 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        // 画面
-        //Debug.Log("Screen:" + Screen.width + "," + Screen.height);
-        Screen.SetResolution(960, 540, false);
+        // 画面サイズ初期化
+        Screen.SetResolution(1600, 900, false);
+
+        // FPS固定
+        Application.targetFrameRate = 60;
 
         // メダル管理
         Medal = GetComponent<MedalManager>();
@@ -143,12 +145,6 @@ public class GameManager : MonoBehaviour
 
         // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey, betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight };
-
-        // 画面サイズ初期化
-        Screen.SetResolution(1600, 900, false);
-
-        // FPS固定
-        Application.targetFrameRate = 60;
 
         // デバッグUIの表示
         hasDebugUI = false;
@@ -211,7 +207,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (Input.GetKeyDown(keyToAutoToggle))
         {
-            Auto.ChangeAutoMode(AutoEndConditionID.None, 0);
+            Auto.ChangeAutoMode(AutoEndConditionID.EndBonus, 0, true, true);
         }
 
         // オート押し順変更
@@ -249,6 +245,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        // ウェイトタイマーの放棄
         Wait.DisposeWaitTimer();
         // セーブ開始
         saveManager.GenerateSaveFolder();
@@ -275,20 +272,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // キー設定変更
-    public void ChangeKeyBinds(ControlSets controlSets, KeyCode changeKey) => KeyCodes[(int)controlSets] = changeKey;
-
-    // セーブデータ参照
-    public SaveDatabase GetSave() => saveManager.CurrentSave;
-
-    // デバッグをつける機能
+    // デバッグをつける機能(デバッグ用)
     private void DebugButtonBehavior()
     {
         hasDebugUI = !hasDebugUI;
         ToggleDebugUI(hasDebugUI);
     }
 
-    // デバッグUIの表示非表示
+    // デバッグUIの表示非表示(デバッグ用)
     private void ToggleDebugUI(bool value)
     {
         autoUI.ToggleUI(value);

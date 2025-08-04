@@ -23,8 +23,6 @@ namespace ReelSpinGame_State.InsertState
         // func
         public void StateStart()
         {
-            //Debug.Log("Start Medal Insert");
-
             gM.Medal.HasMedalInsert += BetSound;
 
             // リプレイなら処理を開始しリプレイランプ点灯
@@ -56,7 +54,6 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateEnd()
         {
-            //Debug.Log("End Medal Insert");
             gM.Status.TurnOffInsertAndStartlamp();
             gM.Medal.HasMedalInsert -= BetSound;
             gM.Medal.FinishMedalInsert();
@@ -84,7 +81,6 @@ namespace ReelSpinGame_State.InsertState
         // フラッシュを止める
         private void StopReelFlash()
         {
-            ////Debug.Log("Stop Flash");
             gM.Effect.StopReelFlash();
             // リール点灯(JAC中は中段のみ点灯させる)
             gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);

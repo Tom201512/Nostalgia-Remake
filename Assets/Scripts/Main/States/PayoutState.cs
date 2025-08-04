@@ -57,7 +57,7 @@ namespace ReelSpinGame_State.PayoutState
             // 連チャン区間の処理
             // 50Gを迎えた場合は連チャン区間を終了させる(但しボーナス非成立時のみ)
             if (gM.Player.CurrentGames == MaxZoneGames &&
-                gM.Bonus.GetHoldingBonusID() == BonusType.BonusNone)
+                gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
                 gM.Bonus.ResetZonePayouts();
             }
@@ -88,7 +88,6 @@ namespace ReelSpinGame_State.PayoutState
             // ここから下は演出
 
             // 演出開始(高速オートが無効であることが条件)
-
             if(!gM.Auto.HasAuto ||
                 (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
             {
@@ -201,12 +200,11 @@ namespace ReelSpinGame_State.PayoutState
             // 通常時に移行した場合
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                //Debug.Log("BonusEnd");
                 gM.Lots.ChangeTable(FlagLotMode.Normal);
                 gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gM.Medal.ChangeMaxBet(3);
 
-                // ファンファーレ再生のフラグを立てる
+                // 終了ファンファーレ再生のフラグを立てる
                 HasBonusFinished = true;
             }
         }
@@ -249,7 +247,7 @@ namespace ReelSpinGame_State.PayoutState
                 }
 
                 // 通常時はずれの場合、すでにボーナスが当選していたら1/6でフラッシュ
-                else if (gM.Bonus.GetHoldingBonusID() != BonusType.BonusNone)
+                else if (gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone)
                 {
                     gM.Effect.StartVFlash(6);
                 }
@@ -262,7 +260,6 @@ namespace ReelSpinGame_State.PayoutState
             }
             else if (HasBonusFinished)
             {
-                //Debug.Log("BonusEND");
                 gM.Effect.StartBonusEndEffect();
             }
         }
@@ -273,8 +270,8 @@ namespace ReelSpinGame_State.PayoutState
             // リールから揃ったボーナス図柄の色を得る
             BigColor color = gM.Reel.GetBigLinedUpCounts(gM.Medal.GetLastBetAmounts(), 3);
 
-            // ビッグチャンス
-            if (gM.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusBIG)
+            // ビッグチャンスの場合
+            if (gM.Reel.GetPayoutResultData().BonusID == (int)BonusTypeID.BonusBIG)
             {
                 gM.Bonus.StartBigChance(color);
                 // ビッグチャンス回数、入賞時の色を記録
@@ -282,10 +279,11 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Player.SetLastBigChanceColor(color);
             }
 
-            // ボーナスゲーム
-            else if (gM.Reel.GetPayoutResultData().BonusID == (int)BonusType.BonusREG)
+            // ボーナスゲームの場合
+            else if (gM.Reel.GetPayoutResultData().BonusID == (int)BonusTypeID.BonusREG)
             {
                 gM.Bonus.StartBonusGame();
+                // ボーナスゲーム回数(REG)を記録
                 gM.Player.IncreaseBonusGame();
             }
 
@@ -297,26 +295,25 @@ namespace ReelSpinGame_State.PayoutState
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
             gM.Player.SetLastBonusStart();
-
+            // ボーナス演出を開始
             HasBonusStarted = true;
         }
 
         // ボーナスをストックさせる
         private void StockBonus()
         {
-            // いずれかのボーナスが引かれた場合はストック(BIGまたはREGのどちらかをストックする)
-            // これにより常に成立後出目が出るようになる。
-            if (gM.Bonus.GetHoldingBonusID() == BonusType.BonusNone)
+            // ボーナス未成立でいずれかのボーナスが成立した場合はストック
+            if (gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
                 // BIG
                 if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
                 {
-                    gM.Bonus.SetBonusStock(BonusType.BonusBIG);
+                    gM.Bonus.SetBonusStock(BonusTypeID.BonusBIG);
                 }
                 // REG
                 if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
                 {
-                    gM.Bonus.SetBonusStock(BonusType.BonusREG);
+                    gM.Bonus.SetBonusStock(BonusTypeID.BonusREG);
                 }
             }
         }
@@ -324,20 +321,11 @@ namespace ReelSpinGame_State.PayoutState
         // 各ゲームモード時の状態チェック
         private void CheckGameModeStatusChange()
         {
-            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
-            {
-                gM.Bonus.CheckBigGameStatus(gM.Reel.GetPayoutResultData().IsReplayOrJacIn);
-                BonusStatusUpdate();
-            }
-            else if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
-            {
-                gM.Bonus.CheckBonusGameStatus(gM.Reel.GetPayoutResultData().Payouts > 0);
-                BonusStatusUpdate();
-            }
-            else
+            // 通常時なら
+            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 // ボーナスがあればボーナス開始
-                if (gM.Reel.GetPayoutResultData().BonusID != (int)BonusType.BonusNone)
+                if (gM.Reel.GetPayoutResultData().BonusID != (int)BonusTypeID.BonusNone)
                 {
                     StartBonus();
                     BonusStatusUpdate();
@@ -353,6 +341,27 @@ namespace ReelSpinGame_State.PayoutState
                 if (gM.Auto.HasAuto)
                 {
                     gM.Auto.CheckAutoEndByBonus(gM.Reel.GetPayoutResultData().BonusID);
+                }
+            }
+            // それ以外(すでにボーナスが当選している場合)
+            else
+            {
+                if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
+                {
+                    gM.Bonus.CheckBigGameStatus(gM.Reel.GetPayoutResultData().IsReplayOrJacIn);
+                }
+                else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
+                {
+                    gM.Bonus.CheckBonusGameStatus(gM.Reel.GetPayoutResultData().Payouts > 0);
+
+                }
+                
+                BonusStatusUpdate();
+
+                // オートがあり終了条件がボーナス終了時の場合はここで判定する
+                if(gM.Auto.HasAuto)
+                {
+                    gM.Auto.CheckAutoEndByBonusFinish((int)gM.Bonus.GetCurrentBonusStatus());
                 }
             }
         }

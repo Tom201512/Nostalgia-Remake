@@ -88,7 +88,7 @@ namespace ReelSpinGame_System
         public void ResetCurrentGame() => CurrentGames = 0;
 
         // ボーナス履歴追加(成立時に使用)
-        public void AddBonusResult(BonusType bonusType)
+        public void AddBonusResult(BonusTypeID bonusType)
         {
             BonusHitData buffer = new BonusHitData();
             BonusHitRecord.Add(buffer);

@@ -28,19 +28,14 @@ namespace ReelSpinGame_State.LotsState
 
             // スロット情報初期化
             InitializeSlot();
-
             // リプレイ状態割り当て
             ApplyReplay();
-
             // ボーナス状態割り当て
             ApplyBonusStatus();
-
             // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
             TurnOnBackLight();
-
             // ボーナス演出の反映
             BonusEffectUpdate();
-
             // UI反映
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
 
@@ -61,8 +56,6 @@ namespace ReelSpinGame_State.LotsState
         {
             // 設定反映
             gM.ChangeSetting(gM.Save.Setting);
-            //Debug.Log("Setting:" + gM.Setting);
-
             // プレイヤー情報反映
             gM.Player.LoadSaveData(gM.Save.Player);
             // メダル情報反映

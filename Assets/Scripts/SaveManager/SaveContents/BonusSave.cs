@@ -13,7 +13,7 @@ namespace ReelSpinGame_Save.Bonus
     {
         // var
         // 現在ストックしているボーナス
-        public BonusType HoldingBonusID { get; set; }
+        public BonusTypeID HoldingBonusID { get; set; }
         // ボーナス状態
         public BonusStatus CurrentBonusStatus { get; set; }
         // BIGボーナス当選時の色
@@ -40,7 +40,7 @@ namespace ReelSpinGame_Save.Bonus
 
         public BonusSave()
         {
-            HoldingBonusID = BonusType.BonusNone;
+            HoldingBonusID = BonusTypeID.BonusNone;
             CurrentBonusStatus = BonusStatus.BonusNone;
             BigChanceColor = BigColor.None;
             RemainingBigGames = 0;
@@ -100,7 +100,7 @@ namespace ReelSpinGame_Save.Bonus
             try
             {
                 // ストック中のボーナス
-                HoldingBonusID = (BonusType)Enum.ToObject(typeof(BonusType), br.ReadInt32());
+                HoldingBonusID = (BonusTypeID)Enum.ToObject(typeof(BonusTypeID), br.ReadInt32());
                 //Debug.Log("HoldingBonusID:" + HoldingBonusID);
                 // 現在のボーナス状態
                 CurrentBonusStatus = (BonusStatus)Enum.ToObject(typeof(BonusStatus), br.ReadInt32());

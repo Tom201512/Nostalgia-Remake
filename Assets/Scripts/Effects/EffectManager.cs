@@ -87,7 +87,7 @@ namespace ReelSpinGame_Effect
         public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundDB.SE.Wait);
 
         // スタート音
-        public void StartLeverOnEffect(FlagId flag, BonusType holding, BonusStatus bonusStatus)
+        public void StartLeverOnEffect(FlagId flag, BonusTypeID holding, BonusStatus bonusStatus)
         {
             if(hasSPStartSound)
             {
@@ -102,7 +102,7 @@ namespace ReelSpinGame_Effect
                     // リプレイ、発生しない
                     // はずれ、1/128
 
-                    if (holding == BonusType.BonusNone)
+                    if (holding == BonusTypeID.BonusNone)
                     {
                         // BIG, REG
                         switch (flag)

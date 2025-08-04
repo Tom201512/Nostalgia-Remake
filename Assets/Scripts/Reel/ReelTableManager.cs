@@ -60,7 +60,7 @@ public class ReelTableManager
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
                 else if(i == (int)ConditionID.Bonus && 
                     GetConditionData(data.MainConditions, i) == BonusAnyValueID &&
-                    bonus != (int)BonusType.BonusNone)
+                    bonus != (int)BonusTypeID.BonusNone)
                 {
                     //Debug.Log(bonus + "ANY BONUS");
                     continue;

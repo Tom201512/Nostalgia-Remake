@@ -10,77 +10,119 @@ namespace ReelSpinGame_AutoPlay.AI
 	// オートプレイ時のAI
 	public class AutoPlayAI
 	{
-		// func
-		// 停止位置を小役、第一停止、現在の状態に合わせて返す
-		public int[] GetStopPos(FlagId flag, ReelID firstPush, BonusType holdingBonus, int bigChanceGames, int remainingJacIn)
+        // const
+
+        // var
+
+        // 技術介入をするか
+        public bool HasTechnicalPlay { get; set; }
+        // ボーナス成立時、リーチ目を狙うか
+        public bool HasRiichiStop { get; set; }
+        // リーチ目を止めたか
+        public bool HasStoppedRiichiPtn { get; set; }
+
+        public AutoPlayAI()
+        {
+            HasTechnicalPlay = true;
+            HasRiichiStop = false;
+            HasStoppedRiichiPtn = false;
+        }
+
+        // func
+
+        // 停止位置を小役、第一停止、現在の状態に合わせて返す
+        public int[] GetStopPos(FlagId flag, ReelID firstPush, BonusTypeID holdingBonus, int bigChanceGames, int remainingJacIn)
 		{
-			// 小役ごとに挙動を変える
-            switch(flag)
+            // 技術介入ありの場合
+            if(HasTechnicalPlay)
             {
-                // BIG時
-                case FlagId.FlagBig:
-                    return AimBigChance();
+                // 小役ごとに挙動を変える
+                switch (flag)
+                {
+                    // BIG時(リーチ目を止める場合は適当押しをする)
+                    case FlagId.FlagBig:
+                        if(HasRiichiStop && !HasStoppedRiichiPtn)
+                        {
+                            HasStoppedRiichiPtn = true;
+                            return AimRandomly();
+                        }
+                        else
+                        {
+                            return AimBigChance();
+                        }
 
-                // REG時
-                case FlagId.FlagReg:
-                    return AimBonusGame();
+                    // REG時(リーチ目を止める場合は適当押しをする)
+                    case FlagId.FlagReg:
+                        if (HasRiichiStop && !HasStoppedRiichiPtn)
+                        {
+                            HasStoppedRiichiPtn = true;
+                            return AimRandomly();
+                        }
+                        else
+                        {
+                            return AimBonusGame();
+                        }
 
-                // チェリー時
-                case FlagId.FlagCherry2:
-                case FlagId.FlagCherry4:
-                    return AICherryBehavior(holdingBonus);
+                    // チェリー時
+                    case FlagId.FlagCherry2:
+                    case FlagId.FlagCherry4:
+                        return AICherryBehavior(holdingBonus);
 
-                // スイカ時
-                case FlagId.FlagMelon:
-                    return AimMelon();
+                    // スイカ時
+                    case FlagId.FlagMelon:
+                        return AimMelon();
 
-                // ベル時(BIG中は変則押し
-                case FlagId.FlagBell:
-                    return AimBell(firstPush, remainingJacIn);
+                    // ベル時(BIG中は変則押し
+                    case FlagId.FlagBell:
+                        return AimBell(firstPush, remainingJacIn);
 
-                // リプレイ時(BIG中はJAC-INまたはハズシ)
-                case FlagId.FlagReplayJacIn:
-                    return AimReplay(bigChanceGames, remainingJacIn);
+                    // リプレイ時(BIG中はJAC-INまたはハズシ)
+                    case FlagId.FlagReplayJacIn:
+                        return AimReplay(bigChanceGames, remainingJacIn);
 
-                // はずれ、JAC中などははずれ制御
-                default:
-                    return AINoneBehavior(holdingBonus);
+                    // はずれ、JAC中などははずれ制御
+                    default:
+                        return AINoneBehavior(holdingBonus);
+                }
             }
-		}
 
-		// はずれ時
-		private int[] AINoneBehavior(BonusType holdingBonus)
-		{
-            // ボーナスがある場合はそのボーナスを狙うように
-            if (holdingBonus == BonusType.BonusBIG)
-			{
-                return AimBigChance();
-			}
-
-            // REGの場合
-            else if(holdingBonus == BonusType.BonusREG)
-            {
-                return AimBonusGame();
-            }
-
-            // はずれ時は適当押しをする
+            // ない場合は適当押しをする
             else
             {
                 return AimRandomly();
             }
         }
 
-        // チェリー時
-        private int[] AICherryBehavior(BonusType holdingBonus)
-        {
+		// はずれ時
+		private int[] AINoneBehavior(BonusTypeID holdingBonus)
+		{
             // ボーナスがある場合はそのボーナスを狙うように
-            if (holdingBonus == BonusType.BonusBIG)
+            if (holdingBonus == BonusTypeID.BonusBIG)
             {
                 return AimBigChance();
             }
 
             // REGの場合
-            else if (holdingBonus == BonusType.BonusREG)
+            else if (holdingBonus == BonusTypeID.BonusREG)
+            {
+                return AimBonusGame();
+            }
+
+            // はずれ時は適当押しをする
+            return AimRandomly();
+        }
+
+        // チェリー時
+        private int[] AICherryBehavior(BonusTypeID holdingBonus)
+        {
+            // ボーナスがある場合はそのボーナスを狙うように
+            if (holdingBonus == BonusTypeID.BonusBIG)
+            {
+                return AimBigChance();
+            }
+
+            // REGの場合
+            else if (holdingBonus == BonusTypeID.BonusREG)
             {
                 return AimBonusGame();
             }

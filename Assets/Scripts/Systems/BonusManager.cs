@@ -32,7 +32,7 @@ namespace ReelSpinGame_Bonus
 
         // 各種数値を得る
         // ストック中のボーナス
-        public BonusType GetHoldingBonusID() => data.HoldingBonusID;
+        public BonusTypeID GetHoldingBonusID() => data.HoldingBonusID;
         // ボーナス状態
         public BonusStatus GetCurrentBonusStatus() => data.CurrentBonusStatus;
         // BIGボーナス当選時の色
@@ -99,7 +99,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // ボーナスストック状態の更新
-        public void SetBonusStock(BonusType bonusType) => data.HoldingBonusID = bonusType;
+        public void SetBonusStock(BonusTypeID bonusType) => data.HoldingBonusID = bonusType;
 
         // ビッグチャンスの開始
         public void StartBigChance(BigColor bigColor)
@@ -110,7 +110,7 @@ namespace ReelSpinGame_Bonus
             data.RemainingBigGames = BigGames;
             data.RemainingJacIn = JacInTimes;
             data.CurrentBonusStatus = BonusStatus.BonusBIGGames;
-            data.HoldingBonusID = BonusType.BonusNone;
+            data.HoldingBonusID = BonusTypeID.BonusNone;
             data.BigChanceColor = bigColor;
             // 連チャン区間の記録開始
             data.HasZone = true;
@@ -135,7 +135,7 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacGames = JacGames;
             data.RemainingJacHits = JacHits;
             data.CurrentBonusStatus = BonusStatus.BonusJACGames;
-            data.HoldingBonusID = BonusType.BonusNone;
+            data.HoldingBonusID = BonusTypeID.BonusNone;
         }
 
         // ボーナス状態のセグメント更新
