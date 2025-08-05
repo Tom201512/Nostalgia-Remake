@@ -377,19 +377,10 @@ MonoBehaviour:
   - mainConditions: 22
     firstReelPosition: 0
     reelTableNumber: 21
-  - mainConditions: 4118
-    firstReelPosition: 0
-    reelTableNumber: 22
-  - mainConditions: 8214
+  - mainConditions: 12310
     firstReelPosition: 0
     reelTableNumber: 22
   - mainConditions: 278
-    firstReelPosition: 0
-    reelTableNumber: 24
-  - mainConditions: 4374
-    firstReelPosition: 0
-    reelTableNumber: 24
-  - mainConditions: 8470
     firstReelPosition: 0
     reelTableNumber: 24
   - mainConditions: 7
