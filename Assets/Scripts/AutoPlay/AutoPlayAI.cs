@@ -48,7 +48,7 @@ namespace ReelSpinGame_AutoPlay.AI
                         }
                         else
                         {
-                            return AimBigChance();
+                            return AimBigChance(flag);
                         }
 
                     // REG時(リーチ目を止める場合は適当押しをする)
@@ -66,7 +66,7 @@ namespace ReelSpinGame_AutoPlay.AI
                     // チェリー時
                     case FlagId.FlagCherry2:
                     case FlagId.FlagCherry4:
-                        return AICherryBehavior(holdingBonus);
+                        return AICherryBehavior(flag, holdingBonus);
 
                     // スイカ時
                     case FlagId.FlagMelon:
@@ -99,7 +99,7 @@ namespace ReelSpinGame_AutoPlay.AI
             // ボーナスがある場合はそのボーナスを狙うように
             if (holdingBonus == BonusTypeID.BonusBIG)
             {
-                return AimBigChance();
+                return AimBigChance(FlagId.FlagNone);
             }
 
             // REGの場合
@@ -113,12 +113,12 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // チェリー時
-        private int[] AICherryBehavior(BonusTypeID holdingBonus)
+        private int[] AICherryBehavior(FlagId flag, BonusTypeID holdingBonus)
         {
             // ボーナスがある場合はそのボーナスを狙うように
             if (holdingBonus == BonusTypeID.BonusBIG)
             {
-                return AimBigChance();
+                return AimBigChance(flag);
             }
 
             // REGの場合
@@ -135,7 +135,7 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // ビッグチャンスを狙う
-        private int[] AimBigChance()
+        private int[] AimBigChance(FlagId flag)
 		{
             int[] stopPos = new int[] { 0, 0, 0 };
 
@@ -179,7 +179,20 @@ namespace ReelSpinGame_AutoPlay.AI
                     // 1/2で上にチェリーのあるBARを停止
                     if (OriginalRandomLot.LotRandomByNum(2))
                     {
-                        stopPos[(int)ReelID.ReelLeft] = 8;
+                        // 2枚チェリー、4枚チェリー時に制御を変える
+                        if(flag == FlagId.FlagCherry2)
+                        {
+                            stopPos[(int)ReelID.ReelLeft] = 6;
+                        }
+                        else if(flag == FlagId.FlagCherry4)
+                        {
+                            stopPos[(int)ReelID.ReelLeft] = 7;
+                        }
+                        // はずれ時
+                        else
+                        {
+                            stopPos[(int)ReelID.ReelLeft] = 8;
+                        }
                     }
                     else
                     {

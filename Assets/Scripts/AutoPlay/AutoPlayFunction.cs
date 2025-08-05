@@ -204,9 +204,12 @@ namespace ReelSpinGame_AutoPlay
                     }
                     break;
 
-                // リーチ目(条件不問でTrue)
+                // リーチ目
                 case (int)AutoEndConditionID.RiichiPattern:
-                    FinishAutoForce();
+                    if(autoAI.HasStoppedRiichiPtn)
+                    {
+                        FinishAutoForce();
+                    }
                     break;
             }
         }

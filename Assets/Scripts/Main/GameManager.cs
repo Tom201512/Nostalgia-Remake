@@ -132,16 +132,12 @@ public class GameManager : MonoBehaviour
         MainFlow = new MainGameFlow(this);
         // ステータスパネル
         Status = statusPanel;
-
         // プレイヤー情報
         Player = new PlayerDatabase();
-
         // オート機能
         Auto = new AutoPlayFunction();
         // セーブ機能
         saveManager = new SaveManager();
-
-        // セーブデータベース
 
         // キーボードのコード設定
         KeyCodes = new KeyCode[] { maxBetKey, betOneKey, betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight };
@@ -153,8 +149,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // セーブ読み込み。セーブがない場合は新規作成
-        // デバッグ用(セーブ消去がtrueなら読み込まず新規データ作成)
-
         // セーブフォルダの作成
         saveManager.GenerateSaveFolder();
 
@@ -179,12 +173,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //saveManager.DecrpytionTest();
-
         // UI 設定
         waitUI.SetWaitManager(Wait);
-        //playerUI.SetPlayerData(Player);
-        //playerUI.SetMedalManager(Medal);
         autoUI.SetAutoFunction(Auto);
 
         // デバッグをすべて非表示
@@ -207,7 +197,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (Input.GetKeyDown(keyToAutoToggle))
         {
-            Auto.ChangeAutoMode(AutoEndConditionID.EndBonus, 0, true, true);
+            Auto.ChangeAutoMode(AutoEndConditionID.AnyBonus, 0, true, true);
         }
 
         // オート押し順変更
