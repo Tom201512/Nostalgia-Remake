@@ -338,12 +338,6 @@ MonoBehaviour:
   - mainConditions: 262657
     firstReelPosition: 0
     reelTableNumber: 14
-  - mainConditions: 205313
-    firstReelPosition: 0
-    reelTableNumber: 14
-  - mainConditions: 270849
-    firstReelPosition: 0
-    reelTableNumber: 16
   - mainConditions: 17
     firstReelPosition: 2621440
     reelTableNumber: 17
@@ -608,6 +602,18 @@ MonoBehaviour:
   - mainConditions: 402193
     firstReelPosition: 1332238
     reelTableNumber: 29
+  - mainConditions: 8705
+    firstReelPosition: 0
+    reelTableNumber: 14
+  - mainConditions: 270849
+    firstReelPosition: 0
+    reelTableNumber: 16
+  - mainConditions: 336385
+    firstReelPosition: 0
+    reelTableNumber: 16
+  - mainConditions: 401921
+    firstReelPosition: 0
+    reelTableNumber: 16
   - mainConditions: 2
     firstReelPosition: 0
     reelTableNumber: 14

@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (Input.GetKeyDown(keyToAutoToggle))
         {
-            Auto.ChangeAutoMode(AutoEndConditionID.AnyBonus, 0, true, true);
+            Auto.ChangeAutoMode(AutoEndConditionID.None, 0, true, false);
         }
 
         // オート押し順変更
