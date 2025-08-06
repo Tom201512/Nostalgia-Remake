@@ -7,6 +7,7 @@ using ReelSpinGame_System;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_UI.Player;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_Bonus.BonusSystemData;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -169,7 +170,7 @@ public class GameManager : MonoBehaviour
             {
                 // 設定値の作成
                 Save.RecordSlotSetting(debugSetting);
-                Debug.Log("Save is newly generated");
+                //Debug.Log("Save is newly generated");
             }
         }
 
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (Input.GetKeyDown(keyToAutoToggle))
         {
-            Auto.ChangeAutoMode(AutoEndConditionID.None, 0, true, false);
+            Auto.ChangeAutoMode(AutoEndConditionID.None, 0, true, false, false, BigColor.None);
         }
 
         // オート押し順変更

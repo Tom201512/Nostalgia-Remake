@@ -44,7 +44,7 @@ namespace ReelSpinGame_System
 
             // ない場合は作成
             Directory.CreateDirectory(path);
-            Debug.Log("Directory is created");
+            //Debug.Log("Directory is created");
             return true;
         }
 
@@ -56,7 +56,7 @@ namespace ReelSpinGame_System
             // 前のセーブを消去
             if (Directory.Exists(path))
             {
-                Debug.Log("Overwrite file");
+                //Debug.Log("Overwrite file");
                 File.Delete(path);
             }
 
@@ -99,12 +99,12 @@ namespace ReelSpinGame_System
                     }
 
                     // ハッシュ値書き込み
-                    Debug.Log("ListLength:" +  dataBuffer.Count);
+                    //Debug.Log("ListLength:" +  dataBuffer.Count);
 
                     // 文字列にしてハッシュコードにする
                     int hash = BitConverter.ToString(GetBytesFromList(dataBuffer)).GetHashCode();
-                    Debug.Log("Hash:" + hash);
-                    Debug.Log("HashBytes:" + BitConverter.ToString(BitConverter.GetBytes(hash)));
+                    //Debug.Log("Hash:" + hash);
+                    //Debug.Log("HashBytes:" + BitConverter.ToString(BitConverter.GetBytes(hash)));
 
                     dataBuffer.Add(hash);
 
@@ -117,7 +117,7 @@ namespace ReelSpinGame_System
                 throw new Exception(e.ToString());
             }
 
-            Debug.Log("Save Encryption is succeeded");
+            //Debug.Log("Save Encryption is succeeded");
             return true;
         }
 
@@ -130,7 +130,7 @@ namespace ReelSpinGame_System
             // ファイルがない場合は読み込まない
             if (!File.Exists(path))
             {
-                Debug.Log("No old save file");
+                //Debug.Log("No old save file");
                 return false;
             }
 
@@ -149,7 +149,7 @@ namespace ReelSpinGame_System
                             index += 1;
                         }
 
-                        Debug.Log("EOF");
+                        //Debug.Log("EOF");
                     }
                 }
             }
@@ -161,7 +161,7 @@ namespace ReelSpinGame_System
             // 古いファイルは消す
             File.Delete(path);
 
-            Debug.Log("Load Done. Old file is deleted");
+            //Debug.Log("Load Done. Old file is deleted");
             return true;
         }
 
@@ -193,7 +193,7 @@ namespace ReelSpinGame_System
                         // 復号
                         data = stream.ReadToEnd();
                         data = saveEncryptor.DecryptData(data);
-                        Debug.Log("File EOF");
+                        //Debug.Log("File EOF");
                     }
 
                     // 文字列をバイト配列に戻し復元開始。ハッシュ値参照も行う
@@ -205,7 +205,7 @@ namespace ReelSpinGame_System
                             // ハッシュ値の参照
                             baseStream.Seek(-4, SeekOrigin.End);
                             int previousHash = br.ReadInt32();
-                            Debug.Log("Previous HashData:" + previousHash);
+                            //Debug.Log("Previous HashData:" + previousHash);
 
                             List<int> intData = new List<int>();
 
@@ -218,16 +218,16 @@ namespace ReelSpinGame_System
                             }
 
                             int newHash = BitConverter.ToString(GetBytesFromList(intData)).GetHashCode();
-                            Debug.Log("FileHash:" + newHash);
+                            //Debug.Log("FileHash:" + newHash);
 
-                            Debug.Log("ListLength:" + intData.Count);
+                            //Debug.Log("ListLength:" + intData.Count);
                             // ハッシュ値が合わない場合は読み込まない
                             if (previousHash != newHash)
                             {
                                 throw new Exception("Hash code is wrong");
                             }
 
-                            Debug.Log("Hash is correct");
+                            //Debug.Log("Hash is correct");
 
                             baseStream.Position = 0;
 
@@ -237,18 +237,18 @@ namespace ReelSpinGame_System
                                 SetValueFromData(br, index);
                                 index += 1;
                             }
-                            Debug.Log("Binary EOF");
+                            //Debug.Log("Binary EOF");
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Debug.Log("Load failed");
+                //Debug.Log("Load failed");
                 throw new Exception(e.ToString());
             }
 
-            Debug.Log("Load with Decryption done");
+            //Debug.Log("Load with Decryption done");
             return true;
         }
 

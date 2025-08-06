@@ -111,8 +111,20 @@ namespace ReelSpinGame_State.InsertState
         // オート中の制御
         private void AutoBetBehavior()
         {
+            // オート時サウンド再生設定を変更
             gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
-            BetAndStartFunction(gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+
+            // 1枚掛けで揃える設定がある場合、リーチ目出現後は1枚掛けで揃える
+            if(gM.Auto.GetHasRiichiStop() && gM.Auto.GetHasOneBetBonusLineUp() &&
+                gM.Auto.GetHasStoppedRiichiPtn() && gM.Medal.GetCurrentBet() != 1)
+            {
+                BetAction(1, gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+            }
+            // その他の設定
+            else
+            {
+                BetAndStartFunction(gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+            }
         }
 
         // プレイヤー操作の管理

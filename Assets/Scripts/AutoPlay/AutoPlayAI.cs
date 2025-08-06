@@ -20,12 +20,19 @@ namespace ReelSpinGame_AutoPlay.AI
         public bool HasRiichiStop { get; set; }
         // リーチ目を止めたか
         public bool HasStoppedRiichiPtn { get; set; }
+        // ボーナスを1枚掛けで揃えさせるか
+        public bool HasOneBetBonusLineUp { get; set; }
+
+        // 揃えるBIG色
+        public BigColor PlayerSelectedBigColor {  get; set; }
 
         public AutoPlayAI()
         {
             HasTechnicalPlay = true;
             HasRiichiStop = false;
             HasStoppedRiichiPtn = false;
+            HasOneBetBonusLineUp = false;
+            PlayerSelectedBigColor = BigColor.None;
         }
 
         // func
@@ -138,9 +145,21 @@ namespace ReelSpinGame_AutoPlay.AI
         private int[] AimBigChance(FlagId flag)
 		{
             int[] stopPos = new int[] { 0, 0, 0 };
+            int colorID = 0;
 
-            // 1/3で赤7, 青7, BB7のいずれかを選択(左制御のみ)
-            switch (Random.Range((int)BigColor.Red, (int)BigColor.Black + 1))
+            // 揃えるBIGの色指定がなければランダムで選択
+            if(PlayerSelectedBigColor == BigColor.None)
+            {
+                colorID = Random.Range((int)BigColor.Red, (int)BigColor.Black + 1);
+            }
+
+            // 揃えるBIGの色を選択した場合はその色に
+            else
+            {
+                colorID = (int)PlayerSelectedBigColor;
+            }
+
+            switch (colorID)
             {
                 case (int)BigColor.Red:
 
@@ -160,18 +179,29 @@ namespace ReelSpinGame_AutoPlay.AI
 
                 case (int)BigColor.Blue:
 
-                    stopPos[(int)ReelID.ReelLeft] = 3;
-
-                    // 1/2でBAR上の青7を停止させる
-                    if (OriginalRandomLot.LotRandomByNum(2))
+                    // 1枚掛けをする場合は
+                    if(HasStoppedRiichiPtn && HasOneBetBonusLineUp)
                     {
-                        stopPos[(int)ReelID.ReelMiddle] = 6;
+                        stopPos[(int)ReelID.ReelLeft] = 2;
                     }
                     else
                     {
+                        stopPos[(int)ReelID.ReelLeft] = 3;
+                    }
+
+                    // 1/2でBAR上の青7を停止させる
+                    // 1枚掛けは必ずBAR上を押す
+                    if((HasStoppedRiichiPtn && HasOneBetBonusLineUp) ||
+                        !OriginalRandomLot.LotRandomByNum(2))
+                    {
                         stopPos[(int)ReelID.ReelMiddle] = 13;
                     }
-                    stopPos[(int)ReelID.ReelRight] = 9;
+                    else
+                    {
+                        stopPos[(int)ReelID.ReelMiddle] = 6;
+                    }
+
+                        stopPos[(int)ReelID.ReelRight] = 9;
 
                     break;
                 case (int)BigColor.Black:
@@ -179,12 +209,17 @@ namespace ReelSpinGame_AutoPlay.AI
                     // 1/2で上にチェリーのあるBARを停止
                     if (OriginalRandomLot.LotRandomByNum(2))
                     {
-                        // 2枚チェリー、4枚チェリー時に制御を変える
-                        if(flag == FlagId.FlagCherry2)
+                        // 2枚チェリー、4枚チェリー時, 1枚掛けで制御を変える
+
+                        // 2枚チェリー、1枚掛け
+                        if (flag == FlagId.FlagCherry2 ||
+                            (HasStoppedRiichiPtn && HasOneBetBonusLineUp))
                         {
                             stopPos[(int)ReelID.ReelLeft] = 6;
                         }
-                        else if(flag == FlagId.FlagCherry4)
+
+                        // 4枚チェリー
+                        else if (flag == FlagId.FlagCherry4)
                         {
                             stopPos[(int)ReelID.ReelLeft] = 7;
                         }
@@ -196,7 +231,15 @@ namespace ReelSpinGame_AutoPlay.AI
                     }
                     else
                     {
-                        stopPos[(int)ReelID.ReelLeft] = 16;
+                        // 1枚掛けの場合はBB7が揃えられる位置を押す
+                        if(HasStoppedRiichiPtn && HasOneBetBonusLineUp)
+                        {
+                            stopPos[(int)ReelID.ReelLeft] = 14;
+                        }
+                        else
+                        {
+                            stopPos[(int)ReelID.ReelLeft] = 16;
+                        }
                     }
 
                     stopPos[(int)ReelID.ReelMiddle] = 9;

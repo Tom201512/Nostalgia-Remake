@@ -84,6 +84,12 @@ namespace ReelSpinGame_AutoPlay
         // リーチ目優先制御の有無を返す
         public bool GetHasRiichiStop() => autoAI.HasRiichiStop;
 
+        // リーチ目を止めたかを返す
+        public bool GetHasStoppedRiichiPtn() => autoAI.HasStoppedRiichiPtn;
+
+        // 1枚掛けボーナス揃えの有無を返す
+        public bool GetHasOneBetBonusLineUp() => autoAI.HasOneBetBonusLineUp;
+
         // オート仕様番号の変更(デバッグ用)
         public void ChangeAutoOrder()
         {
@@ -116,8 +122,12 @@ namespace ReelSpinGame_AutoPlay
             }
         }
 
+        // オートBIG揃い色選択
+        public void ChangeBigLineUpColor(BigColor color) => autoAI.PlayerSelectedBigColor = color;
+
         // オート機能の切り替え
-        public void ChangeAutoMode(AutoEndConditionID conditionID, int conditionGames, bool hasTechnicalPlay, bool hasRiichiStop)
+        public void ChangeAutoMode(AutoEndConditionID conditionID, int conditionGames, bool hasTechnicalPlay, 
+            bool hasRiichiStop, bool hasOneBetBonusLineUp, BigColor favoriteBIGColor)
         {
             // スピードモードが高速なら払い出しフェーズになるまで実行(処理の不具合を抑えるため)
             if (AutoSpeedID > (int)AutoPlaySpeed.Normal)
@@ -145,10 +155,26 @@ namespace ReelSpinGame_AutoPlay
             RemainingAutoGames = conditionGames;
 
             // AI設定
+            // 技術介入
             autoAI.HasTechnicalPlay = hasTechnicalPlay;
-            // リーチ目をとめる設定がある場合は(条件がリーチ目停止、または任意の設定)
-            autoAI.HasRiichiStop = (autoEndConditionID == (int)AutoEndConditionID.RiichiPattern || hasRiichiStop);
-            autoAI.HasStoppedRiichiPtn = false;
+
+            // 技術介入がある場合はリーチ目で止める設定、1枚掛けで揃える設定などをする
+            if (hasTechnicalPlay)
+            {
+                autoAI.HasRiichiStop = (autoEndConditionID == (int)AutoEndConditionID.RiichiPattern || hasRiichiStop);
+                autoAI.HasStoppedRiichiPtn = false;
+                // ボーナスは1枚掛けで揃えさせるか(リーチ目設定が出てる場合のみ有効)
+                autoAI.HasOneBetBonusLineUp = hasRiichiStop && hasOneBetBonusLineUp;
+            }
+            else
+            {
+                autoAI.HasRiichiStop = false;
+                autoAI.HasStoppedRiichiPtn = false;
+                autoAI.HasOneBetBonusLineUp = false;
+            }
+
+            // 狙うBIGの色設定
+            autoAI.PlayerSelectedBigColor = favoriteBIGColor;
         }
 
         // 高速オート終了チェック
@@ -232,7 +258,6 @@ namespace ReelSpinGame_AutoPlay
             HasStopPosDecided = false;
             RemainingAutoGames = 0;
             autoAI.HasStoppedRiichiPtn = false;
-            Debug.Log("Auto finished by condition");
         }
         
         // オート停止位置をリセット
