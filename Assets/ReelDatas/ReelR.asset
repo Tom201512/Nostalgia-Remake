@@ -19,13 +19,13 @@ MonoBehaviour:
     reelTableNumber: 0
   - mainConditions: 4096
     firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 69632
+    firstReelPosition: 0
     reelTableNumber: 7
-  - mainConditions: 331776
+  - mainConditions: 135168
     firstReelPosition: 0
-    reelTableNumber: 9
-  - mainConditions: 397312
-    firstReelPosition: 0
-    reelTableNumber: 9
+    reelTableNumber: 7
   - mainConditions: 8192
     firstReelPosition: 0
     reelTableNumber: 13
@@ -283,13 +283,13 @@ MonoBehaviour:
     reelTableNumber: 38
   - mainConditions: 1
     firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 65537
+    firstReelPosition: 0
     reelTableNumber: 7
-  - mainConditions: 327681
+  - mainConditions: 131073
     firstReelPosition: 0
-    reelTableNumber: 9
-  - mainConditions: 393217
-    firstReelPosition: 0
-    reelTableNumber: 9
+    reelTableNumber: 7
   - mainConditions: 8193
     firstReelPosition: 0
     reelTableNumber: 13
@@ -634,13 +634,13 @@ MonoBehaviour:
     reelTableNumber: 14
   - mainConditions: 4098
     firstReelPosition: 0
+    reelTableNumber: 9
+  - mainConditions: 69634
+    firstReelPosition: 0
     reelTableNumber: 7
-  - mainConditions: 331778
+  - mainConditions: 135170
     firstReelPosition: 0
-    reelTableNumber: 9
-  - mainConditions: 397314
-    firstReelPosition: 0
-    reelTableNumber: 9
+    reelTableNumber: 7
   - mainConditions: 258
     firstReelPosition: 0
     reelTableNumber: 19
