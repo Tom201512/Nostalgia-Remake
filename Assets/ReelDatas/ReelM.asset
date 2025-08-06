@@ -67,16 +67,19 @@ MonoBehaviour:
     reelTableNumber: 15
   - mainConditions: 4608
     firstReelPosition: 0
+    reelTableNumber: 12
+  - mainConditions: 70144
+    firstReelPosition: 0
     reelTableNumber: 10
+  - mainConditions: 135680
+    firstReelPosition: 0
+    reelTableNumber: 10
+  - mainConditions: 201216
+    firstReelPosition: 0
+    reelTableNumber: 14
   - mainConditions: 266752
     firstReelPosition: 0
-    reelTableNumber: 12
-  - mainConditions: 332288
-    firstReelPosition: 0
-    reelTableNumber: 12
-  - mainConditions: 397824
-    firstReelPosition: 0
-    reelTableNumber: 12
+    reelTableNumber: 14
   - mainConditions: 205312
     firstReelPosition: 0
     reelTableNumber: 14
@@ -322,16 +325,19 @@ MonoBehaviour:
     reelTableNumber: 15
   - mainConditions: 513
     firstReelPosition: 0
+    reelTableNumber: 12
+  - mainConditions: 66049
+    firstReelPosition: 0
     reelTableNumber: 10
+  - mainConditions: 131585
+    firstReelPosition: 0
+    reelTableNumber: 10
+  - mainConditions: 197121
+    firstReelPosition: 0
+    reelTableNumber: 14
   - mainConditions: 262657
     firstReelPosition: 0
-    reelTableNumber: 12
-  - mainConditions: 328193
-    firstReelPosition: 0
-    reelTableNumber: 12
-  - mainConditions: 393729
-    firstReelPosition: 0
-    reelTableNumber: 12
+    reelTableNumber: 14
   - mainConditions: 205313
     firstReelPosition: 0
     reelTableNumber: 14
@@ -655,16 +661,19 @@ MonoBehaviour:
     reelTableNumber: 16
   - mainConditions: 4610
     firstReelPosition: 0
+    reelTableNumber: 12
+  - mainConditions: 70146
+    firstReelPosition: 0
     reelTableNumber: 10
+  - mainConditions: 135682
+    firstReelPosition: 0
+    reelTableNumber: 10
+  - mainConditions: 201218
+    firstReelPosition: 0
+    reelTableNumber: 14
   - mainConditions: 266754
     firstReelPosition: 0
-    reelTableNumber: 12
-  - mainConditions: 332290
-    firstReelPosition: 0
-    reelTableNumber: 12
-  - mainConditions: 397826
-    firstReelPosition: 0
-    reelTableNumber: 12
+    reelTableNumber: 14
   - mainConditions: 18
     firstReelPosition: 632
     reelTableNumber: 16
