@@ -29,6 +29,8 @@ public class ReelManager : MonoBehaviour
     private PayoutChecker payoutChecker;
     // 強制ランダム数値
     [SerializeField] private bool instantRandomMode;
+    // 強制ランダム数値を常に有効
+    [SerializeField] private bool infinityRandomMode;
     // 強制時のランダム数値
     [Range(1,6),SerializeField] private int instantRandomValue;
 
@@ -333,11 +335,15 @@ public class ReelManager : MonoBehaviour
         if (instantRandomMode)
         {
             data.RandomValue = instantRandomValue;
-            instantRandomMode = false;
+
+            if(!infinityRandomMode)
+            {
+                instantRandomMode = false;
+            }
         }
         else
         {
-            data.RandomValue = Random.Range(1, MaxRandomLots);
+            data.RandomValue = Random.Range(1, MaxRandomLots + 1);
         }
     }
 
