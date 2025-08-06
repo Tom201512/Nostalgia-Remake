@@ -341,19 +341,10 @@ MonoBehaviour:
   - mainConditions: 21
     firstReelPosition: 0
     reelTableNumber: 16
-  - mainConditions: 4117
-    firstReelPosition: 0
-    reelTableNumber: 17
-  - mainConditions: 8213
+  - mainConditions: 12309
     firstReelPosition: 0
     reelTableNumber: 17
   - mainConditions: 277
-    firstReelPosition: 0
-    reelTableNumber: 20
-  - mainConditions: 4373
-    firstReelPosition: 0
-    reelTableNumber: 20
-  - mainConditions: 8469
     firstReelPosition: 0
     reelTableNumber: 20
   - mainConditions: 6

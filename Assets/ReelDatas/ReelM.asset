@@ -1051,7 +1051,7 @@ MonoBehaviour:
     reelTableNumber: 27
   - mainConditions: 12309
     firstReelPosition: 8
-    reelTableNumber: 26
+    reelTableNumber: 28
   - mainConditions: 12309
     firstReelPosition: 32768
     reelTableNumber: 25
@@ -1065,31 +1065,28 @@ MonoBehaviour:
     firstReelPosition: 198808
     reelTableNumber: 28
   - mainConditions: 66325
-    firstReelPosition: 2626144
+    firstReelPosition: 2622048
+    reelTableNumber: 28
+  - mainConditions: 197397
+    firstReelPosition: 198808
+    reelTableNumber: 28
+  - mainConditions: 197397
+    firstReelPosition: 2622048
     reelTableNumber: 28
   - mainConditions: 197397
     firstReelPosition: 1048580
     reelTableNumber: 25
-  - mainConditions: 197397
-    firstReelPosition: 198808
-    reelTableNumber: 28
-  - mainConditions: 197397
-    firstReelPosition: 2626144
-    reelTableNumber: 28
   - mainConditions: 328469
     firstReelPosition: 198808
     reelTableNumber: 28
   - mainConditions: 328469
-    firstReelPosition: 2626144
+    firstReelPosition: 2622048
     reelTableNumber: 28
   - mainConditions: 394005
     firstReelPosition: 1048580
     reelTableNumber: 27
   - mainConditions: 13077
-    firstReelPosition: 8
-    reelTableNumber: 26
-  - mainConditions: 13077
-    firstReelPosition: 49152
+    firstReelPosition: 49160
     reelTableNumber: 28
   - mainConditions: 144149
     firstReelPosition: 16384
@@ -1201,7 +1198,7 @@ MonoBehaviour:
   - tableData: 000100010100020100020200000302020000020200
   - tableData: 000302020000020100020000000302020000020200
   - tableData: 020100010003020100020000040302010003020100
-  - tableData: 010002020000020100000100000201000000000100
+  - tableData: 000002020000020100000100000201000000000100
   - tableData: 020000030301010002010002020000040302010002
   - tableData: 000302020000020100020200000302020000020200
   - tableData: 020100040302010002010003020100040302010003
