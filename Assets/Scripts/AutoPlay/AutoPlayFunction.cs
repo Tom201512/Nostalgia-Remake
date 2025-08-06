@@ -244,7 +244,7 @@ namespace ReelSpinGame_AutoPlay
         public void CheckAutoEndByBonusFinish(int bonusStatusID)
         {
             // 通常時に戻った場合はオート終了
-            if(bonusStatusID == (int)BonusStatus.BonusNone)
+            if(autoEndConditionID == (int)AutoEndConditionID.EndBonus && bonusStatusID == (int)BonusStatus.BonusNone)
             {
                 FinishAutoForce();
             }
