@@ -59,6 +59,8 @@ namespace ReelSpinGame_Bonus
         public int CurrentZonePayouts { get; set; }
         // 連チャン区間にいるか
         public bool HasZone { get; set; }
+        // 最後に獲得した連チャン区間の枚数
+        public int LastZonePayouts { get; set; }
 
         public BonusSystemData()
         {
@@ -71,6 +73,7 @@ namespace ReelSpinGame_Bonus
             RemainingJacGames = 0;
             CurrentBonusPayouts = 0;
             CurrentZonePayouts = 0;
+            LastZonePayouts = 0;
             HasZone = false;
         }
 
@@ -90,6 +93,7 @@ namespace ReelSpinGame_Bonus
             data.Add(CurrentBonusPayouts);
             data.Add(CurrentZonePayouts);
             data.Add(HasZone ? 1 : 0);
+            data.Add(LastZonePayouts);
 
             // デバッグ用
             //Debug.Log("BonusData:");
@@ -136,6 +140,8 @@ namespace ReelSpinGame_Bonus
                 // 連チャン区間中か
                 HasZone = (br.ReadInt32() == 1 ? true : false);
                 //Debug.Log("HasZone:" + HasZone);
+                // 最終連チャン区間
+                LastZonePayouts = br.ReadInt32();
 
             }
             catch (Exception e)

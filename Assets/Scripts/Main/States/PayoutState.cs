@@ -60,7 +60,6 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
                 gM.Bonus.ResetZonePayouts();
-                Debug.Log("Reset");
             }
 
             // 払い出し開始

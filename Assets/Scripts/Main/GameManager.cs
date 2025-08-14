@@ -80,22 +80,16 @@ public class GameManager : MonoBehaviour
 
     // オート開始/停止ボタン
     [SerializeField] private KeyCode keyToAutoToggle;
-
     // <デバッグ用> デバッグUI表示用
     [SerializeField] private KeyCode keyToDebugToggle;
-
     // カメラの視点変更
     [SerializeField] private KeyCode keyCameraModeChange;
-
     // <デバッグ用> オートの押し順設定
     [SerializeField] private KeyCode keyToAutoOrderChange;
-
     // <デバッグ用> オートスピード変更
     [SerializeField] private KeyCode keyToAutoSpeedChange;
-
     // <デバッグ用> ウェイトカットの有無設定
     [SerializeField] private KeyCode keyToWaitCutToggle;
-
     // <デバッグ用>セーブを消去するか
     [SerializeField] private bool deleteSave;
 

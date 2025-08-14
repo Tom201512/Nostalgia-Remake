@@ -53,6 +53,8 @@ namespace ReelSpinGame_Bonus
         public int GetCurrentZonePayouts() => data.CurrentZonePayouts;
         // 連チャン区間にいるか
         public bool GetHasZone() => data.HasZone;
+        // 最終連チャン区間での枚数
+        public int GetLastZonePayouts() => data.LastZonePayouts;
 
         // 獲得枚数の増減
         public void ChangeBonusPayouts(int amounts) => data.CurrentBonusPayouts += amounts;
@@ -61,6 +63,8 @@ namespace ReelSpinGame_Bonus
         // 連チャン区間枚数を消す
         public void ResetZonePayouts()
         {
+            // 最後に獲得した連チャン枚数を表示
+            data.LastZonePayouts = data.CurrentZonePayouts;
             data.HasZone = false;
             data.CurrentZonePayouts = 0;
         }

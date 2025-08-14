@@ -36,6 +36,7 @@ public class BonusTestUI : UIBaseClass
         buffer += "TotalPayouts:" + bonusManager.GetCurrentBonusPayouts()+ "\n";
         buffer += "ZonePayouts:" + bonusManager.GetCurrentZonePayouts()+ "\n";
         buffer += "HasZone:" + bonusManager.GetHasZone() + "\n";
+        buffer += "LastZone:" + bonusManager.GetLastZonePayouts() + "\n";
 
         text.text = buffer;
     }

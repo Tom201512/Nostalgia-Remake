@@ -1823,6 +1823,8 @@ MonoBehaviour:
 
     HasZone:
 
+    LastZone:
+
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ddfd541b17943d94ebb49b82bfeeccca, type: 2}
@@ -1886,7 +1888,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.044540405, y: 0, z: -1.1149292, w: 12.893097}
+  m_margin: {x: 0.044540405, y: 0, z: -1.1149292, w: -4.958725}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
