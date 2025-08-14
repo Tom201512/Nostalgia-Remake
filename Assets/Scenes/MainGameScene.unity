@@ -1058,6 +1058,7 @@ GameObject:
   - component: {fileID: 460868895}
   - component: {fileID: 460868896}
   - component: {fileID: 460868897}
+  - component: {fileID: 460868898}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1164,6 +1165,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusSegments: {fileID: 1944429048}
+--- !u!114 &460868898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460868891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ec660c07defa549b97bab1368ba483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &470524867
 PrefabInstance:
   m_ObjectHideFlags: 0

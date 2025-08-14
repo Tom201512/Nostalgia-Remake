@@ -1,37 +1,25 @@
-using System.Timers;
+using UnityEngine;
 
-public class WaitManager
+public class WaitManager : MonoBehaviour
 {
     // ウェイト管理
 
     // const
     // ウェイトに必要な時間(ミリ秒)
-    public const int WaitTimerSetting = 4100;
+    public const float WaitTime = 4.1f;
     // var
-    // 処理用タイマー
-    private Timer updateTimer;
     // ウェイトが有効か
     public bool HasWait { get; private set; }
     // ウェイトを無効にしているか
     public bool HasWaitCut { get; private set; }
 
-    // コンストラクタ
-    public WaitManager(bool hasWaitCut)
+    void Awake()
     {
-        // 処理用タイマー作成
-        HasWaitCut = hasWaitCut;
-        updateTimer = new Timer(WaitTimerSetting);
+        HasWait = false;
+        HasWaitCut = false;
     }
 
     // func
-    // タイマー処理の破棄(終了時に使う)
-    public void DisposeWaitTimer()
-    {
-        // Timerのストップ
-        updateTimer.Stop();
-        updateTimer.Dispose();
-    }
-
     // ウェイトカットの設定
     public void SetWaitCutSetting(bool hasWaitCut) => HasWaitCut = hasWaitCut;
 
@@ -42,9 +30,7 @@ public class WaitManager
         if (!HasWaitCut && !HasWait)
         {
             HasWait = true;
-            updateTimer.Elapsed += WaitProcess;
-            updateTimer.AutoReset = false;
-            updateTimer.Start();
+            Invoke("DisableWaitTimer", WaitTime);
         }
     }
 
@@ -54,12 +40,6 @@ public class WaitManager
         if(HasWait)
         {
             HasWait = false;
-            updateTimer.Elapsed -= WaitProcess;
         }
     }
-
-    // コルーチン用
-
-    // ウェイト管理
-    private void WaitProcess(object sender, ElapsedEventArgs e) => DisableWaitTimer();
 }

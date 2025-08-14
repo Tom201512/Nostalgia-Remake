@@ -125,8 +125,8 @@ public class GameManager : MonoBehaviour
         Medal = GetComponent<MedalManager>();
         // フラグ管理
         Lots = GetComponent<FlagLots>();
-        // ウェイト管理
-        Wait = new WaitManager(false);
+        // ウェイト
+        Wait = GetComponent<WaitManager>();
         // ボーナス
         Bonus = GetComponent<BonusManager>();
         // メインフロー作成
@@ -236,8 +236,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        // ウェイトタイマーの放棄
-        Wait.DisposeWaitTimer();
         // セーブ開始
         saveManager.GenerateSaveFolder();
         saveManager.GenerateSaveFileWithEncrypt();
