@@ -60,6 +60,7 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
                 gM.Bonus.ResetZonePayouts();
+                Debug.Log("Reset");
             }
 
             // 払い出し開始
@@ -172,8 +173,13 @@ namespace ReelSpinGame_State.PayoutState
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gM.Bonus.ChangeBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
-                gM.Bonus.ChangeZonePayouts(gM.Reel.GetPayoutResultData().Payouts);
                 gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
+            }
+
+            // ゾーン区間(50G)にいる間はその払い出しを計算
+            if(gM.Bonus.GetHasZone())
+            {
+                gM.Bonus.ChangeZonePayouts(gM.Reel.GetPayoutResultData().Payouts);
             }
         }
 
