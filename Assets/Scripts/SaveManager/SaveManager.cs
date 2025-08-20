@@ -48,7 +48,7 @@ namespace ReelSpinGame_System
             return true;
         }
 
-        // セーブファイル作成(暗号化)
+        // セーブファイル作成
         public bool GenerateSaveFileWithEncrypt()
         {
             string path = Application.persistentDataPath + "/Nostalgia/save.sav";
@@ -121,51 +121,7 @@ namespace ReelSpinGame_System
             return true;
         }
 
-        // セーブファイル読み込み(旧バージョンの読み込み)
-        public bool LoadOldSaveFile()
-        {
-            // セーブを読み込む
-            string path = Application.persistentDataPath + "/Nostalgia/save.sv";
-
-            // ファイルがない場合は読み込まない
-            if (!File.Exists(path))
-            {
-                //Debug.Log("No old save file");
-                return false;
-            }
-
-            try
-            {
-                using (FileStream file = File.OpenRead(path))
-                {
-                    int index = 0;
-
-                    using (BinaryReader br = new BinaryReader(file))
-                    using (Stream baseStream = br.BaseStream)
-                    {
-                        while (baseStream.Position != baseStream.Length)
-                        {
-                            SetValueFromData(br, index);
-                            index += 1;
-                        }
-
-                        //Debug.Log("EOF");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.ToString());
-            }
-
-            // 古いファイルは消す
-            File.Delete(path);
-
-            //Debug.Log("Load Done. Old file is deleted");
-            return true;
-        }
-
-        // セーブ読み込み(暗号化あり)
+        // セーブ読み込み
         public bool LoadSaveFileWithDecryption()
         {
             string path = Application.persistentDataPath + "/Nostalgia/save.sav";

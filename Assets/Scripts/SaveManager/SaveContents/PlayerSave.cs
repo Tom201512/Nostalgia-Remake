@@ -24,7 +24,7 @@ namespace ReelSpinGame_Save.Player
             public PlayerMedalData PlayerMedalData { get; private set; }
 
             // 当選させたボーナス(IDごとに)
-            public List<BonusHitData> BonusHitRecord { get; private set; }
+            //public List<BonusHitData> BonusHitRecord { get; private set; }
 
             // ビッグチャンス成立回数
             public int BigTimes { get; private set; }
@@ -37,7 +37,7 @@ namespace ReelSpinGame_Save.Player
                 TotalGames = 0;
                 CurrentGames = 0;
                 PlayerMedalData = new PlayerMedalData();
-                BonusHitRecord = new List<BonusHitData>();
+                //BonusHitRecord = new List<BonusHitData>();
                 BigTimes = 0;
                 RegTimes = 0;
             }
@@ -50,7 +50,7 @@ namespace ReelSpinGame_Save.Player
                 TotalGames = playerData.TotalGames;
                 CurrentGames = playerData.CurrentGames;
                 PlayerMedalData = playerData.PlayerMedalData;
-                BonusHitRecord = playerData.BonusHitRecord;
+                //BonusHitRecord = playerData.BonusHitRecord;
                 BigTimes = playerData.BigTimes;
                 RegTimes = playerData.RegTimes;
             }
@@ -70,6 +70,11 @@ namespace ReelSpinGame_Save.Player
                     data.Add(list);
                 }
 
+                // BIG/REG回数
+                data.Add(BigTimes);
+                data.Add(RegTimes);
+
+                /*
                 // ボーナス情報の数
                 data.Add(BonusHitRecord.Count);
 
@@ -80,11 +85,7 @@ namespace ReelSpinGame_Save.Player
                     {
                         data.Add(list);
                     }
-                }
-
-                // BIG/REG回数
-                data.Add(BigTimes);
-                data.Add(RegTimes);
+                }*/
 
                 return data;
             }
@@ -104,6 +105,15 @@ namespace ReelSpinGame_Save.Player
                     // メダル情報読み込み
                     PlayerMedalData.LoadData(br);
 
+                    // BIG回数
+                    BigTimes = br.ReadInt32();
+                    //Debug.Log("BigTimes:" + BigTimes);
+
+                    // REG回数
+                    RegTimes = br.ReadInt32();
+                    //Debug.Log("RegTimes:" + RegTimes);
+
+                    /*
                     // ボーナス履歴読み込み
                     // ボーナス履歴数
 
@@ -117,16 +127,10 @@ namespace ReelSpinGame_Save.Player
                         BonusHitRecord.Add(buffer);
                         buffer.LoadData(br);
                     }
+                    */
 
                     //Debug.Log("BonusLoad END");
 
-                    // BIG回数
-                    BigTimes = br.ReadInt32();
-                    //Debug.Log("BigTimes:" + BigTimes);
-
-                    // REG回数
-                    RegTimes = br.ReadInt32();
-                    //Debug.Log("RegTimes:" + RegTimes);
                 }
                 catch (Exception e)
                 {

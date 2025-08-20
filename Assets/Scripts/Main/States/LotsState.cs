@@ -38,6 +38,7 @@ namespace ReelSpinGame_State.LotsState
                 gM.Player.IncreaseGameValue();
             }
 
+            /*
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
             if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
             {
@@ -46,7 +47,7 @@ namespace ReelSpinGame_State.LotsState
             else if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
             {
                 gM.Player.AddBonusResult(BonusTypeID.BonusREG);
-            }
+            }*/
 
             // オートモードがある場合、ここでオート停止位置の設定
             if(gM.Auto.HasAuto)

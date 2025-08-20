@@ -172,7 +172,7 @@ namespace ReelSpinGame_State.PayoutState
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gM.Bonus.ChangeBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
-                gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
+                //gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
             }
 
             // ゾーン区間(50G)にいる間はその払い出しを計算
@@ -281,7 +281,7 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Bonus.StartBigChance(color);
                 // ビッグチャンス回数、入賞時の色を記録
                 gM.Player.IncreaseBigChance();
-                gM.Player.SetLastBigChanceColor(color);
+                //gM.Player.SetLastBigChanceColor(color);
             }
 
             // ボーナスゲームの場合
@@ -293,13 +293,13 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 15枚の払い出しを記録
-            gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
+            //gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
             gM.Bonus.ChangeBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
             gM.Bonus.ChangeZonePayouts(gM.Reel.GetPayoutResultData().Payouts);
             // カウンタリセット
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
-            gM.Player.SetLastBonusStart();
+            //gM.Player.SetLastBonusStart();
             // ボーナス演出を開始
             HasBonusStarted = true;
         }

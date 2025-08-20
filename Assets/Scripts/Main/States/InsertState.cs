@@ -171,7 +171,7 @@ namespace ReelSpinGame_State.InsertState
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gM.Bonus.ChangeBonusPayouts(-gM.Medal.GetLastBetAmounts());
-                gM.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
+                //gM.Player.ChangeLastBonusPayouts(-gM.Medal.GetLastBetAmounts());
             }
 
             // 連チャン区間にいる場合は連チャン区間枚数を減らす

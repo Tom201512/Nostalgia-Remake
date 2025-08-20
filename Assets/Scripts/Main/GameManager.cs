@@ -157,15 +157,11 @@ public class GameManager : MonoBehaviour
             deleteSave = false;
         }
 
-        // 古いファイルがあるなら読み込んで削除
-        else if (!saveManager.LoadOldSaveFile())
+        if (!saveManager.LoadSaveFileWithDecryption())
         {
-            if (!saveManager.LoadSaveFileWithDecryption())
-            {
-                // 設定値の作成
-                Save.RecordSlotSetting(debugSetting);
-                //Debug.Log("Save is newly generated");
-            }
+            // 設定値の作成
+            Save.RecordSlotSetting(debugSetting);
+            //Debug.Log("Save is newly generated");
         }
 
         // UI 設定

@@ -94,6 +94,7 @@ namespace ReelSpinGame_Bonus
                 data.RemainingJacGames = save.RemainingJacGames;
                 data.CurrentBonusPayouts = save.CurrentBonusPayouts;
                 data.CurrentZonePayouts = save.CurrentZonePayouts;
+                data.LastZonePayouts = save.LastZonePayouts;
                 data.HasZone = save.HasZone;
             }
             else
