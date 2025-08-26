@@ -117,11 +117,11 @@ namespace ReelSpinGame_Save.Player
                     // ボーナス履歴読み込み
                     // ボーナス履歴数
 
-                    int bonusResultCounts = br.ReadInt32();
-                    //Debug.Log("BonusResultCounts:" + bonusResultCounts);
+                    int bonusResultCount = br.ReadInt32();
+                    //Debug.Log("BonusResultCount:" + bonusResultCount);
 
                     // 履歴分読み込む
-                    for (int i = 0; i < bonusResultCounts; i++)
+                    for (int i = 0; i < bonusResultCount; i++)
                     {
                         BonusHitData buffer = new BonusHitData();
                         BonusHitRecord.Add(buffer);

@@ -55,14 +55,14 @@ public class BonusSevenSegment : MonoBehaviour
     }
 
     // Šl“¾–‡”‚ğ•\¦
-    public void ShowTotalPayouts(int totalPayouts)
+    public void ShowTotalPayout(int totalPayout)
     {
-        int result = Math.Clamp(totalPayouts, 0, 99999);
+        int result = Math.Clamp(totalPayout, 0, 99999);
 
         List<int> digits = new List<int>();
 
         // Œ©‚Â‚©‚Á‚½Œ…”•ª”’l‚ğ“¾‚é
-        for(int i = 0; i < GetDigitCounts(totalPayouts); i++)
+        for(int i = 0; i < GetDigitCount(totalPayout); i++)
         {
             digits.Add(GetDigitValue(result, i + 1));
         }

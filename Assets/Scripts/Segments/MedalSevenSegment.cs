@@ -56,7 +56,7 @@ public class MedalSevenSegment : MonoBehaviour
     }
 
     // Œ…”‚ğŒvZ‚·‚é
-    public static int GetDigitCounts(int value)
+    public static int GetDigitCount(int value)
     {
         int sum = 0;
         int digitsCount = 0;

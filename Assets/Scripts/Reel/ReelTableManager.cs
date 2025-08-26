@@ -19,7 +19,7 @@ public class ReelTableManager
     // コンストラクタ
     public ReelTableManager()
     {
-        UsedReelTableID = new int[ReelAmounts] { 0, 0, 0 };
+        UsedReelTableID = new int[ReelAmount] { 0, 0, 0 };
     }
 
     // func

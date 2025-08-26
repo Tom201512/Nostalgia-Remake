@@ -106,7 +106,7 @@ namespace ReelSpinGame_System
         // 直近のビッグチャンス時の色を記録
         public void SetLastBigChanceColor(BigColor color) => BonusHitRecord[^1].SetBigChanceColor(color);
         // 現在のボーナス履歴に払い出しを追加する
-        public void ChangeLastBonusPayouts(int payouts) => BonusHitRecord[^1].ChangeBonusPayouts(payouts);*/
+        public void ChangeLastBonusPayout(int payout) => BonusHitRecord[^1].ChangeBonusPayout(payout);*/
 
         // ボーナス履歴情報を読み込む
 

@@ -17,16 +17,16 @@ namespace ReelSpinGame_Reels.Payout
         // 払い出し結果
         public class PayoutResultBuffer
         {
-            public int Payouts { get; set; }
+            public int Payout { get; set; }
             public int BonusID { get; set; }
             public bool IsReplayOrJacIn { get; set; }
 
             // 払い出しのあったライン
             public List<PayoutLineData> PayoutLines { get; set; }
 
-            public PayoutResultBuffer(int payouts, int bonusID, bool isReplayOrJac)
+            public PayoutResultBuffer(int payout, int bonusID, bool isReplayOrJac)
             {
-                Payouts = payouts;
+                Payout = payout;
                 BonusID = bonusID;
                 IsReplayOrJacIn = isReplayOrJac;
                 PayoutLines = new List<PayoutLineData>();
@@ -56,7 +56,7 @@ namespace ReelSpinGame_Reels.Payout
         public void CheckPayoutLines(int betAmount, LastStoppedReelData lastStoppedData)
         {
             // 最終的な払い出し結果
-            int finalPayouts = 0;
+            int finalPayout = 0;
             int bonusID = 0;
             bool replayStatus = false;
             List<PayoutLineData> finalPayoutLine = new List<PayoutLineData>();
@@ -91,7 +91,7 @@ namespace ReelSpinGame_Reels.Payout
                     if (foundIndex != -1)
                     {
                         // 払い出しは常にカウント(15枚を超えても切り捨てられる)
-                        finalPayouts += GetPayoutResultData(CheckMode)[foundIndex].Payouts;
+                        finalPayout += GetPayoutResultData(CheckMode)[foundIndex].Payout;
 
                         // ボーナス未成立なら当たった時に変更
                         if (bonusID == 0)
@@ -116,7 +116,7 @@ namespace ReelSpinGame_Reels.Payout
             }
             // 最終的な払い出し枚数をイベントに送る
 
-            //Debug.Log("payout:" + finalPayouts);
+            //Debug.Log("payout:" + finalPayout);
             //Debug.Log("Bonus:" + bonusID);
             //Debug.Log("IsReplay:" + replayStatus);
 
@@ -137,12 +137,12 @@ namespace ReelSpinGame_Reels.Payout
             }*/
 
             // 最大払い出しを超える枚数だった場合は切り捨てる
-            if(finalPayouts > MedalBehavior.MaxPayout)
+            if(finalPayout > MedalBehavior.MaxPayout)
             {
-                finalPayouts = MedalBehavior.MaxPayout;
+                finalPayout = MedalBehavior.MaxPayout;
             }
 
-            LastPayoutResult.Payouts = finalPayouts;
+            LastPayoutResult.Payout = finalPayout;
             LastPayoutResult.BonusID = bonusID;
             LastPayoutResult.IsReplayOrJacIn = replayStatus;
             LastPayoutResult.PayoutLines = finalPayoutLine;
@@ -164,20 +164,20 @@ namespace ReelSpinGame_Reels.Payout
                 int sameSymbolCount = 0;
 
                 // 図柄のチェック
-                for (int i = 0; i < data.Combinations.Count; i++)
+                for (int i = 0; i < data.Combination.Count; i++)
                 {
                     // 図柄が合っているかチェック(ANYなら次の図柄へ)
-                    if (data.Combinations[i] == PayoutResultData.AnySymbol ||
-                        (byte)lineResult[i] == data.Combinations[i])
+                    if (data.Combination[i] == PayoutResultData.AnySymbol ||
+                        (byte)lineResult[i] == data.Combination[i])
                     {
                         sameSymbolCount += 1;
                     }
                 }
 
                 // 同じ図柄(ANY含め)がリールの数と合えば当選とみなす
-                if (sameSymbolCount == ReelAmounts)
+                if (sameSymbolCount == ReelAmount)
                 {
-                    //Debug.Log("HIT!:" + payoutResult[indexNum].Payouts + "Bonus:" + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);
+                    //Debug.Log("HIT!:" + payoutResult[indexNum].Payout + "Bonus:" + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);
 
                     // 配列番号を送る
                     return indexNum;

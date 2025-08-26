@@ -169,7 +169,7 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し演出開始
-        public void StartPayoutReelFlash(List<PayoutLineData> lastPayoutLines, bool isJacFlag, int payouts)
+        public void StartPayoutReelFlash(List<PayoutLineData> lastPayoutLines, bool isJacFlag, int payout)
         {
             // フラッシュ再生
             flashManager.StartPayoutFlash(0f, lastPayoutLines);
@@ -181,7 +181,7 @@ namespace ReelSpinGame_Effect
                 soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
             }
             // 15枚の払い出し音
-            else if (payouts >= 15)
+            else if (payout >= 15)
             {
                 soundManager.PlaySoundLoop(soundManager.SoundDB.SE.MaxPayout);
             }

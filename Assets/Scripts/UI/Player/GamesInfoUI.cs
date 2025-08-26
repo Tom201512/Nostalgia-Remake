@@ -10,7 +10,7 @@ namespace ReelSpinGame_UI.Player.Games
     {
         // const
         // 最大表示可能ゲーム数
-        private const int MaximumGameCounts = 99999;
+        private const int MaximumGameCount = 99999;
 
         // var
         [SerializeField] private TextMeshProUGUI games;
@@ -19,8 +19,8 @@ namespace ReelSpinGame_UI.Player.Games
         // ゲーム数UI更新
         public void UpdateGamesUI(PlayerDatabase playerDatabase)
         {
-            this.games.text = "Games:" + "\n" + Math.Clamp(playerDatabase.CurrentGames, 0, MaximumGameCounts).ToString() + "G";
-            this.total.text = "Total:" + "\n" + Math.Clamp(playerDatabase.TotalGames, 0, MaximumGameCounts).ToString() + "G";
+            this.games.text = "Games:" + "\n" + Math.Clamp(playerDatabase.CurrentGames, 0, MaximumGameCount).ToString() + "G";
+            this.total.text = "Total:" + "\n" + Math.Clamp(playerDatabase.TotalGames, 0, MaximumGameCount).ToString() + "G";
         }
     }
 }

@@ -33,10 +33,10 @@ public class BonusTestUI : UIBaseClass
         buffer += "JAC_Hits:" + bonusManager.GetRemainingJacHits()+ "\n" + "\n";
 
         // älìæñáêîï\é¶
-        buffer += "TotalPayouts:" + bonusManager.GetCurrentBonusPayouts()+ "\n";
-        buffer += "ZonePayouts:" + bonusManager.GetCurrentZonePayouts()+ "\n";
+        buffer += "TotalPayout:" + bonusManager.GetCurrentBonusPayout()+ "\n";
+        buffer += "ZonePayout:" + bonusManager.GetCurrentZonePayout()+ "\n";
         buffer += "HasZone:" + bonusManager.GetHasZone() + "\n";
-        buffer += "LastZone:" + bonusManager.GetLastZonePayouts() + "\n";
+        buffer += "LastZone:" + bonusManager.GetLastZonePayout() + "\n";
 
         text.text = buffer;
     }

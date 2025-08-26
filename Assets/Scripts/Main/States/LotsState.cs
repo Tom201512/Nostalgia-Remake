@@ -25,7 +25,7 @@ namespace ReelSpinGame_State.LotsState
         {
             //Debug.Log("Start Lots.FlagBehaviour.State");
 
-            gM.Lots.StartFlagLots(gM.Setting, gM.Medal.GetLastBetAmounts());
+            gM.Lots.StartFlagLots(gM.Setting, gM.Medal.GetLastBetAmount());
 
             // ボーナス中ならここでゲーム数を減らす
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)

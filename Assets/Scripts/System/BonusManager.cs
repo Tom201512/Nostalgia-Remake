@@ -48,25 +48,25 @@ namespace ReelSpinGame_Bonus
         public int GetRemainingJacHits() => data.RemainingJacHits;
 
         // 獲得した枚数を表示
-        public int GetCurrentBonusPayouts() => data.CurrentBonusPayouts;
+        public int GetCurrentBonusPayout() => data.CurrentBonusPayout;
         // 連チャン区間中の枚数を表示
-        public int GetCurrentZonePayouts() => data.CurrentZonePayouts;
+        public int GetCurrentZonePayout() => data.CurrentZonePayout;
         // 連チャン区間にいるか
         public bool GetHasZone() => data.HasZone;
         // 最終連チャン区間での枚数
-        public int GetLastZonePayouts() => data.LastZonePayouts;
+        public int GetLastZonePayout() => data.LastZonePayout;
 
         // 獲得枚数の増減
-        public void ChangeBonusPayouts(int amounts) => data.CurrentBonusPayouts += amounts;
-        public void ChangeZonePayouts(int amounts) => data.CurrentZonePayouts += amounts;
+        public void ChangeBonusPayout(int amount) => data.CurrentBonusPayout += amount;
+        public void ChangeZonePayout(int amount) => data.CurrentZonePayout += amount;
 
         // 連チャン区間枚数を消す
-        public void ResetZonePayouts()
+        public void ResetZonePayout()
         {
             // 最後に獲得した連チャン枚数を表示
-            data.LastZonePayouts = data.CurrentZonePayouts;
+            data.LastZonePayout = data.CurrentZonePayout;
             data.HasZone = false;
-            data.CurrentZonePayouts = 0;
+            data.CurrentZonePayout = 0;
         }
 
         // セーブデータにする
@@ -92,9 +92,9 @@ namespace ReelSpinGame_Bonus
                 data.RemainingJacIn = save.RemainingJacIn;
                 data.RemainingJacHits = save.RemainingJacHits;
                 data.RemainingJacGames = save.RemainingJacGames;
-                data.CurrentBonusPayouts = save.CurrentBonusPayouts;
-                data.CurrentZonePayouts = save.CurrentZonePayouts;
-                data.LastZonePayouts = save.LastZonePayouts;
+                data.CurrentBonusPayout = save.CurrentBonusPayout;
+                data.CurrentZonePayout = save.CurrentZonePayout;
+                data.LastZonePayout = save.LastZonePayout;
                 data.HasZone = save.HasZone;
             }
             else
@@ -111,7 +111,7 @@ namespace ReelSpinGame_Bonus
         {
             //Debug.Log("BIG CHANCE start");
             // ビッグチャンスの初期化
-            data.CurrentBonusPayouts = 0;
+            data.CurrentBonusPayout = 0;
             data.RemainingBigGames = BigGames;
             data.RemainingJacIn = JacInTimes;
             data.CurrentBonusStatus = BonusStatus.BonusBIGGames;
@@ -133,7 +133,7 @@ namespace ReelSpinGame_Bonus
             // BIG中でない場合はボーナス払い出し枚数リセット
             if (data.CurrentBonusStatus != BonusStatus.BonusBIGGames)
             {
-                data.CurrentBonusPayouts = 0;
+                data.CurrentBonusPayout = 0;
             }
 
             // ボーナスゲームの初期化
@@ -159,14 +159,14 @@ namespace ReelSpinGame_Bonus
             // 通常時に戻った場合は獲得枚数表示とリセット
             else if(DisplayingTotalCount)
             {
-                StartCoroutine(nameof(UpdateShowPayouts));
+                StartCoroutine(nameof(UpdateShowPayout));
             }
         }
 
         // セグメントをすべて消す
         public void TurnOffSegments()
         {
-            StopCoroutine(nameof(UpdateShowPayouts));
+            StopCoroutine(nameof(UpdateShowPayout));
             bonusSegments.TurnOffAllSegments();
             DisplayingTotalCount = false;
         }
@@ -236,11 +236,11 @@ namespace ReelSpinGame_Bonus
         }
 
         // 獲得枚数を点滅させる
-        private IEnumerator UpdateShowPayouts()
+        private IEnumerator UpdateShowPayout()
         {
             while(DisplayingTotalCount)
             {
-                bonusSegments.ShowTotalPayouts(data.CurrentZonePayouts);
+                bonusSegments.ShowTotalPayout(data.CurrentZonePayout);
                 yield return new WaitForSeconds(PayoutSegFlashTime);
                 bonusSegments.TurnOffAllSegments();
                 yield return new WaitForSeconds(PayoutSegFlashTime);

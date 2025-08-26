@@ -24,9 +24,9 @@ namespace ReelSpinGame_Medal
         // ベット枚数
         public int CurrentBet { get; set; }
         // 払い出し枚数
-        public int RemainingPayouts { get; set; }
+        public int RemainingPayout { get; set; }
         // 最後に払い出したメダル枚数
-        public int LastPayoutAmounts { get; set; }
+        public int LastPayoutAmount { get; set; }
         // ベット完了しているか
         public bool FinishedBet { get;  set; }
 
@@ -35,19 +35,19 @@ namespace ReelSpinGame_Medal
         {
             // var
             // クレジット枚数
-            public int Credits { get; set; }
+            public int Credit { get; set; }
             // 最高ベット枚数
-            public int MaxBetAmounts { get; set; }
+            public int MaxBetAmount { get; set; }
             // 最後にかけたメダル枚数
-            public int LastBetAmounts { get; set; }
+            public int LastBetAmount { get; set; }
             // リプレイ状態か
             public bool HasReplay { get; set; }
 
             public MedalSystemData()
             {
-                Credits = 0;
-                MaxBetAmounts = MaxBetLimit;
-                LastBetAmounts = 0;
+                Credit = 0;
+                MaxBetAmount = MaxBetLimit;
+                LastBetAmount = 0;
                 HasReplay = false;
             }
         }
@@ -59,8 +59,8 @@ namespace ReelSpinGame_Medal
         public MedalBehavior()
         {
             CurrentBet = 0;
-            RemainingPayouts = 0;
-            LastPayoutAmounts = 0;
+            RemainingPayout = 0;
+            LastPayoutAmount = 0;
             FinishedBet = false;
 
             system = new MedalSystemData();
@@ -69,37 +69,37 @@ namespace ReelSpinGame_Medal
         // func
 
         // 残りベット枚数を設定
-        public void SetRemainingBet(int amounts)
+        public void SetRemainingBet(int amount)
         {
             FinishedBet = false;
             // 最後に払い出したメダルリセット
-            LastPayoutAmounts = 0;
+            LastPayoutAmount = 0;
 
             // 現在のベット枚数よりも多く賭けると差分だけ掛ける
             // (2BETから1BETはリセットして調整)
 
             // 多い場合(1枚以上ベットされていること)
-            if (amounts > CurrentBet && CurrentBet > 0)
+            if (amount > CurrentBet && CurrentBet > 0)
             {
                 ////Debug.Log("You bet more than current bet");
-                RemainingBet = Math.Clamp(amounts - CurrentBet, 0, MaxBetLimit);
+                RemainingBet = Math.Clamp(amount - CurrentBet, 0, MaxBetLimit);
             }
 
             // 少ない場合
             else
             {
                 // 0枚ならそのまま
-                RemainingBet = Math.Clamp(amounts, 0, MaxBetLimit);
+                RemainingBet = Math.Clamp(amount, 0, MaxBetLimit);
             }
 
             // もし現在のベットより少ない枚数ならリセット
-            if (amounts < CurrentBet)
+            if (amount < CurrentBet)
             {
                 // ベットで使ったクレジット分を返す
-                system.Credits = Math.Clamp(system.Credits += CurrentBet, MinCredit, MaxCredit);
+                system.Credit = Math.Clamp(system.Credit += CurrentBet, MinCredit, MaxCredit);
                 CurrentBet = 0;
             }
-            system.LastBetAmounts = amounts;
+            system.LastBetAmount = amount;
         }
 
         // 投入処理
@@ -111,7 +111,7 @@ namespace ReelSpinGame_Medal
             // リプレイでなければクレジットを減らす
             if (!system.HasReplay)
             {
-                system.Credits = Math.Clamp(system.Credits -= 1, MinCredit, MaxCredit);
+                system.Credit = Math.Clamp(system.Credit -= 1, MinCredit, MaxCredit);
             }
 
             // 残り枚数が0になったら終了
@@ -124,19 +124,19 @@ namespace ReelSpinGame_Medal
         // 払い出し処理
         public void PayoutOneMedal()
         {
-            RemainingPayouts -= 1;
-            LastPayoutAmounts += 1;
+            RemainingPayout -= 1;
+            LastPayoutAmount += 1;
         }
 
         // クレジットの増減
-        public void ChangeCredits(int value)
+        public void ChangeCredit(int value)
         {
             // クレジット枚数を0枚にする(負数の場合)
-            if (system.Credits < 0)
+            if (system.Credit < 0)
             {
-                system.Credits = 0;
+                system.Credit = 0;
             }
-            system.Credits = Math.Clamp(system.Credits += value, MinCredit, MaxCredit);
+            system.Credit = Math.Clamp(system.Credit += value, MinCredit, MaxCredit);
         }
     }
 }

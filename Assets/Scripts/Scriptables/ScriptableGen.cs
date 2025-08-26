@@ -22,7 +22,7 @@ namespace ReelSpinGame_Datas
         private const string FlagPath = "LotsTable";
 
         // 払い出し関連のファイル
-        private const string PayoutPath = "Payouts";
+        private const string PayoutPath = "Payout";
 
         // JACはずれデフォルト値
         private const float JacNoneDefault = 256f;
@@ -103,7 +103,7 @@ namespace ReelSpinGame_Datas
             string[] pathOrder = { LeftPath, MiddlePath, RightPath };
 
             // あらかじめ設定したディレクトリから全リールのデータを読み込む
-            for (int i = 0; i < ReelAmounts; i++)
+            for (int i = 0; i < ReelAmount; i++)
             {
                 MakeReelData(pathOrder[i]);
             }
@@ -114,7 +114,7 @@ namespace ReelSpinGame_Datas
         private void MakeReelData(string filePath)
         {
             // ディレクトリの作成
-            string path = "Assets/ReelDatas";
+            string path = "Assets/ReelData";
             // ファイル名指定
             string fileName = filePath;
 
@@ -149,7 +149,7 @@ namespace ReelSpinGame_Datas
         private void MakeFlagData()
         {
             // ディレクトリの作成
-            string path = "Assets/FlagDatas";
+            string path = "Assets/FlagData";
             // ファイル名指定
             string fileName = "FlagDatabase";
 
@@ -186,7 +186,7 @@ namespace ReelSpinGame_Datas
         private void MakePayoutData()
         {
             // ディレクトリの作成
-            string path = "Assets/PayoutDatas";
+            string path = "Assets/PayoutData";
             // ファイル名指定
             string fileName = "PayoutDatabase";
 

@@ -74,7 +74,7 @@ namespace ReelSpinGame_State.PlayingState
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
             {
                 // リールを止める
-                gM.Reel.StopSelectedReel(reelID, gM.Medal.GetLastBetAmounts(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
+                gM.Reel.StopSelectedReel(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
             }
         }
 
@@ -84,7 +84,7 @@ namespace ReelSpinGame_State.PlayingState
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
             {
                 // リールを止める
-                gM.Reel.StopSelectedReelFast(reelID, gM.Medal.GetLastBetAmounts(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
+                gM.Reel.StopSelectedReelFast(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
             }
         }
 
@@ -177,7 +177,7 @@ namespace ReelSpinGame_State.PlayingState
             if (gM.Reel.GetStoppedCount() == 2 &&
                 gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                gM.Effect.StartRiichiEffect(gM.Reel.GetBigLinedUpCounts(gM.Medal.GetLastBetAmounts(), 2));
+                gM.Effect.StartRiichiEffect(gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 2));
             }
         }
 

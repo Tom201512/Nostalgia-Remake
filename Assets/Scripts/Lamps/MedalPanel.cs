@@ -21,11 +21,11 @@ public class MedalPanel : MonoBehaviour
     }
 
     // ベット枚数からどのランプをつけるか判定する
-    public void UpdateLampByBet(int currentBet, int lastBetAmounts)
+    public void UpdateLampByBet(int currentBet, int lastBetAmount)
     {
         if (currentBet == 0)
         {
-            if (lastBetAmounts >= 1)
+            if (lastBetAmount >= 1)
             {
                 medal1.TurnOn();
             }
@@ -34,7 +34,7 @@ public class MedalPanel : MonoBehaviour
                 medal1.TurnOff();
             }
 
-            if (lastBetAmounts >= 2)
+            if (lastBetAmount >= 2)
             {
                 medal2A.TurnOn();
                 medal2B.TurnOn();
@@ -45,7 +45,7 @@ public class MedalPanel : MonoBehaviour
                 medal2B.TurnOff();
             }
 
-            if (lastBetAmounts >= 3)
+            if (lastBetAmount >= 3)
             {
                 medal3A.TurnOn();
                 medal3B.TurnOn();

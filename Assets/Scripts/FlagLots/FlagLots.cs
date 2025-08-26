@@ -39,7 +39,7 @@ namespace ReelSpinGame_Lots.Flag
         public void ChangeTable(FlagLotMode mode) => data.CurrentTable = mode;
 
         // フラグ抽選をする
-        public void StartFlagLots(int setting, int betAmounts)
+        public void StartFlagLots(int setting, int betAmount)
         {
             if (useInstant)
             {
@@ -54,15 +54,15 @@ namespace ReelSpinGame_Lots.Flag
             }
             else
             {
-                data.GetFlagLots(setting, betAmounts, useInstant, instantFlagID, flagDatabase);
+                data.GetFlagLots(setting, betAmount, useInstant, instantFlagID, flagDatabase);
             }
         }
 
         // 小役カウンタ増加
-        public void IncreaseCounter(int payoutAmounts) => data.FlagCounter.IncreaseCounter(payoutAmounts);
+        public void IncreaseCounter(int payoutAmount) => data.FlagCounter.IncreaseCounter(payoutAmount);
 
         // 小役カウンタ減少
-        public void DecreaseCounter(int setting, int lastBetAmounts) =>data.FlagCounter.DecreaseCounter(setting, lastBetAmounts);
+        public void DecreaseCounter(int setting, int lastBetAmount) =>data.FlagCounter.DecreaseCounter(setting, lastBetAmount);
 
         // カウンタリセット
         public void ResetCounter() => data.FlagCounter.ResetCounter();

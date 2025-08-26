@@ -41,7 +41,7 @@ namespace ReelSpinGame_Medal
         void Start()
         {
             // クレジット更新
-            creditSegments.ShowSegmentByNumber(data.system.Credits);
+            creditSegments.ShowSegmentByNumber(data.system.Credit);
         }
 
         // タイマー処理の破棄
@@ -51,12 +51,12 @@ namespace ReelSpinGame_Medal
         }
 
         // 数値を得る
-        public int GetCredits() => data.system.Credits;
+        public int GetCredit() => data.system.Credit;
         public int GetCurrentBet() => data.CurrentBet;
-        public int GetRemainingPayouts() => data.RemainingPayouts;
-        public int GetMaxBet() => data.system.MaxBetAmounts;
-        public int GetLastBetAmounts() => data.system.LastBetAmounts;
-        public int GetLastPayout() => data.LastPayoutAmounts;
+        public int GetRemainingPayout() => data.RemainingPayout;
+        public int GetMaxBet() => data.system.MaxBetAmount;
+        public int GetLastBetAmount() => data.system.LastBetAmount;
+        public int GetLastPayout() => data.LastPayoutAmount;
         public bool GetBetFinished() => data.FinishedBet;
         public bool GetHasReplay() => data.system.HasReplay;
 
@@ -75,9 +75,9 @@ namespace ReelSpinGame_Medal
             {
                 MedalSave save = loadData as MedalSave;
 
-                data.system.Credits = save.Credits;
-                data.system.MaxBetAmounts = save.MaxBetAmounts;
-                data.system.LastBetAmounts = save.LastBetAmounts;
+                data.system.Credit = save.Credit;
+                data.system.MaxBetAmount = save.MaxBetAmount;
+                data.system.LastBetAmount = save.LastBetAmount;
                 data.system.HasReplay = save.HasReplay;
             }
             else
@@ -87,27 +87,27 @@ namespace ReelSpinGame_Medal
         }
 
         // 数値を変える
-        public int ChangeMaxBet(int amounts) => data.system.MaxBetAmounts = Math.Clamp(amounts, 0, MaxBetLimit);
+        public int ChangeMaxBet(int amount) => data.system.MaxBetAmount = Math.Clamp(amount, 0, MaxBetLimit);
 
         // MAX_BET用の処理
         public void StartMAXBet()
         {
             ////Debug.Log("Received MAX_BET");
-            StartBet(data.system.MaxBetAmounts, false);
+            StartBet(data.system.MaxBetAmount, false);
         }
 
         // ベット処理開始
-        public void StartBet(int amounts, bool cutCoroutine)
+        public void StartBet(int amount, bool cutCoroutine)
         {
             // 処理ををしていないか、またはリプレイでないかチェック
             if (!data.system.HasReplay && !HasMedalUpdate)
             {
                 // 枚数を調整
                 // 現在の枚数と違ったらベット(現在のMAX BETを超えていないこと, JAC中:1BET, 通常:3BET)
-                if (amounts != data.CurrentBet && amounts <= data.system.MaxBetAmounts)
+                if (amount != data.CurrentBet && amount <= data.system.MaxBetAmount)
                 {
                     // ベット枚数設定
-                    data.SetRemainingBet(amounts);
+                    data.SetRemainingBet(amount);
 
                     // コルーチンを無視する場合
                     if (cutCoroutine)
@@ -118,9 +118,9 @@ namespace ReelSpinGame_Medal
                         }
 
                         // ランプ、セグメント更新
-                        medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
+                        medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
                         // クレジット更新
-                        creditSegments.ShowSegmentByNumber(data.system.Credits);
+                        creditSegments.ShowSegmentByNumber(data.system.Credit);
                         // 払い出しセグメントを消す
                         payoutSegments.TurnOffAllSegments();
                     }
@@ -134,30 +134,30 @@ namespace ReelSpinGame_Medal
         }
 
         // 払い出し開始
-        public void StartPayout(int amounts, bool cutCoroutine)
+        public void StartPayout(int amount, bool cutCoroutine)
         {
             // 払い出しをしていないかチェック
             if (!HasMedalUpdate)
             {
                 // メダルの払い出しを開始する(メダルが増えるのは演出で、データ上ではすでに増えている)
-                if (amounts > 0)
+                if (amount > 0)
                 {
                     // 払い出し枚数の設定
-                    data.RemainingPayouts = Math.Clamp(data.RemainingPayouts + amounts, 0, MaxPayout);
+                    data.RemainingPayout = Math.Clamp(data.RemainingPayout + amount, 0, MaxPayout);
                     // クレジットの増加
-                    data.ChangeCredits(amounts);
+                    data.ChangeCredit(amount);
 
                     // コルーチンを無視する場合
                     if (cutCoroutine)
                     {
-                        while(data.RemainingPayouts > 0)
+                        while(data.RemainingPayout > 0)
                         {
                             data.PayoutOneMedal();
                         }
 
                         // クレジットと払い出しセグメント更新
-                        creditSegments.ShowSegmentByNumber(data.system.Credits);
-                        payoutSegments.ShowSegmentByNumber(data.LastPayoutAmounts);
+                        creditSegments.ShowSegmentByNumber(data.system.Credit);
+                        payoutSegments.ShowSegmentByNumber(data.LastPayoutAmount);
 
                     }
                     else
@@ -173,7 +173,7 @@ namespace ReelSpinGame_Medal
         public void EnableReplay()
         {
             data.system.HasReplay = true;
-            data.RemainingBet = data.system.LastBetAmounts;
+            data.RemainingBet = data.system.LastBetAmount;
         }
 
         // リプレイ状態を消す
@@ -185,15 +185,15 @@ namespace ReelSpinGame_Medal
             // コルーチンを無視する場合
             if(hasCoroutineCut)
             {
-                for (int i = 0; i < data.system.LastBetAmounts; i++)
+                for (int i = 0; i < data.system.LastBetAmount; i++)
                 {
                     data.InsertOneMedal();
                 }
 
                 // ランプ、セグメント更新
-                medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
+                medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
                 // クレジット更新
-                creditSegments.ShowSegmentByNumber(data.system.Credits);
+                creditSegments.ShowSegmentByNumber(data.system.Credit);
                 // 払い出しセグメントを消す
                 payoutSegments.TurnOffAllSegments();
             }
@@ -224,9 +224,9 @@ namespace ReelSpinGame_Medal
                 // イベント送信
                 HasMedalInsert.Invoke();
                 // ランプ、セグメント更新
-                medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmounts);
+                medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
                 // クレジット更新
-                creditSegments.ShowSegmentByNumber(data.system.Credits);
+                creditSegments.ShowSegmentByNumber(data.system.Credit);
                 // 払い出しセグメントを消す
                 payoutSegments.TurnOffAllSegments();
                 // 0.12秒待機
@@ -242,15 +242,15 @@ namespace ReelSpinGame_Medal
         {
             HasMedalUpdate = true;
             // 払い出し処理
-            while (data.RemainingPayouts > 0)
+            while (data.RemainingPayout > 0)
             {
                 // メダル払い出し
                 data.PayoutOneMedal();
                 //HasMedalPayout.Invoke(1);
                 // クレジットと払い出しセグメント更新
-                creditSegments.ShowSegmentByNumber(data.system.Credits - data.RemainingPayouts);
-                ////Debug.Log("LastPayoutAmounts:" + data.LastPayoutAmounts);
-                payoutSegments.ShowSegmentByNumber(data.LastPayoutAmounts);
+                creditSegments.ShowSegmentByNumber(data.system.Credit - data.RemainingPayout);
+                ////Debug.Log("LastPayoutAmount:" + data.LastPayoutAmount);
+                payoutSegments.ShowSegmentByNumber(data.LastPayoutAmount);
 
                 yield return new WaitForSeconds(MedalUpdateTime);
             }

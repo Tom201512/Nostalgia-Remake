@@ -10,7 +10,7 @@ namespace ReelSpinGame_UI.Player.Bonus
     {
         // const
         // 最大表示可能ボーナス回数
-        private const int MaximumBonusCounts = 999;
+        private const int MaximumBonusCount = 999;
 
         // var
         [SerializeField] private TextMeshProUGUI bigCount;
@@ -19,8 +19,8 @@ namespace ReelSpinGame_UI.Player.Bonus
         // ボーナス当選情報更新
         public void UpdateBonusUI(PlayerDatabase playerDatabase)
         {
-            bigCount.text = "BIG:" + "\t" + Math.Clamp(playerDatabase.BigTimes, 0, MaximumBonusCounts).ToString();
-            regCount.text = "REG:" + "\t" + Math.Clamp(playerDatabase.RegTimes, 0, MaximumBonusCounts).ToString();
+            bigCount.text = "BIG:" + "\t" + Math.Clamp(playerDatabase.BigTimes, 0, MaximumBonusCount).ToString();
+            regCount.text = "REG:" + "\t" + Math.Clamp(playerDatabase.RegTimes, 0, MaximumBonusCount).ToString();
         }
     }
 }

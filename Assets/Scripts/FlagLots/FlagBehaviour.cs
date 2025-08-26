@@ -61,7 +61,7 @@ namespace ReelSpinGame_Lots
         // func
 
         // フラグ抽選の開始
-        public void GetFlagLots(int setting, int betAmounts, bool useInstant, FlagId instantFlagID, FlagDatabase flagDatabase)
+        public void GetFlagLots(int setting, int betAmount, bool useInstant, FlagId instantFlagID, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
@@ -71,18 +71,18 @@ namespace ReelSpinGame_Lots
                     // カウンタが0より少ないなら高確率
                     if (FlagCounter.Counter < 0)
                     {
-                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalBTable, lotResultNormal);
+                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalBTable, lotResultNormal);
                     }
                     // カウンタが0以上の場合は低確率
                     else
                     {
-                        CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.NormalATable, lotResultNormal);
+                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalATable, lotResultNormal);
                     }
 
                     break;
 
                 case FlagLotMode.BigBonus:
-                    CurrentFlag = CheckResultByTable(setting, betAmounts, flagDatabase.BigTable, lotResultBig);
+                    CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.BigTable, lotResultBig);
                     break;
 
                 case FlagLotMode.JacGame:
@@ -98,14 +98,14 @@ namespace ReelSpinGame_Lots
         }
 
         // テーブル、設定値とベット枚数からフラグ判定
-        private FlagId CheckResultByTable(int setting, int betAmounts, FlagDataSets flagTable, FlagId[] lotResult)
+        private FlagId CheckResultByTable(int setting, int betAmount, FlagDataSets flagTable, FlagId[] lotResult)
         {
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
             int flagCheckNum = 0;
             int flag = GetFlag();
 
             // ベット枚数に合わせたテーブルを参照するようにする
-            int offset = SeekNum * (betAmounts - 1);
+            int offset = SeekNum * (betAmount - 1);
             //Debug.Log(offset);
 
             int index = 0;

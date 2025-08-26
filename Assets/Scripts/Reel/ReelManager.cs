@@ -177,7 +177,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID, int betAmounts, FlagId flagID, BonusTypeID bonusID)
+    public void StopSelectedReel(ReelID reelID, int betAmount, FlagId flagID, BonusTypeID bonusID)
     {
         // 全リール速度が最高速度になっていれば
         if(data.CanStopReels)
@@ -199,7 +199,7 @@ public class ReelManager : MonoBehaviour
                 // ここでディレイ(スベリコマ)を得て転送
                 // 条件をチェック
                 int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
-                    flagID, data.FirstPushReel, betAmounts, (int)bonusID, data.RandomValue, data.FirstPushPos);
+                    flagID, data.FirstPushReel, betAmount, (int)bonusID, data.RandomValue, data.FirstPushPos);
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
                 // リールを止める
@@ -211,7 +211,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 指定したリールの高速停止(位置指定が必要)
-    public void StopSelectedReelFast(ReelID reelID, int betAmounts, FlagId flagID, BonusTypeID bonusID, int pushedPos)
+    public void StopSelectedReelFast(ReelID reelID, int betAmount, FlagId flagID, BonusTypeID bonusID, int pushedPos)
     {
         // 全リール速度が最高速度になっていれば
         if (data.CanStopReels)
@@ -230,7 +230,7 @@ public class ReelManager : MonoBehaviour
                 // ここでディレイ(スベリコマ)を得て転送
                 // 条件をチェック
                 int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
-                    flagID, data.FirstPushReel, betAmounts, (int)bonusID, data.RandomValue, data.FirstPushPos);
+                    flagID, data.FirstPushReel, betAmount, (int)bonusID, data.RandomValue, data.FirstPushPos);
                 // ディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
                 // リールを止める
@@ -247,22 +247,22 @@ public class ReelManager : MonoBehaviour
     private void SendReelStoppedEvent() => HasSomeReelStopped.Invoke();
 
     // 指定した数のBIG図柄が揃っているかを返す
-    public BigColor GetBigLinedUpCounts(int betAmounts, int checkAmounts)
+    public BigColor GetBigLinedUpCount(int betAmount, int checkAmount)
     {
         // 赤7
-        if (CountBonusSymbols(BigColor.Red, betAmounts) == checkAmounts)
+        if (CountBonusSymbols(BigColor.Red, betAmount) == checkAmount)
         {
             return BigColor.Red;
         }
 
         // 青7
-        if (CountBonusSymbols(BigColor.Blue, betAmounts) == checkAmounts)
+        if (CountBonusSymbols(BigColor.Blue, betAmount) == checkAmount)
         {
             return BigColor.Blue;
         }
 
         // BB7
-        if (CountBonusSymbols(BigColor.Black, betAmounts) == checkAmounts)
+        if (CountBonusSymbols(BigColor.Black, betAmount) == checkAmount)
         {
             return BigColor.Black;
         }
@@ -271,7 +271,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // ビッグチャンス図柄がいくつ揃っているか確認する
-    private int CountBonusSymbols(BigColor bigColor, int betAmounts)
+    private int CountBonusSymbols(BigColor bigColor, int betAmount)
     {
         // 最も多かった個数を記録
         int highestCount = 0;
@@ -279,7 +279,7 @@ public class ReelManager : MonoBehaviour
         foreach (PayoutLineData line in payoutChecker.GetPayoutLines())
         {
             // ベット条件を満たしているか確認
-            if(betAmounts >= line.BetCondition)
+            if(betAmount >= line.BetCondition)
             {
                 int currentCount = 0;
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
@@ -326,7 +326,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 払い出しのチェック
-    public void StartCheckPayouts(int betAmounts) => payoutChecker.CheckPayoutLines(betAmounts, data.LastStopped);
+    public void StartCheckPayout(int betAmount) => payoutChecker.CheckPayoutLines(betAmount, data.LastStopped);
 
     // ランダム数値の決定
     private void SetRandomValue()

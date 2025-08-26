@@ -47,11 +47,11 @@ namespace ReelSpinGame_Datas
         }
 
         // プレイヤーメダル増加
-        public void IncreasePlayerMedal(int amounts) => CurrentPlayerMedal += amounts;
+        public void IncreasePlayerMedal(int amount) => CurrentPlayerMedal += amount;
         // プレイヤーメダル減少
-        public void DecreasePlayerMedal(int amounts)
+        public void DecreasePlayerMedal(int amount)
         {
-            CurrentPlayerMedal -= amounts;
+            CurrentPlayerMedal -= amount;
 
             // 0になったら50追加
             while (CurrentPlayerMedal < 0)
@@ -61,9 +61,9 @@ namespace ReelSpinGame_Datas
         }
 
         // IN増加
-        public void IncreaseInMedal(int amounts) => CurrentInMedal += amounts;
+        public void IncreaseInMedal(int amount) => CurrentInMedal += amount;
         // OUT増加
-        public void IncreaseOutMedal(int amounts) => CurrentOutMedal += amounts;
+        public void IncreaseOutMedal(int amount) => CurrentOutMedal += amount;
 
         // データ書き込み
         public List<int> SaveData()

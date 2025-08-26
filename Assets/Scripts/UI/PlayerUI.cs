@@ -37,8 +37,8 @@ namespace ReelSpinGame_UI.Player
             string buffer = "";
 
             // メダルが増える演出用
-            int playerMedal = playerDatabase.PlayerMedalData.CurrentPlayerMedal - medalManager.GetRemainingPayouts();
-            int outMedal = playerDatabase.PlayerMedalData.CurrentOutMedal - medalManager.GetRemainingPayouts();
+            int playerMedal = playerDatabase.PlayerMedalData.CurrentPlayerMedal - medalManager.GetRemainingPayout();
+            int outMedal = playerDatabase.PlayerMedalData.CurrentOutMedal - medalManager.GetRemainingPayout();
 
             buffer += "Player-" + "\n";
             buffer += "Total:" + playerDatabase.TotalGames + "\n";
@@ -80,7 +80,7 @@ namespace ReelSpinGame_UI.Player
                 // BIG時の色
                 buffer += "BigColor:" + playerDatabase.BonusHitRecord[^1].BigColor + "\n";
                 // 獲得枚数
-                buffer += "BonusPayouts:" + playerDatabase.BonusHitRecord[^1].BonusPayouts + "\n" + "\n";
+                buffer += "BonusPayout:" + playerDatabase.BonusHitRecord[^1].BonusPayout + "\n" + "\n";
             }
             // ボーナス履歴(ボーナス開始ゲーム数がまだ記録されていない場合は一つ前を表示)
             else if (playerDatabase.BonusHitRecord.Count > 1 && playerDatabase.BonusHitRecord[^1].BonusStartGame == 0)
@@ -94,7 +94,7 @@ namespace ReelSpinGame_UI.Player
                 // BIG時の色
                 buffer += "BigColor:" + playerDatabase.BonusHitRecord[^2].BigColor + "\n";
                 // 獲得枚数
-                buffer += "BonusPayouts:" + playerDatabase.BonusHitRecord[^2].BonusPayouts + "\n" + "\n";
+                buffer += "BonusPayout:" + playerDatabase.BonusHitRecord[^2].BonusPayout + "\n" + "\n";
             }
             else
             {
@@ -107,7 +107,7 @@ namespace ReelSpinGame_UI.Player
                 // BIG時の色
                 buffer += "BigColor:" + "\n";
                 // 獲得枚数
-                buffer += "BonusPayouts:" + "\n" + "\n";
+                buffer += "BonusPayout:" + "\n" + "\n";
             }
 
             text.text = buffer;

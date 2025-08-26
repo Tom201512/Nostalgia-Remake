@@ -14,19 +14,19 @@ namespace ReelSpinGame_Save.Medal
 
         // var
         // クレジット枚数
-        public int Credits { get; private set; }
+        public int Credit { get; private set; }
         // 最高ベット枚数
-        public int MaxBetAmounts { get; private set; }
+        public int MaxBetAmount { get; private set; }
         // 最後にかけたメダル枚数
-        public int LastBetAmounts { get; private set; }
+        public int LastBetAmount { get; private set; }
         // リプレイ状態か
         public bool HasReplay { get; private set; }
 
         public MedalSave()
         {
-            Credits = 0;
-            MaxBetAmounts = MaxBetLimit;
-            LastBetAmounts = 0;
+            Credit = 0;
+            MaxBetAmount = MaxBetLimit;
+            LastBetAmount = 0;
             HasReplay = false;
         }
 
@@ -35,9 +35,9 @@ namespace ReelSpinGame_Save.Medal
         // データ記録
         public void RecordData(MedalSystemData medal)
         {
-            Credits = medal.Credits;
-            MaxBetAmounts = medal.MaxBetAmounts;
-            LastBetAmounts = medal.LastBetAmounts;
+            Credit = medal.Credit;
+            MaxBetAmount = medal.MaxBetAmount;
+            LastBetAmount = medal.LastBetAmount;
             HasReplay = medal.HasReplay;
         }
 
@@ -46,9 +46,9 @@ namespace ReelSpinGame_Save.Medal
         {
             // 変数を格納
             List<int> data = new List<int>();
-            data.Add(Credits);
-            data.Add(MaxBetAmounts);
-            data.Add(LastBetAmounts);
+            data.Add(Credit);
+            data.Add(MaxBetAmount);
+            data.Add(LastBetAmount);
             data.Add(HasReplay ? 1 : 0);
 
             // デバッグ用
@@ -67,16 +67,16 @@ namespace ReelSpinGame_Save.Medal
             try
             {
                 // クレジット枚数
-                Credits = br.ReadInt32();
-                //Debug.Log("Credits:" + Credits);
+                Credit = br.ReadInt32();
+                //Debug.Log("Credit:" + Credit);
 
                 // 最大ベット枚数
-                MaxBetAmounts = br.ReadInt32();
-                //Debug.Log("MaxBetAmounts:" + MaxBetAmounts);
+                MaxBetAmount = br.ReadInt32();
+                //Debug.Log("MaxBetAmount:" + MaxBetAmount);
 
                 // 最後に掛けた枚数
-                LastBetAmounts = br.ReadInt32();
-                //Debug.Log("LastBetAmounts:" + LastBetAmounts);
+                LastBetAmount = br.ReadInt32();
+                //Debug.Log("LastBetAmount:" + LastBetAmount);
 
                 // リプレイ状態
                 HasReplay = (br.ReadInt32() == 1 ? true : false);

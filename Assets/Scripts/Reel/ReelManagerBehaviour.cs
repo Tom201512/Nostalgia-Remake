@@ -8,7 +8,7 @@ namespace ReelSpinGame_Reels
 
         // const 
         // リール数
-        public const int ReelAmounts = 3;
+        public const int ReelAmount = 3;
         // リール識別用ID
         public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
         // 最大 ランダムテーブル数(1~6)

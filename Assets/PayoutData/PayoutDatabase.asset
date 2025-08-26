@@ -26,83 +26,83 @@ MonoBehaviour:
   normalPayoutDatas:
   - flagID: 1
     combinations: 000000
-    payouts: 15
+    payout: 15
     bonusType: 1
     hasReplayOrJac: 0
   - flagID: 1
     combinations: 010101
-    payouts: 15
+    payout: 15
     bonusType: 1
     hasReplayOrJac: 0
   - flagID: 1
     combinations: 020200
-    payouts: 15
+    payout: 15
     bonusType: 1
     hasReplayOrJac: 0
   - flagID: 2
     combinations: 020202
-    payouts: 15
+    payout: 15
     bonusType: 2
     hasReplayOrJac: 0
   - flagID: 3
     combinations: 030707
-    payouts: 2
+    payout: 2
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 4
     combinations: 030707
-    payouts: 2
+    payout: 2
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 5
     combinations: 040404
-    payouts: 15
+    payout: 15
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 6
     combinations: 050505
-    payouts: 10
+    payout: 10
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 7
     combinations: 060606
-    payouts: 0
+    payout: 0
     bonusType: 0
     hasReplayOrJac: 1
   bigPayoutDatas:
   - flagID: 3
     combinations: 030707
-    payouts: 2
+    payout: 2
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 4
     combinations: 030707
-    payouts: 2
+    payout: 2
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 5
     combinations: 040404
-    payouts: 15
+    payout: 15
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 6
     combinations: 050505
-    payouts: 10
+    payout: 10
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 7
     combinations: 060606
-    payouts: 3
+    payout: 3
     bonusType: 0
     hasReplayOrJac: 1
   jacPayoutDatas:
   - flagID: 8
     combinations: 000606
-    payouts: 15
+    payout: 15
     bonusType: 0
     hasReplayOrJac: 0
   - flagID: 8
     combinations: 060606
-    payouts: 15
+    payout: 15
     bonusType: 0
     hasReplayOrJac: 0

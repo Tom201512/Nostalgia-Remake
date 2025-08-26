@@ -18,7 +18,7 @@ namespace ReelSpinGame_Datas
         // 入賞時ゲーム数(ボーナスを入賞させたゲーム)
         public int BonusStartGame { get; private set; }
         // ボーナス獲得枚数
-        public int BonusPayouts { get; private set; }
+        public int BonusPayout { get; private set; }
         // BIG当選時の色
         public BigColor BigColor { get; private set; }
 
@@ -28,7 +28,7 @@ namespace ReelSpinGame_Datas
             BonusID = BonusTypeID.BonusNone;
             BonusHitGame = 0;
             BonusStartGame = 0;
-            BonusPayouts = 0;
+            BonusPayout = 0;
             BigColor = BigColor.None;
         }
 
@@ -40,7 +40,7 @@ namespace ReelSpinGame_Datas
         // 入賞時ゲーム数セット
         public void SetBonusStartGame(int game) => BonusStartGame = game;
         // ボーナス獲得枚数変更
-        public void ChangeBonusPayouts(int amounts) => BonusPayouts += amounts;
+        public void ChangeBonusPayout(int amount) => BonusPayout += amount;
         // ビッグチャンス時の色セット
         public void SetBigChanceColor(BigColor color) => BigColor = color;
 
@@ -52,7 +52,7 @@ namespace ReelSpinGame_Datas
             data.Add((int)BonusID);
             data.Add(BonusHitGame);
             data.Add(BonusStartGame);
-            data.Add(BonusPayouts);
+            data.Add(BonusPayout);
             data.Add((int)BigColor);
 
             return data;
@@ -75,8 +75,8 @@ namespace ReelSpinGame_Datas
                 BonusStartGame = br.ReadInt32();
                 //Debug.Log("BonusStartGame:" + BonusStartGame);
                 // ボーナス払い出し枚数
-                BonusPayouts = br.ReadInt32();
-                //Debug.Log("BonusPayouts:" + BonusPayouts);
+                BonusPayout = br.ReadInt32();
+                //Debug.Log("BonusPayout:" + BonusPayout);
                 // BIG時の色
                 BigColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
                 //Debug.Log("BigColor:" + BigColor);

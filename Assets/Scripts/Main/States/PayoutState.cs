@@ -40,7 +40,7 @@ namespace ReelSpinGame_State.PayoutState
             HasBonusFinished = false;
 
             // 払い出し確認
-            StartCheckPayout(gM.Medal.GetLastBetAmounts());
+            StartCheckPayout(gM.Medal.GetLastBetAmount());
 
             // 払い出しの結果をデータに反映
             PayoutUpdate();
@@ -59,12 +59,12 @@ namespace ReelSpinGame_State.PayoutState
             if (gM.Player.CurrentGames == MaxZoneGames &&
                 gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
-                gM.Bonus.ResetZonePayouts();
+                gM.Bonus.ResetZonePayout();
             }
 
             // 払い出し開始
             // オートがあり速度が高速以上なら払い出し演出はカット
-            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payouts, 
+            gM.Medal.StartPayout(gM.Reel.GetPayoutResultData().Payout, 
                 gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
 
             // リプレイ処理
@@ -101,7 +101,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
 
             // 払い出しが終わったら停止
-            if (gM.Medal.GetRemainingPayouts() == 0)
+            if (gM.Medal.GetRemainingPayout() == 0)
             {
                 gM.Effect.StopLoopSound();
 
@@ -137,11 +137,11 @@ namespace ReelSpinGame_State.PayoutState
         }
 
         // 払い出し確認
-        private void StartCheckPayout(int betAmounts)
+        private void StartCheckPayout(int betAmount)
         {
             if (!gM.Reel.GetIsReelWorking())
             {
-                gM.Reel.StartCheckPayouts(betAmounts);
+                gM.Reel.StartCheckPayout(betAmount);
             }
         }
 
@@ -152,7 +152,7 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
             {
                 // 最後に賭けた枚数をOUTに反映
-                gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Medal.GetLastBetAmounts());
+                gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Medal.GetLastBetAmount());
                 gM.Medal.EnableReplay();
             }
             else if (gM.Medal.GetHasReplay())
@@ -165,20 +165,20 @@ namespace ReelSpinGame_State.PayoutState
         private void PayoutUpdate()
         {
             // プレイヤーメダルの増加、OUT枚数の増加(データのみ変更)
-            gM.Player.PlayerMedalData.IncreasePlayerMedal(gM.Reel.GetPayoutResultData().Payouts);
-            gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Reel.GetPayoutResultData().Payouts);
+            gM.Player.PlayerMedalData.IncreasePlayerMedal(gM.Reel.GetPayoutResultData().Payout);
+            gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Reel.GetPayoutResultData().Payout);
 
             // ボーナス中なら各ボーナスの払い出しを増やし状態を変化させる
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
-                gM.Bonus.ChangeBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
-                //gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
+                gM.Bonus.ChangeBonusPayout(gM.Reel.GetPayoutResultData().Payout);
+                //gM.Player.ChangeLastBonusPayout(gM.Reel.GetPayoutResultData().Payout);
             }
 
             // ゾーン区間(50G)にいる間はその払い出しを計算
             if(gM.Bonus.GetHasZone())
             {
-                gM.Bonus.ChangeZonePayouts(gM.Reel.GetPayoutResultData().Payouts);
+                gM.Bonus.ChangeZonePayout(gM.Reel.GetPayoutResultData().Payout);
             }
         }
 
@@ -218,10 +218,10 @@ namespace ReelSpinGame_State.PayoutState
         private void StartEffect()
         {
             // 払い出しがあったらフラッシュを開始させる
-            if (gM.Reel.GetPayoutResultData().Payouts != 0)
+            if (gM.Reel.GetPayoutResultData().Payout != 0)
             {
                 gM.Effect.StartPayoutReelFlash(gM.Reel.GetPayoutResultData().PayoutLines,
-                    gM.Lots.GetCurrentFlag() == FlagId.FlagJac, gM.Reel.GetPayoutResultData().Payouts);
+                    gM.Lots.GetCurrentFlag() == FlagId.FlagJac, gM.Reel.GetPayoutResultData().Payout);
             }
 
             // ボーナス中はビタハズシ成功でフラッシュ
@@ -273,7 +273,7 @@ namespace ReelSpinGame_State.PayoutState
         private void StartBonus()
         {
             // リールから揃ったボーナス図柄の色を得る
-            BigColor color = gM.Reel.GetBigLinedUpCounts(gM.Medal.GetLastBetAmounts(), 3);
+            BigColor color = gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 3);
 
             // ビッグチャンスの場合
             if (gM.Reel.GetPayoutResultData().BonusID == (int)BonusTypeID.BonusBIG)
@@ -293,9 +293,9 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 15枚の払い出しを記録
-            //gM.Player.ChangeLastBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
-            gM.Bonus.ChangeBonusPayouts(gM.Reel.GetPayoutResultData().Payouts);
-            gM.Bonus.ChangeZonePayouts(gM.Reel.GetPayoutResultData().Payouts);
+            //gM.Player.ChangeLastBonusPayout(gM.Reel.GetPayoutResultData().Payout);
+            gM.Bonus.ChangeBonusPayout(gM.Reel.GetPayoutResultData().Payout);
+            gM.Bonus.ChangeZonePayout(gM.Reel.GetPayoutResultData().Payout);
             // カウンタリセット
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
@@ -357,7 +357,7 @@ namespace ReelSpinGame_State.PayoutState
                 }
                 else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
                 {
-                    gM.Bonus.CheckBonusGameStatus(gM.Reel.GetPayoutResultData().Payouts > 0);
+                    gM.Bonus.CheckBonusGameStatus(gM.Reel.GetPayoutResultData().Payout > 0);
 
                 }
                 
@@ -376,14 +376,14 @@ namespace ReelSpinGame_State.PayoutState
         {
             // 小役が当選していたら増加させる
             // リプレイでは増やさない(0増加)
-            if (gM.Reel.GetPayoutResultData().Payouts > 0 || gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
+            if (gM.Reel.GetPayoutResultData().Payout > 0 || gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
             {
-                gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payouts);
+                gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payout);
             }
             // それ以外は減少
             else
             {
-                gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmounts());
+                gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
             }
         }
 

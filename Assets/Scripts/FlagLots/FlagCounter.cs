@@ -31,31 +31,31 @@ namespace ReelSpinGame_Lots.FlagCounter
         public void SetCounter(int value) => Counter = value;
 
         // 小役カウンタの増加
-        public void IncreaseCounter(int payoutAmounts)
+        public void IncreaseCounter(int payoutAmount)
         {
-            Counter += CounterDecrease * payoutAmounts;
+            Counter += CounterDecrease * payoutAmount;
             //Debug.Log("Increased Counter Current:" + Counter);
         }
 
         // 小役カウンタの減少
-        public void DecreaseCounter(int settingNum, int betAmounts)
+        public void DecreaseCounter(int settingNum, int betAmount)
         {
             // 設定5
             if(settingNum == 5)
             {
-                Counter -= betAmounts * CounterIncrease5;
+                Counter -= betAmount * CounterIncrease5;
             }
 
             // 設定6
             else if(settingNum == 6)
             {
-                Counter -= betAmounts * CounterIncrease6;
+                Counter -= betAmount * CounterIncrease6;
             }
 
             // それ以外
             else
             {
-                Counter -= betAmounts * CounterIncreaseDefault;
+                Counter -= betAmount * CounterIncreaseDefault;
             }
 
             //Debug.Log("Decreased Counter Current:" + Counter);

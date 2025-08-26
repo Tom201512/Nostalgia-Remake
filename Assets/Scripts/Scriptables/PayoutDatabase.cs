@@ -61,7 +61,7 @@ namespace ReelSpinGame_Datas
 
             betCondition = (byte)byteBuffer[(int)ReadPos.BetCondition];
             // 読み込み
-            for (int i = 0; i < ReelAmounts; i++)
+            for (int i = 0; i < ReelAmount; i++)
             {
                 payoutLines.Add(byteBuffer[i + (int)ReadPos.PayoutLineStart]);
                 combinationBuffer += payoutLines[i];
@@ -78,7 +78,7 @@ namespace ReelSpinGame_Datas
     {
         // const
         // バッファからデータを読み込む位置
-        public enum ReadPos { FlagID = 0, CombinationsStart = 1, Payout = 4, Bonus, IsReplay }
+        public enum ReadPos { FlagID = 0, CombinationStart = 1, Payout = 4, Bonus, IsReplay }
         // ANYの判定用ID
         public const int AnySymbol = 7;
 
@@ -86,17 +86,17 @@ namespace ReelSpinGame_Datas
         // フラグID
         [SerializeField] private byte flagID;
         // 図柄構成
-        [SerializeField] private List<byte> combinations;
+        [SerializeField] private List<byte> combination;
         // 払い出し枚数
-        [SerializeField] private byte payouts;
+        [SerializeField] private byte payout;
         // 当選するボーナス
         [SerializeField] private byte bonusType;
         // リプレイか(またはJAC-IN)
         [SerializeField] private bool hasReplayOrJac;
 
         public byte FlagID { get { return flagID; }}
-        public List<byte> Combinations { get { return combinations; } }
-        public byte Payouts { get { return payouts; } }
+        public List<byte> Combination { get { return combination; } }
+        public byte Payout { get { return payout; } }
         public byte BonusType { get { return bonusType; } }
         public bool HasReplayOrJac { get { return hasReplayOrJac; } }
 
@@ -105,7 +105,7 @@ namespace ReelSpinGame_Datas
             // ストリームからデータを得る
             byte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), byte.Parse);
             // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
-            combinations = new List<byte>();
+            combination = new List<byte>();
             // デバッグ用
             string combinationBuffer = "";
 
@@ -114,20 +114,20 @@ namespace ReelSpinGame_Datas
             flagID = byteBuffer[(int)ReadPos.FlagID];
 
             // 組み合わせ
-            for (int i = 0; i < ReelAmounts; i++)
+            for (int i = 0; i < ReelAmount; i++)
             {
-                combinations.Add(byteBuffer[i + (int)ReadPos.CombinationsStart]);
-                combinationBuffer += combinations[i];
+                combination.Add(byteBuffer[i + (int)ReadPos.CombinationStart]);
+                combinationBuffer += combination[i];
             }
             // 払い出し
-            payouts = byteBuffer[(int)ReadPos.Payout];
+            payout = byteBuffer[(int)ReadPos.Payout];
             // ボーナス
             bonusType = byteBuffer[(int)ReadPos.Bonus];
             // リプレイの有無
             hasReplayOrJac = byteBuffer[(int)ReadPos.IsReplay] == 1;
 
             //デバッグ用
-            //Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payouts:" + payouts +
+            //Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payout:" + payout +
                 //"Bonus:" + bonusType + "HasReplay:" + hasReplayOrJac);
         }
     }

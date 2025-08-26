@@ -29,7 +29,7 @@ namespace ReelSpinGame_Bonus
         public const int JacHits = 8;
 
         // 最高で記録できる獲得枚数
-        public const int MaxRecordPayouts = 99999;
+        public const int MaxRecordPayout = 99999;
         // 連チャン区間であるゲーム数
         public const int MaxZoneGames = 50;
 
@@ -54,13 +54,13 @@ namespace ReelSpinGame_Bonus
         public int RemainingJacHits { get; set; }
 
         // このボーナスでの獲得枚数
-        public int CurrentBonusPayouts { get; set; }
+        public int CurrentBonusPayout { get; set; }
         // 連チャン区間中のボーナス枚数
-        public int CurrentZonePayouts { get; set; }
+        public int CurrentZonePayout { get; set; }
         // 連チャン区間にいるか
         public bool HasZone { get; set; }
         // 最後に獲得した連チャン区間の枚数
-        public int LastZonePayouts { get; set; }
+        public int LastZonePayout { get; set; }
 
         public BonusSystemData()
         {
@@ -71,9 +71,9 @@ namespace ReelSpinGame_Bonus
             RemainingJacIn = 0;
             RemainingJacHits = 0;
             RemainingJacGames = 0;
-            CurrentBonusPayouts = 0;
-            CurrentZonePayouts = 0;
-            LastZonePayouts = 0;
+            CurrentBonusPayout = 0;
+            CurrentZonePayout = 0;
+            LastZonePayout = 0;
             HasZone = false;
         }
 
@@ -90,10 +90,10 @@ namespace ReelSpinGame_Bonus
             data.Add(RemainingJacIn);
             data.Add(RemainingJacHits);
             data.Add(RemainingJacGames);
-            data.Add(CurrentBonusPayouts);
-            data.Add(CurrentZonePayouts);
+            data.Add(CurrentBonusPayout);
+            data.Add(CurrentZonePayout);
             data.Add(HasZone ? 1 : 0);
-            data.Add(LastZonePayouts);
+            data.Add(LastZonePayout);
 
             // デバッグ用
             //Debug.Log("BonusData:");
@@ -132,16 +132,16 @@ namespace ReelSpinGame_Bonus
                 RemainingJacGames = br.ReadInt32();
                 //Debug.Log("RemainingJacGames:" + RemainingJacGames);
                 // 現在のボーナス獲得枚数
-                CurrentBonusPayouts = br.ReadInt32();
-                //Debug.Log("CurrentBonusPayouts:" + CurrentBonusPayouts);
+                CurrentBonusPayout = br.ReadInt32();
+                //Debug.Log("CurrentBonusPayout:" + CurrentBonusPayout);
                 // 連チャン区間中のボーナス枚数
-                CurrentZonePayouts = br.ReadInt32();
-                //Debug.Log("CurrentZonePayouts:" + CurrentZonePayouts);
+                CurrentZonePayout = br.ReadInt32();
+                //Debug.Log("CurrentZonePayout:" + CurrentZonePayout);
                 // 連チャン区間中か
                 HasZone = (br.ReadInt32() == 1 ? true : false);
                 //Debug.Log("HasZone:" + HasZone);
                 // 最終連チャン区間
-                LastZonePayouts = br.ReadInt32();
+                LastZonePayout = br.ReadInt32();
 
             }
             catch (Exception e)
