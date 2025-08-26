@@ -112,10 +112,9 @@ namespace ReelSpinGame_Medal
                     // コルーチンを無視する場合
                     if (cutCoroutine)
                     {
-                        for(int i = 0; i < data.RemainingBet; i++)
-                        {
-                            data.InsertOneMedal();
-                        }
+                        data.CurrentBet = amount;
+                        data.system.Credit = Math.Clamp(data.system.Credit -= amount, MinCredit, MaxCredit);
+                        data.FinishedBet = true;
 
                         // ランプ、セグメント更新
                         medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
@@ -143,22 +142,19 @@ namespace ReelSpinGame_Medal
                 if (amount > 0)
                 {
                     // 払い出し枚数の設定
-                    data.RemainingPayout = Math.Clamp(data.RemainingPayout + amount, 0, MaxPayout);
+                    data.RemainingPayout = Math.Clamp(amount, 0, MaxPayout);
                     // クレジットの増加
-                    data.ChangeCredit(amount);
+                    data.ChangeCredit(data.RemainingPayout);
 
                     // コルーチンを無視する場合
                     if (cutCoroutine)
                     {
-                        while(data.RemainingPayout > 0)
-                        {
-                            data.PayoutOneMedal();
-                        }
-
+                        data.LastPayoutAmount = data.RemainingPayout;
+                        data.RemainingPayout = 0;
                         // クレジットと払い出しセグメント更新
                         creditSegments.ShowSegmentByNumber(data.system.Credit);
                         payoutSegments.ShowSegmentByNumber(data.LastPayoutAmount);
-
+                        HasMedalUpdate = false;
                     }
                     else
                     {
@@ -185,11 +181,9 @@ namespace ReelSpinGame_Medal
             // コルーチンを無視する場合
             if(hasCoroutineCut)
             {
-                for (int i = 0; i < data.system.LastBetAmount; i++)
-                {
-                    data.InsertOneMedal();
-                }
-
+                // ベット枚数設定
+                data.CurrentBet = data.system.LastBetAmount;
+                data.FinishedBet = true;
                 // ランプ、セグメント更新
                 medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
                 // クレジット更新

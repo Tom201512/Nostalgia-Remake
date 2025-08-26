@@ -1102,7 +1102,7 @@ MonoBehaviour:
   keyToAutoOrderChange: 111
   keyToAutoSpeedChange: 115
   keyToWaitCutToggle: 119
-  deleteSave: 0
+  deleteSave: 1
   debugSetting: 6
 --- !u!4 &460868893
 Transform:
