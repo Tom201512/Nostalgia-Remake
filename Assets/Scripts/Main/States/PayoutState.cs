@@ -18,11 +18,6 @@ namespace ReelSpinGame_State.PayoutState
         // ゲームマネージャ
         private GameManager gM;
 
-        // ボーナスが開始されたか
-        private bool HasBonusStarted;
-        // ボーナスが終了したか
-        private bool HasBonusFinished;
-
         // コンストラクタ
         public PayoutState(GameManager gameManager)
         {
@@ -34,10 +29,6 @@ namespace ReelSpinGame_State.PayoutState
         {
             // 高速オートが解除されたかチェック
             gM.Auto.CheckFastAutoCancelled();
-
-            // ボーナス開始されたかリセット
-            HasBonusStarted = false;
-            HasBonusFinished = false;
 
             // 払い出し確認
             StartCheckPayout(gM.Medal.GetLastBetAmount());
@@ -76,49 +67,20 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Auto.CheckRemainingAuto();
             }
 
-            // オートが切れたら音声を有効にする
-            if (!gM.Auto.HasAuto)
-            {
-                EnableSounds();
-            }
-
             // セーブ処理
             SaveData();
 
-            // ここから下は演出
-
-            // 演出開始(高速オートが無効であることが条件)
-            if(!gM.Auto.HasAuto ||
-                (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
-            {
-                StartEffect();
-            }
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.EffectState);
         }
 
         public void StateUpdate()
         {
-            // UI更新
-            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
 
-            // 払い出しが終わったら停止
-            if (gM.Medal.GetRemainingPayout() == 0)
-            {
-                gM.Effect.StopLoopSound();
-
-                // 払い出し、各種演出(フラッシュ、BGMなど)の待機処理が終わっていたら投入状態へ
-                if (gM.Effect.HasEffectFinished())
-                {
-                    gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
-                }
-            }
         }
 
         public void StateEnd()
         {
-            // UI更新
-            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
-            // ボーナス演出更新
-            BonusEffectUpdate();
+
         }
 
         // データのセーブ
@@ -209,63 +171,12 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gM.Medal.ChangeMaxBet(3);
 
-                // 終了ファンファーレ再生のフラグを立てる
-                HasBonusFinished = true;
-            }
-        }
-
-        // 演出開始
-        private void StartEffect()
-        {
-            // 払い出しがあったらフラッシュを開始させる
-            if (gM.Reel.GetPayoutResultData().Payout != 0)
-            {
-                gM.Effect.StartPayoutReelFlash(gM.Reel.GetPayoutResultData().PayoutLines,
-                    gM.Lots.GetCurrentFlag() == FlagId.FlagJac, gM.Reel.GetPayoutResultData().Payout);
-            }
-
-            // ボーナス中はビタハズシ成功でフラッシュ
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
-                gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
-            {
-                // 11番、17番を押した場合はフラッシュ
-                if (gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 10 ||
-                        gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 16)
+                // 終了ファンファーレ再生のフラグを立てる(通常オートで回している場合)
+                if (!gM.Auto.HasAuto ||
+                 (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
                 {
-                    gM.Effect.StartVFlash(1);
+                    gM.Effect.SetHasBonusFinished();
                 }
-            }
-
-            // 通常時
-            else if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
-            {
-                // リプレイなら1秒待機させてフラッシュ
-                if (gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
-                {
-                    gM.Effect.StartReplayEffect(gM.Reel.GetPayoutResultData().PayoutLines);
-                }
-
-                // 通常時BIG, REG成立時に1/6でフラッシュ
-                else if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig || gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
-                {
-                    gM.Effect.StartVFlash(6);
-                }
-
-                // 通常時はずれの場合、すでにボーナスが当選していたら1/6でフラッシュ
-                else if (gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone)
-                {
-                    gM.Effect.StartVFlash(6);
-                }
-            }
-
-            // ファンファーレの再生
-            if (HasBonusStarted)
-            {
-                gM.Effect.StartBonusStartEffect();
-            }
-            else if (HasBonusFinished)
-            {
-                gM.Effect.StartBonusEndEffect();
             }
         }
 
@@ -300,8 +211,13 @@ namespace ReelSpinGame_State.PayoutState
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
             //gM.Player.SetLastBonusStart();
-            // ボーナス演出を開始
-            HasBonusStarted = true;
+
+            // ファンファーレ再生のフラグを立てる(通常オートで回している場合)
+            if (!gM.Auto.HasAuto ||
+             (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
+            {
+                gM.Effect.SetHasBonusStarted();
+            }
         }
 
         // ボーナスをストックさせる
@@ -385,22 +301,6 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
             }
-        }
-
-        // ボーナス関連の演出更新
-        private void BonusEffectUpdate()
-        {
-            // ボーナス中のランプ処理
-            gM.Bonus.UpdateSegments();
-            // ボーナス中のBGM処理
-            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), false);
-        }
-
-        // 高速オート処理終了時のSE,BGMの再生
-        private void EnableSounds()
-        {
-            // BGM, SEのミュート解除
-            gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
         }
     }
 }

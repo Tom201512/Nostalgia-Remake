@@ -12,7 +12,7 @@ public class MainGameFlow
     // const
 
     //ゲーム状態シリアライズ
-    public enum GameStates { Init, Insert, FlagLots, Wait, Playing, Payout}
+    public enum GameStates { Init, Insert, FlagLots, Wait, Playing, Payout, Effect}
     // var
     // 処理を止める用のタイマー
     private Timer flowStopTimer;
@@ -33,6 +33,8 @@ public class MainGameFlow
     public PlayingState PlayingState { get; private set; }
     // メダル払い出し
     public PayoutState PayoutState { get; private set; }
+    // 演出
+    public EffectState EffectState { get; private set; }
 
     // コンストラクタ
     public MainGameFlow(GameManager gameManager)
@@ -46,6 +48,7 @@ public class MainGameFlow
         WaitState = new WaitState(gameManager);
         PlayingState = new PlayingState(gameManager);
         PayoutState = new PayoutState(gameManager);
+        EffectState = new EffectState(gameManager);
 
         stateManager = new StateManager(InitState);
     }

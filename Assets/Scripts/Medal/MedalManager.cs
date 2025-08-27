@@ -28,6 +28,8 @@ namespace ReelSpinGame_Medal
 
         // メダルの更新処理中か
         public bool HasMedalUpdate { get; private set; }
+        // セグメントを更新中か
+        public bool HasSegmentUpdate { get; private set; }
         // メダルが投入されたか
         public delegate void MedalHasInsertEvent();
         public event MedalHasInsertEvent HasMedalInsert;
@@ -36,6 +38,7 @@ namespace ReelSpinGame_Medal
         {
             data = new MedalBehavior();
             HasMedalUpdate = false;
+            HasSegmentUpdate = false;
         }
 
         void Start()
@@ -86,8 +89,11 @@ namespace ReelSpinGame_Medal
             }
         }
 
-        // 数値を変える
+        // MAXベット枚数変更
         public int ChangeMaxBet(int amount) => data.system.MaxBetAmount = Math.Clamp(amount, 0, MaxBetLimit);
+
+        // 払い出しセグメント更新を開始する
+        public void StartSegmentUpdate() => HasSegmentUpdate = true;
 
         // MAX_BET用の処理
         public void StartMAXBet()
@@ -235,6 +241,13 @@ namespace ReelSpinGame_Medal
         private IEnumerator UpdatePayout()
         {
             HasMedalUpdate = true;
+
+            // セグメント更新が入るまで待機
+            while(!HasSegmentUpdate)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
             // 払い出し処理
             while (data.RemainingPayout > 0)
             {

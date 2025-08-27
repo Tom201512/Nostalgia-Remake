@@ -1,3 +1,4 @@
+using ReelSpinGame_Bonus;
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
@@ -5,10 +6,11 @@ using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_Reels.Payout.PayoutChecker;
 
 namespace ReelSpinGame_Effect
 {
@@ -19,7 +21,6 @@ namespace ReelSpinGame_Effect
         // const
         // リプレイ時に待機させる時間(秒)
         const float ReplayWaitTime = 1.0f;
-
         // Vフラッシュ時の待機時間(秒)
         const float VFlashWaitTime = 1.0f;
 
@@ -31,12 +32,22 @@ namespace ReelSpinGame_Effect
 
         // スタート音に予告音をつけるか
         [SerializeField] private bool hasSPStartSound;
-        // ボーナス処理で待機中か
-        public bool HasFanfareUpdate { get; private set; }
+        // 払い出し前演出処理中か
+        public bool HasBeforePayoutEffect { get; private set; }
+        // 払い出し演出を開始したか
+        public bool HasPayoutEffectStart { get; private set; }
+        // 払い出し後演出が処理中か
+        public bool HasAfterPayoutEffect { get; private set; }
+
         // ビッグチャンス時の色
         public BigColor BigChanceColor { get; private set; }
         // 直前のボーナス状態(同じBGMが再生されていないかチェック用)
         private BonusStatus lastBonusStatus;
+
+        // ボーナスが開始されたか
+        public bool HasBonusStart { get; private set; }
+        // ボーナスが終了したか
+        public bool HasBonusFinished { get; private set; }
 
         // リールのオブジェクト
         [SerializeField] private List<ReelObject> reelObjects;
@@ -48,17 +59,30 @@ namespace ReelSpinGame_Effect
             soundManager = GetComponent<SoundManager>();
             // リールオブジェクト割り当て
             flashManager.SetReelObjects(reelObjects);
+            HasBonusStart = false;
+            HasBonusFinished = false;
+            HasBeforePayoutEffect = false;
+            HasAfterPayoutEffect = false;
         }
 
-        // 演出が終了しているか(サウンド、フラッシュ、ボーナスファンファーレのすべてが停止中)
-        public bool HasEffectFinished() => !flashManager.HasFlashWait && !soundManager.GetSoundEffectHasLoop() && !HasFanfareUpdate;
+        // フラッシュの待機中か
+        public bool GetHasFlashWait() => flashManager.HasFlashWait;
+        // 音声, BGMが止まっているか
+        public bool GetAllSoundStopped() => soundManager.GetBGMStopped() && soundManager.GetSoundEffectStopped();
+
+        // 数値変更
+        public void SetHasPayoutEffectStart() => HasPayoutEffectStart = true;
+        // ボーナス開始されたか
+        public void SetHasBonusStarted() => HasBonusStart = true;
+        // ボーナスが終了したか
+        public void SetHasBonusFinished() => HasBonusFinished = true;
 
         // フラッシュ関連
         // リール全点灯
-        public void TurnOnAllReels(bool isJacGame)
+        public void TurnOnAllReels(BonusStatus bonusStatus)
         {
             // JAC GAME中は中段のみ光らせる
-            if (isJacGame)
+            if (bonusStatus == BonusStatus.BonusJACGames)
             {
                 flashManager.EnableJacGameLight();
             }
@@ -70,10 +94,7 @@ namespace ReelSpinGame_Effect
             // JAC中のライト処理をする
             foreach (ReelObject reel in reelObjects)
             {
-                if (reel.HasJacModeLight != isJacGame)
-                {
-                    reel.HasJacModeLight = isJacGame;
-                }
+                reel.HasJacModeLight = bonusStatus == BonusStatus.BonusJACGames;
             }
         }
 
@@ -86,7 +107,7 @@ namespace ReelSpinGame_Effect
         // ウェイト音再生
         public void StartWaitEffect() => soundManager.PlaySoundLoop(soundManager.SoundDB.SE.Wait);
 
-        // スタート音
+        // スタート時の演出
         public void StartLeverOnEffect(FlagId flag, BonusTypeID holding, BonusStatus bonusStatus)
         {
             if(hasSPStartSound)
@@ -148,7 +169,7 @@ namespace ReelSpinGame_Effect
             }
         }
 
-        // 停止音
+        // リール停止時の演出
         public void StartReelStopEffect() => soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Stop);
 
         // リーチ時演出
@@ -168,61 +189,126 @@ namespace ReelSpinGame_Effect
             }
         }
 
+        // 払い出し前演出開始
+        public void StartBeforePayoutEffect(FlagId flagID, BonusTypeID holdingBonusID, BonusStatus bonusStatus, bool hasBita)
+        {
+            // 演出を発生させたか
+            bool startEffect = false;
+            // 全ての演出をリセット
+            HasBeforePayoutEffect = false;
+            HasPayoutEffectStart = false;
+            HasAfterPayoutEffect = false;
+
+            // 役ごとのフラッシュを発生
+            switch (flagID)
+            {
+                // BIG時、REG時, またはボーナス当選後のはずれのとき1/6でVフラッシュ発生
+                case FlagId.FlagBig:
+                case FlagId.FlagReg:
+                case FlagId.FlagNone:
+                    if (holdingBonusID != BonusTypeID.BonusNone && OriginalRandomLot.LotRandomByNum(6))
+                    {
+                        flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
+                        startEffect = true;
+                    }
+                    break;
+
+
+                // チェリー2枚の場合
+                case FlagId.FlagCherry2:
+                // チェリー4枚の場合
+                case FlagId.FlagCherry4:
+                // ベルの場合:
+                case FlagId.FlagBell:
+                // スイカの場合
+                case FlagId.FlagMelon:
+                // リプレイの場合
+                case FlagId.FlagReplayJacIn:
+                    // 小役ゲーム中にJACINが成立しビタハズシをした場合
+                    if (bonusStatus == BonusStatus.BonusBIGGames && hasBita)
+                    {
+                        flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
+                        startEffect = true;
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            if(startEffect)
+            {
+                StartCoroutine(nameof(UpdateBeforePayoutEffect));
+            }
+        }
+
         // 払い出し演出開始
-        public void StartPayoutReelFlash(List<PayoutLineData> lastPayoutLines, bool isJacFlag, int payout)
+        public void StartPayoutEffect(FlagId flagID, BonusStatus bonusStatus, PayoutResultBuffer payoutResultData, List<PayoutLineData> lastPayoutLines)
         {
-            // フラッシュ再生
-            flashManager.StartPayoutFlash(0f, lastPayoutLines);
+            // 払い出しがあれば再生
+            if (payoutResultData.Payout > 0)
+            {
+                flashManager.StartPayoutFlash(0f, lastPayoutLines);
 
-            // サウンド再生(状態に合わせて変更)
-            // JAC中の払い出し音
-            if (isJacFlag)
-            {
-                soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
+                // サウンド再生(状態に合わせて変更)
+                // JAC役の払い出し音
+                if (flagID == FlagId.FlagJac)
+                {
+                    soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
+                }
+                // 15枚の払い出し音
+                else if (payoutResultData.Payout >= 15)
+                {
+                    soundManager.PlaySoundLoop(soundManager.SoundDB.SE.MaxPayout);
+                }
+                //　それ以外は通常の払い出し音
+                else
+                {
+                    soundManager.PlaySoundLoop(soundManager.SoundDB.SE.NormalPayout);
+                }
             }
-            // 15枚の払い出し音
-            else if (payout >= 15)
+
+            // 通常時のリプレイならフラッシュ再生
+            else if (flagID == FlagId.FlagReplayJacIn && bonusStatus == BonusStatus.BonusNone)
             {
-                soundManager.PlaySoundLoop(soundManager.SoundDB.SE.MaxPayout);
+                flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
+                soundManager.PlaySoundOneShot(soundManager.SoundDB.SE.Replay);
             }
-            //　それ以外は通常の払い出し音
-            else
-            {
-                soundManager.PlaySoundLoop(soundManager.SoundDB.SE.NormalPayout);
-            }
+
+            HasPayoutEffectStart = true;
         }
 
-        // リプレイの演出
-        public void StartReplayEffect(List<PayoutLineData> lastPayoutLines)
+        // 払い出し後演出開始
+        public void StartAfterPayoutEffect()
         {
-            //音再生
-            soundManager.PlaySoundAndWait(soundManager.SoundDB.SE.Replay);
-            // フラッシュさせる
-            flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
-        }
+            // 演出を発生させたか
+            bool startEffect = false;
 
-        // Vフラッシュ演出
-        public void StartVFlash(int probability)
-        {
-            // 確率が0以上ならフラッシュ抽選
-            if (probability > 0 && OriginalRandomLot.LotRandomByNum(probability))
+            // ボーナス開始、終了していれば演出を行う
+            if (HasBonusStart)
             {
-                flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
+                Debug.Log("Fanfare start");
+                StartCoroutine(nameof(UpdateBonusFanfare));
+                startEffect = true;
+            }
+            else if(HasBonusFinished)
+            {
+                Debug.Log("Fanfare end");
+                StartCoroutine(nameof(UpdateBonusEndFanfare));
+                startEffect = true;
+            }
+
+            if(startEffect)
+            {
+                StartCoroutine(nameof(UpdateAfterPayoutEffect));
             }
         }
 
         // ビッグ時の色を割り当てる
         public void SetBigColor(BigColor color) => BigChanceColor = color;
-
-        // ボーナス開始時の演出開始
-        public void StartBonusStartEffect() => StartCoroutine(nameof(UpdateBonusFanfare));
-
-        // ボーナス終了時の演出開始
-        public void StartBonusEndEffect() => StartCoroutine(nameof(UpdateEndFanfare));
-
         // フラッシュ停止
         public void StopReelFlash() => flashManager.StopFlash();
-
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSound();
 
@@ -375,10 +461,39 @@ namespace ReelSpinGame_Effect
 
         // コルーチン
 
+        // 払い出し前演出処理
+        private IEnumerator UpdateBeforePayoutEffect()
+        {
+            HasBeforePayoutEffect = true;
+
+            // 今鳴らしている効果音とフラッシュが止まるのを待つ
+            while (!soundManager.GetSoundEffectStopped() && !flashManager.HasFlashWait)
+            {
+                Debug.Log("Waiting for Before Effect end");
+                yield return new WaitForEndOfFrame();
+            }
+
+            HasBeforePayoutEffect = false;
+        }
+
+        // 払い出し後演出処理
+        private IEnumerator UpdateAfterPayoutEffect()
+        {
+            HasAfterPayoutEffect = true;
+
+            // 今鳴らしている効果音、BGMとフラッシュが止まるのを待つ
+            while (!soundManager.GetSoundEffectStopped() && !soundManager.GetBGMStopped() && !flashManager.HasFlashWait)
+            {
+                Debug.Log("Waiting for After Effect end");
+                yield return new WaitForEndOfFrame();
+            }
+
+            HasAfterPayoutEffect = false;
+        }
+
         // ボーナス当選ファンファーレ再生処理
         private IEnumerator UpdateBonusFanfare()
         {
-            HasFanfareUpdate = true;
             // 今鳴らしている効果音が止まるのを待つ
             while (!soundManager.GetSoundEffectStopped())
             {
@@ -391,13 +506,12 @@ namespace ReelSpinGame_Effect
             {
                 yield return new WaitForEndOfFrame();
             }
-            HasFanfareUpdate = false;
+            HasBonusStart = false;
         }
 
         // ボーナス終了ファンファーレ再生処理
-        private IEnumerator UpdateEndFanfare()
+        private IEnumerator UpdateBonusEndFanfare()
         {
-            HasFanfareUpdate = true;
             // 今鳴らしている効果音が止まるのを待つ
             while (!soundManager.GetSoundEffectStopped())
             {
@@ -408,6 +522,7 @@ namespace ReelSpinGame_Effect
             if (BigChanceColor != BigColor.None)
             {
                 PlayBigEndFanfare();
+                BigChanceColor = BigColor.None;
                 // 今鳴らしているファンファーレが止まるのを待つ
                 while (!soundManager.GetBGMStopped())
                 {
@@ -415,9 +530,7 @@ namespace ReelSpinGame_Effect
                 }
             }
 
-            //Debug.Log("Event End");
-            HasFanfareUpdate = false;
-            BigChanceColor = BigColor.None;
+            HasBonusFinished = false;
             soundManager.StopBGM();
         }
     }

@@ -39,11 +39,13 @@ namespace ReelSpinGame_State.LotsState
             // UI反映
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
 
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
+
         }
 
         public void StateUpdate()
         {
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
+
         }
 
         public void StateEnd()
@@ -85,7 +87,7 @@ namespace ReelSpinGame_State.LotsState
             // リプレイ、またはボーナス中ならライトを点灯させる
             if (gM.Medal.GetHasReplay() || gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
-                gM.Effect.TurnOnAllReels(false);
+                gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus());
             }
             // リプレイでなければINSERTランプ表示
             else

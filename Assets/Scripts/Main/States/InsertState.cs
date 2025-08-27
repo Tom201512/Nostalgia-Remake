@@ -83,7 +83,7 @@ namespace ReelSpinGame_State.InsertState
         {
             gM.Effect.StopReelFlash();
             // リール点灯(JAC中は中段のみ点灯させる)
-            gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
+            gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus());
 
         }
 
