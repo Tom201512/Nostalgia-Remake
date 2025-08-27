@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 namespace ReelSpinGame_Sound
 {
     public class SoundPlayer : MonoBehaviour
     {
         // サウンドプレイヤー
-
-        // const 
 
         // var
         // コンポーネント
@@ -16,15 +15,32 @@ namespace ReelSpinGame_Sound
         public bool HasSoundStopped { get; private set; }
         // ループしている音があるか
         public bool HasLoop { get; private set; }
+        // ループ開始位置
+        public int LoopStart {  get; private set; }
+        // ループ長さ
+        public int LoopLength { get; private set; }
         // 鳴らさないようにするか
         public bool HasLockPlaying;
-
 
         void Awake()
         {
             HasSoundStopped = true;
             HasLockPlaying = false;
             audioSource = GetComponent<AudioSource>();
+            LoopStart = -1;
+            LoopLength = -1;
+        }
+
+        private void Update()
+        {
+            // 位置指定付きのループがある場合は巻き戻す
+            if(HasLoop && LoopStart > -1 && LoopLength > -1)
+            {
+                if (audioSource.timeSamples >= LoopStart + LoopLength)
+                {
+                    audioSource.timeSamples -= LoopLength;
+                }
+            }
         }
 
         private void OnDestroy()
@@ -39,12 +55,27 @@ namespace ReelSpinGame_Sound
         {
             if(!HasLockPlaying)
             {
+                LoopStart = -1;
+                LoopLength = -1;
+
                 audioSource.loop = hasLoop;
                 audioSource.clip = soundSource;
                 audioSource.Play();
                 StartCoroutine(nameof(CheckAudioStopped));
 
                 HasLoop = hasLoop;
+            }
+        }
+
+        // 音再生(ループ位置指定あり)
+        public void PlayAudio(AudioClip soundSource, bool hasLoop, int loopStart, int loopLength)
+        {
+            // ループ位置指定を指定して再生
+            if (!HasLockPlaying)
+            {
+                PlayAudio(soundSource, hasLoop);
+                LoopStart = loopStart;
+                LoopLength = loopLength;
             }
         }
 
@@ -80,10 +111,8 @@ namespace ReelSpinGame_Sound
 
         // ボリューム調整
         public void AdjustVolume(float volume) => audioSource.volume = volume;
-
         // ミュートにするか
         public void ChangeMute(bool value) => audioSource.mute = value;
-
         // 再生不能にするか(いかなる場合でも音を鳴らせなくする)
         public void ChangeLockPlaying(bool value) => HasLockPlaying = value;
     }

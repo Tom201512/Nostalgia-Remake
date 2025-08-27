@@ -18,7 +18,7 @@ namespace ReelSpinGame_Sound
 
         // SE再生
         [SerializeField] private SoundPlayer sePlayer;
-        // BGM再生
+        // BGM再生用
         [SerializeField] private SoundPlayer bgmPlayer;
 
         // 使用中のサウンドパック
@@ -50,21 +50,27 @@ namespace ReelSpinGame_Sound
             SoundDB = SoundDatabases[databaseID];
         }
 
-        // 指定した音を1回再生
-        public void PlaySoundOneShot(AudioClip sound)
+        // 指定したSEを1回再生
+        public void PlaySoundOneShot(SeFile se)
         {
             ////Debug.Log("Played");
-            sePlayer.PlayAudioOneShot(sound);
+            sePlayer.PlayAudioOneShot(se.SourceFile);
+        }
+
+        // 指定した音を再生し終わるまで待つ
+        public void PlaySEAndWait(SeFile se)
+        {
+            sePlayer.PlayAudio(se.SourceFile, false);
         }
 
         // 指定した音をループで再生
-        public void PlaySoundLoop(AudioClip sound)
+        public void PlaySoundLoop(SeFile se)
         {
-            sePlayer.PlayAudio(sound, true);
+            sePlayer.PlayAudio(se.SourceFile, true);
         }
 
-        // ループ中の音停止
-        public void StopLoopSound()
+        // ループ中のSE停止
+        public void StopLoopSE()
         {
             if(sePlayer.HasLoop)
             {
@@ -72,16 +78,10 @@ namespace ReelSpinGame_Sound
             }
         }
 
-        // 指定した音を再生し終わるまで待つ
-        public void PlaySoundAndWait(AudioClip sound)
-        {
-            sePlayer.PlayAudio(sound, false);
-        }
-
         // 指定した音楽再生
-        public void PlayBGM(AudioClip bgm, bool hasLoop)
+        public void PlayBGM(BgmFile bgm)
         {
-            bgmPlayer.PlayAudio(bgm, hasLoop);
+            bgmPlayer.PlayAudio(bgm.SourceFile, bgm.HasLoop, bgm.LoopStart, bgm.LoopLength);
         }
 
         // 音楽停止
@@ -91,12 +91,10 @@ namespace ReelSpinGame_Sound
         public void ChangeSEVolume(float volume) => sePlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
         // ボリューム調整(BGM
         public void ChangeBGMVolume(float volume) => bgmPlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
-
         // SEミュート切り替え
         public void ChangeMuteSEPlayer(bool value) => sePlayer.ChangeMute(value);
         // BGMミュート切り替え
         public void ChangeMuteBGMPlayer(bool value) => bgmPlayer.ChangeMute(value);
-
         // SE再生不可切り替え
         public void ChangeLockSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
     }
