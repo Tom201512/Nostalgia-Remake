@@ -93,7 +93,7 @@ namespace ReelSpinGame_Medal
         public int ChangeMaxBet(int amount) => data.system.MaxBetAmount = Math.Clamp(amount, 0, MaxBetLimit);
 
         // 払い出しセグメント更新を開始する
-        public void StartSegmentUpdate() => HasSegmentUpdate = true;
+        public void ChangeSegmentUpdate(bool value) => HasSegmentUpdate = value;
 
         // MAX_BET用の処理
         public void StartMAXBet()

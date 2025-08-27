@@ -1,4 +1,3 @@
-using ReelSpinGame_Bonus;
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
@@ -22,7 +21,7 @@ namespace ReelSpinGame_Effect
         // リプレイ時に待機させる時間(秒)
         const float ReplayWaitTime = 1.0f;
         // Vフラッシュ時の待機時間(秒)
-        const float VFlashWaitTime = 1.0f;
+        const float VFlashWaitTime = 2.0f;
 
         // var
         // フラッシュ機能
@@ -65,6 +64,11 @@ namespace ReelSpinGame_Effect
             HasAfterPayoutEffect = false;
         }
 
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
         // フラッシュの待機中か
         public bool GetHasFlashWait() => flashManager.HasFlashWait;
         // 音声, BGMが止まっているか
@@ -79,10 +83,10 @@ namespace ReelSpinGame_Effect
 
         // フラッシュ関連
         // リール全点灯
-        public void TurnOnAllReels(BonusStatus bonusStatus)
+        public void TurnOnAllReels(bool isJacGame)
         {
             // JAC GAME中は中段のみ光らせる
-            if (bonusStatus == BonusStatus.BonusJACGames)
+            if (isJacGame)
             {
                 flashManager.EnableJacGameLight();
             }
@@ -94,7 +98,7 @@ namespace ReelSpinGame_Effect
             // JAC中のライト処理をする
             foreach (ReelObject reel in reelObjects)
             {
-                reel.HasJacModeLight = bonusStatus == BonusStatus.BonusJACGames;
+                reel.HasJacModeLight = isJacGame;
             }
         }
 
@@ -110,7 +114,7 @@ namespace ReelSpinGame_Effect
         // スタート時の演出
         public void StartLeverOnEffect(FlagId flag, BonusTypeID holding, BonusStatus bonusStatus)
         {
-            if(hasSPStartSound)
+            if (hasSPStartSound)
             {
                 // 通常時のみ特殊効果音再生
                 if (bonusStatus == BonusStatus.BonusNone)
@@ -192,8 +196,6 @@ namespace ReelSpinGame_Effect
         // 払い出し前演出開始
         public void StartBeforePayoutEffect(FlagId flagID, BonusTypeID holdingBonusID, BonusStatus bonusStatus, bool hasBita)
         {
-            // 演出を発生させたか
-            bool startEffect = false;
             // 全ての演出をリセット
             HasBeforePayoutEffect = false;
             HasPayoutEffectStart = false;
@@ -209,26 +211,34 @@ namespace ReelSpinGame_Effect
                     if (holdingBonusID != BonusTypeID.BonusNone && OriginalRandomLot.LotRandomByNum(6))
                     {
                         flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
-                        startEffect = true;
+                        HasBeforePayoutEffect = true;
                     }
                     break;
 
 
                 // チェリー2枚の場合
                 case FlagId.FlagCherry2:
+                    break;
+
                 // チェリー4枚の場合
                 case FlagId.FlagCherry4:
+                    break;
+
                 // ベルの場合:
                 case FlagId.FlagBell:
+                    break;
+
                 // スイカの場合
                 case FlagId.FlagMelon:
+                    break;
+
                 // リプレイの場合
                 case FlagId.FlagReplayJacIn:
                     // 小役ゲーム中にJACINが成立しビタハズシをした場合
                     if (bonusStatus == BonusStatus.BonusBIGGames && hasBita)
                     {
                         flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
-                        startEffect = true;
+                        HasBeforePayoutEffect = true;
                     }
 
                     break;
@@ -237,9 +247,9 @@ namespace ReelSpinGame_Effect
                     break;
             }
 
-            if(startEffect)
+            if(HasBeforePayoutEffect)
             {
-                StartCoroutine(nameof(UpdateBeforePayoutEffect));
+            StartCoroutine(nameof(UpdateBeforePayoutEffect));
             }
         }
 
@@ -249,24 +259,34 @@ namespace ReelSpinGame_Effect
             // 払い出しがあれば再生
             if (payoutResultData.Payout > 0)
             {
-                flashManager.StartPayoutFlash(0f, lastPayoutLines);
+                // フラッシュ停止
+                flashManager.ForceStopFlash();
 
                 // サウンド再生(状態に合わせて変更)
-                // JAC役の払い出し音
-                if (flagID == FlagId.FlagJac)
-                {
-                    soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
-                }
                 // 15枚の払い出し音
-                else if (payoutResultData.Payout >= 15)
+                if (payoutResultData.Payout >= 15)
                 {
-                    soundManager.PlaySoundLoop(soundManager.SoundDB.SE.MaxPayout);
+                    // JAC役なら変更
+                    if(flagID == FlagId.FlagJac)
+                    {
+                        TurnOnAllReels(true);
+                        soundManager.PlaySoundLoop(soundManager.SoundDB.SE.JacPayout);
+                    }
+                    else
+                    {
+                        TurnOnAllReels(false);
+                        soundManager.PlaySoundLoop(soundManager.SoundDB.SE.MaxPayout);
+                    }
+
                 }
-                //　それ以外は通常の払い出し音
+                //　それ以外は通常の払い出し
                 else
                 {
+                    TurnOnAllReels(false);
                     soundManager.PlaySoundLoop(soundManager.SoundDB.SE.NormalPayout);
                 }
+
+                flashManager.StartPayoutFlash(0f, lastPayoutLines);
             }
 
             // 通常時のリプレイならフラッシュ再生
@@ -280,26 +300,27 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し後演出開始
-        public void StartAfterPayoutEffect()
+        public void StartAfterPayoutEffect(FlagId flagID, BonusStatus bonusStatus)
         {
-            // 演出を発生させたか
-            bool startEffect = false;
-
             // ボーナス開始、終了していれば演出を行う
             if (HasBonusStart)
             {
-                Debug.Log("Fanfare start");
                 StartCoroutine(nameof(UpdateBonusFanfare));
-                startEffect = true;
+                HasAfterPayoutEffect = true;
             }
-            else if(HasBonusFinished)
+            else if (HasBonusFinished)
             {
-                Debug.Log("Fanfare end");
                 StartCoroutine(nameof(UpdateBonusEndFanfare));
-                startEffect = true;
+                HasAfterPayoutEffect = true;
             }
 
-            if(startEffect)
+            // リプレイ発生時は待機させる
+            else if(flagID == FlagId.FlagReplayJacIn && bonusStatus == BonusStatus.BonusNone)
+            {
+                HasAfterPayoutEffect = true;
+            }
+
+            if (HasAfterPayoutEffect)
             {
                 StartCoroutine(nameof(UpdateAfterPayoutEffect));
             }
@@ -308,7 +329,7 @@ namespace ReelSpinGame_Effect
         // ビッグ時の色を割り当てる
         public void SetBigColor(BigColor color) => BigChanceColor = color;
         // フラッシュ停止
-        public void StopReelFlash() => flashManager.StopFlash();
+        public void StopReelFlash() => flashManager.ForceStopFlash();
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSound();
 
@@ -318,9 +339,9 @@ namespace ReelSpinGame_Effect
         public void ChangeBGMVolume(float volume) => soundManager.ChangeBGMVolume(volume);
 
         // オート機能時の効果音、音楽解除
-        public void ChangeSoundSettingByAuto(bool hasAuto, int autoSpeedID) 
+        public void ChangeSoundSettingByAuto(bool hasAuto, int autoSpeedID)
         {
-            if(hasAuto && autoSpeedID > (int)AutoPlaySpeed.Normal)
+            if (hasAuto && autoSpeedID > (int)AutoPlaySpeed.Normal)
             {
                 // 高速以上でSE再生不可能に
                 soundManager.ChangeMuteSEPlayer(true);
@@ -344,9 +365,9 @@ namespace ReelSpinGame_Effect
         public void PlayBonusBGM(BonusStatus status, bool hasAutoFinished)
         {
             // 前回とボーナス状態が変わっていればBGM再生(オート終了時も再生)
-            if(hasAutoFinished || lastBonusStatus != status)
+            if (hasAutoFinished || lastBonusStatus != status)
             {
-                switch(status)
+                switch (status)
                 {
                     case BonusStatus.BonusBIGGames:
                         PlayBigGameBGM();
@@ -464,12 +485,9 @@ namespace ReelSpinGame_Effect
         // 払い出し前演出処理
         private IEnumerator UpdateBeforePayoutEffect()
         {
-            HasBeforePayoutEffect = true;
-
-            // 今鳴らしている効果音とフラッシュが止まるのを待つ
-            while (!soundManager.GetSoundEffectStopped() && !flashManager.HasFlashWait)
+            // 今鳴らしている効果音、BGMとフラッシュが止まるのを待つ
+            while (!soundManager.GetSoundEffectStopped() || !soundManager.GetBGMStopped() || flashManager.HasFlashWait)
             {
-                Debug.Log("Waiting for Before Effect end");
                 yield return new WaitForEndOfFrame();
             }
 
@@ -479,12 +497,9 @@ namespace ReelSpinGame_Effect
         // 払い出し後演出処理
         private IEnumerator UpdateAfterPayoutEffect()
         {
-            HasAfterPayoutEffect = true;
-
             // 今鳴らしている効果音、BGMとフラッシュが止まるのを待つ
-            while (!soundManager.GetSoundEffectStopped() && !soundManager.GetBGMStopped() && !flashManager.HasFlashWait)
+            while (!soundManager.GetSoundEffectStopped() || !soundManager.GetBGMStopped() || flashManager.HasFlashWait)
             {
-                Debug.Log("Waiting for After Effect end");
                 yield return new WaitForEndOfFrame();
             }
 

@@ -108,11 +108,12 @@ namespace ReelSpinGame_Reels.Flash
             }
         }
 
-        // 払い出しフラッシュの停止
-        public void StopFlash()
+        // フラッシュの強制停止
+        public void ForceStopFlash()
         {
             HasFlash = false;
             HasFlashWait = false;
+            StopAllCoroutines();
         }
 
         // リールライトをすべて明るくする
@@ -251,7 +252,6 @@ namespace ReelSpinGame_Reels.Flash
             }
             // ループさせる
             currentFrame += 1;
-
             if (currentFrame == PayoutFlashFrames)
             {
                 currentFrame = 0;
@@ -289,7 +289,6 @@ namespace ReelSpinGame_Reels.Flash
                 PayoutFlash();
                 yield return new WaitForSeconds(ReelFlashTime);
             }
-            yield break;
         }
 
         // タイムアウト用イベント(時間経過でフラッシュ終了)

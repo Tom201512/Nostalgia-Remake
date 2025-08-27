@@ -30,6 +30,7 @@ namespace ReelSpinGame_State.InsertState
             {
                 gM.Medal.StartReplayInsert(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
                 gM.Status.TurnOnReplayLamp();
+                gM.Status.TurnOnStartLamp();
             }
             // リプレイでなければINSERTランプ表示
             else
@@ -83,7 +84,7 @@ namespace ReelSpinGame_State.InsertState
         {
             gM.Effect.StopReelFlash();
             // リール点灯(JAC中は中段のみ点灯させる)
-            gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus());
+            gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
 
         }
 

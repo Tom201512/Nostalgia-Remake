@@ -368,6 +368,7 @@ public class ReelManager : MonoBehaviour
         data.CanStopReels = false;
         yield return new WaitForSeconds(ReelWaitTime);
         data.CanStopReels = true;
+        yield return null;
     }
 
     // リールを自動停止させる
@@ -375,6 +376,7 @@ public class ReelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(ReelAutoStopTime);
         data.HasForceStop = true;
+        yield return null;
     }
 
     // リール自動停止のコルーチンストップ

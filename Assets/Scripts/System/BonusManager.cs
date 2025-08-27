@@ -15,6 +15,9 @@ namespace ReelSpinGame_Bonus
         // 獲得枚数の点滅時に点滅させる時間(秒)
         const float PayoutSegFlashTime = 0.5f;
 
+        // 獲得枚数とゾーン獲得枚数の表示を切り替えるタイミング(秒)
+        const float DisplayChangeTime = 2.0f;
+
         // var
         // ボーナス処理のデータ
         private BonusSystemData data;
@@ -22,12 +25,19 @@ namespace ReelSpinGame_Bonus
         [SerializeField] private BonusSevenSegment bonusSegments;
         // 獲得枚数を表示しているか
         public bool DisplayingTotalCount { get; private set; }
+        // ゾーン区間を表示中か
+        public bool DisplayingZoneCount { get; private set; }
 
         // func
         private void Awake()
         {
             data = new BonusSystemData();
             DisplayingTotalCount = false;
+        }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
         }
 
         // 各種数値を得る
@@ -166,7 +176,7 @@ namespace ReelSpinGame_Bonus
         // セグメントをすべて消す
         public void TurnOffSegments()
         {
-            StopCoroutine(nameof(UpdateShowPayout));
+            StopAllCoroutines();
             bonusSegments.TurnOffAllSegments();
             DisplayingTotalCount = false;
         }
@@ -238,14 +248,32 @@ namespace ReelSpinGame_Bonus
         // 獲得枚数を点滅させる
         private IEnumerator UpdateShowPayout()
         {
+            StartCoroutine(nameof(ChangeShowType));
+
             while(DisplayingTotalCount)
             {
-                bonusSegments.ShowTotalPayout(data.CurrentZonePayout);
+                if(DisplayingTotalCount)
+                {
+                    bonusSegments.ShowTotalPayout(data.CurrentZonePayout);
+                }
+                else
+                {
+                    bonusSegments.ShowTotalPayout(data.CurrentBonusPayout);
+                }
+
                 yield return new WaitForSeconds(PayoutSegFlashTime);
                 bonusSegments.TurnOffAllSegments();
                 yield return new WaitForSeconds(PayoutSegFlashTime);
             }
-            bonusSegments.TurnOffAllSegments();
+        }
+
+        // 獲得枚数とゾーン区間を切り替える
+        private IEnumerator ChangeShowType()
+        {
+            DisplayingZoneCount = false;
+            yield return new WaitForSeconds(DisplayChangeTime);
+            DisplayingZoneCount = true;
+            yield return new WaitForSeconds(DisplayChangeTime);
         }
     }
 }

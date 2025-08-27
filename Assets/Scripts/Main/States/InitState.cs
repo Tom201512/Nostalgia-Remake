@@ -87,7 +87,7 @@ namespace ReelSpinGame_State.LotsState
             // リプレイ、またはボーナス中ならライトを点灯させる
             if (gM.Medal.GetHasReplay() || gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
-                gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus());
+                gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
             }
             // リプレイでなければINSERTランプ表示
             else
