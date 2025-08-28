@@ -28,19 +28,6 @@ namespace ReelSpinGame_Datas
         // JACゲーム時のはずれ確率
         private float jacNoneProb;
 
-        // 効果音にするAudioClipの配列
-        [Serializable]
-        public class AudioClipList : ScriptableObject
-        {
-            [SerializeField] private List<AudioClip> seAudioClipList;
-            [SerializeField] private List<AudioClip> bgmAudioClipList;
-
-            public List<AudioClip> SeAudioClipList { get { return seAudioClipList; } }
-            public List<AudioClip> BgmAudioClipList { get { return bgmAudioClipList; } }
-        }
-
-        private AudioClipList audioClipList;
-
         // スクロール値
         private Vector2 scrollPos;
 
@@ -52,11 +39,6 @@ namespace ReelSpinGame_Datas
             Debug.Log("Open ScriptableGen Generator");
             ScriptableGen window = GetWindow<ScriptableGen>();
             window.titleContent = new GUIContent("Scriptable Generator");
-        }
-
-        private void Awake()
-        {
-            audioClipList = CreateInstance<AudioClipList>();
         }
 
         private void OnEnable()
@@ -113,23 +95,6 @@ namespace ReelSpinGame_Datas
                 if (GUILayout.Button("払い出しデータベース作成"))
                 {
                     MakePayoutData();
-                }
-                GUILayout.Label("\nSE、BGMファイル変換\n");
-
-                using (EditorGUILayout.ScrollViewScope scroll = new EditorGUILayout.ScrollViewScope(scrollPos, GUILayout.Height(200)))
-                {
-                    scrollPos = scroll.scrollPosition;
-                    Editor.CreateEditor(audioClipList).OnInspectorGUI();
-                }
-
-                if (GUILayout.Button("SEファイル変換"))
-                {
-                    MakeSEFile();
-                }
-
-                if (GUILayout.Button("BGMファイル変換"))
-                {
-                    MakeBGMFile();
                 }
             }
         }
@@ -255,72 +220,6 @@ namespace ReelSpinGame_Datas
             GenerateFile(path, fileName, payoutDatabase);
         }
 
-        // AudioClipを独自の効果音ファイルに変換
-        private void MakeSEFile()
-        {
-            if (audioClipList.SeAudioClipList.Count > 0)
-            {
-                // ディレクトリの作成
-                string path = Path.Combine("Assets", "Sound", "SE");
-                // ファイル名
-                string fileName = "";
-
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                    Debug.Log("Directory is created");
-                }
-
-                // 登録したファイルから作成
-                foreach (AudioClip clip in audioClipList.SeAudioClipList)
-                {
-                    SeFile seFile = CreateInstance<SeFile>();
-                    seFile.SourceFile = clip;
-                    fileName = clip.name;
-                    GenerateFile(path, fileName, seFile);
-                }
-
-                Debug.Log("Finished generate sound file");
-            }
-            else
-            {
-                Debug.LogError("No SE audioclip add");
-            }
-        }
-
-        // AudioClipを独自の音楽ファイルに変換
-        private void MakeBGMFile()
-        {
-            if (audioClipList.BgmAudioClipList.Count > 0)
-            {
-                // ディレクトリの作成
-                string path = "Assets/Sound/BGM";
-                // ファイル名
-                string fileName = "";
-
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                    Debug.Log("Directory is created");
-                }
-
-                // 登録したファイルから作成
-                foreach (AudioClip clip in audioClipList.BgmAudioClipList)
-                {
-                    BgmFile bgmFile = CreateInstance<BgmFile>();
-                    bgmFile.SourceFile = clip;
-                    fileName = clip.name;
-                    GenerateFile(path, fileName, bgmFile);
-                }
-
-                Debug.Log("Finished generate BGM file");
-            }
-            else
-            {
-                Debug.LogError("No BGM audioclip add");
-            }
-        }
-
         private void GenerateFile(string path, string fileName, ScriptableObject scriptableObject)
         {
             // 保存処理
@@ -349,30 +248,6 @@ namespace ReelSpinGame_Datas
             }
 
             AssetDatabase.Refresh();
-        }
-    }
-
-    // オーディオクリップのファイル編集
-    [CustomEditor(typeof(AudioClipList))]
-    public class AudioClipListEditor : Editor
-    {
-        private SerializedProperty seList;
-        private SerializedProperty bgmList;
-
-        public void Awake()
-        {
-            seList = serializedObject.FindProperty("seAudioClipList");
-            bgmList = serializedObject.FindProperty("bgmAudioClipList");
-        }
-
-        public override void OnInspectorGUI()
-        {
-            serializedObject.Update();
-            EditorGUILayout.LabelField("SE");
-            EditorGUILayout.PropertyField(seList);
-            EditorGUILayout.LabelField("BGM");
-            EditorGUILayout.PropertyField(bgmList);
-            serializedObject.ApplyModifiedProperties();
         }
     }
 #endif

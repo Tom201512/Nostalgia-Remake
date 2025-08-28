@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace ReelSpinGame_Datas
 {
-	// サウンドデータベース
-	public class SoundPack : ScriptableObject
+    // サウンドデータベース
+    [CreateAssetMenu(fileName = "SoundPack", menuName = "Nostalgia/GenerateSoundPack", order = 5)]
+    public class SoundPack : ScriptableObject
     {
         // var
         // 効果音データ
@@ -21,8 +22,5 @@ namespace ReelSpinGame_Datas
         {
             get { return bgm; }
         }
-
-        public void SetSE(SePack se) => this.se = se;
-        public void SetBGM(BgmPack bgm) => this.bgm = bgm;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace ReelSpinGame_Sound.SE
 {
+    [CreateAssetMenu(fileName = "SE_File", menuName = "Nostalgia/GenerateSEFile", order = 1)]
     [Serializable]
     public class SeFile : ScriptableObject
     {

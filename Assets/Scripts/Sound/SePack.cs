@@ -4,6 +4,7 @@ using UnityEngine;
 namespace ReelSpinGame_Sound.SE
 {
     // 効果音のデータセット
+    [CreateAssetMenu(fileName = "SE_Pack", menuName = "Nostalgia/GenerateSEPack", order = 2)]
     [Serializable]
 	public class SePack : ScriptableObject
 	{

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace ReelSpinGame_Sound.BGM
 {
+    [CreateAssetMenu(fileName = "BGM_File", menuName = "Nostalgia/GenerateBGMFile", order = 3)]
     [Serializable]
     public class BgmFile : ScriptableObject
     {
