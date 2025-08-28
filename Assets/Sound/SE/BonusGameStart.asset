@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BonusGameStart
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 5b8d151a9ea8a1a4c824c5330250e952, type: 3}
-  hasLoop: 0
+  seType: 1

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Stop
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 7785aca8e18f7e7499d338765458e64c, type: 3}
-  hasLoop: 0
+  seType: 0

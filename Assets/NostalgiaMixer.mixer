@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-9027384779357853455
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: fff039c31611f324ea1bfc4b62c21b9a
+  m_EffectName: Attenuation
+  m_MixLevel: d762d43600e050c45839ae4169faf4cd
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-7813969255242442587
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -54,6 +68,7 @@ AudioMixerController:
     - 2c79085029358f748a2b1253ba9da2b9
     - dfd0679924e8288469a68ea40b563f33
     - 55f18507c6ed2c443b73c69b5e1e9f1f
+    - e59ba23310fac2b4e9c6ed236816523a
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -69,6 +84,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -3624460520077670070}
   - {fileID: 5297311660865560637}
+  - {fileID: 6012562491725826419}
   m_Volume: 0641745802adbc64487feef5018f3f5f
   m_Pitch: 21309c81c4b942043b6bd12b8b9b7373
   m_Send: 00000000000000000000000000000000
@@ -105,7 +121,7 @@ AudioMixerSnapshotController:
     0640f000029b48841aebd0574bd4f928: 11.9
     988b00f0d8e239c4ab11923fb1b8ab4b: 0.0004370995
     348f59922d7fc61459b0970e9ea67490: 4.49
-    082211f2a15503a488bf96791bf99e01: -1.5
+    082211f2a15503a488bf96791bf99e01: -5
     3fc5f5f23c0abc4429ebc4df89cd038d: 1
     38aacd63303a27847b7902490a3b09be: 20
     57915f346a066c0419b2c702e52e12b5: 120
@@ -120,6 +136,7 @@ AudioMixerSnapshotController:
     0641745802adbc64487feef5018f3f5f: 0
     11a228c9a1ccbfa42a61606c0e78c023: 1
     e9c0a01b67227ad4fb8c3b6ec5d858e3: 1
+    020017eb99b393948b94bf45db039c29: -4.560346
     0fa6a15cf733c4e47853f9baae88b577: -6212
     1204319d58327c646ba2868eeb181cbb: 22000
     1a83496e884a9f44c8bf1121dfb7bbf0: 0
@@ -156,6 +173,25 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -7813969255242442587}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &6012562491725826419
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jingle
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: e59ba23310fac2b4e9c6ed236816523a
+  m_Children: []
+  m_Volume: 020017eb99b393948b94bf45db039c29
+  m_Pitch: eeb59399239918f49bbb5f7254e90c24
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -9027384779357853455}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0

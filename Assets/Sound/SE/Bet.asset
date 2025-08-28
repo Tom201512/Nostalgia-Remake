@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bet
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: cdd930dfcaa7f6f4cad2a0df81026401, type: 3}
-  hasLoop: 0
+  seType: 0

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SPStart
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 8a5f1613935cdf74ab4f744affe957c7, type: 3}
-  hasLoop: 0
+  seType: 0

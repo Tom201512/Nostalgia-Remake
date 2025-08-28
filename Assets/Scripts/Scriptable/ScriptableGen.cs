@@ -54,11 +54,15 @@ namespace ReelSpinGame_Datas
             window.titleContent = new GUIContent("Scriptable Generator");
         }
 
+        private void Awake()
+        {
+            audioClipList = CreateInstance<AudioClipList>();
+        }
+
         private void OnEnable()
         {
             reelSelection = -1;
             jacNoneProb = JacNoneDefault;
-            audioClipList = CreateInstance<AudioClipList>();
             scrollPos = new Vector2(0, 0);
         }
 

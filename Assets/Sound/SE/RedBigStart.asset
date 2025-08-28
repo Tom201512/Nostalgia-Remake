@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RedBigStart
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: f0aec44f12f45c040addee1d3c97259d, type: 3}
-  hasLoop: 0
+  seType: 1

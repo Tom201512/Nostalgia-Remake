@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Replay
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 9a195f200c3c0cf41bfa624a3cbcd5be, type: 3}
-  hasLoop: 0
+  seType: 1

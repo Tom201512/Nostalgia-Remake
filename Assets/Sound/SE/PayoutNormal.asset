@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PayoutNormal
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: cd6dcbe06464cc54bb3bc4e3c65aac4d, type: 3}
-  hasLoop: 1
+  seType: 2

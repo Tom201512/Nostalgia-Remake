@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Riichi
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: a67c68b0b2027a9448bd5bbef3acc56e, type: 3}
-  hasLoop: 0
+  seType: 0

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Error
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: b022a8c77fafaa44490c1eb69bf42df6, type: 3}
-  hasLoop: 1
+  seType: 2

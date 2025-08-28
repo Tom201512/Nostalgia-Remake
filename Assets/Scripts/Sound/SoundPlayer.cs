@@ -34,11 +34,15 @@ namespace ReelSpinGame_Sound
         private void Update()
         {
             // 位置指定付きのループがある場合は巻き戻す
-            if(HasLoop && LoopStart > -1 && LoopLength > -1)
+            if(audioSource.loop && LoopStart > -1 && LoopLength > -1)
             {
+                Debug.Log("Sample" + audioSource.timeSamples);
+                Debug.Log("LoopEnd" + (LoopStart + LoopLength));
+
                 if (audioSource.timeSamples >= LoopStart + LoopLength)
                 {
                     audioSource.timeSamples -= LoopLength;
+                    Debug.Log("Looped at:" + audioSource.timeSamples);
                 }
             }
         }
@@ -50,49 +54,61 @@ namespace ReelSpinGame_Sound
         }
 
         // func
-        // 音再生
-        public void PlayAudio(AudioClip soundSource, bool hasLoop)
+        // 一回だけ再生(重複可能)
+        public void PlayAudioOneShot(AudioClip soundSource)
         {
-            if(!HasLockPlaying)
+            if (!HasLockPlaying)
             {
-                LoopStart = -1;
-                LoopLength = -1;
-
-                audioSource.loop = hasLoop;
-                audioSource.clip = soundSource;
-                audioSource.Play();
-                StartCoroutine(nameof(CheckAudioStopped));
-
-                HasLoop = hasLoop;
+                audioSource.PlayOneShot(soundSource);
             }
         }
 
-        // 音再生(ループ位置指定あり)
-        public void PlayAudio(AudioClip soundSource, bool hasLoop, int loopStart, int loopLength)
+        // 再生&待機
+        public void PlayAudioAndWait(AudioClip soundSource)
         {
-            // ループ位置指定を指定して再生
             if (!HasLockPlaying)
             {
-                PlayAudio(soundSource, hasLoop);
+                audioSource.loop = false;
+                audioSource.clip = soundSource;
+                audioSource.Play();
+                StartCoroutine(nameof(CheckAudioStopped));
+            }
+        }
+
+        // ループ再生
+        public void PlayLoopAudio(AudioClip soundSource)
+        {
+            if(!HasLockPlaying)
+            {
+                audioSource.loop = true;
+                audioSource.clip = soundSource;
+                audioSource.Play();
+                HasLoop = true;
+                Debug.Log(audioSource.loop);
+            }
+        }
+
+        // ループ再生(ループ位置指定あり)
+        public void PlayLoopAudio(AudioClip soundSource, int loopStart, int loopLength)
+        {
+            if (!HasLockPlaying)
+            {
+                PlayLoopAudio(soundSource);
                 LoopStart = loopStart;
                 LoopLength = loopLength;
+                Debug.Log("LoopStart:" + LoopStart);
+                Debug.Log("Length:" + LoopLength);
             }
         }
 
         // 音停止
         public void StopAudio()
         {
+            audioSource.loop = false;
             audioSource.Stop();
             HasLoop = false;
-        }
-
-        // 一回だけ再生
-        public void PlayAudioOneShot(AudioClip soundSource)
-        {
-            if(!HasLockPlaying)
-            {
-                audioSource.PlayOneShot(soundSource);
-            }
+            LoopStart = -1;
+            LoopLength = -1;
         }
 
         // 音声が止まったかの処理
@@ -106,7 +122,7 @@ namespace ReelSpinGame_Sound
             }
 
             HasSoundStopped = true;
-            //Debug.Log("Sound Stopped");
+            Debug.Log("Sound Stopped");
         }
 
         // ボリューム調整

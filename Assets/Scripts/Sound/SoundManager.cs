@@ -20,6 +20,8 @@ namespace ReelSpinGame_Sound
 
         // SE再生
         [SerializeField] private SoundPlayer sePlayer;
+        // ファンファーレなどのジングル再生用
+        [SerializeField] private SoundPlayer jinglePlayer;
         // BGM再生用
         [SerializeField] private SoundPlayer bgmPlayer;
 
@@ -32,14 +34,10 @@ namespace ReelSpinGame_Sound
         }
 
         // func
-        // 効果音が停止したか確認
-        public bool GetSoundEffectStopped() => sePlayer.HasSoundStopped;
+        // ジングルが停止したか確認
+        public bool GetJingleSoundStopped() => jinglePlayer.HasSoundStopped;
         // 効果音がループしているか確認
         public bool GetSoundEffectHasLoop() => sePlayer.HasLoop;
-        // 音楽が停止したか確認
-        public bool GetBGMStopped() => bgmPlayer.HasSoundStopped;
-        // 音楽がループしているか確認
-        public bool GetBGMHasLoop() => bgmPlayer.HasLoop;
 
         // サウンドパックの差し替え
         public void ChangeSoundPack(int databaseID)
@@ -52,23 +50,26 @@ namespace ReelSpinGame_Sound
             SoundDB = SoundDatabases[databaseID];
         }
 
-        // 指定したSEを1回再生
-        public void PlaySoundOneShot(SeFile se)
+        // SE再生
+        public void PlaySE(SeFile se)
         {
-            ////Debug.Log("Played");
-            sePlayer.PlayAudioOneShot(se.SourceFile);
-        }
+            switch(se.SeType)
+            {
+                case SeFile.SeFileType.Oneshot:
+                    sePlayer.PlayAudioOneShot(se.SourceFile);
+                    break;
 
-        // 指定した音を再生し終わるまで待つ
-        public void PlaySEAndWait(SeFile se)
-        {
-            sePlayer.PlayAudio(se.SourceFile, false);
-        }
+                case SeFile.SeFileType.Jingle:
+                    jinglePlayer.PlayAudioAndWait(se.SourceFile);
+                    break;
 
-        // 指定した音をループで再生
-        public void PlaySoundLoop(SeFile se)
-        {
-            sePlayer.PlayAudio(se.SourceFile, true);
+                case SeFile.SeFileType.Loop:
+                    sePlayer.PlayLoopAudio(se.SourceFile);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         // ループ中のSE停止
@@ -83,7 +84,14 @@ namespace ReelSpinGame_Sound
         // 指定した音楽再生
         public void PlayBGM(BgmFile bgm)
         {
-            bgmPlayer.PlayAudio(bgm.SourceFile, bgm.HasLoop, bgm.LoopStart, bgm.LoopLength);
+            if(bgm.HasLoop)
+            {
+                bgmPlayer.PlayLoopAudio(bgm.SourceFile, bgm.LoopStart, bgm.LoopLength);
+            }
+            else
+            {
+                bgmPlayer.PlayAudioAndWait(bgm.SourceFile);
+            }
         }
 
         // 音楽停止
@@ -95,8 +103,12 @@ namespace ReelSpinGame_Sound
         public void ChangeBGMVolume(float volume) => bgmPlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
         // SEミュート切り替え
         public void ChangeMuteSEPlayer(bool value) => sePlayer.ChangeMute(value);
-        // BGMミュート切り替え
-        public void ChangeMuteBGMPlayer(bool value) => bgmPlayer.ChangeMute(value);
+        // BGM, ジングルミュート切り替え
+        public void ChangeMuteBGMPlayer(bool value)
+        {
+            jinglePlayer.ChangeMute(value);
+            bgmPlayer.ChangeMute(value);
+        }
         // SE再生不可切り替え
         public void ChangeLockSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
     }
