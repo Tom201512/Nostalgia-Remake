@@ -13,7 +13,14 @@ namespace ReelSpinGame_Sound
         // ループするか(位置指定には非対応)
         [SerializeField] private bool hasLoop;
 
-        public AudioClip SourceFile { get { return sourceFile; } }
+        public AudioClip SourceFile 
+        { 
+            get { return sourceFile; }
+#if UNITY_EDITOR
+            set { sourceFile = value; }
+#endif
+        }
+
         public bool HasLoop { get { return hasLoop; } }
     }
 
@@ -247,7 +254,14 @@ namespace ReelSpinGame_Sound
         // ループ長さ
         [SerializeField] private int loopLength = -1;
 
-        public AudioClip SourceFile { get { return sourceFile; } }
+        public AudioClip SourceFile
+        {
+            get { return sourceFile; }
+#if UNITY_EDITOR
+            set { sourceFile = value; }
+#endif
+        }
+
         public bool HasLoop { get { return hasLoop; } }
         public int LoopStart { get { return loopStart; } }
         public int LoopLength { get { return loopLength; } }

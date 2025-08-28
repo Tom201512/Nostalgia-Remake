@@ -1,6 +1,15 @@
+using ReelSpinGame_Sound;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.PackageManager.UI;
+using UnityEditorInternal;
+using UnityEditorInternal.VR;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static ReelSpinGame_Datas.ScriptableGen;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Datas
@@ -10,19 +19,22 @@ namespace ReelSpinGame_Datas
     public class ScriptableGen : EditorWindow
     {
         // const
-        // 読み込み時のファイルパス
+        // 読み込み時のパス
         private const string DataPath = "Assets/DataFile";
 
-        // リールのファイル
+        // リール
         private const string LeftPath = "ReelL";
         private const string MiddlePath = "ReelM";
         private const string RightPath = "ReelR";
 
-        // フラグのファイル
+        // フラグ
         private const string FlagPath = "LotsTable";
 
-        // 払い出し関連のファイル
+        // 払い出し関連
         private const string PayoutPath = "Payout";
+
+        // SE, BGM
+        private const string SoundPath = "Sound";
 
         // JACはずれデフォルト値
         private const float JacNoneDefault = 256f;
@@ -34,6 +46,23 @@ namespace ReelSpinGame_Datas
         // JACゲーム時のはずれ確率
         private float jacNoneProb;
 
+        // 効果音にするAudioClipの配列
+        [Serializable]
+        public class AudioClipList : ScriptableObject
+        {
+            [SerializeField] private List<AudioClip> seAudioClipList;
+            [SerializeField] private List<AudioClip> bgmAudioClipList;
+
+            public List<AudioClip> SeAudioClipList { get { return seAudioClipList; } }
+            public List<AudioClip> BgmAudioClipList { get { return bgmAudioClipList; } }
+        }
+
+        private AudioClipList audioClipList;
+        AudioClipListEditor audioClipEditor;
+
+        // スクロール値
+        private Vector2 scrollPos;
+
         // func
         // リール配列の作成
         [MenuItem("ScriptableGen/Scriptable Generator")]
@@ -44,57 +73,81 @@ namespace ReelSpinGame_Datas
             window.titleContent = new GUIContent("Scriptable Generator");
         }
 
-        private void Awake()
+        private void OnEnable()
         {
             reelSelection = -1;
             jacNoneProb = JacNoneDefault;
+            audioClipList = CreateInstance<AudioClipList>();
+            scrollPos = new Vector2(0, 0);
         }
 
         private void OnGUI()
         {
-            GUILayout.Label("スクリプタブルオブジェクト作成\n");
-            GUILayout.Label("リールデータ作成\n");
 
-            if (GUILayout.Button("全リールデータ作成"))
+            using (new GUILayout.VerticalScope())
             {
-                MakeReelDataAll();
-            }
+                GUILayout.Label("スクリプタブルオブジェクト作成\n");
+                GUILayout.Label("リールデータ作成\n");
 
-            GUILayout.Label("\n各リールの作成\n");
+                if (GUILayout.Button("全リールデータ作成"))
+                {
+                    MakeReelDataAll();
+                }
 
-            reelSelection = GUILayout.Toolbar(reelSelection, new[] { "左", "中", "右" });
+                GUILayout.Label("\n各リールの作成\n");
 
-            if (reelSelection == (int)ReelID.ReelLeft)
-            {
-                reelSelection = -1;
-                MakeReelData(LeftPath);
-            }
+                reelSelection = GUILayout.Toolbar(reelSelection, new[] { "左", "中", "右" });
 
-            if (reelSelection == (int)ReelID.ReelMiddle)
-            {
-                reelSelection = -1;
-                MakeReelData(MiddlePath);
-            }
+                if (reelSelection == (int)ReelID.ReelLeft)
+                {
+                    reelSelection = -1;
+                    MakeReelData(LeftPath);
+                }
 
-            if (reelSelection == (int)ReelID.ReelRight)
-            {
-                reelSelection = -1;
-                MakeReelData(RightPath);
-            }
+                if (reelSelection == (int)ReelID.ReelMiddle)
+                {
+                    reelSelection = -1;
+                    MakeReelData(MiddlePath);
+                }
 
-            GUILayout.Label("\nフラグデータの作成\n");
-            jacNoneProb = EditorGUILayout.FloatField("JAC時はずれ確率(float)", jacNoneProb);
+                if (reelSelection == (int)ReelID.ReelRight)
+                {
+                    reelSelection = -1;
+                    MakeReelData(RightPath);
+                }
 
-            if (GUILayout.Button("フラグデータ作成"))
-            {
-                MakeFlagData();
-            }
+                GUILayout.Label("\nフラグデータの作成\n");
+                jacNoneProb = EditorGUILayout.FloatField("JAC時はずれ確率(float)", jacNoneProb);
 
-            GUILayout.Label("\n払い出しデータベース作成\n");
+                if (GUILayout.Button("フラグデータ作成"))
+                {
+                    MakeFlagData();
+                }
 
-            if (GUILayout.Button("払い出しデータベース作成"))
-            {
-                MakePayoutData();
+                GUILayout.Label("\n払い出しデータベース作成\n");
+
+                if (GUILayout.Button("払い出しデータベース作成"))
+                {
+                    MakePayoutData();
+                }
+                GUILayout.Label("\nSE、BGMファイル変換\n");
+
+                using (EditorGUILayout.ScrollViewScope scroll = new EditorGUILayout.ScrollViewScope(scrollPos, GUILayout.Height(200)))
+                {
+                    scrollPos = scroll.scrollPosition;
+                    Editor.CreateEditor(audioClipList).OnInspectorGUI();
+                }
+
+
+                if (GUILayout.Button("SEファイル変換"))
+                {
+                    MakeSEFile();
+                }
+
+                if (GUILayout.Button("BGMファイル変換"))
+                {
+                    MakeBGMFile();
+                }
             }
         }
 
@@ -144,7 +197,6 @@ namespace ReelSpinGame_Datas
             // 保存処理
             GenerateFile(path, fileName, reelDatabase);
         }
-
 
         private void MakeFlagData()
         {
@@ -220,6 +272,72 @@ namespace ReelSpinGame_Datas
             GenerateFile(path, fileName, payoutDatabase);
         }
 
+        // AudioClipを独自の効果音ファイルに変換
+        private void MakeSEFile()
+        {
+            if (audioClipList.SeAudioClipList.Count > 0)
+            {
+                // ディレクトリの作成
+                string path = "Assets/SoundFiles/SE";
+                // ファイル名
+                string fileName = "";
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                    Debug.Log("Directory is created");
+                }
+
+                // 登録したファイルから作成
+                foreach (AudioClip clip in audioClipList.SeAudioClipList)
+                {
+                    SeFile seFile = CreateInstance<SeFile>();
+                    seFile.SourceFile = clip;
+                    fileName = clip.name;
+                    GenerateFile(path, fileName, seFile);
+                }
+
+                Debug.Log("Finished generate sound file");
+            }
+            else
+            {
+                Debug.LogError("No SE audioclip add");
+            }
+        }
+
+        // AudioClipを独自の音楽ファイルに変換
+        private void MakeBGMFile()
+        {
+            if (audioClipList.BgmAudioClipList.Count > 0)
+            {
+                // ディレクトリの作成
+                string path = "Assets/SoundFiles/BGM";
+                // ファイル名
+                string fileName = "";
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                    Debug.Log("Directory is created");
+                }
+
+                // 登録したファイルから作成
+                foreach (AudioClip clip in audioClipList.BgmAudioClipList)
+                {
+                    BgmFile bgmFile = CreateInstance<BgmFile>();
+                    bgmFile.SourceFile = clip;
+                    fileName = clip.name;
+                    GenerateFile(path, fileName, bgmFile);
+                }
+
+                Debug.Log("Finished generate BGM file");
+            }
+            else
+            {
+                Debug.LogError("No BGM audioclip add");
+            }
+        }
+
         private void GenerateFile(string path, string fileName, ScriptableObject scriptableObject)
         {
             // 保存処理
@@ -248,6 +366,30 @@ namespace ReelSpinGame_Datas
             }
 
             AssetDatabase.Refresh();
+        }
+    }
+
+    // オーディオクリップのファイル編集
+    [CustomEditor(typeof(AudioClipList))]
+    public class AudioClipListEditor : Editor
+    {
+        private SerializedProperty seList;
+        private SerializedProperty bgmList;
+
+        public void Awake()
+        {
+            seList = serializedObject.FindProperty("seAudioClipList");
+            bgmList = serializedObject.FindProperty("bgmAudioClipList");
+        }
+
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+            EditorGUILayout.LabelField("SE");
+            EditorGUILayout.PropertyField(seList);
+            EditorGUILayout.LabelField("BGM");
+            EditorGUILayout.PropertyField(bgmList);
+            serializedObject.ApplyModifiedProperties();
         }
     }
 #endif
