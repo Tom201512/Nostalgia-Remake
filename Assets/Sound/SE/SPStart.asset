@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 39f87665828fac745a5df1a85709c220, type: 3}
   m_Name: SPStart
-  m_EditorClassIdentifier: Assembly-CSharp:ReelSpinGame_Sound:SeFile
+  m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 8a5f1613935cdf74ab4f744affe957c7, type: 3}
   hasLoop: 0

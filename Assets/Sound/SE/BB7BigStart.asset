@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 39f87665828fac745a5df1a85709c220, type: 3}
   m_Name: BB7BigStart
-  m_EditorClassIdentifier: Assembly-CSharp:ReelSpinGame_Sound:SeFile
+  m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 157f15d62af7702448a65a78cb4079a5, type: 3}
   hasLoop: 0

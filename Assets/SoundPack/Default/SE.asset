@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: SE
+  m_EditorClassIdentifier: Assembly-CSharp:ReelSpinGame_Sound.SE:SePack
+  bet: {fileID: 11400000, guid: 34245c8f0a83e954da9ca3f9f5cc2cd5, type: 2}
+  wait: {fileID: 11400000, guid: e1bd1c43f011907439a2dae388c223db, type: 2}
+  start: {fileID: 11400000, guid: 16ade5ca67f896a4f85f2724935815c6, type: 2}
+  spStart: {fileID: 11400000, guid: 6ed9d205cc7bd7547812d7127ff36e5f, type: 2}
+  stop: {fileID: 11400000, guid: 1aa345bf28b06f441aa17af1617588e1, type: 2}
+  redRiichiSound: {fileID: 11400000, guid: d127548dd7e1ce5419f58753103eb7f4, type: 2}
+  blueRiichiSound: {fileID: 11400000, guid: d127548dd7e1ce5419f58753103eb7f4, type: 2}
+  bb7RiichiSound: {fileID: 11400000, guid: d127548dd7e1ce5419f58753103eb7f4, type: 2}
+  replay: {fileID: 11400000, guid: 658a0fcdcbea1d945a139c704b8d9f06, type: 2}
+  normalPayout: {fileID: 11400000, guid: 80003e9e2324efc44a0a1d657bfe8dee, type: 2}
+  maxPayout: {fileID: 11400000, guid: 050669ec45a26404a8d8c47d4a16ac17, type: 2}
+  jacPayout: {fileID: 11400000, guid: 8534e795ce2d3b5448d21b64d6746607, type: 2}
+  redStart: {fileID: 11400000, guid: 285d414918e392641a96ed3146794e31, type: 2}
+  redEnd: {fileID: 11400000, guid: 658f900485f1df54d9191d5ad46ca1b8, type: 2}
+  blueStart: {fileID: 11400000, guid: 25a55d512ddf7674f8651aa9dee3d6ee, type: 2}
+  blueEnd: {fileID: 11400000, guid: 658f900485f1df54d9191d5ad46ca1b8, type: 2}
+  blackStart: {fileID: 11400000, guid: cd889e7ae6aa7a94699b5b571c14fbbb, type: 2}
+  blackEnd: {fileID: 11400000, guid: 658f900485f1df54d9191d5ad46ca1b8, type: 2}
+  regStart: {fileID: 11400000, guid: c7e2019716e311148ba4e632ace5938b, type: 2}
