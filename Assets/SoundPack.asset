@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5301c614ed4661040a4d7a4bc65941c8, type: 3}
-  m_Name: Default
+  m_Name: SoundPack
   m_EditorClassIdentifier: 
-  se: {fileID: 11400000, guid: 7727df927b0309347b6d933e3fa3fcab, type: 2}
-  bgm: {fileID: 11400000, guid: 28a21eef76f41a64abd1aeab7ea2c65f, type: 2}
+  se: {fileID: 0}
+  bgm: {fileID: 0}

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f34c9aca5ce25874b9afcba99992e128, type: 3}
   m_Name: SE
-  m_EditorClassIdentifier: Assembly-CSharp:ReelSpinGame_Sound.SE:SePack
+  m_EditorClassIdentifier: 
   bet: {fileID: 11400000, guid: 34245c8f0a83e954da9ca3f9f5cc2cd5, type: 2}
   wait: {fileID: 11400000, guid: e1bd1c43f011907439a2dae388c223db, type: 2}
   start: {fileID: 11400000, guid: 16ade5ca67f896a4f85f2724935815c6, type: 2}
