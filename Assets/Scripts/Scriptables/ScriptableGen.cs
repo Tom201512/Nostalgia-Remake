@@ -22,20 +22,6 @@ namespace ReelSpinGame_Datas
         // 読み込み時のパス
         private const string DataPath = "Assets/DataFile";
 
-        // リール
-        private const string LeftPath = "ReelL";
-        private const string MiddlePath = "ReelM";
-        private const string RightPath = "ReelR";
-
-        // フラグ
-        private const string FlagPath = "LotsTable";
-
-        // 払い出し関連
-        private const string PayoutPath = "Payout";
-
-        // SE, BGM
-        private const string SoundPath = "Sound";
-
         // JACはずれデフォルト値
         private const float JacNoneDefault = 256f;
 
@@ -101,19 +87,19 @@ namespace ReelSpinGame_Datas
                 if (reelSelection == (int)ReelID.ReelLeft)
                 {
                     reelSelection = -1;
-                    MakeReelData(LeftPath);
+                    MakeReelData("ReelL");
                 }
 
                 if (reelSelection == (int)ReelID.ReelMiddle)
                 {
                     reelSelection = -1;
-                    MakeReelData(MiddlePath);
+                    MakeReelData("ReelM");
                 }
 
                 if (reelSelection == (int)ReelID.ReelRight)
                 {
                     reelSelection = -1;
-                    MakeReelData(RightPath);
+                    MakeReelData("ReelR");
                 }
 
                 GUILayout.Label("\nフラグデータの作成\n");
@@ -153,7 +139,7 @@ namespace ReelSpinGame_Datas
 
         private void MakeReelDataAll()
         {
-            string[] pathOrder = { LeftPath, MiddlePath, RightPath };
+            string[] pathOrder = { "ReelL", "ReelM", "ReelR" };
 
             // あらかじめ設定したディレクトリから全リールのデータを読み込む
             for (int i = 0; i < ReelAmount; i++)
@@ -164,12 +150,12 @@ namespace ReelSpinGame_Datas
             Debug.Log("All ReelData is generated");
         }
 
-        private void MakeReelData(string filePath)
+        private void MakeReelData(string reelName)
         {
             // ディレクトリの作成
             string path = "Assets/ReelData";
             // ファイル名指定
-            string fileName = filePath;
+            string fileName = reelName;
 
             if (!Directory.Exists(path))
             {
@@ -183,15 +169,15 @@ namespace ReelSpinGame_Datas
             // ファイル読み込み
 
             // 配列作成
-            using StreamReader array = new StreamReader(Path.Combine(DataPath, filePath, "Nostalgia_Reel - " + filePath + "Array.csv"));
+            using StreamReader array = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Array.csv"));
             reelDatabase.SetArray(ReelDatabaseGen.MakeReelArray(array));
 
             // 条件テーブル作成
-            using StreamReader condition = new StreamReader(Path.Combine(DataPath, filePath, "Nostalgia_Reel - " + filePath + "Condition.csv"));
+            using StreamReader condition = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Condition.csv"));
             reelDatabase.SetConditions(ReelDatabaseGen.MakeReelConditions(condition));
 
             // ディレイテーブル作成
-            using StreamReader table = new StreamReader(Path.Combine(DataPath, filePath, "Nostalgia_Reel - " + filePath + "Table.csv"));
+            using StreamReader table = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Table.csv"));
             reelDatabase.SetTables(ReelDatabaseGen.MakeTableDatas(table));
 
             // 保存処理
@@ -216,15 +202,15 @@ namespace ReelSpinGame_Datas
 
             // フラグテーブル作成
             // 通常時Aフラグテーブル作成
-            using StreamReader normalA = new StreamReader(Path.Combine(DataPath, FlagPath, "Nostalgia_Flag - FlagTableNormalA.csv"));
+            using StreamReader normalA = new StreamReader(Path.Combine(DataPath, "FlagTable", "Nostalgia_Flag - FlagTableNormalA.csv"));
             flagDatabase.SetNormalATable(FlagDatabaseGen.MakeFlagTableSets(normalA));
 
             // 通常時Bフラグテーブル作成
-            using StreamReader normalB = new StreamReader(Path.Combine(DataPath, FlagPath, "Nostalgia_Flag - FlagTableNormalB.csv"));
+            using StreamReader normalB = new StreamReader(Path.Combine(DataPath, "FlagTable", "Nostalgia_Flag - FlagTableNormalB.csv"));
             flagDatabase.SetNormalBTable(FlagDatabaseGen.MakeFlagTableSets(normalB));
 
             // 小役ゲーム中フラグテーブル作成
-            using StreamReader bigTable = new StreamReader(Path.Combine(DataPath, FlagPath, "Nostalgia_Flag - FlagTableBig.csv"));
+            using StreamReader bigTable = new StreamReader(Path.Combine(DataPath, "FlagTable", "Nostalgia_Flag - FlagTableBig.csv"));
             flagDatabase.SetBIGTable(FlagDatabaseGen.MakeFlagTableSets(bigTable));
 
             // JAC時ハズレ
@@ -252,20 +238,20 @@ namespace ReelSpinGame_Datas
             PayoutDatabase payoutDatabase = CreateInstance<PayoutDatabase>();
 
             // 払い出しライン作成
-            using StreamReader payoutLine = new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - PayoutLineData.csv"));
+            using StreamReader payoutLine = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - PayoutLineData.csv"));
             payoutDatabase.SetPayoutLines(PayoutDatabaseGen.MakePayoutLineDatas(payoutLine));
 
             // 払い出し組み合わせ表作成
             // 通常時
-            using StreamReader normalPayout = new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - NormalPayout.csv"));
+            using StreamReader normalPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - NormalPayout.csv"));
             payoutDatabase.SetNormalPayout(PayoutDatabaseGen.MakeResultDatas(normalPayout));
 
             // 小役ゲーム中
-            using StreamReader bigPayout = new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - BigPayout.csv"));
+            using StreamReader bigPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - BigPayout.csv"));
             payoutDatabase.SetBigPayout(PayoutDatabaseGen.MakeResultDatas(bigPayout));
 
             // JACゲーム中
-            using StreamReader jacPayout = new StreamReader(Path.Combine(DataPath, PayoutPath, "Nostalgia_Payout - JacPayout.csv"));
+            using StreamReader jacPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - JacPayout.csv"));
             payoutDatabase.SetJacPayout(PayoutDatabaseGen.MakeResultDatas(jacPayout));
 
             // 保存処理
@@ -278,7 +264,7 @@ namespace ReelSpinGame_Datas
             if (audioClipList.SeAudioClipList.Count > 0)
             {
                 // ディレクトリの作成
-                string path = "Assets/SoundFiles/SE";
+                string path = Path.Combine("Assets", "Sound", "SE");
                 // ファイル名
                 string fileName = "";
 
@@ -311,7 +297,7 @@ namespace ReelSpinGame_Datas
             if (audioClipList.BgmAudioClipList.Count > 0)
             {
                 // ディレクトリの作成
-                string path = "Assets/SoundFiles/BGM";
+                string path = "Assets/Sound/BGM";
                 // ファイル名
                 string fileName = "";
 
