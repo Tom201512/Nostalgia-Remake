@@ -43,16 +43,25 @@ namespace ReelSpinGame_Sound
         private void Update()
         {
             // ループがあるときの処理
-            if(HasLoop && LoopStart > -1 && LoopLength > -1)
+            if(HasLoop && LoopStart > -1)
             {
                 if (AudioSettings.dspTime > loopTime)
                 {
-                    sources[1].timeSamples = sources[1].clip.samples - LoopStart;
+                    sources[1].timeSamples = LoopStart;
                     Debug.Log("Looped");
                     Debug.Log("DSP:" + AudioSettings.dspTime);
                     sources[1].PlayScheduled(loopTime);
 
-                    double duration = (sources[1].clip.samples - LoopStart) / SampleRate;
+                    double duration = 0.0;
+                    if (LoopLength > -1)
+                    {
+                        duration = LoopStart + LoopLength / SampleRate;
+                    }
+                    else
+                    {
+                        duration = LoopStart / SampleRate;
+                    }
+
                     Debug.Log("Duration:" + duration);
                     loopTime += duration;
                     Debug.Log("Next loop is:" + loopTime);
@@ -103,7 +112,18 @@ namespace ReelSpinGame_Sound
                     sources[0].clip = soundSource;
                     sources[0].PlayScheduled(loopTime);
 
-                    double duration = sources[0].clip.samples / SampleRate;
+                    double duration;
+                    // ループさせる長さがある場合はその長さまで計算
+                    if (loopLength > -1)
+                    {
+                         duration = (loopStart + loopLength) / SampleRate;
+                    }
+                    // ない場合は再生し終えたところを長さとする
+                    else
+                    {
+                         duration = sources[0].clip.samples / SampleRate;
+                    }
+
                     Debug.Log("Duration:" + duration);
                     loopTime += duration;
                     Debug.Log("Next loop is:" + loopTime);
@@ -132,15 +152,14 @@ namespace ReelSpinGame_Sound
             sources[0].Stop();
             StopLoopCheck();
             HasLoop = false;
-            LoopStart = -1;
-            LoopLength = -1;
         }
 
         // ループ処理を切る
         private void StopLoopCheck()
         {
-            sources[1].loop = false;
             sources[1].Stop();
+            LoopStart = -1;
+            LoopLength = -1;
         }
 
         // ボリューム調整

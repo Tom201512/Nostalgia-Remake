@@ -15,4 +15,4 @@ MonoBehaviour:
   sourceFile: {fileID: 8300000, guid: 1a46a11a0c4e8154c89886900e9b2e2b, type: 3}
   hasLoop: 1
   loopStart: 553455
-  loopLength: 553455
+  loopLength: -1
