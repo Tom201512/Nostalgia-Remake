@@ -252,7 +252,7 @@ namespace ReelSpinGame_Bonus
 
             while(DisplayingTotalCount)
             {
-                if(DisplayingTotalCount)
+                if(data.HasZone && DisplayingZoneCount)
                 {
                     bonusSegments.ShowTotalPayout(data.CurrentZonePayout);
                 }
@@ -270,10 +270,14 @@ namespace ReelSpinGame_Bonus
         // 獲得枚数とゾーン区間を切り替える
         private IEnumerator ChangeShowType()
         {
-            DisplayingZoneCount = false;
-            yield return new WaitForSeconds(DisplayChangeTime);
-            DisplayingZoneCount = true;
-            yield return new WaitForSeconds(DisplayChangeTime);
+            while(DisplayingTotalCount)
+            {
+                DisplayingZoneCount = false;
+                yield return new WaitForSeconds(DisplayChangeTime);
+                DisplayingZoneCount = true;
+                yield return new WaitForSeconds(DisplayChangeTime);
+            }
+
         }
     }
 }

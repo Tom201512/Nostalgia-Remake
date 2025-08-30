@@ -287,7 +287,7 @@ namespace ReelSpinGame_Effect
             }
 
             // 通常時のリプレイならフラッシュ再生
-            else if (flagID == FlagId.FlagReplayJacIn && bonusStatus == BonusStatus.BonusNone)
+            else if (payoutResultData.IsReplayOrJacIn && bonusStatus == BonusStatus.BonusNone)
             {
                 flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
                 soundManager.PlaySE(soundManager.SoundDB.SE.Replay);
@@ -297,7 +297,7 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し後演出開始
-        public void StartAfterPayoutEffect(FlagId flagID, BonusStatus bonusStatus)
+        public void StartAfterPayoutEffect(PayoutResultBuffer payoutResultData, BonusStatus bonusStatus)
         {
             // ボーナス開始、終了していれば演出を行う
             if (HasBonusStart)
@@ -312,7 +312,7 @@ namespace ReelSpinGame_Effect
             }
 
             // リプレイ発生時は待機させる
-            else if(flagID == FlagId.FlagReplayJacIn && bonusStatus == BonusStatus.BonusNone)
+            else if(payoutResultData.IsReplayOrJacIn && bonusStatus == BonusStatus.BonusNone)
             {
                 HasAfterPayoutEffect = true;
             }
@@ -529,7 +529,8 @@ namespace ReelSpinGame_Effect
             {
                 yield return new WaitForEndOfFrame();
             }
-
+            // 音楽停止
+            soundManager.StopBGM();
             // BIGの時のみファンファーレを鳴らす
             if (BigChanceColor != BigColor.None)
             {
@@ -543,7 +544,6 @@ namespace ReelSpinGame_Effect
             }
 
             HasBonusFinished = false;
-            soundManager.StopBGM();
         }
     }
 }

@@ -62,7 +62,6 @@ namespace ReelSpinGame_Sound
                 audioSource.clip = soundSource;
                 audioSource.Play();
                 HasLoop = true;
-                Debug.Log(audioSource.loop);
             }
         }
 
@@ -93,7 +92,6 @@ namespace ReelSpinGame_Sound
             }
 
             HasSoundStopped = true;
-            Debug.Log("Sound Stopped");
         }
     }
 }

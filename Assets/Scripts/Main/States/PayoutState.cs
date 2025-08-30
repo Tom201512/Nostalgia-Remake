@@ -204,9 +204,12 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 15枚の払い出しを記録
-            //gM.Player.ChangeLastBonusPayout(gM.Reel.GetPayoutResultData().Payout);
             gM.Bonus.ChangeBonusPayout(gM.Reel.GetPayoutResultData().Payout);
-            gM.Bonus.ChangeZonePayout(gM.Reel.GetPayoutResultData().Payout);
+            // 連チャン区間中なら枚数記録
+            if(gM.Bonus.GetHasZone())
+            {
+                gM.Bonus.ChangeZonePayout(gM.Reel.GetPayoutResultData().Payout);
+            }
             // カウンタリセット
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録

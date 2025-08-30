@@ -69,7 +69,7 @@ namespace ReelSpinGame_State.LotsState
                     // ループしている音を停止
                     gM.Effect.StopLoopSound();
                     // 払い出し後演出を始める
-                    gM.Effect.StartAfterPayoutEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
+                    gM.Effect.StartAfterPayoutEffect(gM.Reel.GetPayoutResultData(), gM.Bonus.GetCurrentBonusStatus());
                     finishPayout = true;
                 }
                 else if(finishPayout)
