@@ -95,7 +95,7 @@ namespace ReelSpinGame_State.PlayingState
             if(!gM.Auto.HasStopPosDecided)
             {
                 gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(),
-                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn());
+                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());
             }
 
             // すべてのリールが止まっていたら払い出し処理をする

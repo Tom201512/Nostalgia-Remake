@@ -17,13 +17,12 @@ namespace ReelSpinGame_Sound
         // var
         // 使用候補のサウンドパック]
         [SerializeField] private List<SoundPack> SoundDatabases;
-
         // SE再生
         [SerializeField] private SoundPlayer sePlayer;
-        // ファンファーレなどのジングル再生用
+        // ジングル再生(短いBGM)
         [SerializeField] private SoundPlayer jinglePlayer;
         // BGM再生用
-        [SerializeField] private SoundPlayer bgmPlayer;
+        [SerializeField] private BgmPlayer bgmPlayer;
 
         // 使用中のサウンドパック
         public SoundPack SoundDB { get; private set; }
@@ -34,8 +33,10 @@ namespace ReelSpinGame_Sound
         }
 
         // func
+        // 効果音が停止したか確認
+        public bool GetSoundStopped() => sePlayer.HasSoundStopped;
         // ジングルが停止したか確認
-        public bool GetJingleSoundStopped() => jinglePlayer.HasSoundStopped;
+        public bool GetJingleStopped() => jinglePlayer.HasSoundStopped;
         // 効果音がループしているか確認
         public bool GetSoundEffectHasLoop() => sePlayer.HasLoop;
 
@@ -57,6 +58,10 @@ namespace ReelSpinGame_Sound
             {
                 case SeFile.SeFileType.Oneshot:
                     sePlayer.PlayAudioOneShot(se.SourceFile);
+                    break;
+
+                case SeFile.SeFileType.Wait:
+                    sePlayer.PlayAudioAndWait(se.SourceFile);
                     break;
 
                 case SeFile.SeFileType.Jingle:
@@ -86,11 +91,11 @@ namespace ReelSpinGame_Sound
         {
             if(bgm.HasLoop)
             {
-                bgmPlayer.PlayLoopAudio(bgm.SourceFile, bgm.LoopStart, bgm.LoopLength);
+                bgmPlayer.PlayBGMLoop(bgm.SourceFile, bgm.LoopStart, bgm.LoopLength);
             }
             else
             {
-                bgmPlayer.PlayAudioAndWait(bgm.SourceFile);
+                bgmPlayer.PlayBGM(bgm.SourceFile);
             }
         }
 
@@ -103,12 +108,8 @@ namespace ReelSpinGame_Sound
         public void ChangeBGMVolume(float volume) => bgmPlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
         // SEミュート切り替え
         public void ChangeMuteSEPlayer(bool value) => sePlayer.ChangeMute(value);
-        // BGM, ジングルミュート切り替え
-        public void ChangeMuteBGMPlayer(bool value)
-        {
-            jinglePlayer.ChangeMute(value);
-            bgmPlayer.ChangeMute(value);
-        }
+        // BGM, ミュート切り替え
+        public void ChangeMuteBGMPlayer(bool value) => bgmPlayer.ChangeMute(value);
         // SE再生不可切り替え
         public void ChangeLockSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
     }

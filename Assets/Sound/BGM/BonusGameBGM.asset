@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: bbcd7e233f0534f42aab55d0fcdbf7a7, type: 3}
   hasLoop: 1
-  loopStart: 276726
-  loopLength: 276726
+  loopStart: 276728
+  loopLength: 276725

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Wait
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 8a90343e8d26e584a8729fa90ea22526, type: 3}
-  seType: 2
+  seType: 3

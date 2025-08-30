@@ -4,6 +4,7 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 namespace ReelSpinGame_AutoPlay.AI
 {
@@ -38,7 +39,7 @@ namespace ReelSpinGame_AutoPlay.AI
         // func
 
         // 停止位置を小役、第一停止、現在の状態に合わせて返す
-        public int[] GetStopPos(FlagId flag, ReelID firstPush, BonusTypeID holdingBonus, int bigChanceGames, int remainingJacIn)
+        public int[] GetStopPos(FlagId flag, ReelID firstPush, BonusTypeID holdingBonus, int bigChanceGames, int remainingJacIn, int betAmount)
 		{
             // 技術介入ありの場合
             if(HasTechnicalPlay)
@@ -55,7 +56,7 @@ namespace ReelSpinGame_AutoPlay.AI
                         }
                         else
                         {
-                            return AimBigChance(flag);
+                            return AimBigChance(flag, betAmount);
                         }
 
                     // REG時(リーチ目を止める場合は適当押しをする)
@@ -67,13 +68,13 @@ namespace ReelSpinGame_AutoPlay.AI
                         }
                         else
                         {
-                            return AimBonusGame();
+                            return AimBonusGame(flag, betAmount);
                         }
 
                     // チェリー時
                     case FlagId.FlagCherry2:
                     case FlagId.FlagCherry4:
-                        return AICherryBehavior(flag, holdingBonus);
+                        return AICherryBehavior(flag, holdingBonus, betAmount);
 
                     // スイカ時
                     case FlagId.FlagMelon:
@@ -89,7 +90,7 @@ namespace ReelSpinGame_AutoPlay.AI
 
                     // はずれ、JAC中などははずれ制御
                     default:
-                        return AINoneBehavior(holdingBonus);
+                        return AINoneBehavior(holdingBonus, betAmount);
                 }
             }
 
@@ -101,18 +102,18 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
 		// はずれ時
-		private int[] AINoneBehavior(BonusTypeID holdingBonus)
+		private int[] AINoneBehavior(BonusTypeID holdingBonus, int betAmount)
 		{
             // ボーナスがある場合はそのボーナスを狙うように
             if (holdingBonus == BonusTypeID.BonusBIG)
             {
-                return AimBigChance(FlagId.FlagNone);
+                return AimBigChance(FlagId.FlagNone, betAmount);
             }
 
             // REGの場合
             else if (holdingBonus == BonusTypeID.BonusREG)
             {
-                return AimBonusGame();
+                return AimBonusGame(FlagId.FlagNone, betAmount);
             }
 
             // はずれ時は適当押しをする
@@ -120,18 +121,18 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // チェリー時
-        private int[] AICherryBehavior(FlagId flag, BonusTypeID holdingBonus)
+        private int[] AICherryBehavior(FlagId flag, BonusTypeID holdingBonus, int betAmount)
         {
             // ボーナスがある場合はそのボーナスを狙うように
             if (holdingBonus == BonusTypeID.BonusBIG)
             {
-                return AimBigChance(flag);
+                return AimBigChance(flag, betAmount);
             }
 
             // REGの場合
             else if (holdingBonus == BonusTypeID.BonusREG)
             {
-                return AimBonusGame();
+                return AimBonusGame(flag, betAmount);
             }
 
             // はずれ時はチェリー狙い
@@ -142,13 +143,13 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // ビッグチャンスを狙う
-        private int[] AimBigChance(FlagId flag)
-		{
+        private int[] AimBigChance(FlagId flag, int betAmount)
+        {
             int[] stopPos = new int[] { 0, 0, 0 };
             int colorID = 0;
 
             // 揃えるBIGの色指定がなければランダムで選択
-            if(PlayerSelectedBigColor == BigColor.None)
+            if (PlayerSelectedBigColor == BigColor.None)
             {
                 colorID = Random.Range((int)BigColor.Red, (int)BigColor.Black + 1);
             }
@@ -179,60 +180,41 @@ namespace ReelSpinGame_AutoPlay.AI
 
                 case (int)BigColor.Blue:
 
-                    // 1枚掛けをする場合は
-                    if(HasStoppedRiichiPtn && HasOneBetBonusLineUp)
-                    {
-                        stopPos[(int)ReelID.ReelLeft] = 2;
-                    }
-                    else
-                    {
-                        stopPos[(int)ReelID.ReelLeft] = 3;
-                    }
+                    stopPos[(int)ReelID.ReelLeft] = 3;
 
                     // 1/2でBAR上の青7を停止させる
-                    // 1枚掛けは必ずBAR上を押す
-                    if((HasStoppedRiichiPtn && HasOneBetBonusLineUp) ||
-                        !OriginalRandomLot.LotRandomByNum(2))
+                    if (OriginalRandomLot.LotRandomByNum(2))
                     {
-                        stopPos[(int)ReelID.ReelMiddle] = 13;
+                        stopPos[(int)ReelID.ReelMiddle] = 12;
                     }
                     else
                     {
                         stopPos[(int)ReelID.ReelMiddle] = 6;
                     }
 
-                        stopPos[(int)ReelID.ReelRight] = 9;
+                    stopPos[(int)ReelID.ReelRight] = 9;
 
                     break;
+
                 case (int)BigColor.Black:
 
                     // 1/2で上にチェリーのあるBARを停止
                     if (OriginalRandomLot.LotRandomByNum(2))
                     {
-                        // 2枚チェリー、4枚チェリー時, 1枚掛けで制御を変える
-
-                        // 2枚チェリー、1枚掛け
-                        if (flag == FlagId.FlagCherry2 ||
-                            (HasStoppedRiichiPtn && HasOneBetBonusLineUp))
+                        // 4枚チェリーまたは1枚掛け
+                        if (flag == FlagId.FlagCherry4 || betAmount == 1)
                         {
                             stopPos[(int)ReelID.ReelLeft] = 6;
                         }
-
-                        // 4枚チェリー
-                        else if (flag == FlagId.FlagCherry4)
-                        {
-                            stopPos[(int)ReelID.ReelLeft] = 7;
-                        }
-                        // はずれ時
                         else
                         {
-                            stopPos[(int)ReelID.ReelLeft] = 8;
+                            stopPos[(int)ReelID.ReelLeft] = 5;
                         }
                     }
                     else
                     {
-                        // 1枚掛けの場合はBB7が揃えられる位置を押す
-                        if(HasStoppedRiichiPtn && HasOneBetBonusLineUp)
+                        // 4枚チェリーの場合はBB7で揃えられる場所で止める
+                        if(flag == FlagId.FlagCherry4)
                         {
                             stopPos[(int)ReelID.ReelLeft] = 14;
                         }
@@ -251,14 +233,22 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // ボーナスゲーム図柄を狙う
-        private int[] AimBonusGame()
+        private int[] AimBonusGame(FlagId flag, int betAmount)
         {
             int[] stopPos = new int[] { 0, 0, 0 };
 
             // 1/2で上にチェリーのあるBARを停止
             if (OriginalRandomLot.LotRandomByNum(2))
             {
-                stopPos[(int)ReelID.ReelLeft] = 8;
+                // 4枚チェリーまたは1枚掛け
+                if (flag == FlagId.FlagCherry4 || betAmount == 1)
+                {
+                    stopPos[(int)ReelID.ReelLeft] = 6;
+                }
+                else
+                {
+                    stopPos[(int)ReelID.ReelLeft] = 5;
+                }
             }
             else
             {

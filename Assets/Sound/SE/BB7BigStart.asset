@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BB7BigStart
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 157f15d62af7702448a65a78cb4079a5, type: 3}
-  seType: 1
+  seType: 2

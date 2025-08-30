@@ -53,7 +53,7 @@ namespace ReelSpinGame_State.LotsState
             if(gM.Auto.HasAuto)
             {
                 gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(),gM.Bonus.GetHoldingBonusID(), 
-                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn());
+                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());
             }
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);

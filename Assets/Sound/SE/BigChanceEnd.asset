@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BigChanceEnd
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 5c219cf348d5fc5489aa6f6e1cc55689, type: 3}
-  seType: 1
+  seType: 2

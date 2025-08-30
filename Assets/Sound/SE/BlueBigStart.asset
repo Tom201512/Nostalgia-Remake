@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BlueBigStart
   m_EditorClassIdentifier: 
   sourceFile: {fileID: 8300000, guid: 8008016c534427c4a99f2519bdac9f66, type: 3}
-  seType: 1
+  seType: 2

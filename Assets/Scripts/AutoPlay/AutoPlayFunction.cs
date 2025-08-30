@@ -270,10 +270,10 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // オート押し順をフラグ、条件から得る
-        public void GetAutoStopPos(FlagId flag, BonusTypeID holdingBonus, int bigChanceGames, int remainingJac)
+        public void GetAutoStopPos(FlagId flag, BonusTypeID holdingBonus, int bigChanceGames, int remainingJac, int betAmount)
         {
             SetAutoStopOrder();
-            AutoStopPos = autoAI.GetStopPos(flag, AutoStopOrders[(int)AutoStopOrder.First], holdingBonus, bigChanceGames, remainingJac);
+            AutoStopPos = autoAI.GetStopPos(flag, AutoStopOrders[(int)AutoStopOrder.First], holdingBonus, bigChanceGames, remainingJac, betAmount);
             HasStopPosDecided = true;
         }
 

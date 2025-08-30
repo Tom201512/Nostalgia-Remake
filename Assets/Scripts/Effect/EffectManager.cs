@@ -482,8 +482,8 @@ namespace ReelSpinGame_Effect
         // 払い出し前演出処理
         private IEnumerator UpdateBeforePayoutEffect()
         {
-            // 今鳴らしている効果音とフラッシュが止まるのを待つ
-            while (!soundManager.GetJingleSoundStopped() || flashManager.HasFlashWait)
+            // 今鳴らしているジングルとフラッシュが止まるのを待つ
+            while (!soundManager.GetSoundStopped() || !soundManager.GetJingleStopped() || flashManager.HasFlashWait)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -494,8 +494,8 @@ namespace ReelSpinGame_Effect
         // 払い出し後演出処理
         private IEnumerator UpdateAfterPayoutEffect()
         {
-            // 今鳴らしている効果音とフラッシュが止まるのを待つ
-            while (!soundManager.GetJingleSoundStopped() || flashManager.HasFlashWait)
+            // 今鳴らしているジングルとフラッシュが止まるのを待つ
+            while (!soundManager.GetSoundStopped() || !soundManager.GetJingleStopped() || flashManager.HasFlashWait)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -507,14 +507,14 @@ namespace ReelSpinGame_Effect
         private IEnumerator UpdateBonusFanfare()
         {
             // 今鳴らしている効果音が止まるのを待つ
-            while (!soundManager.GetJingleSoundStopped())
+            while (!soundManager.GetSoundStopped())
             {
                 yield return new WaitForEndOfFrame();
             }
             // ファンファーレを鳴らす
             PlayFanfare();
             // 今鳴らしているファンファーレが止まるのを待つ
-            while (!soundManager.GetJingleSoundStopped())
+            while (!soundManager.GetJingleStopped())
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -525,7 +525,7 @@ namespace ReelSpinGame_Effect
         private IEnumerator UpdateBonusEndFanfare()
         {
             // 今鳴らしている効果音が止まるのを待つ
-            while (!soundManager.GetJingleSoundStopped())
+            while (!soundManager.GetSoundStopped())
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -536,7 +536,7 @@ namespace ReelSpinGame_Effect
                 PlayBigEndFanfare();
                 BigChanceColor = BigColor.None;
                 // 今鳴らしているファンファーレが止まるのを待つ
-                while (!soundManager.GetJingleSoundStopped())
+                while (!soundManager.GetJingleStopped())
                 {
                     yield return new WaitForEndOfFrame();
                 }
