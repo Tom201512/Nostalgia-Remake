@@ -9,7 +9,7 @@ namespace ReelSpinGame_Sound
 
         // const
         // サンプリングレート
-        const double SampleRate = 44100.0;
+        const int SampleRate = 44100;
 
         // var
         // コンポーネント
@@ -27,7 +27,13 @@ namespace ReelSpinGame_Sound
         public bool HasLockPlaying;
 
         // ループ時の時間
-        private double loopTime;
+        public double LoopTime { get; private set; }
+        // 現在サンプル数
+        public int SampleCount { get; private set; }
+        // 現在のループ長さサンプル数で表示
+        public int DurationSample { get; private set; }
+        // 実際の差分
+        public double Diff {  get; private set; }
 
         void Awake()
         {
@@ -37,35 +43,20 @@ namespace ReelSpinGame_Sound
 
             LoopStart = -1;
             LoopLength = -1;
-            loopTime = 0.0;
+            LoopTime = 0;
+            DurationSample = 0;
+            Diff = 0;
         }
 
-        private void Update()
+        void Update()
         {
-            // ループがあるときの処理
-            if(HasLoop && LoopStart > -1)
+            if (sources[0].isPlaying)
             {
-                if (AudioSettings.dspTime > loopTime)
-                {
-                    sources[1].timeSamples = LoopStart;
-                    Debug.Log("Looped");
-                    Debug.Log("DSP:" + AudioSettings.dspTime);
-                    sources[1].PlayScheduled(loopTime);
-
-                    double duration = 0.0;
-                    if (LoopLength > -1)
-                    {
-                        duration = LoopStart + LoopLength / SampleRate;
-                    }
-                    else
-                    {
-                        duration = LoopStart / SampleRate;
-                    }
-
-                    Debug.Log("Duration:" + duration);
-                    loopTime += duration;
-                    Debug.Log("Next loop is:" + loopTime);
-                }
+                SampleCount = sources[0].timeSamples;
+            }
+            else
+            {
+                SampleCount = sources[1].timeSamples;
             }
         }
 
@@ -82,9 +73,10 @@ namespace ReelSpinGame_Sound
         {
             if (!HasLockPlaying)
             {
-                StopLoopCheck();
+                StopAudio();
                 sources[0].loop = false;
                 sources[0].clip = soundSource;
+                sources[0].clip.LoadAudioData();
                 sources[0].Play();
                 StartCoroutine(nameof(CheckAudioStopped));
             }
@@ -95,53 +87,61 @@ namespace ReelSpinGame_Sound
         {
             if (!HasLockPlaying)
             {
-                // イントロ付きループならソースを2つ使ってループ再生を実現
+                StopAudio();
+                HasLoop = true;
+                // ソースを2つ使ってループ再生を実現
+                sources[0].loop = false;
+                sources[0].clip = soundSource;
+                sources[0].clip.LoadAudioData();
+                sources[0].PlayScheduled(AudioSettings.dspTime);
+
+                // 初期化
+
+                // ループを準備
+                sources[1].clip = soundSource;
+                sources[1].clip.LoadAudioData();
+                sources[1].loop = false;
+
+                // 開始時間記録
+                Debug.Log("LoopStartTime:" + AudioSettings.dspTime);
+
                 if (loopStart > -1)
                 {
-                    // 初期化
-                    loopTime = AudioSettings.dspTime;
                     LoopStart = loopStart;
-
-                    // 長さ付きの場合は追加
-                    if(loopLength > -1)
-                    {
-                        LoopLength = loopLength;
-                    }
-
-                    sources[0].loop = false;
-                    sources[0].clip = soundSource;
-                    sources[0].PlayScheduled(loopTime);
-
-                    double duration;
-                    // ループさせる長さがある場合はその長さまで計算
-                    if (loopLength > -1)
-                    {
-                         duration = (loopStart + loopLength) / SampleRate;
-                    }
-                    // ない場合は再生し終えたところを長さとする
-                    else
-                    {
-                         duration = sources[0].clip.samples / SampleRate;
-                    }
-
-                    Debug.Log("Duration:" + duration);
-                    loopTime += duration;
-                    Debug.Log("Next loop is:" + loopTime);
-
-                    // ループを準備
-                    sources[1].clip = soundSource;
-                    sources[1].loop = false;
                 }
-                // ない場合は普通のループ再生をする
                 else
                 {
-                    StopLoopCheck();
-                    sources[0].loop = true;
-                    sources[0].clip = soundSource;
-                    sources[0].Play();
+                    LoopStart = 0;
+                }
+                sources[1].timeSamples = LoopStart;
+
+
+                // 長さ付きの場合は追加
+                if (loopLength > -1)
+                {
+                    LoopLength = loopLength;
+                }
+                // ない場合は自動計算
+                else
+                {
+                    LoopLength = sources[0].clip.samples - loopStart;
                 }
 
-                HasLoop = true;
+                // 長さのサンプル数計算
+                if (loopLength > -1)
+                {
+                    DurationSample = loopStart + loopLength;
+                }
+                else
+                {
+                    DurationSample = sources[0].clip.samples;
+                }
+
+                Debug.Log("Duration:" + DurationSample);
+                LoopTime = AudioSettings.dspTime + (double)DurationSample / SampleRate;
+                Debug.Log("Next loop is:" + LoopTime);
+
+                StartCoroutine(nameof(LoopCheck));
             }
         }
 
@@ -150,17 +150,16 @@ namespace ReelSpinGame_Sound
         {
             sources[0].loop = false;
             sources[0].Stop();
+            sources[1].Stop();
             StopLoopCheck();
+
+            LoopStart = -1;
+            LoopLength = -1;
             HasLoop = false;
         }
 
         // ループ処理を切る
-        private void StopLoopCheck()
-        {
-            sources[1].Stop();
-            LoopStart = -1;
-            LoopLength = -1;
-        }
+        public void StopLoopCheck() => StopCoroutine(nameof(LoopCheck));
 
         // ボリューム調整
         public void AdjustVolume(float volume)
@@ -178,6 +177,42 @@ namespace ReelSpinGame_Sound
         // 再生不能にするか(いかなる場合でも音を鳴らせなくする)
         public void ChangeLockPlaying(bool value) => HasLockPlaying = value;
 
+        // 開始位置までシークする
+        public void SeekToStartLoop()
+        {
+            Debug.Log("Looped");
+            Debug.Log("DSP:" + AudioSettings.dspTime);
+            sources[0].Stop();
+
+            Diff = AudioSettings.dspTime - LoopTime;
+            Debug.Log("Diff:" + Diff);
+            sources[1].PlayScheduled(AudioSettings.dspTime);
+
+            Debug.Log("LoopStartTime:" + AudioSettings.dspTime);
+
+            if (LoopStart > -1)
+            {
+                sources[1].timeSamples = LoopStart;
+            }
+            else
+            {
+                sources[1].timeSamples = 0;
+            }
+
+            if (LoopLength > -1)
+            {
+                DurationSample = LoopLength;
+            }
+            else
+            {
+                DurationSample = sources[1].clip.samples;
+            }
+
+            Debug.Log("Duration:" + DurationSample);
+            LoopTime = AudioSettings.dspTime + (double)DurationSample / SampleRate;
+            Debug.Log("Next loop is:" + LoopTime);
+        }
+
         // 音声が止まったかの処理
         private IEnumerator CheckAudioStopped()
         {
@@ -190,6 +225,20 @@ namespace ReelSpinGame_Sound
 
             HasSoundStopped = true;
             Debug.Log("Sound Stopped");
+        }
+
+        private IEnumerator LoopCheck()
+        {
+            while(HasLoop)
+            {
+                Debug.Log("Loop Check start");
+                
+                while(AudioSettings.dspTime < LoopTime)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+                SeekToStartLoop();
+            }
         }
     }
 }
