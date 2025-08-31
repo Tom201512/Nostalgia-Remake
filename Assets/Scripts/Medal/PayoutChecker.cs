@@ -1,5 +1,6 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
+using ReelSpinGame_Reels.Symbol;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
@@ -75,7 +76,7 @@ namespace ReelSpinGame_Reels.Payout
                     foreach (List<ReelData.ReelSymbols> reelResult in lastStoppedData.LastSymbols)
                     {
                         // マイナス数値を配列番号に変換
-                        int lineIndex = ReelData.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
+                        int lineIndex = SymbolChange.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
 
                         //Debug.Log("Symbol:" + reelResult[lineIndex]);
                         lineResult.Add(reelResult[lineIndex]);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using static ReelSpinGame_Reels.ReelData;
+using ReelSpinGame_Reels.Symbol;
 
 namespace ReelSpinGame_Reels
 {
@@ -63,6 +64,6 @@ namespace ReelSpinGame_Reels
         }
 
         // 最後に止めた図柄を得る
-        public ReelSymbols GetLastStoppedSymbol(int reelID, int posID) => LastSymbols[reelID][GetReelArrayIndex(posID)];
+        public ReelSymbols GetLastStoppedSymbol(int reelID, int posID) => LastSymbols[reelID][SymbolChange.GetReelArrayIndex(posID)];
     }
 }

@@ -1,5 +1,7 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Flash;
+using ReelSpinGame_Reels.Effect;
+using ReelSpinGame_Reels.Symbol;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +34,8 @@ namespace ReelSpinGame_Reels.Flash
         // var
         // リールオブジェクト
         private List<ReelObject> reelObjects;
+        // リール演出マネージャー
+        [SerializeField] private ReelEffectManager reelEffectManager;
         // 最後にあった払い出しライン
         private List<PayoutLineData> lastPayoutLines;
 
@@ -117,52 +121,13 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // リールライトをすべて明るくする
-        public void TurnOnAllReels()
-        {
-            foreach (ReelObject reel in reelObjects)
-            {
-                reel.SetReelBaseBrightness(ReelBase.TurnOnValue);
-                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
-                {
-                    reel.SetSymbolBrightness(i, ReelBase.TurnOnValue);
-                }
-            }
-        }
+        public void TurnOnAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOnValue);
 
         // リールライトをすべて暗くする
-        public void TurnOffAllReels()
-        {
-            foreach (ReelObject reel in reelObjects)
-            {
-                reel.SetReelBaseBrightness(ReelBase.TurnOffValue);
-                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
-                {
-                    reel.SetSymbolBrightness(i, ReelBase.TurnOffValue);
-                }
-            }
-        }
+        public void TurnOffAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOffValue);
 
         // JAC GAME時のライト点灯
-        public void EnableJacGameLight()
-        {
-            foreach (ReelObject reel in reelObjects)
-            {
-                reel.SetReelBaseBrightness(SymbolChange.TurnOffValue);
-
-                // 真ん中以外点灯
-                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
-                {
-                    if (i == (int)ReelPosID.Center)
-                    {
-                        reel.SetSymbolBrightness(i, SymbolChange.TurnOnValue);
-                    }
-                    else
-                    {
-                        reel.SetSymbolBrightness(i, SymbolChange.TurnOffValue);
-                    }
-                }
-            }
-        }
+        public void EnableJacGameLight() => reelEffectManager.EnableJacGameLight();
 
         // 真ん中に近くなったリールを徐々に光らせる
 
@@ -180,26 +145,26 @@ namespace ReelSpinGame_Reels.Flash
             if (currentFrame == flashData[(int)FlashData.PropertyID.FrameID])
             {
                 // リール全て変更
-                foreach (ReelObject reel in reelObjects)
+                for(int i = 0; i < ReelAmount; i++)
                 {
                     // 本体と枠下枠上の図柄変更
-                    int bodyBright = flashData[(int)FlashData.PropertyID.Body + reel.GetReelID() * SeekOffset];
+                    int bodyBright = flashData[(int)FlashData.PropertyID.Body + i * SeekOffset];
                     if (bodyBright != NoChangeValue)
                     {
-                        reel.SetReelBaseBrightness((byte)bodyBright);
-                        reel.SetSymbolBrightness((int)ReelPosID.Lower2nd, (byte)bodyBright);
-                        reel.SetSymbolBrightness((int)ReelPosID.Upper2nd, (byte)bodyBright);
+                        reelEffectManager.ChangeReelBackLight(i, (byte)bodyBright);
+                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Lower2nd, (byte)bodyBright);
+                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Upper2nd, (byte)bodyBright);
                     }
 
                     // 図柄の明るさ変更
-                    for (int i = (int)ReelPosID.Lower2nd; i < (int)ReelPosID.Upper2nd; i++)
+                    for (int j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd; j++)
                     {
-                        int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + i + reel.GetReelID() * SeekOffset];
+                        int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + j + i * SeekOffset];
 
-                        //Debug.Log("Symbol:" + i + "Bright:" + symbolBright);
+                        //Debug.Log("Symbol:" + j + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
-                            reel.SetSymbolBrightness(i, (byte)symbolBright);
+                            reelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);
                         }
                     }
                 }
@@ -233,14 +198,14 @@ namespace ReelSpinGame_Reels.Flash
         private void PayoutFlash()
         {
             // 暗くする量を計算
-            byte brightness = CalculateBrightness(SymbolChange.TurnOffValue, PayoutFlashFrames);
+            byte brightness = CalculateBrightness(SymbolLight.TurnOffValue, PayoutFlashFrames);
             //全ての払い出しのあったラインをフラッシュさせる
             foreach (PayoutLineData payoutLine in lastPayoutLines)
             {
                 for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
                 {
                     // 図柄点灯
-                    reelObjects[i].SetSymbolBrightness(payoutLine.PayoutLines[i], brightness);
+                    reelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
                     if (reelObjects[(int)ReelID.ReelLeft].GetReelSymbol
@@ -261,12 +226,12 @@ namespace ReelSpinGame_Reels.Flash
         private byte CalculateBrightness(int turnOffValue, int frame)
         {
             // 明るさの計算(0.01秒で25下げる)
-            int distance = SymbolChange.TurnOnValue - turnOffValue;
+            int distance = SymbolLight.TurnOnValue - turnOffValue;
             float changeValue = distance / frame;
             // 0.01秒で下げる明るさの量(0.08秒でもとに戻る)
-            float result = SymbolChange.TurnOnValue - currentFrame * changeValue;
+            float result = SymbolLight.TurnOnValue - currentFrame * changeValue;
             // 数値を超えないように調整
-            result = Math.Clamp(result, SymbolChange.TurnOffValue, SymbolChange.TurnOnValue);
+            result = Math.Clamp(result, SymbolLight.TurnOffValue, SymbolLight.TurnOnValue);
             // byte型に変換
             return (byte)Math.Round(result);
         }

@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Datas;
 using System;
 using UnityEngine;
+using ReelSpinGame_Reels.Symbol;
 
 namespace ReelSpinGame_Reels
 {
@@ -64,18 +65,13 @@ namespace ReelSpinGame_Reels
         // 指定したリールの位置番号を返す
         public int GetReelPos(int posID) => OffsetReel(currentLower, posID);
         // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
+        public ReelSymbols GetReelSymbol(int posID) => SymbolChange.ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
         // 停止予定の位置からリール図柄を返す
-        public ReelSymbols GetSymbolFromWillStop(int posID) => ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
+        public ReelSymbols GetSymbolFromWillStop(int posID) => SymbolChange.ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel(currentLower, (int)Mathf.Sign(rotateSpeed));
         // 停止位置になったか
         public bool CheckReachedStop() => currentLower == WillStopPos;
-
-        // リール配列の番号を図柄へ変更
-        public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
-        // リール位置を配列要素に置き換える
-        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower2nd * -1;
 
         // 回転を開始させる
         public void BeginStartReel()

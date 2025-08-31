@@ -10,6 +10,7 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
+using ReelSpinGame_Reels;
 
 namespace ReelSpinGame_Effect
 {
