@@ -1,4 +1,3 @@
-using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Symbol;
 using System;
 using UnityEngine;
@@ -10,11 +9,6 @@ public class SymbolChange : MonoBehaviour
     // 図柄の表示用
     [SerializeField] private Sprite[] symbolImages;
 
-    // 明るさ
-    private byte lastBrightness;
-    // 明るさ変更コンポーネント
-    private SymbolLight symbolLight;
-
     // 表示部分
     private SpriteRenderer sprite;
 
@@ -24,40 +18,13 @@ public class SymbolChange : MonoBehaviour
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
-        symbolLight = GetComponent<SymbolLight>();
-        lastBrightness = 0;
-        ChangeBrightness(SymbolLight.TurnOffValue);
-    }
-
-    private void Start()
-    {
-        sprite.material.SetColor("_Color", new Color32(symbolLight.Brightness, symbolLight.Brightness, symbolLight.Brightness, 255));
-        lastBrightness = symbolLight.Brightness;
-    }
-
-    void Update()
-    {
-        if(symbolLight.Brightness != lastBrightness)
-        {
-            sprite.material.SetColor("_Color", new Color32(symbolLight.Brightness, symbolLight.Brightness, symbolLight.Brightness, 255));
-            lastBrightness = symbolLight.Brightness;
-        }
     }
 
     // 図柄変更
-    public void ChangeSymbol(ReelData.ReelSymbols symbolID) => sprite.sprite = symbolImages[(int)symbolID];
-
-    // 色変更
-    public void ChangeBrightness(byte brightness)
-    {
-        if(lastBrightness != brightness)
-        {
-
-        }
-    }
+    public void ChangeSymbol(ReelSymbols symbolID) => sprite.sprite = symbolImages[(int)symbolID];
 
     // 位置IDを返す
-    public ReelData.ReelPosID GetPosID() => posID;
+    public ReelPosID GetPosID() => posID;
 
     // リール配列の番号を図柄へ変更
     public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);

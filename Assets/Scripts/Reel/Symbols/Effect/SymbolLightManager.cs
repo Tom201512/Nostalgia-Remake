@@ -14,6 +14,10 @@ namespace ReelSpinGame_Reels.Symbol
         }
 
         // Žw’è‚µ‚½ˆÊ’u‚Ì–¾‚é‚³•ÏX
-        public void ChangeSymbolBrightness(int posID, byte brightness) => SymbolLightObj[SymbolChange.GetReelArrayIndex(posID)].ChangeBrightness(brightness);
+        public void ChangeSymbolBrightness(int posID, byte brightness)
+        {
+            Debug.Log("PosID:" + posID + "Brightness:" + brightness);
+            SymbolLightObj[SymbolChange.GetReelArrayIndex(posID)].ChangeBrightness(brightness);
+        }
     }
 }

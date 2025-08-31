@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace ReelSpinGame_Reels.Symbol
 {
@@ -11,17 +12,32 @@ namespace ReelSpinGame_Reels.Symbol
         // デフォルトの暗さ(消灯時)
         public const byte TurnOffValue = 120;
 
-        // 明るさ
         // 表示部分
-        public byte Brightness {  get; private set; }
+        private SpriteRenderer sprite;
+
+        // 明るさ
+        private byte lastBrightness;
 
         private void Awake()
         {
-            Brightness = 120;
+            sprite = GetComponent<SpriteRenderer>();
+            lastBrightness = 0;
+        }
+
+        private void Start()
+        {
+            ChangeBrightness(TurnOffValue);
         }
 
         // 色変更
-        public void ChangeBrightness(byte brightness) => Brightness = brightness;
+        public void ChangeBrightness(byte brightness)
+        {
+            if(lastBrightness != brightness)
+            {
+                sprite.material.SetColor("_Color", new Color32(brightness, brightness, brightness, 255));
+                lastBrightness = brightness;
+            }
+        }
     }
 }
 
