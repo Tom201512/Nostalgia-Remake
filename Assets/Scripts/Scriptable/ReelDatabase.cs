@@ -214,8 +214,6 @@ namespace ReelSpinGame_Datas
                 }
                 indexNum++;
             }
-
-            //Debug.Log("Array:" + debugBuffer);
         }
     }
 }

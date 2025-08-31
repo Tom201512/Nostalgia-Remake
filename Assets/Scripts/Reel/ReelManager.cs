@@ -1,4 +1,5 @@
 ﻿using ReelSpinGame_Datas;
+using ReelSpinGame_Datas.Reels;
 using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Payout;
 using System.Collections;
