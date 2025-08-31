@@ -365,6 +365,52 @@ MonoBehaviour:
   - mainConditions: 8
     firstReelPosition: 0
     reelTableNumber: 30
+  first:
+  - mainConditon: 0
+    tid: 1
+    cid: 1
+  - mainConditon: 0
+    tid: 1
+    cid: 2
+  - mainConditon: 0
+    tid: 1
+    cid: 3
+  - mainConditon: 0
+    tid: 1
+    cid: 4
+  - mainConditon: 0
+    tid: 1
+    cid: 5
+  - mainConditon: 0
+    tid: 1
+    cid: 6
+  - mainConditon: 0
+    tid: 1
+    cid: 7
+  - mainConditon: 0
+    tid: 1
+    cid: 8
+  - mainConditon: 0
+    tid: 1
+    cid: 9
+  - mainConditon: 16
+    tid: 3
+    cid: 1
+  second:
+  - mainConditon: 0
+    tid: 2
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopPos: 0
+  third:
+  - mainConditon: 0
+    tid: 2
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
   tables:
   - tableData: 010201010003020300010001000100010003020300
   - tableData: 000000010003020300000001000000000003020300

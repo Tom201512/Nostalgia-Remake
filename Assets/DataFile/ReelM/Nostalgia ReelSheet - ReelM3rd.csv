@@ -1,4 +1,3 @@
-Flag,Bet,Bonus,Rand,1stReel,1stCID,2ndPush,2ndCID,TID,CID,TableName
 0,0,0,0,0,0,0,0,1,0,NoneA
 0,0,0,0,1,1,0,0,2,0,NoneB
 0,0,0,0,1,2,0,0,3,0,NoneC

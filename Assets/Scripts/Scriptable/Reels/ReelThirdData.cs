@@ -16,6 +16,10 @@ namespace ReelSpinGame_Datas.Reels
         private const int SecondPushedReedPos = FirstPushedCIDPos + 1;
         // 第二停止したリールのCIDを読み込む位置
         private const int SecondPushedTIDPos = SecondPushedReedPos + 1;
+        // 第三停止のTID読み込み位置
+        private const int ThirdPushTIDPos = SecondPushedTIDPos + 1;
+        // 第三停止のCID読み込み位置
+        private const int ThirdPushCIDPos = ThirdPushTIDPos + 1;
 
         // var
         // 第二停止の停止条件
@@ -30,11 +34,9 @@ namespace ReelSpinGame_Datas.Reels
         [SerializeField] private byte secondStopCID;
 
         // コンストラクタ
-        public ReelThirdData(StringReader sReader)
+        public ReelThirdData(StreamReader sReader)
         {
-            // 最初のヘッダは読み込まない
-            sReader.ReadLine();
-            string[] values = sReader.ReadLine().Split(',');
+            string[] values = GetDataFromStream(sReader);
 
             int indexNum = 0;
             foreach (string value in values)
@@ -68,6 +70,18 @@ namespace ReelSpinGame_Datas.Reels
                 else if (indexNum < SecondPushedTIDPos)
                 {
                     secondStopCID = Convert.ToByte(value);
+                }
+
+                // 第三停止のTID
+                else if (indexNum < ThirdPushTIDPos)
+                {
+                    TID = Convert.ToByte(value);
+                }
+
+                // 第二したリールのTID読み込み
+                else if (indexNum < ThirdPushCIDPos)
+                {
+                    CID = Convert.ToByte(value);
                 }
 
                 // 最後の部分は読まない(テーブル名)

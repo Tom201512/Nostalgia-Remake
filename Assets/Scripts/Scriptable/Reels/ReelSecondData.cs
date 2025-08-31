@@ -12,10 +12,8 @@ namespace ReelSpinGame_Datas.Reels
         private const int FirstPushedReelIDPos = ConditionMaxRead + 1;
         // 第一停止したリールのCIDを読み込む位置
         private const int FirstPushedCIDPos = FirstPushedReelIDPos + 1;
-        // 第二停止の停止位置読み込み位置
-        private const int SecondPushReedPos = FirstPushedCIDPos + 1;
         // 第二停止のTID読み込み位置
-        private const int SecondPushTIDPos = SecondPushReedPos + 1;
+        private const int SecondPushTIDPos = FirstPushedCIDPos + 1;
         // 第二停止のCID読み込み位置
         private const int SecondPushCIDPos = SecondPushTIDPos + 1;
 
@@ -30,11 +28,9 @@ namespace ReelSpinGame_Datas.Reels
         [SerializeField] private int secondStopPos;
 
         // コンストラクタ
-        public ReelSecondData(StringReader sReader)
+        public ReelSecondData(StreamReader sReader)
         {
-            // 最初のヘッダは読み込まない
-            sReader.ReadLine();
-            string[] values = sReader.ReadLine().Split(',');
+            string[] values = GetDataFromStream(sReader);
 
             int indexNum = 0;
             foreach (string value in values)
@@ -58,12 +54,6 @@ namespace ReelSpinGame_Datas.Reels
                     firstStopCID = Convert.ToByte(value);
                 }
 
-                // 第一リール停止
-                else if (indexNum < SecondPushReedPos)
-                {
-                    secondStopPos = GetPosDataFromString(value);
-                }
-
                 // TID読み込み
                 else if (indexNum < SecondPushTIDPos)
                 {
@@ -74,6 +64,15 @@ namespace ReelSpinGame_Datas.Reels
                 else if (indexNum < SecondPushCIDPos)
                 {
                     CID = Convert.ToByte(value);
+                }
+
+                // 第二リール停止位置(末端まで読み込む)
+                else if (indexNum < values.Length - 1)
+                {
+                    if (value != "ANY")
+                    {
+                        secondStopPos += ConvertToArrayBit(Convert.ToInt32(value));
+                    }
                 }
 
                 // 最後の部分は読まない(テーブル名)

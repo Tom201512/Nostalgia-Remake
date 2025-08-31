@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -9,10 +10,8 @@ namespace ReelSpinGame_Datas.Reels
     public class ReelFirstData : ReelBaseData
     {
         // const
-        // 第一停止を読み込む位置
-        private const int FirstPushReedPos = ConditionMaxRead + 1;
         // 第一停止のTID読み込み位置
-        private const int FirstPushTIDPos = FirstPushReedPos + 1;
+        private const int FirstPushTIDPos = ConditionMaxRead + 1;
         // 第一停止のCID読み込み位置
         private const int FirstPushCIDPos = FirstPushTIDPos + 1;
 
@@ -21,26 +20,21 @@ namespace ReelSpinGame_Datas.Reels
         private int firstStopPos;
 
         // コンストラクタ
-        public ReelFirstData(StringReader sReader)
+        public ReelFirstData(StreamReader sReader)
         {
-            // 最初のヘッダは読み込まない
-            sReader.ReadLine();
-            string[] values = sReader.ReadLine().Split(',');
+            string[] values = GetDataFromStream(sReader);
 
             int indexNum = 0;
+            Debug.Log("Count:" + values.Length);
+
             foreach (string value in values)
             {
+                Debug.Log(value);
                 // メイン条件(16進数で読み込みint型で圧縮)
                 if (indexNum < ConditionMaxRead)
                 {
                     int offset = (int)Math.Pow(16, indexNum);
                     MainConditions += Convert.ToInt32(value) * offset;
-                }
-
-                // 第一リール停止
-                else if (indexNum < FirstPushReedPos)
-                {
-                    firstStopPos = GetPosDataFromString(value);
                 }
 
                 // TID読み込み
@@ -55,6 +49,15 @@ namespace ReelSpinGame_Datas.Reels
                     CID = Convert.ToByte(value);
                 }
 
+                // 第一リール停止位置(末端まで読み込む)
+                else if (indexNum < values.Length - 1)
+                {
+                    if(value != "ANY")
+                    {
+                        firstStopPos = ConvertToArrayBit(Convert.ToInt32(value));
+                    }
+                }
+
                 // 最後の部分は読まない(テーブル名)
                 else
                 {
@@ -62,6 +65,7 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
+            Debug.Log("Load Done");
         }
 
         // 条件チェック
@@ -86,7 +90,7 @@ namespace ReelSpinGame_Datas.Reels
 
     // 基本データ
     [Serializable]
-    public class ReelBaseData : ScriptableObject
+    public class ReelBaseData
     {
         // const
         // 条件を読み込むバイト数
@@ -110,42 +114,6 @@ namespace ReelSpinGame_Datas.Reels
         public int MainConditions { get { return mainConditon; } protected set { mainConditon = value; } }
         public byte TID { get { return tid; } protected set { tid = value; } }
         public byte CID { get { return cid; } protected set { cid = value; } }
-
-        // エクセルで読み込んだ文字列から停止位置データを得る
-        public int GetPosDataFromString(string str)
-        {
-            // 文字列を得る
-            string buffer = str;
-            // 結果
-            int result = 0;
-
-            Debug.Log(buffer[0] == '"');
-            // 両端のカンマを消す
-            if (buffer[0] == '"')
-            {
-                buffer = buffer.Trim('"');
-                Debug.Log(buffer);
-            }
-
-            // 文字列がANYなら条件文を0にする
-            if (buffer == "ANY")
-            {
-                return 0;
-            }
-            else
-            {
-                // 文字列をカンマ区切りで読み込み
-                string[] dataBuffer = buffer.Split(",");
-
-                foreach (string s in dataBuffer)
-                {
-                    Debug.Log(s);
-                    result += ConvertToArrayBit(Convert.ToInt32(s));
-                }
-            }
-
-            return result;
-        }
 
         // 各条件の数値を返す
         public static int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
@@ -191,11 +159,39 @@ namespace ReelSpinGame_Datas.Reels
         }
 
         // データをビットにする
-        private int ConvertToArrayBit(int data)
+        public int ConvertToArrayBit(int data)
         {
             // 0の時は変換しない
             if (data == 0) { return 0; }
             return (int)Math.Pow(2, data);
+        }
+
+        // データ読み込み
+        public string[] GetDataFromStream(StreamReader sReader)
+        {
+            // カンマ入りのデータがあるため、独自にパーサーを作成
+            string dataText = sReader.ReadLine();
+            Debug.Log(dataText);
+            string dataBuffer = "";
+
+            // ダブルクオーテーションを発見したか
+            bool findDoubleQuartation = false;
+
+            int index = 0;
+            foreach(char c in dataText)
+            {
+                // ダブルクォーテーションを発見した場合はパースする
+
+                if(c != ' ')
+                {
+                    dataBuffer += c;
+                }
+
+                index += 1;
+            }
+
+            Debug.Log("FinalData:" + dataBuffer);
+            return dataBuffer.Split(",");
         }
     }
 }

@@ -1,3 +1,4 @@
+using ReelSpinGame_Datas.Reels;
 using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,45 @@ namespace ReelSpinGame_Datas
                 }
 
                 //Debug.Log("Condition:" + condition.MainConditions + "Details:" + ConditionDebug + "FirstReel:" + condition.FirstReelPosition + "ReelTableNum" + condition.ReelTableNumber);
+            }
+
+            return finalResult;
+        }
+
+        public static List<ReelFirstData> MakeReelFirstData(StreamReader reelFirstDataFile)
+        {
+            List<ReelFirstData> finalResult = new List<ReelFirstData>();
+
+            // 全ての行を読み込む
+            while (reelFirstDataFile.Peek() != -1)
+            {
+                finalResult.Add(new ReelFirstData(reelFirstDataFile));
+            }
+
+            return finalResult;
+        }
+
+        public static List<ReelSecondData> MakeReelSecondData(StreamReader reelSecondFile)
+        {
+            List<ReelSecondData> finalResult = new List<ReelSecondData>();
+
+            // 全ての行を読み込む
+            while (reelSecondFile.Peek() != -1)
+            {
+                finalResult.Add(new ReelSecondData(reelSecondFile));
+            }
+
+            return finalResult;
+        }
+
+        public static List<ReelThirdData> MakeReelThirdData(StreamReader conditionsFile)
+        {
+            List<ReelThirdData> finalResult = new List<ReelThirdData>();
+
+            // 全ての行を読み込む
+            while (conditionsFile.Peek() != -1)
+            {
+                finalResult.Add(new ReelThirdData(conditionsFile));
             }
 
             return finalResult;
