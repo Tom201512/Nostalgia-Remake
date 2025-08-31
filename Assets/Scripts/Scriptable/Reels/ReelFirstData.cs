@@ -180,8 +180,7 @@ namespace ReelSpinGame_Datas.Reels
             int index = 0;
             foreach(char c in dataText)
             {
-                // ダブルクォーテーションを発見した場合はパースする
-
+                // 空白以外読み込む
                 if(c != ' ')
                 {
                     dataBuffer += c;
