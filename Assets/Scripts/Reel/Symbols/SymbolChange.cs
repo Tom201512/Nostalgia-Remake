@@ -6,12 +6,6 @@ using static ReelSpinGame_Reels.ReelData;
 
 public class SymbolChange : MonoBehaviour
 {
-    // const
-    // デフォルトの明るさ(点灯時)
-    public const byte TurnOnValue = 255;
-    // デフォルトの暗さ(消灯時)
-    public const byte TurnOffValue = 120;
-
     // var
     // 図柄の表示用
     [SerializeField] private Sprite[] symbolImages;
@@ -32,7 +26,7 @@ public class SymbolChange : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         symbolLight = GetComponent<SymbolLight>();
         lastBrightness = 0;
-        ChangeBrightness(TurnOffValue);
+        ChangeBrightness(SymbolLight.TurnOffValue);
     }
 
     private void Start()
