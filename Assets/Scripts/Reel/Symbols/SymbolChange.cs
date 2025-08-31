@@ -19,7 +19,7 @@ public class SymbolChange : MonoBehaviour
     private SpriteRenderer sprite;
 
     // ƒŠ[ƒ‹ˆÊ’u¯•ÊID
-    [SerializeField] private ReelData.ReelPosID posID;
+    [SerializeField] private ReelPosID posID;
 
     void Awake()
     {
