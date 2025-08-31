@@ -16,7 +16,6 @@ namespace ReelSpinGame_Reels.Symbol
         // éwíËÇµÇΩà íuÇÃñæÇÈÇ≥ïœçX
         public void ChangeSymbolBrightness(int posID, byte brightness)
         {
-            Debug.Log("PosID:" + posID + "Brightness:" + brightness);
             SymbolLightObj[SymbolChange.GetReelArrayIndex(posID)].ChangeBrightness(brightness);
         }
     }
