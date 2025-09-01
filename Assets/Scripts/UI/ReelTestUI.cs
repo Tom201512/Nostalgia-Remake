@@ -57,9 +57,15 @@ public class ReelTestUI : UIBaseClass
         buffer += "RightDelay:" + reel.GetLastDelay(ReelID.ReelRight) + "\n" + "\n";
 
         // 使用されたテーブルID
-        buffer += "LeftTableID" + reel.GetUsedReelTableID(ReelID.ReelLeft) + "\n";
-        buffer += "MiddleTableID" + reel.GetUsedReelTableID(ReelID.ReelMiddle) + "\n";
-        buffer += "RightTableID" + reel.GetUsedReelTableID(ReelID.ReelRight) + "\n" + "\n";
+        buffer += "LeftTableTID" + reel.GetUsedReelTID(ReelID.ReelLeft) + "\n";
+        buffer += "MiddleTableTID" + reel.GetUsedReelTID(ReelID.ReelMiddle) + "\n";
+        buffer += "RightTableTID" + reel.GetUsedReelTID(ReelID.ReelRight) + "\n" + "\n";
+
+        // 使用された組み合わせID
+        buffer += "LeftTableCID" + reel.GetUsedReelCID(ReelID.ReelLeft) + "\n";
+        buffer += "MiddleTableCID" + reel.GetUsedReelCID(ReelID.ReelMiddle) + "\n";
+        buffer += "RightTableCID" + reel.GetUsedReelCID(ReelID.ReelRight) + "\n" + "\n";
+
         // ランダム値
         buffer += "Random" + reel.GetRandomValue() + "\n" + "\n";
 

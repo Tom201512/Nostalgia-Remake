@@ -1,5 +1,4 @@
 ﻿using ReelSpinGame_Datas;
-using ReelSpinGame_Datas.Reels;
 using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Payout;
 using System.Collections;
@@ -122,7 +121,9 @@ public class ReelManager : MonoBehaviour
     // 最後に止めた出目
     public LastStoppedReelData GetLastStopped() => data.LastStopped;
     // 使用したリールテーブルID
-    public int GetUsedReelTableID(ReelID reelID) => data.ReelTableManager.UsedReelTableID[(int)reelID];
+    public int GetUsedReelTID(ReelID reelID) => data.ReelTableManager.UsedReelTableTID[(int)reelID];
+    // 使用した組み合わせID
+    public int GetUsedReelCID(ReelID reelID) => data.ReelTableManager.UsedReelTableCID[(int)reelID];
     // 払い出し結果データ表示
     public PayoutResultBuffer GetPayoutResultData() => payoutChecker.LastPayoutResult;
     // 払い出し判定モード表示
@@ -178,7 +179,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID, int betAmount, FlagId flagID, BonusTypeID bonusID)
+    public void StopSelectedReel(ReelID reelID, int bet, FlagId flagID, BonusTypeID bonusID)
     {
         // 全リール速度が最高速度になっていれば
         if(data.CanStopReels)
@@ -199,10 +200,15 @@ public class ReelManager : MonoBehaviour
 
                 // ここでディレイ(スベリコマ)を得て転送
                 // 条件をチェック
-                int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
-                    flagID, data.FirstPushReel, betAmount, (int)bonusID, data.RandomValue, data.FirstPushPos);
+                //int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
+                    //flagID, data.FirstPushReel, bet, (int)bonusID, data.RandomValue, data.FirstPushPos);
                 // ディレイ(スベリコマ)を得る
-                int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
+                //int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
+
+                // 新規実装版 現在のフラグ、停止させたリール、ベット枚数やボーナスストック、ランダム数値をもとにディレイ(スベリコマ)を得る
+                int delay = data.ReelTableManager.GetDelay(data.StoppedReelCount, pushedPos, reelObjects[(int)reelID].GetReelDatabase(),
+                    flagID, reelID, bet, bonusID, data.RandomValue);
+
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);
                 // 停止したリール数を増やす
