@@ -138,15 +138,13 @@ namespace ReelSpinGame_Datas.Reels
         // CIDチェック(第二停止用)
         private bool SecondReelCIDCheck(int firstStopReelID, int firstStopCID)
         {
-            Debug.Log("FirstPushed:" + firstStopReelID + "CID:" + firstStopCID);
-            Debug.Log("Condition FirstReel:" + this.firstStopReelID + "CID:" + this.firstStopReelID);
             // 第一停止リールIDの指定が0(ANY)なら無視する
             if (this.firstStopReelID == 0)
             {
                 Debug.Log("CID CheckPass: ANY");
                 return true;
             }
-            else if (firstStopReelID == this.firstStopReelID)
+            else if (firstStopReelID + 1 == this.firstStopReelID)
             {
                 // 第一停止のCIDが一致、または0ならtrueを返す
                 Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));

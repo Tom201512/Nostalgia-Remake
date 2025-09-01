@@ -129,7 +129,7 @@ namespace ReelSpinGame_Datas.Reels
                 Debug.Log("CID CheckPass: ANY");
                 first = true;
             }
-            else if (firstStopReelID == this.firstStopReelID)
+            else if (firstStopReelID + 1 == this.firstStopReelID)
             {
                 // ëÊàÍí‚é~ÇÃCIDÇ™àÍívÅAÇ‹ÇΩÇÕ0Ç»ÇÁtrueÇï‘Ç∑
                 Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
@@ -143,7 +143,7 @@ namespace ReelSpinGame_Datas.Reels
                 Debug.Log("CID CheckPass: ANY");
                 second = true;
             }
-            else if (secondStopReelID == this.secondStopReelID)
+            else if (secondStopReelID + 1 == this.secondStopReelID)
             {
                 // ëÊìÒí‚é~ÇÃCIDÇ™àÍívÅAÇ‹ÇΩÇÕ0Ç»ÇÁtrueÇï‘Ç∑
                 Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));
