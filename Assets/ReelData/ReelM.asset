@@ -1177,6 +1177,10 @@ MonoBehaviour:
     tid: 1
     cid: 1
     firstStopPos: 0
+  - mainConditon: 8
+    tid: 34
+    cid: 1
+    firstStopPos: 0
   second:
   - mainConditon: 0
     tid: 1
@@ -1242,6 +1246,12 @@ MonoBehaviour:
     tid: 10
     cid: 1
     firstStopReelID: 1
+    firstStopCID: 0
+    secondStopPos: 0
+  - mainConditon: 8
+    tid: 34
+    cid: 1
+    firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
   third:
@@ -1319,6 +1329,13 @@ MonoBehaviour:
     tid: 10
     cid: 1
     firstStopReelID: 1
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 8
+    tid: 34
+    cid: 1
+    firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
