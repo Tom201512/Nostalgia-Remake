@@ -12,8 +12,10 @@ namespace ReelSpinGame_Datas.Reels
         private const int FirstPushedReelIDPos = ConditionMaxRead + 1;
         // 第一停止したリールのCIDを読み込む位置
         private const int FirstPushedCIDPos = FirstPushedReelIDPos + 1;
+        // 第二停止の停止位置条件読み込み位置
+        private const int SecondPushReadPos = FirstPushedCIDPos + 1;
         // 第二停止のTID読み込み位置
-        private const int SecondPushTIDPos = FirstPushedCIDPos + 1;
+        private const int SecondPushTIDPos = SecondPushReadPos + 1;
         // 第二停止のCID読み込み位置
         private const int SecondPushCIDPos = SecondPushTIDPos + 1;
 
@@ -24,7 +26,7 @@ namespace ReelSpinGame_Datas.Reels
         [SerializeField] private byte firstStopReelID;
         // 第一停止したリールのCID
         [SerializeField] private byte firstStopCID;
-        // 第一停止したリールのCID
+        // 第二停止の停止条件
         [SerializeField] private int secondStopPos;
 
         // コンストラクタ
@@ -45,13 +47,31 @@ namespace ReelSpinGame_Datas.Reels
                 // 第一したリールのID読み込み
                 else if (indexNum < FirstPushedReelIDPos)
                 {
-                    secondStopPos = Convert.ToByte(value);
+                    firstStopReelID = Convert.ToByte(value);
                 }
 
                 // 第一したリールのTID読み込み
                 else if (indexNum < FirstPushedCIDPos)
                 {
                     firstStopCID = Convert.ToByte(value);
+                }
+
+                // 第二リール停止位置(末端まで読み込む)
+                else if (indexNum < SecondPushReadPos)
+                {
+                    if (value != "ANY")
+                    {
+                        string[] stopPosData = value.Trim('"').Split(",");
+                        foreach (string stop in stopPosData)
+                        {
+                            secondStopPos += ConvertToArrayBit(Convert.ToInt32(stop));
+                        }
+                    }
+                    else
+                    {
+                        secondStopPos = 0;
+                    }
+                    Debug.Log("SecondStopPos:" + secondStopPos);
                 }
 
                 // TID読み込み
@@ -66,15 +86,6 @@ namespace ReelSpinGame_Datas.Reels
                     CID = Convert.ToByte(value);
                 }
 
-                // 第二リール停止位置(末端まで読み込む)
-                else if (indexNum < values.Length - 1)
-                {
-                    if (value != "ANY")
-                    {
-                        secondStopPos += ConvertToArrayBit(Convert.ToInt32(value));
-                    }
-                }
-
                 // 最後の部分は読まない(テーブル名)
                 else
                 {
@@ -82,22 +93,43 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
+
+            Debug.Log("MainCondition:" + MainConditions);
+            Debug.Log("FirstPushedReelID:" + firstStopReelID);
+            Debug.Log("FirstPushedCID:" + firstStopCID);
+            Debug.Log("SecondStopPos:" + secondStopPos);
+            Debug.Log("TID:" + TID);
+            Debug.Log("CID:" + CID);
+
+            Debug.Log("Second Push Load Done");
         }
 
         // 条件チェック
-        public bool CheckSecondReelCondition(int flagID, int bet, int bonus, int random, int firstStopReelID, int firstStopCID)
+        public bool CheckSecondReelCondition(int flagID, int bet, int bonus, int random, int firstStopReelID, int firstStopCID, int pushedPos)
         {
             // メイン条件チェック
             if (CheckMainCondition(flagID, bet, bonus, random))
             {
                 // 第一停止のリールIDとCIDが一致するかチェック 
-                
+
+                Debug.Log("FirstPush:" + firstStopReelID + "CID:" + firstStopCID);
+
                 if (SecondReelCIDCheck(firstStopReelID, firstStopCID))
                 {
+                    Debug.Log("Pushed:" + pushedPos);
                     // 第二停止の条件が一致するかチェック。0はANY
                     // 第二停止の数値をビット演算で比較できるようにする
-                    int checkValue = 1 << secondStopPos + 1;
-                    return secondStopPos == 0 || (checkValue & secondStopPos) != 0;
+                    int checkValue = 1 << pushedPos + 1;
+                    Debug.Log("check:" + checkValue);
+                    Debug.Log("SecondPushPos:" + secondStopPos);
+
+                    // 停止条件を確認
+                    if (secondStopPos == 0 || ((checkValue & secondStopPos) != 0))
+                    {
+                        Debug.Log("Stop Pos has match with condition");
+                        // 条件一致
+                        return true;
+                    }
                 }
             }
             return false;
@@ -106,6 +138,8 @@ namespace ReelSpinGame_Datas.Reels
         // CIDチェック(第二停止用)
         private bool SecondReelCIDCheck(int firstStopReelID, int firstStopCID)
         {
+            Debug.Log("FirstPushed:" + firstStopReelID + "CID:" + firstStopCID);
+            Debug.Log("Condition FirstReel:" + this.firstStopReelID + "CID:" + this.firstStopReelID);
             // 第一停止リールIDの指定が0(ANY)なら無視する
             if (this.firstStopReelID == 0)
             {

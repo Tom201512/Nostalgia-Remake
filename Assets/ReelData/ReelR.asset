@@ -1353,6 +1353,7 @@ MonoBehaviour:
   - mainConditon: 0
     tid: 1
     cid: 1
+    firstStopPos: 0
   second:
   - mainConditon: 0
     tid: 1
@@ -1365,61 +1366,61 @@ MonoBehaviour:
     cid: 1
     firstStopReelID: 0
     firstStopCID: 1
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 3
-    cid: 1
+    cid: 2
     firstStopReelID: 0
     firstStopCID: 2
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 3
-    cid: 1
+    cid: 3
     firstStopReelID: 0
     firstStopCID: 3
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 4
-    cid: 1
+    cid: 4
     firstStopReelID: 0
     firstStopCID: 4
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 5
-    cid: 1
+    cid: 5
     firstStopReelID: 0
     firstStopCID: 5
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 6
-    cid: 1
+    cid: 6
     firstStopReelID: 0
     firstStopCID: 6
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 3
-    cid: 1
+    cid: 7
     firstStopReelID: 0
     firstStopCID: 7
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 6
-    cid: 1
+    cid: 8
     firstStopReelID: 0
     firstStopCID: 8
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 0
     tid: 1
-    cid: 1
+    cid: 9
     firstStopReelID: 0
     firstStopCID: 9
-    secondStopPos: 1
+    secondStopPos: 0
   - mainConditon: 16
     tid: 7
     cid: 1
     firstStopReelID: 0
     firstStopCID: 9
-    secondStopPos: 1
+    secondStopPos: 0
   third:
   - mainConditon: 0
     tid: 1
@@ -1437,56 +1438,56 @@ MonoBehaviour:
     secondStopCID: 0
   - mainConditon: 0
     tid: 3
-    cid: 1
+    cid: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 3
-    cid: 1
+    cid: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 4
-    cid: 1
+    cid: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 5
-    cid: 1
+    cid: 5
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 6
-    cid: 1
+    cid: 6
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 3
-    cid: 1
+    cid: 7
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 6
-    cid: 1
+    cid: 8
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 0
     tid: 1
-    cid: 1
+    cid: 9
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0

@@ -10,31 +10,47 @@ namespace ReelSpinGame_Datas.Reels
     public class ReelFirstData : ReelBaseData
     {
         // const
+        // 第一停止の停止条件読み込み位置
+        private const int FirstPushReadPos = ConditionMaxRead + 1;
         // 第一停止のTID読み込み位置
-        private const int FirstPushTIDPos = ConditionMaxRead + 1;
+        private const int FirstPushTIDPos = FirstPushReadPos + 1;
         // 第一停止のCID読み込み位置
         private const int FirstPushCIDPos = FirstPushTIDPos + 1;
 
         // var
         // 第一停止の停止条件
-        private int firstStopPos;
+        [SerializeField] private int firstStopPos;
 
         // コンストラクタ
         public ReelFirstData(StreamReader sReader)
         {
             string[] values = GetDataFromStream(sReader);
-
             int indexNum = 0;
-            Debug.Log("Count:" + values.Length);
 
             foreach (string value in values)
             {
-                Debug.Log(value);
                 // メイン条件(16進数で読み込みint型で圧縮)
                 if (indexNum < ConditionMaxRead)
                 {
                     int offset = (int)Math.Pow(16, indexNum);
                     MainConditions += Convert.ToInt32(value) * offset;
+                }
+
+                // 第一リール停止位置(末端まで読み込む)
+                else if (indexNum < FirstPushReadPos)
+                {
+                    if (value != "ANY")
+                    {
+                        string[] stopPosData = value.Trim('"').Split(",");
+                        foreach (string stop in stopPosData)
+                        {
+                            firstStopPos += ConvertToArrayBit(Convert.ToInt32(stop));
+                        }
+                    }
+                    else
+                    {
+                        firstStopPos = 0;
+                    }
                 }
 
                 // TID読み込み
@@ -49,15 +65,6 @@ namespace ReelSpinGame_Datas.Reels
                     CID = Convert.ToByte(value);
                 }
 
-                // 第一リール停止位置(末端まで読み込む)
-                else if (indexNum < values.Length - 1)
-                {
-                    if(value != "ANY")
-                    {
-                        firstStopPos = ConvertToArrayBit(Convert.ToInt32(value));
-                    }
-                }
-
                 // 最後の部分は読まない(テーブル名)
                 else
                 {
@@ -65,21 +72,31 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
-            Debug.Log("Load Done");
+            Debug.Log("MainCondition:" + MainConditions);
+            Debug.Log("FirstStopPos:" + firstStopPos);
+            Debug.Log("TID:" + TID);
+            Debug.Log("CID:" + CID);
+
+            Debug.Log("First Push Load Done");
         }
 
         // 条件チェック
-        public bool CheckFirstReelCondition(int flagID, int bet, int bonus, int random, int firstPushPos)
+        public bool CheckFirstReelCondition(int flagID, int bet, int bonus, int random, int pushedPos)
         {
             // メイン条件チェック
             if(CheckMainCondition(flagID, bet, bonus, random))
             {
                 // 第一停止の条件が一致するかチェック。0はANY
                 // 第一停止の数値をビット演算で比較できるようにする
-                int checkValue = 1 << firstPushPos + 1;
-                // いずれかの条件が
-                if (firstStopPos == 0 || (checkValue & firstStopPos) != 0)
+                Debug.Log("Pushed:" + pushedPos);
+                int checkValue = 1 << pushedPos + 1;
+                Debug.Log("check:" + checkValue);
+                Debug.Log("FirstPos:" + firstStopPos);
+
+                // 停止条件を確認
+                if (firstStopPos == 0 || ((checkValue & firstStopPos) != 0))
                 {
+                    Debug.Log("Stop Pos has match with condition");
                     // 条件一致
                     return true;
                 }
@@ -116,11 +133,12 @@ namespace ReelSpinGame_Datas.Reels
         public byte CID { get { return cid; } protected set { cid = value; } }
 
         // 各条件の数値を返す
-        public static int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
+        protected int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
 
         // メイン条件があっているかチェック
-        public bool CheckMainCondition(int flagID, int bet, int bonus, int random)
+        protected bool CheckMainCondition(int flagID, int bet, int bonus, int random)
         {
+            Debug.Log("MainCondition:" + flagID + "," + bet + "," + bonus + "," + random);
             // データを条件にする
             int[] conditions = new int[]
             {
@@ -130,36 +148,40 @@ namespace ReelSpinGame_Datas.Reels
                 random,
             };
 
+            Debug.Log("ConditionData:" + MainConditions);
+
             // メイン条件チェック
             for (int i = 0; i < ConditionMaxRead; i++)
             {
-                //Debug.Log("Condition1:" + GetConditionData(condition, i));
-                //Debug.Log("Condition2:" + GetConditionData(data.MainConditions, i));
+                int checkData = GetConditionData(MainConditions, i);
+                Debug.Log("checkData:" + checkData);
+
                 // フラグID以外の条件で0があった場合はパスする
-                if (i != (int)ConditionID.Flag && conditions[i] == 0)
+                if (i != (int)ConditionID.Flag && checkData == 0)
                 {
+                    Debug.Log("No condition");
                     continue;
                 }
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
                 else if (i == (int)ConditionID.Bonus && conditions[i] == BonusAnyValueID &&
                     bonus != (int)BonusTypeID.BonusNone)
                 {
-                    //Debug.Log(bonus + "ANY BONUS");
+                    Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
-
                 // それ以外は受け取ったものと条件が合うか確認する
-                else if (conditions[i] != GetConditionData(MainConditions, i))
+                else if (conditions[i] != checkData)
                 {
+                    Debug.Log("Condition not match");
                     return false;
                 }
             }
-
+            Debug.Log("Condition Passed");
             return true;
         }
 
         // データをビットにする
-        public int ConvertToArrayBit(int data)
+        protected int ConvertToArrayBit(int data)
         {
             // 0の時は変換しない
             if (data == 0) { return 0; }
@@ -167,30 +189,70 @@ namespace ReelSpinGame_Datas.Reels
         }
 
         // データ読み込み
-        public string[] GetDataFromStream(StreamReader sReader)
+        protected string[] GetDataFromStream(StreamReader sReader)
         {
             // カンマ入りのデータがあるため、独自にパーサーを作成
-            string dataText = sReader.ReadLine();
-            Debug.Log(dataText);
-            string dataBuffer = "";
+            // 読み込んだデータのテキスト
+            string loadedText = sReader.ReadLine();
+            // データに入れるバッファ
+            string bufferText = "";
+            // ダブルクォーテーションでパースしたデータ
+            string parseText = "";
+            List<string> dataBuffer = new List<string>();
 
             // ダブルクオーテーションを発見したか
             bool findDoubleQuartation = false;
 
-            int index = 0;
-            foreach(char c in dataText)
+            foreach(char c in loadedText)
             {
                 // 空白以外読み込む
                 if(c != ' ')
                 {
-                    dataBuffer += c;
+                    // ダブルクォーテーションなら別テキストに移す(カンマも取り入れる)
+                    if(c == '"')
+                    {
+                        findDoubleQuartation = !findDoubleQuartation;
+                        parseText += c;
+                    }
+                    else 
+                    {
+                        if(findDoubleQuartation)
+                        {
+                            parseText += c;
+                        }
+                        // ダブルクォーテーションを読み込んだ時はカンマも読まない
+                        else
+                        {
+                            // カンマを読み込んだらバッファテキストを取り込む
+                            if(c == ',')
+                            {
+                                // パースした文章がある場合はその文章をバッファに取り込む
+                                if(parseText != "")
+                                {
+                                    dataBuffer.Add(parseText);
+                                    parseText = "";
+                                }
+                                else
+                                {
+                                    dataBuffer.Add(bufferText);
+                                    bufferText = "";
+                                }
+                            }
+                            // カンマを読み込むまではバッファにテキストを詰める
+                            else
+                            {
+                                bufferText += c;
+                            }
+                        }
+                    }
                 }
-
-                index += 1;
             }
 
-            Debug.Log("FinalData:" + dataBuffer);
-            return dataBuffer.Split(",");
+            // 最後に読み込んだテキストを読み込む
+            dataBuffer.Add(bufferText);
+
+            string finalData = String.Join(",", dataBuffer);
+            return dataBuffer.ToArray();
         }
     }
 }

@@ -78,7 +78,7 @@ namespace ReelSpinGame_Datas.Reels
                     TID = Convert.ToByte(value);
                 }
 
-                // 第二したリールのTID読み込み
+                // 第三停止のCID
                 else if (indexNum < ThirdPushCIDPos)
                 {
                     CID = Convert.ToByte(value);
@@ -91,10 +91,20 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
+
+            Debug.Log("MainCondition:" + MainConditions);
+            Debug.Log("FirstPushedReelID:" + firstStopReelID);
+            Debug.Log("FirstPushedCID:" + firstStopCID);
+            Debug.Log("SecondPushedReelID:" + secondStopReelID);
+            Debug.Log("SecondPushedCID:" + secondStopCID);
+            Debug.Log("TID:" + TID);
+            Debug.Log("CID:" + CID);
+
+            Debug.Log("Third Push Load Done");
         }
 
         // 条件チェック
-        public bool CheckSecondReelCondition(int flagID, int bet, int bonus, int random, 
+        public bool CheckThirdReelCondition(int flagID, int bet, int bonus, int random, 
             int firstStopReelID, int firstStopCID, int secondStopReelID, int secondStopReelCID)
         {
             // メイン条件チェック
