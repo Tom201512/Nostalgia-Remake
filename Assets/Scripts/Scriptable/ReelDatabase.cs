@@ -1,3 +1,4 @@
+using ReelSpinGame_Datas.Reels;
 using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,33 @@ namespace ReelSpinGame_Datas
         [SerializeField] private byte[] array;
         // リール条件
         [SerializeField] private List<ReelConditionsData> conditions;
+        // 第一停止
+        [SerializeField] private List<ReelFirstData> first;
+        // 第二停止
+        [SerializeField] private List<ReelSecondData> second;
+        // 第三停止
+        [SerializeField] private List<ReelThirdData> third;
         // ディレイテーブル
         [SerializeField] private List<ReelTableData> tables;
 
         public byte[] Array { get { return array; } }
         public List<ReelConditionsData> Conditions { get { return conditions; }}
+        public List<ReelFirstData> FirstCondition { get { return first; } }
+        public List<ReelSecondData> SecondCondition { get { return second; } }
+        public List<ReelThirdData> ThirdCondition { get { return third; } }
         public List<ReelTableData> Tables { get { return tables; } }
 
         // func
         public void SetArray(byte[] array) => this.array = array;
         public void SetConditions(List<ReelConditionsData> conditions) => this.conditions = conditions;
         public void SetTables(List<ReelTableData> tables) => this.tables = tables;
+
+        public void SetReelConditions(List<ReelFirstData> first, List<ReelSecondData> second, List<ReelThirdData> third)
+        {
+            this.first = first;
+            this.second = second;
+            this.third = third;
+        }
     }
 
     // リール条件テーブル
@@ -214,8 +231,6 @@ namespace ReelSpinGame_Datas
                 }
                 indexNum++;
             }
-
-            //Debug.Log("Array:" + debugBuffer);
         }
     }
 }

@@ -1,11 +1,8 @@
-using ReelSpinGame_Sound.SE;
-using ReelSpinGame_Sound.BGM;
-using System;
+using ReelSpinGame_Datas.Reels;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using static ReelSpinGame_Datas.ScriptableGen;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Datas
@@ -18,6 +15,9 @@ namespace ReelSpinGame_Datas
         // 読み込み時のパス
         private const string DataPath = "Assets/DataFile";
 
+        // リールファイル先頭のファイル名
+        private const string ReelFileStartPath = "Nostalgia ReelSheet - ";
+
         // JACはずれデフォルト値
         private const float JacNoneDefault = 256f;
 
@@ -27,9 +27,6 @@ namespace ReelSpinGame_Datas
 
         // JACゲーム時のはずれ確率
         private float jacNoneProb;
-
-        // スクロール値
-        private Vector2 scrollPos;
 
         // func
         // リール配列の作成
@@ -45,7 +42,6 @@ namespace ReelSpinGame_Datas
         {
             reelSelection = -1;
             jacNoneProb = JacNoneDefault;
-            scrollPos = new Vector2(0, 0);
         }
 
         private void OnGUI()
@@ -138,8 +134,15 @@ namespace ReelSpinGame_Datas
             using StreamReader condition = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Condition.csv"));
             reelDatabase.SetConditions(ReelDatabaseGen.MakeReelConditions(condition));
 
+            // 停止順ごとの条件テーブル作成
+            using StreamReader first = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "1st.csv"));
+            using StreamReader second = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "2nd.csv"));
+            using StreamReader third = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "3rd.csv"));
+
+            reelDatabase.SetReelConditions(ReelDatabaseGen.MakeReelFirstData(first), ReelDatabaseGen.MakeReelSecondData(second),ReelDatabaseGen.MakeReelThirdData(third));
+
             // ディレイテーブル作成
-            using StreamReader table = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Table.csv"));
+            using StreamReader table = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "Table.csv"));
             reelDatabase.SetTables(ReelDatabaseGen.MakeTableDatas(table));
 
             // 保存処理
