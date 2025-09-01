@@ -143,11 +143,13 @@ namespace ReelSpinGame_Datas.Reels
             // ‘æˆê’â~ƒŠ[ƒ‹ID‚Ìw’è‚ª0(ANY)‚È‚ç–³‹‚·‚é
             if (this.firstStopReelID == 0)
             {
+                Debug.Log("CID CheckPass: ANY");
                 return true;
             }
             else if (firstStopReelID == this.firstStopReelID)
             {
                 // ‘æˆê’â~‚ÌCID‚ªˆê’vA‚Ü‚½‚Í0‚È‚çtrue‚ğ•Ô‚·
+                Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
                 return this.firstStopCID == 0 || firstStopCID == this.firstStopCID;
             }
 

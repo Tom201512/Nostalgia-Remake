@@ -126,11 +126,13 @@ namespace ReelSpinGame_Datas.Reels
             // ‘æˆê’â~ƒŠ[ƒ‹ID‚Ìw’è‚ª0(ANY)‚È‚ç–³‹‚·‚é
             if (this.firstStopReelID == 0)
             {
+                Debug.Log("CID CheckPass: ANY");
                 first = true;
             }
             else if (firstStopReelID == this.firstStopReelID)
             {
                 // ‘æˆê’â~‚ÌCID‚ªˆê’vA‚Ü‚½‚Í0‚È‚çtrue‚ğ•Ô‚·
+                Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
                 first = this.firstStopCID == 0 || firstStopCID == this.firstStopCID;
             }
 
@@ -138,12 +140,14 @@ namespace ReelSpinGame_Datas.Reels
             // ‘æ“ñ’â~ƒŠ[ƒ‹ID‚Ìw’è‚ª0(ANY)‚È‚ç–³‹‚·‚é
             if (this.secondStopReelID == 0)
             {
+                Debug.Log("CID CheckPass: ANY");
                 second = true;
             }
             else if (secondStopReelID == this.secondStopReelID)
             {
                 // ‘æ“ñ’â~‚ÌCID‚ªˆê’vA‚Ü‚½‚Í0‚È‚çtrue‚ğ•Ô‚·
-                second = this.secondStopCID == 0 || firstStopCID == this.secondStopCID;
+                Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));
+                second = this.secondStopCID == 0 || secondStopCID == this.secondStopCID;
             }
 
             // ‘o•û‚ÌŒ‹‰Ê‚ªtrue‚È‚çğŒˆê’v
