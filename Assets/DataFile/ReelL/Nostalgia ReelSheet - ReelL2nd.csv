@@ -1,4 +1,9 @@
 0,0,0,0,0,0,ANY,2,1,NoneB
+6,0,0,0,0,1,ANY,25,1,BellMiddle
+6,0,0,0,0,2,ANY,24,2,BellUpper
+6,0,0,0,0,3,ANY,26,3,BellLower
+6,0,0,0,0,4,ANY,26,4,BellLower
+6,0,0,0,0,5,ANY,24,5,BellUpper
 7,0,0,0,0,0,ANY,29,1,ReplayLowerA
 7,0,0,2,0,0,ANY,30,2,ReplayLowerB
 7,0,0,4,0,0,ANY,30,2,ReplayLowerB

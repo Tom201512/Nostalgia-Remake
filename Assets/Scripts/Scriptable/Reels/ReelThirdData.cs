@@ -123,13 +123,13 @@ namespace ReelSpinGame_Datas.Reels
             bool second = false;
 
             // 第一停止
-            // 第一停止リールIDの指定が0(ANY)なら無視する
-            if (this.firstStopReelID == 0)
+            // 第一停止リールIDの指定が0以外なら条件が正しいかチェック
+            if (this.firstStopReelID != 0 && firstStopReelID + 1 == this.firstStopReelID)
             {
-                Debug.Log("CID CheckPass: ANY");
-                first = true;
+                return false;
             }
-            else if (firstStopReelID + 1 == this.firstStopReelID)
+            // 第一停止リールIDの条件が正しければCIDをチェック
+            else
             {
                 // 第一停止のCIDが一致、または0ならtrueを返す
                 Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
@@ -137,13 +137,13 @@ namespace ReelSpinGame_Datas.Reels
             }
 
             // 第二停止
-            // 第二停止リールIDの指定が0(ANY)なら無視する
-            if (this.secondStopReelID == 0)
+            // 第二停止リールIDの指定が0以外なら条件が正しいかチェック
+            if (this.secondStopReelID != 0 && secondStopReelID + 1 == this.firstStopReelID)
             {
-                Debug.Log("CID CheckPass: ANY");
-                second = true;
+                return false;
             }
-            else if (secondStopReelID + 1 == this.secondStopReelID)
+            // 第二停止リールIDの条件が正しければCIDをチェック
+            else
             {
                 // 第二停止のCIDが一致、または0ならtrueを返す
                 Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));

@@ -1,4 +1,13 @@
 0,0,0,0,ANY,1,1,NoneA
+6,0,0,0,ANY,36,1,BellMiddle
+6,0,0,3,ANY,35,2,BellUpper
+6,0,0,4,ANY,35,2,BellUpper
+6,0,0,5,ANY,37,3,BellLower
+6,0,0,6,ANY,37,3,BellLower
+6,1,0,0,ANY,36,1,BellMiddle
+6,3,0,4,ANY,35,4,BellUpper
+6,3,0,5,ANY,35,4,BellUpper
+6,3,0,6,ANY,37,5,BellLower
 7,0,0,0,ANY,40,1,ReplayLower
 7,1,0,0,ANY,39,1,ReplayMiddle
 8,0,0,0,ANY,39,1,ReplayMiddle

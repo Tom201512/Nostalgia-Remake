@@ -9,6 +9,11 @@
 0,0,0,0,1,8,ANY,6,8,NoneF
 0,0,0,0,1,9,ANY,1,9,NoneA
 0,1,0,0,1,9,ANY,7,1,None1Bet
+6,0,0,0,0,1,ANY,36,1,BellMiddle
+6,0,0,0,0,2,ANY,35,2,BellUpper
+6,0,0,0,0,3,ANY,37,3,BellLower
+6,0,0,0,0,4,ANY,35,4,BellUpper
+6,0,0,0,0,5,ANY,37,5,BellLower
 7,0,0,0,0,0,ANY,40,1,ReplayLower
 7,1,0,0,0,0,ANY,39,1,ReplayMiddle
 7,0,0,0,1,1,ANY,39,1,ReplayMiddle
