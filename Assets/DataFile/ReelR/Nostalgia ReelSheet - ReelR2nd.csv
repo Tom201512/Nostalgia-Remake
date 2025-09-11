@@ -9,6 +9,12 @@
 0,0,0,0,1,8,ANY,6,8,NoneF
 0,0,0,0,1,9,ANY,1,9,NoneA
 0,1,0,0,1,9,ANY,7,1,None1Bet
+5,0,0,0,0,1,ANY,32,1,MelonMiddle
+5,0,0,0,0,2,ANY,31,2,MelonUpper
+5,0,0,0,0,3,ANY,33,3,MelonLower
+5,0,0,0,0,4,ANY,34,4,MelonDiagonalA
+5,0,0,0,0,5,ANY,33,5,MelonLower
+5,0,0,0,0,6,ANY,32,6,MelonMiddle
 6,0,0,0,0,1,ANY,36,1,BellMiddle
 6,0,0,0,0,2,ANY,35,2,BellUpper
 6,0,0,0,0,3,ANY,37,3,BellLower
