@@ -1,4 +1,7 @@
 0,0,0,0,0,0,ANY,2,1,NoneB
+3,0,0,0,0,0,ANY,15,1,Cherry2
+4,0,0,0,0,0,ANY,15,1,Cherry2
+4,3,0,0,0,0,ANY,16,1,Cherry4
 5,0,0,0,0,1,ANY,20,1,MelonMiddle
 5,0,0,0,0,2,ANY,19,2,MelonUpper
 5,0,0,0,0,3,ANY,21,3,MelonLower

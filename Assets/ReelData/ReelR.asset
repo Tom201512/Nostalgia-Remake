@@ -1354,6 +1354,18 @@ MonoBehaviour:
     tid: 1
     cid: 1
     firstStopPos: 0
+  - mainConditon: 3
+    tid: 29
+    cid: 1
+    firstStopPos: 0
+  - mainConditon: 4
+    tid: 29
+    cid: 1
+    firstStopPos: 0
+  - mainConditon: 52
+    tid: 30
+    cid: 1
+    firstStopPos: 0
   - mainConditon: 5
     tid: 31
     cid: 2
@@ -1504,6 +1516,24 @@ MonoBehaviour:
     cid: 1
     firstStopReelID: 1
     firstStopCID: 9
+    secondStopPos: 0
+  - mainConditon: 3
+    tid: 29
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopPos: 0
+  - mainConditon: 4
+    tid: 29
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopPos: 0
+  - mainConditon: 52
+    tid: 30
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
     secondStopPos: 0
   - mainConditon: 5
     tid: 32
@@ -1709,6 +1739,27 @@ MonoBehaviour:
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
+  - mainConditon: 3
+    tid: 29
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 4
+    tid: 29
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 52
+    tid: 30
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
   - mainConditon: 5
     tid: 32
     cid: 1
@@ -1874,8 +1925,8 @@ MonoBehaviour:
   - tableData: 040302010004030201000201040302010004030201
   - tableData: 020100020200000403020403020100020100020403
   - tableData: 040302010003020100030201040302010004030201
-  - tableData: 020100010001000302010403020100010002010403
-  - tableData: 040302010001000302010203040302010002010403
+  - tableData: 020100030302000002010403020100040302010403
+  - tableData: 040302010002010002030001040302010002010201
   - tableData: 030201000302010203000104030201000203000104
   - tableData: 040302010004030201000100000302010403020100
   - tableData: 010100020200000201000303020004030201000303

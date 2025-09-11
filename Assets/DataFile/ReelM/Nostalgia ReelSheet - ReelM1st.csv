@@ -1,4 +1,7 @@
 0,0,0,0,ANY,1,1,NoneA
+3,0,0,0,ANY,1,1,NoneA
+4,0,0,0,ANY,1,1,NoneA
+4,3,0,0,ANY,28,1,MelonLower
 5,0,0,0,ANY,26,2,MelonUpper
 5,0,0,4,ANY,28,3,MelonLower
 5,0,0,5,ANY,28,3,MelonLower
