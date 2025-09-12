@@ -57,8 +57,6 @@ namespace ReelSpinGame_Effect
         {
             flashManager = GetComponent<FlashManager>();
             soundManager = GetComponent<SoundManager>();
-            // リールオブジェクト割り当て
-            flashManager.SetReelObjects(reelObjects);
             HasBonusStart = false;
             HasBonusFinished = false;
             HasBeforePayoutEffect = false;
@@ -91,12 +89,6 @@ namespace ReelSpinGame_Effect
             else
             {
                 flashManager.TurnOnAllReels();
-            }
-
-            // JAC中のライト処理をする
-            foreach (ReelObject reel in reelObjects)
-            {
-                reel.HasJacModeLight = isJacGame;
             }
         }
 
@@ -252,7 +244,7 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し演出開始
-        public void StartPayoutEffect(FlagId flagID, BonusStatus bonusStatus, PayoutResultBuffer payoutResultData, List<PayoutLineData> lastPayoutLines)
+        public void StartPayoutEffect(FlagId flagID, BonusStatus bonusStatus, PayoutResultBuffer payoutResultData, LastStoppedReelData lastStoppedReelData)
         {
             // 払い出しがあれば再生
             if (payoutResultData.Payout > 0)
@@ -284,13 +276,13 @@ namespace ReelSpinGame_Effect
                     soundManager.PlaySE(soundManager.SoundDB.SE.NormalPayout);
                 }
 
-                flashManager.StartPayoutFlash(0f, lastPayoutLines);
+                flashManager.StartPayoutFlash(0f, payoutResultData, lastStoppedReelData);
             }
 
             // 通常時のリプレイならフラッシュ再生
             else if (payoutResultData.IsReplayOrJacIn && bonusStatus == BonusStatus.BonusNone)
             {
-                flashManager.StartPayoutFlash(ReplayWaitTime, lastPayoutLines);
+                flashManager.StartPayoutFlash(ReplayWaitTime, payoutResultData, lastStoppedReelData);
                 soundManager.PlaySE(soundManager.SoundDB.SE.Replay);
             }
 

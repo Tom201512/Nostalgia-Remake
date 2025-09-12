@@ -119,7 +119,7 @@ public class ReelManager : MonoBehaviour
 
     // リール出目データ
     // 最後に止めた出目
-    public LastStoppedReelData GetLastStopped() => data.LastStopped;
+    public LastStoppedReelData GetLastStoppedReelData() => data.LastStoppedReelData;
     // 使用したリールテーブルID
     public int GetUsedReelTID(ReelID reelID) => data.ReelTableManager.UsedReelTableTID[(int)reelID];
     // 使用した組み合わせID
@@ -143,7 +143,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // リール始動
-    public void StartReels(bool usingFastAuto)
+    public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto)
     {
         // ランダム数値決定
         SetRandomValue();
@@ -161,6 +161,9 @@ public class ReelManager : MonoBehaviour
                 // 高速オートの有無で最高速度を変える
                 float speed = usingFastAuto ? 1.5f : 1.0f;
                 reelObjects[i].StartReel(speed, usingFastAuto);
+
+                // JACGAME中のリール計算処理をするか
+                reelObjects[i].HasJacModeLight = currentBonusStatus == BonusStatus.BonusJACGames;
             }
 
             // 高速オートの場合はすぐに停止可能にする
@@ -333,7 +336,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 払い出しのチェック
-    public void StartCheckPayout(int betAmount) => payoutChecker.CheckPayoutLines(betAmount, data.LastStopped);
+    public void StartCheckPayout(int betAmount) => payoutChecker.CheckPayoutLines(betAmount, data.LastStoppedReelData);
 
     // ランダム数値の決定
     private void SetRandomValue()

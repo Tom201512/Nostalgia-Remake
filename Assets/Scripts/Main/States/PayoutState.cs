@@ -93,7 +93,7 @@ namespace ReelSpinGame_State.PayoutState
             // フラグ情報記録
             gM.Save.RecordFlagCounter(gM.Lots.GetCounter());
             // 最終リール位置を記録
-            gM.Save.RecordReelPos(gM.Reel.GetLastStopped().LastPos);
+            gM.Save.RecordReelPos(gM.Reel.GetLastStoppedReelData().LastPos);
             // ボーナス情報記録
             gM.Save.RecordBonusData(gM.Bonus.MakeSaveData());
         }

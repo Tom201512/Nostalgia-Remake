@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Reels.Flash
@@ -32,12 +33,13 @@ namespace ReelSpinGame_Reels.Flash
         public enum PayoutLineID { PayoutMiddle, PayoutLower, PayoutUpper, PayoutDiagonalA, PayoutDiagonalB };
 
         // var
-        // リールオブジェクト
-        private List<ReelObject> reelObjects;
         // リール演出マネージャー
         [SerializeField] private ReelEffectManager reelEffectManager;
-        // 最後にあった払い出しライン
-        private List<PayoutLineData> lastPayoutLines;
+
+        // 最後の払い出し結果
+        private PayoutResultBuffer lastPayoutResult;
+        // 最後に止めたリール結果
+        private LastStoppedReelData lastStoppedReelData;
 
         // 現在のフレーム数(1フレーム0.1秒)
         private int currentFrame;
@@ -54,9 +56,6 @@ namespace ReelSpinGame_Reels.Flash
         // func
         public void Awake()
         {
-            reelObjects = new List<ReelObject>();
-            lastPayoutLines = new List<PayoutLineData>();
-
             HasFlash = false;
             HasFlashWait = false;
             CurrentFlashID = 0;
@@ -77,10 +76,6 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // func
-        // データを渡す
-        // リールオブジェクト
-        public void SetReelObjects(List<ReelObject> reelObjects) => this.reelObjects = reelObjects;
-
         // リールフラッシュを再生させる
         public void StartReelFlash(float waitSeconds, FlashID flashID)
         {
@@ -97,10 +92,10 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // 払い出しフラッシュの再生
-        public void StartPayoutFlash(float waitSeconds, List<PayoutLineData> lastPayoutLines)
+        public void StartPayoutFlash(float waitSeconds, PayoutResultBuffer lastPayoutResult, LastStoppedReelData lastStoppedReelData)
         {
-            this.lastPayoutLines.Clear();
-            this.lastPayoutLines = lastPayoutLines;
+            this.lastPayoutResult = lastPayoutResult;
+            this.lastStoppedReelData = lastStoppedReelData;
             currentFrame = 0;
             HasFlash = true;
             StartCoroutine(nameof(UpdatePayoutFlash));
@@ -200,7 +195,7 @@ namespace ReelSpinGame_Reels.Flash
             // 暗くする量を計算
             byte brightness = CalculateBrightness(SymbolLight.TurnOffValue, PayoutFlashFrames);
             //全ての払い出しのあったラインをフラッシュさせる
-            foreach (PayoutLineData payoutLine in lastPayoutLines)
+            foreach (PayoutLineData payoutLine in lastPayoutResult.PayoutLines)
             {
                 for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
                 {
@@ -208,8 +203,8 @@ namespace ReelSpinGame_Reels.Flash
                     reelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
-                    if (reelObjects[(int)ReelID.ReelLeft].GetReelSymbol
-                        (payoutLine.PayoutLines[(int)ReelID.ReelLeft]) == ReelSymbols.Cherry)
+                    if (lastStoppedReelData.LastSymbols[(int)ReelID.ReelLeft]
+                        [SymbolChange.GetReelArrayIndex(payoutLine.PayoutLines[(int)ReelID.ReelLeft])] == ReelSymbols.Cherry)
                     {
                         break;
                     }

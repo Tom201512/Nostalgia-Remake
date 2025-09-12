@@ -32,7 +32,7 @@ namespace ReelSpinGame_State.PlayingState
         public void StateStart()
         {
             // リール始動(高速オート時は1.5倍のリールスピードになる)
-            gM.Reel.StartReels(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+            gM.Reel.StartReels(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
             // スタート音再生

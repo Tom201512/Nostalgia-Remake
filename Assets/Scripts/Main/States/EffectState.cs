@@ -58,7 +58,7 @@ namespace ReelSpinGame_State.LotsState
                 {
                     gM.Medal.ChangeSegmentUpdate(true);
                     gM.Effect.StartPayoutEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus(),
-                        gM.Reel.GetPayoutResultData(), gM.Reel.GetPayoutResultData().PayoutLines);
+                        gM.Reel.GetPayoutResultData(), gM.Reel.GetLastStoppedReelData());
                 }
 
                 // ï•Ç¢èoÇµÇ™èIÇÌÇÈÇ‹Ç≈ë“ã@

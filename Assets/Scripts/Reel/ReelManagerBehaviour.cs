@@ -37,7 +37,7 @@ namespace ReelSpinGame_Reels
         public ReelTableManager ReelTableManager { get; private set; }
 
         // 最後に止めたリールのデータ
-        public LastStoppedReelData LastStopped { get; private set; }
+        public LastStoppedReelData LastStoppedReelData { get; private set; }
 
         // リールテーブルのランダム数値
         public int RandomValue { get; set; }
@@ -56,11 +56,11 @@ namespace ReelSpinGame_Reels
             RandomValue = 0;
             StoppedReelCount = 0;
 
-            LastStopped = new LastStoppedReelData();
+            LastStoppedReelData = new LastStoppedReelData();
             ReelTableManager = new ReelTableManager();
         }
 
         // 最後に止めたリールデータを作る
-        public void GenerateLastStopped(List<ReelObject> reelObjects) => LastStopped.GenerateLastStopped(reelObjects);
+        public void GenerateLastStopped(List<ReelObject> reelObjects) => LastStoppedReelData.GenerateLastStopped(reelObjects);
     }
 }
