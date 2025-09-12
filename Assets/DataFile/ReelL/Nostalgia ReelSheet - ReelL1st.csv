@@ -8,14 +8,65 @@
 0,0,0,0,12,1,8,NoneA
 0,0,0,0,13,1,9,NoneA
 0,1,0,0,ANY,3,1,None1Bet
+0,0,2,0,"1, 10, 18",14,1,Reg1st
+0,0,2,0,2,14,2,Reg1st
+0,0,2,0,3,14,3,Reg1st
+0,0,2,0,"4, 5",14,4,Reg1st
+0,0,2,0,"6, 7, 8, 9",14,5,Reg1st
+0,0,2,0,11,14,6,Reg1st
+0,0,2,0,12,14,7,Reg1st
+0,0,2,0,13,14,8,Reg1st
+0,0,2,0,14,14,9,Reg1st
+0,0,2,0,"15, 16, 17",14,10,Reg1st
+0,0,2,0,"19, 21",14,11,Reg1st
+0,0,2,0,20,14,12,Reg1st
+0,1,2,0,ANY,10,12,RegCherry4
+1,0,2,0,"1, 10, 18",14,1,Reg1st
+1,0,2,0,2,14,2,Reg1st
+1,0,2,0,3,14,3,Reg1st
+1,0,2,0,"4, 5",14,4,Reg1st
+1,0,2,0,"6, 7, 8, 9",14,5,Reg1st
+1,0,2,0,11,14,6,Reg1st
+1,0,2,0,12,14,7,Reg1st
+1,0,2,0,13,14,8,Reg1st
+1,0,2,0,14,14,9,Reg1st
+1,0,2,0,"15, 16, 17",14,10,Reg1st
+1,0,2,0,"19, 21",14,11,Reg1st
+1,0,2,0,20,14,12,Reg1st
+1,1,2,0,ANY,10,12,RegCherry4
+2,0,0,0,1,12,1,RegBefore1st
+2,0,0,0,2,12,2,RegBefore1st
+2,0,0,0,"3, 4",12,3,RegBefore1st
+2,0,0,0,"5, 6, 9",12,4,RegBefore1st
+2,0,0,0,"7, 11",12,5,RegBefore1st
+2,0,0,0,"8, 10, 15",12,6,RegBefore1st
+2,0,0,0,12,12,7,RegBefore1st
+2,0,0,0,13,12,8,RegBefore1st
+2,0,0,0,14,12,9,RegBefore1st
+2,0,0,0,"16, 17",12,10,RegBefore1st
+2,0,0,0,"18, 19, 20, 21",12,11,RegBefore1st
+2,1,0,0,ANY,10,1,RegCherry4
+2,0,2,0,"1, 10, 18",14,1,Reg1st
+2,0,2,0,2,14,2,Reg1st
+2,0,2,0,3,14,3,Reg1st
+2,0,2,0,"4, 5",14,4,Reg1st
+2,0,2,0,"6, 7, 8, 9",14,5,Reg1st
+2,0,2,0,11,14,6,Reg1st
+2,0,2,0,12,14,7,Reg1st
+2,0,2,0,13,14,8,Reg1st
+2,0,2,0,14,14,9,Reg1st
+2,0,2,0,"15, 16, 17",14,10,Reg1st
+2,0,2,0,"19, 21",14,11,Reg1st
+2,0,2,0,20,14,12,Reg1st
+2,1,2,0,ANY,10,1,RegCherry4
 3,0,0,0,ANY,15,1,Cherry2
-3,0,1,0,ANY,6,1,BonusCherry2Upper
-3,0,1,4,ANY,7,2,BonusCherry2Lower
-3,0,1,5,ANY,7,2,BonusCherry2Lower
-3,0,1,6,ANY,7,2,BonusCherry2Lower
-3,1,1,0,ANY,9,1,BigCherry4
-3,3,1,3,ANY,8,3,BigCherry2Diagonal
-3,3,1,6,ANY,8,4,BigCherry2Diagonal
+3,0,1,0,ANY,6,1,#REF!
+3,0,1,4,ANY,7,2,#REF!
+3,0,1,5,ANY,7,2,#REF!
+3,0,1,6,ANY,7,2,#REF!
+3,1,1,0,ANY,9,1,#REF!
+3,3,1,3,ANY,8,3,#REF!
+3,3,1,6,ANY,8,4,#REF!
 3,0,2,0,ANY,6,1,BonusCherry2Upper
 3,0,2,4,ANY,7,2,BonusCherry2Lower
 3,0,2,5,ANY,7,2,BonusCherry2Lower
@@ -25,8 +76,8 @@
 3,3,2,6,ANY,6,4,BonusCherry2Upper
 4,0,0,0,ANY,15,1,Cherry2
 4,3,0,0,ANY,16,1,Cherry4
-4,0,1,0,ANY,15,1,Cherry2
-4,3,1,0,ANY,16,1,Cherry4
+4,0,1,0,ANY,15,1,#REF!
+4,3,1,0,ANY,16,1,#REF!
 4,0,2,0,ANY,15,1,Cherry2
 4,3,2,0,ANY,16,1,Cherry4
 5,0,0,0,"1, 8, 10, 12, 13, 15, 18",17,1,Melon1st

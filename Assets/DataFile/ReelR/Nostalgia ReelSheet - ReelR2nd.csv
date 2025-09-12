@@ -9,6 +9,10 @@
 0,0,0,0,1,8,ANY,6,8,NoneF
 0,0,0,0,1,9,ANY,1,9,NoneA
 0,1,0,0,1,9,ANY,7,1,None1Bet
+2,0,0,0,0,1,ANY,14,1,RegUpper
+2,0,0,0,0,2,ANY,15,2,RegLower
+2,0,0,0,0,3,ANY,17,3,RegDiagonalB
+2,1,0,0,0,1,ANY,20,1,RegCherry4
 3,0,0,0,0,0,ANY,29,1,Cherry2
 4,0,0,0,0,0,ANY,29,1,Cherry2
 4,3,0,0,0,0,ANY,30,1,Cherry4
