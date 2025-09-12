@@ -49,9 +49,6 @@ namespace ReelSpinGame_Effect
         // ボーナスが終了したか
         public bool HasBonusFinished { get; private set; }
 
-        // リールのオブジェクト
-        [SerializeField] private List<ReelObject> reelObjects;
-
         // func 
         private void Awake()
         {
