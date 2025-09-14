@@ -163,7 +163,7 @@ namespace ReelSpinGame_Datas.Reels
                     continue;
                 }
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
-                else if (i == (int)ConditionID.Bonus && conditions[i] == BonusAnyValueID &&
+                else if (i == (int)ConditionID.Bonus && checkData == BonusAnyValueID &&
                     bonus != (int)BonusTypeID.BonusNone)
                 {
                     Debug.Log(bonus + "ANY BONUS");
