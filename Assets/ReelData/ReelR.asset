@@ -1797,6 +1797,12 @@ MonoBehaviour:
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
+  - mainConditon: 288
+    tid: 20
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopPos: 0
   - mainConditon: 13088
     tid: 17
     cid: 3
@@ -2072,6 +2078,12 @@ MonoBehaviour:
     cid: 3
     firstStopReelID: 1
     firstStopCID: 10
+    secondStopPos: 0
+  - mainConditon: 289
+    tid: 20
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
     secondStopPos: 0
   - mainConditon: 13089
     tid: 17
@@ -2372,6 +2384,12 @@ MonoBehaviour:
     cid: 3
     firstStopReelID: 1
     firstStopCID: 10
+    secondStopPos: 0
+  - mainConditon: 290
+    tid: 20
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
     secondStopPos: 0
   - mainConditon: 13090
     tid: 17
@@ -2913,6 +2931,13 @@ MonoBehaviour:
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
+  - mainConditon: 288
+    tid: 20
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 0
   - mainConditon: 13088
     tid: 17
     cid: 3
@@ -3233,6 +3258,13 @@ MonoBehaviour:
     cid: 3
     firstStopReelID: 1
     firstStopCID: 10
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 289
+    tid: 20
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 13089
@@ -3583,6 +3615,13 @@ MonoBehaviour:
     cid: 3
     firstStopReelID: 1
     firstStopCID: 10
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 290
+    tid: 20
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 13090

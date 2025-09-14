@@ -51,6 +51,7 @@
 0,2,0,6,1,8,0,0,39,4,ReplayMiddle
 0,2,0,6,1,9,0,0,14,3,RegUpper
 0,2,0,6,1,10,0,0,39,3,ReplayMiddle
+0,2,1,0,1,1,0,0,20,1,RegCherry4
 0,2,3,3,1,1,0,0,17,3,RegDiagonalB
 0,2,3,3,1,2,0,0,16,3,RegDiagonalA
 0,2,3,6,1,1,0,0,15,4,RegLower
@@ -97,6 +98,7 @@
 1,2,0,6,1,8,0,0,39,4,ReplayMiddle
 1,2,0,6,1,9,0,0,14,3,RegUpper
 1,2,0,6,1,10,0,0,39,3,ReplayMiddle
+1,2,1,0,1,1,0,0,20,1,RegCherry4
 1,2,3,3,1,1,0,0,17,3,RegDiagonalB
 1,2,3,3,1,2,0,0,16,3,RegDiagonalA
 1,2,3,6,1,1,0,0,15,4,RegLower
@@ -147,6 +149,7 @@
 2,2,0,6,1,8,0,0,39,4,ReplayMiddle
 2,2,0,6,1,9,0,0,14,3,RegUpper
 2,2,0,6,1,10,0,0,39,3,ReplayMiddle
+2,2,1,0,1,1,0,0,20,1,RegCherry4
 2,2,3,3,1,1,0,0,17,3,RegDiagonalB
 2,2,3,3,1,2,0,0,16,3,RegDiagonalA
 2,2,3,6,1,1,0,0,15,4,RegLower

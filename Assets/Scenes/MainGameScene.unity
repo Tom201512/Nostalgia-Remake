@@ -871,8 +871,8 @@ MonoBehaviour:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
   - {fileID: 1933351381669917605}
-  instantRandomMode: 0
-  infinityRandomMode: 0
+  instantRandomMode: 1
+  infinityRandomMode: 1
   instantRandomValue: 1
 --- !u!114 &286284040
 MonoBehaviour:
