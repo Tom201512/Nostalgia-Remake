@@ -81,10 +81,10 @@ namespace ReelSpinGame_Datas.Reels
         }
 
         // 条件チェック
-        public bool CheckFirstReelCondition(int flagID, int bet, int bonus, int random, int pushedPos)
+        public bool CheckFirstReelCondition(int flagID, int bonus, int bet, int random, int pushedPos)
         {
             // メイン条件チェック
-            if(CheckMainCondition(flagID, bet, bonus, random))
+            if(CheckMainCondition(flagID, bonus, bet, random))
             {
                 // 第一停止の条件が一致するかチェック。0はANY
                 // 第一停止の数値をビット演算で比較できるようにする
@@ -119,7 +119,7 @@ namespace ReelSpinGame_Datas.Reels
         public const int BonusAnyValueID = 3;
 
         // 条件のシリアライズ
-        public enum ConditionID { Flag, Bet, Bonus, Random }
+        public enum ConditionID { Flag, Bonus, Bet, Random }
 
         // フラグID, ボーナス, ベット枚数, ランダム制御の順で読み込む
         [SerializeField] private int mainConditon;
@@ -136,15 +136,15 @@ namespace ReelSpinGame_Datas.Reels
         protected int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
 
         // メイン条件があっているかチェック
-        protected bool CheckMainCondition(int flagID, int bet, int bonus, int random)
+        protected bool CheckMainCondition(int flagID, int bonus, int bet, int random)
         {
-            Debug.Log("MainCondition:" + flagID + "," + bet + "," + bonus + "," + random);
+            Debug.Log("MainCondition:" + flagID + "," + bonus + "," + bet + "," + random);
             // データを条件にする
             int[] conditions = new int[]
             {
                 flagID,
-                bet,
                 bonus,
+                bet,
                 random,
             };
 

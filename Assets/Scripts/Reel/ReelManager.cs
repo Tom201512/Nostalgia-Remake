@@ -210,7 +210,7 @@ public class ReelManager : MonoBehaviour
 
                 // 新規実装版 現在のフラグ、停止させたリール、ベット枚数やボーナスストック、ランダム数値をもとにディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelay(data.StoppedReelCount, pushedPos, reelObjects[(int)reelID].GetReelDatabase(),
-                    flagID, reelID, bet, bonusID, data.RandomValue);
+                    flagID, reelID, bonusID, bet, data.RandomValue);
 
                 // リールを止める
                 reelObjects[(int)reelID].StopReel(pushedPos, delay);

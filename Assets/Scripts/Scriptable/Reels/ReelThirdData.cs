@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Datas.Reels
 {
@@ -104,11 +105,11 @@ namespace ReelSpinGame_Datas.Reels
         }
 
         // 条件チェック
-        public bool CheckThirdReelCondition(int flagID, int bet, int bonus, int random, 
-            int firstStopReelID, int firstStopCID, int secondStopReelID, int secondStopReelCID)
+        public bool CheckThirdReelCondition(int flagID, int bonus, int bet, int random, 
+            ReelID firstStopReelID, int firstStopCID, ReelID secondStopReelID, int secondStopReelCID)
         {
             // メイン条件チェック
-            if (CheckMainCondition(flagID, bet, bonus, random))
+            if (CheckMainCondition(flagID, bonus, bet, random))
             {
                 // 第一と第二停止のリールID, CIDが一致するかチェック
                 return ThirdReelCIDCheck(firstStopReelID, firstStopCID, secondStopReelID, secondStopReelCID);
@@ -117,35 +118,33 @@ namespace ReelSpinGame_Datas.Reels
         }
 
         // CIDチェック(第三停止用)
-        private bool ThirdReelCIDCheck(int firstStopReelID, int firstStopCID, int secondStopReelID, int secondStopCID)
+        private bool ThirdReelCIDCheck(ReelID firstStopReelID, int firstStopCID, ReelID secondStopReelID, int secondStopCID)
         {
             bool first = false;
             bool second = false;
 
             // 第一停止
-            // 第一停止リールIDの指定が0以外なら条件が正しいかチェック
-            if (this.firstStopReelID != 0 && firstStopReelID + 1 == this.firstStopReelID)
+
+            Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
+            Debug.Log("FirstStop Check: " + (this.firstStopReelID != 0 && (int)firstStopReelID + 1 == this.firstStopReelID));
+
+            // 第一停止リールIDの条件が正しいかチェック(0はANY)
+            if (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID)
             {
-                return false;
-            }
-            // 第一停止リールIDの条件が正しければCIDをチェック
-            else
-            {
-                // 第一停止のCIDが一致、または0ならtrueを返す
+                // 第一停止のCIDをチェック
                 Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
                 first = this.firstStopCID == 0 || firstStopCID == this.firstStopCID;
             }
 
             // 第二停止
-            // 第二停止リールIDの指定が0以外なら条件が正しいかチェック
-            if (this.secondStopReelID != 0 && secondStopReelID + 1 == this.firstStopReelID)
+
+            Debug.Log("SecondStopReel Condition: " + this.secondStopReelID);
+            Debug.Log("SecondStop Check: " + (this.secondStopReelID != 0 && (int)secondStopReelID + 1 == this.secondStopReelID));
+
+            // 第二停止リールIDの条件が正しいかチェック(0はANY)
+            if (this.secondStopReelID == 0 || (int)secondStopReelID + 1 == this.secondStopReelID)
             {
-                return false;
-            }
-            // 第二停止リールIDの条件が正しければCIDをチェック
-            else
-            {
-                // 第二停止のCIDが一致、または0ならtrueを返す
+                // 第二停止のCIDをチェック
                 Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));
                 second = this.secondStopCID == 0 || secondStopCID == this.secondStopCID;
             }

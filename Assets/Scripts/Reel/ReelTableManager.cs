@@ -1,6 +1,5 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Datas.Reels;
-using Unity.VisualScripting;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Datas.ReelConditionsData;
@@ -27,7 +26,7 @@ namespace ReelSpinGame_Reels.Table
         public int[] UsedReelTableCID { get; private set; }
 
         // 停止させたリール順のリールID
-        public int[] PushedReelIdOrder { get; private set; }
+        public ReelID[] PushedReelIdOrder { get; private set; }
         // テーブルID
         public int[] PushedReelTidOrder { get; private set; }
         // 組み合わせID
@@ -39,7 +38,7 @@ namespace ReelSpinGame_Reels.Table
             UsedReelTableTID = new int[ReelAmount] { 0, 0, 0 };
             UsedReelTableCID = new int[ReelAmount] { 0, 0, 0 };
 
-            PushedReelIdOrder = new int[ReelAmount] { 0, 0, 0 };
+            PushedReelIdOrder = new ReelID[ReelAmount] {ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
             PushedReelTidOrder = new int[ReelAmount] { 0, 0, 0 };
             PushedReelCidOrder = new int[ReelAmount] { 0, 0, 0 };
         }
@@ -135,7 +134,7 @@ namespace ReelSpinGame_Reels.Table
 
         // 
         public int GetDelay(int stoppedCount, int pushedPos, ReelDatabase reelDatabase,
-            FlagId flagID, ReelID pushReelID, int bet, BonusTypeID bonus, int random)
+            FlagId flagID, ReelID pushReelID, BonusTypeID bonus, int bet, int random)
         {
             // 見つけたテーブルID
             int findTID = -1;
@@ -151,7 +150,7 @@ namespace ReelSpinGame_Reels.Table
                     foreach (ReelFirstData first in reelDatabase.FirstCondition)
                     {
                         // 一致するテーブルがあるたびに更新をする
-                        if (first.CheckFirstReelCondition((int)flagID, bet, (int)bonus, random, pushedPos))
+                        if (first.CheckFirstReelCondition((int)flagID, (int)bonus, bet, random, pushedPos))
                         {
                             findTID = first.TID;
                             findCID = first.CID;
@@ -165,7 +164,7 @@ namespace ReelSpinGame_Reels.Table
                     Debug.Log("Second Stop Check");
                     foreach (ReelSecondData second in reelDatabase.SecondCondition)
                     {
-                        if (second.CheckSecondReelCondition((int)flagID, bet, (int)bonus, random,
+                        if (second.CheckSecondReelCondition((int)flagID, (int)bonus, bet, random,
                             PushedReelIdOrder[(int)StopOrder.First], PushedReelCidOrder[(int)StopOrder.First], pushedPos))
                         {
                             findTID = second.TID;
@@ -180,7 +179,7 @@ namespace ReelSpinGame_Reels.Table
                     Debug.Log("Third Stop Check");
                     foreach (ReelThirdData third in reelDatabase.ThirdCondition)
                     {
-                        if (third.CheckThirdReelCondition((int)flagID, bet, (int)bonus, random,
+                        if (third.CheckThirdReelCondition((int)flagID, (int)bonus, bet, random,
                             PushedReelIdOrder[(int)StopOrder.First], PushedReelCidOrder[(int)StopOrder.First],
                             PushedReelIdOrder[(int)StopOrder.Second], PushedReelCidOrder[(int)StopOrder.Second]))
                         {
@@ -195,13 +194,11 @@ namespace ReelSpinGame_Reels.Table
             // テーブルと組み合わせIDが発見できたらそのテーブルからスベリコマ取得
             if(findTID != -1 && findCID != -1)
             {
-                PushedReelIdOrder[stoppedCount] = (int)pushReelID;
+                PushedReelIdOrder[stoppedCount] = pushReelID;
                 PushedReelTidOrder[stoppedCount] = findTID;
                 PushedReelCidOrder[stoppedCount] = findCID;
                 UsedReelTableTID[(int)pushReelID] = findTID;
                 UsedReelTableCID[(int)pushReelID] = findCID;
-
-
 
                 return reelDatabase.Tables[findTID - 1].TableData[pushedPos];
             }

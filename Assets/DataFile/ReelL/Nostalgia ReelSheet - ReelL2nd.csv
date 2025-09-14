@@ -3,12 +3,12 @@
 2,0,0,4,0,2,ANY,5,2,BonusLower
 2,0,0,5,0,2,ANY,5,2,BonusLower
 2,0,0,6,0,2,ANY,5,2,BonusLower
-2,1,0,0,0,0,ANY,10,1,RegCherry4
-2,3,0,3,0,3,ANY,4,3,BonusUpper
-2,3,0,4,0,3,ANY,4,3,BonusUpper
+2,0,1,0,0,0,ANY,10,1,RegCherry4
+2,0,3,3,0,3,ANY,4,3,BonusUpper
+2,0,3,4,0,3,ANY,4,3,BonusUpper
 3,0,0,0,0,0,ANY,15,1,Cherry2
 4,0,0,0,0,0,ANY,15,1,Cherry2
-4,3,0,0,0,0,ANY,16,1,Cherry4
+4,0,3,0,0,0,ANY,16,1,Cherry4
 5,0,0,0,0,1,ANY,20,1,MelonMiddle
 5,0,0,0,0,2,ANY,19,2,MelonUpper
 5,0,0,0,0,3,ANY,21,3,MelonLower
@@ -23,5 +23,5 @@
 7,0,0,2,0,0,ANY,30,2,ReplayLowerB
 7,0,0,4,0,0,ANY,30,2,ReplayLowerB
 7,0,0,6,0,0,ANY,30,2,ReplayLowerB
-7,1,0,0,0,0,ANY,28,2,Replay1Bet
+7,0,1,0,0,0,ANY,28,2,Replay1Bet
 8,0,0,0,0,0,ANY,31,1,JAC
