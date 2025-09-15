@@ -140,7 +140,7 @@ namespace ReelSpinGame_Datas.Reels
         private bool SecondReelCIDCheck(ReelID firstStopReelID, int firstStopCID)
         {
             Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
-            Debug.Log("FirstStop Check: " + (this.firstStopReelID != 0 && (int)firstStopReelID + 1 == this.firstStopReelID));
+            Debug.Log("FirstStop Check: " + (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID));
 
             // 第一停止リールIDの条件が正しいかチェック(0はANY)
             if (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID)

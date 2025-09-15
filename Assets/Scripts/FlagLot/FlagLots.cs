@@ -55,7 +55,15 @@ namespace ReelSpinGame_Lots.Flag
             }
             else
             {
-                data.GetFlagLots(setting, betAmount, useInstant, holdingBonusID, flagDatabase);
+                data.GetFlagLots(setting, betAmount, useInstant, flagDatabase);
+            }
+
+            // 何らかのボーナスが成立中にBIGまたはREGフラグが引かれた場合ははずれに置き換える
+            if (holdingBonusID != BonusTypeID.BonusNone &&
+               (data.CurrentFlag == FlagId.FlagBig || data.CurrentFlag == FlagId.FlagReg))
+            {
+                Debug.Log("Bonus flag has replaced to None");
+                data.CurrentFlag = FlagId.FlagNone;
             }
         }
 

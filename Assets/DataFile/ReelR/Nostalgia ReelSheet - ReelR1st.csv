@@ -5,9 +5,6 @@
 0,1,0,5,ANY,10,3,BigLower
 0,1,0,6,ANY,10,3,BigLower
 0,1,1,0,ANY,13,1,BigCherry4
-0,1,1,4,ANY,20,2,RegCherry4
-0,1,1,5,ANY,20,2,RegCherry4
-0,1,1,6,ANY,20,2,RegCherry4
 0,1,3,3,ANY,10,3,BigLower
 0,1,3,4,ANY,10,4,BigLower
 0,2,0,0,ANY,14,1,RegUpper
@@ -23,9 +20,9 @@
 1,0,0,5,ANY,10,3,BigLower
 1,0,0,6,ANY,10,3,BigLower
 1,0,1,0,ANY,13,1,BigCherry4
-1,0,1,4,ANY,20,2,RegCherry4
-1,0,1,5,ANY,20,2,RegCherry4
-1,0,1,6,ANY,20,2,RegCherry4
+1,0,1,4,ANY,13,2,BigCherry4
+1,0,1,5,ANY,13,2,BigCherry4
+1,0,1,6,ANY,13,2,BigCherry4
 1,0,3,3,ANY,10,3,BigLower
 1,0,3,4,ANY,10,4,BigLower
 2,0,0,0,ANY,14,1,RegUpper

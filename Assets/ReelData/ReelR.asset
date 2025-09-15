@@ -1378,18 +1378,6 @@ MonoBehaviour:
     tid: 13
     cid: 1
     firstStopPos: 0
-  - mainConditon: 16656
-    tid: 20
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20752
-    tid: 20
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24848
-    tid: 20
-    cid: 2
-    firstStopPos: 0
   - mainConditon: 13072
     tid: 10
     cid: 3
@@ -1451,15 +1439,15 @@ MonoBehaviour:
     cid: 1
     firstStopPos: 0
   - mainConditon: 16641
-    tid: 20
+    tid: 13
     cid: 2
     firstStopPos: 0
   - mainConditon: 20737
-    tid: 20
+    tid: 13
     cid: 2
     firstStopPos: 0
   - mainConditon: 24833
-    tid: 20
+    tid: 13
     cid: 2
     firstStopPos: 0
   - mainConditon: 13057
@@ -1743,17 +1731,287 @@ MonoBehaviour:
     firstStopReelID: 0
     firstStopCID: 5
     secondStopPos: 0
+  - mainConditon: 16
+    tid: 21
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 23
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 26
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 25
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 10
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 9
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 6
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 38
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 32
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopPos: 0
+  - mainConditon: 16
+    tid: 38
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopPos: 0
+  - mainConditon: 12304
+    tid: 33
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopPos: 0
+  - mainConditon: 12304
+    tid: 34
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopPos: 0
+  - mainConditon: 12304
+    tid: 36
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 26
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 33
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 34
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopPos: 0
+  - mainConditon: 16400
+    tid: 36
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 26
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 33
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 28
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopPos: 0
+  - mainConditon: 20496
+    tid: 28
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 26
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 34
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 34
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopPos: 0
+  - mainConditon: 24592
+    tid: 39
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopPos: 0
   - mainConditon: 272
     tid: 13
     cid: 1
     firstStopReelID: 0
+    firstStopCID: 0
+    secondStopPos: 0
+  - mainConditon: 13072
+    tid: 22
+    cid: 3
+    firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 272
-    tid: 20
-    cid: 2
-    firstStopReelID: 0
+  - mainConditon: 13072
+    tid: 24
+    cid: 3
+    firstStopReelID: 1
     firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 13072
+    tid: 27
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 13072
+    tid: 28
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopPos: 0
+  - mainConditon: 13072
+    tid: 22
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopPos: 0
+  - mainConditon: 25360
+    tid: 27
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 25360
+    tid: 10
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 25360
+    tid: 8
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 25360
+    tid: 10
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopPos: 0
+  - mainConditon: 25360
+    tid: 8
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 5
     secondStopPos: 0
   - mainConditon: 32
     tid: 14
@@ -2774,20 +3032,335 @@ MonoBehaviour:
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 5
+  - mainConditon: 16
+    tid: 21
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 23
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 26
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 25
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 10
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 9
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 6
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 38
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 32
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16
+    tid: 38
+    cid: 1
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 12304
+    tid: 33
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 12304
+    tid: 34
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 12304
+    tid: 36
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 26
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 33
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 34
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 16400
+    tid: 36
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 26
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 33
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 28
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 20496
+    tid: 28
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 26
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 8
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 10
+    cid: 2
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 34
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 7
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 34
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 8
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 24592
+    tid: 39
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 9
+    secondStopReelID: 0
+    secondStopCID: 0
   - mainConditon: 272
     tid: 13
     cid: 1
     firstStopReelID: 0
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 13072
+    tid: 22
+    cid: 3
+    firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
-    secondStopCID: 1
-  - mainConditon: 272
-    tid: 20
-    cid: 2
-    firstStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 13072
+    tid: 24
+    cid: 3
+    firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
-    secondStopCID: 2
+    secondStopCID: 0
+  - mainConditon: 13072
+    tid: 27
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 13072
+    tid: 28
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 13072
+    tid: 22
+    cid: 3
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 25360
+    tid: 27
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 25360
+    tid: 10
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 25360
+    tid: 8
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 25360
+    tid: 10
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainConditon: 25360
+    tid: 8
+    cid: 4
+    firstStopReelID: 1
+    firstStopCID: 5
+    secondStopReelID: 0
+    secondStopCID: 0
   - mainConditon: 32
     tid: 14
     cid: 1
@@ -3866,10 +4439,10 @@ MonoBehaviour:
   - tableData: 020100030302000002010403020100040302010403
   - tableData: 040302010002010002030001040302010002010201
   - tableData: 030201000302010203000104030201000203000104
-  - tableData: 040302010004030201000100000302010403020100
+  - tableData: 040302010003020103020100000302010403020100
   - tableData: 010100020200000201000303020004030201000303
-  - tableData: 000300030404030201000203020304030201000403
-  - tableData: 000302010003020403020100000302010003020100
+  - tableData: 020100030404030201000403020104030201000403
+  - tableData: 000100010003000403020100000100010001020100
   - tableData: 000002020000000201000101010304030201000100
   - tableData: 000003020100020200000100000003020403020100
   - tableData: 010003030200000201000100010404030201000100

@@ -62,7 +62,7 @@ namespace ReelSpinGame_Lots
         // func
 
         // フラグ抽選の開始
-        public void GetFlagLots(int setting, int betAmount, bool useInstant, BonusTypeID holdingBonusID, FlagDatabase flagDatabase)
+        public void GetFlagLots(int setting, int betAmount, bool useInstant, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
@@ -93,14 +93,6 @@ namespace ReelSpinGame_Lots
                 default:
                     break;
 
-            }
-
-            // 何らかのボーナスが成立中にBIGまたはREGフラグが引かれた場合ははずれに置き換える
-            if(holdingBonusID != BonusTypeID.BonusNone &&
-               (CurrentFlag == FlagId.FlagBig || CurrentFlag == FlagId.FlagReg))
-            {
-                Debug.Log("Bonus flag has replaced to None");
-                CurrentFlag = FlagId.FlagNone;
             }
         }
 

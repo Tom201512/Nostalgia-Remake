@@ -873,7 +873,7 @@ MonoBehaviour:
   - {fileID: 1933351381669917605}
   instantRandomMode: 1
   infinityRandomMode: 1
-  instantRandomValue: 3
+  instantRandomValue: 1
 --- !u!114 &286284040
 MonoBehaviour:
   m_ObjectHideFlags: 0
