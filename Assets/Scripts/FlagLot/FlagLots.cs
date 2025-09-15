@@ -1,6 +1,7 @@
 using ReelSpinGame_Datas;
 using UnityEngine;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Lots.Flag
 {
@@ -39,7 +40,7 @@ namespace ReelSpinGame_Lots.Flag
         public void ChangeTable(FlagLotMode mode) => data.CurrentTable = mode;
 
         // ƒtƒ‰ƒO’Š‘I‚ð‚·‚é
-        public void StartFlagLots(int setting, int betAmount)
+        public void StartFlagLots(int setting, int betAmount, BonusTypeID holdingBonusID)
         {
             if (useInstant)
             {
@@ -54,7 +55,7 @@ namespace ReelSpinGame_Lots.Flag
             }
             else
             {
-                data.GetFlagLots(setting, betAmount, useInstant, instantFlagID, flagDatabase);
+                data.GetFlagLots(setting, betAmount, useInstant, holdingBonusID, flagDatabase);
             }
         }
 

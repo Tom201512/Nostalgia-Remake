@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using ReelSpinGame_Datas;
+﻿using ReelSpinGame_Datas;
+using UnityEngine;
+
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Lots
 {
@@ -61,7 +62,7 @@ namespace ReelSpinGame_Lots
         // func
 
         // フラグ抽選の開始
-        public void GetFlagLots(int setting, int betAmount, bool useInstant, FlagId instantFlagID, FlagDatabase flagDatabase)
+        public void GetFlagLots(int setting, int betAmount, bool useInstant, BonusTypeID holdingBonusID, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
@@ -90,11 +91,17 @@ namespace ReelSpinGame_Lots
                     break;
 
                 default:
-                    //Debug.LogError("No table found");
                     break;
 
             }
-            //Debug.Log("Flag:" + CurrentFlag);
+
+            // 何らかのボーナスが成立中にBIGまたはREGフラグが引かれた場合ははずれに置き換える
+            if(holdingBonusID != BonusTypeID.BonusNone &&
+               (CurrentFlag == FlagId.FlagBig || CurrentFlag == FlagId.FlagReg))
+            {
+                Debug.Log("Bonus flag has replaced to None");
+                CurrentFlag = FlagId.FlagNone;
+            }
         }
 
         // テーブル、設定値とベット枚数からフラグ判定

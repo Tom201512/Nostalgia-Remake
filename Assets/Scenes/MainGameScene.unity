@@ -873,7 +873,7 @@ MonoBehaviour:
   - {fileID: 1933351381669917605}
   instantRandomMode: 1
   infinityRandomMode: 1
-  instantRandomValue: 1
+  instantRandomValue: 3
 --- !u!114 &286284040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,7 +1264,7 @@ MonoBehaviour:
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
   useInstant: 1
   useInfinityInstant: 1
-  instantFlagID: 2
+  instantFlagID: 1
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
