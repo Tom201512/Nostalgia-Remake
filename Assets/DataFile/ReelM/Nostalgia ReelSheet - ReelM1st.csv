@@ -36,6 +36,12 @@
 2,0,3,3,ANY,16,3,RegMiddle
 2,0,3,4,ANY,16,3,RegMiddle
 3,0,0,0,ANY,1,1,NoneA
+3,1,0,0,ANY,15,1,RegUpper
+3,1,0,4,ANY,17,2,RegLower
+3,1,0,5,ANY,17,2,RegLower
+3,1,0,6,ANY,17,2,RegLower
+3,1,3,3,ANY,16,3,RegMiddle
+3,1,3,6,ANY,16,4,RegMiddle
 3,2,0,0,ANY,15,1,RegUpper
 3,2,0,4,ANY,17,2,RegLower
 3,2,0,5,ANY,17,2,RegLower
@@ -45,6 +51,14 @@
 3,3,1,0,ANY,1,1,NoneA
 4,0,0,0,ANY,1,1,NoneA
 4,0,3,0,ANY,28,1,MelonLower
+4,1,0,0,ANY,12,1,BigMiddle
+4,1,0,4,ANY,16,2,RegMiddle
+4,1,0,5,ANY,16,2,RegMiddle
+4,1,0,6,ANY,16,2,RegMiddle
+4,1,2,0,ANY,15,1,RegUpper
+4,1,2,4,ANY,17,2,RegLower
+4,1,2,5,ANY,17,2,RegLower
+4,1,2,6,ANY,17,2,RegLower
 4,2,0,0,ANY,16,1,RegMiddle
 4,2,2,0,ANY,15,1,RegUpper
 4,2,2,4,ANY,17,2,RegLower

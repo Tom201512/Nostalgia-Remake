@@ -614,6 +614,30 @@ MonoBehaviour:
     tid: 15
     cid: 1
     firstStopPos: 0
+  - mainConditon: 19
+    tid: 6
+    cid: 1
+    firstStopPos: 0
+  - mainConditon: 16403
+    tid: 7
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 20499
+    tid: 7
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 24595
+    tid: 7
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 13075
+    tid: 8
+    cid: 3
+    firstStopPos: 0
+  - mainConditon: 25363
+    tid: 8
+    cid: 4
+    firstStopPos: 0
   - mainConditon: 35
     tid: 6
     cid: 1
@@ -650,8 +674,40 @@ MonoBehaviour:
     tid: 16
     cid: 1
     firstStopPos: 0
+  - mainConditon: 20
+    tid: 9
+    cid: 1
+    firstStopPos: 0
+  - mainConditon: 16404
+    tid: 10
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 20500
+    tid: 10
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 24596
+    tid: 10
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 532
+    tid: 6
+    cid: 1
+    firstStopPos: 0
+  - mainConditon: 16916
+    tid: 7
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 21012
+    tid: 7
+    cid: 2
+    firstStopPos: 0
+  - mainConditon: 25108
+    tid: 7
+    cid: 2
+    firstStopPos: 0
   - mainConditon: 36
-    tid: 16
+    tid: 10
     cid: 1
     firstStopPos: 0
   - mainConditon: 548
@@ -982,7 +1038,7 @@ MonoBehaviour:
     firstStopCID: 4
     secondStopPos: 0
   - mainConditon: 16
-    tid: 4
+    tid: 5
     cid: 5
     firstStopReelID: 0
     firstStopCID: 5
@@ -1048,7 +1104,7 @@ MonoBehaviour:
     firstStopCID: 4
     secondStopPos: 0
   - mainConditon: 1
-    tid: 4
+    tid: 5
     cid: 5
     firstStopReelID: 0
     firstStopCID: 5
@@ -1095,6 +1151,30 @@ MonoBehaviour:
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
+  - mainConditon: 19
+    tid: 6
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 19
+    tid: 7
+    cid: 2
+    firstStopReelID: 0
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 19
+    tid: 6
+    cid: 3
+    firstStopReelID: 0
+    firstStopCID: 3
+    secondStopPos: 0
+  - mainConditon: 19
+    tid: 7
+    cid: 4
+    firstStopReelID: 0
+    firstStopCID: 4
+    secondStopPos: 0
   - mainConditon: 35
     tid: 6
     cid: 1
@@ -1136,6 +1216,30 @@ MonoBehaviour:
     cid: 1
     firstStopReelID: 0
     firstStopCID: 0
+    secondStopPos: 0
+  - mainConditon: 20
+    tid: 9
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 20
+    tid: 10
+    cid: 2
+    firstStopReelID: 0
+    firstStopCID: 2
+    secondStopPos: 0
+  - mainConditon: 532
+    tid: 6
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopPos: 0
+  - mainConditon: 532
+    tid: 7
+    cid: 2
+    firstStopReelID: 0
+    firstStopCID: 2
     secondStopPos: 0
   - mainConditon: 36
     tid: 10
@@ -1294,7 +1398,7 @@ MonoBehaviour:
     secondStopReelID: 0
     secondStopCID: 4
   - mainConditon: 16
-    tid: 4
+    tid: 5
     cid: 5
     firstStopReelID: 0
     firstStopCID: 5
@@ -1371,7 +1475,7 @@ MonoBehaviour:
     secondStopReelID: 0
     secondStopCID: 4
   - mainConditon: 1
-    tid: 4
+    tid: 5
     cid: 5
     firstStopReelID: 0
     firstStopCID: 5
@@ -1426,6 +1530,34 @@ MonoBehaviour:
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
+  - mainConditon: 19
+    tid: 6
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 1
+  - mainConditon: 19
+    tid: 7
+    cid: 2
+    firstStopReelID: 0
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 2
+  - mainConditon: 19
+    tid: 6
+    cid: 3
+    firstStopReelID: 0
+    firstStopCID: 3
+    secondStopReelID: 0
+    secondStopCID: 3
+  - mainConditon: 19
+    tid: 7
+    cid: 4
+    firstStopReelID: 0
+    firstStopCID: 4
+    secondStopReelID: 0
+    secondStopCID: 4
   - mainConditon: 35
     tid: 6
     cid: 1
@@ -1475,6 +1607,34 @@ MonoBehaviour:
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
+  - mainConditon: 20
+    tid: 9
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 1
+  - mainConditon: 20
+    tid: 10
+    cid: 2
+    firstStopReelID: 0
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 2
+  - mainConditon: 532
+    tid: 6
+    cid: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 1
+  - mainConditon: 532
+    tid: 7
+    cid: 2
+    firstStopReelID: 0
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 2
   - mainConditon: 36
     tid: 10
     cid: 1

@@ -3,7 +3,7 @@
 0,1,0,0,0,2,ANY,4,2,BonusUpper
 0,1,0,0,0,3,ANY,5,3,BonusLower
 0,1,0,0,0,4,ANY,4,4,BonusUpper
-0,1,0,0,0,5,ANY,4,5,BonusUpper
+0,1,0,0,0,5,ANY,5,5,BonusLower
 0,1,1,0,0,1,ANY,9,1,BigCherry4
 0,1,1,0,0,2,ANY,10,2,RegCherry4
 0,2,0,0,0,1,ANY,4,1,BonusUpper
@@ -14,7 +14,7 @@
 1,0,0,0,0,2,ANY,4,2,BonusUpper
 1,0,0,0,0,3,ANY,5,3,BonusLower
 1,0,0,0,0,4,ANY,4,4,BonusUpper
-1,0,0,0,0,5,ANY,4,5,BonusUpper
+1,0,0,0,0,5,ANY,5,5,BonusLower
 1,0,1,0,0,1,ANY,9,1,BigCherry4
 1,0,1,0,0,2,ANY,10,2,RegCherry4
 2,0,0,0,0,1,ANY,4,1,BonusUpper
@@ -22,6 +22,10 @@
 2,0,0,0,0,3,ANY,4,3,BonusUpper
 2,0,1,0,0,0,ANY,10,1,RegCherry4
 3,0,0,0,0,0,ANY,15,1,Cherry2
+3,1,0,0,0,1,ANY,6,1,BonusCherry2Upper
+3,1,0,0,0,2,ANY,7,2,BonusCherry2Lower
+3,1,0,0,0,3,ANY,6,3,BonusCherry2Upper
+3,1,0,0,0,4,ANY,7,4,BonusCherry2Lower
 3,2,0,0,0,1,ANY,6,1,BonusCherry2Upper
 3,2,0,0,0,2,ANY,7,2,BonusCherry2Lower
 3,2,0,0,0,3,ANY,6,3,BonusCherry2Upper
@@ -29,6 +33,10 @@
 3,3,1,0,0,0,ANY,15,1,Cherry2
 4,0,0,0,0,0,ANY,15,1,Cherry2
 4,0,3,0,0,0,ANY,16,1,Cherry4
+4,1,0,0,0,1,ANY,9,1,BigCherry4
+4,1,0,0,0,2,ANY,10,2,RegCherry4
+4,1,2,0,0,1,ANY,6,1,BonusCherry2Upper
+4,1,2,0,0,2,ANY,7,2,BonusCherry2Lower
 4,2,0,0,0,0,ANY,10,1,RegCherry4
 4,2,2,0,0,1,ANY,6,1,BonusCherry2Upper
 4,2,2,0,0,2,ANY,7,2,BonusCherry2Lower
