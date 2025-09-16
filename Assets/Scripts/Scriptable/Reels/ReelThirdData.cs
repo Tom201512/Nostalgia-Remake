@@ -93,15 +93,15 @@ namespace ReelSpinGame_Datas.Reels
                 indexNum += 1;
             }
 
-            Debug.Log("MainCondition:" + MainConditions);
-            Debug.Log("FirstPushedReelID:" + firstStopReelID);
-            Debug.Log("FirstPushedCID:" + firstStopCID);
-            Debug.Log("SecondPushedReelID:" + secondStopReelID);
-            Debug.Log("SecondPushedCID:" + secondStopCID);
-            Debug.Log("TID:" + TID);
-            Debug.Log("CID:" + CID);
+            //Debug.Log("MainCondition:" + MainConditions);
+            //Debug.Log("FirstPushedReelID:" + firstStopReelID);
+            //Debug.Log("FirstPushedCID:" + firstStopCID);
+            //Debug.Log("SecondPushedReelID:" + secondStopReelID);
+            //Debug.Log("SecondPushedCID:" + secondStopCID);
+            //Debug.Log("TID:" + TID);
+            //Debug.Log("CID:" + CID);
 
-            Debug.Log("Third Push Load Done");
+            //Debug.Log("Third Push Load Done");
         }
 
         // 条件チェック
@@ -125,14 +125,14 @@ namespace ReelSpinGame_Datas.Reels
 
             // 第一停止
 
-            Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
-            Debug.Log("FirstStop Check: " + (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID));
+            //Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
+            //Debug.Log("FirstStop Check: " + (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID));
 
             // 第一停止リールIDの条件が正しいかチェック(0はANY)
             if (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID)
             {
                 // 第一停止のCIDをチェック
-                Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
+                //Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
                 first = this.firstStopCID == 0 || firstStopCID == this.firstStopCID;
             }
             else
@@ -142,14 +142,14 @@ namespace ReelSpinGame_Datas.Reels
 
             // 第二停止
 
-                Debug.Log("SecondStopReel Condition: " + this.secondStopReelID);
-            Debug.Log("SecondStop Check: " + (this.secondStopReelID == 0 || (int)secondStopReelID + 1 == this.secondStopReelID));
+            //Debug.Log("SecondStopReel Condition: " + this.secondStopReelID);
+            //Debug.Log("SecondStop Check: " + (this.secondStopReelID == 0 || (int)secondStopReelID + 1 == this.secondStopReelID));
 
             // 第二停止リールIDの条件が正しいかチェック(0はANY)
             if (this.secondStopReelID == 0 || (int)secondStopReelID + 1 == this.secondStopReelID)
             {
                 // 第二停止のCIDをチェック
-                Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));
+                //Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));
                 second = this.secondStopCID == 0 || secondStopCID == this.secondStopCID;
             }
             else

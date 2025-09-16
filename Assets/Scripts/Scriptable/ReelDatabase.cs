@@ -14,7 +14,6 @@ namespace ReelSpinGame_Datas
         // ƒŠ[ƒ‹”z—ñ
         [SerializeField] private byte[] array;
         // ƒŠ[ƒ‹ğŒ
-        [SerializeField] private List<ReelConditionsData> conditions;
         // ‘æˆê’â~
         [SerializeField] private List<ReelFirstData> first;
         // ‘æ“ñ’â~
@@ -25,7 +24,6 @@ namespace ReelSpinGame_Datas
         [SerializeField] private List<ReelTableData> tables;
 
         public byte[] Array { get { return array; } }
-        public List<ReelConditionsData> Conditions { get { return conditions; }}
         public List<ReelFirstData> FirstCondition { get { return first; } }
         public List<ReelSecondData> SecondCondition { get { return second; } }
         public List<ReelThirdData> ThirdCondition { get { return third; } }
@@ -33,7 +31,6 @@ namespace ReelSpinGame_Datas
 
         // func
         public void SetArray(byte[] array) => this.array = array;
-        public void SetConditions(List<ReelConditionsData> conditions) => this.conditions = conditions;
         public void SetTables(List<ReelTableData> tables) => this.tables = tables;
 
         public void SetReelConditions(List<ReelFirstData> first, List<ReelSecondData> second, List<ReelThirdData> third)

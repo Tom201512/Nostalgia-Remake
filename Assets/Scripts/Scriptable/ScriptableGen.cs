@@ -127,12 +127,8 @@ namespace ReelSpinGame_Datas
             // ファイル読み込み
 
             // 配列作成
-            using StreamReader array = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Array.csv"));
+            using StreamReader array = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "Array.csv"));
             reelDatabase.SetArray(ReelDatabaseGen.MakeReelArray(array));
-
-            // 条件テーブル作成
-            using StreamReader condition = new StreamReader(Path.Combine(DataPath, reelName, "Nostalgia_Reel - " + reelName + "Condition.csv"));
-            reelDatabase.SetConditions(ReelDatabaseGen.MakeReelConditions(condition));
 
             // 停止順ごとの条件テーブル作成
             using StreamReader first = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "1st.csv"));

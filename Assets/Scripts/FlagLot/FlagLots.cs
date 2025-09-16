@@ -62,7 +62,6 @@ namespace ReelSpinGame_Lots.Flag
             if (holdingBonusID != BonusTypeID.BonusNone &&
                (data.CurrentFlag == FlagId.FlagBig || data.CurrentFlag == FlagId.FlagReg))
             {
-                Debug.Log("Bonus flag has replaced to None");
                 data.CurrentFlag = FlagId.FlagNone;
             }
         }

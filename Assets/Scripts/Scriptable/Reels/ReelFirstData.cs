@@ -72,12 +72,12 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
-            Debug.Log("MainCondition:" + MainConditions);
-            Debug.Log("FirstStopPos:" + firstStopPos);
-            Debug.Log("TID:" + TID);
-            Debug.Log("CID:" + CID);
+            //Debug.Log("MainCondition:" + MainConditions);
+            //Debug.Log("FirstStopPos:" + firstStopPos);
+            //Debug.Log("TID:" + TID);
+            //Debug.Log("CID:" + CID);
 
-            Debug.Log("First Push Load Done");
+            //Debug.Log("First Push Load Done");
         }
 
         // 条件チェック
@@ -88,15 +88,15 @@ namespace ReelSpinGame_Datas.Reels
             {
                 // 第一停止の条件が一致するかチェック。0はANY
                 // 第一停止の数値をビット演算で比較できるようにする
-                Debug.Log("Pushed:" + pushedPos);
+                //Debug.Log("Pushed:" + pushedPos);
                 int checkValue = 1 << pushedPos + 1;
-                Debug.Log("check:" + checkValue);
-                Debug.Log("FirstPos:" + firstStopPos);
+                //Debug.Log("check:" + checkValue);
+                //Debug.Log("FirstPos:" + firstStopPos);
 
                 // 停止条件を確認
                 if (firstStopPos == 0 || ((checkValue & firstStopPos) != 0))
                 {
-                    Debug.Log("Stop Pos has match with condition");
+                    //Debug.Log("Stop Pos has match with condition");
                     // 条件一致
                     return true;
                 }
@@ -138,7 +138,7 @@ namespace ReelSpinGame_Datas.Reels
         // メイン条件があっているかチェック
         protected bool CheckMainCondition(int flagID, int bonus, int bet, int random)
         {
-            Debug.Log("MainCondition:" + flagID + "," + bonus + "," + bet + "," + random);
+            //Debug.Log("MainCondition:" + flagID + "," + bonus + "," + bet + "," + random);
             // データを条件にする
             int[] conditions = new int[]
             {
@@ -148,35 +148,35 @@ namespace ReelSpinGame_Datas.Reels
                 random,
             };
 
-            Debug.Log("ConditionData:" + MainConditions);
+            //Debug.Log("ConditionData:" + MainConditions);
 
             // メイン条件チェック
             for (int i = 0; i < ConditionMaxRead; i++)
             {
                 int checkData = GetConditionData(MainConditions, i);
-                Debug.Log("checkData:" + checkData);
+                //Debug.Log("checkData:" + checkData);
 
                 // フラグID以外の条件で0があった場合はパスする
                 if (i != (int)ConditionID.Flag && checkData == 0)
                 {
-                    Debug.Log("No condition");
+                    //Debug.Log("No condition");
                     continue;
                 }
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
                 else if (i == (int)ConditionID.Bonus && checkData == BonusAnyValueID &&
                     bonus != (int)BonusTypeID.BonusNone)
                 {
-                    Debug.Log(bonus + "ANY BONUS");
+                    //Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
                 // それ以外は受け取ったものと条件が合うか確認する
                 else if (conditions[i] != checkData)
                 {
-                    Debug.Log("Condition not match");
+                    //Debug.Log("Condition not match");
                     return false;
                 }
             }
-            Debug.Log("Condition Passed");
+            //Debug.Log("Condition Passed");
             return true;
         }
 

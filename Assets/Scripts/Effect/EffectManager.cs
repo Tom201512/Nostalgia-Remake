@@ -1,16 +1,14 @@
-using ReelSpinGame_Datas;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
-using ReelSpinGame_Reels;
 
 namespace ReelSpinGame_Effect
 {

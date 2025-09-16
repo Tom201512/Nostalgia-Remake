@@ -201,14 +201,7 @@ public class ReelManager : MonoBehaviour
                     data.FirstPushPos = pushedPos;
                 }
 
-                // ここでディレイ(スベリコマ)を得て転送
-                // 条件をチェック
-                //int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
-                    //flagID, data.FirstPushReel, bet, (int)bonusID, data.RandomValue, data.FirstPushPos);
                 // ディレイ(スベリコマ)を得る
-                //int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
-
-                // 新規実装版 現在のフラグ、停止させたリール、ベット枚数やボーナスストック、ランダム数値をもとにディレイ(スベリコマ)を得る
                 int delay = data.ReelTableManager.GetDelay(data.StoppedReelCount, pushedPos, reelObjects[(int)reelID].GetReelDatabase(),
                     flagID, reelID, bonusID, bet, data.RandomValue);
 
@@ -221,7 +214,7 @@ public class ReelManager : MonoBehaviour
     }
 
     // 指定したリールの高速停止(位置指定が必要)
-    public void StopSelectedReelFast(ReelID reelID, int betAmount, FlagId flagID, BonusTypeID bonusID, int pushedPos)
+    public void StopSelectedReelFast(ReelID reelID, int bet, FlagId flagID, BonusTypeID bonusID, int pushedPos)
     {
         // 全リール速度が最高速度になっていれば
         if (data.CanStopReels)
@@ -237,12 +230,9 @@ public class ReelManager : MonoBehaviour
                     data.FirstPushPos = pushedPos;
                 }
 
-                // ここでディレイ(スベリコマ)を得て転送
-                // 条件をチェック
-                int tableIndex = data.ReelTableManager.FindTableToUse(reelID, reelObjects[(int)reelID].GetReelDatabase(),
-                    flagID, data.FirstPushReel, betAmount, (int)bonusID, data.RandomValue, data.FirstPushPos);
                 // ディレイ(スベリコマ)を得る
-                int delay = data.ReelTableManager.GetDelayFromTable(reelObjects[(int)reelID].GetReelDatabase(), pushedPos, tableIndex);
+                int delay = data.ReelTableManager.GetDelay(data.StoppedReelCount, pushedPos, reelObjects[(int)reelID].GetReelDatabase(),
+                    flagID, reelID, bonusID, bet, data.RandomValue);
                 // リールを止める
 
                 // すぐ指定位置まで停止させる。

@@ -72,7 +72,7 @@ namespace ReelSpinGame_Datas.Reels
                     {
                         secondStopPos = 0;
                     }
-                    Debug.Log("SecondStopPos:" + secondStopPos);
+                    //Debug.Log("SecondStopPos:" + secondStopPos);
                 }
 
                 // TID読み込み
@@ -95,14 +95,14 @@ namespace ReelSpinGame_Datas.Reels
                 indexNum += 1;
             }
 
-            Debug.Log("MainCondition:" + MainConditions);
-            Debug.Log("FirstPushedReelID:" + firstStopReelID);
-            Debug.Log("FirstPushedCID:" + firstStopCID);
-            Debug.Log("SecondStopPos:" + secondStopPos);
-            Debug.Log("TID:" + TID);
-            Debug.Log("CID:" + CID);
+            //Debug.Log("MainCondition:" + MainConditions);
+            //Debug.Log("FirstPushedReelID:" + firstStopReelID);
+            //Debug.Log("FirstPushedCID:" + firstStopCID);
+            //Debug.Log("SecondStopPos:" + secondStopPos);
+            //Debug.Log("TID:" + TID);
+            //Debug.Log("CID:" + CID);
 
-            Debug.Log("Second Push Load Done");
+            //Debug.Log("Second Push Load Done");
         }
 
         // 条件チェック
@@ -113,21 +113,21 @@ namespace ReelSpinGame_Datas.Reels
             {
                 // 第一停止のリールIDとCIDが一致するかチェック 
 
-                Debug.Log("FirstPush:" + firstStopReelID + "CID:" + firstStopCID);
+                //Debug.Log("FirstPush:" + firstStopReelID + "CID:" + firstStopCID);
 
                 if (SecondReelCIDCheck(firstStopReelID, firstStopCID))
                 {
-                    Debug.Log("Pushed:" + pushedPos);
+                    //Debug.Log("Pushed:" + pushedPos);
                     // 第二停止の条件が一致するかチェック。0はANY
                     // 第二停止の数値をビット演算で比較できるようにする
                     int checkValue = 1 << pushedPos + 1;
-                    Debug.Log("check:" + checkValue);
-                    Debug.Log("SecondPushPos:" + secondStopPos);
+                    //Debug.Log("check:" + checkValue);
+                    //Debug.Log("SecondPushPos:" + secondStopPos);
 
                     // 停止条件を確認
                     if (secondStopPos == 0 || ((checkValue & secondStopPos) != 0))
                     {
-                        Debug.Log("Stop Pos has match with condition");
+                        //Debug.Log("Stop Pos has match with condition");
                         // 条件一致
                         return true;
                     }
@@ -139,14 +139,14 @@ namespace ReelSpinGame_Datas.Reels
         // CIDチェック(第二停止用)
         private bool SecondReelCIDCheck(ReelID firstStopReelID, int firstStopCID)
         {
-            Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
-            Debug.Log("FirstStop Check: " + (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID));
+            //Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
+            //Debug.Log("FirstStop Check: " + (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID));
 
             // 第一停止リールIDの条件が正しいかチェック(0はANY)
             if (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID)
             {
                 // 第一停止のCIDをチェック
-                Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
+                //Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
                 return this.firstStopCID == 0 || firstStopCID == this.firstStopCID;
             }
             else

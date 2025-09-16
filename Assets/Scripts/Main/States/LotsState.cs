@@ -1,7 +1,5 @@
 ﻿using ReelSpinGame_Interface;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
-using UnityEngine;
 
 namespace ReelSpinGame_State.LotsState
 {
