@@ -13,24 +13,26 @@ public class ReelBase : MonoBehaviour
     private Renderer render;
 
     // –¾‚é‚³
-    private byte brightness;
     private byte lastBrightness;
 
     void Awake()
     {
         render = GetComponent<Renderer>();
         lastBrightness = 0;
+    }
+
+    private void Start()
+    {
         ChangeBrightness(TurnOffValue);
     }
 
-    private void Update()
+    // F•ÏX
+    public void ChangeBrightness(byte brightness)
     {
-        if(brightness != lastBrightness)
+        if (lastBrightness != brightness)
         {
             render.material.SetColor("_Color", new Color32(brightness, brightness, brightness, 255));
             lastBrightness = brightness;
         }
     }
-
-    public void ChangeBrightness(byte brightness) =>this.brightness = brightness;
 }

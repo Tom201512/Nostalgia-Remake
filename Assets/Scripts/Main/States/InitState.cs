@@ -32,20 +32,18 @@ namespace ReelSpinGame_State.LotsState
             ApplyReplay();
             // ボーナス状態割り当て
             ApplyBonusStatus();
-            // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
-            TurnOnBackLight();
             // ボーナス演出の反映
             BonusEffectUpdate();
             // UI反映
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
-
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
-
         }
 
         public void StateUpdate()
         {
+            // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
+            TurnOnBackLight();
 
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
         }
 
         public void StateEnd()
