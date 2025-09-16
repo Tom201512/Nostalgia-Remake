@@ -128,11 +128,12 @@ namespace ReelSpinGame_Sound
                 //Debug.Log("Loop start at:" + AudioSettings.dspTime);
 
                 // 最初のトラックを再生。ループ位置になったらトラックを切り替える
-                sources[usingTrackIndex].Play();
+                // 初回のループは少し早めにループしてしまうので0.05秒遅らせる
+                LoopTime = AudioSettings.dspTime + 0.1;
+                sources[usingTrackIndex].PlayScheduled(LoopTime);
                 double samples = LoopStart + LoopLength;
 
-                // 初回のループは少し早めにループしてしまうので0.05秒遅らせる
-                LoopTime = samples / SampleRate + AudioSettings.dspTime + 0.05;
+                LoopTime += samples / SampleRate;
                 // ループさせる長さのサンプルを計算
                 //Debug.Log("Loop Samples:" + samples);
                 //Debug.Log("Next loop is:" + LoopTime);
