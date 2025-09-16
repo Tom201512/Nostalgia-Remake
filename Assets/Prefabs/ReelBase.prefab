@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reelBase: {fileID: 8171721267369878532}
-  symbols: {fileID: 6762777919229751399}
+  symbolLight: {fileID: 6762777919229751399}
 --- !u!1 &2169237100488002603
 GameObject:
   m_ObjectHideFlags: 0
