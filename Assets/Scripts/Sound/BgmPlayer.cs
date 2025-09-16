@@ -125,18 +125,17 @@ namespace ReelSpinGame_Sound
                     LoopLength = sources[usingTrackIndex].clip.samples;
                 }
 
-                Debug.Log("Loop start at:" + AudioSettings.dspTime);
+                //Debug.Log("Loop start at:" + AudioSettings.dspTime);
 
                 // 最初のトラックを再生。ループ位置になったらトラックを切り替える
-                sources[usingTrackIndex].timeSamples = 0;
-                sources[usingTrackIndex].PlayScheduled(AudioSettings.dspTime);
-
+                sources[usingTrackIndex].Play();
                 double samples = LoopStart + LoopLength;
 
-                LoopTime = samples / SampleRate + AudioSettings.dspTime + 0.02;
+                // 初回のループは少し早めにループしてしまうので0.05秒遅らせる
+                LoopTime = samples / SampleRate + AudioSettings.dspTime + 0.05;
                 // ループさせる長さのサンプルを計算
-                Debug.Log("Loop Samples:" + samples);
-                Debug.Log("Next loop is:" + LoopTime);
+                //Debug.Log("Loop Samples:" + samples);
+                //Debug.Log("Next loop is:" + LoopTime);
             }
         }
 
@@ -173,7 +172,7 @@ namespace ReelSpinGame_Sound
         {
             // 今鳴らしている方を終了させる
             sources[usingTrackIndex].SetScheduledEndTime(LoopTime);
-            Debug.Log("Current:" + usingTrackIndex);
+            //Debug.Log("Current:" + usingTrackIndex);
             // トラック切り替え
             if (usingTrackIndex < sources.Length - 1)
             {
@@ -193,10 +192,10 @@ namespace ReelSpinGame_Sound
             // ループさせる長さのサンプルを計算
             samples = LoopLength;
 
-            Debug.Log("Loop Samples:" + samples);
+            //Debug.Log("Loop Samples:" + samples);
             LoopTime += samples / SampleRate;
-            Debug.Log("Next loop is:" + LoopTime);
-            Debug.Log("Prepared Loop");
+            //Debug.Log("Next loop is:" + LoopTime);
+            //Debug.Log("Prepared Loop");
         }
 
         // 音声が止まったかの処理
