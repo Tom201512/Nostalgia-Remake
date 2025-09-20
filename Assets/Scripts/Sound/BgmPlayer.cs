@@ -28,31 +28,19 @@ namespace ReelSpinGame_Sound
 
         // ループ時の時間
         public double LoopTime { get; private set; }
-        // 現在サンプル数
-        public int SampleCount { get; private set; }
-        // 現在のループ長さサンプル数で表示
-        public int DurationSample { get; private set; }        
-        // 実際の差分
-        public double Diff {  get; private set; }
 
         // 使用中のトラック
         private int usingTrackIndex;
-        // ループ開始位置に到達したか
-        private bool hasReachedLoopStart;
 
         void Awake()
         {
             HasSoundStopped = true;
             HasLockPlaying = false;
-            hasReachedLoopStart = false;
             usingTrackIndex = 0;
-            //Debug.Log("Count:" + sources.Length);
 
             LoopStart = -1;
             LoopLength = -1;
             LoopTime = 0;
-            DurationSample = 0;
-            Diff = 0;
         }
 
         void Update()
@@ -62,7 +50,6 @@ namespace ReelSpinGame_Sound
                 // ループ時間を過ぎたら次のトラックを準備
                 if(AudioSettings.dspTime + 1.0 >= LoopTime)
                 {
-                    hasReachedLoopStart = true;
                     PrepareLoopTrack();
                 }
             }
@@ -127,16 +114,14 @@ namespace ReelSpinGame_Sound
 
                 //Debug.Log("Loop start at:" + AudioSettings.dspTime);
 
-                // 最初のトラックを再生。ループ位置になったらトラックを切り替える
-                // 初回のループは少し早めにループしてしまうので0.05秒遅らせる
+                // 最初のトラックを再生。ループのスタート位置になったらトラックを切り替える
+                // 初回は0.1秒ほど遅らせる
                 LoopTime = AudioSettings.dspTime + 0.1;
                 sources[usingTrackIndex].PlayScheduled(LoopTime);
-                double samples = LoopStart + LoopLength;
-
-                LoopTime += samples / SampleRate;
+                LoopTime += (double)LoopStart / SampleRate;
                 // ループさせる長さのサンプルを計算
                 //Debug.Log("Loop Samples:" + samples);
-                //Debug.Log("Next loop is:" + LoopTime);
+                Debug.Log("Loop start at:" + LoopTime);
             }
         }
 
@@ -148,7 +133,6 @@ namespace ReelSpinGame_Sound
             LoopStart = -1;
             LoopLength = -1;
             HasLoop = false;
-            hasReachedLoopStart = false;
             usingTrackIndex = 0;
         }
 
@@ -188,15 +172,10 @@ namespace ReelSpinGame_Sound
             sources[usingTrackIndex].timeSamples = LoopStart;
             sources[usingTrackIndex].PlayScheduled(LoopTime);
 
-            double samples;
-
-            // ループさせる長さのサンプルを計算
-            samples = LoopLength;
-
             //Debug.Log("Loop Samples:" + samples);
-            LoopTime += samples / SampleRate;
-            //Debug.Log("Next loop is:" + LoopTime);
-            //Debug.Log("Prepared Loop");
+            LoopTime += (double)LoopLength / SampleRate;
+            Debug.Log("Next loop is:" + LoopTime);
+            Debug.Log("Prepared Loop");
         }
 
         // 音声が止まったかの処理
