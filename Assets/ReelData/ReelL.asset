@@ -381,7 +381,7 @@ MonoBehaviour:
   - mainConditon: 5
     tid: 17
     cid: 1
-    firstStopPos: 308482
+    firstStopPos: 324866
   - mainConditon: 5
     tid: 17
     cid: 2
@@ -389,7 +389,7 @@ MonoBehaviour:
   - mainConditon: 5
     tid: 17
     cid: 3
-    firstStopPos: 215192
+    firstStopPos: 198808
   - mainConditon: 5
     tid: 17
     cid: 2
@@ -413,7 +413,7 @@ MonoBehaviour:
   - mainConditon: 4869
     tid: 17
     cid: 4
-    firstStopPos: 215192
+    firstStopPos: 198808
   - mainConditon: 4869
     tid: 17
     cid: 5
@@ -429,7 +429,7 @@ MonoBehaviour:
   - mainConditon: 13061
     tid: 17
     cid: 4
-    firstStopPos: 215192
+    firstStopPos: 198808
   - mainConditon: 13061
     tid: 17
     cid: 5
@@ -441,7 +441,7 @@ MonoBehaviour:
   - mainConditon: 21253
     tid: 17
     cid: 4
-    firstStopPos: 215192
+    firstStopPos: 198808
   - mainConditon: 21253
     tid: 17
     cid: 5
@@ -453,7 +453,7 @@ MonoBehaviour:
   - mainConditon: 53
     tid: 18
     cid: 1
-    firstStopPos: 271618
+    firstStopPos: 275714
   - mainConditon: 53
     tid: 18
     cid: 2
@@ -464,12 +464,12 @@ MonoBehaviour:
     firstStopPos: 215184
   - mainConditon: 53
     tid: 18
-    cid: 2
-    firstStopPos: 1048580
-  - mainConditon: 53
-    tid: 18
     cid: 6
     firstStopPos: 8
+  - mainConditon: 53
+    tid: 18
+    cid: 2
+    firstStopPos: 1048580
   - mainConditon: 16437
     tid: 18
     cid: 3
@@ -1440,7 +1440,7 @@ MonoBehaviour:
   - tableData: 000101010003020100000000000102010004020300
   - tableData: 000104030201000201000201000204030201000201
   - tableData: 000403020100010001000201000403020100010001
-  - tableData: 000001000403040200000001000301010004020300
+  - tableData: 000001000403040200000001000201010004020300
   - tableData: 000000000403040200000000000000010004020300
   - tableData: 010002010403020100020100020100000403020100
   - tableData: 000100020104030201000201000201000104030201

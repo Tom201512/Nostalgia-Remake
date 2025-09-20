@@ -263,7 +263,7 @@
 5,0,0,0,0,3,0,3,28,3,MelonLower
 5,0,0,0,0,4,0,4,29,4,MelonDiagonal
 5,0,0,0,0,5,0,5,29,5,MelonDiagonal
-5,0,0,0,1,6,0,6,29,6,MelonDiagonal
+5,0,0,0,0,6,0,6,29,6,MelonDiagonal
 6,0,0,0,0,1,0,1,31,1,BellMiddle
 6,0,0,0,0,2,0,2,30,2,BellUpper
 6,0,0,0,0,3,0,3,32,3,BellLower
@@ -277,5 +277,4 @@
 7,0,0,0,1,5,0,0,34,5,ReplayMiddle
 7,0,0,0,1,6,0,0,34,6,ReplayMiddle
 7,0,1,0,0,0,0,0,34,1,ReplayMiddle
-7,0,1,0,1,0,0,0,34,1,ReplayMiddle
 8,0,0,0,0,0,0,0,34,1,ReplayMiddle

@@ -1960,7 +1960,7 @@ MonoBehaviour:
   - mainConditon: 5
     tid: 29
     cid: 6
-    firstStopReelID: 1
+    firstStopReelID: 0
     firstStopCID: 6
     secondStopPos: 0
   - mainConditon: 6
@@ -2039,12 +2039,6 @@ MonoBehaviour:
     tid: 34
     cid: 1
     firstStopReelID: 0
-    firstStopCID: 0
-    secondStopPos: 0
-  - mainConditon: 263
-    tid: 34
-    cid: 1
-    firstStopReelID: 1
     firstStopCID: 0
     secondStopPos: 0
   - mainConditon: 8
@@ -3912,7 +3906,7 @@ MonoBehaviour:
   - mainConditon: 5
     tid: 29
     cid: 6
-    firstStopReelID: 1
+    firstStopReelID: 0
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 6
@@ -4004,13 +3998,6 @@ MonoBehaviour:
     tid: 34
     cid: 1
     firstStopReelID: 0
-    firstStopCID: 0
-    secondStopReelID: 0
-    secondStopCID: 0
-  - mainConditon: 263
-    tid: 34
-    cid: 1
-    firstStopReelID: 1
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0

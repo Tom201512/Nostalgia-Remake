@@ -2017,12 +2017,6 @@ MonoBehaviour:
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 263
-    tid: 40
-    cid: 1
-    firstStopReelID: 1
-    firstStopCID: 0
-    secondStopPos: 0
   - mainConditon: 8
     tid: 40
     cid: 1
@@ -3966,13 +3960,6 @@ MonoBehaviour:
     tid: 40
     cid: 1
     firstStopReelID: 0
-    firstStopCID: 0
-    secondStopReelID: 0
-    secondStopCID: 0
-  - mainConditon: 263
-    tid: 40
-    cid: 1
-    firstStopReelID: 1
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
