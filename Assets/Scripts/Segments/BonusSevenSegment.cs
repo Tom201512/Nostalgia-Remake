@@ -19,7 +19,7 @@ public class BonusSevenSegment : MonoBehaviour
 
     // func
 
-    void Awake()
+    private void Awake()
     {
         segments = GetComponentsInChildren<Segment>();
     }

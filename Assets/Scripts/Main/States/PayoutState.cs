@@ -70,6 +70,13 @@ namespace ReelSpinGame_State.PayoutState
             // セーブ処理
             SaveData();
 
+            // オートが終了している場合は設定画面からの設定を受け付けられるようにする
+            if (!gM.Auto.HasAuto)
+            {
+                gM.Option.LockOptionButton(false);
+                Debug.Log("Option lock disabled");
+            }
+
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.EffectState);
         }
 

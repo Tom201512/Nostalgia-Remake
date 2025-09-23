@@ -92,7 +92,7 @@ namespace ReelSpinGame_State.PlayingState
         private void AutoControl()
         {
             // オート停止位置が決まっているかチェック。決まっていなければすぐ決める
-            if(!gM.Auto.HasStopPosDecided)
+            if (!gM.Auto.HasStopPosDecided)
             {
                 gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(),
                     gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());

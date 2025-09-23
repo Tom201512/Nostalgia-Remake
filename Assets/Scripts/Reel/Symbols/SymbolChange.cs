@@ -15,7 +15,7 @@ public class SymbolChange : MonoBehaviour
     // ƒŠ[ƒ‹ˆÊ’u¯•ÊID
     [SerializeField] private ReelPosID posID;
 
-    void Awake()
+    private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
     }

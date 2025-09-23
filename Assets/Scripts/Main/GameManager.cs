@@ -6,6 +6,7 @@ using ReelSpinGame_Medal;
 using ReelSpinGame_System;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_UI.Player;
+using ReelSpinGame_Option;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using UnityEngine;
@@ -24,10 +25,14 @@ public class GameManager : MonoBehaviour
     // メインカメラ
     [SerializeField] private SlotCamera slotCam;
 
-    // 各種機能
+    // 各種マネージャー
+    // リール情報
     [SerializeField] private ReelManager reelManagerObj;
+    // 演出
     [SerializeField] private EffectManager effectManagerObj;
-
+    // オプション画面
+    [SerializeField] private OptionManager optionManagerObj;
+    // プレイヤーUI
     [SerializeField] PlayerUI playerUI;
 
     // デバッグ用
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviour
     public ReelManager Reel { get { return reelManagerObj; } }
     public BonusManager Bonus { get; private set; }
     public EffectManager Effect { get { return effectManagerObj; } }
+    public OptionManager Option { get { return optionManagerObj; } }
 
     // プレイヤー情報
     public PlayerDatabase Player;
@@ -80,6 +86,9 @@ public class GameManager : MonoBehaviour
 
     // オート開始/停止ボタン
     [SerializeField] private KeyCode keyToAutoToggle;
+    // オプションボタン
+    [SerializeField] private KeyCode keyToOptionToggle;
+
     // <デバッグ用> デバッグUI表示用
     [SerializeField] private KeyCode keyToDebugToggle;
     // カメラの視点変更
@@ -107,7 +116,7 @@ public class GameManager : MonoBehaviour
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
         // 画面サイズ初期化
         Screen.SetResolution(1600, 900, false);
@@ -141,7 +150,7 @@ public class GameManager : MonoBehaviour
         hasDebugUI = false;
     }
 
-    void Start()
+    private void Start()
     {
         // セーブ読み込み。セーブがない場合は新規作成
         // セーブフォルダの作成
@@ -175,7 +184,7 @@ public class GameManager : MonoBehaviour
         MainFlow.stateManager.StartState();
     }
 
-    void Update()
+    private void Update()
     {
         // 画面サイズ調整
 
@@ -188,7 +197,31 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (Input.GetKeyDown(keyToAutoToggle))
         {
-            Auto.ChangeAutoMode(AutoEndConditionID.None, 0, true, false, false, BigColor.None);
+            if(!Option.hasOptionMode)
+            {
+                Auto.ChangeAutoMode(AutoEndConditionID.None, 0, true, false, false, BigColor.None);
+
+                if(Auto.HasAuto)
+                {
+                    Option.LockOptionButton(true);
+                    Debug.Log("Option lock enabled");
+                }
+                else if(Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal)
+                {
+                    Option.LockOptionButton(false);
+                    Debug.Log("Option lock disabled");
+                }
+            }
+            else
+            {
+                Debug.LogAssertion("Can't activate auto because you're in option mode");
+            }
+        }
+
+        // オプション画面起動(メニューボタンを押しても作動)
+        if(Input.GetKeyDown(keyToOptionToggle))
+        {
+            Option.ToggleOptionScreen();
         }
 
         // オート押し順変更

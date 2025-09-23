@@ -16,12 +16,12 @@ public class UIMain : MonoBehaviour
 
     // func
 
-    void Awake()
+    private void Awake()
     {
         canvas = GetComponent<CanvasScaler>();
     }
 
-    void Update()
+    private void Update()
     {
         // UIÉTÉCÉYí≤êÆ
         float screenAspect = Screen.width / (float)Screen.height;

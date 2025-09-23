@@ -42,14 +42,17 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateUpdate()
         {
-            // オートの有無に合わせて操作受付を変える
-            if (gM.Auto.HasAuto)
+            if(!gM.Option.hasOptionMode)
             {
-                AutoBetBehavior();
-            }
-            else
-            {
-                PlayerControl();
+                // オートの有無に合わせて操作受付を変える
+                if (gM.Auto.HasAuto)
+                {
+                    AutoBetBehavior();
+                }
+                else
+                {
+                    PlayerControl();
+                }
             }
         }
 

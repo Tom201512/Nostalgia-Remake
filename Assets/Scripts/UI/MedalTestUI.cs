@@ -10,12 +10,12 @@ public class MedalTestUI : UIBaseClass
     [SerializeField] private MedalManager medal;
 
     // func
-    void Awake()
+    private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    void Update()
+    private void Update()
     {
         string buffer = "";
 

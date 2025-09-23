@@ -39,7 +39,7 @@ public class ReelManager : MonoBehaviour
     public event ReelStoppedEvent HasSomeReelStopped;
 
     // 初期化
-    void Awake()
+    private void Awake()
     {
         for (int i = 0; i < reelObjects.Count; i++)
         {
@@ -51,7 +51,7 @@ public class ReelManager : MonoBehaviour
         payoutChecker = GetComponent<PayoutChecker>();
     }
 
-    void Update()
+    private void Update()
     {
         // リールが動いている時は
         if (data.IsReelWorking)

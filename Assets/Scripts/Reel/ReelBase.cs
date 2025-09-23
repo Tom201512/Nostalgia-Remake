@@ -15,7 +15,7 @@ public class ReelBase : MonoBehaviour
     // –¾‚é‚³
     private byte lastBrightness;
 
-    void Awake()
+    private void Awake()
     {
         render = GetComponent<Renderer>();
         lastBrightness = 0;

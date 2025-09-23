@@ -18,7 +18,7 @@ namespace ReelSpinGame_Sound
         // –Â‚ç‚³‚È‚¢‚æ‚¤‚É‚·‚é‚©
         public bool HasLockPlaying;
 
-        void Awake()
+        private void Awake()
         {
             HasSoundStopped = true;
             HasLockPlaying = false;

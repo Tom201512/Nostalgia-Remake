@@ -20,7 +20,7 @@ public class StatusPanel : MonoBehaviour
     [SerializeField] LampComponent startLamp;
     [SerializeField] LampComponent insertLamp;
 
-    public void Awake()
+    private void Awake()
     {
         hasInsertTurnOn = false;
         hasStartTurnOn = false;

@@ -20,7 +20,7 @@ namespace ReelSpinGame_Lots.Flag
         [SerializeField] private FlagId instantFlagID;
 
         // func
-        void Awake()
+        private void Awake()
         {
             data = new FlagBehaviour();
         }

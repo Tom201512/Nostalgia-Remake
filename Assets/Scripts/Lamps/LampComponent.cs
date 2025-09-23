@@ -34,7 +34,7 @@ public class LampComponent : MonoBehaviour
     private byte lastBrightness;
 
     // func
-    void Awake()
+    private void Awake()
     {
         IsTurnedOn = false;
         image = GetComponent<Image>();

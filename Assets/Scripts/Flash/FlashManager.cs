@@ -54,7 +54,7 @@ namespace ReelSpinGame_Reels.Flash
         [SerializeField] private List<TextAsset> testAssetList;
 
         // func
-        public void Awake()
+        private void Awake()
         {
             HasFlash = false;
             HasFlashWait = false;

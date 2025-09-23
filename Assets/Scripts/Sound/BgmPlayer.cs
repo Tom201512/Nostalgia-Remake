@@ -32,7 +32,7 @@ namespace ReelSpinGame_Sound
         // 使用中のトラック
         private int usingTrackIndex;
 
-        void Awake()
+        private void Awake()
         {
             HasSoundStopped = true;
             HasLockPlaying = false;
@@ -43,7 +43,7 @@ namespace ReelSpinGame_Sound
             LoopTime = 0;
         }
 
-        void Update()
+        private void Update()
         {
             if (HasLoop)
             {
@@ -121,7 +121,7 @@ namespace ReelSpinGame_Sound
                 LoopTime += (double)LoopStart / SampleRate;
                 // ループさせる長さのサンプルを計算
                 //Debug.Log("Loop Samples:" + samples);
-                Debug.Log("Loop start at:" + LoopTime);
+                //Debug.Log("Loop start at:" + LoopTime);
             }
         }
 
@@ -174,8 +174,8 @@ namespace ReelSpinGame_Sound
 
             //Debug.Log("Loop Samples:" + samples);
             LoopTime += (double)LoopLength / SampleRate;
-            Debug.Log("Next loop is:" + LoopTime);
-            Debug.Log("Prepared Loop");
+            //Debug.Log("Next loop is:" + LoopTime);
+            //Debug.Log("Prepared Loop");
         }
 
         // 音声が止まったかの処理

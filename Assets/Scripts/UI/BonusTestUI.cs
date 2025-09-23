@@ -6,14 +6,13 @@ public class BonusTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
     [SerializeField] private BonusManager bonusManager;
-    // Start is called before the first frame update
-    void Awake()
+
+    private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         string buffer = "";
 

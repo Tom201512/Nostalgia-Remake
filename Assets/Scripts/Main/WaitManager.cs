@@ -13,7 +13,7 @@ public class WaitManager : MonoBehaviour
     // ウェイトを無効にしているか
     public bool HasWaitCut { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
         HasWait = false;
         HasWaitCut = false;

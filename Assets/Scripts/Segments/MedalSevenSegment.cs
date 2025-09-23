@@ -15,7 +15,7 @@ public class MedalSevenSegment : MonoBehaviour
 
     // func
 
-    void Awake()
+    private void Awake()
     {
         segments = GetComponentsInChildren<Segment>();
     }

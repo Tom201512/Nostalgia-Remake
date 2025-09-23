@@ -34,14 +34,14 @@ namespace ReelSpinGame_Medal
         public delegate void MedalHasInsertEvent();
         public event MedalHasInsertEvent HasMedalInsert;
 
-        void Awake()
+        private void Awake()
         {
             data = new MedalBehavior();
             HasMedalUpdate = false;
             HasSegmentUpdate = false;
         }
 
-        void Start()
+        private void Start()
         {
             // クレジット更新
             creditSegments.ShowSegmentByNumber(data.system.Credit);
