@@ -33,13 +33,14 @@ namespace ReelSpinGame_Option
 
         private void Start()
         {
-            openButton.buttonPushedEvent += ToggleOptionScreen;
+            openButton.ButtonPushedEvent += ToggleOptionScreen;
         }
 
         // func
         // オプション画面を開く
         public void ToggleOptionScreen()
         {
+            Debug.Log("option clicked");
             if (!lockOptionMode)
             {
                 hasOptionScreen = !hasOptionScreen;
