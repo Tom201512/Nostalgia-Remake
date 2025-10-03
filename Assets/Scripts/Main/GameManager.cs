@@ -99,8 +99,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode keyToAutoSpeedChange;
     // <デバッグ用> ウェイトカットの有無設定
     [SerializeField] private KeyCode keyToWaitCutToggle;
-    // <デバッグ用>セーブを消去するか
-    [SerializeField] private bool deleteSave;
+
+    // <デバッグ用>セーブをしない
+    [SerializeField] private bool dontSaveFlag;
 
     // <デバッグ用> デバッグUI表示するか
     private bool hasDebugUI;
@@ -152,25 +153,32 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // セーブ読み込み。セーブがない場合は新規作成
-        // セーブフォルダの作成
-        saveManager.GenerateSaveFolder();
+        // 読み込みに失敗したか
+        bool loadFailed = false;
 
-        if (deleteSave)
+        if(!dontSaveFlag)
         {
-            // セーブ削除
-            saveManager.DeleteSaveFile();
+            // セーブ読み込み。セーブがない場合は新規作成
+            // セーブフォルダの作成
 
-            // 設定値の作成
-            Save.RecordSlotSetting(debugSetting);
-            deleteSave = false;
+            // セーブがない場合は新規にデータ作成
+            if(saveManager.GenerateSaveFolder())
+            {
+                loadFailed = true;
+            }
+            // 読み込みに失敗したら新規にデータを作成する
+            else if (!saveManager.LoadSaveFileWithDecryption())
+            {
+                loadFailed = true;
+            }
         }
 
-        if (!saveManager.LoadSaveFileWithDecryption())
+        // 読み込みに失敗した場合はセーブを初期化
+        if(loadFailed)
         {
-            // 設定値の作成
+            Debug.LogWarning("セーブの読み込みに失敗しました。新規ファイルでプレイします。");
+            Save.InitializeSave();
             Save.RecordSlotSetting(debugSetting);
-            //Debug.Log("Save is newly generated");
         }
 
         // UI 設定
@@ -203,12 +211,12 @@ public class GameManager : MonoBehaviour
 
                 if(Auto.HasAuto)
                 {
-                    Option.LockOptionButton(true);
+                    Option.ToggleOptionLock(true);
                     Debug.Log("Option lock enabled");
                 }
                 else if(Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal)
                 {
-                    Option.LockOptionButton(false);
+                    Option.ToggleOptionLock(false);
                     Debug.Log("Option lock disabled");
                 }
             }
@@ -260,8 +268,11 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         // セーブ開始
-        saveManager.GenerateSaveFolder();
-        saveManager.GenerateSaveFileWithEncrypt();
+        if(!dontSaveFlag)
+        {
+            saveManager.GenerateSaveFolder();
+            saveManager.GenerateSaveFileWithEncrypt();
+        }
     }
 
     // func

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
 
 namespace ReelSpinGame_System
@@ -43,7 +44,16 @@ namespace ReelSpinGame_System
             }
 
             // ない場合は作成
-            Directory.CreateDirectory(path);
+            try
+            {
+                Directory.CreateDirectory(path);
+            }
+            catch(Exception e)
+            {
+                Debug.LogException(e);
+                throw new Exception(e.ToString());
+            }
+
             //Debug.Log("Directory is created");
             return true;
         }
@@ -56,8 +66,7 @@ namespace ReelSpinGame_System
             // 前のセーブを消去
             if (Directory.Exists(path))
             {
-                //Debug.Log("Overwrite file");
-                File.Delete(path);
+                DeleteSaveFile();
             }
 
             try
@@ -114,10 +123,11 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
+                Debug.LogException(e);
                 throw new Exception(e.ToString());
             }
 
-            //Debug.Log("Save Encryption is succeeded");
+            Debug.Log("Save Encryption is succeeded");
             return true;
         }
 
@@ -129,6 +139,7 @@ namespace ReelSpinGame_System
             // ファイルがない場合は読み込まない
             if (!File.Exists(path))
             {
+                Debug.LogError("File not found");
                 return false;
             }
 
@@ -161,26 +172,25 @@ namespace ReelSpinGame_System
                             // ハッシュ値の参照
                             baseStream.Seek(-4, SeekOrigin.End);
                             int previousHash = br.ReadInt32();
-                            //Debug.Log("Previous HashData:" + previousHash);
 
-                            List<int> intData = new List<int>();
-
-                            baseStream.Seek(0, SeekOrigin.Begin);
 
                             // ハッシュ値以外を読み込みリストファイルを作る
+                            List<int> intData = new List<int>();
+                            baseStream.Seek(0, SeekOrigin.Begin);
+
                             while (baseStream.Position != baseStream.Length - sizeof(int))
                             {
                                 intData.Add(br.ReadInt32());
                             }
 
+                            // 新しく作ったリストのハッシュ値が一致するかチェックする
                             int newHash = BitConverter.ToString(GetBytesFromList(intData)).GetHashCode();
-                            //Debug.Log("FileHash:" + newHash);
 
-                            //Debug.Log("ListLength:" + intData.Count);
                             // ハッシュ値が合わない場合は読み込まない
                             if (previousHash != newHash)
                             {
-                                throw new Exception("Hash code is wrong");
+                                Debug.LogError("Hash code is wrong");
+                                return false;
                             }
 
                             //Debug.Log("Hash is correct");
@@ -190,8 +200,15 @@ namespace ReelSpinGame_System
                             // ハッシュ値以外を読み込む
                             while (baseStream.Position != baseStream.Length - sizeof(int))
                             {
-                                SetValueFromData(br, index);
-                                index += 1;
+                                if(SetValueFromData(br, index))
+                                {
+                                    index += 1;
+                                }
+                                else
+                                {
+                                    Debug.LogError("Failed to Load data");
+                                    return false;
+                                }
                             }
                             //Debug.Log("Binary EOF");
                         }
@@ -200,16 +217,17 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                //Debug.Log("Load failed");
-                throw new Exception(e.ToString());
+                Debug.LogException(e);
+                Debug.Log("Load failed");
+                return false;
             }
 
-            //Debug.Log("Load with Decryption done");
+            Debug.Log("Load with Decryption is done");
             return true;
         }
 
         // セーブ削除
-        public void DeleteSaveFile()
+        public bool DeleteSaveFile()
         {
             string path = Application.persistentDataPath + "/Nostalgia/save.sav";
 
@@ -219,12 +237,16 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
+                Debug.LogException(e);
                 throw new Exception(e.ToString());
             }
+
+            Debug.Log("Save deletion succeeded");
+            return true;
         }
 
         // データ番地ごとに数字をセット
-        private void SetValueFromData(BinaryReader br, int addressID)
+        private bool SetValueFromData(BinaryReader br, int addressID)
         {
             try
             {
@@ -232,7 +254,6 @@ namespace ReelSpinGame_System
                 {
                     case (int)AddressID.Setting:
                         CurrentSave.RecordSlotSetting(br.ReadInt32());
-
                         break;
 
                     case (int)AddressID.Player:
@@ -264,12 +285,12 @@ namespace ReelSpinGame_System
             }
             catch(Exception e)
             {
-                throw new Exception(e.ToString());
+                Debug.LogException(e);
+                Debug.LogError("Loading error happened at:" + (AddressID)Enum.ToObject(typeof(ReelSymbols), addressID));
+                return false;
             }
-            finally
-            {
 
-            }
+            return true;
         }
 
         // int型ListからByte配列を得る

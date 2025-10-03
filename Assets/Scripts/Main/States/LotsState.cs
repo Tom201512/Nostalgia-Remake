@@ -56,7 +56,7 @@ namespace ReelSpinGame_State.LotsState
             }
 
             // 設定画面を開けなくする
-            gM.Option.LockOptionButton(true);
+            gM.Option.ToggleOptionLock(true);
             Debug.Log("Option locked");
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);

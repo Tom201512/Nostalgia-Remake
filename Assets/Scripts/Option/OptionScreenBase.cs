@@ -8,11 +8,15 @@ namespace ReelSpinGame_Option.MenuContent
     public abstract class OptionScreenBase : MonoBehaviour
     {
         // var
-        // 操作ができない状態か
+        // 操作ができる状態か(アニメーション中などはつけないこと)
         public bool CanInteract {  get; private set; }
 
         // クローズボタン
         [SerializeField] private ButtonComponent closeButton;
+
+        // 画面が閉じたときのイベント
+        public delegate void OnClosedWindow();
+        public event OnClosedWindow OnClosedWindowEvent;
 
         // func
 
@@ -20,6 +24,11 @@ namespace ReelSpinGame_Option.MenuContent
         {
             CanInteract = false;
             closeButton.ButtonPushedEvent += CloseScreen;
+        }
+
+        void Start()
+        {
+            closeButton.ToggleInteractive(true);
         }
 
         // 操作可能状態のコントロール
@@ -37,8 +46,8 @@ namespace ReelSpinGame_Option.MenuContent
         public void CloseScreen()
         {
             gameObject.SetActive(false);
-            InitializeScreen();
             Debug.Log(name + " Closed");
+            OnClosedWindowEvent.Invoke();
         }
 
         // 初期化用

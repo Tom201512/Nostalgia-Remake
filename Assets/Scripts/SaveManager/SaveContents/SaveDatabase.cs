@@ -46,6 +46,26 @@ namespace ReelSpinGame_Save.Database
         // 台設定
         public void RecordSlotSetting(int setting) => Setting = setting;
 
+        // データを初期化
+        public void InitializeSave()
+        {
+            Player = null;
+            Medal = null;
+            LastReelPos = null;
+            Bonus = null;
+
+            GC.Collect();
+
+            Setting = 6;
+            Player = new PlayerSave();
+            Medal = new MedalSave();
+            FlagCounter = 0;
+            LastReelPos = new List<int> { 19, 19, 19 };
+            Bonus = new BonusSave();
+        }
+
+        
+
         // プレイヤー情報
         public void RecordPlayerSave(ISavable player)
         {

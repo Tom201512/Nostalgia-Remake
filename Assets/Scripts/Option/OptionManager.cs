@@ -1,6 +1,6 @@
 using ReelSpinGame_Option.Button;
+using ReelSpinGame_Option.MenuBar;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ReelSpinGame_Option
 {
@@ -11,11 +11,10 @@ namespace ReelSpinGame_Option
         // const
 
         // var
-
-        // オプションメニュー開閉ボタン
+        // メニュー開閉ボタン
         [SerializeField] private ButtonComponent openButton;
-        // オプションメニューUI
-        [SerializeField] private GameObject optionUIScreen;
+        // メニューバーのUI
+        [SerializeField] private MenuManager menuBarUI;
 
         // オプション画面を開いているか(UIボタンの表示に使用する)
         public bool hasOptionScreen { get; private set; }
@@ -29,11 +28,14 @@ namespace ReelSpinGame_Option
             hasOptionScreen = false;
             hasOptionMode = false;
             lockOptionMode = false;
+            openButton.ButtonPushedEvent += ToggleOptionScreen;
+            menuBarUI.OnPressedMenuEvent += EnterOptionMode;
+            menuBarUI.OnClosedWindowEvent += DisableOptionMode;
         }
 
         private void Start()
         {
-            openButton.ButtonPushedEvent += ToggleOptionScreen;
+            openButton.ToggleInteractive(true);
         }
 
         // func
@@ -41,27 +43,30 @@ namespace ReelSpinGame_Option
         public void ToggleOptionScreen()
         {
             Debug.Log("option clicked");
-            if (!lockOptionMode)
-            {
-                hasOptionScreen = !hasOptionScreen;
-                hasOptionMode = !hasOptionMode;
-                optionUIScreen.SetActive(hasOptionScreen);
-
-                Debug.Log("Option:" + hasOptionMode);
-            }
-            else
-            {
-                Debug.LogWarning("Can't activate option because option mode is locked");
-            }
+            menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);
         }
 
-        // オプションロック設定
-        public void LockOptionButton(bool value)
+        // ロック状態の設定
+        public void ToggleOptionLock(bool value)
         {
+            // 遊技中はボタンを押せないようにする(有効になるのは回転時)
             lockOptionMode = value;
-            openButton.ToggleInteractive(lockOptionMode);
+            menuBarUI.SetInteractiveAllButton(!value);
+            Debug.Log("Lock:" + value);
+        }
 
-            Debug.Log("Lock:" + lockOptionMode);
+        // オプションモードに入れる
+        void EnterOptionMode()
+        {
+            hasOptionMode = true;
+            openButton.ToggleInteractive(false);
+        }
+
+        // オプションモード解除
+        void DisableOptionMode()
+        {
+            hasOptionMode = false;
+            openButton.ToggleInteractive(true);
         }
     }
 }

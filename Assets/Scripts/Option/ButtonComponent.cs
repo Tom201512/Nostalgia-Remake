@@ -38,9 +38,12 @@ namespace ReelSpinGame_Option.Button
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            ButtonPushedEvent?.Invoke();
-            //ChangeButtonContentColor(Color.yellow);
-            Debug.Log(name + " Pushed");
+            if(CanInteractable)
+            {
+                ButtonPushedEvent?.Invoke();
+                //ChangeButtonContentColor(Color.yellow);
+                Debug.Log(name + " Pushed");
+            }
         }
 
         private void OnMouseUp()
