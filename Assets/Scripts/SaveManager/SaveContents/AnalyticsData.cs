@@ -295,7 +295,7 @@ namespace ReelSpinGame_Datas.Analytics
                 BigJacAvoidTimes += 1;
                 BigJacPerfectAvoidTimes += 1;
                 Debug.Log("JacAvoid:" + BigJacAvoidTimes);
-                Debug.Log("JacPerfectAvoid:" + NormalBellLineUpCount);
+                Debug.Log("JacPerfectAvoid:" + BigJacPerfectAvoidTimes);
             }
             // アシスト入りで外したかのチェック(乱数が偶数であること)
             else if((leftPushedPos == 9 || leftPushedPos == 15) &&
@@ -304,7 +304,7 @@ namespace ReelSpinGame_Datas.Analytics
                 BigJacAvoidTimes += 1;
                 BigJacAssistedAvoidTimes += 1;
                 Debug.Log("JacAvoid:" + BigJacAvoidTimes);
-                Debug.Log("JacAssistedAvoid:" + NormalBellLineUpCount);
+                Debug.Log("JacAssistedAvoid:" + BigJacAssistedAvoidTimes);
             }
         }
 
