@@ -74,7 +74,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
 
             // 小役入賞回数の記録(払い出しがあれば)
-            if(gM.Medal.GetLastPayout() > 0 || gM.Medal.GetHasReplay())
+            if(gM.Reel.GetPayoutResultData().Payout > 0 || gM.Medal.GetHasReplay())
             {
                 gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
             }

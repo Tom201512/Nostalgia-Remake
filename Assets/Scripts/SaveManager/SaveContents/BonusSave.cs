@@ -59,27 +59,16 @@ namespace ReelSpinGame_Save.Bonus
         public void RecordData(BonusSystemData bonus)
         {
             HoldingBonusID = bonus.HoldingBonusID;
-            Debug.Log("HoldingBonusID:" + HoldingBonusID);
             CurrentBonusStatus = bonus.CurrentBonusStatus;
-            Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
             BigChanceColor = bonus.BigChanceColor;
-            Debug.Log("BigChanceColor:" + BigChanceColor);
             RemainingBigGames = bonus.RemainingBigGames;
-            Debug.Log("RemainingBigGames:" + RemainingBigGames);
             RemainingJacIn = bonus.RemainingJacIn;
-            Debug.Log("RemainingJacIn:" + RemainingJacIn);
             RemainingJacHits = bonus.RemainingJacHits;
-            Debug.Log("RemainingJacHits:" + RemainingJacHits);
             RemainingJacGames = bonus.RemainingJacGames;
-            Debug.Log("RemainingJacGames:" + RemainingJacGames);
             CurrentBonusPayout = bonus.CurrentBonusPayout;
-            Debug.Log("CurrentBonusPayout:" + CurrentBonusPayout);
             CurrentZonePayout = bonus.CurrentZonePayout;
-            Debug.Log("CurrentZonePayout:" + CurrentZonePayout);
             LastZonePayout = bonus.LastZonePayout;
-            Debug.Log("LastZonePayout:" + LastZonePayout);
             HasZone = bonus.HasZone;
-            Debug.Log("HasZone:" + HasZone);
         }
 
         // ÉZÅ[Éu
