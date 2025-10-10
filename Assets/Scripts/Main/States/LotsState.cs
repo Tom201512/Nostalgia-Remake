@@ -1,4 +1,5 @@
 ﻿using ReelSpinGame_Interface;
+using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using UnityEngine;
 
@@ -37,7 +38,10 @@ namespace ReelSpinGame_State.LotsState
                 gM.Player.IncreaseGameValue();
             }
 
-            /*
+            // 総ゲーム数の加算
+            gM.Player.PlayerAnalyticsData.IncreaseTotalAllGameCounts(gM.Bonus.GetCurrentBonusStatus());
+
+            
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
             if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
             {
@@ -46,10 +50,10 @@ namespace ReelSpinGame_State.LotsState
             else if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
             {
                 gM.Player.AddBonusResult(BonusTypeID.BonusREG);
-            }*/
+            }
 
             // オートモードがある場合、ここでオート停止位置の設定
-            if(gM.Auto.HasAuto)
+            if (gM.Auto.HasAuto)
             {
                 gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(),gM.Bonus.GetHoldingBonusID(), 
                     gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());

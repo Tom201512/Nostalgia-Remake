@@ -20,6 +20,8 @@ namespace ReelSpinGame_Datas
         public int CurrentInMedal { get; private set; }
         // 獲得メダル枚数(OUT)
         public int CurrentOutMedal { get; private set; }
+        // 99999Gまでの差枚数を記録
+        public List<int> MedalSlumpGraph { get; private set; }
 
         // コンストラクタ
         public PlayerMedalData()
@@ -27,6 +29,7 @@ namespace ReelSpinGame_Datas
             CurrentPlayerMedal = DefaultPlayerMedal;
             CurrentInMedal = 0;
             CurrentOutMedal = 0;
+            MedalSlumpGraph = new List<int>();
         }
 
         // func
@@ -65,14 +68,31 @@ namespace ReelSpinGame_Datas
         // OUT増加
         public void IncreaseOutMedal(int amount) => CurrentOutMedal += amount;
 
+        // 差枚を記録する
+        public void CountCurrentSlumpGraph() => MedalSlumpGraph.Add(CurrentOutMedal - CurrentInMedal);
+
         // データ書き込み
         public List<int> SaveData()
         {
             // 変数を格納
             List<int> data = new List<int>();
             data.Add(CurrentPlayerMedal);
+            Debug.Log("CurrentPlayerMedal:" + CurrentPlayerMedal);
             data.Add(CurrentInMedal);
+            Debug.Log("CurrentInMedal:" + CurrentInMedal);
             data.Add(CurrentOutMedal);
+            Debug.Log("CurrentOutMedal:" + CurrentOutMedal);
+
+            // 差枚数のデータ数を読み込み
+            int loadCount = MedalSlumpGraph.Count;
+            Debug.Log("SlumpGraphCount:" +  loadCount);
+            data.Add(loadCount);
+
+            for (int i = 0; i < loadCount; i++)
+            {
+                data.Add(MedalSlumpGraph[i]);
+                Debug.Log("[" + i + "]:" + loadCount);
+            }
 
             return data;
         }
@@ -82,27 +102,28 @@ namespace ReelSpinGame_Datas
         {
             try
             {
-                // プレイヤー所持枚数
                 CurrentPlayerMedal = br.ReadInt32();
-                //Debug.Log("CurrentPlayerMedal:" + CurrentPlayerMedal);
-
-                // IN枚数
+                Debug.Log("Current Medal:" + CurrentPlayerMedal);
                 CurrentInMedal = br.ReadInt32();
-                //Debug.Log("CurrentInMedal:" + CurrentInMedal);
-
-                // OUT枚数
+                Debug.Log("Current IN:" + CurrentInMedal);
                 CurrentOutMedal = br.ReadInt32();
-                //Debug.Log("CurrentOutMedal:" + CurrentOutMedal);
+                Debug.Log("Current OUT:" + CurrentOutMedal);
+
+                int loadCount = br.ReadInt32();
+                Debug.Log("LoadCount:" + loadCount);
+                for (int i = 0; i < loadCount; i++)
+                {
+                    MedalSlumpGraph.Add(br.ReadInt32());
+                    Debug.Log("Slump [" + i + "]:" + MedalSlumpGraph[i]);
+                }
             }
             catch (Exception e)
             {
-                throw new Exception(e.ToString());
-            }
-            finally
-            {
-                //Debug.Log("MedalData Loaded");
+                Debug.LogException(e);
+                return false;
             }
 
+            Debug.Log("Medal Load is done");
             return true;
         }
     }

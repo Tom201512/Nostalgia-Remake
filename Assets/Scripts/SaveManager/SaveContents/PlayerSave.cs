@@ -1,4 +1,5 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Datas.Analytics;
 using ReelSpinGame_Interface;
 using ReelSpinGame_System;
 using System;
@@ -20,26 +21,28 @@ namespace ReelSpinGame_Save.Player
             // ボーナス間ゲーム数
             public int CurrentGames { get; private set; }
 
-            // メダル情報
-            public PlayerMedalData PlayerMedalData { get; private set; }
-
-            // 当選させたボーナス(IDごとに)
-            //public List<BonusHitData> BonusHitRecord { get; private set; }
-
             // ビッグチャンス成立回数
             public int BigTimes { get; private set; }
             // ボーナスゲーム成立回数
             public int RegTimes { get; private set; }
+
+            // メダル情報
+            public PlayerMedalData PlayerMedalData { get; private set; }
+            // 当選させたボーナス(IDごとに)
+            public List<BonusHitData> BonusHitRecord { get; private set; }
+            // 解析データ
+            public AnalyticsData PlayerAnalyticsData { get; private set; }
 
             // コンストラクタ
             public PlayerSave()
             {
                 TotalGames = 0;
                 CurrentGames = 0;
-                PlayerMedalData = new PlayerMedalData();
-                //BonusHitRecord = new List<BonusHitData>();
                 BigTimes = 0;
                 RegTimes = 0;
+                PlayerMedalData = new PlayerMedalData();
+                BonusHitRecord = new List<BonusHitData>();
+                PlayerAnalyticsData = new AnalyticsData();
             }
 
             // func
@@ -49,10 +52,11 @@ namespace ReelSpinGame_Save.Player
             {
                 TotalGames = playerData.TotalGames;
                 CurrentGames = playerData.CurrentGames;
-                PlayerMedalData = playerData.PlayerMedalData;
-                //BonusHitRecord = playerData.BonusHitRecord;
                 BigTimes = playerData.BigTimes;
                 RegTimes = playerData.RegTimes;
+                PlayerMedalData = playerData.PlayerMedalData;
+                BonusHitRecord = playerData.BonusHitRecord;
+                PlayerAnalyticsData = playerData.PlayerAnalyticsData;
             }
 
             // セーブ
@@ -62,7 +66,15 @@ namespace ReelSpinGame_Save.Player
                 List<int> data = new List<int>();
 
                 data.Add(TotalGames);
+                Debug.Log("TotalGames:" + TotalGames);
                 data.Add(CurrentGames);
+                Debug.Log("CurrentGames:" + CurrentGames);
+
+                // BIG/REG回数
+                data.Add(BigTimes);
+                Debug.Log("BigTimes:" + BigTimes);
+                data.Add(RegTimes);
+                Debug.Log("RegTimes:" + RegTimes);
 
                 // メダル情報
                 foreach (int list in PlayerMedalData.SaveData())
@@ -70,13 +82,9 @@ namespace ReelSpinGame_Save.Player
                     data.Add(list);
                 }
 
-                // BIG/REG回数
-                data.Add(BigTimes);
-                data.Add(RegTimes);
-
-                /*
                 // ボーナス情報の数
                 data.Add(BonusHitRecord.Count);
+                Debug.Log("BonusData count :" + BonusHitRecord.Count);
 
                 // ボーナス情報
                 for (int i = 0; i < BonusHitRecord.Count; i++)
@@ -85,7 +93,13 @@ namespace ReelSpinGame_Save.Player
                     {
                         data.Add(list);
                     }
-                }*/
+                }
+
+                // 解析情報
+                foreach(int list in PlayerAnalyticsData.SaveData())
+                {
+                    data.Add(list);
+                }
 
                 return data;
             }
@@ -97,44 +111,47 @@ namespace ReelSpinGame_Save.Player
                 {
                     // ゲーム数読み込み
                     TotalGames = br.ReadInt32();
-                    //Debug.Log("TotalGames:" + TotalGames);
+                    Debug.Log("TotalGames:" + TotalGames);
 
                     CurrentGames = br.ReadInt32();
-                    //Debug.Log("CurrentGames:" + CurrentGames);
+                    Debug.Log("CurrentGames:" + CurrentGames);
+
+                    // BIG回数
+                    BigTimes = br.ReadInt32();
+                    Debug.Log("BigTimes:" + BigTimes);
+
+                    // REG回数
+                    RegTimes = br.ReadInt32();
+                    Debug.Log("RegTimes:" + RegTimes);
 
                     // メダル情報読み込み
                     PlayerMedalData.LoadData(br);
 
-                    // BIG回数
-                    BigTimes = br.ReadInt32();
-                    //Debug.Log("BigTimes:" + BigTimes);
-
-                    // REG回数
-                    RegTimes = br.ReadInt32();
-                    //Debug.Log("RegTimes:" + RegTimes);
-
-                    /*
                     // ボーナス履歴読み込み
                     // ボーナス履歴数
 
                     int bonusResultCount = br.ReadInt32();
-                    //Debug.Log("BonusResultCount:" + bonusResultCount);
+                    Debug.Log("BonusResultCount:" + bonusResultCount);
 
                     // 履歴分読み込む
                     for (int i = 0; i < bonusResultCount; i++)
                     {
+                        Debug.Log("BonusResult[" + i + "]:");
                         BonusHitData buffer = new BonusHitData();
-                        BonusHitRecord.Add(buffer);
                         buffer.LoadData(br);
+                        BonusHitRecord.Add(buffer);
                     }
-                    */
 
-                    //Debug.Log("BonusLoad END");
+                    // 解析情報読み込み
+                    PlayerAnalyticsData.LoadData(br);
+
+                    Debug.Log("PlyaerLoad END");
 
                 }
                 catch (Exception e)
                 {
-                    throw new Exception(e.ToString());
+                    Debug.LogException(e);
+                    return false;
                 }
                 finally
                 {

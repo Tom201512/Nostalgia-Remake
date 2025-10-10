@@ -14,19 +14,16 @@ namespace ReelSpinGame_Save.Database
 
         // 台設定
         public int Setting { get; private set; }
-
         // プレイヤー情報
         public PlayerSave Player { get; private set; }
-
         // メダル情報
         public MedalSave Medal { get; private set; }
-
         // フラグカウンタ数値
         public int FlagCounter { get; private set; }
-
         // 最後に止まったリール位置
         public List<int> LastReelPos { get; private set; }
-
+        // 最後に止めたリールのスベリコマ
+        public List<int> LastReelDelay { get; private set; }
         // ボーナス情報
         public BonusSave Bonus { get; private set; }
 
@@ -37,6 +34,7 @@ namespace ReelSpinGame_Save.Database
             Medal = new MedalSave();
             FlagCounter = 0;
             LastReelPos = new List<int> { 19, 19, 19 };
+            LastReelDelay = new List<int> { 0, 0, 0, };
             Bonus = new BonusSave();
         }
 
@@ -52,6 +50,7 @@ namespace ReelSpinGame_Save.Database
             Player = null;
             Medal = null;
             LastReelPos = null;
+            LastReelDelay = null;
             Bonus = null;
 
             GC.Collect();
@@ -61,6 +60,7 @@ namespace ReelSpinGame_Save.Database
             Medal = new MedalSave();
             FlagCounter = 0;
             LastReelPos = new List<int> { 19, 19, 19 };
+            LastReelDelay = new List<int> { 0, 0, 0, };
             Bonus = new BonusSave();
         }
 
@@ -97,6 +97,9 @@ namespace ReelSpinGame_Save.Database
 
         // リール位置
         public void RecordReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
+
+        // スベリコマ数
+        public void RecordLastReelDelay(List<int> lastReelDelay) => LastReelDelay = lastReelDelay;
 
         // ボーナス情報
         public void RecordBonusData(ISavable bonus)

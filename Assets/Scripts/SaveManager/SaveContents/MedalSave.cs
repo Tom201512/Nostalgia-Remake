@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Medal.MedalBehavior;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace ReelSpinGame_Save.Medal
 {
@@ -36,9 +37,13 @@ namespace ReelSpinGame_Save.Medal
         public void RecordData(MedalSystemData medal)
         {
             Credit = medal.Credit;
+            Debug.Log("Credit:" + Credit);
             MaxBetAmount = medal.MaxBetAmount;
+            Debug.Log("MaxBetAmount:" + MaxBetAmount);
             LastBetAmount = medal.LastBetAmount;
+            Debug.Log("LastBetAmount:" + LastBetAmount);
             HasReplay = medal.HasReplay;
+            Debug.Log("HasReplay:" + HasReplay);
         }
 
         // セーブ
@@ -47,16 +52,13 @@ namespace ReelSpinGame_Save.Medal
             // 変数を格納
             List<int> data = new List<int>();
             data.Add(Credit);
+            Debug.Log("Credit:" + Credit);
             data.Add(MaxBetAmount);
+            Debug.Log("MaxBetAmount:" + MaxBetAmount);
             data.Add(LastBetAmount);
+            Debug.Log("LastBetAmount:" + LastBetAmount);
             data.Add(HasReplay ? 1 : 0);
-
-            // デバッグ用
-            //Debug.Log("MedalData:");
-            //foreach (int i in data)
-            //{
-            //    Debug.Log(i);
-            //}
+            Debug.Log("HasReplay:" + HasReplay);
 
             return data;
         }
@@ -66,29 +68,19 @@ namespace ReelSpinGame_Save.Medal
         {
             try
             {
-                // クレジット枚数
                 Credit = br.ReadInt32();
-                //Debug.Log("Credit:" + Credit);
-
-                // 最大ベット枚数
+                Debug.Log("Credit:" + Credit);
                 MaxBetAmount = br.ReadInt32();
-                //Debug.Log("MaxBetAmount:" + MaxBetAmount);
-
-                // 最後に掛けた枚数
+                Debug.Log("MaxBetAmount:" + MaxBetAmount);
                 LastBetAmount = br.ReadInt32();
-                //Debug.Log("LastBetAmount:" + LastBetAmount);
-
-                // リプレイ状態
+                Debug.Log("LastBetAmount:" + LastBetAmount);
                 HasReplay = (br.ReadInt32() == 1 ? true : false);
-                //Debug.Log("HasReplay:" + HasReplay);
+                Debug.Log("HasReplay:" + HasReplay);
             }
             catch (Exception e)
             {
-                throw new Exception(e.ToString());
-            }
-            finally
-            {
-                //Debug.Log("MedalSystem Loaded");
+                Debug.LogException(e);
+                return false;
             }
 
             return true;

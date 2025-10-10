@@ -1,6 +1,7 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Save.Player.ReelSpinGame_System;
+using ReelSpinGame_Datas.Analytics;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,26 +24,30 @@ namespace ReelSpinGame_System
         // ボーナス間ゲーム数
         public int CurrentGames { get; private set; }
 
-        // メダル情報
-        public PlayerMedalData PlayerMedalData { get; private set; }
-
-        // 当選させたボーナス(IDごとに)
-        //public List<BonusHitData> BonusHitRecord { get; private set; }
-
         // ビッグチャンス成立回数
         public int BigTimes { get; private set; }
         // ボーナスゲーム成立回数
         public int RegTimes { get; private set; }
+
+        // メダル情報
+        public PlayerMedalData PlayerMedalData { get; private set; }
+
+        // 当選させたボーナス(IDごとに)
+        public List<BonusHitData> BonusHitRecord { get; private set; }
+
+        // 解析データ
+        public AnalyticsData PlayerAnalyticsData { get; private set; }
 
         // コンストラクタ
         public PlayerDatabase()
         {
             TotalGames = 0;
             CurrentGames = 0;
-            PlayerMedalData = new PlayerMedalData();
-            //BonusHitRecord = new List<BonusHitData>();
             BigTimes = 0;
             RegTimes = 0;
+            PlayerMedalData = new PlayerMedalData();
+            BonusHitRecord = new List<BonusHitData>();
+            PlayerAnalyticsData = new AnalyticsData();
         }
 
         // func
@@ -56,7 +61,7 @@ namespace ReelSpinGame_System
         }
 
         // セーブを読み込む
-        public void LoadSaveData(ISavable loadData)
+        public bool LoadSaveData(ISavable loadData)
         {
             if (loadData.GetType() == typeof(PlayerSave))
             {
@@ -65,14 +70,17 @@ namespace ReelSpinGame_System
 
                 TotalGames = save.TotalGames;
                 CurrentGames = save.CurrentGames;
-                PlayerMedalData.SetData(save.PlayerMedalData);
-                //SetBonusRecord(save);
                 BigTimes = save.BigTimes;
                 RegTimes = save.RegTimes;
+                PlayerMedalData.SetData(save.PlayerMedalData);
+                BonusHitRecord = save.BonusHitRecord;
+                PlayerAnalyticsData = save.PlayerAnalyticsData;
+                return true;
             }
             else
             {
-                throw new Exception("Loaded data is not PlayerData");
+                Debug.LogError("Loaded data is not PlayerData");
+                return false;
             }
         }
 
@@ -86,12 +94,7 @@ namespace ReelSpinGame_System
         }
         // ボーナス間ゲーム数リセット
         public void ResetCurrentGame() => CurrentGames = 0;
-        // ビッグチャンス回数の増加
-        public void IncreaseBigChance() => BigTimes += 1;
-        // ボーナスゲーム回数の増加
-        public void IncreaseBonusGame() => RegTimes += 1;
 
-        /*
         // ボーナス履歴追加(成立時に使用)
         public void AddBonusResult(BonusTypeID bonusType)
         {
@@ -102,21 +105,27 @@ namespace ReelSpinGame_System
         }
 
         // 直近のボーナス履歴の入賞を記録
-        public void SetLastBonusStart() => BonusHitRecord[^1].SetBonusStartGame(CurrentGames);
+        public void SetLastBonusStart()
+        {
+            BonusHitRecord[^1].SetBonusStartGame(CurrentGames);
+
+            // どちらのボーナスが立ったか確認してカウントする
+            if (BonusHitRecord[^1].BonusID == BonusTypeID.BonusBIG)
+            {
+                BigTimes += 1;
+            }
+            else
+            {
+                RegTimes += 1;
+            }
+        }
         // 直近のビッグチャンス時の色を記録
         public void SetLastBigChanceColor(BigColor color) => BonusHitRecord[^1].SetBigChanceColor(color);
         // 現在のボーナス履歴に払い出しを追加する
-        public void ChangeLastBonusPayout(int payout) => BonusHitRecord[^1].ChangeBonusPayout(payout);*/
-
-        // ボーナス履歴情報を読み込む
-
-        /*
-        private void SetBonusRecord(PlayerSave save)
-        {
-            foreach(BonusHitData b in save.BonusHitRecord)
-            {
-                BonusHitRecord.Add(b);
-            }
-        }*/
+        public void ChangeLastBonusPayout(int payout) => BonusHitRecord[^1].ChangeBonusPayout(payout);
+        // 現在のボーナス履歴の成立時出目を記録
+        public void SetBonusHitPos(List<int> lastPos) => BonusHitRecord[^1].SetBonusReelPos(lastPos);
+        // 現在のボーナス履歴の成立時スベリを記録
+        public void SetBonusHitDelay(List<int> lastDelay) => BonusHitRecord[^1].SetBonusReelDelay(lastDelay);
     }
 }

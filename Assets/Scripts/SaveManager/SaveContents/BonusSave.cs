@@ -59,16 +59,27 @@ namespace ReelSpinGame_Save.Bonus
         public void RecordData(BonusSystemData bonus)
         {
             HoldingBonusID = bonus.HoldingBonusID;
+            Debug.Log("HoldingBonusID:" + HoldingBonusID);
             CurrentBonusStatus = bonus.CurrentBonusStatus;
+            Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
             BigChanceColor = bonus.BigChanceColor;
+            Debug.Log("BigChanceColor:" + BigChanceColor);
             RemainingBigGames = bonus.RemainingBigGames;
+            Debug.Log("RemainingBigGames:" + RemainingBigGames);
             RemainingJacIn = bonus.RemainingJacIn;
+            Debug.Log("RemainingJacIn:" + RemainingJacIn);
             RemainingJacHits = bonus.RemainingJacHits;
+            Debug.Log("RemainingJacHits:" + RemainingJacHits);
             RemainingJacGames = bonus.RemainingJacGames;
+            Debug.Log("RemainingJacGames:" + RemainingJacGames);
             CurrentBonusPayout = bonus.CurrentBonusPayout;
+            Debug.Log("CurrentBonusPayout:" + CurrentBonusPayout);
             CurrentZonePayout = bonus.CurrentZonePayout;
+            Debug.Log("CurrentZonePayout:" + CurrentZonePayout);
             LastZonePayout = bonus.LastZonePayout;
+            Debug.Log("LastZonePayout:" + LastZonePayout);
             HasZone = bonus.HasZone;
+            Debug.Log("HasZone:" + HasZone);
         }
 
         // セーブ
@@ -78,23 +89,27 @@ namespace ReelSpinGame_Save.Bonus
             List<int> data = new List<int>();
 
             data.Add((int)HoldingBonusID);
+            Debug.Log("HoldingBonusID:" + HoldingBonusID);
             data.Add((int)CurrentBonusStatus);
+            Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
             data.Add((int)BigChanceColor);
+            Debug.Log("BigChanceColor:" + BigChanceColor);
             data.Add(RemainingBigGames);
+            Debug.Log("RemainingBigGames:" + RemainingBigGames);
             data.Add(RemainingJacIn);
+            Debug.Log("RemainingJacIn:" + RemainingJacIn);
             data.Add(RemainingJacHits);
+            Debug.Log("RemainingJacHits:" + RemainingJacHits);
             data.Add(RemainingJacGames);
+            Debug.Log("RemainingJacGames:" + RemainingJacGames);
             data.Add(CurrentBonusPayout);
+            Debug.Log("CurrentBonusPayout:" + CurrentBonusPayout);
             data.Add(CurrentZonePayout);
+            Debug.Log("CurrentZonePayout:" + CurrentZonePayout);
             data.Add(LastZonePayout);
+            Debug.Log("LastZonePayout:" + LastZonePayout);
             data.Add(HasZone ? 1 : 0);
-
-            // デバッグ用
-            //Debug.Log("BonusData:");
-            //foreach (int i in data)
-            //{
-            //    Debug.Log(i);
-            //}
+            Debug.Log("HasZone:" + HasZone);
 
             return data;
         }
@@ -104,50 +119,40 @@ namespace ReelSpinGame_Save.Bonus
         {
             try
             {
-                // ストック中のボーナス
                 HoldingBonusID = (BonusTypeID)Enum.ToObject(typeof(BonusTypeID), br.ReadInt32());
-                //Debug.Log("HoldingBonusID:" + HoldingBonusID);
-                // 現在のボーナス状態
+                Debug.Log("HoldingBonusID:" + HoldingBonusID);
                 CurrentBonusStatus = (BonusStatus)Enum.ToObject(typeof(BonusStatus), br.ReadInt32());
-                //Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
-                // ビッグチャンス時の色
+                Debug.Log("CurrentBonusStatus:" + CurrentBonusStatus);
                 BigChanceColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
-                //Debug.Log("BigChanceColor:" + BigChanceColor);
-                // 残りBIGゲーム数
+                Debug.Log("BigChanceColor:" + BigChanceColor);
                 RemainingBigGames = br.ReadInt32();
-                //Debug.Log("RemainingBigGames:" + RemainingBigGames);
-                // 残りJACIN
+                Debug.Log("RemainingBigGames:" + RemainingBigGames);
                 RemainingJacIn = br.ReadInt32();
-                //Debug.Log("RemainingJacIn:" + RemainingJacIn);
-                // 残りJACゲーム中当選回数
+                Debug.Log("RemainingJacIn:" + RemainingJacIn);
                 RemainingJacHits = br.ReadInt32();
-                //Debug.Log("RemainingJacHits:" + RemainingJacHits);
-                // 残りJACゲーム数
+                Debug.Log("RemainingJacHits:" + RemainingJacHits);
                 RemainingJacGames = br.ReadInt32();
-                //Debug.Log("RemainingJacGames:" + RemainingJacGames);
-                // 現在のボーナス獲得枚数
+                Debug.Log("RemainingJacGames:" + RemainingJacGames);
                 CurrentBonusPayout = br.ReadInt32();
-                //Debug.Log("CurrentBonusPayout:" + CurrentBonusPayout);
-                // 連チャン区間中のボーナス枚数
+                Debug.Log("CurrentBonusPayout:" + CurrentBonusPayout);
                 CurrentZonePayout = br.ReadInt32();
-                //Debug.Log("CurrentZonePayout:" + CurrentZonePayout);
-                // 最後に獲得した連チャン区間の枚数
+                Debug.Log("CurrentZonePayout:" + CurrentZonePayout);
                 LastZonePayout = br.ReadInt32();
-                //Debug.Log("LastZonePayout:" + LastZonePayout);
-                // 連チャン区間中か
+                Debug.Log("LastZonePayout:" + LastZonePayout);
                 HasZone = (br.ReadInt32() == 1 ? true : false);
-                //Debug.Log("HasZone:" + HasZone);
-
+                Debug.Log("HasZone:" + HasZone);
             }
             catch (Exception e)
             {
-                throw new Exception(e.ToString());
+                Debug.LogException(e);
+                return false;
             }
             finally
             {
-                //Debug.Log("BonusData end");
+
             }
 
+            Debug.Log("BonusData end");
             return true;
         }
     }

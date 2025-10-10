@@ -51,7 +51,7 @@ namespace ReelSpinGame_System
             catch(Exception e)
             {
                 Debug.LogException(e);
-                throw new Exception(e.ToString());
+                return false;
             }
 
             //Debug.Log("Directory is created");
@@ -79,6 +79,7 @@ namespace ReelSpinGame_System
 
                     // 台設定
                     dataBuffer.Add(CurrentSave.Setting);
+                    Debug.Log("Setting:" + CurrentSave.Setting);
 
                     // プレイヤーデータ
                     foreach (int i in CurrentSave.Player.SaveData())
@@ -94,12 +95,16 @@ namespace ReelSpinGame_System
 
                     // フラグカウンタ
                     dataBuffer.Add(CurrentSave.FlagCounter);
+                    Debug.Log("FlagCounter:" + CurrentSave.FlagCounter);
 
                     //リール停止位置
                     foreach (int i in CurrentSave.LastReelPos)
                     {
                         dataBuffer.Add(i);
                     }
+
+                    Debug.Log("ReelPos:" + CurrentSave.LastReelPos[(int)ReelLeft] + "," +
+                        CurrentSave.LastReelPos[(int)ReelMiddle] + "," + CurrentSave.LastReelPos[(int)ReelRight]);
 
                     // ボーナス情報
                     foreach (int i in CurrentSave.Bonus.SaveData())
@@ -124,7 +129,7 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                throw new Exception(e.ToString());
+                return false;
             }
 
             Debug.Log("Save Encryption is succeeded");
@@ -193,7 +198,7 @@ namespace ReelSpinGame_System
                                 return false;
                             }
 
-                            //Debug.Log("Hash is correct");
+                            Debug.Log("Hash is correct");
 
                             baseStream.Position = 0;
 
@@ -206,7 +211,7 @@ namespace ReelSpinGame_System
                                 }
                                 else
                                 {
-                                    Debug.LogError("Failed to Load data");
+                                    Debug.LogError("Failed to Load data at:" + index);
                                     return false;
                                 }
                             }
@@ -238,7 +243,7 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                throw new Exception(e.ToString());
+                return false;
             }
 
             Debug.Log("Save deletion succeeded");
@@ -254,6 +259,7 @@ namespace ReelSpinGame_System
                 {
                     case (int)AddressID.Setting:
                         CurrentSave.RecordSlotSetting(br.ReadInt32());
+                        Debug.Log("Setting:" + CurrentSave.Setting);
                         break;
 
                     case (int)AddressID.Player:
@@ -266,15 +272,19 @@ namespace ReelSpinGame_System
 
                     case (int)AddressID.FlagC:
                         CurrentSave.RecordFlagCounter(br.ReadInt32());
+                        Debug.Log("FlagCounter:" + CurrentSave.FlagCounter);
                         break;
 
                     case (int)AddressID.Reel:
                         // 左
                         CurrentSave.LastReelPos[(int)ReelLeft] = br.ReadInt32();
+                        Debug.Log("Left:" + CurrentSave.LastReelPos[(int)ReelLeft]);
                         // 中
                         CurrentSave.LastReelPos[(int)ReelMiddle] = br.ReadInt32();
+                        Debug.Log("Middle:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
                         // 右
                         CurrentSave.LastReelPos[(int)ReelRight] = br.ReadInt32();
+                        Debug.Log("Right:" + CurrentSave.LastReelPos[(int)ReelRight]);
                         break;
 
                     // ボーナス情報

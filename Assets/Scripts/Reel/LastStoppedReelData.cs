@@ -13,6 +13,8 @@ namespace ReelSpinGame_Reels
         // var
         // 最後に止めた位置
         public List<int> LastPos { get; private set; }
+        // 最後に止めたときのスベリコマ数
+        public List<int> LastReelDelay { get; private set; }
         // 最後に止まった出目
         public List<List<ReelSymbols>> LastSymbols { get; private set; }
 
@@ -20,6 +22,7 @@ namespace ReelSpinGame_Reels
         public LastStoppedReelData()
         {
             LastPos = new List<int>();
+            LastReelDelay = new List<int>();
             LastSymbols = new List<List<ReelSymbols>>();
         }
 
@@ -28,6 +31,7 @@ namespace ReelSpinGame_Reels
         {
             // 初期化
             LastPos.Clear();
+            LastReelDelay.Clear();
             LastSymbols.Clear();
 
             string posBuffer = "";
@@ -36,6 +40,7 @@ namespace ReelSpinGame_Reels
             for (int i = 0; i < reelObjects.Count; i++)
             {
                 LastPos.Add(reelObjects[i].GetReelPos(ReelPosID.Lower));
+                LastReelDelay.Add(reelObjects[i].GetLastDelay());
                 posBuffer += LastPos[i];
 
                 //Debug.Log("Position:" + LastPos[i]);

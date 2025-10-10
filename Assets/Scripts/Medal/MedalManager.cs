@@ -72,7 +72,7 @@ namespace ReelSpinGame_Medal
         }
 
         // ÉZÅ[ÉuÇì«Ç›çûÇﬁ
-        public void LoadSaveData(ISavable loadData)
+        public bool LoadSaveData(ISavable loadData)
         {
             if(loadData.GetType() == typeof(MedalSave))
             {
@@ -82,10 +82,12 @@ namespace ReelSpinGame_Medal
                 data.system.MaxBetAmount = save.MaxBetAmount;
                 data.system.LastBetAmount = save.LastBetAmount;
                 data.system.HasReplay = save.HasReplay;
+                return true;
             }
             else
             {
-                throw new Exception("Loaded data is not MedalData");
+                Debug.LogError("Loaded data is not MedalData");
+                return false;
             }
         }
 

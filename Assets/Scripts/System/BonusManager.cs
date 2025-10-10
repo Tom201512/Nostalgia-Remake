@@ -89,7 +89,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // セーブを読み込む
-        public void LoadSaveData(ISavable loadData)
+        public bool LoadSaveData(ISavable loadData)
         {
             if (loadData.GetType() == typeof(BonusSave))
             {
@@ -106,10 +106,13 @@ namespace ReelSpinGame_Bonus
                 data.CurrentZonePayout = save.CurrentZonePayout;
                 data.LastZonePayout = save.LastZonePayout;
                 data.HasZone = save.HasZone;
+
+                return true;
             }
             else
             {
-                throw new Exception("Loaded data is not BonusData");
+                Debug.LogError("Loaded data is not BonusData");
+                return false;
             }
         }
 

@@ -25,6 +25,6 @@ namespace ReelSpinGame_Interface
     public interface IHasSave
     {
         ISavable MakeSaveData();
-        void LoadSaveData(ISavable save);
+        bool LoadSaveData(ISavable save);
     }
 }
