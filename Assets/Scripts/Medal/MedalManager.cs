@@ -34,6 +34,9 @@ namespace ReelSpinGame_Medal
         public delegate void MedalHasInsertEvent();
         public event MedalHasInsertEvent HasMedalInsert;
 
+        // セグメント用　以前のクレジット枚数
+        private int previousCredits = 0;
+
         private void Awake()
         {
             data = new MedalBehavior();
@@ -151,6 +154,8 @@ namespace ReelSpinGame_Medal
                 {
                     // 払い出し枚数の設定
                     data.RemainingPayout = Math.Clamp(amount, 0, MaxPayout);
+                    // 以前のクレジットを保存
+                    previousCredits = Math.Clamp(data.system.Credit, 0, MaxCredit);
                     // クレジットの増加
                     data.ChangeCredit(data.RemainingPayout);
 
@@ -257,7 +262,10 @@ namespace ReelSpinGame_Medal
                 data.PayoutOneMedal();
                 //HasMedalPayout.Invoke(1);
                 // クレジットと払い出しセグメント更新
-                creditSegments.ShowSegmentByNumber(data.system.Credit - data.RemainingPayout);
+                int offset = 0;
+
+
+                creditSegments.ShowSegmentByNumber(Math.Clamp(previousCredits += 1, 0, MaxCredit));
                 ////Debug.Log("LastPayoutAmount:" + data.LastPayoutAmount);
                 payoutSegments.ShowSegmentByNumber(data.LastPayoutAmount);
 
