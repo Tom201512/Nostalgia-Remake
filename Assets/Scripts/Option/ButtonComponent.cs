@@ -38,7 +38,8 @@ namespace ReelSpinGame_Option.Button
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if(CanInteractable)
+            Debug.Log("Interactable :" + CanInteractable);
+            if (CanInteractable)
             {
                 ButtonPushedEvent?.Invoke();
                 //ChangeButtonContentColor(Color.yellow);

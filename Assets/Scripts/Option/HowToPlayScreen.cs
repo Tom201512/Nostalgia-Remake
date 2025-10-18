@@ -1,53 +1,88 @@
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Option.MenuContent;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-//using UnityEngine.UI;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-public class HowToPlayScreen : OptionScreenBase
+public class HowToPlayScreen : MonoBehaviour, IOptionScreenBase
 {
     // 遊び方ガイド画面
 
     // const
+
+    // 操作ができる状態か(アニメーション中などはつけないこと)
+    public bool CanInteract { get; set; }
+
     // var
     // スクリーン
     [SerializeField] private Image screen;
     // 表示する画面
-    [SerializeField] private List<Texture> imageList;
+    [SerializeField] private List<Sprite> imageList;
     // 次ボタン
     [SerializeField] private ButtonComponent nextButton;
     // 前ボタン
     [SerializeField] private ButtonComponent previousButton;
+    // クローズボタン
+    [SerializeField] private ButtonComponent closeButton;
+    // ページ表記
+    [SerializeField] private TextMeshProUGUI pageCount;
 
     // 表示中のページ番号
     private int currentPage = 0;
 
-    // 初期化用
-    protected override void InitializeScreen()
+    // 画面を閉じたときのイベント
+    public delegate void OnClosedScreen();
+    public event OnClosedScreen OnClosedScreenEvent;
+
+    // func
+
+    private void Awake()
+    {
+        // ボタン登録
+        closeButton.ButtonPushedEvent += OnClosedPressed;
+        nextButton.ButtonPushedEvent += OnNextPushed;
+        previousButton.ButtonPushedEvent += OnPreviousPushed;
+    }
+
+    void OnDestroy()
+    {
+        closeButton.ButtonPushedEvent -= OnClosedPressed;
+        nextButton.ButtonPushedEvent -= OnNextPushed;
+        previousButton.ButtonPushedEvent -= OnPreviousPushed;
+    }
+
+    // 画面表示&初期化
+    public void OpenScreen()
     {
         Debug.Log("Initialized How To Play");
         CanInteract = true;
         Debug.Log("Interact :" + CanInteract);
         currentPage = 0;
+        UpdateScreen();
 
-        // ボタン登録
-        //nextButton.ButtonPushedEvent += OnNextPushed;
-        // previousButton.ButtonPushedEvent += OnPreviousPushed;
+        closeButton.ToggleInteractive(true);
+        nextButton.ToggleInteractive(true);
+        previousButton.ToggleInteractive(true);
     }
 
-    // 終了用
-    protected override void CloseScreenBehavior()
+    // 画面を閉じる
+    public void CloseScreen()
     {
-        Debug.Log("Closed How To Play");
-        // ボタン登録解除
-        //nextButton.ButtonPushedEvent -= OnNextPushed;
-        //previousButton.ButtonPushedEvent -= OnPreviousPushed;
+        Debug.Log("Interact :" + CanInteract);
+        if (CanInteract)
+        {
+            Debug.Log("Closed How To Play");
+            closeButton.ToggleInteractive(false); ;
+            nextButton.ToggleInteractive(false);
+            previousButton.ToggleInteractive(false);
+        }
     }
 
     // 次ボタンを押したときの挙動
     private void OnNextPushed()
     {
+        Debug.Log("Next pressed");
         if (currentPage + 1 == imageList.Count)
         {
             currentPage = 0;
@@ -63,6 +98,7 @@ public class HowToPlayScreen : OptionScreenBase
     // 前ボタンを押したときの挙動
     private void OnPreviousPushed()
     {
+        Debug.Log("Previous pressed");
         if (currentPage - 1 < 0)
         {
             currentPage = imageList.Count - 1;
@@ -75,10 +111,14 @@ public class HowToPlayScreen : OptionScreenBase
         UpdateScreen();
     }
 
+    // 閉じるボタンを押したときの挙動
+    private void OnClosedPressed() => OnClosedScreenEvent?.Invoke();
+
     // 画像の反映処理
     private void UpdateScreen()
     {
         Debug.Log("Page:" + currentPage + 1);
-        screen.image = imageList[currentPage];
+        screen.sprite = imageList[currentPage];
+        pageCount.text = (currentPage + 1) + "/" + imageList.Count;
     }
 }

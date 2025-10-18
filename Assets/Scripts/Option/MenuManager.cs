@@ -56,6 +56,7 @@ namespace ReelSpinGame_Option.MenuBar
         public void TestOpen()
         {
             howToPlayScreen.gameObject.SetActive(true);
+            howToPlayScreen.OpenScreen();
             SetInteractiveAllButton(false);
             OnPressedMenuEvent?.Invoke();
             Debug.Log("Open Dialog");
@@ -64,6 +65,7 @@ namespace ReelSpinGame_Option.MenuBar
         // ‰æ–Ê‚ð•Â‚¶‚½‚Æ‚«‚ÌƒCƒxƒ“ƒg
         public void TestClose()
         {
+            howToPlayScreen.CloseScreen();
             howToPlayScreen.gameObject.SetActive(false);
             SetInteractiveAllButton(true);
             OnClosedScreenEvent?.Invoke();
