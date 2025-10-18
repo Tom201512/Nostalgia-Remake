@@ -9,20 +9,20 @@ namespace ReelSpinGame_Option.MenuContent
     {
         // var
         // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract {  get; private set; }
+        public bool CanInteract { get; set; }
 
         // クローズボタン
         [SerializeField] private ButtonComponent closeButton;
 
-        // 画面が閉じたときのイベント
-        public delegate void OnClosedWindow();
-        public event OnClosedWindow OnClosedWindowEvent;
+        // 画面を閉じたときのイベント
+        public delegate void OnClosedScreen();
+        public event OnClosedScreen OnClosedScreenEvent;
 
         // func
 
         private void Awake()
         {
-            CanInteract = false;
+            CanInteract = true;
             closeButton.ButtonPushedEvent += CloseScreen;
         }
 
@@ -37,7 +37,6 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            gameObject.SetActive(true);
             InitializeScreen();
             Debug.Log(name + " Opened");
         }
@@ -45,12 +44,19 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面を閉じる
         public void CloseScreen()
         {
-            gameObject.SetActive(false);
-            Debug.Log(name + " Closed");
-            OnClosedWindowEvent.Invoke();
+            Debug.Log("Interact :" + CanInteract);
+            if(CanInteract)
+            {
+                CloseScreenBehavior();
+                OnClosedScreenEvent?.Invoke();
+                Debug.Log(name + " Closed");
+            }
         }
 
         // 初期化用
         protected abstract void InitializeScreen();
+
+        // 終了用
+        protected abstract void CloseScreenBehavior();
     }
 }

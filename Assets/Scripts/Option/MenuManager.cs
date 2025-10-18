@@ -21,22 +21,22 @@ namespace ReelSpinGame_Option.MenuBar
         // 各種画面
         // 遊び方表示画面
         // テスト用
-        [SerializeField] private OptionScreenBase screenBase; 
+        [SerializeField] private HowToPlayScreen howToPlayScreen; 
 
         // 何かしらのボタンを押したときのイベント
         public delegate void OnPressedMenu();
         public event OnPressedMenu OnPressedMenuEvent;
 
-        // 何かしらのウィンドウを閉じたときのイベント
-        public delegate void OnClosedWindow();
-        public event OnClosedWindow OnClosedWindowEvent;
+        // 何かしらの画面を閉じたときのイベント
+        public delegate void OnClosedScreen();
+        public event OnClosedScreen OnClosedScreenEvent;
 
         // オプション
 
         void Awake()
         {
             howToPlayButton.ButtonPushedEvent += TestOpen;
-            screenBase.OnClosedWindowEvent += TestClose;
+            howToPlayScreen.OnClosedScreenEvent += TestClose;
         }
 
         void Start()
@@ -44,12 +44,18 @@ namespace ReelSpinGame_Option.MenuBar
             howToPlayButton.ToggleInteractive(true);
         }
 
+        void OnDestroy()
+        {
+            howToPlayButton.ButtonPushedEvent -= TestOpen;
+            howToPlayScreen.OnClosedScreenEvent -= TestClose;
+        }
+
         // func
         // (テスト用)
         // 何かのボタンを開いた時の関数
         public void TestOpen()
         {
-            screenBase.gameObject.SetActive(true);
+            howToPlayScreen.gameObject.SetActive(true);
             SetInteractiveAllButton(false);
             OnPressedMenuEvent?.Invoke();
             Debug.Log("Open Dialog");
@@ -58,9 +64,9 @@ namespace ReelSpinGame_Option.MenuBar
         // 画面を閉じたときのイベント
         public void TestClose()
         {
-            screenBase.gameObject.SetActive(false);
+            howToPlayScreen.gameObject.SetActive(false);
             SetInteractiveAllButton(true);
-            OnClosedWindowEvent?.Invoke();
+            OnClosedScreenEvent?.Invoke();
             Debug.Log("Close");
         }
 

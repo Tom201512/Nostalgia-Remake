@@ -30,12 +30,19 @@ namespace ReelSpinGame_Option
             lockOptionMode = false;
             openButton.ButtonPushedEvent += ToggleOptionScreen;
             menuBarUI.OnPressedMenuEvent += EnterOptionMode;
-            menuBarUI.OnClosedWindowEvent += DisableOptionMode;
+            menuBarUI.OnClosedScreenEvent += DisableOptionMode;
         }
 
         private void Start()
         {
             openButton.ToggleInteractive(true);
+        }
+
+        private void OnDestroy()
+        {
+            openButton.ButtonPushedEvent -= ToggleOptionScreen;
+            menuBarUI.OnPressedMenuEvent -= EnterOptionMode;
+            menuBarUI.OnClosedScreenEvent -= DisableOptionMode;
         }
 
         // func

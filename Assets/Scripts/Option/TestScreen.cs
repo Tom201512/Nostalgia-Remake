@@ -10,5 +10,11 @@ namespace ReelSpinGame_Option.MenuContent.Test
         {
             Debug.Log("Initialized");
         }
+
+        // èâä˙âªóp
+        protected override void CloseScreenBehavior()
+        {
+            Debug.Log("Closed");
+        }
     }
 }

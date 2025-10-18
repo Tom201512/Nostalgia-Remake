@@ -261,10 +261,7 @@ namespace ReelSpinGame_Medal
                 // メダル払い出し
                 data.PayoutOneMedal();
                 //HasMedalPayout.Invoke(1);
-                // クレジットと払い出しセグメント更新
-                int offset = 0;
-
-
+                // クレジットセグメント更新
                 creditSegments.ShowSegmentByNumber(Math.Clamp(previousCredits += 1, 0, MaxCredit));
                 ////Debug.Log("LastPayoutAmount:" + data.LastPayoutAmount);
                 payoutSegments.ShowSegmentByNumber(data.LastPayoutAmount);
