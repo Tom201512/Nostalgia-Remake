@@ -1,4 +1,5 @@
 using ReelSpinGame_System;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -16,13 +17,34 @@ namespace ReelSpinGame_Option.MenuContent
             string data = "";
 
             // ƒQ[ƒ€”‚È‚Ç
+            data += "ƒQ[ƒ€” Games:" +"\n" + "\n";
             data += "‘‰ñ“]” TotalSpin:" + player.TotalGames + "\n";
             data += "Œ»Ý‰ñ“]” CurrentSpin:" + player.CurrentGames + "\n";
             data += "ƒrƒbƒOƒ`ƒƒƒ“ƒX‰ñ” BIG CHANCE:" + player.BigTimes + "\n";
-            data += "ƒ{[ƒiƒXƒQ[ƒ€‰ñ” BIG CHANCE:" + player.RegTimes + "\n";
-            data += "BIG CHANCE’†‰ñ“]” SpinTimesIn BIG CHANCE:" + player.PlayerAnalyticsData.BigGamesCount + "\n";
-            data += "BONUG GAME’†‰ñ“]” SpinTimesIn BONUS GAME:" + player.PlayerAnalyticsData.BigGamesCount + "\n";
+            data += "ƒ{[ƒiƒXƒQ[ƒ€‰ñ” BONUS GAME:" + player.RegTimes + "\n";
+            data += "BIG CHANCE’†‰ñ“]” SpinTimes in BIG CHANCE:" + player.PlayerAnalyticsData.BigGamesCount + "\n";
+            data += "BONUG GAME’†‰ñ“]” SpinTimes in BONUS GAME:" + player.PlayerAnalyticsData.BigGamesCount + "\n";
             data += "‘SƒQ[ƒ€” TotalPlayedGames:" + player.PlayerAnalyticsData.TotalAllGamesCount + "\n" + "\n";
+
+            // ƒƒ_ƒ‹–‡”
+            data += "ƒƒ_ƒ‹ Medal:" + "\n" + "\n";
+            data += "ƒƒ_ƒ‹–‡” CurrentMedal:" + player.PlayerMedalData.CurrentPlayerMedal + "\n";
+            data += "“Š“ü–‡” CurrentIN:" + player.PlayerMedalData.CurrentInMedal + "\n";
+            data += "•¥o–‡” CurrentOUT:" + player.PlayerMedalData.CurrentOutMedal + "\n";
+            data += "·–‡” IN/OUT:" + (player.PlayerMedalData.CurrentOutMedal - player.PlayerMedalData.CurrentInMedal) + "\n";
+            data += "‹@ŠBŠ„ PayoutRate:";
+
+            // ‹@ŠBŠ„
+            if (player.PlayerMedalData.CurrentInMedal > 0 && player.PlayerMedalData.CurrentOutMedal > 0)
+            {
+                float payoutRate = (float)player.PlayerMedalData.CurrentOutMedal / player.PlayerMedalData.CurrentInMedal * 100;
+                data += payoutRate.ToString("F2") + "%";
+            }
+            else
+            {
+                data += "000.00%";
+            }
+
 
             textUI.text = data;
         }

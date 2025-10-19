@@ -30,39 +30,58 @@ namespace ReelSpinGame_Option.Button
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("Mouse entered");
-            ChangeButtonContentColor(new Color(1,1,1,1f));
+            if(CanInteractable)
+            {
+                Debug.Log("Mouse entered");
+                ChangeButtonContentColor(new Color(1, 1, 1, 1f));
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("Mouse leaved");
-            ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+            if (CanInteractable)
+            {
+                Debug.Log("Mouse leaved");
+                ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("Pointer:" + eventData.button);
-            if(eventData.button == 0)
+            if (CanInteractable)
             {
-                Debug.Log("Interactable :" + CanInteractable);
-                if (CanInteractable)
+                Debug.Log("Pointer:" + eventData.button);
+                if (eventData.button == 0)
                 {
                     ButtonPushedEvent?.Invoke();
                     Debug.Log(name + " Pushed");
+                    ChangeButtonContentColor(new Color(0.5f, 0.5f, 0.5f, 1f));
                 }
-
-                ChangeButtonContentColor(new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            Debug.Log("Mouse up");
-            ChangeButtonContentColor(new Color(1, 1, 1, 1f));
+            if (CanInteractable)
+            {
+                Debug.Log("Mouse up");
+                ChangeButtonContentColor(new Color(1, 1, 1, 1f));
+            }
         }
 
-        public void ToggleInteractive(bool value) => CanInteractable = value;
+        public void ToggleInteractive(bool value)
+        {
+            CanInteractable = value;
+
+            if(CanInteractable)
+            {
+                ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+            }
+            else
+            {
+                ChangeButtonContentColor(new Color(0.4f, 0.4f, 0.4f, 1f));
+            }
+        }
 
         private void ChangeButtonContentColor(Color color)
         {

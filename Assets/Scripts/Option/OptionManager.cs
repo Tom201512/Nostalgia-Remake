@@ -56,7 +56,7 @@ namespace ReelSpinGame_Option
         // ロック状態の設定
         public void ToggleOptionLock(bool value)
         {
-            // 遊技中はボタンを押せないようにする(有効になるのは回転時)
+            // 遊技中はメニューバーを
             lockOptionMode = value;
             menuBarUI.SetInteractiveAllButton(!value);
             Debug.Log("Lock:" + value);

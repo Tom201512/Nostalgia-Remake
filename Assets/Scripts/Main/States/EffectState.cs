@@ -85,6 +85,11 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateEnd()
         {
+            // オートが終了している場合は設定画面からの設定を受け付けられるようにする
+            if (!gM.Auto.HasAuto)
+            {
+                gM.Option.ToggleOptionLock(false);
+            }
             // UI更新
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
             // ボーナス演出更新
