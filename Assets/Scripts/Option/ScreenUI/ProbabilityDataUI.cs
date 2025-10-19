@@ -17,8 +17,8 @@ namespace ReelSpinGame_Option.MenuContent
             string data = "";
 
             // ボーナス確率
-            data += "ボーナス確率 Bonus probability:" + "\n" + "\n";
-            data += "ビッグチャンス確率 BIG CHANCE:";
+            data += "ボーナス確率 Bonus probability: " + "\n" + "\n";
+            data += "ビッグチャンス確率 BIG CHANCE: ";
             if (player.BigTimes > 0)
             {
                 float bigProbability = (float)player.TotalGames / player.BigTimes;
@@ -29,7 +29,7 @@ namespace ReelSpinGame_Option.MenuContent
                 data += "1/---\n";
             }
 
-            data += "ボーナスゲーム確率 BONUS GAME:";
+            data += "ボーナスゲーム確率 BONUS GAME: ";
             if (player.RegTimes > 0)
             {
                 float regprobability = (float)player.TotalGames / player.RegTimes;
@@ -42,8 +42,8 @@ namespace ReelSpinGame_Option.MenuContent
 
             // 小役確率
             data += "通常時小役確率 Normal mode probability:" + "\n" + "\n";
-            data += "ベル Bell:";
-            data += " 確率 Probability:";
+            data += "ベル Bell: ";
+            data += " 確率 Probability: ";
 
             if (player.PlayerAnalyticsData.NormalBellHitCount > 0)
             {
@@ -55,12 +55,12 @@ namespace ReelSpinGame_Option.MenuContent
                 data += "1/---";
             }
 
-            data += " 成立 Hit:" + player.PlayerAnalyticsData.NormalBellHitCount;
-            data += " 入賞 Line Up:" + player.PlayerAnalyticsData.NormalBellLineUpCount + "\n";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalBellHitCount;
+            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalBellLineUpCount + "\n";
 
 
-            data += "スイカ Melon:";
-            data += " 確率 Probability:";
+            data += "スイカ Melon: ";
+            data += " 確率 Probability: ";
 
             if (player.PlayerAnalyticsData.NormalMelonHitCount > 0)
             {
@@ -72,12 +72,12 @@ namespace ReelSpinGame_Option.MenuContent
                 data += "1/---";
             }
 
-            data += " 成立 Hit:" + player.PlayerAnalyticsData.NormalMelonHitCount;
-            data += " 入賞 Line Up:" + player.PlayerAnalyticsData.NormalMelonLineUpCount + "\n";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalMelonHitCount;
+            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalMelonLineUpCount + "\n";
 
 
-            data += "2枚チェリー Cherry2:";
-            data += " 確率 Probability:";
+            data += "2枚チェリー Cherry2: ";
+            data += " 確率 Probability: ";
 
             if (player.PlayerAnalyticsData.NormalCherry2HitCount > 0)
             {
@@ -89,12 +89,12 @@ namespace ReelSpinGame_Option.MenuContent
                 data += "1/---";
             }
 
-            data += " 成立 Hit:" + player.PlayerAnalyticsData.NormalCherry2HitCount;
-            data += " 入賞 Line Up:" + player.PlayerAnalyticsData.NormalCherry2LineUpCount + "\n";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry2HitCount;
+            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalCherry2LineUpCount + "\n";
 
 
-            data += "4枚チェリー Cherry4:";
-            data += " 確率 Probability:";
+            data += "4枚チェリー Cherry4: ";
+            data += " 確率 Probability: ";
 
             if (player.PlayerAnalyticsData.NormalCherry4HitCount > 0)
             {
@@ -106,8 +106,8 @@ namespace ReelSpinGame_Option.MenuContent
                 data += "1/---";
             }
 
-            data += " 成立 Hit:" + player.PlayerAnalyticsData.NormalCherry4HitCount;
-            data += " 入賞 Line Up:" + player.PlayerAnalyticsData.NormalCherry4LineUpCount + "\n";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry4HitCount;
+            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalCherry4LineUpCount + "\n";
 
             textUI.text = data;
         }

@@ -163,15 +163,15 @@ namespace ReelSpinGame_Datas
 
             // フラグテーブル作成
             // 通常時Aフラグテーブル作成
-            using StreamReader normalA = new StreamReader(Path.Combine(DataPath, "FlagTable", "Nostalgia_Flag - FlagTableNormalA.csv"));
+            using StreamReader normalA = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableNormalA.csv"));
             flagDatabase.SetNormalATable(FlagDatabaseGen.MakeFlagTableSets(normalA));
 
             // 通常時Bフラグテーブル作成
-            using StreamReader normalB = new StreamReader(Path.Combine(DataPath, "FlagTable", "Nostalgia_Flag - FlagTableNormalB.csv"));
+            using StreamReader normalB = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableNormalB.csv"));
             flagDatabase.SetNormalBTable(FlagDatabaseGen.MakeFlagTableSets(normalB));
 
             // 小役ゲーム中フラグテーブル作成
-            using StreamReader bigTable = new StreamReader(Path.Combine(DataPath, "FlagTable", "Nostalgia_Flag - FlagTableBig.csv"));
+            using StreamReader bigTable = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableBig.csv"));
             flagDatabase.SetBIGTable(FlagDatabaseGen.MakeFlagTableSets(bigTable));
 
             // JAC時ハズレ

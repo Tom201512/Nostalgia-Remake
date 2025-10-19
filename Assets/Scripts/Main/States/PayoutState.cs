@@ -36,10 +36,11 @@ namespace ReelSpinGame_State.PayoutState
             // 払い出しの結果をデータに反映
             PayoutUpdate();
 
-            // フラグ増減(通常時)
-            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            // 小役が当選していたら増加させる
+            // リプレイでは増やさない(0増加)
+            if (gM.Reel.GetPayoutResultData().Payout > 0 || gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
             {
-                ChangeFlagCounter();
+                gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payout);
             }
 
             // 状態遷移
@@ -310,22 +311,6 @@ namespace ReelSpinGame_State.PayoutState
                 {
                     gM.Auto.CheckAutoEndByBonusFinish((int)gM.Bonus.GetCurrentBonusStatus());
                 }
-            }
-        }
-
-        // フラグ増減
-        private void ChangeFlagCounter()
-        {
-            // 小役が当選していたら増加させる
-            // リプレイでは増やさない(0増加)
-            if (gM.Reel.GetPayoutResultData().Payout > 0 || gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
-            {
-                gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payout);
-            }
-            // それ以外は減少
-            else
-            {
-                gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
             }
         }
     }

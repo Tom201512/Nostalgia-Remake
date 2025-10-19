@@ -184,6 +184,9 @@ namespace ReelSpinGame_State.InsertState
                 gM.Bonus.ChangeZonePayout(-gM.Medal.GetLastBetAmount());
             }
 
+            // 小役カウンタ減少
+            gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
+
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);
         }
     }
