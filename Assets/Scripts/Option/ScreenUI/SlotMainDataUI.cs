@@ -23,7 +23,7 @@ namespace ReelSpinGame_Option.MenuContent
             data += "ビッグチャンス回数 BIG CHANCE:" + player.BigTimes + "\n";
             data += "ボーナスゲーム回数 BONUS GAME:" + player.RegTimes + "\n";
             data += "BIG CHANCE中回転数 SpinTimes in BIG CHANCE:" + player.PlayerAnalyticsData.BigGamesCount + "\n";
-            data += "BONUG GAME中回転数 SpinTimes in BONUS GAME:" + player.PlayerAnalyticsData.BigGamesCount + "\n";
+            data += "BONUG GAME中回転数 SpinTimes in BONUS GAME:" + player.PlayerAnalyticsData.JacGamesCount + "\n";
             data += "全ゲーム数 TotalPlayedGames:" + player.PlayerAnalyticsData.TotalAllGamesCount + "\n" + "\n";
 
             // メダル枚数

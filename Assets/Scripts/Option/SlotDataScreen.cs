@@ -15,14 +15,15 @@ namespace ReelSpinGame_Option.MenuContent
         // スロット情報画面
 
         // const
-        private const int maxPage = 4;
+        private const int maxPage = 5;
 
         // var
 
         // 各種画面
-        // 情報表示
+        // メイン情報
         [SerializeField] private SlotMainDataUI slotMainDataUI;
-
+        // 通常時小役確率
+        [SerializeField] private ProbabilityDataUI probabilityDataUI;
 
         // 次ボタン
         [SerializeField] private ButtonComponent nextButton;
@@ -53,6 +54,11 @@ namespace ReelSpinGame_Option.MenuContent
             closeButton.ButtonPushedEvent += OnClosedPressed;
             nextButton.ButtonPushedEvent += OnNextPushed;
             previousButton.ButtonPushedEvent += OnPreviousPushed;
+        }
+
+        private void Start()
+        {
+            UpdateScreen();
         }
 
         private void Update()
@@ -148,18 +154,34 @@ namespace ReelSpinGame_Option.MenuContent
         // 画像の反映処理
         private void UpdateScreen()
         {
+            DisactivateAllScreen();
+
             Debug.Log("Page:" + currentPage + 1);
             // ページごとに処理を行う
 
             switch (currentPage)
             {
                 case 0:
+                    slotMainDataUI.gameObject.SetActive(true);
                     slotMainDataUI.UpdateText(playerData);
+                    break;
+
+                case 1:
+                    probabilityDataUI.gameObject.SetActive(true);
+                    probabilityDataUI.UpdateText(playerData);
                     break;
 
                 default:
                     break;
             }
+
+            pageCount.text = (currentPage + 1) + "/" + maxPage;
+        }
+
+        private void DisactivateAllScreen()
+        {
+            slotMainDataUI.gameObject.SetActive(false);
+            probabilityDataUI.gameObject.SetActive(false);
         }
     }
 }
