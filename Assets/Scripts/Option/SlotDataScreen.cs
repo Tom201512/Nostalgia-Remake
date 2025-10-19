@@ -1,5 +1,7 @@
+using ReelSpinGame_Datas;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,20 +9,20 @@ using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.MenuContent
 {
-    public class HowToPlayScreen : MonoBehaviour, IOptionScreenBase
+    public class SlotDataScreen : MonoBehaviour, IOptionScreenBase
     {
-        // 遊び方ガイド画面
+        // スロット情報画面
 
         // const
-
-        // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract { get; set; }
+        private const int maxPage = 4;
 
         // var
-        // スクリーン
-        [SerializeField] private Image screen;
-        // 表示する画面
-        [SerializeField] private List<Sprite> imageList;
+
+        // 各種画面
+        // 情報表示
+        [SerializeField] private SlotMainDataUI slotMainDataUI;
+
+
         // 次ボタン
         [SerializeField] private ButtonComponent nextButton;
         // 前ボタン
@@ -30,15 +32,20 @@ namespace ReelSpinGame_Option.MenuContent
         // ページ表記
         [SerializeField] private TextMeshProUGUI pageCount;
 
-        // 表示中のページ番号
-        private int currentPage = 0;
+        // 操作ができる状態か(アニメーション中などはつけないこと)
+        public bool CanInteract { get; set; }
 
         // 画面を閉じたときのイベント
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
-        // func
+        // 表示中のページ番号
+        private int currentPage = 0;
 
+        // プレイヤーデータのアドレス
+        private PlayerDatabase playerData;
+
+        // func
         private void Awake()
         {
             // ボタン登録
@@ -57,7 +64,7 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            Debug.Log("Initialized How To Play");
+            Debug.Log("Initialized SlotData");
             CanInteract = true;
             Debug.Log("Interact :" + CanInteract);
             currentPage = 0;
@@ -74,18 +81,24 @@ namespace ReelSpinGame_Option.MenuContent
             Debug.Log("Interact :" + CanInteract);
             if (CanInteract)
             {
-                Debug.Log("Closed How To Play");
+                Debug.Log("Closed SlotData");
                 closeButton.ToggleInteractive(false); ;
                 nextButton.ToggleInteractive(false);
                 previousButton.ToggleInteractive(false);
             }
         }
 
+        // データを受け渡す
+        public void SendData(PlayerDatabase player)
+        {
+            playerData = player;
+        }
+
         // 次ボタンを押したときの挙動
         private void OnNextPushed()
         {
             Debug.Log("Next pressed");
-            if (currentPage + 1 == imageList.Count)
+            if (currentPage + 1 == maxPage)
             {
                 currentPage = 0;
             }
@@ -103,7 +116,7 @@ namespace ReelSpinGame_Option.MenuContent
             Debug.Log("Previous pressed");
             if (currentPage - 1 < 0)
             {
-                currentPage = imageList.Count - 1;
+                currentPage = maxPage - 1;
             }
             else
             {
@@ -120,8 +133,17 @@ namespace ReelSpinGame_Option.MenuContent
         private void UpdateScreen()
         {
             Debug.Log("Page:" + currentPage + 1);
-            screen.sprite = imageList[currentPage];
-            pageCount.text = (currentPage + 1) + "/" + imageList.Count;
+            // ページごとに処理を行う
+
+            switch (currentPage)
+            {
+                case 0:
+                    slotMainDataUI.UpdateText(playerData);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

@@ -15,13 +15,16 @@ namespace ReelSpinGame_Option.MenuBar
         // var
 
         // 各種ボタン
-        // 遊び方のボタン
+        // 遊び方ガイドを開くボタン
         [SerializeField] private ButtonComponent howToPlayButton;
+        // スロット情報画面を開くボタン
+        [SerializeField] private ButtonComponent slotDataButton;
 
         // 各種画面
-        // 遊び方表示画面
-        // テスト用
-        [SerializeField] private HowToPlayScreen howToPlayScreen; 
+        // 遊び方ガイドの画面
+        [SerializeField] private HowToPlayScreen howToPlayScreen;
+        // スロット情報画面
+        [SerializeField] private SlotDataScreen slotDataScreen;
 
         // 何かしらのボタンを押したときのイベント
         public delegate void OnPressedMenu();
@@ -35,47 +38,81 @@ namespace ReelSpinGame_Option.MenuBar
 
         void Awake()
         {
-            howToPlayButton.ButtonPushedEvent += TestOpen;
-            howToPlayScreen.OnClosedScreenEvent += TestClose;
+            howToPlayButton.ButtonPushedEvent += HowToPlayOpen;
+            howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
+            slotDataButton.ButtonPushedEvent += SlotDataOpen;
+            slotDataScreen.OnClosedScreenEvent += SlotDataClose;
         }
 
         void Start()
         {
-            howToPlayButton.ToggleInteractive(true);
+            SetInteractiveAllButton(true);
         }
 
         void OnDestroy()
         {
-            howToPlayButton.ButtonPushedEvent -= TestOpen;
-            howToPlayScreen.OnClosedScreenEvent -= TestClose;
+            howToPlayButton.ButtonPushedEvent -= HowToPlayOpen;
+            howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
+            slotDataButton.ButtonPushedEvent += SlotDataOpen;
+            slotDataScreen.OnClosedScreenEvent += SlotDataClose;
         }
 
         // func
-        // (テスト用)
-        // 何かのボタンを開いた時の関数
-        public void TestOpen()
+        // 遊び方ガイドを開いた時の処理
+        public void HowToPlayOpen()
         {
             howToPlayScreen.gameObject.SetActive(true);
             howToPlayScreen.OpenScreen();
-            SetInteractiveAllButton(false);
-            OnPressedMenuEvent?.Invoke();
-            Debug.Log("Open Dialog");
+            OnPressedBehaviour();
+            Debug.Log("Open HowToPlay");
         }
 
-        // 画面を閉じたときのイベント
-        public void TestClose()
+        // 遊び方ガイドを閉じた時の処理
+        public void HowToPlayClose()
         {
             howToPlayScreen.CloseScreen();
             howToPlayScreen.gameObject.SetActive(false);
+            OnClosedBehaviour();
+            Debug.Log("Close HowToPlay");
+        }
+
+        // スロット情報を開いた時の処理
+        public void SlotDataOpen()
+        {
+            slotDataScreen.gameObject.SetActive(true);
+            slotDataScreen.OpenScreen();
+            OnPressedBehaviour();
+            Debug.Log("Open SlotData");
+        }
+
+        // スロット情報を閉じた時の処理
+        public void SlotDataClose()
+        {
+            slotDataScreen.CloseScreen();
+            slotDataScreen.gameObject.SetActive(false);
+            OnClosedBehaviour();
+            Debug.Log("Close SlotData");
+        }
+
+        // 画面を開いたときの処理
+        private void OnPressedBehaviour()
+        {
+            SetInteractiveAllButton(false);
+            OnPressedMenuEvent?.Invoke();
+        }
+
+        // 画面を閉じたときの処理
+        private void OnClosedBehaviour()
+        {
             SetInteractiveAllButton(true);
             OnClosedScreenEvent?.Invoke();
-            Debug.Log("Close");
         }
 
         // 全メニューのロック設定
         public void SetInteractiveAllButton(bool value)
         {
             howToPlayButton.ToggleInteractive(value);
+            slotDataButton.ToggleInteractive(value);
         }
     }
 }

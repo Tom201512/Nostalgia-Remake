@@ -5,14 +5,11 @@ using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.Button
 {
-    public class ButtonComponent : MonoBehaviour, IPointerDownHandler
+    public class ButtonComponent : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
     {
         // ボタン用
 
         // const
-
-        // var
-
         // アイコン
         [SerializeField] private Image iconImage;
         // テキスト
@@ -28,28 +25,41 @@ namespace ReelSpinGame_Option.Button
         void Awake()
         {
             CanInteractable = false;
-            ChangeButtonContentColor(Color.white);
+            ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
         }
 
-        private void OnMouseOver()
+        public void OnPointerEnter(PointerEventData eventData)
         {
             Debug.Log("Mouse entered");
+            ChangeButtonContentColor(new Color(1,1,1,1f));
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            Debug.Log("Mouse leaved");
+            ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("Interactable :" + CanInteractable);
-            if (CanInteractable)
+            Debug.Log("Pointer:" + eventData.button);
+            if(eventData.button == 0)
             {
-                ButtonPushedEvent?.Invoke();
-                //ChangeButtonContentColor(Color.yellow);
-                Debug.Log(name + " Pushed");
+                Debug.Log("Interactable :" + CanInteractable);
+                if (CanInteractable)
+                {
+                    ButtonPushedEvent?.Invoke();
+                    Debug.Log(name + " Pushed");
+                }
+
+                ChangeButtonContentColor(new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         }
 
-        private void OnMouseUp()
+        public void OnPointerUp(PointerEventData eventData)
         {
-            ChangeButtonContentColor(Color.white);
+            Debug.Log("Mouse up");
+            ChangeButtonContentColor(new Color(1, 1, 1, 1f));
         }
 
         public void ToggleInteractive(bool value) => CanInteractable = value;
@@ -64,7 +74,7 @@ namespace ReelSpinGame_Option.Button
 
             if (text != null)
             {
-                text.material.color = color;
+                text.color = color;
                 Debug.Log("Changed text color");
             }
         }

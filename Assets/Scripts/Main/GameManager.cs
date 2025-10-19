@@ -10,6 +10,7 @@ using ReelSpinGame_Option;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using UnityEngine;
+using ReelSpinGame_Option.MenuContent;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private OptionManager optionManagerObj;
     // プレイヤーUI
     [SerializeField] PlayerUI playerUI;
+    // スロット情報データ画面UI
+    [SerializeField] SlotDataScreen slotDataScreen;
 
     // デバッグ用
     [SerializeField] MedalTestUI medalUI;
@@ -184,6 +187,8 @@ public class GameManager : MonoBehaviour
         // UI 設定
         waitUI.SetWaitManager(Wait);
         autoUI.SetAutoFunction(Auto);
+
+        slotDataScreen.SendData(Player);
 
         // デバッグをすべて非表示
         ToggleDebugUI(false);
