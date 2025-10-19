@@ -2,6 +2,7 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_System;
+using ReelSpinGame_Util.OriginalInputs;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -54,7 +55,22 @@ namespace ReelSpinGame_Option.MenuContent
             previousButton.ButtonPushedEvent += OnPreviousPushed;
         }
 
-        void OnDestroy()
+        private void Update()
+        {
+            if(CanInteract)
+            {
+                if (OriginalInput.CheckOneKeyInput(KeyCode.RightArrow))
+                {
+                    OnNextPushed();
+                }
+                if (OriginalInput.CheckOneKeyInput(KeyCode.LeftArrow))
+                {
+                    OnPreviousPushed();
+                }
+            }
+        }
+
+        private void OnDestroy()
         {
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             nextButton.ButtonPushedEvent -= OnNextPushed;
