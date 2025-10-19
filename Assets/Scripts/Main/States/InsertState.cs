@@ -185,7 +185,11 @@ namespace ReelSpinGame_State.InsertState
             }
 
             // 小役カウンタ減少
-            gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
+            // リプレイでは増やさない(0増加)
+            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            {
+                gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
+            }
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);
         }

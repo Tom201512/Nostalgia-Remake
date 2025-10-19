@@ -36,12 +36,16 @@ namespace ReelSpinGame_State.PayoutState
             // 払い出しの結果をデータに反映
             PayoutUpdate();
 
-            // 小役が当選していたら増加させる
+            // 通常時に小役が当選していたら増加させる
             // リプレイでは増やさない(0増加)
-            if (gM.Reel.GetPayoutResultData().Payout > 0 || gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
+            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payout);
+                if (gM.Reel.GetPayoutResultData().Payout > 0 || gM.Reel.GetPayoutResultData().IsReplayOrJacIn)
+                {
+                    gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payout);
+                }
             }
+
 
             // 状態遷移
             CheckGameModeStatusChange();
