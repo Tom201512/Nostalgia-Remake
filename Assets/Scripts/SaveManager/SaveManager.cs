@@ -235,10 +235,11 @@ namespace ReelSpinGame_System
         public bool DeleteSaveFile()
         {
             string path = Application.persistentDataPath + "/Nostalgia/save.sav";
-
+            string keyPath = Application.persistentDataPath + "/Nostalgia/save.key";
             try
             {
                 File.Delete(path);
+                File.Delete(keyPath);
             }
             catch (Exception e)
             {
