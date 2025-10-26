@@ -7,7 +7,7 @@ namespace ReelSpinGame_Option.MenuContent
 {
     public class ProbabilityDataUI : MonoBehaviour
     {
-        // スロット基本情報画面のスクリプト
+        // 通常時確率などの情報
 
         // 情報画面
         [SerializeField] TextMeshProUGUI textUI;
@@ -47,14 +47,14 @@ namespace ReelSpinGame_Option.MenuContent
             if (player.PlayerAnalyticsData.NormalBellHitCount > 0)
             {
                 float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalBellHitCount;
-                data += "1/" + probability.ToString("F3") + "\t\t\t\t";
+                data += "1/" + probability.ToString("F3") + "<space=5em>";
             }
             else
             {
-                data += "1/---" + "\t\t\t\t";
+                data += "1/---" + "<space=5em>";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalBellHitCount + "\t\t\t\t";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalBellHitCount + "<space=5em>";
             data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalBellLineUpCount + "\n";
 
 
@@ -64,14 +64,14 @@ namespace ReelSpinGame_Option.MenuContent
             if (player.PlayerAnalyticsData.NormalMelonHitCount > 0)
             {
                 float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalMelonHitCount;
-                data += "1/" + probability.ToString("F3") + "\t\t\t\t";
+                data += "1/" + probability.ToString("F3") + "<space=5em>";
             }
             else
             {
-                data += "1/---" + "\t\t\t\t";
+                data += "1/---" + "<space=5em>";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalMelonHitCount + "\t\t\t\t";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalMelonHitCount + "<space=5em>";
             data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalMelonLineUpCount + "\n";
 
 
@@ -81,14 +81,14 @@ namespace ReelSpinGame_Option.MenuContent
             if (player.PlayerAnalyticsData.NormalCherry2HitCount > 0)
             {
                 float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalCherry2HitCount;
-                data += "1/" + probability.ToString("F3") + "\t\t\t\t";
+                data += "1/" + probability.ToString("F3") + "<space=5em>";
             }
             else
             {
-                data += "1/---" + "\t\t\t\t";
+                data += "1/---" + "<space=5em>";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry2HitCount + "\t\t\t\t";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry2HitCount + "<space=5em>";
             data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalCherry2LineUpCount + "\n";
 
 
@@ -98,14 +98,14 @@ namespace ReelSpinGame_Option.MenuContent
             if (player.PlayerAnalyticsData.NormalCherry4HitCount > 0)
             {
                 float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalCherry4HitCount;
-                data += "1/" + probability.ToString("F3") + "\t\t\t\t";
+                data += "1/" + probability.ToString("F3") + "<space=5em>";
             }
             else
             {
-                data += "1/---" + "\t\t\t\t";
+                data += "1/---" + "<space=5em>";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry4HitCount + "\t\t\t\t";
+            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry4HitCount + "<space=5em>";
             data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalCherry4LineUpCount + "\n";
 
             textUI.text = data;

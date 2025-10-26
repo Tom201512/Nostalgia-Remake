@@ -181,6 +181,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("セーブの読み込みに失敗しました。新規ファイルでプレイします。");
             Save.InitializeSave();
+            saveManager.DeleteSaveFile();
             Save.RecordSlotSetting(debugSetting);
         }
 

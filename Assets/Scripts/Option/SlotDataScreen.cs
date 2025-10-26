@@ -24,6 +24,8 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] private SlotMainDataUI slotMainDataUI;
         // 通常時小役確率
         [SerializeField] private ProbabilityDataUI probabilityDataUI;
+        // ボーナス中小役確率, JACハズシ確率
+        [SerializeField] private BonusProbabilityDataUI bonusProbabilityDataUI;
 
         // 次ボタン
         [SerializeField] private ButtonComponent nextButton;
@@ -171,6 +173,11 @@ namespace ReelSpinGame_Option.MenuContent
                     probabilityDataUI.UpdateText(playerData);
                     break;
 
+                case 2:
+                    bonusProbabilityDataUI.gameObject.SetActive(true);
+                    bonusProbabilityDataUI.UpdateText(playerData);
+                    break;
+
                 default:
                     break;
             }
@@ -182,6 +189,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             slotMainDataUI.gameObject.SetActive(false);
             probabilityDataUI.gameObject.SetActive(false);
+            bonusProbabilityDataUI.gameObject.SetActive(false);
         }
     }
 }

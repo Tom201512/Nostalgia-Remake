@@ -128,6 +128,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.Save.RecordReelPos(gM.Reel.GetLastStoppedReelData().LastPos);
             // ボーナス情報記録
             gM.Save.RecordBonusData(gM.Bonus.MakeSaveData());
+            Debug.Log("Saved");
         }
 
         // 払い出し確認
