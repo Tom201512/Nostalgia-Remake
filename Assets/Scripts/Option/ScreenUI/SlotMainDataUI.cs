@@ -9,62 +9,53 @@ namespace ReelSpinGame_Option.MenuContent
     {
         // スロット基本情報画面のスクリプト
 
-        // 情報画面
-        [SerializeField] TextMeshProUGUI textUI;
         // データ部分
         [SerializeField] TextMeshProUGUI dataTextUI;
 
         public void UpdateText(PlayerDatabase player)
         {
-            DisplayInfoText();
-            DisplayDataText(player);
-        }
+            string data = "\n";
+            float probability = 0.0f;
 
-        private void DisplayInfoText()
-        {
-            string data = "";
-            // ゲーム数など
-            data += "ゲーム数 Games\n";
-            data += "\t\t総ゲーム数 Total:\n";
-            data += "\t\t現在 Current:\n";
-            data += "\t\t通常時 Normal:\n";
-            data += "\t\tビッグチャンス中 BIG CHANCE:\n";
-            data += "\t\tボーナスゲーム中 BONUS GAME:\n\n";
-
-            // ボーナス回数
-            data += "ボーナス回数 Bonus:\n";
-            data += "\t\tビッグチャンス BIG CHANCE:\n";
-            data += "\t\tボーナスゲーム BONUS GAME:\n\n";
-
-            // メダル枚数
-            data += "メダル Medal:\n";
-            data += "\t\t枚数 Current:\n";
-            data += "\t\t投入 IN:\n";
-            data += "\t\t払出 OUT:\n";
-            data += "\t\t差枚 Difference\n";
-            data += "\t\t機械割 PayoutRate:";
-
-            textUI.text = data;
-        }
-
-        private void DisplayDataText(PlayerDatabase player)
-        {
-            string data = "";
             //総ゲーム数
-            data += player.PlayerAnalyticsData.TotalAllGamesCount.ToString().PadLeft(7, ' ') + "G\n";
+            data += player.PlayerAnalyticsData.TotalAllGamesCount.ToString() + "G\n";
             // 現在
-            data += player.CurrentGames.ToString().PadLeft(7, ' ') + "G\n";
+            data += player.CurrentGames.ToString()+ "G\n";
             // 通常時
-            data += player.TotalGames.ToString().PadLeft(7, ' ') + "G\n";
+            data += player.TotalGames.ToString() + "G\n";
             // BIG CHANCE
-            data += player.PlayerAnalyticsData.BigGamesCount.ToString().PadLeft(7, ' ') + "G\n";
+            data += player.PlayerAnalyticsData.BigGamesCount.ToString()+ "G\n";
             // BONUS GAME
-            data += player.PlayerAnalyticsData.JacGamesCount.ToString().PadLeft(7, ' ') + "G\n\n\n";
+            data += player.PlayerAnalyticsData.JacGamesCount.ToString() + "G\n\n\n";
 
-            // BIG回数
-            data += player.BigTimes.ToString().PadLeft(7, ' ') + "\n";
-            // REG回数
-            data += player.RegTimes.ToString().PadLeft(7, ' ') + "\n\n\n";
+            // ビッグチャンス
+            // 回数
+            data += player.BigTimes.ToString() + "\n";
+
+            if (player.BigTimes > 0)
+            {
+                probability = (float)player.TotalGames / player.BigTimes;
+                data += "1/" + probability.ToString("F2") + "\n\n\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n\n\n";
+            }
+
+            // ボーナスゲーム回数
+            // 回数
+            data += player.RegTimes.ToString() + "\n";
+
+            if (player.RegTimes > 0)
+            {
+                float regprobability = (float)player.TotalGames / player.RegTimes;
+                data += "1/" + regprobability.ToString("F2") + "\n" + "\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n\n\n";
+            }
+
 
 
             // メダル枚数

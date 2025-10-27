@@ -7,108 +7,174 @@ namespace ReelSpinGame_Option.MenuContent
 {
     public class ProbabilityDataUI : MonoBehaviour
     {
-        // 通常時確率などの情報
+        // 確率などの情報
 
-        // 情報画面
-        [SerializeField] TextMeshProUGUI textUI;
+        // データ部分
+        // 通常時
+        [SerializeField] TextMeshProUGUI normalDataTextUI;
+        // BIG時
+        [SerializeField] TextMeshProUGUI bigDataTextUI;
 
         public void UpdateText(PlayerDatabase player)
         {
-            string data = "";
+            DisplayNormalMode(player);
+            DisplayBigChance(player);
+        }
 
-            // ボーナス確率
-            data += "ボーナス確率 Bonus probability: " + "\n" + "\n";
-            data += "ビッグチャンス確率 BIG CHANCE: ";
-            if (player.BigTimes > 0)
-            {
-                float bigProbability = (float)player.TotalGames / player.BigTimes;
-                data += "1/" + bigProbability.ToString("F3") + "\n";
-            }
-            else
-            {
-                data += "1/---" + "\n";
-            }
-
-            data += "ボーナスゲーム確率 BONUS GAME: ";
-            if (player.RegTimes > 0)
-            {
-                float regprobability = (float)player.TotalGames / player.RegTimes;
-                data += "1/" + regprobability.ToString("F3") + "\n" + "\n";
-            }
-            else
-            {
-                data += "1/---" + "\n" + "\n";
-            }
+        // 通常時表示
+        private void DisplayNormalMode(PlayerDatabase player)
+        {
+            float probability = 0.0f;
+            string data = "\n\n";
 
             // 小役確率
-            data += "ベル Bell: " + "\n";
-            data += " 確率 Probability: ";
-
+            // ベル
+            // 確率
             if (player.PlayerAnalyticsData.NormalBellHitCount > 0)
             {
-                float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalBellHitCount;
-                data += "1/" + probability.ToString("F3") + "<space=5em>";
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalBellHitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
             }
             else
             {
-                data += "1/---" + "<space=5em>";
+                data += "1/---.--" + "\n";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalBellHitCount + "<space=5em>";
-            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalBellLineUpCount + "\n";
+            // 成立回数
+            data += player.PlayerAnalyticsData.NormalBellHitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.NormalBellLineUpCount + "\n\n\n";
 
-
-            data += "スイカ Melon: " + "\n";
-            data += " 確率 Probability: ";
-
+            // スイカ
+            // 確率
             if (player.PlayerAnalyticsData.NormalMelonHitCount > 0)
             {
-                float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalMelonHitCount;
-                data += "1/" + probability.ToString("F3") + "<space=5em>";
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalMelonHitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
             }
             else
             {
-                data += "1/---" + "<space=5em>";
+                data += "1/---.--" + "\n";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalMelonHitCount + "<space=5em>";
-            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalMelonLineUpCount + "\n";
+            // 成立回数
+            data += player.PlayerAnalyticsData.NormalMelonHitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.NormalMelonLineUpCount + "\n\n\n";
 
-
-            data += "2枚チェリー Cherry2: " + "\n";
-            data += " 確率 Probability: ";
-
+            // 2枚チェリー
+            // 確率
             if (player.PlayerAnalyticsData.NormalCherry2HitCount > 0)
             {
-                float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalCherry2HitCount;
-                data += "1/" + probability.ToString("F3") + "<space=5em>";
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalCherry2HitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
             }
             else
             {
-                data += "1/---" + "<space=5em>";
+                data += "1/---.--" + "\n";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry2HitCount + "<space=5em>";
-            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalCherry2LineUpCount + "\n";
+            // 成立回数
+            data += player.PlayerAnalyticsData.NormalCherry2HitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.NormalCherry2LineUpCount + "\n\n\n";
 
-
-            data += "4枚チェリー Cherry4: " + "\n";
-            data += " 確率 Probability: ";
-
+            // 4枚チェリー
+            // 確率
             if (player.PlayerAnalyticsData.NormalCherry4HitCount > 0)
             {
-                float probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalCherry4HitCount;
-                data += "1/" + probability.ToString("F3") + "<space=5em>";
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.NormalCherry4HitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
             }
             else
             {
-                data += "1/---" + "<space=5em>";
+                data += "1/---.--" + "\n";
             }
 
-            data += " 成立 Hit: " + player.PlayerAnalyticsData.NormalCherry4HitCount + "<space=5em>";
-            data += " 入賞 Line Up: " + player.PlayerAnalyticsData.NormalCherry4LineUpCount + "\n";
+            // 成立回数
+            data += player.PlayerAnalyticsData.NormalCherry4HitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.NormalCherry4LineUpCount + "\n\n\n";
 
-            textUI.text = data;
+            normalDataTextUI.text = data;
+        }
+
+        // ビッグチャンス時表示
+        private void DisplayBigChance(PlayerDatabase player)
+        {
+            float probability = 0.0f;
+            string data = "\n\n";
+
+            // 小役確率
+            // ベル
+            // 確率
+            if (player.PlayerAnalyticsData.BigBellHitCount > 0)
+            {
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.BigBellHitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n";
+            }
+
+            // 成立回数
+            data += player.PlayerAnalyticsData.BigBellHitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.BigBellLineUpCount + "\n\n\n";
+
+            // スイカ
+            // 確率
+            if (player.PlayerAnalyticsData.BigMelonHitCount > 0)
+            {
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.BigMelonHitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n";
+            }
+
+            // 成立回数
+            data += player.PlayerAnalyticsData.BigMelonHitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.BigMelonLineUpCount + "\n\n\n";
+
+            // 2枚チェリー
+            // 確率
+            if (player.PlayerAnalyticsData.BigCherry2HitCount > 0)
+            {
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.BigCherry2HitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n";
+            }
+
+            // 成立回数
+            data += player.PlayerAnalyticsData.BigCherry2HitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.BigCherry2LineUpCount + "\n\n\n";
+
+            // 4枚チェリー
+            // 確率
+            if (player.PlayerAnalyticsData.BigCherry4HitCount > 0)
+            {
+                probability = (float)player.TotalGames / player.PlayerAnalyticsData.BigCherry4HitCount;
+                data += "1/" + probability.ToString("F2") + "\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n";
+            }
+
+            // 成立回数
+            data += player.PlayerAnalyticsData.BigCherry4HitCount + "\n";
+            // 入賞回数
+            data += player.PlayerAnalyticsData.BigCherry4LineUpCount + "\n\n\n";
+
+            bigDataTextUI.text = data;
         }
     }
 }
