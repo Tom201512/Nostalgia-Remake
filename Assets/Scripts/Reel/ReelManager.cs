@@ -100,6 +100,8 @@ public class ReelManager : MonoBehaviour
     public int GetRandomValue() => data.RandomValue;
 
     // リールオブジェクト
+    // 指定リールの図柄配列を渡す
+    public byte[] GetArrayContents(ReelID reelID) => reelObjects[(int)reelID].GetReelDatabase().Array;
     // 指定したリールの現在位置(下段)を返す
     public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);
     // 指定したリールの停止可能位置(中段)を返す
