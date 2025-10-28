@@ -1915,10 +1915,11 @@ MonoBehaviour:
   m_text: "\u76F4\u8FD1\u30DC\u30FC\u30CA\u30B9\u60C5\u5831 Latest bonus:\n\t\u6210\u7ACB\u30B2\u30FC\u30E0
     Bonus hit game:\n\t\u5165\u8CDE\u30B2\u30FC\u30E0 Bonus line up game:\n\t\u7372\u5F97\u679A\u6570
     Payout:\n\nJAC \u30CF\u30BA\u30B7 JAC-Avoid:\n\t\u6210\u529F\u56DE\u6570 JAC-Avoid
-    Success:\n\t\u6210\u529F\u78BA\u7387 Accuracy:\n\t\u30D3\u30BF\u30CF\u30BA\u30B7
-    Perfect-Avoid:\n\t\u30A2\u30B7\u30B9\u30C8\u30CF\u30BA\u30B7 Assisted-Avoid:\n\t\u30D3\u30BF\u62BC\u3057\u7CBE\u5EA6
+    Success:\n\t\u30D3\u30BF\u30CF\u30BA\u30B7 Perfect-Avoid:\n\t\u30A2\u30B7\u30B9\u30C8\u30CF\u30BA\u30B7
+    Assisted-Avoid:\n\t\u6210\u529F\u78BA\u7387 Accuracy:\n\t\u30D3\u30BF\u62BC\u3057\u7CBE\u5EA6
     Perfect-Accuracy:\n\n\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0\u4E2D\u30CF\u30BA\u30EC
-    BONUS GAME No payouts:\n\n"
+    BONUS GAME No payout\n\t\u767A\u751F\u56DE\u6570 Times:\n\t\u767A\u751F\u78BA\u7387
+    Probability:\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ddfd541b17943d94ebb49b82bfeeccca, type: 2}
   m_sharedMaterial: {fileID: -4681302108203465451, guid: ddfd541b17943d94ebb49b82bfeeccca, type: 2}
@@ -2163,9 +2164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 1
+  useInstant: 0
   useInfinityInstant: 0
-  instantFlagID: 1
+  instantFlagID: 0
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4332,14 +4333,17 @@ MonoBehaviour:
 
     9999999
 
-    999.99%
-
     9999999
 
     9999999
 
     999.99%
 
+    999.99%
+
+
+
+    9999999
 
     9999999'
   m_isRightToLeft: 0

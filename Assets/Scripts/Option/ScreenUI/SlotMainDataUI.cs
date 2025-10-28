@@ -48,8 +48,8 @@ namespace ReelSpinGame_Option.MenuContent
 
             if (player.RegTimes > 0)
             {
-                float regprobability = (float)player.TotalGames / player.RegTimes;
-                data += "1/" + regprobability.ToString("F2") + "\n" + "\n";
+                probability = (float)player.TotalGames / player.RegTimes;
+                data += "1/" + probability.ToString("F2") + "\n" + "\n";
             }
             else
             {
@@ -71,7 +71,7 @@ namespace ReelSpinGame_Option.MenuContent
             if (player.PlayerMedalData.CurrentInMedal > 0 && player.PlayerMedalData.CurrentOutMedal > 0)
             {
                 float payoutRate = (float)player.PlayerMedalData.CurrentOutMedal / player.PlayerMedalData.CurrentInMedal * 100;
-                data += payoutRate.ToString("F2").PadLeft(5, ' ') + "%";
+                data += payoutRate.ToString("F2") + "%\n";
             }
             else
             {

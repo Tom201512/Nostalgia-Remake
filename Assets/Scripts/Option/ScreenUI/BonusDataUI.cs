@@ -61,9 +61,56 @@ namespace ReelSpinGame_Option.MenuContent
                 data += "-------\n";
             }
 
-                data += "\n";
+            data += "\n\n";
 
-             dataTextUI.text = data;
+            // JACハズシ
+            // 成功回数
+            data += player.PlayerAnalyticsData.BigJacAvoidTimes + "\n";
+            // ビタハズシ回数
+            data += player.PlayerAnalyticsData.BigJacPerfectAvoidTimes + "\n";
+            // アシストハズシ回数
+            data += player.PlayerAnalyticsData.BigJacAssistedAvoidTimes + "\n";
+
+            // 成功確率
+            if (player.PlayerAnalyticsData.BigJacAvoidTimes > 0)
+            {
+                rate = (float)player.PlayerAnalyticsData.BigJacInTimes / player.PlayerAnalyticsData.BigJacAvoidTimes * 100;
+                data += rate.ToString("F2") + "%\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n";
+            }
+
+            // ビタハズシ成功確率
+            if (player.PlayerAnalyticsData.BigJacPerfectAvoidTimes > 0)
+            {
+                rate = (float)player.PlayerAnalyticsData.BigJacAvoidTimes / player.PlayerAnalyticsData.BigJacPerfectAvoidTimes * 100;
+                data += rate.ToString("F2") + "%\n";
+            }
+            else
+            {
+                data += "1/---.--" + "\n";
+            }
+
+            data += "\n\n";
+
+
+            // ボーナスゲーム中ハズレ
+            // 回数
+            data += player.PlayerAnalyticsData.JacGameNoneTimes + "\n";
+            // 確率
+            if (player.PlayerAnalyticsData.JacGameNoneTimes > 0)
+            {
+                probability = (float)player.PlayerAnalyticsData.JacGamesCount / player.PlayerAnalyticsData.JacGameNoneTimes;
+                data += "1/" + probability.ToString("F2");
+            }
+            else
+            {
+                data += "1/---.--";
+            }
+
+            dataTextUI.text = data;
         }
      }
 }
