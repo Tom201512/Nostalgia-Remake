@@ -1,10 +1,9 @@
-using ReelSpinGame_Reels.Symbol;
 using ReelSpinGame_Datas;
+using ReelSpinGame_Reels.Symbol;
 using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.ReelData;
-using UnityEngine.Timeline;
 
 namespace ReelSpinGame_Reels
 {
@@ -107,6 +106,7 @@ namespace ReelSpinGame_Reels
         public int GetReelPos(ReelPosID posID) => reelData.GetReelPos((sbyte)posID);
         // sbyteで読む場合
         public int GetReelPos(sbyte posID) => reelData.GetReelPos(posID);
+
         // 指定した位置の図柄を返す
         public ReelSymbols GetReelSymbol(ReelPosID posID) => reelData.GetReelSymbol((sbyte)posID);
         // sbyteで読む場合
@@ -115,9 +115,11 @@ namespace ReelSpinGame_Reels
         public ReelSymbols GetSymbolFromWillStop(ReelPosID posID) => reelData.GetSymbolFromWillStop((sbyte)posID);
         // sbyteで読む場合
         public ReelSymbols GetSymbolFromWillStop(sbyte posID) => reelData.GetSymbolFromWillStop(posID);
-
         // リール条件を渡す
         public ReelDatabase GetReelDatabase() => reelDatabaseFile;
+
+        // 指定番号の図柄画像を返す
+        public Sprite GetSymbolImageAtPos(int pos) => symbolManager.GetSymbolImage(reelDatabaseFile.Array[pos]);
 
         // リールデータを渡す
         public void SetReelData(int reelID, int initialLowerPos)
@@ -349,13 +351,6 @@ namespace ReelSpinGame_Reels
                     StopReelSpeed();
                 }
             }
-
-            /*
-            if (( && Math.Sign(rotateSpeed) == 1) ||
-                (transform.rotation.eulerAngles.x > ChangeAngle && Math.Sign(rotateSpeed) != -1))
-            {
-
-            }*/
         }
 
         // リールの回転を停止させる

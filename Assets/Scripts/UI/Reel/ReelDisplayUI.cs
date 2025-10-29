@@ -1,8 +1,5 @@
-using ReelSpinGame_Reels;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_UI.Reel
 {
@@ -11,15 +8,17 @@ namespace ReelSpinGame_UI.Reel
         // リール結果表示
 
         // var
-        // リール図柄
-        [SerializeField] Sprite[] symbolImages;
-        // 各リール
-        [SerializeField] List<ReelObject> reels;
+        // リールディスプレイ
+        [SerializeField] List<ReelDisplayer> reelDisplayers;
 
         // Start is called before the first frame update
         void Start()
         {
-
+            foreach(ReelDisplayer display in  reelDisplayers)
+            {
+                Debug.Log("Display at" + 19);
+                display.DisplayReel(19);
+            }
         }
 
         // Update is called once per frame

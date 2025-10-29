@@ -1,14 +1,11 @@
 using ReelSpinGame_Reels.Symbol;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using static ReelSpinGame_Reels.ReelData;
 
 public class SymbolChange : MonoBehaviour
 {
-    // var
-    // 図柄の表示用
-    [SerializeField] private Sprite[] symbolImages;
-
     // 表示部分
     private SpriteRenderer sprite;
 
@@ -21,7 +18,7 @@ public class SymbolChange : MonoBehaviour
     }
 
     // 図柄変更
-    public void ChangeSymbol(ReelSymbols symbolID) => sprite.sprite = symbolImages[(int)symbolID];
+    public void ChangeSymbol(Sprite symbolSprite) => sprite.sprite = symbolSprite;
 
     // 位置IDを返す
     public ReelPosID GetPosID() => posID;

@@ -111,7 +111,7 @@ namespace ReelSpinGame_Reels
         public void FinishStopReel() => CurrentReelStatus = ReelStatus.Stopped;
 
         // リール位置をオーバーフローしない数値で返す
-        private int OffsetReel(int reelPos, int offset)
+        public static int OffsetReel(int reelPos, int offset)
         {
             if (reelPos + offset < 0)
             {
