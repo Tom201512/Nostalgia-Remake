@@ -1,7 +1,9 @@
 using ReelSpinGame_Reels.Symbol;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Reels.Effect
 {
@@ -9,12 +11,17 @@ namespace ReelSpinGame_Reels.Effect
     public class ReelEffectManager : MonoBehaviour
     {
         // var
+        // ‹^——V‹Z—p‚ÌƒŠ[ƒ‹î•ñ
+        [SerializeField] private List<ReelObject> fakeReelSpinObjects;
         // ƒŠ[ƒ‹ƒGƒtƒFƒNƒg‚Ì”z—ñ
         [SerializeField] private List<ReelEffect> reelEffectList;
 
+        // ‹^——V‹Z’†‚©
+        public bool HasFakeSpin { get; private set; }
+
         private void Awake()
         {
-            
+            HasFakeSpin = false;
         }
 
         // w’è‚µ‚½ƒŠ[ƒ‹‚ÌƒoƒbƒNƒ‰ƒCƒg•ÏX
@@ -56,6 +63,36 @@ namespace ReelSpinGame_Reels.Effect
                     }
                 }
             }
+        }
+
+        // ‹^——V‹Z
+        public void StartFakeSpin()
+        {
+            HasFakeSpin = true;
+            StartCoroutine(nameof(FakeSpinTestA));
+        }
+
+        // ‹^——V‹ZƒeƒXƒg
+        private IEnumerator FakeSpinTestA()
+        {
+            Debug.Log("‹^——V‹Z‚ğŠJn‚µ‚Ü‚µ‚½B");
+            
+            Debug.Log("‰EƒŠ[ƒ‹‚ğ1•bŒã‚É‰ñ“]‚³‚¹‚Ü‚·B");
+            yield return new WaitForSeconds(1.0f);
+            fakeReelSpinObjects[(int)ReelID.ReelRight].StartReel(0.98f, true);
+
+            Debug.Log("’†ƒŠ[ƒ‹‚ğ1•bŒã‚É‰ñ“]‚³‚¹‚Ü‚·B");
+            yield return new WaitForSeconds(1.0f);
+            fakeReelSpinObjects[(int)ReelID.ReelMiddle].StartReel(0.98f, true);
+
+            Debug.Log("¶ƒŠ[ƒ‹‚ğ1•bŒã‚É‰ñ“]‚³‚¹‚Ü‚·B");
+            yield return new WaitForSeconds(1.0f);
+            fakeReelSpinObjects[(int)ReelID.ReelLeft].StartReel(0.98f, true);
+
+            Debug.Log("3•bŒã‚É‹^——V‹Z‚ğI—¹‚µ‚Ü‚·");
+            yield return new WaitForSeconds(3.0f);
+            Debug.Log("‹^——V‹Z‚ğI—¹‚µ‚Ü‚µ‚½");
+            HasFakeSpin = false;
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.ReelData;
+using UnityEngine.Timeline;
 
 namespace ReelSpinGame_Reels
 {
@@ -78,15 +79,9 @@ namespace ReelSpinGame_Reels
 
         private void Update()
         {
-            //止まっていないときは加速
-            if (rotateSpeed < maxSpeed && Math.Sign(maxSpeed) == 1 ||
-            rotateSpeed > maxSpeed && Math.Sign(maxSpeed) == -1)
-            {
-                SpeedUpReel();
-            }
-
             if (maxSpeed != 0)
             {
+                ChangeReelSpeed();
                 RotateReel();
             }
         }
@@ -150,6 +145,20 @@ namespace ReelSpinGame_Reels
             ChangeBlurSetting(true);
         }
 
+        // 速度変更
+        public void AdjustMaxSpeed(float maxSpeed)
+        {
+            Debug.Log("Max speed changed:" + maxSpeed);
+            if (Math.Sign(this.maxSpeed) != Math.Sign(maxSpeed))
+            {
+                rotateSpeed = 0f;
+            }
+            this.maxSpeed = maxSpeed;
+        }
+
+        // ブラー設定
+        public void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
+
         // リール停止
         public void StopReel(int pushedPos, int delay) => reelData.BeginStopReel(pushedPos, delay, false);
 
@@ -172,12 +181,40 @@ namespace ReelSpinGame_Reels
             StopReelSpeed();
         }
 
-        // 速度加速
-        private void SpeedUpReel() =>
-            rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(rotateRPS) * Time.deltaTime * Math.Sign(maxSpeed), -1 * maxSpeed, maxSpeed);
+        // 速度変更
+        private void ChangeReelSpeed()
+        {
+            // 回転速度が最高速度より低ければ加速、高ければ減速させる。
+            // 逆回転の場合
+            if(Math.Sign(maxSpeed) == -1)
+            {
+                if (rotateSpeed > maxSpeed)
+                {
+                    Debug.Log("Speed Up Reverse");
+                    rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(rotateRPS) * Time.deltaTime * -1, maxSpeed, 0);
+                }
+                else if (rotateSpeed < maxSpeed)
+                {
+                    Debug.Log("Speed Down Reverse");
+                    rotateSpeed = Mathf.Clamp(rotateSpeed -= ReturnReelAccerateSpeed(rotateRPS) * Time.deltaTime * -1, maxSpeed, 0);
+                }
+            }
+            // 前回転の場合
+            else
+            {
+                if (rotateSpeed < maxSpeed)
+                {
+                    rotateSpeed = Mathf.Clamp(rotateSpeed += ReturnReelAccerateSpeed(rotateRPS) * Time.deltaTime * 1, 0, maxSpeed);
+                }
+                else if (rotateSpeed > maxSpeed)
+                {
+                    Debug.Log("Speed down");
+                    rotateSpeed = Mathf.Clamp(rotateSpeed -= ReturnReelAccerateSpeed(rotateRPS) * Time.deltaTime * 1, 0, maxSpeed);
+                }
+            }
 
-        // ブラーを切るか
-        private void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
+            Debug.Log("RotateSpeed:" + rotateSpeed);
+        }
 
         // JAC時の明るさ計算(
         private byte CalculateJACBrightness(bool isNegative)
@@ -221,7 +258,11 @@ namespace ReelSpinGame_Reels
         // リール回転
         private void RotateReel()
         {
-            float rotationAngle = Math.Clamp((ReturnDegreePerSecond(rotateRPS)) * Time.deltaTime * rotateSpeed, 0, 360);
+            float rotationAngle;
+            rotationAngle = Math.Clamp((ReturnDegreePerSecond(rotateRPS)) * Time.deltaTime * rotateSpeed, -360, 360);
+            Debug.Log("RotationAngle:" + rotationAngle);
+
+            Debug.Log(rotationAngle * Vector3.left);
             transform.Rotate(rotationAngle * Vector3.left);
 
             // JAC中であればライトの調整をする
@@ -239,21 +280,22 @@ namespace ReelSpinGame_Reels
                 }
             }
 
-            //Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
+            Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
             //Debug.Log("ChangeAngle:" + (360f - ChangeAngle));
 
             // 一定角度に達したら図柄の更新(17.14286度)
-            if (transform.rotation.eulerAngles.x > 0 &&
-                (transform.rotation.eulerAngles.x < 360f - ChangeAngle && Math.Sign(rotateSpeed) == 1) ||
-                (transform.rotation.eulerAngles.x > ChangeAngle && Math.Sign(rotateSpeed) == -1))
+
+            // 回転速度に合わせて変更
+            // 逆回転の場合
+            if(Math.Sign(rotateSpeed) == -1 && transform.rotation.eulerAngles.x < 180 && transform.rotation.eulerAngles.x > ChangeAngle)
             {
-                //Debug.Log("Symbol changed");
+                Debug.Log("Symbol changed");
                 // 図柄位置変更
                 reelData.ChangeReelPos(rotateSpeed);
                 symbolManager.UpdateSymbolsObjects(reelData);
 
                 // 角度をもとに戻す
-                transform.Rotate(Vector3.right, (ChangeAngle) * Math.Sign(rotateSpeed));
+                transform.Rotate(Vector3.right, ChangeAngle * -1);
 
                 if (HasJacModeLight)
                 {
@@ -275,6 +317,45 @@ namespace ReelSpinGame_Reels
                     StopReelSpeed();
                 }
             }
+            // 前回転の場合
+            else if(Math.Sign(rotateSpeed) == 1 && transform.rotation.eulerAngles.x > 180 && transform.rotation.eulerAngles.x < 360f - ChangeAngle)
+            {
+                Debug.Log("Symbol changed");
+                // 図柄位置変更
+                reelData.ChangeReelPos(rotateSpeed);
+                symbolManager.UpdateSymbolsObjects(reelData);
+
+                // 角度をもとに戻す
+                transform.Rotate(Vector3.right, ChangeAngle);
+
+
+                if (HasJacModeLight)
+                {
+                    if (Math.Sign(maxSpeed) == -1)
+                    {
+                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOffValue);
+                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOnValue);
+                    }
+                    else
+                    {
+                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
+                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
+                    }
+                }
+
+                // 停止する位置になったら
+                if (reelData.CurrentReelStatus == ReelStatus.Stopping && reelData.CheckReachedStop())
+                {
+                    StopReelSpeed();
+                }
+            }
+
+            /*
+            if (( && Math.Sign(rotateSpeed) == 1) ||
+                (transform.rotation.eulerAngles.x > ChangeAngle && Math.Sign(rotateSpeed) != -1))
+            {
+
+            }*/
         }
 
         // リールの回転を停止させる

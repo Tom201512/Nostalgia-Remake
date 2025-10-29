@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4246934
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5170,6 +5170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68c86a25b79d314ab5c2de97c941654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fakeReelSpinObjects:
+  - {fileID: 1933351382769078780}
+  - {fileID: 1190830224200012641}
+  - {fileID: 1933351381669917605}
   reelEffectList:
   - {fileID: 1933351382769078782}
   - {fileID: 1190830224200012643}
@@ -7702,6 +7706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symbolImages: []
+  reels: []
 --- !u!1001 &1504003625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9169,6 +9174,7 @@ GameObject:
   - component: {fileID: 1787737427}
   - component: {fileID: 1787737426}
   - component: {fileID: 1787737428}
+  - component: {fileID: 1787737429}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -9240,6 +9246,22 @@ MonoBehaviour:
   sePlayer: {fileID: 1187044818}
   jinglePlayer: {fileID: 1780579353}
   bgmPlayer: {fileID: 656534617}
+--- !u!114 &1787737429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787737424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153eab5bd346be343aef7f25f0bad3fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reelObjects:
+  - {fileID: 1933351382769078780}
+  - {fileID: 1190830224200012641}
+  - {fileID: 1933351381669917605}
 --- !u!1001 &1801798812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10532,7 +10554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2045587106
 RectTransform:
   m_ObjectHideFlags: 0

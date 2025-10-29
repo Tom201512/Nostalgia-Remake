@@ -23,6 +23,8 @@ namespace ReelSpinGame_Effect
         const float VFlashWaitTime = 2.0f;
 
         // var
+        // 疑似遊技機能
+        private FakeReelSpin fakeReelSpinManager;
         // フラッシュ機能
         private FlashManager flashManager;
         // サウンド機能
@@ -50,6 +52,7 @@ namespace ReelSpinGame_Effect
         // func 
         private void Awake()
         {
+            fakeReelSpinManager = GetComponent<FakeReelSpin>();
             flashManager = GetComponent<FlashManager>();
             soundManager = GetComponent<SoundManager>();
             HasBonusStart = false;
@@ -63,6 +66,8 @@ namespace ReelSpinGame_Effect
             StopAllCoroutines();
         }
 
+        // 疑似遊技中か
+        public bool GetHasFakeReelSpin() => fakeReelSpinManager.HasFakeReel;
         // フラッシュの待機中か
         public bool GetHasFlashWait() => flashManager.HasFlashWait;
         // 数値変更
@@ -71,6 +76,13 @@ namespace ReelSpinGame_Effect
         public void SetHasBonusStarted() => HasBonusStart = true;
         // ボーナスが終了したか
         public void SetHasBonusFinished() => HasBonusFinished = true;
+
+        // 疑似遊技関連
+        // 疑似遊技を開始(試験用)
+        public void StartFakeReelSpin()
+        {
+            fakeReelSpinManager.StartFakeReelSpin();
+        }
 
         // フラッシュ関連
         // リール全点灯

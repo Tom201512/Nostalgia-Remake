@@ -12,11 +12,8 @@ public class MainGameFlow
     // const
 
     //ゲーム状態シリアライズ
-    public enum GameStates { Init, Insert, FlagLots, Wait, Playing, Payout, Effect}
+    public enum GameStates { Init, Insert, FlagLots, FakeReel, Wait, Playing, Payout, Effect}
     // var
-    // 処理を止める用のタイマー
-    private Timer flowStopTimer;
-
     // 現在のゲーム状態
     public StateManager stateManager { get; private set; }
 
@@ -27,6 +24,8 @@ public class MainGameFlow
     public InsertState InsertState { get; private set; }
     // 抽選
     public LotsState LotsState { get; private set; }
+    // 疑似遊技
+    public FakeReelSpinState FakeReelSpinState { get; private set; }
     // ウェイトの状態
     public WaitState WaitState { get; private set; }
     // リール回転(プレイ中)
@@ -39,26 +38,16 @@ public class MainGameFlow
     // コンストラクタ
     public MainGameFlow(GameManager gameManager)
     {
-        // 処理用タイマー作成
-        flowStopTimer = new Timer();
-
         InitState = new InitState(gameManager);
         InsertState = new InsertState(gameManager);
         LotsState = new LotsState(gameManager);
+        FakeReelSpinState = new FakeReelSpinState(gameManager);
         WaitState = new WaitState(gameManager);
         PlayingState = new PlayingState(gameManager);
         PayoutState = new PayoutState(gameManager);
         EffectState = new EffectState(gameManager);
 
         stateManager = new StateManager(InitState);
-    }
-
-    // デストラクタ
-    ~MainGameFlow()
-    {
-        // Timerのストップ
-        flowStopTimer.Stop();
-        flowStopTimer.Dispose();
     }
 
     // func
