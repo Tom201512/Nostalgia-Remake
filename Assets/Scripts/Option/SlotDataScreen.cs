@@ -15,7 +15,7 @@ namespace ReelSpinGame_Option.MenuContent
         // ƒXƒƒbƒgî•ñ‰æ–Ê
 
         // const
-        private const int maxPage = 5;
+        private const int maxPage = 3;
 
         // var
 
