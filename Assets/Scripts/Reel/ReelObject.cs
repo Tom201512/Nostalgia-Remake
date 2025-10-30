@@ -49,7 +49,7 @@ namespace ReelSpinGame_Reels
         public event ReelStoppedEvent HasReelStopped;
 
         // リール演出用マネージャー
-        private ReelEffect reelEffectManager;
+        public ReelEffect ReelEffectManager { get; private set; }
 
         // リール情報
         [SerializeField] ReelDatabase reelDatabaseFile;
@@ -63,7 +63,7 @@ namespace ReelSpinGame_Reels
             HasJacModeLight = false;
 
             symbolManager = GetComponentInChildren<SymbolManager>();
-            reelEffectManager = GetComponentInChildren<ReelEffect>();
+            ReelEffectManager = GetComponentInChildren<ReelEffect>();
 
             // ブラーの取得
             postVolume = GetComponent<PostProcessVolume>();
@@ -175,9 +175,9 @@ namespace ReelSpinGame_Reels
             // JAC中ならライトも調整
             if (HasJacModeLight)
             {
-                reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center,SymbolLight.TurnOnValue);
-                reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOffValue);
-                reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
+                ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center,SymbolLight.TurnOnValue);
+                ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOffValue);
+                ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
             }
 
             StopReelSpeed();
@@ -272,13 +272,13 @@ namespace ReelSpinGame_Reels
             {
                 if (Math.Sign(maxSpeed) == -1)
                 {
-                    reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(false));
-                    reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(true));
+                    ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(false));
+                    ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(true));
                 }
                 else
                 {
-                    reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(false));
-                    reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(true));
+                    ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(false));
+                    ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(true));
                 }
             }
 
@@ -303,13 +303,13 @@ namespace ReelSpinGame_Reels
                 {
                     if (Math.Sign(maxSpeed) == -1)
                     {
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOffValue);
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOnValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOffValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOnValue);
                     }
                     else
                     {
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
                     }
                 }
 
@@ -335,13 +335,13 @@ namespace ReelSpinGame_Reels
                 {
                     if (Math.Sign(maxSpeed) == -1)
                     {
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOffValue);
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOnValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOffValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOnValue);
                     }
                     else
                     {
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
-                        reelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
+                        ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
                     }
                 }
 

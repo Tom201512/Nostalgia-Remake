@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataTextUI: {fileID: 938102381}
+  reelDisplay: {fileID: 1482770902}
 --- !u!1 &21422577
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,7 +898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &164001299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1343,6 +1344,8 @@ MonoBehaviour:
   instantRandomMode: 0
   infinityRandomMode: 0
   instantRandomValue: 1
+  reelEffectManager: {fileID: 1787737429}
+  slotDataScreen: {fileID: 2045587107}
 --- !u!114 &286284040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1415,9 +1418,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30B2\u30FC\u30E0\u6570 Games:\n\t\u7DCF\u30B2\u30FC\u30E0\u6570 Total:\n\t\u73FE\u5728
     Current:\n\t\u901A\u5E38\u6642 Normal:\n\t\u30D3\u30C3\u30B0\u30C1\u30E3\u30F3\u30B9\u4E2D 
-    BIG CHANCE:\n\t\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0\u4E2D BONUS GAME:\n\n\u30D3\u30C3\u30B0\u30C1\u30E3\u30F3\u30B9
-    BIG CHANCE:\n\t\u56DE\u6570 Line up count:\n\t\u78BA\u7387 Probability:\n\n\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0
-    BONUS GAME:\n\t\u56DE\u6570 Line up count:\n\t\u78BA\u7387 Probability\n\n\u5408\u7B97
+    BIG CHANCE:\n\t\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0\u4E2D BONUS GAME:\n\n\u30DC\u30FC\u30CA\u30B9\u78BA\u7387
+    Bonus probability:\n\t\u30D3\u30C3\u30B0\u30C1\u30E3\u30F3\u30B9 BIG CHANCE:\n\t\t\u56DE\u6570
+    Line up count:\n\t\t\u78BA\u7387 Probability:\n\n\t\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0
+    BONUS GAME:\n\t\t\u56DE\u6570 Line up count:\n\t\t\u78BA\u7387 Probability\n\n\t\u5408\u7B97
     Total probability:"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ddfd541b17943d94ebb49b82bfeeccca, type: 2}
@@ -5529,58 +5533,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130185881}
   m_CullTransparentMesh: 1
---- !u!1 &1136249060
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1136249062}
-  - component: {fileID: 1136249061}
-  m_Layer: 0
-  m_Name: ReelEffectManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1136249061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136249060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b68c86a25b79d314ab5c2de97c941654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fakeReelSpinObjects:
-  - {fileID: 1933351382769078780}
-  - {fileID: 1190830224200012641}
-  - {fileID: 1933351381669917605}
-  reelEffectList:
-  - {fileID: 1933351382769078782}
-  - {fileID: 1190830224200012643}
-  - {fileID: 1933351381669917607}
---- !u!4 &1136249062
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136249060}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1787737425}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1153269139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8225,7 +8177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1482770901
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9772,7 +9724,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1136249062}
   - {fileID: 656534615}
   - {fileID: 1187044816}
   - {fileID: 1780579355}
@@ -9790,7 +9741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc3a7cbc6c835b408628e8ec849ed93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reelEffectManager: {fileID: 1136249061}
   testAssetList:
   - {fileID: 4900000, guid: 50ab29c0d7cca6c4487f814604e56e66, type: 3}
 --- !u!114 &1787737427
@@ -9832,13 +9782,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1787737424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 153eab5bd346be343aef7f25f0bad3fa, type: 3}
+  m_Script: {fileID: 11500000, guid: b68c86a25b79d314ab5c2de97c941654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reelObjects:
-  - {fileID: 1933351382769078780}
-  - {fileID: 1190830224200012641}
-  - {fileID: 1933351381669917605}
 --- !u!1001 &1801798812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11232,7 +11178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2045587106
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11333,7 +11279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2063797985
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11379,6 +11325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataTextUI: {fileID: 2118214188}
+  dataTextUI2: {fileID: 1419682601}
 --- !u!1 &2088607533
 GameObject:
   m_ObjectHideFlags: 0
@@ -11671,6 +11618,7 @@ MonoBehaviour:
 
 
 
+
     9999999
 
     1/99999.99
@@ -11878,17 +11826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1190830224200012643 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4287227727636106190, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-  m_PrefabInstance: {fileID: 2026191043128771322}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1933351381669917605 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
@@ -11900,17 +11837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1933351381669917607 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4287227727636106190, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-  m_PrefabInstance: {fileID: 7971434692843571151}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1933351382769078780 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
@@ -11920,17 +11846,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1933351382769078782 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4287227727636106190, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
-  m_PrefabInstance: {fileID: 6297900694069576971}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2026191043128771322

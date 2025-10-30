@@ -1,4 +1,5 @@
 using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
@@ -23,8 +24,8 @@ namespace ReelSpinGame_Effect
         const float VFlashWaitTime = 2.0f;
 
         // var
-        // 疑似遊技機能
-        private FakeReelSpin fakeReelSpinManager;
+        // リール演出マネージャー
+        private ReelEffectManager reelEffectManager;
         // フラッシュ機能
         private FlashManager flashManager;
         // サウンド機能
@@ -52,7 +53,7 @@ namespace ReelSpinGame_Effect
         // func 
         private void Awake()
         {
-            fakeReelSpinManager = GetComponent<FakeReelSpin>();
+            reelEffectManager = GetComponent<ReelEffectManager>();
             flashManager = GetComponent<FlashManager>();
             soundManager = GetComponent<SoundManager>();
             HasBonusStart = false;
@@ -61,13 +62,18 @@ namespace ReelSpinGame_Effect
             HasAfterPayoutEffect = false;
         }
 
+        private void Start()
+        {
+            flashManager.SetReelEffectManager(reelEffectManager);
+        }
+
         private void OnDestroy()
         {
             StopAllCoroutines();
         }
 
         // 疑似遊技中か
-        public bool GetHasFakeReelSpin() => fakeReelSpinManager.HasFakeReel;
+        public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;
         // フラッシュの待機中か
         public bool GetHasFlashWait() => flashManager.HasFlashWait;
         // 数値変更
@@ -81,7 +87,7 @@ namespace ReelSpinGame_Effect
         // 疑似遊技を開始(試験用)
         public void StartFakeReelSpin()
         {
-            fakeReelSpinManager.StartFakeReelSpin();
+            reelEffectManager.StartFakeSpin();
         }
 
         // フラッシュ関連

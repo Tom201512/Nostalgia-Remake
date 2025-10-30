@@ -9,6 +9,7 @@ using ReelSpinGame_UI.Player;
 using ReelSpinGame_Option;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 using UnityEngine;
 using ReelSpinGame_Option.MenuContent;
 

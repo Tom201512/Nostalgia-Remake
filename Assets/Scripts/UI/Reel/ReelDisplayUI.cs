@@ -1,5 +1,7 @@
+using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_UI.Reel
 {
@@ -11,20 +13,18 @@ namespace ReelSpinGame_UI.Reel
         // リールディスプレイ
         [SerializeField] List<ReelDisplayer> reelDisplayers;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            foreach(ReelDisplayer display in  reelDisplayers)
-            {
-                Debug.Log("Display at" + 19);
-                display.DisplayReel(19);
-            }
-        }
+        // リールオブジェクト
+        public List<ReelObject> ReelObjects { get; private set; }
 
-        // Update is called once per frame
-        void Update()
-        {
+        // リールのセット
+        public void SetReels(List<ReelObject> reelObjects) => ReelObjects = reelObjects;
 
+        // 指定位置のリール図柄を表示させる
+        public void DisplayReels(int leftLower, int middleLower, int rightLower)
+        {
+            reelDisplayers[(int)ReelID.ReelLeft].DisplayReel(leftLower, ReelObjects[(int)ReelID.ReelLeft]);
+            reelDisplayers[(int)ReelID.ReelMiddle].DisplayReel(middleLower, ReelObjects[(int)ReelID.ReelMiddle]);
+            reelDisplayers[(int)ReelID.ReelRight].DisplayReel(rightLower, ReelObjects[(int)ReelID.ReelRight]);
         }
     }
 }

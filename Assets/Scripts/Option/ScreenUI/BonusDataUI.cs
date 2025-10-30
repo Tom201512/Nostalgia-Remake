@@ -1,7 +1,11 @@
+using ReelSpinGame_Reels;
 using ReelSpinGame_System;
+using ReelSpinGame_UI.Reel;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -11,6 +15,14 @@ namespace ReelSpinGame_Option.MenuContent
 
         // データ部分
         [SerializeField] TextMeshProUGUI dataTextUI;
+        // リールディスプレイ(リーチ目用)
+        [SerializeField] ReelDisplayUI reelDisplay;
+
+        // リールオブジェクトをセットする
+        public void SetReelObject(List<ReelObject> reelObjects)
+        {
+            reelDisplay.SetReels(reelObjects);
+        }
 
         public void UpdateText(PlayerDatabase player)
         {
@@ -45,7 +57,6 @@ namespace ReelSpinGame_Option.MenuContent
                     data += player.BonusHitRecord[^1].BonusStartGame + "\n";
                     data += player.BonusHitRecord[^1].BonusPayout + "\n";
                 }
-                // そうでなければ2つ前を表示
                 else
                 {
                     data += "-------\n";
@@ -112,5 +123,50 @@ namespace ReelSpinGame_Option.MenuContent
 
             dataTextUI.text = data;
         }
-     }
+
+        // 当選後出目を表示する
+        public void DisplayWinningPattern(PlayerDatabase player)
+        {
+            // ボーナス履歴が2つ以上ある場合は条件に合わせて表示
+            if(player.BonusHitRecord.Count > 1)
+            {
+                if (player.BonusHitRecord[^1].BonusStartGame != 0)
+                {
+                    reelDisplay.gameObject.SetActive(true);
+                    // ボーナスが2個以上ある場合でまだ当選していなければ2つ目を表示
+                    reelDisplay.DisplayReels(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+                }
+                // そうでなければ2つ前を表示
+                else
+                {
+                    reelDisplay.gameObject.SetActive(true);
+                    // ボーナスが2個以上ある場合でまだ当選していなければ2つ目を表示
+                    reelDisplay.DisplayReels(player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelRight]);
+                }
+            }
+            // 1つある場合は
+            else if(player.BonusHitRecord.Count > 0)
+            {
+                // 入賞ゲーム数がなければ表示しない
+                if (player.BonusHitRecord[^1].BonusStartGame != 0)
+                {
+                    reelDisplay.DisplayReels(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+                }
+                else
+                {
+                    reelDisplay.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                reelDisplay.gameObject.SetActive(false);
+            }
+        }
+    }
 }

@@ -34,7 +34,7 @@ namespace ReelSpinGame_Reels.Flash
 
         // var
         // リール演出マネージャー
-        [SerializeField] private ReelEffectManager reelEffectManager;
+        public ReelEffectManager ReelEffectManager { get; private set; }
 
         // 最後の払い出し結果
         private PayoutResultBuffer lastPayoutResult;
@@ -76,6 +76,9 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // func
+        // リール演出機能のセット
+        public void SetReelEffectManager(ReelEffectManager reelEffectManager) => ReelEffectManager = reelEffectManager;
+
         // リールフラッシュを再生させる
         public void StartReelFlash(float waitSeconds, FlashID flashID)
         {
@@ -116,13 +119,13 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // リールライトをすべて明るくする
-        public void TurnOnAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOnValue);
+        public void TurnOnAllReels() => ReelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOnValue);
 
         // リールライトをすべて暗くする
-        public void TurnOffAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOffValue);
+        public void TurnOffAllReels() => ReelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOffValue);
 
         // JAC GAME時のライト点灯
-        public void EnableJacGameLight() => reelEffectManager.EnableJacGameLight();
+        public void EnableJacGameLight() => ReelEffectManager.EnableJacGameLight();
 
         // 真ん中に近くなったリールを徐々に光らせる
 
@@ -146,9 +149,9 @@ namespace ReelSpinGame_Reels.Flash
                     int bodyBright = flashData[(int)FlashData.PropertyID.Body + i * SeekOffset];
                     if (bodyBright != NoChangeValue)
                     {
-                        reelEffectManager.ChangeReelBackLight(i, (byte)bodyBright);
-                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Lower2nd, (byte)bodyBright);
-                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Upper2nd, (byte)bodyBright);
+                        ReelEffectManager.ChangeReelBackLight(i, (byte)bodyBright);
+                        ReelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Lower2nd, (byte)bodyBright);
+                        ReelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Upper2nd, (byte)bodyBright);
                     }
 
                     // 図柄の明るさ変更
@@ -159,7 +162,7 @@ namespace ReelSpinGame_Reels.Flash
                         //Debug.Log("Symbol:" + j + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
-                            reelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);
+                            ReelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);
                         }
                     }
                 }
@@ -200,7 +203,7 @@ namespace ReelSpinGame_Reels.Flash
                 for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
                 {
                     // 図柄点灯
-                    reelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
+                    ReelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
                     if (lastStoppedReelData.LastSymbols[(int)ReelID.ReelLeft]

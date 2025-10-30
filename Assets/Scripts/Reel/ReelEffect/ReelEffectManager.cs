@@ -11,10 +11,8 @@ namespace ReelSpinGame_Reels.Effect
     public class ReelEffectManager : MonoBehaviour
     {
         // var
-        // 疑似遊技用のリール情報
-        [SerializeField] private List<ReelObject> fakeReelSpinObjects;
-        // リールエフェクトの配列
-        [SerializeField] private List<ReelEffect> reelEffectList;
+        // リール情報
+        public List<ReelObject> ReelObjects { get; private set; }
 
         // 疑似遊技中か
         public bool HasFakeSpin { get; private set; }
@@ -24,21 +22,27 @@ namespace ReelSpinGame_Reels.Effect
             HasFakeSpin = false;
         }
 
+        // リールオブジェクトをセットする
+        public void SetReels(List<ReelObject> reels)
+        {
+            ReelObjects = reels;
+        }
+
         // 指定したリールのバックライト変更
-        public void ChangeReelBackLight(int reelID, byte brightness) => reelEffectList[reelID].ChangeReelBrightness(brightness);
+        public void ChangeReelBackLight(int reelID, byte brightness) => ReelObjects[reelID].ReelEffectManager.ChangeReelBrightness(brightness);
 
         // 指定したリールと図柄位置のライト変更
-        public void ChangeReelSymbolLight(int reelID, int posID, byte brightness) => reelEffectList[reelID].ChangeSymbolBrightness(posID, brightness);
+        public void ChangeReelSymbolLight(int reelID, int posID, byte brightness) => ReelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
 
         // 全リールの明るさ一括変更
         public void ChangeAllReelBrightness(byte brightness)
         {
-            foreach (ReelEffect reel in reelEffectList)
+            foreach (ReelObject reel in ReelObjects)
             {
-                reel.ChangeReelBrightness(brightness);
+                reel.ReelEffectManager.ChangeReelBrightness(brightness);
                 for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
                 {
-                    reel.ChangeSymbolBrightness(i, brightness);
+                    reel.ReelEffectManager.ChangeSymbolBrightness(i, brightness);
                 }
             }
         }
@@ -46,20 +50,20 @@ namespace ReelSpinGame_Reels.Effect
         // JAC GAME時のライト点灯
         public void EnableJacGameLight()
         {
-            foreach (ReelEffect reel in reelEffectList)
+            foreach (ReelObject reel in ReelObjects)
             {
-                reel.ChangeReelBrightness(ReelBase.TurnOffValue);
+                reel.ReelEffectManager.ChangeReelBrightness(ReelBase.TurnOffValue);
 
                 // 真ん中以外点灯
                 for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
                 {
                     if (i == (int)ReelPosID.Center)
                     {
-                        reel.ChangeSymbolBrightness(i, SymbolLight.TurnOnValue);
+                        reel.ReelEffectManager.ChangeSymbolBrightness(i, SymbolLight.TurnOnValue);
                     }
                     else
                     {
-                        reel.ChangeSymbolBrightness(i, SymbolLight.TurnOffValue);
+                        reel.ReelEffectManager.ChangeSymbolBrightness(i, SymbolLight.TurnOffValue);
                     }
                 }
             }
@@ -79,15 +83,15 @@ namespace ReelSpinGame_Reels.Effect
             
             Debug.Log("右リールを1秒後に回転させます。");
             yield return new WaitForSeconds(1.0f);
-            fakeReelSpinObjects[(int)ReelID.ReelRight].StartReel(0.98f, true);
+            ReelObjects[(int)ReelID.ReelRight].StartReel(0.98f, true);
 
             Debug.Log("中リールを1秒後に回転させます。");
             yield return new WaitForSeconds(1.0f);
-            fakeReelSpinObjects[(int)ReelID.ReelMiddle].StartReel(0.98f, true);
+            ReelObjects[(int)ReelID.ReelMiddle].StartReel(0.98f, true);
 
             Debug.Log("左リールを1秒後に回転させます。");
             yield return new WaitForSeconds(1.0f);
-            fakeReelSpinObjects[(int)ReelID.ReelLeft].StartReel(0.98f, true);
+            ReelObjects[(int)ReelID.ReelLeft].StartReel(0.98f, true);
 
             Debug.Log("3秒後に疑似遊技を終了します");
             yield return new WaitForSeconds(3.0f);

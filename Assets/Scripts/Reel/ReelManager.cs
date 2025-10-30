@@ -1,5 +1,7 @@
 ﻿using ReelSpinGame_Datas;
+using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Payout;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,6 +36,11 @@ public class ReelManager : MonoBehaviour
     // 強制時のランダム数値
     [Range(1,6),SerializeField] private int instantRandomValue;
 
+    // リール演出用マネージャー
+    [SerializeField] private ReelEffectManager reelEffectManager;
+    // スロット情報UI
+    [SerializeField] private SlotDataScreen slotDataScreen;
+
     // いずれかのリールが停止したかのイベント
     public delegate void ReelStoppedEvent();
     public event ReelStoppedEvent HasSomeReelStopped;
@@ -49,6 +56,10 @@ public class ReelManager : MonoBehaviour
 
         data = new ReelManagerBehaviour();
         payoutChecker = GetComponent<PayoutChecker>();
+
+        // リール情報を渡す
+        reelEffectManager.SetReels(reelObjects);
+        slotDataScreen.SendReelObjectData(reelObjects);
     }
 
     private void Update()

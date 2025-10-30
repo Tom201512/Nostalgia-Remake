@@ -1,12 +1,11 @@
-using ReelSpinGame_Datas;
 using ReelSpinGame_Option.Button;
-using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_Reels;
 using ReelSpinGame_System;
 using ReelSpinGame_Util.OriginalInputs;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -47,7 +46,7 @@ namespace ReelSpinGame_Option.MenuContent
         private int currentPage = 0;
 
         // プレイヤーデータのアドレス
-        private PlayerDatabase playerData;
+        public PlayerDatabase PlayerData;
 
         // func
         private void Awake()
@@ -115,7 +114,13 @@ namespace ReelSpinGame_Option.MenuContent
         // データを受け渡す
         public void SendData(PlayerDatabase player)
         {
-            playerData = player;
+            PlayerData = player;
+        }
+
+        // リールオブジェクトのデータを渡す
+        public void SendReelObjectData(List<ReelObject> reelObjects)
+        {
+            bonusDataUI.SetReelObject(reelObjects);
         }
 
         // 次ボタンを押したときの挙動
@@ -165,17 +170,18 @@ namespace ReelSpinGame_Option.MenuContent
             {
                 case 0:
                     slotMainDataUI.gameObject.SetActive(true);
-                    slotMainDataUI.UpdateText(playerData);
+                    slotMainDataUI.UpdateText(PlayerData);
                     break;
 
                 case 1:
                     probabilityDataUI.gameObject.SetActive(true);
-                    probabilityDataUI.UpdateText(playerData);
+                    probabilityDataUI.UpdateText(PlayerData);
                     break;
 
                 case 2:
                     bonusDataUI.gameObject.SetActive(true);
-                    bonusDataUI.UpdateText(playerData);
+                    bonusDataUI.UpdateText(PlayerData);
+                    bonusDataUI.DisplayWinningPattern(PlayerData);
                     break;
 
                 default:

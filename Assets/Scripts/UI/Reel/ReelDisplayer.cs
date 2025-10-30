@@ -11,8 +11,6 @@ namespace ReelSpinGame_UI.Reel
         // リール結果を表示する
 
         // var
-        // 表示させるリール
-        [SerializeField] ReelObject reel;
         // 図柄部分
         private SymbolDisplayUI[] reelSymbols;
 
@@ -22,7 +20,7 @@ namespace ReelSpinGame_UI.Reel
         }
 
         // 下の位置を基準にリール図柄を表示
-        public void DisplayReel(int lowerPos)
+        public void DisplayReel(int lowerPos, ReelObject reel)
         {
             foreach(SymbolDisplayUI symbol in reelSymbols)
             {

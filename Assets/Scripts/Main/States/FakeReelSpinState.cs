@@ -39,7 +39,7 @@ namespace ReelSpinGame_State.PlayingState
         public void StateUpdate()
         {
             // ‹^——V‹Z‚ªI‚í‚é‚Ü‚Å‘Ò‚Â
-            if (!gM.Effect.GetHasFakeReelSpin())
+            if (!gM.Effect.GetHasFakeSpin())
             {
                 gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
             }
