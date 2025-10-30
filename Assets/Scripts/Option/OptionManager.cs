@@ -49,14 +49,17 @@ namespace ReelSpinGame_Option
         // オプション画面を開く
         public void ToggleOptionScreen()
         {
-            Debug.Log("option clicked");
-            menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);
+            if(openButton.CanInteractable)
+            {
+                Debug.Log("option clicked");
+                menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);
+            }
         }
 
         // ロック状態の設定
         public void ToggleOptionLock(bool value)
         {
-            // 遊技中はメニューバーを
+            // 遊技中はメニューバー操作ができないようにする
             lockOptionMode = value;
             menuBarUI.SetInteractiveAllButton(!value);
             Debug.Log("Lock:" + value);
