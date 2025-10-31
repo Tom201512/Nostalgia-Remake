@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Datas
 {
@@ -189,7 +190,7 @@ namespace ReelSpinGame_Datas
             {
                 //Debug.Log(value);
                 // リールデータを読み込む
-                if (indexNum < ReelData.MaxReelArray)
+                if (indexNum < MaxReelArray)
                 {
                     tableData.Add(Convert.ToByte(value));
                     debugBuffer += tableData[indexNum];
@@ -215,7 +216,7 @@ namespace ReelSpinGame_Datas
             {
                 //Debug.Log(value);
                 // リールデータを読み込む
-                if (indexNum < ReelData.MaxReelArray)
+                if (indexNum < MaxReelArray)
                 {
                     tableData.Add(Convert.ToByte(value));
                     debugBuffer += tableData[indexNum];

@@ -24,7 +24,7 @@ namespace ReelSpinGame_UI.Reel
         {
             foreach(SymbolDisplayUI symbol in reelSymbols)
             {
-                Debug.Log("Pos:" + ReelData.OffsetReel(lowerPos, (int)symbol.GetPosID()));
+                //Debug.Log("Pos:" + ReelObjectModel.OffsetReel(lowerPos, (int)symbol.GetPosID()));
                 symbol.ChangeSymbol(sprite);
             }
         }

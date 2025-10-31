@@ -10,9 +10,9 @@ using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Reels
 {
-    public class ReelObject : MonoBehaviour
+    public class ReelObjectPresenter : MonoBehaviour
     {
-        // リールオブジェクト
+        // リールオブジェクトプレゼンター
 
         // var
         // 1分間の回転数 (Rotate Per Minute)
@@ -28,90 +28,104 @@ namespace ReelSpinGame_Reels
         // リール演出用マネージャー
         public ReelEffect ReelEffectManager { get; private set; }
 
+        // リールオブジェクトのモデル
+        private ReelObjectModel reelObjectModel;
         // リール回転用のプレゼンター
         private ReelSpinPresenter reelSpinPresenter;
         // リール配列用のプレゼンター
         private ReelArrayPresenter reelArrayPresenter;
 
-        // リール情報
-        private ReelData reelData;
+
         // JAC中の点灯をするか
         public bool HasJacModeLight { get; set; }
-        // モーションブラー
-        private PostProcessVolume postVolume;
-        // ブラー部分のプロファイル
-        private MotionBlur motionBlur;
 
         private void Awake()
         {
             reelSpinPresenter = GetComponent<ReelSpinPresenter>();
             ReelEffectManager = GetComponent<ReelEffect>();
-
-            // ブラーの取得
-            postVolume = GetComponent<PostProcessVolume>();
-            postVolume.profile.TryGetSettings(out motionBlur);
+            reelArrayPresenter = GetComponent<ReelArrayPresenter>();
 
             reelSpinPresenter.SetReelSpinPresenter(rotateRPM);
+            reelArrayPresenter.SetReelArrayPresenter(reelDatabaseFile.Array);
         }
 
         private void Start()
         {
-            ChangeBlurSetting(false);
+            reelSpinPresenter.ChangeBlurSetting(false);
+            reelSpinPresenter.OnReelPositionChanged += OnReelPosChangedCallback;
+            reelArrayPresenter.UpdateReelSymbols(reelObjectModel.CurrentLower);
+        }
+
+        private void OnDestroy()
+        {
+            reelSpinPresenter.OnReelPositionChanged -= OnReelPosChangedCallback;
         }
 
         // func
 
         // 数値を得る
         // リールのID
-        public int GetReelID() => reelData.ReelID;
+        public int GetReelID() => reelObjectModel.ReelID;
         // 現在のリール状態
         public ReelStatus GetCurrentReelStatus() => reelSpinPresenter.GetCurrentReelStatus();
         // 最後に止めた下段位置
-        public int GetLastPushedPos() => reelData.LastPushedPos;
+        public int GetLastPushedLowerPos() => reelObjectModel.LastPushedLowerPos;
         // 停止予定位置
-        public int GetWillStopPos() => reelData.WillStopPos;
+        public int GetWillStopLowerPos() => reelObjectModel.WillStopLowerPos;
         // 最後に止めたときのディレイ数
-        public int GetLastDelay() => reelData.LastDelay;
+        public int GetLastDelay() => reelObjectModel.LastStoppedDelay;
         // 指定した位置にあるリールの番号を返す
-        public int GetReelPos(ReelPosID posID) => reelData.GetReelPos((sbyte)posID);
-        // sbyteで読む場合
-        public int GetReelPos(sbyte posID) => reelData.GetReelPos(posID);
+        public int GetReelPos(ReelPosID posID) => reelArrayPresenter.GetReelPos(reelObjectModel.CurrentLower, (sbyte)posID);
 
-        // 速度
         // 現在速度を返す
         public float GetCurrentSpeed() => reelSpinPresenter.GetCurrentSpeed();
         // 現在の角度を返す
         public float GetCurrentDegree() => reelSpinPresenter.GetCurrentDegree();
+
         // リール条件を渡す
         public ReelDatabase GetReelDatabase() => reelDatabaseFile;
 
         // リールデータを渡す
-        public void SetReelData(int reelID, int initialLowerPos)
-        {
-            reelArrayPresenter = GetComponent<ReelArrayPresenter>();
-            reelArrayPresenter.SetReelArrayPresenter(initialLowerPos, reelDatabaseFile.Array);
-        }
+        public void SetReelData(int reelID, int initialLowerPos) => reelObjectModel = new ReelObjectModel(reelID, initialLowerPos);
 
-        // リール位置変更(セーブデータ読み込み用)
-        public void SetReelPos(int lowerPos) => reelArrayPresenter.SetCurrentLower(lowerPos);
+        // func
+
+        // 下段の位置が停止予定位置になったかを返す
+        public bool HasReachedStopPos() => reelObjectModel.CurrentLower == reelObjectModel.WillStopLowerPos;
+
+        // 指定したリール位置にする
+        public void SetReelPos(int lowerPos) => reelObjectModel.CurrentLower = lowerPos;
+        // 最後に押した位置を設定する
+        public void SetLastPushedLowerPos(int lastPushedLowerPos) => reelObjectModel.LastPushedLowerPos = lastPushedLowerPos;
+        // 停止予定位置を設定する
+        public void SetWillStopLowerPos(int willStoplowerPos) => reelObjectModel.WillStopLowerPos = willStoplowerPos;
+        // 停止位置関連の数値をリセット
+        public void ResetStopValues()
+        {
+            reelObjectModel.LastPushedLowerPos = 0;
+            reelObjectModel.WillStopLowerPos = 0;
+        }
 
         //　リール始動
         public void StartReel(float maxSpeed, bool cutAccelerate)
         {
             reelSpinPresenter.StartReelSpin(maxSpeed, cutAccelerate);
+            reelSpinPresenter.ChangeBlurSetting(true);
         }
 
-        // ブラー設定
-        public void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
-
         // リール停止
-        public void StopReel(int pushedPos, int delay) => reelData.BeginStopReel(pushedPos, delay, false);
+        public void StopReel(int pushedLowerPos, int delay)
+        {
+            reelObjectModel.LastPushedLowerPos = pushedLowerPos;
+            reelObjectModel.LastStoppedDelay = delay;
+            //reelSpinPresenter.GetCurrentReelStatus();
+        }
 
         // リール停止(高速版)
         public void StopReelFast(int pushedPos, int delay)
         {
             // 強制停止
-            reelData.BeginStopReel(pushedPos, delay, true);
+            //reelData.BeginStopReel(pushedPos, delay, true);
 
             // JAC中ならライトも調整
             if (HasJacModeLight)
@@ -122,6 +136,35 @@ namespace ReelSpinGame_Reels
             }
 
             //ReelSpinPresenter.StopReelSpeed();
+        }
+
+        // リール位置変更 (回転速度の符号に合わせて変更)
+        public void ChangeReelPos(float rotateSpeed)
+        {
+            // 逆回転の場合
+            if (Math.Sign(rotateSpeed) == -1)
+            {
+                if (reelObjectModel.CurrentLower - 1 < 0)
+                {
+                    reelObjectModel.CurrentLower = MaxReelArray - 1;
+                }
+                else
+                {
+                    reelObjectModel.CurrentLower -= 1;
+                }
+            }
+            // 前回転の場合
+            else if (Math.Sign(rotateSpeed) == 1)
+            {
+                if (reelObjectModel.CurrentLower + 1 > MaxReelArray)
+                {
+                    reelObjectModel.CurrentLower = 0;
+                }
+                else
+                {
+                    reelObjectModel.CurrentLower += 1;
+                }
+            }
         }
 
         /*
@@ -163,5 +206,13 @@ namespace ReelSpinGame_Reels
             }
             return (byte)Math.Clamp(CenterBright, 0, 255);
         }*/
+
+        // リール位置が変わったときのコールバック
+        private void OnReelPosChangedCallback()
+        {
+            Debug.Log("Reel pos changed");
+            ChangeReelPos(reelSpinPresenter.GetCurrentSpeed());
+            reelArrayPresenter.UpdateReelSymbols(reelObjectModel.CurrentLower);
+        }
     }
 }

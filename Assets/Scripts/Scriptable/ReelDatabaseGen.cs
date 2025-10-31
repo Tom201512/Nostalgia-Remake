@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Datas.ReelConditionsData;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Datas
 {
@@ -23,7 +24,7 @@ namespace ReelSpinGame_Datas
                 //Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
             }
 
-            for (int i = 0; i < ReelData.MaxReelArray; i++)
+            for (int i = 0; i < MaxReelArray; i++)
             {
                 //Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(result[i]));
             }

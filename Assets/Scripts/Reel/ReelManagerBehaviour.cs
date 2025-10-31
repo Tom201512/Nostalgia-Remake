@@ -61,6 +61,6 @@ namespace ReelSpinGame_Reels
         }
 
         // 最後に止めたリールデータを作る
-        public void GenerateLastStopped(List<ReelObject> reelObjects) => LastStoppedReelData.GenerateLastStopped(reelObjects);
+        public void GenerateLastStopped(List<ReelObjectPresenter> reelObjects) => LastStoppedReelData.GenerateLastStopped(reelObjects);
     }
 }

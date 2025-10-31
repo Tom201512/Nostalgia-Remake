@@ -18,12 +18,5 @@ namespace ReelSpinGame_Reels.Array
         // var
         // リール配列
         public byte[] ReelArray { get; set; }
-
-        // 現在の位置(下段基準)
-        public int CurrentLower { get; set; }
-        // 最後に止めた位置(下段基準)
-        public int LastPushedLowerPos { get;  set; }
-        // 将来的に止まる位置(下段基準)
-        public int WillStopLowerPos { get; set; }
     }
 }

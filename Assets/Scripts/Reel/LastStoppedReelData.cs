@@ -26,7 +26,7 @@ namespace ReelSpinGame_Reels
         }
 
         // 最後に止めた結果を作る
-        public void GenerateLastStopped(List<ReelObject> reelObjects)
+        public void GenerateLastStopped(List<ReelObjectPresenter> reelObjects)
         {
             // 初期化
             LastPos.Clear();

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Reels.Array
 {
@@ -23,24 +19,16 @@ namespace ReelSpinGame_Reels.Array
             symbolManager = GetComponentInChildren<SymbolManager>();
         }
 
-        void Start()
-        {
-            symbolManager.UpdateSymbolsObjects(reelArrayModel.CurrentLower, reelArrayModel.ReelArray);
-        }
-
-        void Update()
-        {
-
-        }
-
         // リール配列プレゼンターの初期化
-        public void SetReelArrayPresenter(int currentLower, byte[] reelArray)
+        public void SetReelArrayPresenter(byte[] reelArray)
         {
-            reelArrayModel.CurrentLower = currentLower;
             reelArrayModel.ReelArray = reelArray;
         }
 
-        // 下段位置を動かす
-        public void SetCurrentLower(int currentLower) => reelArrayModel.CurrentLower = currentLower;
+        // 指定位置からのリール位置を得る
+        public int GetReelPos(int currentLower, sbyte posID) => symbolManager.OffsetReel(currentLower, posID);
+
+        // 図柄位置の更新
+        public void UpdateReelSymbols(int currentLower) => symbolManager.UpdateSymbolsObjects(currentLower, reelArrayModel.ReelArray);
     }
 }

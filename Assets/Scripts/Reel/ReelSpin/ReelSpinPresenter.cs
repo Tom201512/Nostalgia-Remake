@@ -1,6 +1,7 @@
 using System;
 using TreeEditor;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Spin
@@ -16,6 +17,18 @@ namespace ReelSpinGame_Reels.Spin
 
         // モデル
         private ReelSpinModel reelSpinModel;
+
+        // モーションブラー
+        private PostProcessVolume postVolume;
+        // ブラー部分のプロファイル
+        private MotionBlur motionBlur;
+
+        private void Awake()
+        {
+            // ブラーの取得
+            postVolume = GetComponent<PostProcessVolume>();
+            postVolume.profile.TryGetSettings(out motionBlur);
+        }
 
         private void Update()
         {
@@ -35,6 +48,9 @@ namespace ReelSpinGame_Reels.Spin
 
         // 最高速度状態か返す
         public bool IsMaximumSpeed() => reelSpinModel.RotateSpeed == reelSpinModel.MaxSpeed;
+
+        // ブラー設定
+        public void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
 
         // データのセット
         public void SetReelSpinPresenter(float RotateRPM)
@@ -61,9 +77,6 @@ namespace ReelSpinGame_Reels.Spin
         {
             float rotationAngle;
             rotationAngle = Math.Clamp((reelSpinModel.ReturnDegreePerSecond()) * Time.deltaTime * reelSpinModel.RotateSpeed, -360, 360);
-            Debug.Log("RotationAngle:" + rotationAngle);
-
-            Debug.Log(rotationAngle * Vector3.left);
             transform.Rotate(rotationAngle * Vector3.left);
 
             /*
@@ -81,8 +94,6 @@ namespace ReelSpinGame_Reels.Spin
                     ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(true));
                 }
             }*/
-
-            Debug.Log("Euler:" + transform.rotation.eulerAngles.x);
             //Debug.Log("ChangeAngle:" + (360f - ChangeAngle));
 
             // 一定角度に達したら図柄の更新(17.14286度)
@@ -92,13 +103,11 @@ namespace ReelSpinGame_Reels.Spin
             if (Math.Sign(reelSpinModel.RotateSpeed) == -1 && transform.rotation.eulerAngles.x < 180 && transform.rotation.eulerAngles.x > ChangeAngle)
             {
                 Debug.Log("Symbol changed");
-                OnReelPositionChanged?.Invoke();
-
-                // 図柄位置変更
-
                 // 角度をもとに戻す
-                transform.Rotate(Vector3.right, ReelSpinModel.ChangeAngle * -1);
+                transform.Rotate(Vector3.right, ChangeAngle * -1);
 
+                // 位置変更を伝える
+                OnReelPositionChanged?.Invoke();
                 /*
                 if (HasJacModeLight)
                 {
@@ -125,11 +134,10 @@ namespace ReelSpinGame_Reels.Spin
             else if (Math.Sign(reelSpinModel.RotateSpeed) == 1 && transform.rotation.eulerAngles.x > 180 && transform.rotation.eulerAngles.x < 360f - ChangeAngle)
             {
                 Debug.Log("Symbol changed");
-                // 図柄位置変更
-                OnReelPositionChanged?.Invoke();
-
                 // 角度をもとに戻す
-                transform.Rotate(Vector3.right, ReelSpinModel.ChangeAngle * -1);
+                transform.Rotate(Vector3.right, ChangeAngle);
+                // 位置変更を伝える
+                OnReelPositionChanged?.Invoke();
 
                 /*
                 if (HasJacModeLight)

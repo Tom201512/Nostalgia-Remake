@@ -26,8 +26,8 @@ public class ReelManager : MonoBehaviour
     // var
     // リールマネージャーのデータ
     private ReelManagerBehaviour data;
-    // リールのオブジェクト
-    [SerializeField] private List<ReelObject> reelObjects;
+    // リールオブジェクトプレゼンター
+    [SerializeField] private List<ReelObjectPresenter> reelObjects;
     // 払い出し確認機能
     private PayoutChecker payoutChecker;
     // 強制ランダム数値
@@ -118,10 +118,10 @@ public class ReelManager : MonoBehaviour
     public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);
     // 指定したリールの停止可能位置(中段)を返す
     public int GetReelCenterPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
-    // 指定したリールの最後に押した位置を返す
-    public int GetPushedPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedPos();
+    // 指定したリールの最後に押した下段位置を返す
+    public int GetPushedPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedLowerPos();
     // 指定リールの停止予定位置を返す
-    public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].GetWillStopPos();
+    public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].GetWillStopLowerPos();
     // 指定したリールのディレイ数を返す
     public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].GetLastDelay();
     // 指定リールの状態を確認する
@@ -365,7 +365,7 @@ public class ReelManager : MonoBehaviour
     // 全リールが停止したか確認
     private bool CheckAllReelStopped()
     {
-        foreach (ReelObject obj in reelObjects)
+        foreach (ReelObjectPresenter obj in reelObjects)
         {
             // 止まっていないリールがまだあれば falseを返す
             if (obj.GetCurrentReelStatus() != ReelStatus.Stopped)

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_UI.Reel
 {

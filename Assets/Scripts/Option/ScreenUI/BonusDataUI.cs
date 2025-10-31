@@ -1,7 +1,6 @@
 using ReelSpinGame_Reels;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Reel;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,7 +18,7 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] ReelDisplayUI reelDisplay;
 
         // リールオブジェクトをセットする
-        public void SetReelObject(List<ReelObject> reelObjects)
+        public void SetReelObject(List<ReelObjectPresenter> reelObjects)
         {
             //reelDisplay.SetReels(reelObjects);
         }

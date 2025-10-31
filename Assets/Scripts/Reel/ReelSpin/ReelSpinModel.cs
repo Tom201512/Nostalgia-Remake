@@ -84,8 +84,6 @@ namespace ReelSpinGame_Reels.Spin
                     RotateSpeed = Mathf.Clamp(RotateSpeed -= ReturnReelAccerateSpeed() * Time.deltaTime * 1, 0, MaxSpeed);
                 }
             }
-
-            Debug.Log("RotateSpeed:" + RotateSpeed);
         }
 
         // ‰Á‘¬“x‚ð•Ô‚·

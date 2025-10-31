@@ -2,7 +2,7 @@ using ReelSpinGame_Reels.Symbol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelData;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
 
 namespace ReelSpinGame_Reels.Effect
@@ -11,8 +11,8 @@ namespace ReelSpinGame_Reels.Effect
     public class ReelEffectManager : MonoBehaviour
     {
         // var
-        // リール情報
-        public List<ReelObject> ReelObjects { get; private set; }
+        // リールオブジェクトプレゼンター
+        public List<ReelObjectPresenter> ReelObjects { get; private set; }
 
         // 疑似遊技中か
         public bool HasFakeSpin { get; private set; }
@@ -23,7 +23,7 @@ namespace ReelSpinGame_Reels.Effect
         }
 
         // リールオブジェクトをセットする
-        public void SetReels(List<ReelObject> reels)
+        public void SetReels(List<ReelObjectPresenter> reels)
         {
             ReelObjects = reels;
         }
@@ -37,7 +37,7 @@ namespace ReelSpinGame_Reels.Effect
         // 全リールの明るさ一括変更
         public void ChangeAllReelBrightness(byte brightness)
         {
-            foreach (ReelObject reel in ReelObjects)
+            foreach (ReelObjectPresenter reel in ReelObjects)
             {
                 reel.ReelEffectManager.ChangeReelBrightness(brightness);
                 for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
@@ -50,7 +50,7 @@ namespace ReelSpinGame_Reels.Effect
         // JAC GAME時のライト点灯
         public void EnableJacGameLight()
         {
-            foreach (ReelObject reel in ReelObjects)
+            foreach (ReelObjectPresenter reel in ReelObjects)
             {
                 reel.ReelEffectManager.ChangeReelBrightness(ReelBase.TurnOffValue);
 

@@ -50,6 +50,15 @@ public class SymbolManager : MonoBehaviour
         Underline.SetActive(hasLastPosSymbol);
     }
 
+    // リール図柄を得る
+    public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[OffsetReel(currentLower, posID)]);
+
+    // リール配列の番号を図柄へ変更
+    public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+
+    // 図柄を得る
+    public Sprite GetSymbolImage(byte symbolID) => symbolImages[symbolID];
+
     // リール位置をオーバーフローしない数値で返す
     public int OffsetReel(int reelPos, int offset)
     {
@@ -65,13 +74,4 @@ public class SymbolManager : MonoBehaviour
         // オーバーフローがないならそのまま返す
         return reelPos + offset;
     }
-
-    // リール図柄を得る
-    public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[OffsetReel(currentLower, posID)]);
-
-    // リール配列の番号を図柄へ変更
-    public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
-
-    // 図柄を得る
-    public Sprite GetSymbolImage(byte symbolID) => symbolImages[symbolID];
 }

@@ -118,7 +118,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // リールオブジェクトのデータを渡す
-        public void SendReelObjectData(List<ReelObject> reelObjects)
+        public void SendReelObjectData(List<ReelObjectPresenter> reelObjects)
         {
             bonusDataUI.SetReelObject(reelObjects);
         }
