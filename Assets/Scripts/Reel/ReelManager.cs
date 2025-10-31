@@ -115,9 +115,9 @@ public class ReelManager : MonoBehaviour
     // 指定リールの図柄配列を渡す
     public byte[] GetArrayContents(ReelID reelID) => reelObjects[(int)reelID].GetReelDatabase().Array;
     // 指定したリールの現在位置(下段)を返す
-    public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);
+    public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos((sbyte)ReelPosID.Lower);
     // 指定したリールの停止可能位置(中段)を返す
-    public int GetReelCenterPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);
+    public int GetReelCenterPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos((sbyte)ReelPosID.Center);
     // 指定したリールの最後に押した下段位置を返す
     public int GetPushedPos(ReelID reelID) => reelObjects[(int)reelID].GetLastPushedLowerPos();
     // 指定リールの停止予定位置を返す

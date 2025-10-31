@@ -76,7 +76,9 @@ namespace ReelSpinGame_Reels
         // 最後に止めたときのディレイ数
         public int GetLastDelay() => reelSpinPresenter.GetLastStoppedDelay();
         // 指定した位置にあるリールの番号を返す
-        public int GetReelPos(ReelPosID posID) => reelArrayPresenter.GetReelPos(reelObjectModel.CurrentLower, (sbyte)posID);
+        public int GetReelPos(sbyte posID) => reelArrayPresenter.GetReelPos(reelObjectModel.CurrentLower, posID);
+        // 指定した位置にあるリールの図柄を返す
+        public ReelSymbols GetReelSymbol(sbyte posID) => reelArrayPresenter.GetReelSymbol(reelObjectModel.CurrentLower, posID);
 
         // 現在速度を返す
         public float GetCurrentSpeed() => reelSpinPresenter.GetCurrentSpeed();
