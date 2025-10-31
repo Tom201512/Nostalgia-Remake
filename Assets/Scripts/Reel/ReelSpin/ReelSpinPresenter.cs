@@ -1,5 +1,4 @@
 using System;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
@@ -23,6 +22,10 @@ namespace ReelSpinGame_Reels.Spin
         // ブラー部分のプロファイル
         private MotionBlur motionBlur;
 
+        // リールが停止したことを伝えるイベント
+        public delegate void ReelStoppedEvent();
+        public event ReelStoppedEvent HasReelStopped;
+
         private void Awake()
         {
             // ブラーの取得
@@ -34,7 +37,7 @@ namespace ReelSpinGame_Reels.Spin
         {
             if (reelSpinModel.MaxSpeed != 0)
             {
-                reelSpinModel.ChangeReelSpeed();
+                reelSpinModel.AccelerateReelSpeed();
                 RotateReel();
             }
         }
@@ -48,6 +51,9 @@ namespace ReelSpinGame_Reels.Spin
 
         // 最高速度状態か返す
         public bool IsMaximumSpeed() => reelSpinModel.RotateSpeed == reelSpinModel.MaxSpeed;
+
+        // 最後に止めたときのスベリコマ数を得る
+        public int GetLastStoppedDelay() => reelSpinModel.LastStoppedDelay;
 
         // ブラー設定
         public void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
@@ -70,6 +76,23 @@ namespace ReelSpinGame_Reels.Spin
             }
 
             reelSpinModel.CurrentReelStatus = ReelStatus.Spinning;
+        }
+
+        // リールの停止処理を開始する
+        public void StartStopReelSpin(int delay)
+        {
+            Debug.Log("Received ReelStop");
+            reelSpinModel.CurrentReelStatus = ReelStatus.RecieveStop;
+            reelSpinModel.RemainingDelay = delay;
+        }
+
+        // リールの回転を終了する
+        public void FinishReelSpin()
+        {
+            Debug.Log("Finished ReelSpin");
+            transform.rotation = Quaternion.identity;
+            reelSpinModel.FinishReelSpin();
+            HasReelStopped?.Invoke();
         }
 
         // リールの回転
@@ -96,13 +119,17 @@ namespace ReelSpinGame_Reels.Spin
             }*/
             //Debug.Log("ChangeAngle:" + (360f - ChangeAngle));
 
-            // 一定角度に達したら図柄の更新(17.14286度)
+            ChangeReelPos();
+        }
 
-            // 回転速度に合わせて変更
+        // 図柄位置を変更する
+        private void ChangeReelPos()
+        {
+            // 一定角度に達したら図柄の更新(17.14286度)
             // 逆回転の場合
             if (Math.Sign(reelSpinModel.RotateSpeed) == -1 && transform.rotation.eulerAngles.x < 180 && transform.rotation.eulerAngles.x > ChangeAngle)
             {
-                Debug.Log("Symbol changed");
+                //Debug.Log("Symbol changed");
                 // 角度をもとに戻す
                 transform.Rotate(Vector3.right, ChangeAngle * -1);
 
@@ -123,22 +150,25 @@ namespace ReelSpinGame_Reels.Spin
                     }
                 }*/
 
-                /*
-                // 停止する位置になったら
-                if (reelSpinModel.CurrentReelStatus == ReelSpinModel.ReelStatus.Stopping && reelData.CheckReachedStop())
+                // 残りスベリコマ数が0になったら停止処理
+                if (reelSpinModel.RemainingDelay > 0 && reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)
                 {
-                    StopReelSpeed();
-                }*/
+                    reelSpinModel.RemainingDelay -= 1;
+                    Debug.Log("Remaining Delay:" + reelSpinModel.RemainingDelay);
+                }
+                else if(reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)
+                {
+                    FinishReelSpin();
+                }
             }
             // 前回転の場合
             else if (Math.Sign(reelSpinModel.RotateSpeed) == 1 && transform.rotation.eulerAngles.x > 180 && transform.rotation.eulerAngles.x < 360f - ChangeAngle)
             {
-                Debug.Log("Symbol changed");
+                //Debug.Log("Symbol changed");
                 // 角度をもとに戻す
                 transform.Rotate(Vector3.right, ChangeAngle);
                 // 位置変更を伝える
                 OnReelPositionChanged?.Invoke();
-
                 /*
                 if (HasJacModeLight)
                 {
@@ -152,13 +182,37 @@ namespace ReelSpinGame_Reels.Spin
                         ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
                         ReelEffectManager.ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
                     }
-                }
-
-                // 停止する位置になったら
-                if (reelData.CurrentReelStatus == ReelStatus.Stopping && reelData.CheckReachedStop())
-                {
-                    StopReelSpeed();
                 }*/
+
+                // 残りスベリコマ数が0になったら停止処理
+                if (reelSpinModel.RemainingDelay > 0 && reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)
+                {
+                    reelSpinModel.RemainingDelay -= 1;
+                    Debug.Log("Remaining Delay:" + reelSpinModel.RemainingDelay);
+                }
+                else if (reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)
+                {
+                    FinishReelSpin();
+                }
+            }
+        }
+
+        // 回転を遅くする
+        private void SlowDownReelSpeed()
+        {
+            // 一定角度に達したらリール速度を落とす(15.14286度)
+            // 逆回転の場合
+            if (Math.Sign(reelSpinModel.RotateSpeed) == -1 && transform.rotation.eulerAngles.x < 180 && transform.rotation.eulerAngles.x > StopAngle)
+            {
+                // 停止状態にする
+                reelSpinModel.CurrentReelStatus = ReelStatus.Stopping;
+                reelSpinModel.MaxSpeed = 0.0f;
+            }
+            // 前回転の場合
+            else if (Math.Sign(reelSpinModel.RotateSpeed) == 1 && transform.rotation.eulerAngles.x > 180 && transform.rotation.eulerAngles.x < 360f - StopAngle)
+            {
+                reelSpinModel.CurrentReelStatus = ReelStatus.Stopping;
+                reelSpinModel.MaxSpeed = 0.0f;
             }
         }
     }

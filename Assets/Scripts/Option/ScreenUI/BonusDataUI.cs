@@ -4,7 +4,7 @@ using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Option.MenuContent
 {

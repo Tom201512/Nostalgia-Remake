@@ -7,7 +7,7 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 namespace ReelSpinGame_Datas.Reels
 {
     [Serializable]
-    public class ReelFirstData : ReelBaseData
+    public class ReelFirstConditions : ReelBaseData
     {
         // const
         // 第一停止の停止条件読み込み位置
@@ -22,7 +22,7 @@ namespace ReelSpinGame_Datas.Reels
         [SerializeField] private int firstStopPos;
 
         // コンストラクタ
-        public ReelFirstData(StreamReader sReader)
+        public ReelFirstConditions(StreamReader sReader)
         {
             string[] values = GetDataFromStream(sReader);
             int indexNum = 0;

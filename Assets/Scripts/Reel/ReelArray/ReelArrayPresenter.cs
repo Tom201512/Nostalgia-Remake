@@ -26,7 +26,7 @@ namespace ReelSpinGame_Reels.Array
         }
 
         // 指定位置からのリール位置を得る
-        public int GetReelPos(int currentLower, sbyte posID) => symbolManager.OffsetReel(currentLower, posID);
+        public int GetReelPos(int currentLower, sbyte posID) => ReelObjectPresenter.OffsetReelPos(currentLower, posID);
 
         // 図柄位置の更新
         public void UpdateReelSymbols(int currentLower) => symbolManager.UpdateSymbolsObjects(currentLower, reelArrayModel.ReelArray);

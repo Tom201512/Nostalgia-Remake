@@ -21,7 +21,7 @@ namespace ReelSpinGame_Reels
         public int LastPushedLowerPos { get; set; }
         // 将来的に止まる位置(下段基準)
         public int WillStopLowerPos { get; set; }
-        // 最後に止めたときのディレイ数
+        // 最後に止めた時のスベリコマ数
         public int LastStoppedDelay { get; set; }
 
         // コンストラクタ

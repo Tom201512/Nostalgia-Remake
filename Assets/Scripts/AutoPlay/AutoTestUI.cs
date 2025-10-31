@@ -1,6 +1,6 @@
 using ReelSpinGame_AutoPlay;
 using TMPro;
-using static ReelSpinGame_Reels.ReelManagerBehaviour.ReelID;
+using static ReelSpinGame_Reels.ReelManagerModel.ReelID;
 
 public class AutoTestUI : UIBaseClass
 {

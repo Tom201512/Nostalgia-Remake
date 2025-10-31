@@ -37,7 +37,7 @@ public class SymbolManager : MonoBehaviour
         // 現在のリール下段を基準として位置を更新する。
         foreach (SymbolChange symbol in SymbolObj)
         {
-            symbol.ChangeSymbol(symbolImages[(int)reelArray[OffsetReel(currentLower, (sbyte)symbol.GetPosID())]]);
+            symbol.ChangeSymbol(symbolImages[(int)reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, (sbyte)symbol.GetPosID())]]);
 
             // もし最後の位置にある図柄の場合は切れ目の位置を動かす
             if(!hasLastPosSymbol && currentLower == 20)
@@ -51,27 +51,11 @@ public class SymbolManager : MonoBehaviour
     }
 
     // リール図柄を得る
-    public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[OffsetReel(currentLower, posID)]);
+    public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, posID)]);
 
     // リール配列の番号を図柄へ変更
     public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
 
     // 図柄を得る
     public Sprite GetSymbolImage(byte symbolID) => symbolImages[symbolID];
-
-    // リール位置をオーバーフローしない数値で返す
-    public int OffsetReel(int reelPos, int offset)
-    {
-        if (reelPos + offset < 0)
-        {
-            return MaxReelArray + reelPos + offset;
-        }
-
-        else if (reelPos + offset > MaxReelArray - 1)
-        {
-            return reelPos + offset - MaxReelArray;
-        }
-        // オーバーフローがないならそのまま返す
-        return reelPos + offset;
-    }
 }

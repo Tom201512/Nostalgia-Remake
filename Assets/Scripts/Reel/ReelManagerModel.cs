@@ -3,7 +3,7 @@ using ReelSpinGame_Reels.Table;
 
 namespace ReelSpinGame_Reels
 {
-	public class ReelManagerBehaviour
+	public class ReelManagerModel
 	{
         // リールマネージャーのデータ
 
@@ -43,7 +43,7 @@ namespace ReelSpinGame_Reels
         public int RandomValue { get; set; }
 
         // コンストラクタ
-        public ReelManagerBehaviour()
+        public ReelManagerModel()
         {
             IsReelFinished = true;
             IsReelWorking = false;

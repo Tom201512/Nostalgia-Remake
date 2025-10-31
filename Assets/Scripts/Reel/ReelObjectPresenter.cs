@@ -35,7 +35,6 @@ namespace ReelSpinGame_Reels
         // リール配列用のプレゼンター
         private ReelArrayPresenter reelArrayPresenter;
 
-
         // JAC中の点灯をするか
         public bool HasJacModeLight { get; set; }
 
@@ -53,12 +52,14 @@ namespace ReelSpinGame_Reels
         {
             reelSpinPresenter.ChangeBlurSetting(false);
             reelSpinPresenter.OnReelPositionChanged += OnReelPosChangedCallback;
+            reelSpinPresenter.HasReelStopped += OnReelHasStoppedCallback;
             reelArrayPresenter.UpdateReelSymbols(reelObjectModel.CurrentLower);
         }
 
         private void OnDestroy()
         {
             reelSpinPresenter.OnReelPositionChanged -= OnReelPosChangedCallback;
+            reelSpinPresenter.HasReelStopped -= OnReelHasStoppedCallback;
         }
 
         // func
@@ -73,7 +74,7 @@ namespace ReelSpinGame_Reels
         // 停止予定位置
         public int GetWillStopLowerPos() => reelObjectModel.WillStopLowerPos;
         // 最後に止めたときのディレイ数
-        public int GetLastDelay() => reelObjectModel.LastStoppedDelay;
+        public int GetLastDelay() => reelSpinPresenter.GetLastStoppedDelay();
         // 指定した位置にあるリールの番号を返す
         public int GetReelPos(ReelPosID posID) => reelArrayPresenter.GetReelPos(reelObjectModel.CurrentLower, (sbyte)posID);
 
@@ -114,18 +115,27 @@ namespace ReelSpinGame_Reels
         }
 
         // リール停止
-        public void StopReel(int pushedLowerPos, int delay)
+        public void StopReel(int pushedMiddlePos, int delay)
         {
-            reelObjectModel.LastPushedLowerPos = pushedLowerPos;
+            Debug.Log("Pushed at: " + pushedMiddlePos);
+            Debug.Log("Delay:" + delay);
+            reelObjectModel.LastPushedLowerPos = pushedMiddlePos;
+            reelObjectModel.WillStopLowerPos = OffsetReelPos(pushedMiddlePos, delay);
             reelObjectModel.LastStoppedDelay = delay;
-            //reelSpinPresenter.GetCurrentReelStatus();
+            reelSpinPresenter.StartStopReelSpin(delay);
         }
 
         // リール停止(高速版)
-        public void StopReelFast(int pushedPos, int delay)
+        public void StopReelFast(int pushedMiddlePos, int delay)
         {
             // 強制停止
-            //reelData.BeginStopReel(pushedPos, delay, true);
+            reelObjectModel.LastPushedLowerPos = pushedMiddlePos;
+            reelObjectModel.WillStopLowerPos = OffsetReelPos(pushedMiddlePos, delay);
+            reelObjectModel.LastStoppedDelay = delay;
+            reelObjectModel.CurrentLower = reelObjectModel.WillStopLowerPos;
+
+            reelSpinPresenter.FinishReelSpin();
+            reelArrayPresenter.UpdateReelSymbols(reelObjectModel.CurrentLower);
 
             // JAC中ならライトも調整
             if (HasJacModeLight)
@@ -210,9 +220,32 @@ namespace ReelSpinGame_Reels
         // リール位置が変わったときのコールバック
         private void OnReelPosChangedCallback()
         {
-            Debug.Log("Reel pos changed");
+            //Debug.Log("Reel pos changed");
             ChangeReelPos(reelSpinPresenter.GetCurrentSpeed());
             reelArrayPresenter.UpdateReelSymbols(reelObjectModel.CurrentLower);
+        }
+
+        // リールが停止したときのコールバック
+        private void OnReelHasStoppedCallback()
+        {
+            Debug.Log("StoppedEvent called");
+            HasReelStopped?.Invoke();
+        }
+
+        // リール位置をオーバーフローしない数値で返す
+        public static int OffsetReelPos(int reelPos, int offset)
+        {
+            if (reelPos + offset < 0)
+            {
+                return MaxReelArray + reelPos + offset;
+            }
+
+            else if (reelPos + offset > MaxReelArray - 1)
+            {
+                return reelPos + offset - MaxReelArray;
+            }
+            // オーバーフローがないならそのまま返す
+            return reelPos + offset;
         }
     }
 }

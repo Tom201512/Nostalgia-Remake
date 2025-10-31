@@ -3,7 +3,7 @@ using ReelSpinGame_Medal;
 using ReelSpinGame_Reels.Symbol;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Reels.Payout

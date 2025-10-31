@@ -16,25 +16,25 @@ namespace ReelSpinGame_Datas
         [SerializeField] private byte[] array;
         // リール条件
         // 第一停止
-        [SerializeField] private List<ReelFirstData> first;
+        [SerializeField] private List<ReelFirstConditions> first;
         // 第二停止
-        [SerializeField] private List<ReelSecondData> second;
+        [SerializeField] private List<ReelSecondConditions> second;
         // 第三停止
-        [SerializeField] private List<ReelThirdData> third;
+        [SerializeField] private List<ReelThirdConditions> third;
         // ディレイテーブル
         [SerializeField] private List<ReelTableData> tables;
 
         public byte[] Array { get { return array; } }
-        public List<ReelFirstData> FirstCondition { get { return first; } }
-        public List<ReelSecondData> SecondCondition { get { return second; } }
-        public List<ReelThirdData> ThirdCondition { get { return third; } }
+        public List<ReelFirstConditions> FirstCondition { get { return first; } }
+        public List<ReelSecondConditions> SecondCondition { get { return second; } }
+        public List<ReelThirdConditions> ThirdCondition { get { return third; } }
         public List<ReelTableData> Tables { get { return tables; } }
 
         // func
         public void SetArray(byte[] array) => this.array = array;
         public void SetTables(List<ReelTableData> tables) => this.tables = tables;
 
-        public void SetReelConditions(List<ReelFirstData> first, List<ReelSecondData> second, List<ReelThirdData> third)
+        public void SetReelConditions(List<ReelFirstConditions> first, List<ReelSecondConditions> second, List<ReelThirdConditions> third)
         {
             this.first = first;
             this.second = second;

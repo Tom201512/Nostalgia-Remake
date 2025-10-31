@@ -3,7 +3,7 @@ using ReelSpinGame_Datas.Reels;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Reels.Table
 {
@@ -58,7 +58,7 @@ namespace ReelSpinGame_Reels.Table
                 // ëÊàÍí‚é~
                 case 0:
                     //Debug.Log("First Stop Check");
-                    foreach (ReelFirstData first in reelDatabase.FirstCondition)
+                    foreach (ReelFirstConditions first in reelDatabase.FirstCondition)
                     {
                         // àÍívÇ∑ÇÈÉeÅ[ÉuÉãÇ™Ç†ÇÈÇΩÇ—Ç…çXêVÇÇ∑ÇÈ
                         if (first.CheckFirstReelCondition((int)flagID, (int)bonus, bet, random, pushedPos))
@@ -73,7 +73,7 @@ namespace ReelSpinGame_Reels.Table
                 // ëÊìÒí‚é~
                 case 1:
                     //Debug.Log("Second Stop Check");
-                    foreach (ReelSecondData second in reelDatabase.SecondCondition)
+                    foreach (ReelSecondConditions second in reelDatabase.SecondCondition)
                     {
                         if (second.CheckSecondReelCondition((int)flagID, (int)bonus, bet, random,
                             PushedReelIdOrder[(int)StopOrder.First], PushedReelCidOrder[(int)StopOrder.First], pushedPos))
@@ -88,7 +88,7 @@ namespace ReelSpinGame_Reels.Table
                 // ëÊéOí‚é~
                 case 2:
                     //Debug.Log("Third Stop Check");
-                    foreach (ReelThirdData third in reelDatabase.ThirdCondition)
+                    foreach (ReelThirdConditions third in reelDatabase.ThirdCondition)
                     {
                         if (third.CheckThirdReelCondition((int)flagID, (int)bonus, bet, random,
                             PushedReelIdOrder[(int)StopOrder.First], PushedReelCidOrder[(int)StopOrder.First],

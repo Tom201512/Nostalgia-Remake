@@ -1,12 +1,12 @@
 using System;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Datas.Reels
 {
     [Serializable]
-    public class ReelSecondData : ReelBaseData
+    public class ReelSecondConditions : ReelBaseData
     {
         // const
         // 第一停止したリールIDを読み込む位置
@@ -31,7 +31,7 @@ namespace ReelSpinGame_Datas.Reels
         [SerializeField] private int secondStopPos;
 
         // コンストラクタ
-        public ReelSecondData(StreamReader sReader)
+        public ReelSecondConditions(StreamReader sReader)
         {
             string[] values = GetDataFromStream(sReader);
 

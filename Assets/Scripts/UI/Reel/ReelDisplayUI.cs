@@ -2,7 +2,7 @@ using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Array;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_UI.Reel
 {
