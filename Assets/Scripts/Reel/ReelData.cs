@@ -64,10 +64,6 @@ namespace ReelSpinGame_Reels
         public void SetReelPos(int lowerPos) => currentLower = lowerPos;
         // 指定したリールの位置番号を返す
         public int GetReelPos(int posID) => OffsetReel(currentLower, posID);
-        // リールの位置から図柄を返す
-        public ReelSymbols GetReelSymbol(int posID) => SymbolChange.ReturnSymbol(ReelDatabase.Array[OffsetReel(currentLower, posID)]);
-        // 停止予定の位置からリール図柄を返す
-        public ReelSymbols GetSymbolFromWillStop(int posID) => SymbolChange.ReturnSymbol(ReelDatabase.Array[OffsetReel(WillStopPos, posID)]);
         // リール位置変更 (回転速度の符号に合わせて変更)
         public void ChangeReelPos(float rotateSpeed) => currentLower = OffsetReel(currentLower, (int)Mathf.Sign(rotateSpeed));
         // 停止位置になったか

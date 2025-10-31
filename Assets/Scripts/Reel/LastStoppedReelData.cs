@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using static ReelSpinGame_Reels.ReelData;
-using ReelSpinGame_Reels.Symbol;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Reels
 {
@@ -51,7 +50,7 @@ namespace ReelSpinGame_Reels
                 // 各位置の図柄を得る(枠下2段目から枠上2段目まで)
                 for (sbyte j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd; j++)
                 {
-                    LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
+                    //LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
                     //Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));
                 }
             }

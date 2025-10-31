@@ -9,8 +9,9 @@ using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
-using static ReelSpinGame_Reels.ReelData;
 using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 public class ReelManager : MonoBehaviour
 {
@@ -200,8 +201,8 @@ public class ReelManager : MonoBehaviour
         // 全リール速度が最高速度になっていれば
         if(data.CanStopReels)
         {
-            // 止められる状態なら
-            if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.WaitForStop)
+            // 回転中なら停止
+            if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.Spinning)
             {
                 // 中段の位置を得る
                 int pushedPos = GetReelCenterPos(reelID);
@@ -232,8 +233,8 @@ public class ReelManager : MonoBehaviour
         // 全リール速度が最高速度になっていれば
         if (data.CanStopReels)
         {
-            // 止められる状態なら
-            if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.WaitForStop)
+            // 回転中なら停止
+            if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.Spinning)
             {
                 // 第一停止なら押したところの停止位置を得る
                 if (!data.IsFirstReelPushed)
@@ -298,6 +299,7 @@ public class ReelManager : MonoBehaviour
                 // 停止中状態になっている停止予定位置のリールからリーチ状態か確認
                 for (int i = 0; i < reelObjects.Count; i++)
                 {
+                    /*
                     // 赤7
                     if (bigColor == BigColor.Red && 
                         reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
@@ -326,7 +328,7 @@ public class ReelManager : MonoBehaviour
                         {
                             currentCount += 1;
                         }
-                    }
+                    }*/
                 }
                 // 最も多かったカウントを記録
                 if(currentCount > highestCount)

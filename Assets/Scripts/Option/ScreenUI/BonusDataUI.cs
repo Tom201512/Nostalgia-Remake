@@ -21,7 +21,7 @@ namespace ReelSpinGame_Option.MenuContent
         // リールオブジェクトをセットする
         public void SetReelObject(List<ReelObject> reelObjects)
         {
-            reelDisplay.SetReels(reelObjects);
+            //reelDisplay.SetReels(reelObjects);
         }
 
         public void UpdateText(PlayerDatabase player)

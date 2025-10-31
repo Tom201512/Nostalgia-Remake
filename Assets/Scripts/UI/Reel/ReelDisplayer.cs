@@ -20,12 +20,12 @@ namespace ReelSpinGame_UI.Reel
         }
 
         // ‰º‚ÌˆÊ’u‚ğŠî€‚ÉƒŠ[ƒ‹}•¿‚ğ•\¦
-        public void DisplayReel(int lowerPos, ReelObject reel)
+        public void DisplayReel(int lowerPos, Sprite sprite)
         {
             foreach(SymbolDisplayUI symbol in reelSymbols)
             {
                 Debug.Log("Pos:" + ReelData.OffsetReel(lowerPos, (int)symbol.GetPosID()));
-                symbol.ChangeSymbol(reel.GetSymbolImageAtPos(ReelData.OffsetReel(lowerPos, (int)symbol.GetPosID())));
+                symbol.ChangeSymbol(sprite);
             }
         }
     }
