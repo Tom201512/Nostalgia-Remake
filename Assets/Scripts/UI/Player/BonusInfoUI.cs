@@ -19,8 +19,8 @@ namespace ReelSpinGame_UI.Player.Bonus
         // ボーナス当選情報更新
         public void UpdateBonusUI(PlayerDatabase playerDatabase)
         {
-            bigCount.text = "BIG:" + "\t" + Math.Clamp(playerDatabase.BigTimes, 0, MaximumBonusCount).ToString();
-            regCount.text = "REG:" + "\t" + Math.Clamp(playerDatabase.RegTimes, 0, MaximumBonusCount).ToString();
+            bigCount.text = "BIG:" + Math.Clamp(playerDatabase.BigTimes, 0, MaximumBonusCount).ToString();
+            regCount.text = "REG:" + Math.Clamp(playerDatabase.RegTimes, 0, MaximumBonusCount).ToString();
         }
     }
 }

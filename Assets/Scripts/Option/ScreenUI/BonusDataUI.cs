@@ -14,13 +14,14 @@ namespace ReelSpinGame_Option.MenuContent
 
         // データ部分
         [SerializeField] TextMeshProUGUI dataTextUI;
+        
         // リールディスプレイ(リーチ目用)
         [SerializeField] ReelDisplayUI reelDisplay;
 
         // リールオブジェクトをセットする
         public void SetReelObject(List<ReelObjectPresenter> reelObjects)
         {
-            //reelDisplay.SetReels(reelObjects);
+            reelDisplay.SetReels(reelObjects);
         }
 
         public void UpdateText(PlayerDatabase player)

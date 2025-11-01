@@ -54,8 +54,8 @@ public class SymbolManager : MonoBehaviour
     public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, posID)]);
 
     // ƒŠ[ƒ‹”z—ñ‚Ì”Ô†‚ð}•¿‚Ö•ÏX
-    public static ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+    public ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
 
     // }•¿‚ð“¾‚é
-    public Sprite GetSymbolImage(byte symbolID) => symbolImages[symbolID];
+    public Sprite GetSymbolImage(ReelSymbols symbolID) => symbolImages[(int)symbolID];
 }

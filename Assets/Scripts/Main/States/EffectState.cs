@@ -34,7 +34,7 @@ namespace ReelSpinGame_State.LotsState
             {
                 EnableSounds();
                 // ビタ箇所を押したかチェック
-                bool hasBita = gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 10 || gM.Reel.GetPushedPos((int)ReelID.ReelLeft) == 16;
+                bool hasBita = gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft) == 10 || gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft) == 16;
 
                 // 演出開始
                 gM.Effect.StartBeforePayoutEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(),

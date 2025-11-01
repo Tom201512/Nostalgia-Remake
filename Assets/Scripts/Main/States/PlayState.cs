@@ -199,7 +199,7 @@ namespace ReelSpinGame_State.PlayingState
                 // 順番にリールが止まっていないものから停止させる
                 if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelStatus.Stopped)
                 {
-                    if (gM.Reel.GetReelCenterPos(ReelID.ReelRight) ==
+                    if (gM.Reel.GetReelPushedPos(ReelID.ReelRight) ==
                         gM.Auto.AutoStopPos[(int)ReelID.ReelRight])
                     {
                         StopReel(ReelID.ReelRight);
@@ -207,7 +207,7 @@ namespace ReelSpinGame_State.PlayingState
                 }
                 else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) != ReelStatus.Stopped)
                 {
-                    if (gM.Reel.GetReelCenterPos(ReelID.ReelMiddle) ==
+                    if (gM.Reel.GetReelPushedPos(ReelID.ReelMiddle) ==
                         gM.Auto.AutoStopPos[(int)ReelID.ReelMiddle])
                     {
                         StopReel(ReelID.ReelMiddle);
@@ -215,7 +215,7 @@ namespace ReelSpinGame_State.PlayingState
                 }
                 else if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelStatus.Stopped)
                 {
-                    if (gM.Reel.GetReelCenterPos(ReelID.ReelLeft) ==
+                    if (gM.Reel.GetReelPushedPos(ReelID.ReelLeft) ==
                         gM.Auto.AutoStopPos[(int)ReelID.ReelLeft])
                     {
                         StopReel(ReelID.ReelLeft);
@@ -239,7 +239,7 @@ namespace ReelSpinGame_State.PlayingState
                 // オート速度が高速または通常なら規定位置になったときに停止
                 if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)First]) == ReelStatus.Spinning)
                 {
-                    if (gM.Reel.GetReelCenterPos(gM.Auto.AutoStopOrders[(int)First]) ==
+                    if (gM.Reel.GetReelPushedPos(gM.Auto.AutoStopOrders[(int)First]) ==
                         gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)First]])
                     {
                         StopReel(gM.Auto.AutoStopOrders[(int)First]);
@@ -247,7 +247,7 @@ namespace ReelSpinGame_State.PlayingState
                 }
                 else if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)Second]) == ReelStatus.Spinning)
                 {
-                    if (gM.Reel.GetReelCenterPos(gM.Auto.AutoStopOrders[(int)Second]) ==
+                    if (gM.Reel.GetReelPushedPos(gM.Auto.AutoStopOrders[(int)Second]) ==
                         gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)Second]])
                     {
                         StopReel(gM.Auto.AutoStopOrders[(int)Second]);
@@ -255,7 +255,7 @@ namespace ReelSpinGame_State.PlayingState
                 }
                 else if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)Third]) == ReelStatus.Spinning)
                 {
-                    if (gM.Reel.GetReelCenterPos(gM.Auto.AutoStopOrders[(int)Third]) ==
+                    if (gM.Reel.GetReelPushedPos(gM.Auto.AutoStopOrders[(int)Third]) ==
                         gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)Third]])
                     {
                         StopReel(gM.Auto.AutoStopOrders[(int)Third]);

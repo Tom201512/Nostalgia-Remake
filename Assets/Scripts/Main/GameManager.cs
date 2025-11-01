@@ -3,15 +3,14 @@ using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
-using ReelSpinGame_System;
-using ReelSpinGame_Save.Database;
-using ReelSpinGame_UI.Player;
 using ReelSpinGame_Option;
+using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_Save.Database;
+using ReelSpinGame_System;
+using ReelSpinGame_UI.Player;
+using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelManagerModel;
-using UnityEngine;
-using ReelSpinGame_Option.MenuContent;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,7 +30,7 @@ public class GameManager : MonoBehaviour
     // リール情報
     [SerializeField] private ReelManager reelManagerObj;
     // 演出
-    [SerializeField] private EffectManager effectManagerObj;
+    [SerializeField] private EffectPresenter effectManagerObj;
     // オプション画面
     [SerializeField] private OptionManager optionManagerObj;
     // プレイヤーUI
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
     public WaitManager Wait { get; private set; }
     public ReelManager Reel { get { return reelManagerObj; } }
     public BonusManager Bonus { get; private set; }
-    public EffectManager Effect { get { return effectManagerObj; } }
+    public EffectPresenter Effect { get { return effectManagerObj; } }
     public OptionManager Option { get { return optionManagerObj; } }
 
     // プレイヤー情報
@@ -106,6 +105,8 @@ public class GameManager : MonoBehaviour
 
     // <デバッグ用>セーブをしない
     [SerializeField] private bool dontSaveFlag;
+    // <デバッグ用> 開始時にセーブ消去
+    [SerializeField] private bool deleteSaveFlag;
 
     // <デバッグ用> デバッグUI表示するか
     private bool hasDebugUI;
@@ -159,6 +160,12 @@ public class GameManager : MonoBehaviour
     {
         // 読み込みに失敗したか
         bool loadFailed = false;
+
+        if(deleteSaveFlag)
+        {
+            Debug.LogWarning("セーブを削除しました。");
+            saveManager.DeleteSaveFile();
+        }
 
         if(!dontSaveFlag)
         {

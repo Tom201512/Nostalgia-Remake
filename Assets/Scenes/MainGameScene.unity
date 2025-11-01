@@ -1343,7 +1343,7 @@ MonoBehaviour:
   - {fileID: 1933351381669917605}
   instantRandomMode: 0
   infinityRandomMode: 0
-  instantRandomValue: 1
+  instantRandomValue: 2
   reelEffectManager: {fileID: 1787737429}
   slotDataScreen: {fileID: 2045587107}
 --- !u!114 &286284040
@@ -2374,7 +2374,8 @@ MonoBehaviour:
   keyToAutoOrderChange: 111
   keyToAutoSpeedChange: 115
   keyToWaitCutToggle: 119
-  dontSaveFlag: 1
+  dontSaveFlag: 0
+  deleteSaveFlag: 0
   debugSetting: 6
 --- !u!4 &460868893
 Transform:
@@ -2389,8 +2390,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 286284037}
   - {fileID: 1787737425}
+  - {fileID: 286284037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &460868895

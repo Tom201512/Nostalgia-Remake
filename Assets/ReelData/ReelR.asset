@@ -1406,7 +1406,7 @@ MonoBehaviour:
     firstStopCID: 1
     secondStopPos: 0
   - mainConditon: 257
-    tid: 21
+    tid: 14
     cid: 2
     firstStopReelID: 0
     firstStopCID: 2
@@ -1418,7 +1418,7 @@ MonoBehaviour:
     firstStopCID: 1
     secondStopPos: 0
   - mainConditon: 257
-    tid: 21
+    tid: 14
     cid: 2
     firstStopReelID: 1
     firstStopCID: 2
@@ -3250,7 +3250,7 @@ MonoBehaviour:
     secondStopReelID: 0
     secondStopCID: 1
   - mainConditon: 257
-    tid: 21
+    tid: 14
     cid: 2
     firstStopReelID: 0
     firstStopCID: 2
@@ -3264,7 +3264,7 @@ MonoBehaviour:
     secondStopReelID: 0
     secondStopCID: 1
   - mainConditon: 257
-    tid: 21
+    tid: 14
     cid: 2
     firstStopReelID: 1
     firstStopCID: 2

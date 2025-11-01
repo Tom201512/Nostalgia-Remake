@@ -69,6 +69,15 @@ namespace ReelSpinGame_Reels.Effect
             }
         }
 
+        // JAC’†‚Ì–¾‚é‚³ŒvZ‚Ìİ’è
+        public void SetJacBrightnessCalculation(bool value)
+        {
+            foreach (ReelObjectPresenter reel in ReelObjects)
+            {
+                reel.SetJacBrightnessCalculate(value);
+            }
+        }
+
         // ‹^——V‹Z
         public void StartFakeSpin()
         {

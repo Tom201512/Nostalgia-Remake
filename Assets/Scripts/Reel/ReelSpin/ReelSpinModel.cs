@@ -8,16 +8,12 @@ namespace ReelSpinGame_Reels.Spin
         // const
         // 図柄変更時の角度 (360度を21分割)
         public const float ChangeAngle = 360.0f / 21.0f;
-        // 図柄停止時の角度 (変更時角度から3度引いた角度)
-        public const float StopAngle = ChangeAngle - 3.0f;
+        // 図柄停止時の角度 (変更時角度から1度引いた角度)
+        public const float StopAngle = ChangeAngle - 0.5f;
         // リール半径(cm)
         const float ReelRadius = 12.75f;
-        // JAC時の光度調整数値
-        const float JacLightOffset = 0.4f;
         // 最高速度までの経過時間(秒)
         const float MaxSpeedReelTime = 0.3f;
-        // 最高ディレイ(スベリコマ)数
-        public const int MaxReelDelay = 4;
 
         // リールの状態(停止、回転、停止信号受理、停止中)
         public enum ReelStatus { Stopped, Spinning, RecieveStop, Stopping}
@@ -31,21 +27,24 @@ namespace ReelSpinGame_Reels.Spin
         public float RotateRPS { get; private set; }
         // JAC中の点灯をするか
         public bool HasJacModeLight { get; set; }
-        // 最後に止めたときのスベリコマ数
-        public int LastStoppedDelay { get; set; }
         // 現在のリール状態
         public ReelStatus CurrentReelStatus { get; set; }
 
-        // 残りスベリコマ数
-        public int RemainingDelay { get; set; }
+        // 現在の位置(下段基準)
+        public int CurrentLower { get; set; }
+        // 押した位置(中段基準)
+        public int LastPushedPos { get; set; }
+        // 将来的に止まる位置(下段基準)
+        public int WillStopLowerPos { get; set; }
+        // 最後に止めた時のスベリコマ数
+        public int LastStoppedDelay { get; set; }
 
         public ReelSpinModel(float rotateRPM)
         {
             RotateSpeed = 0.0f;
             MaxSpeed = 0.0f;
             RotateRPS = rotateRPM / 60.0f;
-            RemainingDelay = 0;
-            LastStoppedDelay = 0;
+            CurrentLower = 0;
             HasJacModeLight = false;
             CurrentReelStatus = ReelStatus.Stopped;
         }
