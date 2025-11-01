@@ -5,7 +5,7 @@ using ReelSpinGame_Util.OriginalInputs;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -118,7 +118,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // リールオブジェクトのデータを渡す
-        public void SendReelObjectData(List<ReelObject> reelObjects)
+        public void SendReelObjectData(List<ReelObjectPresenter> reelObjects)
         {
             bonusDataUI.SetReelObject(reelObjects);
         }

@@ -4,7 +4,8 @@ using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction.AutoStopOrder;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -71,7 +72,7 @@ namespace ReelSpinGame_State.PlayingState
         // リール停止
         private void StopReel(ReelID reelID)
         {
-            if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+            if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
                 // リールを止める
                 gM.Reel.StopSelectedReel(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
@@ -81,7 +82,7 @@ namespace ReelSpinGame_State.PlayingState
         // 超高速オート時の停止
         private void StopReelQuick(ReelID reelID, int autoStopPos)
         {
-            if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+            if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
                 // リールを止める
                 gM.Reel.StopSelectedReelFast(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
@@ -196,25 +197,25 @@ namespace ReelSpinGame_State.PlayingState
             else
             {
                 // 順番にリールが止まっていないものから停止させる
-                if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelSpinGame_Reels.ReelData.ReelStatus.Stopped)
+                if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelStatus.Stopped)
                 {
-                    if (gM.Reel.GetReelCenterPos(ReelID.ReelRight) ==
+                    if (gM.Reel.GetReelPushedPos(ReelID.ReelRight) ==
                         gM.Auto.AutoStopPos[(int)ReelID.ReelRight])
                     {
                         StopReel(ReelID.ReelRight);
                     }
                 }
-                else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) != ReelSpinGame_Reels.ReelData.ReelStatus.Stopped)
+                else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) != ReelStatus.Stopped)
                 {
-                    if (gM.Reel.GetReelCenterPos(ReelID.ReelMiddle) ==
+                    if (gM.Reel.GetReelPushedPos(ReelID.ReelMiddle) ==
                         gM.Auto.AutoStopPos[(int)ReelID.ReelMiddle])
                     {
                         StopReel(ReelID.ReelMiddle);
                     }
                 }
-                else if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelSpinGame_Reels.ReelData.ReelStatus.Stopped)
+                else if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelStatus.Stopped)
                 {
-                    if (gM.Reel.GetReelCenterPos(ReelID.ReelLeft) ==
+                    if (gM.Reel.GetReelPushedPos(ReelID.ReelLeft) ==
                         gM.Auto.AutoStopPos[(int)ReelID.ReelLeft])
                     {
                         StopReel(ReelID.ReelLeft);
@@ -236,25 +237,25 @@ namespace ReelSpinGame_State.PlayingState
             else
             {
                 // オート速度が高速または通常なら規定位置になったときに停止
-                if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)First]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)First]) == ReelStatus.Spinning)
                 {
-                    if (gM.Reel.GetReelCenterPos(gM.Auto.AutoStopOrders[(int)First]) ==
+                    if (gM.Reel.GetReelPushedPos(gM.Auto.AutoStopOrders[(int)First]) ==
                         gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)First]])
                     {
                         StopReel(gM.Auto.AutoStopOrders[(int)First]);
                     }
                 }
-                else if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)Second]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                else if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)Second]) == ReelStatus.Spinning)
                 {
-                    if (gM.Reel.GetReelCenterPos(gM.Auto.AutoStopOrders[(int)Second]) ==
+                    if (gM.Reel.GetReelPushedPos(gM.Auto.AutoStopOrders[(int)Second]) ==
                         gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)Second]])
                     {
                         StopReel(gM.Auto.AutoStopOrders[(int)Second]);
                     }
                 }
-                else if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)Third]) == ReelSpinGame_Reels.ReelData.ReelStatus.WaitForStop)
+                else if (gM.Reel.GetReelStatus(gM.Auto.AutoStopOrders[(int)Third]) == ReelStatus.Spinning)
                 {
-                    if (gM.Reel.GetReelCenterPos(gM.Auto.AutoStopOrders[(int)Third]) ==
+                    if (gM.Reel.GetReelPushedPos(gM.Auto.AutoStopOrders[(int)Third]) ==
                         gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)Third]])
                     {
                         StopReel(gM.Auto.AutoStopOrders[(int)Third]);
@@ -267,15 +268,15 @@ namespace ReelSpinGame_State.PlayingState
         private void ReelForcedStop()
         {
             // 左->中->右から強制停止
-            if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelSpinGame_Reels.ReelData.ReelStatus.Stopped)
+            if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelStatus.Stopped)
             {
                 StopReel(ReelID.ReelLeft);
             }
-            else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) != ReelSpinGame_Reels.ReelData.ReelStatus.Stopped)
+            else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) != ReelStatus.Stopped)
             {
                 StopReel(ReelID.ReelMiddle);
             }
-            else if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelSpinGame_Reels.ReelData.ReelStatus.Stopped)
+            else if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelStatus.Stopped)
             {
                 StopReel(ReelID.ReelRight);
             }

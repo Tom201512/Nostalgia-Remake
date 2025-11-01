@@ -1,11 +1,10 @@
 using ReelSpinGame_Reels;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Reel;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -15,11 +14,12 @@ namespace ReelSpinGame_Option.MenuContent
 
         // データ部分
         [SerializeField] TextMeshProUGUI dataTextUI;
+        
         // リールディスプレイ(リーチ目用)
         [SerializeField] ReelDisplayUI reelDisplay;
 
         // リールオブジェクトをセットする
-        public void SetReelObject(List<ReelObject> reelObjects)
+        public void SetReelObject(List<ReelObjectPresenter> reelObjects)
         {
             reelDisplay.SetReels(reelObjects);
         }

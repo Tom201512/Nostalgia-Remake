@@ -1,6 +1,8 @@
 using ReelSpinGame_Reels;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
+
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 public class SymbolManager : MonoBehaviour
 {
@@ -27,7 +29,7 @@ public class SymbolManager : MonoBehaviour
     // func
 
     // }•¿‚ÌXV
-    public void UpdateSymbolsObjects(ReelData data)
+    public void UpdateSymbolsObjects(int currentLower, byte[] reelArray)
     {
         // Ø‚ê–Ú‚ÌˆÊ’u‚É‚ ‚é}•¿‚ªŽ~‚Ü‚Á‚Ä‚¢‚é‚©
         bool hasLastPosSymbol = false;
@@ -35,10 +37,10 @@ public class SymbolManager : MonoBehaviour
         // Œ»Ý‚ÌƒŠ[ƒ‹‰º’i‚ðŠî€‚Æ‚µ‚ÄˆÊ’u‚ðXV‚·‚éB
         foreach (SymbolChange symbol in SymbolObj)
         {
-            symbol.ChangeSymbol(symbolImages[(int)data.GetReelSymbol((sbyte)symbol.GetPosID())]);
+            symbol.ChangeSymbol(symbolImages[(int)reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, (sbyte)symbol.GetPosID())]]);
 
             // ‚à‚µÅŒã‚ÌˆÊ’u‚É‚ ‚é}•¿‚Ìê‡‚ÍØ‚ê–Ú‚ÌˆÊ’u‚ð“®‚©‚·
-            if(!hasLastPosSymbol && data.GetReelPos((sbyte)symbol.GetPosID()) == 20)
+            if(!hasLastPosSymbol && currentLower == 20)
             {
                 hasLastPosSymbol = true;
                 Underline.transform.SetPositionAndRotation(symbol.transform.position, symbol.transform.rotation);
@@ -48,6 +50,12 @@ public class SymbolManager : MonoBehaviour
         Underline.SetActive(hasLastPosSymbol);
     }
 
+    // ƒŠ[ƒ‹}•¿‚ð“¾‚é
+    public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, posID)]);
+
+    // ƒŠ[ƒ‹”z—ñ‚Ì”Ô†‚ð}•¿‚Ö•ÏX
+    public ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
+
     // }•¿‚ð“¾‚é
-    public Sprite GetSymbolImage(byte symbolID) => symbolImages[symbolID];
+    public Sprite GetSymbolImage(ReelSymbols symbolID) => symbolImages[(int)symbolID];
 }

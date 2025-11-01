@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Datas.ReelConditionsData;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 namespace ReelSpinGame_Datas
 {
@@ -23,7 +24,7 @@ namespace ReelSpinGame_Datas
                 //Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
             }
 
-            for (int i = 0; i < ReelData.MaxReelArray; i++)
+            for (int i = 0; i < MaxReelArray; i++)
             {
                 //Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(result[i]));
             }
@@ -57,40 +58,40 @@ namespace ReelSpinGame_Datas
             return finalResult;
         }
 
-        public static List<ReelFirstData> MakeReelFirstData(StreamReader reelFirstDataFile)
+        public static List<ReelFirstConditions> MakeReelFirstData(StreamReader reelFirstDataFile)
         {
-            List<ReelFirstData> finalResult = new List<ReelFirstData>();
+            List<ReelFirstConditions> finalResult = new List<ReelFirstConditions>();
 
             // 全ての行を読み込む
             while (reelFirstDataFile.Peek() != -1)
             {
-                finalResult.Add(new ReelFirstData(reelFirstDataFile));
+                finalResult.Add(new ReelFirstConditions(reelFirstDataFile));
             }
 
             return finalResult;
         }
 
-        public static List<ReelSecondData> MakeReelSecondData(StreamReader reelSecondFile)
+        public static List<ReelSecondConditions> MakeReelSecondData(StreamReader reelSecondFile)
         {
-            List<ReelSecondData> finalResult = new List<ReelSecondData>();
+            List<ReelSecondConditions> finalResult = new List<ReelSecondConditions>();
 
             // 全ての行を読み込む
             while (reelSecondFile.Peek() != -1)
             {
-                finalResult.Add(new ReelSecondData(reelSecondFile));
+                finalResult.Add(new ReelSecondConditions(reelSecondFile));
             }
 
             return finalResult;
         }
 
-        public static List<ReelThirdData> MakeReelThirdData(StreamReader conditionsFile)
+        public static List<ReelThirdConditions> MakeReelThirdData(StreamReader conditionsFile)
         {
-            List<ReelThirdData> finalResult = new List<ReelThirdData>();
+            List<ReelThirdConditions> finalResult = new List<ReelThirdConditions>();
 
             // 全ての行を読み込む
             while (conditionsFile.Peek() != -1)
             {
-                finalResult.Add(new ReelThirdData(conditionsFile));
+                finalResult.Add(new ReelThirdConditions(conditionsFile));
             }
 
             return finalResult;

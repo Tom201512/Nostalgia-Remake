@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
@@ -13,9 +14,9 @@ using static ReelSpinGame_Reels.Payout.PayoutChecker;
 
 namespace ReelSpinGame_Effect
 {
-    public class EffectManager : MonoBehaviour
+    public class EffectPresenter : MonoBehaviour
     {
-        // リールフラッシュやサウンドの管理
+        // リールフラッシュやサウンドなどの演出管理
 
         // const
         // リプレイ時に待機させる時間(秒)
@@ -103,6 +104,9 @@ namespace ReelSpinGame_Effect
             {
                 flashManager.TurnOnAllReels();
             }
+
+            // JAC中は回転中の明るさ計算を行う
+            reelEffectManager.SetJacBrightnessCalculation(isJacGame);
         }
 
         // リールライト全消灯

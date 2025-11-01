@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 public class ReelTestUI : UIBaseClass
 {
@@ -21,9 +21,9 @@ public class ReelTestUI : UIBaseClass
         buffer += "HasForceStop:" + reel.HasForceStop() + "\n";
 
         // 現在のリール位置
-        buffer += "LeftPos:" + reel.GetCurrentReelPos(ReelID.ReelLeft) + "\n";
-        buffer += "MiddlePos:" + reel.GetCurrentReelPos(ReelID.ReelMiddle) + "\n";
-        buffer += "RightPos:" + reel.GetCurrentReelPos(ReelID.ReelRight) + "\n" + "\n";
+        buffer += "LeftPos:" + (reel.GetCurrentReelPos(ReelID.ReelLeft) + 1) + "\n";
+        buffer += "MiddlePos:" + (reel.GetCurrentReelPos(ReelID.ReelMiddle) + 1) + "\n";
+        buffer += "RightPos:" + (reel.GetCurrentReelPos(ReelID.ReelRight) + 1) + "\n" + "\n";
 
         // リール状態
         buffer += "LeftStatus:" + reel.GetReelStatus(ReelID.ReelLeft) + "\n";
@@ -41,14 +41,14 @@ public class ReelTestUI : UIBaseClass
         buffer += "RightDegree:" + reel.GetReelDegree(ReelID.ReelRight) + "\n" + "\n";
 
         // 停止予定位置
-        buffer += "LeftWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelLeft)) + "\n";
-        buffer += "MiddleWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelMiddle)) + "\n";
-        buffer += "RightWillStopAt:" + (reel.GetWillStopReelPos(ReelID.ReelRight)) + "\n" + "\n";
+        buffer += "LeftWillStopAt:" + ((reel.GetWillStopReelPos(ReelID.ReelLeft)) + 1) + "\n";
+        buffer += "MiddleWillStopAt:" + ((reel.GetWillStopReelPos(ReelID.ReelMiddle)) + 1) + "\n";
+        buffer += "RightWillStopAt:" + ((reel.GetWillStopReelPos(ReelID.ReelRight)) + 1) + "\n" + "\n";
 
-        // 停止した位置
-        buffer += "LeftStopped:" + (reel.GetPushedPos(ReelID.ReelLeft)) + "\n";
-        buffer += "MiddleStopped:" + (reel.GetPushedPos(ReelID.ReelMiddle)) + "\n";
-        buffer += "RightStopped:" + (reel.GetPushedPos(ReelID.ReelRight)) + "\n" + "\n";
+        // 押した位置
+        buffer += "LeftPushed:" + ((reel.GetLastPushedLowerPos(ReelID.ReelLeft)) + 1) + "\n";
+        buffer += "MiddlePushed:" + ((reel.GetLastPushedLowerPos(ReelID.ReelMiddle)) + 1) + "\n";
+        buffer += "RightPushed:" + ((reel.GetLastPushedLowerPos(ReelID.ReelRight)) + 1) + "\n" + "\n";
 
         // スベリコマ数
         buffer += "LeftDelay:" + reel.GetLastDelay(ReelID.ReelLeft) + "\n";

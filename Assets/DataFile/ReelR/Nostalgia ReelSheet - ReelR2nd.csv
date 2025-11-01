@@ -173,9 +173,9 @@
 1,0,0,6,1,10,ANY,22,4,RedLower
 1,0,0,6,1,11,ANY,12,4,BigCherryLower
 1,0,1,0,0,1,ANY,14,1,BigCherry4
-1,0,1,0,0,2,ANY,21,2,RegCherry4
+1,0,1,0,0,2,ANY,14,2,BigCherry4
 1,0,1,0,1,1,ANY,14,1,BigCherry4
-1,0,1,0,1,2,ANY,21,2,RegCherry4
+1,0,1,0,1,2,ANY,14,2,BigCherry4
 2,0,0,0,0,1,ANY,15,1,RegUpper
 2,0,0,0,0,2,ANY,16,2,RegLower
 2,0,0,0,0,3,ANY,18,3,RegDiagonalB

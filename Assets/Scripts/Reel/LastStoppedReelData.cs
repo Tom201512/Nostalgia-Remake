@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using static ReelSpinGame_Reels.ReelData;
-using ReelSpinGame_Reels.Symbol;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using UnityEngine;
 
 namespace ReelSpinGame_Reels
 {
@@ -27,7 +27,7 @@ namespace ReelSpinGame_Reels
         }
 
         // 最後に止めた結果を作る
-        public void GenerateLastStopped(List<ReelObject> reelObjects)
+        public void GenerateLastStopped(List<ReelObjectPresenter> reelObjects)
         {
             // 初期化
             LastPos.Clear();
@@ -39,11 +39,11 @@ namespace ReelSpinGame_Reels
             // リール図柄を作成する
             for (int i = 0; i < reelObjects.Count; i++)
             {
-                LastPos.Add(reelObjects[i].GetReelPos(ReelPosID.Lower));
+                LastPos.Add(reelObjects[i].GetReelPos((sbyte)ReelPosID.Lower));
                 LastReelDelay.Add(reelObjects[i].GetLastDelay());
                 posBuffer += LastPos[i];
 
-                //Debug.Log("Position:" + LastPos[i]);
+                Debug.Log("Position:" + LastPos[i]);
 
                 // データ作成
                 LastSymbols.Add(new List<ReelSymbols>());
@@ -52,10 +52,10 @@ namespace ReelSpinGame_Reels
                 for (sbyte j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd; j++)
                 {
                     LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
-                    //Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));
+                    Debug.Log("Symbol:" + reelObjects[i].GetReelSymbol(j));
                 }
             }
-            //Debug.Log("Final ReelPosition" + posBuffer);
+            Debug.Log("Final ReelPosition" + posBuffer);
 
             // 各リールごとに表示(デバッグ)
             foreach (List<ReelSymbols> reelResult in LastSymbols)
@@ -63,7 +63,7 @@ namespace ReelSpinGame_Reels
                 //Debug.Log("Reel:");
                 for (int i = 0; i < reelResult.Count; i++)
                 {
-                    //Debug.Log(reelResult[i]);
+                    Debug.Log(reelResult[i]);
                 }
             }
         }

@@ -1,9 +1,9 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
-using ReelSpinGame_Reels.Symbol;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Reels.Payout
 {
@@ -66,14 +66,14 @@ namespace ReelSpinGame_Reels.Payout
             foreach (PayoutLineData lineData in payoutDatabase.PayoutLines)
             {
                 // 指定ラインの結果を保管
-                List<ReelData.ReelSymbols> lineResult = new List<ReelData.ReelSymbols>();
+                List<ReelSymbols> lineResult = new List<ReelSymbols>();
 
                 // ベット枚数の条件を満たしているかチェック
                 if (betAmount >= lineData.BetCondition)
                 {
                     // 各リールから指定ラインの位置を得る(枠下2段目を基準に)
                     int reelIndex = 0;
-                    foreach (List<ReelData.ReelSymbols> reelResult in lastStoppedData.LastSymbols)
+                    foreach (List<ReelSymbols> reelResult in lastStoppedData.LastSymbols)
                     {
                         // マイナス数値を配列番号に変換
                         int lineIndex = SymbolChange.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
@@ -85,7 +85,7 @@ namespace ReelSpinGame_Reels.Payout
 
                     // 図柄構成リストと見比べて該当するものがあれば当選。払い出し、ボーナス、リプレイ処理もする。
                     // ボーナスは非当選でもストックされる
-                    int foundIndex = CheckPayoutLines(lineResult, GetPayoutResultData(CheckMode));
+                    int foundIndex = CheckHasPayout(lineResult, GetPayoutResultData(CheckMode));
 
                     // データを追加(払い出しだけ当たった分追加する)
                     // 当たったデータがあれば記録(-1以外)
@@ -117,12 +117,12 @@ namespace ReelSpinGame_Reels.Payout
             }
             // 最終的な払い出し枚数をイベントに送る
 
-            //Debug.Log("payout:" + finalPayout);
-            //Debug.Log("Bonus:" + bonusID);
-            //Debug.Log("IsReplay:" + replayStatus);
+            Debug.Log("payout:" + finalPayout);
+            Debug.Log("Bonus:" + bonusID);
+            Debug.Log("IsReplay:" + replayStatus);
 
             // デバッグ用
-            /*for(int i = 0; i < finalPayoutLine.Count; i++)
+            for(int i = 0; i < finalPayoutLine.Count; i++)
             {
                 string buffer = "";
                 for(int j = 0; j < finalPayoutLine[i].PayoutLines.Count; j++)
@@ -134,8 +134,8 @@ namespace ReelSpinGame_Reels.Payout
                         buffer += ",";
                     }
                 }
-                //Debug.Log("PayoutLines" + i + ":" + buffer);
-            }*/
+                Debug.Log("PayoutLines" + i + ":" + buffer);
+            }
 
             // 最大払い出しを超える枚数だった場合は切り捨てる
             if(finalPayout > MedalBehavior.MaxPayout)
@@ -150,7 +150,7 @@ namespace ReelSpinGame_Reels.Payout
         }
 
         // 図柄の判定(配列を返す)
-        private int CheckPayoutLines(List<ReelData.ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
+        private int CheckHasPayout(List<ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
         {
             // 全て同じ図柄が揃っていたらHITを返す
             // ANY(10番)は無視

@@ -2,7 +2,7 @@
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
-using static ReelSpinGame_Reels.ReelManagerBehaviour;
+using static ReelSpinGame_Reels.ReelManagerModel;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine;
 
@@ -87,7 +87,7 @@ namespace ReelSpinGame_State.PayoutState
             // JACハズシの記録
             if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
             {
-                gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetPushedPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
+                gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
             }
 
             // 成立時の出目を記録する(ただし表示するのは入賞した後)

@@ -19,13 +19,13 @@ namespace ReelSpinGame_UI.Reel
             reelSymbols = GetComponentsInChildren<SymbolDisplayUI>();
         }
 
-        // 下の位置を基準にリール図柄を表示
-        public void DisplayReel(int lowerPos, ReelObject reel)
+        // 指定した下の位置を基準にリール図柄を表示
+        public void DisplayReel(int lowerPos, ReelObjectPresenter reelObjectPresetner)
         {
             foreach(SymbolDisplayUI symbol in reelSymbols)
             {
-                Debug.Log("Pos:" + ReelData.OffsetReel(lowerPos, (int)symbol.GetPosID()));
-                symbol.ChangeSymbol(reel.GetSymbolImageAtPos(ReelData.OffsetReel(lowerPos, (int)symbol.GetPosID())));
+                Sprite sprite = reelObjectPresetner.GetReelSymbolSprite(ReelObjectPresenter.OffsetReelPos(lowerPos, (int)symbol.GetPosID()));
+                symbol.ChangeSymbol(sprite);
             }
         }
     }
