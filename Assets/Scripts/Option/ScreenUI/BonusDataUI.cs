@@ -130,13 +130,23 @@ namespace ReelSpinGame_Option.MenuContent
             // ボーナス履歴が2つ以上ある場合は条件に合わせて表示
             if(player.BonusHitRecord.Count > 1)
             {
+                // ボーナスが2個以上ある場合でまだ当選していなければ2つ目を表示
                 if (player.BonusHitRecord[^1].BonusStartGame != 0)
                 {
                     reelDisplay.gameObject.SetActive(true);
-                    // ボーナスが2個以上ある場合でまだ当選していなければ2つ目を表示
                     reelDisplay.DisplayReels(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // リール位置、スベリコマを表示
+                    reelDisplay.DisplayPos(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // スベリコマを表示
+                    reelDisplay.DisplayDelay(player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelRight]);
                 }
                 // そうでなければ2つ前を表示
                 else
@@ -146,6 +156,16 @@ namespace ReelSpinGame_Option.MenuContent
                     reelDisplay.DisplayReels(player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelLeft],
                         player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelMiddle],
                         player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // リール位置、スベリコマを表示
+                    reelDisplay.DisplayPos(player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // スベリコマを表示
+                    reelDisplay.DisplayDelay(player.BonusHitRecord[^2].BonusReelDelay[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^2].BonusReelDelay[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^2].BonusReelDelay[(int)ReelID.ReelRight]);
                 }
             }
             // 1つある場合は
@@ -157,6 +177,16 @@ namespace ReelSpinGame_Option.MenuContent
                     reelDisplay.DisplayReels(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // リール位置、スベリコマを表示
+                    reelDisplay.DisplayPos(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // スベリコマを表示
+                    reelDisplay.DisplayDelay(player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelRight]);
                 }
                 else
                 {

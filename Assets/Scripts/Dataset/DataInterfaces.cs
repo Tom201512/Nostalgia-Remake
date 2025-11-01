@@ -13,7 +13,6 @@ namespace ReelSpinGame_Interface
         void StateEnd();
     }
 
-
     // セーブできるデータ
     public interface ISavable
     {

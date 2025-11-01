@@ -53,6 +53,7 @@ namespace ReelSpinGame_Option
             {
                 Debug.Log("option clicked");
                 menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);
+                menuBarUI.SetInteractiveAllButton(!lockOptionMode);
             }
         }
 
@@ -70,6 +71,7 @@ namespace ReelSpinGame_Option
         {
             hasOptionMode = true;
             openButton.ToggleInteractive(false);
+            menuBarUI.SetInteractiveAllButton(!lockOptionMode);
         }
 
         // オプションモード解除

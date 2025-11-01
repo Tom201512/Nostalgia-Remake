@@ -27,6 +27,14 @@ namespace ReelSpinGame_State.PayoutState
         }
         public void StateStart()
         {
+            // 成立時の出目を記録する(ただし表示するのは入賞した後)
+            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
+                (gM.Lots.GetCurrentFlag() == FlagId.FlagBig || gM.Lots.GetCurrentFlag() == FlagId.FlagReg))
+            {
+                gM.Player.SetBonusHitPos(gM.Reel.GetLastStoppedReelData().LastPos);
+                gM.Player.SetBonusHitDelay(gM.Reel.GetLastStoppedReelData().LastReelDelay);
+            }
+
             // 高速オートが解除されたかチェック
             gM.Auto.CheckFastAutoCancelled();
 
@@ -45,7 +53,6 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Lots.IncreaseCounter(gM.Reel.GetPayoutResultData().Payout);
                 }
             }
-
 
             // 状態遷移
             CheckGameModeStatusChange();
@@ -88,14 +95,6 @@ namespace ReelSpinGame_State.PayoutState
             if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
             {
                 gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
-            }
-
-            // 成立時の出目を記録する(ただし表示するのは入賞した後)
-            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
-                (gM.Lots.GetCurrentFlag() == FlagId.FlagBig || gM.Lots.GetCurrentFlag() == FlagId.FlagReg))
-            {
-                gM.Player.SetBonusHitPos(gM.Reel.GetLastStoppedReelData().LastPos);
-                gM.Player.SetBonusHitDelay(gM.Reel.GetLastStoppedReelData().LastReelDelay);
             }
 
             // セーブ処理

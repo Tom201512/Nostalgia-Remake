@@ -61,6 +61,10 @@ namespace ReelSpinGame_State.InsertState
             gM.Status.TurnOffInsertAndStartlamp();
             gM.Medal.HasMedalInsert -= BetSound;
             gM.Medal.FinishMedalInsert();
+
+            // 設定画面を開けなくする
+            gM.Option.ToggleOptionLock(true);
+            Debug.Log("Option locked");
         }
 
         // ベット処理

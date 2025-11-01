@@ -110,7 +110,11 @@ namespace ReelSpinGame_Reels
         }
 
         // 下段位置の変更
-        public void ChangeCurrentLower(int lowerPos) => reelSpinPresenter.SetCurrentLower(lowerPos);
+        public void ChangeCurrentLower(int lowerPos)
+        {
+            reelSpinPresenter.SetCurrentLower(lowerPos);
+            reelArrayPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
+        }
 
         // JAC中の明るさ計算の設定
         public void SetJacBrightnessCalculate(bool value) => ReelEffectManager.SetJacBrightnessCalculate(value);
@@ -131,6 +135,7 @@ namespace ReelSpinGame_Reels
         // リール停止(高速版)
         public void StopReelFast(int pushedPos, int delay)
         {
+            reelSpinPresenter.StopReelImmediately(pushedPos, delay);
             reelArrayPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
         }
 

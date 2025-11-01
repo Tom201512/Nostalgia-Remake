@@ -44,11 +44,6 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataScreen.OnClosedScreenEvent += SlotDataClose;
         }
 
-        void Start()
-        {
-            SetInteractiveAllButton(true);
-        }
-
         void OnDestroy()
         {
             howToPlayButton.ButtonPushedEvent -= HowToPlayOpen;

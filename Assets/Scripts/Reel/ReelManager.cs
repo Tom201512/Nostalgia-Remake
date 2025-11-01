@@ -240,6 +240,7 @@ public class ReelManager : MonoBehaviour
             // 回転中なら停止
             if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.Spinning)
             {
+                Debug.Log("PushedPos:" + pushedPos);
                 // 第一停止なら押したところの停止位置を得る
                 if (!reelManagerModel.IsFirstReelPushed)
                 {
@@ -251,6 +252,7 @@ public class ReelManager : MonoBehaviour
                 // ディレイ(スベリコマ)を得る
                 int delay = reelManagerModel.ReelTableManager.GetDelay(reelManagerModel.StoppedReelCount, pushedPos, reelObjects[(int)reelID].GetReelDatabase(),
                     flagID, reelID, bonusID, bet, reelManagerModel.RandomValue);
+                Debug.Log("Delay:" + delay);
                 // リールを止める
 
                 // すぐ指定位置まで停止させる。

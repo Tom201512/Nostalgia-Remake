@@ -9,6 +9,7 @@ using ReelSpinGame_Save.Database;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
@@ -230,7 +231,10 @@ public class GameManager : MonoBehaviour
                 }
                 else if(Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal)
                 {
-                    Option.ToggleOptionLock(false);
+                    if(!Option.lockOptionMode)
+                    {
+                        Option.ToggleOptionLock(false);
+                    }
                     Debug.Log("Option lock disabled");
                 }
             }

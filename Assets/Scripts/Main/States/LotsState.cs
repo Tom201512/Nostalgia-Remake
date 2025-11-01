@@ -59,10 +59,6 @@ namespace ReelSpinGame_State.LotsState
                     gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());
             }
 
-            // 設定画面を開けなくする
-            gM.Option.ToggleOptionLock(true);
-            Debug.Log("Option locked");
-
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
         }
 

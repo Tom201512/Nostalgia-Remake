@@ -59,8 +59,8 @@ namespace ReelSpinGame_Datas
             BonusReelPos[(int)ReelID.ReelLeft] = reelPos[(int)ReelID.ReelLeft];
             BonusReelPos[(int)ReelID.ReelMiddle] = reelPos[(int)ReelID.ReelMiddle];
             BonusReelPos[(int)ReelID.ReelRight] = reelPos[(int)ReelID.ReelRight];
-            Debug.Log("ReelPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," +
-                    BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
+            //Debug.Log("ReelPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," +
+                    //BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
         }
         // 成立時のスベリコマ数セット
         public void SetBonusReelDelay(List<int> reelDelay)
@@ -68,8 +68,8 @@ namespace ReelSpinGame_Datas
             BonusReelDelay[(int)ReelID.ReelLeft] = reelDelay[(int)ReelID.ReelLeft];
             BonusReelDelay[(int)ReelID.ReelMiddle] = reelDelay[(int)ReelID.ReelMiddle];
             BonusReelDelay[(int)ReelID.ReelRight] = reelDelay[(int)ReelID.ReelRight];
-            Debug.Log("ReelDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," +
-                    BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
+            //Debug.Log("ReelDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," +
+                   //BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
         }
 
         // セーブ
@@ -78,27 +78,27 @@ namespace ReelSpinGame_Datas
             // 変数を格納
             List<int> data = new List<int>();
             data.Add((int)BonusID);
-            Debug.Log("BonusID:" + BonusID);
+            //Debug.Log("BonusID:" + BonusID);
             data.Add(BonusHitGame);
-            Debug.Log("BonusHitGame:" + BonusHitGame);
+            //Debug.Log("BonusHitGame:" + BonusHitGame);
             data.Add(BonusStartGame);
-            Debug.Log("BonusStartGame:" + BonusStartGame);
+            //Debug.Log("BonusStartGame:" + BonusStartGame);
             data.Add(BonusPayout);
-            Debug.Log("BonusPayout:" + BonusPayout);
+            //Debug.Log("BonusPayout:" + BonusPayout);
             data.Add((int)BigColor);
-            Debug.Log("BigColor:" + BigColor);
+            //Debug.Log("BigColor:" + BigColor);
 
             foreach(int pos in BonusReelPos)
             {
                 data.Add(pos);
             }
-            Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
+            //Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
 
             foreach(int delay in BonusReelDelay)
             {
                 data.Add(delay);
             }
-            Debug.Log("ReelStopDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," + BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
+            //Debug.Log("ReelStopDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," + BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
 
             return data;
         }
