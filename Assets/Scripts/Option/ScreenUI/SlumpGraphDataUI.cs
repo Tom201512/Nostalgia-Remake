@@ -8,6 +8,10 @@ namespace ReelSpinGame_Option.MenuContent
     {
         // 差枚数のスランプグラフを表示するUI
 
-        
+        // const
+        // グラフ幅
+        const int graph_width = 1800;
+        //グラフ高さ
+        const int graph_height = 840;
     }
 }
