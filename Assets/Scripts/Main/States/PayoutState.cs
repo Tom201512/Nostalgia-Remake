@@ -32,6 +32,7 @@ namespace ReelSpinGame_State.PayoutState
                 (gM.Lots.GetCurrentFlag() == FlagId.FlagBig || gM.Lots.GetCurrentFlag() == FlagId.FlagReg))
             {
                 gM.Player.SetBonusHitPos(gM.Reel.GetLastStoppedReelData().LastPos);
+                gM.Player.SetBonusPushOrder(gM.Reel.GetLastStoppedReelData().LastPushOrder);
                 gM.Player.SetBonusHitDelay(gM.Reel.GetLastStoppedReelData().LastReelDelay);
             }
 

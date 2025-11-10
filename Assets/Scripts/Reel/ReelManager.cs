@@ -223,10 +223,11 @@ public class ReelManager : MonoBehaviour
                 int delay = reelManagerModel.ReelTableManager.GetDelay(reelManagerModel.StoppedReelCount, pushedPos, reelObjects[(int)reelID].GetReelDatabase(),
                     flagID, reelID, bonusID, bet, reelManagerModel.RandomValue);
 
-                // リールを止める
-                reelObjects[(int)reelID].StopReel(pushedPos, delay);
                 // 停止したリール数を増やす
                 reelManagerModel.StoppedReelCount += 1;
+
+                // リールを止める
+                reelObjects[(int)reelID].StopReel(pushedPos, reelManagerModel.StoppedReelCount, delay);
             }
         }
     }
@@ -255,10 +256,11 @@ public class ReelManager : MonoBehaviour
                 Debug.Log("Delay:" + delay);
                 // リールを止める
 
-                // すぐ指定位置まで停止させる。
-                reelObjects[(int)reelID].StopReelFast(pushedPos, delay);
                 // 停止したリール数を増やす
                 reelManagerModel.StoppedReelCount += 1;
+
+                // すぐ指定位置まで停止させる。
+                reelObjects[(int)reelID].StopReelFast(pushedPos, reelManagerModel.StoppedReelCount, delay);
             }
         }
     }

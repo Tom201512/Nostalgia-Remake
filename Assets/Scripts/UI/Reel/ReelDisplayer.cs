@@ -49,7 +49,21 @@ namespace ReelSpinGame_UI.Reel
         // 停止順番を表示
         public void DisplayOrder(int order)
         {
-            
+            switch(order)
+            {
+                case 1:
+                    reelPushOrderText.text = "1st";
+                    break;
+                case 2:
+                    reelPushOrderText.text = "2nd";
+                    break;
+                case 3:
+                    reelPushOrderText.text = "3rd";
+                    break;
+                default:
+                    reelPushOrderText.text = "---";
+                    break;
+            }
         }
 
         // スベリコマ数

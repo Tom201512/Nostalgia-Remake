@@ -26,6 +26,8 @@ namespace ReelSpinGame_Datas
         public BigColor BigColor { get; private set; }
         // ボーナス成立時のリール位置
         public List<int> BonusReelPos { get; private set; }
+        // ボーナス成立時の押し順
+        public List<int> BonusReelPushOrder { get; private set; }
         // ボーナス成立時のスベリコマ数
         public List<int> BonusReelDelay { get; private set; }
 
@@ -38,6 +40,7 @@ namespace ReelSpinGame_Datas
             BonusPayout = 0;
             BigColor = BigColor.None;
             BonusReelPos = new List<int> { 0, 0, 0, };
+            BonusReelPushOrder = new List<int> { 0, 0, 0, };
             BonusReelDelay = new List<int> { 0, 0, 0, };
         }
 
@@ -62,6 +65,15 @@ namespace ReelSpinGame_Datas
             //Debug.Log("ReelPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," +
                     //BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
         }
+
+        // 成立時の押し順セット
+        public void SetBonusReelPushOrder(List<int> reelPushOrder)
+        {
+            BonusReelPushOrder[(int)ReelID.ReelLeft] = reelPushOrder[(int)ReelID.ReelLeft];
+            BonusReelPushOrder[(int)ReelID.ReelMiddle] = reelPushOrder[(int)ReelID.ReelMiddle];
+            BonusReelPushOrder[(int)ReelID.ReelRight] = reelPushOrder[(int)ReelID.ReelRight];
+        }
+
         // 成立時のスベリコマ数セット
         public void SetBonusReelDelay(List<int> reelDelay)
         {
@@ -94,7 +106,13 @@ namespace ReelSpinGame_Datas
             }
             //Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
 
-            foreach(int delay in BonusReelDelay)
+            foreach (int pos in BonusReelPushOrder)
+            {
+                data.Add(pos);
+            }
+            //Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
+
+            foreach (int delay in BonusReelDelay)
             {
                 data.Add(delay);
             }
@@ -125,6 +143,13 @@ namespace ReelSpinGame_Datas
                 }
 
                 Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
+
+
+                for (int i = 0; i < BonusReelPushOrder.Count; i++)
+                {
+                    BonusReelPushOrder[i] = br.ReadInt32();
+                }
+                Debug.Log("ReelStopOrder:" + BonusReelPushOrder[(int)ReelID.ReelLeft] + "," + BonusReelPushOrder[(int)ReelID.ReelMiddle] + "," + BonusReelPushOrder[(int)ReelID.ReelRight]);
 
                 for (int i = 0; i < BonusReelDelay.Count; i++)
                 {

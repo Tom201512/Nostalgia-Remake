@@ -36,6 +36,8 @@ namespace ReelSpinGame_Reels.Spin
         public int LastPushedPos { get; set; }
         // 将来的に止まる位置(下段基準)
         public int WillStopLowerPos { get; set; }
+        // 押し順
+        public int LastStoppedOrder { get; set; }
         // 最後に止めた時のスベリコマ数
         public int LastStoppedDelay { get; set; }
 
@@ -45,6 +47,7 @@ namespace ReelSpinGame_Reels.Spin
             MaxSpeed = 0.0f;
             RotateRPS = rotateRPM / 60.0f;
             CurrentLower = 0;
+            LastStoppedOrder = 0;
             HasJacModeLight = false;
             CurrentReelStatus = ReelStatus.Stopped;
         }

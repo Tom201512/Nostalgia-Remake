@@ -143,6 +143,11 @@ namespace ReelSpinGame_Option.MenuContent
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
 
+                    // 押し順を表示
+                    reelDisplay.DisplayOrder(player.BonusHitRecord[^1].BonusReelPushOrder[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelPushOrder[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelPushOrder[(int)ReelID.ReelRight]);
+
                     // スベリコマを表示
                     reelDisplay.DisplayDelay(player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelLeft],
                         player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelMiddle],
@@ -161,6 +166,11 @@ namespace ReelSpinGame_Option.MenuContent
                     reelDisplay.DisplayPos(player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelLeft],
                         player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelMiddle],
                         player.BonusHitRecord[^2].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // 押し順を表示
+                    reelDisplay.DisplayOrder(player.BonusHitRecord[^2].BonusReelPushOrder[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^2].BonusReelPushOrder[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^2].BonusReelPushOrder[(int)ReelID.ReelRight]);
 
                     // スベリコマを表示
                     reelDisplay.DisplayDelay(player.BonusHitRecord[^2].BonusReelDelay[(int)ReelID.ReelLeft],
@@ -182,6 +192,11 @@ namespace ReelSpinGame_Option.MenuContent
                     reelDisplay.DisplayPos(player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelLeft],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelMiddle],
                         player.BonusHitRecord[^1].BonusReelPos[(int)ReelID.ReelRight]);
+
+                    // 押し順を表示
+                    reelDisplay.DisplayOrder(player.BonusHitRecord[^1].BonusReelPushOrder[(int)ReelID.ReelLeft],
+                        player.BonusHitRecord[^1].BonusReelPushOrder[(int)ReelID.ReelMiddle],
+                        player.BonusHitRecord[^1].BonusReelPushOrder[(int)ReelID.ReelRight]);
 
                     // スベリコマを表示
                     reelDisplay.DisplayDelay(player.BonusHitRecord[^1].BonusReelDelay[(int)ReelID.ReelLeft],

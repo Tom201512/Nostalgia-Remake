@@ -69,6 +69,8 @@ namespace ReelSpinGame_Reels.Spin
         public int GetLastPushedPos() => reelSpinModel.LastPushedPos;
         // í‚é~ó\íËà íuÇìæÇÈ
         public int GetWillStopLowerPos() => reelSpinModel.WillStopLowerPos;
+        // í‚é~ÇµÇΩÇ∆Ç´ÇÃâüÇµèáÇìæÇÈ
+        public int GetLastStoppedOrder() => reelSpinModel.LastStoppedOrder;
         // ç≈å„Ç…é~ÇﬂÇΩÇ∆Ç´ÇÃÉXÉxÉäÉRÉ}êîÇìæÇÈ
         public int GetLastStoppedDelay() => reelSpinModel.LastStoppedDelay;
 
@@ -107,12 +109,13 @@ namespace ReelSpinGame_Reels.Spin
         }
 
         // ÉäÅ[ÉãÇÃí‚é~èàóùÇäJénÇ∑ÇÈ
-        public void StartStopReelSpin(int pushedPos, int delay)
+        public void StartStopReelSpin(int pushedPos, int pushOrder, int delay)
         {
             Debug.Log("Received ReelStop");
             Debug.Log("Delay:" + delay);
             reelSpinModel.LastPushedPos = pushedPos;
             reelSpinModel.WillStopLowerPos = ReelObjectPresenter.OffsetReelPos(pushedPos, delay);
+            reelSpinModel.LastStoppedOrder = pushOrder;
             reelSpinModel.LastStoppedDelay = delay;
             reelSpinModel.CurrentReelStatus = ReelStatus.RecieveStop;
 
@@ -120,12 +123,13 @@ namespace ReelSpinGame_Reels.Spin
         }
 
         // ÉäÅ[ÉãÇã≠êßí‚é~Ç≥ÇπÇÈ
-        public void StopReelImmediately(int pushedPos, int delay)
+        public void StopReelImmediately(int pushedPos, int pushOrder, int delay)
         {
             Debug.Log("Received ReelStop");
             Debug.Log("Delay:" + delay);
             reelSpinModel.LastPushedPos = pushedPos;
             reelSpinModel.WillStopLowerPos = ReelObjectPresenter.OffsetReelPos(pushedPos, delay);
+            reelSpinModel.LastStoppedOrder = pushOrder;
             reelSpinModel.LastStoppedDelay = delay;
             reelSpinModel.CurrentLower = reelSpinModel.WillStopLowerPos;
             FinishReelSpin();

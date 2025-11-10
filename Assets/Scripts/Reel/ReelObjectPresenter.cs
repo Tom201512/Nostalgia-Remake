@@ -81,6 +81,8 @@ namespace ReelSpinGame_Reels
         public int GetLastPushedLowerPos() => reelSpinPresenter.GetLastPushedPos();
         // í‚é~ó\íËà íu
         public int GetWillStopLowerPos() => reelSpinPresenter.GetWillStopLowerPos();
+        // í‚é~ÇµÇΩÇ∆Ç´ÇÃâüÇµèáÇï‘Ç∑
+        public int GetLastStoppedOrder() => reelSpinPresenter.GetLastStoppedOrder();
         // ç≈å„Ç…é~ÇﬂÇΩÇ∆Ç´ÇÃÉfÉBÉåÉCêî
         public int GetLastDelay() => reelSpinPresenter.GetLastStoppedDelay();
 
@@ -127,15 +129,15 @@ namespace ReelSpinGame_Reels
         }
 
         // ÉäÅ[Éãí‚é~
-        public void StopReel(int pushedPos, int delay)
+        public void StopReel(int pushedPos, int pushOrder, int delay)
         {
-            reelSpinPresenter.StartStopReelSpin(pushedPos, delay);
+            reelSpinPresenter.StartStopReelSpin(pushedPos, pushOrder, delay);
         }
 
         // ÉäÅ[Éãí‚é~(çÇë¨î≈)
-        public void StopReelFast(int pushedPos, int delay)
+        public void StopReelFast(int pushedPos, int pushOrder, int delay)
         {
-            reelSpinPresenter.StopReelImmediately(pushedPos, delay);
+            reelSpinPresenter.StopReelImmediately(pushedPos, pushOrder,delay);
             reelArrayPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
         }
 

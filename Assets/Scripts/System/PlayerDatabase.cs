@@ -125,6 +125,8 @@ namespace ReelSpinGame_System
         public void ChangeLastBonusPayout(int payout) => BonusHitRecord[^1].ChangeBonusPayout(payout);
         // 現在のボーナス履歴の成立時出目を記録
         public void SetBonusHitPos(List<int> lastPos) => BonusHitRecord[^1].SetBonusReelPos(lastPos);
+        // 現在のボーナス成立時の押し順を記録
+        public void SetBonusPushOrder(List<int> pushOrder) => BonusHitRecord[^1].SetBonusReelPushOrder(pushOrder);
         // 現在のボーナス履歴の成立時スベリを記録
         public void SetBonusHitDelay(List<int> lastDelay) => BonusHitRecord[^1].SetBonusReelDelay(lastDelay);
     }

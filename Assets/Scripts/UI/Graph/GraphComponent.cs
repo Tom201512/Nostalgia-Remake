@@ -69,30 +69,30 @@ namespace ReelSpinGame_UI.Graph
             }
 
             // 最高、最低差枚数の表示
+
+            // 1000枚ごとの区切りをつける
+            int differenceOffset = 1;
             // 最低でも-1000枚~1000枚から表示する。超えている場合は高い方の数値を基準に表示
             if(highest > 1000 || lowest < -1000)
             {
                 if(highest >= lowest)
                 {
-                    maxDiffText.text = "+" + (highest / 1000 + 1) * 1000;
-                    minDiffText.text = "-" + (highest / 1000 + 1) * 1000;
+                    differenceOffset = highest / 1000 + 1;
                 }
                 else
                 {
-                    maxDiffText.text = "+" + (Math.Abs(lowest) / 1000 + 1) * 1000;
-                    minDiffText.text = "-" + (Math.Abs(lowest) / 1000 + 1) * 1000;
+                    differenceOffset = Math.Abs(lowest) / 1000 + 1;
                 }
             }
-            else
-            {
-                maxDiffText.text = "+1000";
-                minDiffText.text = "-1000";
-            }
+
+            maxDiffText.text = "+" + differenceOffset * 1000;
+            minDiffText.text = "-" + differenceOffset * 1000;
 
             // グラフ描画
             // 区切る時の数値を求める
-            int divideValue = playerData.PlayerMedalData.MedalSlumpGraph.Count / 1000 + 1;
-            Debug.Log("Divide:" + divideValue);
+            // X
+            int divideValueX = playerData.PlayerMedalData.MedalSlumpGraph.Count / 1000 + 1;
+            Debug.Log("DivideX:" + divideValueX);
 
             // 現在のデータ数
             int count = 0;
@@ -107,7 +107,7 @@ namespace ReelSpinGame_UI.Graph
                 float posY = 0.0f;
 
                 posX = GraphXPosOffset * (count + 1);
-                posY = GraphMiddlePosY + GraphYPosOffset * ((float)playerData.PlayerMedalData.MedalSlumpGraph[index] / divideValue);
+                posY = GraphMiddlePosY + GraphYPosOffset * ((float)playerData.PlayerMedalData.MedalSlumpGraph[index] / differenceOffset);
 
                 Debug.Log("DrawGraph at:" + posX + "," + posY);
                 graphDrawer.AddPosition(posX, posY);
@@ -120,7 +120,7 @@ namespace ReelSpinGame_UI.Graph
                 }
 
                 count += 1;
-                index += divideValue;
+                index += divideValueX;
 
                 Debug.Log("Count:" + count);
                 Debug.Log("Index:" + index);
