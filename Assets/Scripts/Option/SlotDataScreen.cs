@@ -14,7 +14,7 @@ namespace ReelSpinGame_Option.MenuContent
         // スロット情報画面
 
         // const
-        private const int maxPage = 3;
+        private const int maxPage = 4;
 
         // var
 
@@ -25,6 +25,8 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] private ProbabilityDataUI probabilityDataUI;
         // 直近ボーナス情報、JACハズシ確率など
         [SerializeField] private BonusDataUI bonusDataUI;
+        // スランプグラフ
+        [SerializeField] private SlumpGraphDataUI slumpGraphDataUI;
 
         // 次ボタン
         [SerializeField] private ButtonComponent nextButton;
@@ -184,6 +186,11 @@ namespace ReelSpinGame_Option.MenuContent
                     bonusDataUI.DisplayWinningPattern(PlayerData);
                     break;
 
+                case 3:
+                    slumpGraphDataUI.gameObject.SetActive(true);
+                    slumpGraphDataUI.UpdateData(PlayerData);
+                    break;
+
                 default:
                     break;
             }
@@ -196,6 +203,7 @@ namespace ReelSpinGame_Option.MenuContent
             slotMainDataUI.gameObject.SetActive(false);
             probabilityDataUI.gameObject.SetActive(false);
             bonusDataUI.gameObject.SetActive(false);
+            slumpGraphDataUI.gameObject.SetActive(false);
         }
     }
 }

@@ -21,12 +21,7 @@ namespace ReelSpinGame_UI.Graph
         private void Awake()
         {
             lineRenderer = GetComponent<LineRenderer>();
-            positions.Add(new Vector3(0, 0));
-        }
-
-        private void Start()
-        {
-            ResetDraw();
+            positions = new List<Vector3>();
         }
 
         // func
@@ -35,15 +30,27 @@ namespace ReelSpinGame_UI.Graph
         public void ResetDraw()
         {
             positions.Clear();
-            positions.Add(new Vector3(0, 0));
+            lineRenderer.positionCount = 0;
             lineRenderer.SetPositions(positions.ToArray());
         }
 
-        // 指定座標へ描画する
-        public void DrawAtPosition(float x, float y)
+        // 座標の追加
+        public void AddPosition(float x, float y)
         {
+            lineRenderer.positionCount += 1;
             positions.Add(new Vector3(x, y));
-            lineRenderer.SetPositions(positions.ToArray());
+        }
+
+        // 描画を行う
+        public void StartDraw()
+        {
+            foreach(Vector3 position in positions)
+            {
+                Debug.Log("Position X:" + position.x + " Y:" + position.y);
+            }
+
+            Vector3[] results = positions.ToArray();
+            lineRenderer.SetPositions(results);
         }
     }
 }

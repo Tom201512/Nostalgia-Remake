@@ -36,6 +36,12 @@ namespace ReelSpinGame_UI.Reel
             reelDisplayers[(int)ReelID.ReelRight].DisplayPos(rightLower);
         }
 
+        // 押し順の表示
+        public void DisplayOrder(int leftOrder, int middleOrder, int rightOrder)
+        {
+
+        }
+
         // リールスベリコマ
         public void DisplayDelay(int leftDelay, int middleDelay, int rightDelay)
         {

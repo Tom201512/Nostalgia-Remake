@@ -15,6 +15,8 @@ namespace ReelSpinGame_UI.Reel
         private SymbolDisplayUI[] reelSymbols;
         // コマ表示用フォント
         [SerializeField] private List<TextMeshProUGUI> reelPosTexts;
+        // 押し順表示用フォント
+        [SerializeField] private TextMeshProUGUI reelPushOrderText;
         // スベリコマ表示用フォント
         [SerializeField] private TextMeshProUGUI reelDelayText;
 
@@ -42,6 +44,12 @@ namespace ReelSpinGame_UI.Reel
                 string pos = (ReelObjectPresenter.OffsetReelPos(lowerPos, i) + 1).ToString();
                 reelPosTexts[i].text = pos;
             }
+        }
+
+        // 停止順番を表示
+        public void DisplayOrder(int order)
+        {
+            
         }
 
         // スベリコマ数

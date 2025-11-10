@@ -1,6 +1,8 @@
+using ReelSpinGame_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ReelSpinGame_UI.Graph;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -8,10 +10,10 @@ namespace ReelSpinGame_Option.MenuContent
     {
         // 差枚数のスランプグラフを表示するUI
 
-        // const
-        // グラフ幅
-        const int graph_width = 1800;
-        //グラフ高さ
-        const int graph_height = 840;
+        // var
+        [SerializeField] private GraphComponent graphComponent;
+
+        // func
+        public void UpdateData(PlayerDatabase player) => graphComponent.StartDrawGraph(player);
     }
 }

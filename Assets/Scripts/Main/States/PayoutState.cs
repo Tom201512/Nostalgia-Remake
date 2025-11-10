@@ -79,8 +79,11 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Auto.CheckRemainingAuto();
             }
 
-            // 差枚数のカウント
-            gM.Player.PlayerMedalData.CountCurrentSlumpGraph();
+            // 差枚数のカウント(通常時のみ)
+            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            {
+                gM.Player.PlayerMedalData.CountCurrentSlumpGraph();
+            }
 
             // 小役成立回数の記録
             gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());

@@ -42,6 +42,12 @@ namespace ReelSpinGame_Datas
                 CurrentPlayerMedal = data.CurrentPlayerMedal;
                 CurrentInMedal = data.CurrentInMedal;
                 CurrentOutMedal = data.CurrentOutMedal;
+                MedalSlumpGraph = new List<int>(data.MedalSlumpGraph);
+
+                for (int i = 0; i < MedalSlumpGraph.Count; i++)
+                {
+                    Debug.Log("Slump [" + i + "]:" + MedalSlumpGraph[i]);
+                }
             }
             else
             {
@@ -91,7 +97,7 @@ namespace ReelSpinGame_Datas
             for (int i = 0; i < loadCount; i++)
             {
                 data.Add(MedalSlumpGraph[i]);
-                Debug.Log("[" + i + "]:" + loadCount);
+                Debug.Log("Slump [" + i + "]:" + MedalSlumpGraph[i]);
             }
 
             return data;
