@@ -20,8 +20,12 @@ namespace ReelSpinGame_Option.MenuContent
         // var
         // スクリーン
         [SerializeField] private Image screen;
+        // タイトル部分
+        [SerializeField] private TextMeshProUGUI titleText;
         // 表示する画面
         [SerializeField] private List<Sprite> imageList;
+        // 表示するタイトル
+        [SerializeField] private List<string> titleList;
         // 次ボタン
         [SerializeField] private ButtonComponent nextButton;
         // 前ボタン
