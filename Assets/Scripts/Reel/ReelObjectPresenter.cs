@@ -47,7 +47,6 @@ namespace ReelSpinGame_Reels
             ReelEffectManager = GetComponent<ReelEffect>();
             reelSpinPresenter = GetComponent<ReelSpinPresenter>();
             reelArrayPresenter = GetComponent<ReelArrayPresenter>();
-
             reelSpinPresenter.SetReelSpinPresenter(rotateRPM);
             reelArrayPresenter.SetReelArrayPresenter(reelDatabaseFile.Array);
         }

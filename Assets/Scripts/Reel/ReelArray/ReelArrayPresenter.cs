@@ -16,13 +16,13 @@ namespace ReelSpinGame_Reels.Array
 
         void Awake()
         {
-            reelArrayModel = new ReelArrayModel();
             symbolManager = GetComponentInChildren<SymbolManager>();
         }
 
         // リール配列プレゼンターの初期化
         public void SetReelArrayPresenter(byte[] reelArray)
         {
+            reelArrayModel = new ReelArrayModel();
             reelArrayModel.ReelArray = reelArray;
         }
 
