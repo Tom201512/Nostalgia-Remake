@@ -23,9 +23,7 @@ namespace ReelSpinGame_Option.MenuContent
         // タイトル部分
         [SerializeField] private TextMeshProUGUI titleText;
         // 表示する画面
-        [SerializeField] private List<Sprite> imageList;
-        // 表示するタイトル
-        [SerializeField] private List<string> titleList;
+        [SerializeField] private List<GameObject> screenList;
         // 次ボタン
         [SerializeField] private ButtonComponent nextButton;
         // 前ボタン
@@ -105,7 +103,7 @@ namespace ReelSpinGame_Option.MenuContent
         private void OnNextPushed()
         {
             Debug.Log("Next pressed");
-            if (currentPage + 1 == imageList.Count)
+            if (currentPage + 1 == screenList.Count)
             {
                 currentPage = 0;
             }
@@ -123,7 +121,7 @@ namespace ReelSpinGame_Option.MenuContent
             Debug.Log("Previous pressed");
             if (currentPage - 1 < 0)
             {
-                currentPage = imageList.Count - 1;
+                currentPage = screenList.Count - 1;
             }
             else
             {
@@ -140,8 +138,19 @@ namespace ReelSpinGame_Option.MenuContent
         private void UpdateScreen()
         {
             Debug.Log("Page:" + currentPage + 1);
-            screen.sprite = imageList[currentPage];
-            pageCount.text = (currentPage + 1) + "/" + imageList.Count;
+            CloseAllScreen();
+            screenList[currentPage].SetActive(true);
+            
+            pageCount.text = (currentPage + 1) + "/" + screenList.Count;
+        }
+
+        // 全てのページを非表示にする
+        private void CloseAllScreen()
+        {
+            foreach(GameObject screen in screenList)
+            {
+                screen.SetActive(false);
+            }
         }
     }
 }

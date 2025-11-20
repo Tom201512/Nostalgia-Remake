@@ -5486,7 +5486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &897966409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5501,18 +5501,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screen: {fileID: 0}
   titleText: {fileID: 1267869499}
-  imageList:
-  - {fileID: 21300000, guid: 84acb8dbf18286c4aacaf1948b7d93fd, type: 3}
-  - {fileID: 21300000, guid: 8b36b6196dea20d45a67a0dcfed9ede9, type: 3}
-  - {fileID: 21300000, guid: e4b5bfad621aa644d85ea370590df6f0, type: 3}
-  - {fileID: 21300000, guid: 94f079fdf84f25847ad533f7141641e8, type: 3}
-  - {fileID: 21300000, guid: b4c3f0a6041efe74ba40dc6341e55ec3, type: 3}
-  - {fileID: 21300000, guid: 24b8d57eaa238c44bbb0bec559940880, type: 3}
-  - {fileID: 21300000, guid: 81b8266d8d3263f459876016d9270955, type: 3}
-  - {fileID: 21300000, guid: 230ed5540ef02c74089ab6afd89cc91c, type: 3}
-  - {fileID: 21300000, guid: c336e60062aa0f14d8fe065ce5f473de, type: 3}
-  - {fileID: 21300000, guid: 8e526d7ebde6ad64bb3669d16e4c9ff6, type: 3}
-  titleList: []
+  screenList:
+  - {fileID: 1543795476}
+  - {fileID: 604483026}
+  - {fileID: 1866687008}
+  - {fileID: 2041598314}
+  - {fileID: 269382450}
+  - {fileID: 1478270320}
+  - {fileID: 1135135901}
+  - {fileID: 1108328069}
+  - {fileID: 338052428}
+  - {fileID: 1391994953}
   nextButton: {fileID: 1757300559}
   previousButton: {fileID: 1847114030}
   closeButton: {fileID: 897966407}
