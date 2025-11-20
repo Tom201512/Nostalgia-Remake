@@ -19,9 +19,46 @@ MonoBehaviour:
     m_Key: HowToPlayImage1
     m_Metadata:
       m_Items: []
+  - m_Id: 1456599504576512
+    m_Key: HowToPlayImage10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456276270538752
+    m_Key: HowToPlayImage2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456402728804352
+    m_Key: HowToPlayImage3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456406386237440
+    m_Key: HowToPlayImage4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456466587082752
+    m_Key: HowToPlayImage5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456484442234880
+    m_Key: HowToPlayImage6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456514842550272
+    m_Key: HowToPlayImage7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456538892689408
+    m_Key: HowToPlayImage8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456579908788224
+    m_Key: HowToPlayImage9
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 4813485255415824412
+    - rid: 4813485348711563264
   m_KeyGenerator:
     rid: 4813485255415824409
   references:
@@ -39,5 +76,47 @@ MonoBehaviour:
           m_TableCodes:
           - ja
           - en
+        - m_KeyId: 1456276270538752
+          m_TableCodes:
+          - ja
+          - en
         m_TypeString: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    - rid: 4813485348711563264
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 1456402728804352
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456406386237440
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456466587082752
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456484442234880
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456514842550272
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456538892689408
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456579908788224
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 1456599504576512
+          m_TableCodes:
+          - ja
+          - en
+        m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

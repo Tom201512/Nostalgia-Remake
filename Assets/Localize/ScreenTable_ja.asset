@@ -22,6 +22,42 @@ MonoBehaviour:
     m_Localized: 497f5590b5274d643aad95a5fa609e98[Instruction1JP]
     m_Metadata:
       m_Items: []
+  - m_Id: 1456276270538752
+    m_Localized: 45a65dfbcef6fe9479853c50c0cca6d0[Instrcution2JP]
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456402728804352
+    m_Localized: 5c94c7c3bb895d64d95b716ab2440599
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456406386237440
+    m_Localized: 354e12ff6ef4bb546851ed9688796e4a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456466587082752
+    m_Localized: 439c55727dbc06243930d1d6e90723eb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456484442234880
+    m_Localized: 4fb432051f1c8474fad523b58994eb25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456514842550272
+    m_Localized: f37ca744f2fa9574483e6e72c9d4021f
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456538892689408
+    m_Localized: 4bfcdeac78323ce46b43010015faf790
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456579908788224
+    m_Localized: 73995b96aeaf4894592c624be374ffb9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1456599504576512
+    m_Localized: ba720e30396bc1c4d93e732d86475a72
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -43,15 +43,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2003435315200
-    m_Localized: Normal mode hints
+    m_Localized: 'Normal mode hint:'
     m_Metadata:
       m_Items: []
   - m_Id: 2149787164672
-    m_Localized: Winning-Patterns
+    m_Localized: 'Winning-Patterns:'
     m_Metadata:
       m_Items: []
   - m_Id: 2461453312000
-    m_Localized: 'BONUS:'
+    m_Localized: 'Bonus:'
     m_Metadata:
       m_Items: []
   - m_Id: 2520983068672
