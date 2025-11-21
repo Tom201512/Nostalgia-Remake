@@ -18,10 +18,6 @@ namespace ReelSpinGame_Option.MenuContent
         public bool CanInteract { get; set; }
 
         // var
-        // スクリーン
-        [SerializeField] private Image screen;
-        // タイトル部分
-        [SerializeField] private TextMeshProUGUI titleText;
         // 表示する画面
         [SerializeField] private List<GameObject> screenList;
         // 次ボタン
@@ -50,19 +46,9 @@ namespace ReelSpinGame_Option.MenuContent
             previousButton.ButtonPushedEvent += OnPreviousPushed;
         }
 
-        private void Update()
+        private void Start()
         {
-            if (CanInteract)
-            {
-                if (OriginalInput.CheckOneKeyInput(KeyCode.RightArrow))
-                {
-                    OnNextPushed();
-                }
-                if (OriginalInput.CheckOneKeyInput(KeyCode.LeftArrow))
-                {
-                    OnPreviousPushed();
-                }
-            }
+            
         }
 
         private void OnDestroy()
@@ -79,6 +65,8 @@ namespace ReelSpinGame_Option.MenuContent
             CanInteract = true;
             Debug.Log("Interact :" + CanInteract);
             currentPage = 0;
+
+            InitializeScreens();
             UpdateScreen();
 
             closeButton.ToggleInteractive(true);
@@ -142,6 +130,17 @@ namespace ReelSpinGame_Option.MenuContent
             screenList[currentPage].SetActive(true);
             
             pageCount.text = (currentPage + 1) + "/" + screenList.Count;
+        }
+
+        // 初期化
+        private void InitializeScreens()
+        {
+            foreach (GameObject screen in screenList)
+            {
+                screen.SetActive(true);
+            }
+
+            CloseAllScreen();
         }
 
         // 全てのページを非表示にする

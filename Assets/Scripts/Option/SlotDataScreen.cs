@@ -64,21 +64,6 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        private void Update()
-        {
-            if(CanInteract)
-            {
-                if (OriginalInput.CheckOneKeyInput(KeyCode.RightArrow))
-                {
-                    OnNextPushed();
-                }
-                if (OriginalInput.CheckOneKeyInput(KeyCode.LeftArrow))
-                {
-                    OnPreviousPushed();
-                }
-            }
-        }
-
         private void OnDestroy()
         {
             closeButton.ButtonPushedEvent -= OnClosedPressed;
