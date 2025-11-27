@@ -6,6 +6,12 @@ namespace ReelSpinGame_Reels.Spin
     public class ReelSpinModel
     {
         // const
+        // リール配列数
+        public const int MaxReelArray = 21;
+        // 図柄
+        public enum ReelSymbols { RedSeven, BlueSeven, BAR, Cherry, Melon, Bell, Replay }
+        // リール位置識別用
+        public enum ReelPosID { Lower2nd = -1, Lower, Center, Upper, Upper2nd }
         // 図柄変更時の角度 (360度を21分割)
         public const float ChangeAngle = 360.0f / 21.0f;
         // 図柄停止時の角度 (変更時角度から1度引いた角度)
@@ -19,6 +25,9 @@ namespace ReelSpinGame_Reels.Spin
         public enum ReelStatus { Stopped, Spinning, RecieveStop, Stopping}
 
         // var
+        // リール配列
+        public byte[] ReelArray { get; set; }
+
         // 現在の回転速度
         public float RotateSpeed { get; set; }
         // 最高速度

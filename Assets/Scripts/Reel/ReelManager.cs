@@ -11,7 +11,6 @@ using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerModel;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
 
 public class ReelManager : MonoBehaviour
 {
@@ -116,7 +115,7 @@ public class ReelManager : MonoBehaviour
 
     // リールオブジェクト
     // 指定リールの図柄配列を渡す
-    public byte[] GetArrayContents(ReelID reelID) => reelObjects[(int)reelID].GetReelDatabase().Array;
+    public byte[] GetArrayContents(ReelID reelID) => reelObjects[(int)reelID].GetReelArrayData();
     // 指定したリールの現在位置(下段)を返す
     public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos((sbyte)ReelPosID.Lower);
     // 指定したリールの押した位置(中段の位置)を返す

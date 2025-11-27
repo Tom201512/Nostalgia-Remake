@@ -2,7 +2,7 @@ using ReelSpinGame_Reels;
 using System;
 using UnityEngine;
 
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 public class SymbolManager : MonoBehaviour
 {

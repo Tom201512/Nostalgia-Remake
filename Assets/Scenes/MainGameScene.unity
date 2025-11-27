@@ -2069,7 +2069,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286284036}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b0ad6fc097aa08144b165ff8f269e581, type: 2}
   m_CullingMode: 0
@@ -17522,9 +17522,17 @@ PrefabInstance:
       value: MiddleReel
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: rotateRPM
       value: 79.8
       objectReference: {fileID: 0}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelDatabaseFile
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c65266efef15dc4a80392e7e9fcc469, type: 2}
     - target: {fileID: 2169237100488002603, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: CenterSymbolM
@@ -17541,6 +17549,10 @@ PrefabInstance:
       propertyPath: symbolLight
       value: 
       objectReference: {fileID: 1967485809}
+    - target: {fileID: 4427254641869140786, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelArrayDataFile
+      value: 
+      objectReference: {fileID: 11400000, guid: fd44fd8b799349f42a39e9d2190cd351, type: 2}
     - target: {fileID: 4698204694510346898, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: MiddleReelBody
@@ -17923,7 +17935,7 @@ PrefabInstance:
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
       value: 
-      objectReference: {fileID: 11400000, guid: 5e0103a395971e94b8db84a44f66c812, type: 2}
+      objectReference: {fileID: 11400000, guid: d72c8853982602947a098eb7433fce01, type: 2}
     - target: {fileID: 2169237100488002603, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: CenterSymbolL
@@ -17944,6 +17956,10 @@ PrefabInstance:
       propertyPath: symbolLight
       value: 
       objectReference: {fileID: 943475977}
+    - target: {fileID: 4427254641869140786, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelArrayDataFile
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e556d94d407d4d46b75984531a04080, type: 2}
     - target: {fileID: 4698204694510346898, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: LeftReelBody
@@ -18026,13 +18042,17 @@ PrefabInstance:
       value: RightReel
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: rotateRPM
       value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
       value: 
-      objectReference: {fileID: 11400000, guid: 13f766545f16473448d81242258187cc, type: 2}
+      objectReference: {fileID: 11400000, guid: 211ee5fe31d2595489f2f93476d61204, type: 2}
     - target: {fileID: 2169237100488002603, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: CenterSymbolR
@@ -18049,6 +18069,10 @@ PrefabInstance:
       propertyPath: symbolLight
       value: 
       objectReference: {fileID: 540040689}
+    - target: {fileID: 4427254641869140786, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelArrayDataFile
+      value: 
+      objectReference: {fileID: 11400000, guid: e9825a517408f484b8d0b47686614e96, type: 2}
     - target: {fileID: 4698204694510346898, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: RightReelBody

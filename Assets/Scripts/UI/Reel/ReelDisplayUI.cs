@@ -1,5 +1,4 @@
 using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.Array;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelManagerModel;

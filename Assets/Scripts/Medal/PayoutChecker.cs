@@ -2,7 +2,7 @@ using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Reels.Payout

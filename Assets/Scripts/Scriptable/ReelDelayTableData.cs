@@ -4,16 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Datas
 {
-    // リールデータベース
-    public class ReelDatabase : ScriptableObject
+    // リールのスベリコマデータ
+    public class ReelDelayTableData : ScriptableObject
     {
         // var
-        // リール配列
-        [SerializeField] private byte[] array;
         // リール条件
         // 第一停止
         [SerializeField] private List<ReelFirstConditions> first;
@@ -24,22 +22,23 @@ namespace ReelSpinGame_Datas
         // ディレイテーブル
         [SerializeField] private List<ReelTableData> tables;
 
-        public byte[] Array { get { return array; } }
         public List<ReelFirstConditions> FirstCondition { get { return first; } }
         public List<ReelSecondConditions> SecondCondition { get { return second; } }
         public List<ReelThirdConditions> ThirdCondition { get { return third; } }
         public List<ReelTableData> Tables { get { return tables; } }
 
         // func
-        public void SetArray(byte[] array) => this.array = array;
-        public void SetTables(List<ReelTableData> tables) => this.tables = tables;
 
+        // リール条件セット
         public void SetReelConditions(List<ReelFirstConditions> first, List<ReelSecondConditions> second, List<ReelThirdConditions> third)
         {
             this.first = first;
             this.second = second;
             this.third = third;
         }
+
+        // リールテーブルのセット
+        public void SetTables(List<ReelTableData> tables) => this.tables = tables;
     }
 
     // リール条件テーブル

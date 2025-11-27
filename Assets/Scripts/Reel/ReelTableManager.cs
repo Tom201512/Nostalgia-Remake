@@ -44,7 +44,7 @@ namespace ReelSpinGame_Reels.Table
 
         // func
         // スベリコマを得る
-        public int GetDelay(int stoppedCount, int pushedPos, ReelDatabase reelDatabase,
+        public int GetDelay(int stoppedCount, int pushedPos, ReelDelayTableData reelDatabase,
             FlagId flagID, ReelID pushReelID, BonusTypeID bonus, int bet, int random)
         {
             // 見つけたテーブルID

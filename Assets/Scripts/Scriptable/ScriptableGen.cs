@@ -63,19 +63,22 @@ namespace ReelSpinGame_Datas
                 if (reelSelection == (int)ReelID.ReelLeft)
                 {
                     reelSelection = -1;
-                    MakeReelData("ReelL");
+                    MakeReelArrayData("ReelL");
+                    MakeReelDelayData("ReelL");
                 }
 
                 if (reelSelection == (int)ReelID.ReelMiddle)
                 {
                     reelSelection = -1;
-                    MakeReelData("ReelM");
+                    MakeReelArrayData("ReelM");
+                    MakeReelDelayData("ReelM");
                 }
 
                 if (reelSelection == (int)ReelID.ReelRight)
                 {
                     reelSelection = -1;
-                    MakeReelData("ReelR");
+                    MakeReelArrayData("ReelR");
+                    MakeReelDelayData("ReelR");
                 }
 
                 GUILayout.Label("\nフラグデータの作成\n");
@@ -102,19 +105,22 @@ namespace ReelSpinGame_Datas
             // あらかじめ設定したディレクトリから全リールのデータを読み込む
             for (int i = 0; i < ReelAmount; i++)
             {
-                MakeReelData(pathOrder[i]);
+                MakeReelArrayData(pathOrder[i]);
+                MakeReelDelayData(pathOrder[i]);
             }
 
             Debug.Log("All ReelData is generated");
         }
 
-        private void MakeReelData(string reelName)
+        // リール配列の作成
+        private void MakeReelArrayData(string reelName)
         {
             // ディレクトリの作成
             string path = "Assets/ReelData";
             // ファイル名指定
-            string fileName = reelName;
+            string fileName = reelName + "Array";
 
+            // ファイルが無ければ新規作成
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -122,13 +128,37 @@ namespace ReelSpinGame_Datas
             }
 
             // スクリプタブルオブジェクト作成
-            ReelDatabase reelDatabase = CreateInstance<ReelDatabase>();
+            ReelArrayData reelArrayData = CreateInstance<ReelArrayData>();
 
             // ファイル読み込み
 
             // 配列作成
             using StreamReader array = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "Array.csv"));
-            reelDatabase.SetArray(ReelDatabaseGen.MakeReelArray(array));
+            reelArrayData.SetArray(ReelDatabaseGen.MakeReelArray(array));
+
+            // 保存処理
+            GenerateFile(path, fileName, reelArrayData);
+        }
+
+        // リールスベリコマデータの作成
+        private void MakeReelDelayData(string reelName)
+        {
+            // ディレクトリの作成
+            string path = "Assets/ReelData";
+            // ファイル名指定
+            string fileName = reelName + "Delay";
+
+            // ファイルが無ければ新規作成
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Debug.Log("Directory is created");
+            }
+
+            // スクリプタブルオブジェクト作成
+            ReelDelayTableData reelDatabase = CreateInstance<ReelDelayTableData>();
+
+            // ファイル読み込み
 
             // 停止順ごとの条件テーブル作成
             using StreamReader first = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "1st.csv"));

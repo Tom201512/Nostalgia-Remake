@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -8310782498088753725}
   - component: {fileID: 4287227727636106190}
   - component: {fileID: 4427254641869140786}
-  - component: {fileID: 4531396742264716713}
   m_Layer: 3
   m_Name: ReelBase
   m_TagString: Untagged
@@ -50,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateRPM: 79.8
   reelDatabaseFile: {fileID: 11400000, guid: 3e4745ce543247f41831242aae0ad29a, type: 2}
+  reelID: 0
 --- !u!114 &-8310782498088753725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,18 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc642bcd6fc2ff44b6ee223d706860e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4531396742264716713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582631020889352479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44a2345cc80bfb546ad8b68d35eba406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  defaultReelSpinRPM: 79.8
+  reelArrayDataFile: {fileID: 0}
 --- !u!1 &2169237100488002603
 GameObject:
   m_ObjectHideFlags: 0

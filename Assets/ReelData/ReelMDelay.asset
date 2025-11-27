@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44dfdc09c767d1e4fb34e95241dff17a, type: 3}
-  m_Name: ReelM
+  m_Script: {fileID: 11500000, guid: 1712bc42e7e2a4f449b8a597a1d5bea3, type: 3}
+  m_Name: ReelMDelay
   m_EditorClassIdentifier: 
-  array: 030506030403050601030602030506010403050600
   first:
   - mainConditon: 0
     tid: 1

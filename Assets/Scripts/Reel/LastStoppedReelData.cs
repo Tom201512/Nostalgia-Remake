@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels

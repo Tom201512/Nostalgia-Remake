@@ -1,11 +1,9 @@
 using ReelSpinGame_Datas.Reels;
-using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using static ReelSpinGame_Datas.ReelConditionsData;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Datas
 {

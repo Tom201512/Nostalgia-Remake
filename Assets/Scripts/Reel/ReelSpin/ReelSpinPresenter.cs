@@ -1,3 +1,4 @@
+using ReelSpinGame_Datas;
 using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -10,6 +11,13 @@ namespace ReelSpinGame_Reels.Spin
         // リール回転用のプレゼンター
 
         // var
+        // 回転時のRPM
+        [SerializeField] [Range(0, 80.0f)] private float defaultReelSpinRPM;
+        // リール配列データ
+        [SerializeField] ReelArrayData reelArrayDataFile;
+        // 図柄マネージャー
+        private SymbolManager symbolManager;
+
         // 図柄位置が変わったことを伝えるイベント
         public delegate void ReelPositionChanged();
         public event ReelPositionChanged OnReelPositionChanged;
@@ -35,6 +43,9 @@ namespace ReelSpinGame_Reels.Spin
             // ブラーの取得
             postVolume = GetComponent<PostProcessVolume>();
             postVolume.profile.TryGetSettings(out motionBlur);
+            symbolManager = GetComponentInChildren<SymbolManager>();
+            reelSpinModel = new ReelSpinModel(defaultReelSpinRPM);
+            reelSpinModel.ReelArray = reelArrayDataFile.Array;
         }
 
         private void Update()
@@ -51,6 +62,9 @@ namespace ReelSpinGame_Reels.Spin
             }
         }
 
+        // リール配列情報を渡す
+        public byte[] GetReelArray() => reelSpinModel.ReelArray;
+ 
         // 現在のリール情報を返す
         public ReelStatus GetCurrentReelStatus() => reelSpinModel.CurrentReelStatus;
         // 現在の速度を返す
@@ -88,11 +102,12 @@ namespace ReelSpinGame_Reels.Spin
         // ブラー設定
         public void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
 
-        // データのセット
-        public void SetReelSpinPresenter(float RotateRPM)
-        {
-            reelSpinModel = new ReelSpinModel(RotateRPM);
-        }
+        // 指定位置からのリール位置を得る
+        public int GetReelPos(int currentLower, sbyte posID) => ReelObjectPresenter.OffsetReelPos(currentLower, posID);
+        // 指定位置からのリール図柄を得る
+        public ReelSymbols GetReelSymbol(int currentLower, sbyte posID) => symbolManager.ReturnSymbol(reelSpinModel.ReelArray[ReelObjectPresenter.OffsetReelPos(currentLower, posID)]);
+        // 指定位置からのリール図柄画像を得る
+        public Sprite GetReelSymbolSprite(int reelPos) => symbolManager.GetSymbolImage(GetReelSymbol(reelPos, (int)ReelPosID.Lower));
 
         // リールの回転を開始
         public void StartReelSpin(float maxSpeed, bool cutAccelerate)
@@ -135,6 +150,10 @@ namespace ReelSpinGame_Reels.Spin
             FinishReelSpin();
         }
 
+
+        // 図柄位置の更新
+        public void UpdateReelSymbols(int currentLower) => symbolManager.UpdateSymbolsObjects(currentLower, reelSpinModel.ReelArray);
+
         // リールの回転
         private void RotateReel()
         {
@@ -160,6 +179,7 @@ namespace ReelSpinGame_Reels.Spin
 
                 // 位置変更を伝える
                 OnReelPositionChanged?.Invoke();
+                UpdateReelSymbols(reelSpinModel.CurrentLower);
 
                 // 停止位置になったら停止処理
                 if (reelSpinModel.CurrentLower == reelSpinModel.WillStopLowerPos && reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)
@@ -175,6 +195,7 @@ namespace ReelSpinGame_Reels.Spin
                 transform.Rotate(Vector3.right, ChangeAngle);
                 // 位置変更を伝える
                 OnReelPositionChanged?.Invoke();
+                UpdateReelSymbols(reelSpinModel.CurrentLower);
 
                 // 停止位置になったら停止処理
                 if (reelSpinModel.CurrentLower == reelSpinModel.WillStopLowerPos && reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)

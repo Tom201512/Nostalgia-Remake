@@ -2,7 +2,7 @@ using ReelSpinGame_AutoPlay.AI;
 using System;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Reels.Array.ReelArrayModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_AutoPlay
