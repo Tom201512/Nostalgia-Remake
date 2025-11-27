@@ -25,10 +25,10 @@ public class ReelManager : MonoBehaviour
     // var
     // リールマネージャーモデル
     private ReelManagerModel reelManagerModel;
-    // リールオブジェクトプレゼンター
-    [SerializeField] private List<ReelObjectPresenter> reelObjects;
     // 払い出し確認機能
     private PayoutChecker payoutChecker;
+    // リールオブジェクトプレゼンター
+    [SerializeField] private List<ReelObjectPresenter> reelObjects;
     // 強制ランダム数値
     [SerializeField] private bool instantRandomMode;
     // 強制ランダム数値を常に有効

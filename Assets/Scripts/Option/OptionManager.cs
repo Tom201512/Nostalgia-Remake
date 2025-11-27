@@ -36,6 +36,7 @@ namespace ReelSpinGame_Option
         private void Start()
         {
             openButton.ToggleInteractive(true);
+            menuBarUI.gameObject.SetActive(false);
         }
 
         private void OnDestroy()

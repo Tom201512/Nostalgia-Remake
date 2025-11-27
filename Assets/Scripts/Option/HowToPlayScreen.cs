@@ -48,7 +48,7 @@ namespace ReelSpinGame_Option.MenuContent
 
         private void Start()
         {
-            
+            CloseAllScreen();
         }
 
         private void OnDestroy()
@@ -66,7 +66,6 @@ namespace ReelSpinGame_Option.MenuContent
             Debug.Log("Interact :" + CanInteract);
             currentPage = 0;
 
-            InitializeScreens();
             UpdateScreen();
 
             closeButton.ToggleInteractive(true);
@@ -130,17 +129,6 @@ namespace ReelSpinGame_Option.MenuContent
             screenList[currentPage].SetActive(true);
             
             pageCount.text = (currentPage + 1) + "/" + screenList.Count;
-        }
-
-        // 初期化
-        private void InitializeScreens()
-        {
-            foreach (GameObject screen in screenList)
-            {
-                screen.SetActive(true);
-            }
-
-            CloseAllScreen();
         }
 
         // 全てのページを非表示にする

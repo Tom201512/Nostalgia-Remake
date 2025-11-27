@@ -36,7 +36,7 @@ namespace ReelSpinGame_Option.MenuBar
 
         // ƒIƒvƒVƒ‡ƒ“
 
-        void Awake()
+        private void Awake()
         {
             howToPlayButton.ButtonPushedEvent += HowToPlayOpen;
             howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
@@ -44,7 +44,13 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataScreen.OnClosedScreenEvent += SlotDataClose;
         }
 
-        void OnDestroy()
+        private void Start()
+        {
+            howToPlayScreen.gameObject.SetActive(false);
+            slotDataScreen.gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
         {
             howToPlayButton.ButtonPushedEvent -= HowToPlayOpen;
             howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
