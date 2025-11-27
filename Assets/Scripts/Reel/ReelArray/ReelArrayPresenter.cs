@@ -8,6 +8,8 @@ namespace ReelSpinGame_Reels.Array
         // リール配列プレゼンター
 
         // var
+
+        // リール配列データ
         // リール配列モデル
         private ReelArrayModel reelArrayModel;
 
