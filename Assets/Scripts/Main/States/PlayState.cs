@@ -131,17 +131,17 @@ namespace ReelSpinGame_State.PlayingState
                 if (gM.Reel.GetIsReelWorking())
                 {
                     // 左停止
-                    if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.StopLeft]))
+                    if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StopLeft))
                     {
                         StopReel(ReelID.ReelLeft);
                     }
                     // 中停止
-                    if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.StopMiddle]))
+                    if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StopMiddle))
                     {
                         StopReel(ReelID.ReelMiddle);
                     }
                     // 右停止
-                    if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.StopRight]))
+                    if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StopRight))
                     {
                         StopReel(ReelID.ReelRight);
                     }

@@ -3255,6 +3255,7 @@ GameObject:
   - component: {fileID: 460868896}
   - component: {fileID: 460868897}
   - component: {fileID: 460868898}
+  - component: {fileID: 460868899}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3286,16 +3287,8 @@ MonoBehaviour:
   reelUI: {fileID: 1227000794}
   bonusUI: {fileID: 660297972}
   autoUI: {fileID: 1956132309}
+  debugSetting: 6
   statusPanel: {fileID: 326547722}
-  maxBetKey: 32
-  betOneKey: 49
-  betTwoKey: 50
-  startAndMaxBetKey: 273
-  keyToStopLeft: 276
-  keyToStopMiddle: 274
-  keyToStopRight: 275
-  keyToAutoToggle: 97
-  keyToOptionToggle: 109
   keyToDebugToggle: 100
   keyCameraModeChange: 99
   keyToAutoOrderChange: 111
@@ -3303,7 +3296,6 @@ MonoBehaviour:
   keyToWaitCutToggle: 119
   dontSaveFlag: 0
   deleteSaveFlag: 0
-  debugSetting: 6
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -3378,6 +3370,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ec660c07defa549b97bab1368ba483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &460868899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460868891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5252ba3569e21348bddc3c8ad62649f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxBetKey: 32
+  betOneKey: 49
+  betTwoKey: 50
+  startAndMaxBetKey: 273
+  stopLeftKey: 276
+  stopMiddleKey: 274
+  stopRightKey: 275
+  toggleAutoKey: 97
+  toggleOptionKey: 109
 --- !u!1001 &470524867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8766,7 +8779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000053565916}
+  m_AnchoredPosition: {x: 0, y: 0.0004934629}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1221661642

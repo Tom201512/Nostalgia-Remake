@@ -9,16 +9,14 @@ using ReelSpinGame_Save.Database;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
 using UnityEngine;
-using UnityEngine.UIElements;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
+// ゲームの管理
 public class GameManager : MonoBehaviour
 {
-    // ゲームの管理
     // const
-    // 最高設定値
-    public const int MaxSlotSetting = 6;
+    public const int MaxSlotSetting = 6;    // 最高設定値
 
     // 各種操作のシリアライズ
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight }
@@ -47,51 +45,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] BonusTestUI bonusUI;
     [SerializeField] AutoTestUI autoUI;
 
-    // 各種機能
-    public MedalManager Medal { get; private set; }
-    public FlagLots Lots { get; private set; }
-    public WaitManager Wait { get; private set; }
-    public ReelManager Reel { get { return reelManagerObj; } }
-    public BonusManager Bonus { get; private set; }
-    public EffectPresenter Effect { get { return effectManagerObj; } }
-    public OptionManager Option { get { return optionManagerObj; } }
+    // デバッグ用設定値
+    [Range(0, 6), SerializeField] private int debugSetting;
 
-    // プレイヤー情報
-    public PlayerDatabase Player;
+    // 各種マネージャー
+    public InputManager InputManager { get; private set; }              // 入力マネージャー
+    public MedalManager Medal { get; private set; }                     // メダルマネージャー
+    public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
+    public WaitManager Wait { get; private set; }                       // ウェイト管理マネージャー
+    public ReelManager Reel { get { return reelManagerObj; } }          // リールマネージャー
+    public BonusManager Bonus { get; private set; }                     // ボーナス管理マネージャー
+    public EffectPresenter Effect { get { return effectManagerObj; } }  // 演出管理マネージャー
+    public OptionManager Option { get { return optionManagerObj; } }    // オプションマネージャー
 
-    // プレイヤーUI
-    public PlayerUI PlayerUI { get { return playerUI; } }
+    // プレイヤー関連
+    public PlayerDatabase Player;                               // プレイヤー情報
+    public PlayerUI PlayerUI { get { return playerUI; } }       // プレイヤーUI
 
-    // オートプレイ機能
-    public AutoPlayFunction Auto { get; private set; }
+    public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
 
-    // セーブ機能
-    private SaveManager saveManager;
+    public SaveDatabase Save { get { return saveManager.CurrentSave; } }    // セーブデータベース
 
-    // セーブデータベース
-    public SaveDatabase Save { get { return saveManager.CurrentSave; } }
 
+
+
+
+    // ステータスパネル
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }
-
-    // キー設定
-    // MAXBET
-    [SerializeField] private KeyCode maxBetKey;
-    // 1BET
-    [SerializeField] private KeyCode betOneKey;
-    //2BET
-    [SerializeField] private KeyCode betTwoKey;
-    // リール始動(またはMAX BET)
-    [SerializeField] private KeyCode startAndMaxBetKey;
-    // リール停止
-    [SerializeField] private KeyCode keyToStopLeft;
-    [SerializeField] private KeyCode keyToStopMiddle;
-    [SerializeField] private KeyCode keyToStopRight;
-
-    // オート開始/停止ボタン
-    [SerializeField] private KeyCode keyToAutoToggle;
-    // オプションボタン
-    [SerializeField] private KeyCode keyToOptionToggle;
 
     // <デバッグ用> デバッグUI表示用
     [SerializeField] private KeyCode keyToDebugToggle;
@@ -114,14 +95,11 @@ public class GameManager : MonoBehaviour
 
     // 設定値
     public int Setting { get; private set; }
-    // デバッグ用設定値
-    [Range(0, 6), SerializeField] private int debugSetting;
-
-    // 入力用キーコード
-    public KeyCode[] KeyCodes { get; private set; }
 
     // ゲームステート用
     public MainGameFlow MainFlow { get; private set; }
+
+    private SaveManager saveManager;    // セーブ機能
 
     private void Awake()
     {
@@ -131,6 +109,8 @@ public class GameManager : MonoBehaviour
         // FPS固定
         Application.targetFrameRate = 60;
 
+        // 操作
+        InputManager = GetComponent<InputManager>();
         // メダル管理
         Medal = GetComponent<MedalManager>();
         // フラグ管理
@@ -149,9 +129,6 @@ public class GameManager : MonoBehaviour
         Auto = new AutoPlayFunction();
         // セーブ機能
         saveManager = new SaveManager();
-
-        // キーボードのコード設定
-        KeyCodes = new KeyCode[] { maxBetKey, betOneKey, betTwoKey, startAndMaxBetKey, keyToStopLeft, keyToStopMiddle, keyToStopRight };
 
         // デバッグUIの表示
         hasDebugUI = false;
@@ -218,7 +195,7 @@ public class GameManager : MonoBehaviour
         }
 
         // オートプレイ機能ボタン
-        if (Input.GetKeyDown(keyToAutoToggle))
+        if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
             if(!Option.hasOptionMode)
             {
@@ -245,7 +222,7 @@ public class GameManager : MonoBehaviour
         }
 
         // オプション画面起動(メニューボタンを押しても作動)
-        if(Input.GetKeyDown(keyToOptionToggle))
+        if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleOption))
         {
             Option.ToggleOptionScreen();
         }

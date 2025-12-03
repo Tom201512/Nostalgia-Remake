@@ -139,25 +139,25 @@ namespace ReelSpinGame_State.InsertState
         private void PlayerControl()
         {
             // MAX BET
-            if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.MaxBet]))
+            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.MaxBet))
             {
                 BetAction(gM.Medal.GetMaxBet(), false);
             }
 
-            // BET2
-            if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.BetTwo]))
-            {
-                BetAction(2, false);
-            }
-
             // BET1
-            if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.BetOne]))
+            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetOne))
             {
                 BetAction(1, false);
             }
 
+            // BET2
+            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetTwo))
+            {
+                BetAction(2, false);
+            }
+
             // ベット終了 または MAXBET
-            if (OriginalInput.CheckOneKeyInput(gM.KeyCodes[(int)GameManager.ControlSets.StartAndMax]))
+            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StartAndMax))
             {
                 BetAndStartFunction(false);
             }
