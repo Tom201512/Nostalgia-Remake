@@ -2932,9 +2932,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30DC\u30FC\u30CA\u30B9\u78BA\u7387 Bonus probability\n\t\u30D3\u30C3\u30B0\u30C1\u30E3\u30F3\u30B9
-    BIG CHANCE:\n\t\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0 BONUS GAME:\n\t\u5408\u7B97
-    Total:\n\n\u76F4\u8FD1\u30DC\u30FC\u30CA\u30B9\u60C5\u5831 Latest bonus:\n\t\u6210\u7ACB\u30B2\u30FC\u30E0
+  m_text: "\u76F4\u8FD1\u30DC\u30FC\u30CA\u30B9\u60C5\u5831 Latest bonus:\n\t\u6210\u7ACB\u30B2\u30FC\u30E0
     Bonus hit game:\n\t\u5165\u8CDE\u30B2\u30FC\u30E0 Bonus line up game:\n\t\u7372\u5F97\u679A\u6570
     Payout:\n\nJAC \u30CF\u30BA\u30B7 JAC-Avoid:\n\t\u6210\u529F\u56DE\u6570 JAC-Avoid
     Success:\n\t\u30D3\u30BF\u30CF\u30BA\u30B7 Perfect-Avoid:\n\t\u30A2\u30B7\u30B9\u30C8\u30CF\u30BA\u30B7
@@ -7102,7 +7100,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 1}
+  m_SizeDelta: {x: 1200, y: 2}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &971907936
 MonoBehaviour:
@@ -7117,7 +7115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8768,7 +8766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000026562695}
+  m_AnchoredPosition: {x: 0, y: 0.000053565916}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1221661642
@@ -11675,7 +11673,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1006127649}
   m_Direction: 3
   m_Value: 0
-  m_Size: 0.9999943
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
