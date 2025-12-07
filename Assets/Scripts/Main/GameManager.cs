@@ -66,10 +66,6 @@ public class GameManager : MonoBehaviour
 
     public SaveDatabase Save { get { return saveManager.CurrentSave; } }    // セーブデータベース
 
-
-
-
-
     // ステータスパネル
     [SerializeField] StatusPanel statusPanel;
     public StatusPanel Status { get; private set; }

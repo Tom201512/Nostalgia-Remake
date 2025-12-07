@@ -14,7 +14,7 @@ namespace ReelSpinGame_Option.MenuContent
         // ƒXƒƒbƒgî•ñ‰æ–Ê
 
         // const
-        private const int maxPage = 4;
+        private const int maxPage = 5;
 
         // var
 
@@ -180,6 +180,7 @@ namespace ReelSpinGame_Option.MenuContent
 
                 case 4:
                     bonusRecordDataUI.gameObject.SetActive(true);
+                    bonusRecordDataUI.GenerateBonusResult(PlayerData.BonusHitRecord);
                     break;
 
                 default:

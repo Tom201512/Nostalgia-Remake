@@ -50,6 +50,7 @@ namespace ReelSpinGame_UI.Graph
         public void StartDrawGraph(PlayerDatabase playerData)
         {
             graphCamera.gameObject.SetActive(true);
+            graphDrawer.gameObject.SetActive(true);
             graphDrawer.ResetDraw();
 
             // Å‚AÅ’á·–‡‚Ì•\‹Lİ’è
