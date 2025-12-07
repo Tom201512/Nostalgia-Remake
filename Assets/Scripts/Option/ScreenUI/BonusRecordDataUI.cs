@@ -1,13 +1,8 @@
 using ReelSpinGame_Datas;
-using ReelSpinGame_System;
-using ReelSpinGame_UI.Bonus;
-using ReelSpinGame_UI.Graph;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
+using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -41,18 +36,26 @@ namespace ReelSpinGame_Option.MenuContent
         // ボーナス履歴をデータから作成する
         public void GenerateBonusResult(List<BonusHitData> bonusHitDatas)
         {
-            // 初期化
-            BonusDisplayDatas.Clear();
-
             int index = 0; // 配列要素番号
             foreach(BonusHitData bonusData in bonusHitDatas)
             {
+                if(bonusData.BonusStartGame == 0)
+                {
+                    break;
+                }
                 GenerateBonusDisplayData(bonusData, index); // データを記録
                 bonusLogDisplayList.AddBonusData(BonusDisplayDatas[index]); // 表示用画像を作成
                 Debug.Log("Generated Data, Index:" + index);
 
                 index += 1;
             }
+        }
+
+        // 画面を閉じる
+        public void CloseBonusResult()
+        {
+            BonusDisplayDatas.Clear();
+            bonusLogDisplayList.InitializeData();
         }
 
         // func(private)

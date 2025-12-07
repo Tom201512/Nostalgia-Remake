@@ -93,6 +93,7 @@ namespace ReelSpinGame_Option.MenuContent
             Debug.Log("Interact :" + CanInteract);
             if (CanInteract)
             {
+                DisactivateAllScreen();
                 Debug.Log("Closed SlotData");
                 closeButton.ToggleInteractive(false); ;
                 nextButton.ToggleInteractive(false);
@@ -192,6 +193,8 @@ namespace ReelSpinGame_Option.MenuContent
 
         private void DisactivateAllScreen()
         {
+            bonusRecordDataUI.CloseBonusResult();
+
             slotMainDataUI.gameObject.SetActive(false);
             probabilityDataUI.gameObject.SetActive(false);
             bonusDataUI.gameObject.SetActive(false);

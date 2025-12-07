@@ -52,7 +52,7 @@ namespace ReelSpinGame_Datas
         // 入賞時ゲーム数セット
         public void SetBonusStartGame(int game) => BonusStartGame = game;
         // ボーナス獲得枚数変更
-        public void ChangeBonusPayout(int amount) => BonusPayout += amount;
+        public void ChangeBonusPayout(int amount) => BonusPayout = amount;
         // ビッグチャンス時の色セット
         public void SetBigChanceColor(BigColor color) => BigColor = color;
 

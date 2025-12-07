@@ -3035,7 +3035,7 @@ MonoBehaviour:
   keyToAutoSpeedChange: 115
   keyToWaitCutToggle: 119
   dontSaveFlag: 0
-  deleteSaveFlag: 0
+  deleteSaveFlag: 1
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -3066,9 +3066,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
-  useInstant: 0
+  useInstant: 1
   useInfinityInstant: 0
-  instantFlagID: 0
+  instantFlagID: 2
 --- !u!114 &460868896
 MonoBehaviour:
   m_ObjectHideFlags: 0

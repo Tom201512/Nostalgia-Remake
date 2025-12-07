@@ -26,16 +26,18 @@ public class BonusLogDisplayList : MonoBehaviour
         
     }
 
-    void OnDisable()
+    // func(public)
+    // 初期化
+    public void InitializeData()
     {
-        // 無効になったらオブジェクトリストを削除
-        foreach (BonusLogDisplay bonus in GetComponentsInChildren<BonusLogDisplay>())
+        BonusLogDisplay[] bonusLog = GetComponentsInChildren<BonusLogDisplay>();
+        foreach (BonusLogDisplay bonus in bonusLog)
         {
+            bonus.transform.SetParent(null);
             Destroy(bonus);
         }
     }
 
-    // func(public)
     // データ追加
     public void AddBonusData(BonusDisplayData bonusDisplayData)
     {

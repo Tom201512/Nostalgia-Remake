@@ -166,15 +166,22 @@ namespace ReelSpinGame_State.PayoutState
             gM.Player.PlayerMedalData.IncreasePlayerMedal(gM.Reel.GetPayoutResultData().Payout);
             gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Reel.GetPayoutResultData().Payout);
 
-            // ボーナス中なら各ボーナスの払い出しを増やし状態を変化させる
+            // ボーナス中なら各ボーナスの払い出しを増やす
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gM.Bonus.ChangeBonusPayout(gM.Reel.GetPayoutResultData().Payout);
-                gM.Player.ChangeLastBonusPayout(gM.Reel.GetPayoutResultData().Payout);
+                gM.Player.ChangeLastBonusPayout(gM.Bonus.GetCurrentBonusPayout());
+            }
+
+            // 払い出し時にボーナスが揃っていればボーナス払い出しを増やす
+            if(gM.Reel.GetPayoutResultData().BonusID != 0)
+            {
+                gM.Bonus.ChangeBonusPayout(gM.Reel.GetPayoutResultData().Payout);
+                gM.Player.ChangeLastBonusPayout(gM.Bonus.GetCurrentBonusPayout());
             }
 
             // ゾーン区間(50G)にいる間はその払い出しを計算
-            if(gM.Bonus.GetHasZone())
+            if (gM.Bonus.GetHasZone())
             {
                 gM.Bonus.ChangeZonePayout(gM.Reel.GetPayoutResultData().Payout);
             }
