@@ -12,10 +12,9 @@ using static ReelSpinGame_Reels.Payout.PayoutChecker;
 using static ReelSpinGame_Reels.ReelManagerModel;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
-public class ReelManager : MonoBehaviour
+// リール回転マネージャー
+public class ReelRotateManager : MonoBehaviour
 {
-    // リールマネージャー
-
     // const
     // リール速度が一定になってから停止できるようになるまでの秒数
     public const float ReelWaitTime = 0.5f;
@@ -50,9 +49,6 @@ public class ReelManager : MonoBehaviour
     {
         reelManagerModel = new ReelManagerModel();
         payoutChecker = GetComponent<PayoutChecker>();
-
-        // リール情報を渡す
-        reelEffectManager.SetReels(reelObjects);
     }
 
     private void Start()

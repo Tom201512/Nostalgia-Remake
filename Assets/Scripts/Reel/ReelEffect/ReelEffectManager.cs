@@ -12,7 +12,7 @@ namespace ReelSpinGame_Reels.Effect
     {
         // var
         // リールオブジェクトプレゼンター
-        public List<ReelObjectPresenter> ReelObjects { get; private set; }
+        [SerializeField] List<ReelObjectPresenter> reelObjects;
 
         // 疑似遊技中か
         public bool HasFakeSpin { get; private set; }
@@ -22,22 +22,16 @@ namespace ReelSpinGame_Reels.Effect
             HasFakeSpin = false;
         }
 
-        // リールオブジェクトをセットする
-        public void SetReels(List<ReelObjectPresenter> reels)
-        {
-            ReelObjects = reels;
-        }
-
         // 指定したリールのバックライト変更
-        public void ChangeReelBackLight(int reelID, byte brightness) => ReelObjects[reelID].ReelEffectManager.ChangeReelBrightness(brightness);
+        public void ChangeReelBackLight(int reelID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(brightness);
 
         // 指定したリールと図柄位置のライト変更
-        public void ChangeReelSymbolLight(int reelID, int posID, byte brightness) => ReelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
+        public void ChangeReelSymbolLight(int reelID, int posID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
 
         // 全リールの明るさ一括変更
         public void ChangeAllReelBrightness(byte brightness)
         {
-            foreach (ReelObjectPresenter reel in ReelObjects)
+            foreach (ReelObjectPresenter reel in reelObjects)
             {
                 reel.ReelEffectManager.ChangeReelBrightness(brightness);
                 for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
@@ -50,7 +44,7 @@ namespace ReelSpinGame_Reels.Effect
         // JAC GAME時のライト点灯
         public void EnableJacGameLight()
         {
-            foreach (ReelObjectPresenter reel in ReelObjects)
+            foreach (ReelObjectPresenter reel in reelObjects)
             {
                 reel.ReelEffectManager.ChangeReelBrightness(ReelBase.TurnOffValue);
 
@@ -72,7 +66,7 @@ namespace ReelSpinGame_Reels.Effect
         // JAC中の明るさ計算の設定
         public void SetJacBrightnessCalculation(bool value)
         {
-            foreach (ReelObjectPresenter reel in ReelObjects)
+            foreach (ReelObjectPresenter reel in reelObjects)
             {
                 reel.SetJacBrightnessCalculate(value);
             }
@@ -92,15 +86,15 @@ namespace ReelSpinGame_Reels.Effect
             
             Debug.Log("右リールを1秒後に回転させます。");
             yield return new WaitForSeconds(1.0f);
-            ReelObjects[(int)ReelID.ReelRight].StartReel(0.98f, true);
+            reelObjects[(int)ReelID.ReelRight].StartReel(0.98f, true);
 
             Debug.Log("中リールを1秒後に回転させます。");
             yield return new WaitForSeconds(1.0f);
-            ReelObjects[(int)ReelID.ReelMiddle].StartReel(0.98f, true);
+            reelObjects[(int)ReelID.ReelMiddle].StartReel(0.98f, true);
 
             Debug.Log("左リールを1秒後に回転させます。");
             yield return new WaitForSeconds(1.0f);
-            ReelObjects[(int)ReelID.ReelLeft].StartReel(0.98f, true);
+            reelObjects[(int)ReelID.ReelLeft].StartReel(0.98f, true);
 
             Debug.Log("3秒後に疑似遊技を終了します");
             yield return new WaitForSeconds(3.0f);

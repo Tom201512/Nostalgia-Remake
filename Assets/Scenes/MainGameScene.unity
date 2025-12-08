@@ -2286,9 +2286,8 @@ GameObject:
   - component: {fileID: 286284038}
   - component: {fileID: 286284040}
   - component: {fileID: 286284041}
-  - component: {fileID: 286284042}
   m_Layer: 0
-  m_Name: ReelManager
+  m_Name: ReelRotateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2321,7 +2320,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 286284036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5787d13652097f4498666a1bc1bb1ed5, type: 3}
+  m_Script: {fileID: 11500000, guid: bf035872e93d1bb469bbd56ad2817348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reelObjects:
@@ -2330,9 +2329,9 @@ MonoBehaviour:
   - {fileID: 1933351381669917605}
   instantRandomMode: 0
   infinityRandomMode: 0
-  instantRandomValue: 2
-  reelEffectManager: {fileID: 1787737429}
-  slotDataScreen: {fileID: 2045587107}
+  instantRandomValue: 1
+  reelEffectManager: {fileID: 0}
+  slotDataScreen: {fileID: 0}
 --- !u!114 &286284040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2367,18 +2366,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &286284042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286284036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b68c86a25b79d314ab5c2de97c941654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &295609827
 GameObject:
   m_ObjectHideFlags: 0
@@ -15054,6 +15041,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68c86a25b79d314ab5c2de97c941654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reelObjects:
+  - {fileID: 1933351382769078780}
+  - {fileID: 1190830224200012641}
+  - {fileID: 1933351381669917605}
 --- !u!1 &1793767376
 GameObject:
   m_ObjectHideFlags: 0

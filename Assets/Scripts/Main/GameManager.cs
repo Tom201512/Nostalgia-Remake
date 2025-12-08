@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     // 各種マネージャー
     // リール情報
-    [SerializeField] private ReelManager reelManagerObj;
+    [SerializeField] private ReelRotateManager reelManagerObj;
     // 演出
     [SerializeField] private EffectPresenter effectManagerObj;
     // オプション画面
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     public MedalManager Medal { get; private set; }                     // メダルマネージャー
     public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
     public WaitManager Wait { get; private set; }                       // ウェイト管理マネージャー
-    public ReelManager Reel { get { return reelManagerObj; } }          // リールマネージャー
+    public ReelRotateManager Reel { get { return reelManagerObj; } }          // リールマネージャー
     public BonusManager Bonus { get; private set; }                     // ボーナス管理マネージャー
     public EffectPresenter Effect { get { return effectManagerObj; } }  // 演出管理マネージャー
     public OptionManager Option { get { return optionManagerObj; } }    // オプションマネージャー

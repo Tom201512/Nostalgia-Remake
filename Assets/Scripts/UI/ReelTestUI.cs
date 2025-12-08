@@ -5,7 +5,7 @@ using static ReelSpinGame_Reels.ReelManagerModel;
 public class ReelTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
-    [SerializeField] private ReelManager reel;
+    [SerializeField] private ReelRotateManager reel;
 
     private void Awake()
     {
