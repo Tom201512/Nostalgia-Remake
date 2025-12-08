@@ -53,7 +53,6 @@ public class ReelManager : MonoBehaviour
 
         // リール情報を渡す
         reelEffectManager.SetReels(reelObjects);
-        slotDataScreen.SendReelObjectData(reelObjects);
     }
 
     private void Start()

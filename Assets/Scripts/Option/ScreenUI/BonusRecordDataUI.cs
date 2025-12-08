@@ -1,5 +1,7 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
@@ -13,13 +15,16 @@ namespace ReelSpinGame_Option.MenuContent
         // const
 
         // var
-        [SerializeField] private BonusLogDisplayList bonusLogDisplayList; // ボーナス履歴リスト
+        [SerializeField] BonusLogDisplayList bonusLogDisplayList; // ボーナス履歴リスト
+        [SerializeField] ReelDisplayUI reelDisplayUI; // 当選時出目表示機能
+        [SerializeField] TextMeshProUGUI noDataText; // データがないときに表示するテキスト
 
         public List<BonusDisplayData> BonusDisplayDatas { get; private set; } // ボーナス履歴のデータ
 
         void Awake()
         {
             BonusDisplayDatas = new List<BonusDisplayData>();
+            reelDisplayUI.gameObject.SetActive(false);
         }
 
         void Start()
@@ -37,9 +42,18 @@ namespace ReelSpinGame_Option.MenuContent
         public void GenerateBonusResult(List<BonusHitData> bonusHitDatas)
         {
             int index = 0; // 配列要素番号
-            foreach(BonusHitData bonusData in bonusHitDatas)
+            if(bonusHitDatas.Count == 0)
             {
-                if(bonusData.BonusStartGame == 0)
+                noDataText.gameObject.SetActive(true);
+            }
+            else
+            {
+                noDataText.gameObject.SetActive(false);
+            }
+
+            foreach (BonusHitData bonusData in bonusHitDatas)
+            {
+                if (bonusData.BonusStartGame == 0)
                 {
                     break;
                 }
@@ -49,6 +63,9 @@ namespace ReelSpinGame_Option.MenuContent
 
                 index += 1;
             }
+
+            // ボタンが押されたときに成立時出目を表示
+            bonusLogDisplayList.OnBonusLogSelectedEvent += DisplayHitReelPattern;
         }
 
         // 画面を閉じる
@@ -56,6 +73,8 @@ namespace ReelSpinGame_Option.MenuContent
         {
             BonusDisplayDatas.Clear();
             bonusLogDisplayList.InitializeData();
+            bonusLogDisplayList.OnBonusLogSelectedEvent -= DisplayHitReelPattern;
+            reelDisplayUI.gameObject.SetActive(false);
         }
 
         // func(private)
@@ -90,6 +109,32 @@ namespace ReelSpinGame_Option.MenuContent
                 bonusDisplayData.BonusReelDelay[(int)ReelID.ReelRight]);
 
             BonusDisplayDatas.Add(bonusDisplayData);
+        }
+
+        // ボーナス履歴データが押されたら当選時の出目を表示
+        void DisplayHitReelPattern(int indexNum)
+        {
+            reelDisplayUI.gameObject.SetActive(true);
+
+            reelDisplayUI.DisplayReels(
+                BonusDisplayDatas[indexNum].BonusReelPos[(int)ReelID.ReelLeft],
+                BonusDisplayDatas[indexNum].BonusReelPos[(int)ReelID.ReelMiddle],
+                BonusDisplayDatas[indexNum].BonusReelPos[(int)ReelID.ReelRight]);
+
+            reelDisplayUI.DisplayPos(
+                BonusDisplayDatas[indexNum].BonusReelPos[(int)ReelID.ReelLeft],
+                BonusDisplayDatas[indexNum].BonusReelPos[(int)ReelID.ReelMiddle],
+                BonusDisplayDatas[indexNum].BonusReelPos[(int)ReelID.ReelRight]);
+
+            reelDisplayUI.DisplayOrder(
+                BonusDisplayDatas[indexNum].BonusReelPushOrder[(int)ReelID.ReelLeft],
+                BonusDisplayDatas[indexNum].BonusReelPushOrder[(int)ReelID.ReelMiddle],
+                BonusDisplayDatas[indexNum].BonusReelPushOrder[(int)ReelID.ReelRight]);
+
+            reelDisplayUI.DisplayDelay(
+                BonusDisplayDatas[indexNum].BonusReelDelay[(int)ReelID.ReelLeft],
+                BonusDisplayDatas[indexNum].BonusReelDelay[(int)ReelID.ReelMiddle],
+                BonusDisplayDatas[indexNum].BonusReelDelay[(int)ReelID.ReelRight]);
         }
     }
 }

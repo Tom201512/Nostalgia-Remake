@@ -107,12 +107,6 @@ namespace ReelSpinGame_Option.MenuContent
             PlayerData = player;
         }
 
-        // リールオブジェクトのデータを渡す
-        public void SendReelObjectData(List<ReelObjectPresenter> reelObjects)
-        {
-            bonusDataUI.SetReelObject(reelObjects);
-        }
-
         // 次ボタンを押したときの挙動
         private void OnNextPushed()
         {

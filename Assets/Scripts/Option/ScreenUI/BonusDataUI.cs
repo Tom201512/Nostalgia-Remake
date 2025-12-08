@@ -18,12 +18,6 @@ namespace ReelSpinGame_Option.MenuContent
         // リールディスプレイ(リーチ目用)
         [SerializeField] ReelDisplayUI reelDisplay;
 
-        // リールオブジェクトをセットする
-        public void SetReelObject(List<ReelObjectPresenter> reelObjects)
-        {
-            reelDisplay.SetReels(reelObjects);
-        }
-
         public void UpdateText(PlayerDatabase player)
         {
             float probability = 0.0f;

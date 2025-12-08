@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 namespace ReelSpinGame_UI.Bonus
 {
     // ボーナス履歴表示オブジェクト
-    public class BonusLogDisplay : MonoBehaviour
+    public class BonusLogDisplay : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
     {
         // const
 
@@ -21,7 +23,9 @@ namespace ReelSpinGame_UI.Bonus
         [SerializeField] BonusTypeDisplay bonusTypeDisplay; // ボーナスタイプ表示画像
         [SerializeField] TextMeshProUGUI payoutText; // 払い出し枚数テキスト
 
-        public bool HasSelect {  get; private set; } // 選択されているか
+        public int BonusIndexNumber { get; private set; } // ボーナスの配列要素番号
+        public bool HasSelect { get; private set; } // 選択されているか
+        public bool CanInteractable { get; private set; } // ボタンが押せる状態か
 
         // 登録データ
         public struct BonusDisplayData
@@ -34,9 +38,56 @@ namespace ReelSpinGame_UI.Bonus
             public List<int> BonusReelDelay; // ボーナス成立時のスベリコマ数
         }
 
+        // ボタンが押された時のイベント
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="indexNum">配列番号</param>
+        public delegate void OnBonusLogPressed(int indexNum);
+        public event OnBonusLogPressed OnBonusLogPressedEvent;
+
         void Awake()
         {
+            BonusIndexNumber = 0;
             ToggleSelection(false);
+            CanInteractable = true;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (CanInteractable)
+            {
+                Debug.Log("BonusLog Mouse entered");
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (CanInteractable)
+            {
+                Debug.Log("BonusLog Mouse leaved");
+            }
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (CanInteractable)
+            {
+                Debug.Log("BonusLog Pointer:" + eventData.button);
+                if (eventData.button == 0)
+                {
+                    OnBonusLogPressedEvent?.Invoke(BonusIndexNumber);
+                    Debug.Log("BonusLog Pushed:" + BonusIndexNumber);
+                }
+            }
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (CanInteractable)
+            {
+                Debug.Log("BonusLog Mouse up");
+            }
         }
 
         void Start()
@@ -60,6 +111,8 @@ namespace ReelSpinGame_UI.Bonus
         // データ登録
         public void SetData(BonusDisplayData bonusDisplayData)
         {
+            // 配列要素番号
+            BonusIndexNumber = bonusDisplayData.BonusLogNumber - 1;
             // 履歴番号
             numberText.text = "No." + bonusDisplayData.BonusLogNumber;
 
@@ -83,6 +136,12 @@ namespace ReelSpinGame_UI.Bonus
         }
 
         // func (private)
+        // ボーナス履歴が押された時の処理
+        void OnButtonPressedBehavior()
+        {
+            Debug.Log("LogPressed");
+            OnBonusLogPressedEvent?.Invoke(BonusIndexNumber);
+        }
     }
 }
 
