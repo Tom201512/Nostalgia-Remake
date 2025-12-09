@@ -14,10 +14,8 @@ namespace ReelSpinGame_Lots.Flag
         // フラグデータベース
         [SerializeField] FlagDatabase flagDatabase;
 
-        // デバッグ用(強制役)
-        [SerializeField] private bool useInstant;
-        [SerializeField] private bool useInfinityInstant;
-        [SerializeField] private FlagId instantFlagID;
+        public bool UseForceFlag { get; private set; } // 強制役を使用するか
+        public FlagID ForceFlagID { get; private set; } // 使用する強制役フラグ
 
         // func
         private void Awake()
@@ -27,7 +25,7 @@ namespace ReelSpinGame_Lots.Flag
 
         // 各数値を得る
         // 現在のフラグ
-        public FlagId GetCurrentFlag() => data.CurrentFlag;
+        public FlagID GetCurrentFlag() => data.CurrentFlag;
         // 現在のテーブル
         public FlagLotMode GetCurrentTable() => data.CurrentTable;
         // カウンタ
@@ -39,30 +37,32 @@ namespace ReelSpinGame_Lots.Flag
         // テーブル変更
         public void ChangeTable(FlagLotMode mode) => data.CurrentTable = mode;
 
+        // 強制フラグの設定
+        public void SetForceFlag(FlagID forceFlagID)
+        {
+            ForceFlagID = forceFlagID;
+            UseForceFlag = true;
+        }
+
         // フラグ抽選をする
         public void StartFlagLots(int setting, int betAmount, BonusTypeID holdingBonusID)
         {
-            if (useInstant)
+            if (UseForceFlag)
             {
                 // 強制役を発動させる。その後は強制役を切る
-                data.CurrentFlag = instantFlagID;
-
-                // デバッグ用
-                if(!useInfinityInstant)
-                {
-                    useInstant = false;
-                }
+                data.CurrentFlag = ForceFlagID;
+                UseForceFlag = false;
             }
             else
             {
-                data.GetFlagLots(setting, betAmount, useInstant, flagDatabase);
+                data.GetFlagLots(setting, betAmount, flagDatabase);
             }
 
             // 何らかのボーナスが成立中にBIGまたはREGフラグが引かれた場合ははずれに置き換える
             if (holdingBonusID != BonusTypeID.BonusNone &&
-               (data.CurrentFlag == FlagId.FlagBig || data.CurrentFlag == FlagId.FlagReg))
+               (data.CurrentFlag == FlagID.FlagBig || data.CurrentFlag == FlagID.FlagReg))
             {
-                data.CurrentFlag = FlagId.FlagNone;
+                data.CurrentFlag = FlagID.FlagNone;
             }
         }
 

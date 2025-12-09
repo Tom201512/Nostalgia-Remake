@@ -108,7 +108,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 次ボタンを押したときの挙動
-        private void OnNextPushed()
+        private void OnNextPushed(int signalID)
         {
             Debug.Log("Next pressed");
             if (currentPage + 1 == maxPage)
@@ -124,7 +124,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 前ボタンを押したときの挙動
-        private void OnPreviousPushed()
+        private void OnPreviousPushed(int signalID)
         {
             Debug.Log("Previous pressed");
             if (currentPage - 1 < 0)
@@ -140,7 +140,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 閉じるボタンを押したときの挙動
-        private void OnClosedPressed() => OnClosedScreenEvent?.Invoke();
+        private void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
 
         // 画像の反映処理
         private void UpdateScreen()

@@ -2,6 +2,7 @@
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using UnityEngine;
+using System;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -25,6 +26,12 @@ namespace ReelSpinGame_State.LotsState
         {
             //Debug.Log("Start Lots.FlagBehaviour.State");
 
+            // 強制役フラグの指定があれば強制役を設定する
+            if(gM.Option.GetForceFlagSelectID() != -1)
+            {
+                FlagID selectedFlagID = (FlagID)Enum.ToObject(typeof(FlagID), gM.Option.GetForceFlagSelectID());
+                gM.Lots.SetForceFlag(selectedFlagID);
+            }
             gM.Lots.StartFlagLots(gM.Setting, gM.Medal.GetLastBetAmount(), gM.Bonus.GetHoldingBonusID());
 
             // ボーナス中ならここでゲーム数を減らす
@@ -43,11 +50,11 @@ namespace ReelSpinGame_State.LotsState
 
             
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
+            if (gM.Lots.GetCurrentFlag() == FlagID.FlagBig)
             {
                 gM.Player.AddBonusResult(BonusTypeID.BonusBIG);
             }
-            else if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
+            else if (gM.Lots.GetCurrentFlag() == FlagID.FlagReg)
             {
                 gM.Player.AddBonusResult(BonusTypeID.BonusREG);
             }

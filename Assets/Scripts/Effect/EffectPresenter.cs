@@ -118,7 +118,7 @@ namespace ReelSpinGame_Effect
         public void StartWaitEffect() => soundManager.PlaySE(soundManager.SoundDB.SE.Wait);
 
         // スタート時の演出
-        public void StartLeverOnEffect(FlagId flag, BonusTypeID holding, BonusStatus bonusStatus)
+        public void StartLeverOnEffect(FlagID flag, BonusTypeID holding, BonusStatus bonusStatus)
         {
             if (hasSPStartSound)
             {
@@ -138,20 +138,20 @@ namespace ReelSpinGame_Effect
                         // BIG, REG
                         switch (flag)
                         {
-                            case FlagId.FlagBig:
-                            case FlagId.FlagReg:
+                            case FlagID.FlagBig:
+                            case FlagID.FlagReg:
                                 LotStartSound(4);
                                 break;
 
-                            case FlagId.FlagMelon:
+                            case FlagID.FlagMelon:
                                 LotStartSound(8);
                                 break;
 
-                            case FlagId.FlagBell:
+                            case FlagID.FlagBell:
                                 LotStartSound(32);
                                 break;
 
-                            case FlagId.FlagNone:
+                            case FlagID.FlagNone:
                                 LotStartSound(128);
                                 break;
 
@@ -200,7 +200,7 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し前演出開始
-        public void StartBeforePayoutEffect(FlagId flagID, BonusTypeID holdingBonusID, BonusStatus bonusStatus, bool hasBita)
+        public void StartBeforePayoutEffect(FlagID flagID, BonusTypeID holdingBonusID, BonusStatus bonusStatus, bool hasBita)
         {
             // 全ての演出をリセット
             HasBeforePayoutEffect = false;
@@ -211,9 +211,9 @@ namespace ReelSpinGame_Effect
             switch (flagID)
             {
                 // BIG時、REG時, またはボーナス当選後のはずれのとき1/6でVフラッシュ発生
-                case FlagId.FlagBig:
-                case FlagId.FlagReg:
-                case FlagId.FlagNone:
+                case FlagID.FlagBig:
+                case FlagID.FlagReg:
+                case FlagID.FlagNone:
                     if (holdingBonusID != BonusTypeID.BonusNone && OriginalRandomLot.LotRandomByNum(6))
                     {
                         flashManager.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
@@ -223,23 +223,23 @@ namespace ReelSpinGame_Effect
 
 
                 // チェリー2枚の場合
-                case FlagId.FlagCherry2:
+                case FlagID.FlagCherry2:
                     break;
 
                 // チェリー4枚の場合
-                case FlagId.FlagCherry4:
+                case FlagID.FlagCherry4:
                     break;
 
                 // ベルの場合:
-                case FlagId.FlagBell:
+                case FlagID.FlagBell:
                     break;
 
                 // スイカの場合
-                case FlagId.FlagMelon:
+                case FlagID.FlagMelon:
                     break;
 
                 // リプレイの場合
-                case FlagId.FlagReplayJacIn:
+                case FlagID.FlagReplayJacIn:
                     // 小役ゲーム中にJACINが成立しビタハズシをした場合
                     if (bonusStatus == BonusStatus.BonusBIGGames && hasBita)
                     {
@@ -260,7 +260,7 @@ namespace ReelSpinGame_Effect
         }
 
         // 払い出し演出開始
-        public void StartPayoutEffect(FlagId flagID, BonusStatus bonusStatus, PayoutResultBuffer payoutResultData, LastStoppedReelData lastStoppedReelData)
+        public void StartPayoutEffect(FlagID flagID, BonusStatus bonusStatus, PayoutResultBuffer payoutResultData, LastStoppedReelData lastStoppedReelData)
         {
             // 払い出しがあれば再生
             if (payoutResultData.Payout > 0)
@@ -273,7 +273,7 @@ namespace ReelSpinGame_Effect
                 if (payoutResultData.Payout >= 15)
                 {
                     // JAC役なら変更
-                    if(flagID == FlagId.FlagJac)
+                    if(flagID == FlagID.FlagJac)
                     {
                         TurnOnAllReels(true);
                         soundManager.PlaySE(soundManager.SoundDB.SE.JacPayout);

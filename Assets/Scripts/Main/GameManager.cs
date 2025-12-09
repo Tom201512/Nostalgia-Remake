@@ -171,6 +171,7 @@ public class GameManager : MonoBehaviour
         waitUI.SetWaitManager(Wait);
         autoUI.SetAutoFunction(Auto);
 
+        // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
 
         // デバッグをすべて非表示
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
         // オプション画面起動(メニューボタンを押しても作動)
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleOption))
         {
-            Option.ToggleOptionScreen();
+            Option.ToggleOptionScreen(-1);
         }
 
         // オート押し順変更

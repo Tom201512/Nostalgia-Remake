@@ -36,6 +36,9 @@ namespace ReelSpinGame_State.LotsState
             BonusEffectUpdate();
             // UI反映
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
+
+            // オプション設定反映
+            gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());
         }
 
         public void StateUpdate()

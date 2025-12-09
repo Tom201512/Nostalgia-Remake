@@ -28,17 +28,14 @@ public class ReelRotateManager : MonoBehaviour
     private PayoutChecker payoutChecker;
     // リールオブジェクトプレゼンター
     [SerializeField] private List<ReelObjectPresenter> reelObjects;
-    // 強制ランダム数値
-    [SerializeField] private bool instantRandomMode;
-    // 強制ランダム数値を常に有効
-    [SerializeField] private bool infinityRandomMode;
-    // 強制時のランダム数値
-    [Range(1,6),SerializeField] private int instantRandomValue;
-
     // リール演出用マネージャー
     [SerializeField] private ReelEffectManager reelEffectManager;
     // スロット情報UI
     [SerializeField] private SlotDataScreen slotDataScreen;
+
+
+    public bool HasForceRandomValue { get; private set; } // 強制ランダム数値を使用するか
+    public int ForceRandomValue { get; private set; } // 強制フラグ発動時のランダム数値
 
     // いずれかのリールが停止したかのイベント
     public delegate void ReelStoppedEvent();
@@ -153,6 +150,13 @@ public class ReelRotateManager : MonoBehaviour
         }
     }
 
+    // 強制ランダム数値の設定
+    public void SetForceRandomValue(int value)
+    {
+        ForceRandomValue = value;
+        HasForceRandomValue = true;
+    }
+
     // リール始動
     public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto)
     {
@@ -193,7 +197,7 @@ public class ReelRotateManager : MonoBehaviour
     }
 
     // 各リール停止
-    public void StopSelectedReel(ReelID reelID, int bet, FlagId flagID, BonusTypeID bonusID)
+    public void StopSelectedReel(ReelID reelID, int bet, FlagID flagID, BonusTypeID bonusID)
     {
         // 全リール速度が最高速度になっていれば
         if(reelManagerModel.CanStopReels)
@@ -227,7 +231,7 @@ public class ReelRotateManager : MonoBehaviour
     }
 
     // 指定したリールの高速停止(位置指定が必要)
-    public void StopSelectedReelFast(ReelID reelID, int bet, FlagId flagID, BonusTypeID bonusID, int pushedPos)
+    public void StopSelectedReelFast(ReelID reelID, int bet, FlagID flagID, BonusTypeID bonusID, int pushedPos)
     {
         // 全リール速度が最高速度になっていれば
         if (reelManagerModel.CanStopReels)
@@ -353,14 +357,10 @@ public class ReelRotateManager : MonoBehaviour
     private void SetRandomValue()
     {
         // 強制的に変更する場合は指定した数値に
-        if (instantRandomMode)
+        if (HasForceRandomValue)
         {
-            reelManagerModel.RandomValue = instantRandomValue;
-
-            if(!infinityRandomMode)
-            {
-                instantRandomMode = false;
-            }
+            reelManagerModel.RandomValue = ForceRandomValue;
+            HasForceRandomValue = false;
         }
         else
         {

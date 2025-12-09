@@ -29,7 +29,7 @@ namespace ReelSpinGame_State.PayoutState
         {
             // 成立時の出目を記録する(ただし表示するのは入賞した後)
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone &&
-                (gM.Lots.GetCurrentFlag() == FlagId.FlagBig || gM.Lots.GetCurrentFlag() == FlagId.FlagReg))
+                (gM.Lots.GetCurrentFlag() == FlagID.FlagBig || gM.Lots.GetCurrentFlag() == FlagID.FlagReg))
             {
                 gM.Player.SetBonusHitPos(gM.Reel.GetLastStoppedReelData().LastPos);
                 gM.Player.SetBonusPushOrder(gM.Reel.GetLastStoppedReelData().LastPushOrder);
@@ -96,13 +96,16 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // JACハズシの記録
-            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagId.FlagReplayJacIn)
+            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
             {
                 gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
             }
 
             // セーブ処理
             SaveData();
+
+            // オプション設定の反映
+            gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());
 
             // 演出処理へ
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.EffectState);
@@ -269,12 +272,12 @@ namespace ReelSpinGame_State.PayoutState
             if (gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
                 // BIG
-                if (gM.Lots.GetCurrentFlag() == FlagId.FlagBig)
+                if (gM.Lots.GetCurrentFlag() == FlagID.FlagBig)
                 {
                     gM.Bonus.SetBonusStock(BonusTypeID.BonusBIG);
                 }
                 // REG
-                if (gM.Lots.GetCurrentFlag() == FlagId.FlagReg)
+                if (gM.Lots.GetCurrentFlag() == FlagID.FlagReg)
                 {
                     gM.Bonus.SetBonusStock(BonusTypeID.BonusREG);
                 }

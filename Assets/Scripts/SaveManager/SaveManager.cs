@@ -20,6 +20,7 @@ namespace ReelSpinGame_System
         // var
         // 現在のセーブデータ
         public SaveDatabase CurrentSave { get; private set; }
+        // オプションのセーブデータ
 
         // 暗号化機能
         private SaveEncryptor saveEncryptor;

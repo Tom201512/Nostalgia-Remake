@@ -19,7 +19,7 @@ namespace ReelSpinGame_Effect.Data
 
         }
 
-        public void StartLeverOnEffect(FlagId flag, BonusTypeID holding, BonusStatus bonusStatus)
+        public void StartLeverOnEffect(FlagID flag, BonusTypeID holding, BonusStatus bonusStatus)
         {
             // í èÌéûÇÃÇ›ì¡éÍå¯â âπçƒê∂
             if (bonusStatus == BonusStatus.BonusNone)
@@ -37,20 +37,20 @@ namespace ReelSpinGame_Effect.Data
                     // BIG, REG
                     switch (flag)
                     {
-                        case FlagId.FlagBig:
-                        case FlagId.FlagReg:
+                        case FlagID.FlagBig:
+                        case FlagID.FlagReg:
                             LotStartSound(4);
                             break;
 
-                        case FlagId.FlagMelon:
+                        case FlagID.FlagMelon:
                             LotStartSound(8);
                             break;
 
-                        case FlagId.FlagBell:
+                        case FlagID.FlagBell:
                             LotStartSound(32);
                             break;
 
-                        case FlagId.FlagNone:
+                        case FlagID.FlagNone:
                             LotStartSound(128);
                             break;
 

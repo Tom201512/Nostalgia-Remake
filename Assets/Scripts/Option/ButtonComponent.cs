@@ -14,9 +14,15 @@ namespace ReelSpinGame_Option.Button
         [SerializeField] private Image iconImage;
         // テキスト
         [SerializeField] private TextMeshProUGUI text;
+        // 送る信号番号
+        [SerializeField] int signalID;
 
         // ボタンを押したときのイベント
-        public delegate void ButtonPushed();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="signalID">信号番号</param>
+        public delegate void ButtonPushed(int signalID);
         public event ButtonPushed ButtonPushedEvent;
 
         // ボタンが押せる状態か
@@ -53,7 +59,7 @@ namespace ReelSpinGame_Option.Button
                 Debug.Log("Pointer:" + eventData.button);
                 if (eventData.button == 0)
                 {
-                    ButtonPushedEvent?.Invoke();
+                    ButtonPushedEvent?.Invoke(signalID);
                     Debug.Log(name + " Pushed");
                     ChangeButtonContentColor(new Color(0.5f, 0.5f, 0.5f, 1f));
                 }

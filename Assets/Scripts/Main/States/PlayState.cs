@@ -32,6 +32,14 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateStart()
         {
+            // 強制役でランダム数値が使われていれば使う
+            if(gM.Option.GetForceFlagSelectID() != -1 && gM.Option.GetForceFlagRandomID() != 0)
+            {
+                gM.Reel.SetForceRandomValue(gM.Option.GetForceFlagRandomID());
+            }
+
+            // 強制フラグ設定のリセット
+            gM.Option.ResetForceFlagSetting();
             // リール始動(高速オート時は1.5倍のリールスピードになる)
             gM.Reel.StartReels(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
             // ボーナス中のランプ処理

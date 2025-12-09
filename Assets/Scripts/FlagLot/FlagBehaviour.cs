@@ -16,41 +16,41 @@ namespace ReelSpinGame_Lots
         const int SeekNum = 6;
 
         // フラグID
-        public enum FlagId { FlagNone, FlagBig, FlagReg, FlagCherry2, FlagCherry4, FlagMelon, FlagBell, FlagReplayJacIn, FlagJac }
+        public enum FlagID { FlagNone, FlagBig, FlagReg, FlagCherry2, FlagCherry4, FlagMelon, FlagBell, FlagReplayJacIn, FlagJac }
         // フラグテーブル
         public enum FlagLotMode { Normal, BigBonus, JacGame };
 
         // var
         // 現在フラグ(プロパティ)
-        public FlagId CurrentFlag { get; set; }
+        public FlagID CurrentFlag { get; set; }
         // 参照するテーブルID
         public FlagLotMode CurrentTable { get; set; }
         // フラグカウンタ
         public FlagCounter.FlagCounter FlagCounter { get; private set; }
         // 強制役の設定
         public bool UseInstant { get; private set; }
-        public FlagId InstantFlagID { get; private set; }
+        public FlagID InstantFlagID { get; private set; }
 
         // 抽選順番(最終的に当選したフラグを参照するのに使う)
-        private FlagId[] lotResultNormal = new FlagId[]
+        private FlagID[] lotResultNormal = new FlagID[]
         {
-            FlagId.FlagBig,
-            FlagId.FlagReg,
-            FlagId.FlagCherry2,
-            FlagId.FlagCherry4,
-            FlagId.FlagMelon,
-            FlagId.FlagBell,
-            FlagId.FlagReplayJacIn
+            FlagID.FlagBig,
+            FlagID.FlagReg,
+            FlagID.FlagCherry2,
+            FlagID.FlagCherry4,
+            FlagID.FlagMelon,
+            FlagID.FlagBell,
+            FlagID.FlagReplayJacIn
         };
 
         // BIG CHANCE中
-        private FlagId[] lotResultBig = new FlagId[]
+        private FlagID[] lotResultBig = new FlagID[]
         {
-            FlagId.FlagCherry2,
-            FlagId.FlagCherry4,
-            FlagId.FlagMelon,
-            FlagId.FlagReplayJacIn,
-            FlagId.FlagBell
+            FlagID.FlagCherry2,
+            FlagID.FlagCherry4,
+            FlagID.FlagMelon,
+            FlagID.FlagReplayJacIn,
+            FlagID.FlagBell
         };
 
         // コンストラクタ
@@ -62,7 +62,7 @@ namespace ReelSpinGame_Lots
         // func
 
         // フラグ抽選の開始
-        public void GetFlagLots(int setting, int betAmount, bool useInstant, FlagDatabase flagDatabase)
+        public void GetFlagLots(int setting, int betAmount, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
@@ -97,7 +97,7 @@ namespace ReelSpinGame_Lots
         }
 
         // テーブル、設定値とベット枚数からフラグ判定
-        private FlagId CheckResultByTable(int setting, int betAmount, FlagDataSets flagTable, FlagId[] lotResult)
+        private FlagID CheckResultByTable(int setting, int betAmount, FlagDataSets flagTable, FlagID[] lotResult)
         {
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
             int flagCheckNum = 0;
@@ -123,11 +123,11 @@ namespace ReelSpinGame_Lots
             }
 
             // 何も当たらなければ"はずれ"を返す
-            return FlagId.FlagNone;
+            return FlagID.FlagNone;
         }
 
         // BONUS GAME中の抽選
-        private FlagId BonusGameLots(float nonePoss)
+        private FlagID BonusGameLots(float nonePoss)
         {
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選。端数切捨て)
             int flagCheckNum = 0;
@@ -137,11 +137,11 @@ namespace ReelSpinGame_Lots
             flagCheckNum = Mathf.FloorToInt(MaxFlagLots / nonePoss);
             if (flag < flagCheckNum)
             {
-                return FlagId.FlagNone;
+                return FlagID.FlagNone;
             }
 
             // 何も当たらなければ"JAC役"を返す
-            return FlagId.FlagJac;
+            return FlagID.FlagJac;
         }
 
         // フラグ抽選

@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 0}
   text: {fileID: 0}
+  signalID: -1
 --- !u!1 &8246817304617718255
 GameObject:
   m_ObjectHideFlags: 0

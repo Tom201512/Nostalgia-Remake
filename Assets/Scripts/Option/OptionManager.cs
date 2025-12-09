@@ -1,6 +1,9 @@
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Option.MenuBar;
+using ReelSpinGame_Option.MenuContent;
 using UnityEngine;
+
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Option
 {
@@ -15,6 +18,9 @@ namespace ReelSpinGame_Option
         [SerializeField] private ButtonComponent openButton;
         // メニューバーのUI
         [SerializeField] private MenuManager menuBarUI;
+
+        // 各種設定画面のデータ
+        [SerializeField] ForceFlagScreen forceFlagScreen; // 強制フラグ
 
         // オプション画面を開いているか(UIボタンの表示に使用する)
         public bool hasOptionScreen { get; private set; }
@@ -48,7 +54,7 @@ namespace ReelSpinGame_Option
 
         // func
         // オプション画面を開く
-        public void ToggleOptionScreen()
+        public void ToggleOptionScreen(int signalID)
         {
             if(openButton.CanInteractable)
             {
@@ -66,6 +72,21 @@ namespace ReelSpinGame_Option
             menuBarUI.SetInteractiveAllButton(!value);
             Debug.Log("Lock:" + value);
         }
+
+        // 各画面の設定情報取得
+        public int GetForceFlagSelectID() => forceFlagScreen.CurrentSelectFlagID; // 選択したフラグ値
+        public int GetForceFlagRandomID() => forceFlagScreen.CurrentSelectRandomID; // 選択したランダム値
+
+        // 各画面の設定情報変更
+
+        // 強制フラグのボタン有効化設定を変更
+        public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID)
+        {
+            forceFlagScreen.SetBonusStatus(currentBonusStatus, holdingBonusID);
+        }
+
+        // 強制フラグの設定リセット
+        public void ResetForceFlagSetting() => forceFlagScreen.ResetFlagSetting();
 
         // オプションモードに入れる
         void EnterOptionMode()
