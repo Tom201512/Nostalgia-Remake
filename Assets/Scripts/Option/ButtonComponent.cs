@@ -75,6 +75,7 @@ namespace ReelSpinGame_Option.Button
             }
         }
 
+        // 操作可能状態を変更する
         public void ToggleInteractive(bool value)
         {
             CanInteractable = value;
@@ -89,6 +90,7 @@ namespace ReelSpinGame_Option.Button
             }
         }
 
+        // ボタンの色を変える
         private void ChangeButtonContentColor(Color color)
         {
             if (iconImage != null)
