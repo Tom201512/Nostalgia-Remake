@@ -14,20 +14,15 @@ namespace ReelSpinGame_Option
         // const
 
         // var
-        // メニュー開閉ボタン
-        [SerializeField] private ButtonComponent openButton;
-        // メニューバーのUI
-        [SerializeField] private MenuManager menuBarUI;
+        [SerializeField] private ButtonComponent openButton; // メニュー開閉ボタン
+        [SerializeField] private MenuManager menuBarUI; // メニューバーのUI
 
         // 各種設定画面のデータ
         [SerializeField] ForceFlagScreen forceFlagScreen; // 強制フラグ
 
-        // オプション画面を開いているか(UIボタンの表示に使用する)
-        public bool hasOptionScreen { get; private set; }
-        // 設定変更中か(ゲームの操作ができなくなる)
-        public bool hasOptionMode { get; private set; }
-        // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
-        public bool lockOptionMode { get; private set; }
+        public bool hasOptionScreen { get; private set; } // オプション画面を開いているか(UIボタンの表示に使用する)
+        public bool hasOptionMode { get; private set; } // 設定変更中か(ゲームの操作ができなくなる)
+        public bool lockOptionMode { get; private set; } // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
 
         private void Awake()
         {

@@ -9,10 +9,17 @@ using static ReelSpinGame_Reels.ReelManagerModel.ReelID;
 
 namespace ReelSpinGame_System
 {
+
+    // セーブマネージャーのインターフェース
+    public interface ISaveManage
+    {
+        public List<int> GenerateDataBuffer(); // データバッファを作成
+        public bool LoadDataBuffer(Stream baseStream, BinaryReader br); //データバッファの読み込み
+    }
+
+    // セーブ機能
     public class SaveManager
     {
-        // セーブ機能
-
         // const
         // アドレス番地
         private enum AddressID { Setting, Player, Medal, FlagC, Reel, Bonus}
@@ -21,15 +28,20 @@ namespace ReelSpinGame_System
         // 現在のセーブデータ
         public SaveDatabase CurrentSave { get; private set; }
         // オプションのセーブデータ
+        public OptionSave OptionSave { get; private set; }
 
-        // 暗号化機能
-        private SaveEncryptor saveEncryptor;
+        PlayerSaveManager playerSaveManager; // プレイヤーのセーブマネージャー
+        OptionSaveManager optionSaveManager; // オプションのセーブマネージャー
+        SaveEncryptor saveEncryptor; // 暗号化機能
 
         // コンストラクタ
         public SaveManager()
         {
             CurrentSave = new SaveDatabase();
+            OptionSave = new OptionSave();
             saveEncryptor = new SaveEncryptor();
+            playerSaveManager = new PlayerSaveManager();
+            optionSaveManager = new OptionSaveManager();
         }
 
         // func
@@ -55,7 +67,6 @@ namespace ReelSpinGame_System
                 return false;
             }
 
-            //Debug.Log("Directory is created");
             return true;
         }
 
@@ -114,13 +125,8 @@ namespace ReelSpinGame_System
                     }
 
                     // ハッシュ値書き込み
-                    //Debug.Log("ListLength:" +  dataBuffer.Count);
-
                     // 文字列にしてハッシュコードにする
                     int hash = BitConverter.ToString(GetBytesFromList(dataBuffer)).GetHashCode();
-                    //Debug.Log("Hash:" + hash);
-                    //Debug.Log("HashBytes:" + BitConverter.ToString(BitConverter.GetBytes(hash)));
-
                     dataBuffer.Add(hash);
 
                     // すべての数値を書き込んだらバイト配列にし、暗号化して保存
@@ -166,7 +172,6 @@ namespace ReelSpinGame_System
                         // 復号
                         data = stream.ReadToEnd();
                         data = saveEncryptor.DecryptData(data);
-                        //Debug.Log("File EOF");
                     }
 
                     // 文字列をバイト配列に戻し復元開始。ハッシュ値参照も行う
@@ -178,7 +183,6 @@ namespace ReelSpinGame_System
                             // ハッシュ値の参照
                             baseStream.Seek(-4, SeekOrigin.End);
                             int previousHash = br.ReadInt32();
-
 
                             // ハッシュ値以外を読み込みリストファイルを作る
                             List<int> intData = new List<int>();
@@ -306,7 +310,7 @@ namespace ReelSpinGame_System
         }
 
         // int型ListからByte配列を得る
-        private byte[] GetBytesFromList(List<int> lists)
+        public static byte[] GetBytesFromList(List<int> lists)
         {
             List<byte> bytes = new List<byte>();
 
@@ -324,7 +328,7 @@ namespace ReelSpinGame_System
         }
 
         // 文字列からバイト配列を作成
-        private byte[] GetBytesFromString(string byteString)
+        public static byte[] GetBytesFromString(string byteString)
         {
             List<byte> bytes = new List<byte>();
             string[] buffer = byteString.Split("-");

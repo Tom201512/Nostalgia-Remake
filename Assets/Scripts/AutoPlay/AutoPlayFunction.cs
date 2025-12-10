@@ -24,6 +24,27 @@ namespace ReelSpinGame_AutoPlay
         // 条件(無制限, BIG成立, REG成立, ボーナス成立, ボーナス終了(どちらか), リーチ目, 指定ゲーム数消費)
         public enum AutoEndConditionID { None, BIG, REG, AnyBonus, EndBonus, RiichiPattern, Games }
 
+        // 一定条件のフラグ
+        [Flags]
+        public enum AutoSpecificConditionID
+        {
+            None = 0,
+            WinningPattern = 1,
+            BIG = 2,
+            REG = 4,
+            EndBonus = 8,
+        }
+
+        // 回数条件のフラグ
+        public enum AutoSpinTimeConditionID
+        {
+            None = 0,
+            Spin1000G,
+            Spin3000G,
+            Spin5000G,
+            Spin10000G,
+        }
+
         // var
         // オートプレイ中か
         public bool HasAuto { get; private set; }

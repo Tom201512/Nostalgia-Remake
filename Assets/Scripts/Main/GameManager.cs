@@ -63,8 +63,8 @@ public class GameManager : MonoBehaviour
     public PlayerUI PlayerUI { get { return playerUI; } }       // プレイヤーUI
 
     public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
-
     public SaveDatabase Save { get { return saveManager.CurrentSave; } }    // セーブデータベース
+    public OptionSave OptionSetting { get { return saveManager.OptionSave; } } // オプションのセーブ
 
     // ステータスパネル
     [SerializeField] StatusPanel statusPanel;
