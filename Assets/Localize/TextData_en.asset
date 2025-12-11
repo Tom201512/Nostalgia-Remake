@@ -58,6 +58,17 @@ MonoBehaviour:
     m_Localized: 'JAC-Avoid:'
     m_Metadata:
       m_Items: []
+  - m_Id: 9057444530282496
+    m_Localized: 'Main data:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057479548526592
+    m_Localized: "Games:\n\tTotal games:\n\tCurrent games:\n\tNormal games:\n\tBIG
+      CHANCE games:\n\tBONUS GAME games:\n\nBonus probability:\n\tBIG CHANCE:\n\tLine
+      up count:\n\tProbability:\n\n\tBONUS GAME:\n\t\tLine up count:\n\t\tProbability:\n\n\tTotal
+      probability:"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

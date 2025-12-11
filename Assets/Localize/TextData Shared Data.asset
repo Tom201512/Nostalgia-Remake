@@ -55,6 +55,14 @@ MonoBehaviour:
     m_Key: HowToPlay10
     m_Metadata:
       m_Items: []
+  - m_Id: 9057444530282496
+    m_Key: SlotMainDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057479548526592
+    m_Key: SlotMainDataInfo1
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

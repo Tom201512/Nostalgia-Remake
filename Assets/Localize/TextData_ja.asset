@@ -58,6 +58,14 @@ MonoBehaviour:
     m_Localized: "JAC\u30CF\u30BA\u30B7:"
     m_Metadata:
       m_Items: []
+  - m_Id: 9057444530282496
+    m_Localized: "\u30E1\u30A4\u30F3\u60C5\u5831:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057479548526592
+    m_Localized: "\u30B2\u30FC\u30E0\u6570:\n\t\u7DCF\u30B2\u30FC\u30E0\u6570:\n\t\u73FE\u5728\u30B2\u30FC\u30E0\u6570:\n\t\u901A\u5E38\u6642\u30B2\u30FC\u30E0\u6570:\n\t\u30D3\u30C3\u30B0\u30C1\u30E3\u30F3\u30B9\u4E2D\u30B2\u30FC\u30E0\u6570:\n\t\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0\u4E2D\u30B2\u30FC\u30E0\u6570:\n\n\u30DC\u30FC\u30CA\u30B9\u78BA\u7387:\n\t\u30D3\u30C3\u30B0\u30C1\u30E3\u30F3\u30B9:\n\t\t\u6210\u7ACB\u56DE\u6570:\n\t\t\u78BA\u7387:\n\n\t\u30DC\u30FC\u30CA\u30B9\u30B2\u30FC\u30E0:\n\t\t\u6210\u7ACB\u56DE\u6570:\n\t\t\u78BA\u7387:\n\n\t\u5408\u7B97:"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

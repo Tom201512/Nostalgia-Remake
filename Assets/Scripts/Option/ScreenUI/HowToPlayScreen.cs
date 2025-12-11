@@ -4,6 +4,8 @@ using ReelSpinGame_Util.OriginalInputs;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.MenuContent
@@ -18,19 +20,18 @@ namespace ReelSpinGame_Option.MenuContent
         public bool CanInteract { get; set; }
 
         // var
-        // 表示する画面
-        [SerializeField] private List<GameObject> screenList;
-        // 次ボタン
-        [SerializeField] private ButtonComponent nextButton;
-        // 前ボタン
-        [SerializeField] private ButtonComponent previousButton;
-        // クローズボタン
-        [SerializeField] private ButtonComponent closeButton;
-        // ページ表記
-        [SerializeField] private TextMeshProUGUI pageCount;
+        [SerializeField] ButtonComponent nextButton;        // 次ボタン
+        [SerializeField] ButtonComponent previousButton;    // 前ボタン
+        [SerializeField] ButtonComponent closeButton;       // クローズボタン
+        [SerializeField] TextMeshProUGUI pageCount;         // ページ表記
 
-        // 表示中のページ番号
-        private int currentPage = 0;
+        // ローカライズ用
+        [SerializeField] List<LocalizedString> titleTextList; // テキストリスト
+        [SerializeField] List<LocalizedSprite> screenList; // 画像リスト
+        [SerializeField] LocalizeStringEvent titleText; // タイトルテキスト
+        [SerializeField] LocalizeSpriteEvent screen;    // 表示する画面
+
+        private int currentPage;    // 表示中のページ番号
 
         // 画面を閉じたときのイベント
         public delegate void OnClosedScreen();
@@ -40,6 +41,7 @@ namespace ReelSpinGame_Option.MenuContent
 
         private void Awake()
         {
+            currentPage = 0;
             // ボタン登録
             closeButton.ButtonPushedEvent += OnClosedPressed;
             nextButton.ButtonPushedEvent += OnNextPushed;
@@ -48,7 +50,7 @@ namespace ReelSpinGame_Option.MenuContent
 
         private void Start()
         {
-            CloseAllScreen();
+            UpdateScreen();
         }
 
         private void OnDestroy()
@@ -125,19 +127,10 @@ namespace ReelSpinGame_Option.MenuContent
         private void UpdateScreen()
         {
             Debug.Log("Page:" + currentPage + 1);
-            CloseAllScreen();
-            screenList[currentPage].SetActive(true);
+            titleText.StringReference = titleTextList[currentPage];
+            screen.AssetReference = screenList[currentPage];
             
             pageCount.text = (currentPage + 1) + "/" + screenList.Count;
-        }
-
-        // 全てのページを非表示にする
-        private void CloseAllScreen()
-        {
-            foreach(GameObject screen in screenList)
-            {
-                screen.SetActive(false);
-            }
         }
     }
 }
