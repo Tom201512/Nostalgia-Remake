@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     public PlayerUI PlayerUI { get { return playerUI; } }       // プレイヤーUI
 
     public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
-    public SaveDatabase Save { get { return saveManager.CurrentSave; } }    // セーブデータベース
+    public SaveDatabase Save { get { return saveManager.PlayerSaveData; } }    // セーブデータベース
     public OptionSave OptionSetting { get { return saveManager.OptionSave; } } // オプションのセーブ
 
     // ステータスパネル
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
         if(deleteSaveFlag)
         {
             Debug.LogWarning("セーブを削除しました。");
-            saveManager.DeleteSaveFile();
+            saveManager.DeletePlayerSave();
         }
 
         if(!dontSaveFlag)
@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
                 loadFailed = true;
             }
             // 読み込みに失敗したら新規にデータを作成する
-            else if (!saveManager.LoadSaveFileWithDecryption())
+            else if (!saveManager.LoadPlayerSave())
             {
                 loadFailed = true;
             }
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("セーブの読み込みに失敗しました。新規ファイルでプレイします。");
             Save.InitializeSave();
-            saveManager.DeleteSaveFile();
+            saveManager.DeletePlayerSave();
             Save.RecordSlotSetting(debugSetting);
         }
 
@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
         if(!dontSaveFlag)
         {
             saveManager.GenerateSaveFolder();
-            saveManager.GenerateSaveFileWithEncrypt();
+            saveManager.GeneratePlayerSave();
         }
     }
 

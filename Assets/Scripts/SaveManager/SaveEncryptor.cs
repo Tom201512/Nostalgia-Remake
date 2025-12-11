@@ -20,7 +20,7 @@ namespace ReelSpinGame_Save.Encryption
         // func
 
         // セーブデータ(byte配列)の暗号化
-        public string EncryptData(string plainText)
+        public string EncryptData(string plainText, string keyPath)
         {
             //Debug.Log("Plain:" + plainText);
 
@@ -36,7 +36,7 @@ namespace ReelSpinGame_Save.Encryption
                 aes.GenerateIV();
                 aes.GenerateKey();
 
-                GenerateKeyFile(aes.Key, aes.IV);
+                GenerateKeyFile(aes.Key, aes.IV, keyPath);
 
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
@@ -62,7 +62,7 @@ namespace ReelSpinGame_Save.Encryption
 
         // 復号
         
-        public string DecryptData(string cipherText)
+        public string DecryptData(string cipherText, string keyPath)
         {
             //Debug.Log("Cipher:" + cipherText);
 
@@ -81,7 +81,7 @@ namespace ReelSpinGame_Save.Encryption
                 aes.Mode = Mode;
                 aes.Padding = Padding;
 
-                LoadKeyFile(aes);
+                LoadKeyFile(aes, keyPath);
 
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
@@ -99,10 +99,8 @@ namespace ReelSpinGame_Save.Encryption
         }
 
         // AESキーの暗号化ファイル作成
-        private void GenerateKeyFile(byte[] key, byte[] IV)
+        private void GenerateKeyFile(byte[] key, byte[] IV, string path)
         {
-            string path = Application.persistentDataPath + "/Nostalgia/save.key";
-
             //Debug.Log(BitConverter.ToString(key));
             //Debug.Log(BitConverter.ToString(IV));
 
@@ -130,10 +128,8 @@ namespace ReelSpinGame_Save.Encryption
         }
 
         // AESキーの読み込み
-        private void LoadKeyFile(Aes aes)
+        private void LoadKeyFile(Aes aes, string path)
         {
-            string path = Application.persistentDataPath + "/Nostalgia/save.key";
-
             try
             {
                 using (FileStream fs = File.OpenRead(path))
