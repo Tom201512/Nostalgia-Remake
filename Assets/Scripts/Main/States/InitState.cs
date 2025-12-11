@@ -58,19 +58,19 @@ namespace ReelSpinGame_State.LotsState
         private void InitializeSlot()
         {
             // 設定反映
-            gM.ChangeSetting(gM.Save.Setting);
+            gM.ChangeSetting(gM.PlayerSave.Setting);
             // プレイヤー情報反映
-            gM.Player.LoadSaveData(gM.Save.Player);
+            gM.Player.LoadSaveData(gM.PlayerSave.Player);
             // メダル情報反映
-            gM.Medal.LoadSaveData(gM.Save.Medal);
+            gM.Medal.LoadSaveData(gM.PlayerSave.Medal);
             // フラグ数値反映
-            gM.Lots.SetCounterValue(gM.Save.FlagCounter);
+            gM.Lots.SetCounterValue(gM.PlayerSave.FlagCounter);
             // リール位置反映
-            gM.Reel.SetReelPos(gM.Save.LastReelPos);
+            gM.Reel.SetReelPos(gM.PlayerSave.LastReelPos);
             // ボーナス状態反映
-            gM.Bonus.LoadSaveData(gM.Save.Bonus);
+            gM.Bonus.LoadSaveData(gM.PlayerSave.Bonus);
             // 演出マネージャーにボーナスの色を割り当てる
-            gM.Effect.SetBigColor(gM.Save.Bonus.BigChanceColor);
+            gM.Effect.SetBigColor(gM.PlayerSave.Bonus.BigChanceColor);
         }
 
         // リプレイ状態の反映

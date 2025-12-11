@@ -83,6 +83,13 @@ namespace ReelSpinGame_Option
         // 強制フラグの設定リセット
         public void ResetForceFlagSetting() => forceFlagScreen.ResetFlagSetting();
 
+        // オート設定変更
+
+        public void SetAutoSetting()
+        {
+
+        }
+
         // オプションモードに入れる
         void EnterOptionMode()
         {

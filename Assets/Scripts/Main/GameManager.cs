@@ -8,6 +8,8 @@ using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -63,8 +65,8 @@ public class GameManager : MonoBehaviour
     public PlayerUI PlayerUI { get { return playerUI; } }       // プレイヤーUI
 
     public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
-    public SaveDatabase Save { get { return saveManager.PlayerSaveData; } }    // セーブデータベース
-    public OptionSave OptionSetting { get { return saveManager.OptionSave; } } // オプションのセーブ
+    public SaveDatabase PlayerSave { get { return saveManager.PlayerSaveData; } }    // プレイヤーのセーブ
+    public OptionSave OptionSave { get { return saveManager.OptionSave; } } // オプションのセーブ
 
     // ステータスパネル
     [SerializeField] StatusPanel statusPanel;
@@ -134,6 +136,8 @@ public class GameManager : MonoBehaviour
     {
         // 読み込みに失敗したか
         bool loadFailed = false;
+        // プレイヤーファイルのみ読み込みが失敗したか
+        bool playerLoadFailed = false;
 
         if(deleteSaveFlag)
         {
@@ -152,19 +156,32 @@ public class GameManager : MonoBehaviour
                 loadFailed = true;
             }
             // 読み込みに失敗したら新規にデータを作成する
-            else if (!saveManager.LoadPlayerSave())
+            else if (!saveManager.LoadOptionSave())
             {
                 loadFailed = true;
+            }
+            else if (!saveManager.LoadPlayerSave())
+            {
+                playerLoadFailed = true;
             }
         }
 
         // 読み込みに失敗した場合はセーブを初期化
         if(loadFailed)
         {
-            Debug.LogWarning("セーブの読み込みに失敗しました。新規ファイルでプレイします。");
-            Save.InitializeSave();
+            Debug.LogWarning("セーブファイルが破損しています。全てのファイルをリセットしました。");
+            OptionSave.InitializeSave();
+            PlayerSave.InitializeSave();
+            saveManager.DeleteOptionSave();
             saveManager.DeletePlayerSave();
-            Save.RecordSlotSetting(debugSetting);
+            PlayerSave.RecordSlotSetting(debugSetting);
+        }
+        else if(playerLoadFailed)
+        {
+            Debug.LogWarning("プレイヤーセーブの読み込みに失敗しました。新規にプレイします。");
+            PlayerSave.InitializeSave();
+            saveManager.DeletePlayerSave();
+            PlayerSave.RecordSlotSetting(debugSetting);
         }
 
         // UI 設定
@@ -173,6 +190,8 @@ public class GameManager : MonoBehaviour
 
         // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
+
+        Auto.SetAutoOrder(OptionSave.GetAutoOption().AutoStopOrders);
 
         // デバッグをすべて非表示
         ToggleDebugUI(false);
@@ -184,12 +203,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // 画面サイズ調整
-
-        // 終了処理
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
 
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
@@ -228,12 +241,14 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(keyToAutoOrderChange))
         {
             Auto.ChangeAutoOrder();
+            UpdateOptionSetting();
         }
 
         // オートスピード変更
         if(Input.GetKeyDown(keyToAutoSpeedChange))
         {
             Auto.ChangeAutoSpeed();
+            UpdateOptionSetting();
         }
 
         // ウェイトカット
@@ -264,6 +279,7 @@ public class GameManager : MonoBehaviour
         {
             saveManager.GenerateSaveFolder();
             saveManager.GeneratePlayerSave();
+            saveManager.GenerateOptionSave();
         }
     }
 
@@ -279,12 +295,46 @@ public class GameManager : MonoBehaviour
         // 0ならランダムを選ぶ
         else if (setting == 0)
         {
-            Setting = Random.Range(1, MaxSlotSetting + 1);
+            Setting = UnityEngine.Random.Range(1, MaxSlotSetting + 1);
         }
         else
         {
             Setting = setting;
         }
+    }
+
+    // オプション内容変更
+    public void UpdateOptionSetting()
+    {
+        AutoOptionData autoOptionData = new AutoOptionData();
+
+        // オート設定初期化
+        autoOptionData.AutoSpeedID = (AutoPlaySpeed)Enum.ToObject(typeof(AutoPlaySpeed), Auto.AutoSpeedID);
+        autoOptionData.AutoStopOrders = (AutoStopOrderOptions)Enum.ToObject(typeof(AutoStopOrderOptions), Auto.AutoOrderID);
+        autoOptionData.HasTechnicalPlay = Auto.GetHasTechnicalPlay();
+        autoOptionData.PlayerSelectedBigColor = Auto.GetBigColorLineUP();
+        autoOptionData.SpecificConditionBinary = AutoSpecificConditionID.None;
+        autoOptionData.SpinConditionID = AutoSpinTimeConditionID.None;
+
+        // その他設定初期化
+        OtherOptionData otherOptionData = new OtherOptionData();
+
+        // 音量初期化
+        otherOptionData.MusicVolumeSetting = 5;
+        otherOptionData.SoundVolumeSetting = 5;
+
+        // その他設定
+        otherOptionData.ShowMiniReelSetting = false;
+        otherOptionData.AssistMarkerPos = new List<int>()
+            {
+                -1,
+                -1,
+                -1,
+            };
+        otherOptionData.HasWaitCut = false;
+        otherOptionData.HasDelayDisplay = false;
+
+        OptionSave.RecordData(autoOptionData, otherOptionData);
     }
 
     // デバッグをつける機能(デバッグ用)

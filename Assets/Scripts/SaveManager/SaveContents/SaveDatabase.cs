@@ -64,8 +64,6 @@ namespace ReelSpinGame_Save.Database
             Bonus = new BonusSave();
         }
 
-        
-
         // プレイヤー情報
         public void RecordPlayerSave(ISavable player)
         {

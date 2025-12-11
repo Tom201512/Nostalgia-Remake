@@ -125,15 +125,15 @@ namespace ReelSpinGame_State.PayoutState
         private void SaveData()
         {
             // プレイヤー情報記録
-            gM.Save.RecordPlayerSave(gM.Player.MakeSaveData());
+            gM.PlayerSave.RecordPlayerSave(gM.Player.MakeSaveData());
             // メダル情報記録
-            gM.Save.RecordMedalSave(gM.Medal.MakeSaveData());
+            gM.PlayerSave.RecordMedalSave(gM.Medal.MakeSaveData());
             // フラグ情報記録
-            gM.Save.RecordFlagCounter(gM.Lots.GetCounter());
+            gM.PlayerSave.RecordFlagCounter(gM.Lots.GetCounter());
             // 最終リール位置を記録
-            gM.Save.RecordReelPos(gM.Reel.GetLastStoppedReelData().LastPos);
+            gM.PlayerSave.RecordReelPos(gM.Reel.GetLastStoppedReelData().LastPos);
             // ボーナス情報記録
-            gM.Save.RecordBonusData(gM.Bonus.MakeSaveData());
+            gM.PlayerSave.RecordBonusData(gM.Bonus.MakeSaveData());
             Debug.Log("Saved");
         }
 

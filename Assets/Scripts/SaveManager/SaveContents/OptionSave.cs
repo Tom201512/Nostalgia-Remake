@@ -1,4 +1,8 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Lots.FlagCounter;
+using ReelSpinGame_Save.Bonus;
+using ReelSpinGame_Save.Medal;
+using ReelSpinGame_Save.Player.ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,11 +81,40 @@ namespace ReelSpinGame_Save.Database
 
         // func
 
+        // データを初期化
+        public void InitializeSave()
+        {
+            // オート設定初期化
+            autoOptionData.AutoSpeedID = AutoPlaySpeed.Normal;
+            autoOptionData.AutoStopOrders = AutoStopOrderOptions.LMR;
+            autoOptionData.HasTechnicalPlay = true;
+            autoOptionData.PlayerSelectedBigColor = BigColor.None;
+            autoOptionData.SpecificConditionBinary = AutoSpecificConditionID.None;
+            autoOptionData.SpinConditionID = AutoSpinTimeConditionID.None;
+
+            // 音量初期化
+            otherOptionData.MusicVolumeSetting = 5;
+            otherOptionData.SoundVolumeSetting = 5;
+
+            // その他設定
+            otherOptionData.ShowMiniReelSetting = false;
+            otherOptionData.AssistMarkerPos = new List<int>()
+            {
+                -1,
+                -1,
+                -1,
+            };
+            otherOptionData.HasWaitCut = false;
+            otherOptionData.HasDelayDisplay = false;
+        }
+
         // データ記録
         public void RecordData(AutoOptionData autoOptionData, OtherOptionData otherOptionData)
         {
             this.autoOptionData = autoOptionData;
             this.otherOptionData = otherOptionData;
+
+            Debug.Log(this.autoOptionData.AutoStopOrders);
         }
 
         // セーブ
@@ -206,5 +239,9 @@ namespace ReelSpinGame_Save.Database
             Debug.Log("Option Read is done");
             return true;
         }
+
+        // オートの設定を渡す
+        public AutoOptionData GetAutoOption() => autoOptionData;
+        public OtherOptionData GetOtherOption() => otherOptionData;
     }
 }

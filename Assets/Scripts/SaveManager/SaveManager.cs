@@ -72,7 +72,15 @@ namespace ReelSpinGame_System
             return true;
         }
 
-        // セーブファイル作成
+        // プレイヤーセーブ削除
+        public void DeletePlayerSave()
+        {
+            string path = Application.persistentDataPath + PlayerSavePath;
+            string keyPath = Application.persistentDataPath + PlayerKeyPath;
+            DeleteSave(path, keyPath);
+        }
+
+        // プレイヤーセーブファイル作成
         public bool GeneratePlayerSave()
         {
             string path = Application.persistentDataPath + PlayerSavePath;
@@ -81,7 +89,7 @@ namespace ReelSpinGame_System
             // 前のセーブを消去
             if (Directory.Exists(path))
             {
-                DeletePlayerSave();
+                DeleteSave(path, keyPath);
             }
 
             try
@@ -89,7 +97,7 @@ namespace ReelSpinGame_System
                 using (FileStream file = File.OpenWrite(path))
                 using (StreamWriter sw = new StreamWriter(file))
                 {
-                    List<int> dataBuffer = playerSaveManager.GenerateDataBuffer();
+                    List<int> dataBuffer = new List<int>(playerSaveManager.GenerateDataBuffer());
                     // すべての数値を書き込んだらバイト配列にし、暗号化して保存
                     sw.Write(saveEncryptor.EncryptData(BitConverter.ToString(GetBytesFromList(dataBuffer)), keyPath));
                 }
@@ -153,11 +161,99 @@ namespace ReelSpinGame_System
             return true;
         }
 
-        // セーブ削除
-        public bool DeletePlayerSave()
+        // オプションセーブファイル作成
+        public bool GenerateOptionSave()
         {
-            string path = Application.persistentDataPath + PlayerSavePath;
-            string keyPath = Application.persistentDataPath + PlayerKeyPath;
+            string path = Application.persistentDataPath + OptionSavePath;
+            string keyPath = Application.persistentDataPath + OptionKeyPath;
+
+            // 前のセーブを消去
+            if (Directory.Exists(path))
+            {
+                DeleteSave(path, keyPath);
+            }
+
+            try
+            {
+                using (FileStream file = File.OpenWrite(path))
+                using (StreamWriter sw = new StreamWriter(file))
+                {
+                    List<int> dataBuffer = new List<int>(optionSaveManager.GenerateDataBuffer());
+                    Debug.Log(dataBuffer.Count);
+                    // すべての数値を書き込んだらバイト配列にし、暗号化して保存
+                    sw.Write(saveEncryptor.EncryptData(BitConverter.ToString(GetBytesFromList(dataBuffer)), keyPath));
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                return false;
+            }
+
+            Debug.Log("Save Encryption is succeeded");
+            return true;
+        }
+
+        // オプションファイル読み込み
+        public bool LoadOptionSave()
+        {
+            string path = Application.persistentDataPath + OptionSavePath;
+            string keyPath = Application.persistentDataPath + OptionKeyPath;
+
+            // ファイルがない場合は読み込まない
+            if (!File.Exists(path))
+            {
+                Debug.LogError("File not found");
+                return false;
+            }
+            try
+            {
+                // ファイルの復号化をする
+                using (FileStream file = File.OpenRead(path))
+                {
+                    string optionData = DecodeFile(file, keyPath); // プレイヤーのデータ
+
+                    // 文字列をバイト配列に戻し復元開始。ハッシュ値参照も行う
+                    using (MemoryStream ms = new MemoryStream(GetBytesFromString(optionData)))
+                    {
+                        using (BinaryReader br = new BinaryReader(ms))
+                        using (Stream baseStream = br.BaseStream)
+                        {
+                            // ハッシュ値が正しければデータ読み込み
+                            if (CheckHash(baseStream, br))
+                            {
+                                optionSaveManager.LoadDataBuffer(baseStream, br);
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Debug.Log("Load failed");
+                return false;
+            }
+
+            Debug.Log("Load with Decryption is done");
+            return true;
+        }
+
+        // オプションセーブ削除
+        public void DeleteOptionSave()
+        {
+            string path = Application.persistentDataPath + OptionSavePath;
+            string keyPath = Application.persistentDataPath + OptionKeyPath;
+            DeleteSave(path, keyPath);
+        }
+
+        // ファイル削除
+        bool DeleteSave(string path, string keyPath)
+        {
             try
             {
                 File.Delete(path);

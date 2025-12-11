@@ -104,13 +104,20 @@ namespace ReelSpinGame_AutoPlay
         // リーチ目優先制御の有無を返す
         public bool GetHasRiichiStop() => autoAI.HasRiichiStop;
 
+        // BIG CHANCE図柄の色を返す
+        public BigColor GetBigColorLineUP() => autoAI.PlayerSelectedBigColor;
+
         // リーチ目を止めたかを返す
         public bool GetHasStoppedRiichiPtn() => autoAI.HasStoppedRiichiPtn;
 
         // 1枚掛けボーナス揃えの有無を返す
         public bool GetHasOneBetBonusLineUp() => autoAI.HasOneBetBonusLineUp;
 
-        // オート仕様番号の変更(デバッグ用)
+
+        // オート押し順設定
+        public void SetAutoOrder(AutoStopOrderOptions autoOrder) => AutoOrderID = (int)autoOrder;
+
+        // オート押し順番号の変更(デバッグ用)
         public void ChangeAutoOrder()
         {
             if (!HasAuto)
