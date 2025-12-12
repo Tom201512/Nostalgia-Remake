@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextTableData_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: dc071bb6f3b6f7b40bdcad4679f814e6, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 358265708544
+    m_Localized: 'Control:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474510843904
+    m_Localized: 'Screen:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1380065271808
+    m_Localized: 'How to play:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1495719010304
+    m_Localized: 'Reel array:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1603768475648
+    m_Localized: 'Payout:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1868865265664
+    m_Localized: 'Lots probability:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2003435315200
+    m_Localized: 'Normal mode hint:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2149787164672
+    m_Localized: 'Winning-Patterns:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2461453312000
+    m_Localized: 'Bonus:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2520983068672
+    m_Localized: 'JAC-Avoid:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110479272992768
+    m_Localized: Random
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110517411799040
+    m_Localized: BIG CHANCE symbol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110525666189312
+    m_Localized: BIG CHANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110610537930752
+    m_Localized: End bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455116319776768
+    m_Localized: 'End condition:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455300491665408
+    m_Localized: BONUS GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455442808594432
+    m_Localized: 'End timing:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455591660249088
+    m_Localized: Winning-Pattern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455663835832320
+    m_Localized: L-M-R
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457268719149056
+    m_Localized: L-R-M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457270229098496
+    m_Localized: M-L-R
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457658365796352
+    m_Localized: M-R-L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457776972324864
+    m_Localized: R-L-M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457848942387200
+    m_Localized: R-M-L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457953816764416
+    m_Localized: 'Stop order:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458048742252544
+    m_Localized: 'Auto setting:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458163351609344
+    m_Localized: 'Speed:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458290833285120
+    m_Localized: Slow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458348785983488
+    m_Localized: Fast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458350006525952
+    m_Localized: Very fast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458485734203392
+    m_Localized: 1000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458527094235136
+    m_Localized: 3000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458577681735680
+    m_Localized: 5000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458614952321024
+    m_Localized: 10000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458671671894016
+    m_Localized: Unlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458717746323456
+    m_Localized: 'Lock stop position:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9460232397578240
+    m_Localized: 'Technical play:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461064698486784
+    m_Localized: 'Main data:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461551464243200
+    m_Localized: "Games:\n\tTotal games:\n\tCurrent games:\n\tNormal games:\n\tBIG
+      CHANCE games:\n\tBONUS GAME games:\n\nBonus probability:\n\tBIG CHANCE:\n\tLine
+      up count:\n\tProbability:\n\n\tBONUS GAME:\n\t\tLine up count:\n\t\tProbability:\n\n\tTotal
+      probability:"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
-  m_Name: TextData
+  m_Script: {fileID: 11500000, guid: 4db626ad063b13545924a9839ac5fa83, type: 3}
+  m_Name: ImageTable
   m_EditorClassIdentifier: 
-  m_SharedTableData: {fileID: 11400000, guid: dc071bb6f3b6f7b40bdcad4679f814e6, type: 2}
+  m_SharedTableData: {fileID: 11400000, guid: 2cb0572778dbff74f9d288872fa62d6d, type: 2}
   m_Tables:
-  - {fileID: 11400000, guid: d3b41988471351242a45374c577a4d4a, type: 2}
-  - {fileID: 11400000, guid: 88a83b0d26926d149a116be5a1cb1a3e, type: 2}
+  - {fileID: 11400000, guid: 684c3a3e8e0576347a088e948fe1eef5, type: 2}
+  - {fileID: 11400000, guid: cb18ab2532cad4942becea86418cea96, type: 2}
   m_Extensions: []
-  m_Group: String Table
+  m_Group: Asset Table
   references:
     version: 2
     RefIds: []

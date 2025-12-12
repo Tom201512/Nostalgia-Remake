@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: TextTableData Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: TextTableData
+  m_TableCollectionNameGuidString: dc071bb6f3b6f7b40bdcad4679f814e6
+  m_Entries:
+  - m_Id: 9110479272992768
+    m_Key: AutoBigColorRandom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110517411799040
+    m_Key: AutoBigColorTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110525666189312
+    m_Key: AutoEndBigCondition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110610537930752
+    m_Key: AutoEndBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358265708544
+    m_Key: HowToPlay01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474510843904
+    m_Key: HowToPlay02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1380065271808
+    m_Key: HowToPlay03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1495719010304
+    m_Key: HowToPlay04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1603768475648
+    m_Key: HowToPlay05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1868865265664
+    m_Key: HowToPlay06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2003435315200
+    m_Key: HowToPlay07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2149787164672
+    m_Key: HowToPlay08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2461453312000
+    m_Key: HowToPlay09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2520983068672
+    m_Key: HowToPlay10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455116319776768
+    m_Key: AutoEndConditionTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455300491665408
+    m_Key: AutoEndREG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455442808594432
+    m_Key: AutoEndTimingSub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455591660249088
+    m_Key: AutoEndWinning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455663835832320
+    m_Key: AutoOrderLMR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457268719149056
+    m_Key: AutoOrderLRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457270229098496
+    m_Key: AutoOrderMLR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457658365796352
+    m_Key: AutoOrderMRL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457776972324864
+    m_Key: AutoOrderRLM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457848942387200
+    m_Key: AutoOrderRML
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457953816764416
+    m_Key: AutoOrderTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458048742252544
+    m_Key: AutoSettingTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458163351609344
+    m_Key: AutoSpeedSettingTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458290833285120
+    m_Key: AutoSpeedSlow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458348785983488
+    m_Key: AutoSpeedFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458350006525952
+    m_Key: AutoSpeedVeryFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458485734203392
+    m_Key: AutoSpinTimes1000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458527094235136
+    m_Key: AutoSpinTimes3000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458577681735680
+    m_Key: AutoSpinTimes5000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458614952321024
+    m_Key: AutoSpinTimes10000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458671671894016
+    m_Key: AutoSpinTimesUnlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458717746323456
+    m_Key: AutoStopPosLockTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9460232397578240
+    m_Key: AutoTechnicalTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461064698486784
+    m_Key: SlotMain01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461551464243200
+    m_Key: SlotMainDataInfo1
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4813485255415824408
+  references:
+    version: 2
+    RefIds:
+    - rid: 4813485255415824408
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1763282276336

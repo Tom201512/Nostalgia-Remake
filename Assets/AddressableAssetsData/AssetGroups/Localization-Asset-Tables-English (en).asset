@@ -18,10 +18,11 @@ MonoBehaviour:
   m_GUID: 0b8652e3501f0934989b445bcc690125
   m_SerializeEntries:
   - m_GUID: cb18ab2532cad4942becea86418cea96
-    m_Address: ScreenTable_en
+    m_Address: ImageTable_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 13b65055ef986414ebd769d970d060b9, type: 2}

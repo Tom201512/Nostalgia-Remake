@@ -19,6 +19,7 @@ namespace ReelSpinGame_Option
 
         // 各種設定画面のデータ
         [SerializeField] ForceFlagScreen forceFlagScreen; // 強制フラグ
+        [SerializeField] AutoPlaySettingScreen autoPlaySettingScreen; // オートプレイ
 
         public bool hasOptionScreen { get; private set; } // オプション画面を開いているか(UIボタンの表示に使用する)
         public bool hasOptionMode { get; private set; } // 設定変更中か(ゲームの操作ができなくなる)
