@@ -1,3 +1,4 @@
+using ReelSpinGame_Option.Button;
 using UnityEngine;
 
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
@@ -16,6 +17,7 @@ namespace ReelSpinGame_Option.AutoSetting
         [SerializeField] SelectButtonComponent orderSelect;         // 押し順変更
         [SerializeField] SelectButtonComponent bigColorSelect;      // BIG時図柄変更
         [SerializeField] SelectButtonComponent technicalSelect;     // 技術介入変更 
+        [SerializeField] CheckBoxManager autoEndTimingCheckBoxes;   // オート終了条件チェックボックス
 
         void Awake()
         {
@@ -33,6 +35,7 @@ namespace ReelSpinGame_Option.AutoSetting
             orderSelect.SetInteractive(value);
             bigColorSelect.SetInteractive(value);
             technicalSelect.SetInteractive(value);
+            autoEndTimingCheckBoxes.ChangeCheckBoxInteractive(value);
         }
 
         // func(private)

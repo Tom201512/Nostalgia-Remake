@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,7 +35,7 @@ namespace ReelSpinGame_Option.Button
             CanInteractable = false;
             IsSelected = false;
             ChangeCheckBoxTextColor(new Color(0.7f, 0.7f, 0.7f, 1f));
-            ChangeCheckBoxIconColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+            ChangeCheckBoxImageColor(new Color(0.7f, 0.7f, 0.7f, 1f));
         }
 
         void Start()
@@ -57,7 +58,7 @@ namespace ReelSpinGame_Option.Button
                     ChangeCheckBoxTextColor(new Color(1, 1, 1, 1f));
                 }
 
-                ChangeCheckBoxIconColor(new Color(1, 1, 1, 1f));
+                ChangeCheckBoxImageColor(new Color(1, 1, 1, 1f));
             }
         }
 
@@ -76,7 +77,7 @@ namespace ReelSpinGame_Option.Button
                     ChangeCheckBoxTextColor(new Color(0.7f, 0.7f, 0.7f, 1f));
                 }
 
-                ChangeCheckBoxIconColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+                ChangeCheckBoxImageColor(new Color(0.7f, 0.7f, 0.7f, 1f));
             }
         }
 
@@ -87,8 +88,10 @@ namespace ReelSpinGame_Option.Button
                 Debug.Log("Pointer:" + eventData.button);
                 if (eventData.button == 0)
                 {
+                    IsSelected = !IsSelected;
                     ButtonPushedEvent?.Invoke(signalID);
                     Debug.Log(name + " Pushed");
+                    Debug.Log("Selected:" + IsSelected);
 
                     if (IsSelected)
                     {
@@ -99,7 +102,8 @@ namespace ReelSpinGame_Option.Button
                         ChangeCheckBoxTextColor(new Color(0.5f, 0.5f, 0.5f, 1f));
                     }
 
-                    ChangeCheckBoxIconColor(new Color(0.5f, 0.5f, 0.5f, 1f));
+                    ChangeCheckBoxImageColor(new Color(0.5f, 0.5f, 0.5f, 1f));
+                    UpdateCheckBoxIcon();
                 }
             }
         }
@@ -118,7 +122,7 @@ namespace ReelSpinGame_Option.Button
                     ChangeCheckBoxTextColor(new Color(1, 1, 1, 1f));
                 }
 
-                ChangeCheckBoxIconColor(new Color(1, 1, 1, 1f));
+                ChangeCheckBoxImageColor(new Color(1, 1, 1, 1f));
             }
         }
 
@@ -138,7 +142,7 @@ namespace ReelSpinGame_Option.Button
                     ChangeCheckBoxTextColor(new Color(0.7f, 0.7f, 0.7f, 1f));
                 }
 
-                ChangeCheckBoxIconColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+                ChangeCheckBoxImageColor(new Color(0.7f, 0.7f, 0.7f, 1f));
             }
             else
             {
@@ -151,15 +155,8 @@ namespace ReelSpinGame_Option.Button
                     ChangeCheckBoxTextColor(new Color(0.4f, 0.4f, 0.4f, 1f));
                 }
 
-                ChangeCheckBoxIconColor(new Color(0.4f, 0.4f, 0.4f, 1f));
+                ChangeCheckBoxImageColor(new Color(0.4f, 0.4f, 0.4f, 1f));
             }
-        }
-
-        // 選択状態の変更
-        public void ChangeSelectedStatus(bool value)
-        {
-            IsSelected = value;
-            UpdateCheckBoxIcon();
         }
 
         // 画像の更新
@@ -186,11 +183,11 @@ namespace ReelSpinGame_Option.Button
         }
 
         // 画像の色を変更する
-        void ChangeCheckBoxIconColor(Color color)
+        void ChangeCheckBoxImageColor(Color color)
         {
-            if (text != null)
+            if (checkBoxImage != null)
             {
-                text.color = color;
+                checkBoxImage.color = color;
                 Debug.Log("Changed icon color");
             }
         }
