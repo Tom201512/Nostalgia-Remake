@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9110517411799040
-    m_Localized: BIG CHANCE symbol
+    m_Localized: 'BIG CHANCE symbol:'
     m_Metadata:
       m_Items: []
   - m_Id: 9110525666189312
@@ -175,6 +175,22 @@ MonoBehaviour:
       CHANCE games:\n\tBONUS GAME games:\n\nBonus probability:\n\tBIG CHANCE:\n\tLine
       up count:\n\tProbability:\n\n\tBONUS GAME:\n\t\tLine up count:\n\t\tProbability:\n\n\tTotal
       probability:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9744566589382656
+    m_Localized: Enable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9744648390893568
+    m_Localized: Disable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9758787163185152
+    m_Localized: 'Spin times:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9763470141349888
+    m_Localized: Enter setting
     m_Metadata:
       m_Items: []
   references:

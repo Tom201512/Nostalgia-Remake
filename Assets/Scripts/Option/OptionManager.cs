@@ -96,7 +96,6 @@ namespace ReelSpinGame_Option
         {
             hasOptionMode = true;
             openButton.ToggleInteractive(false);
-            menuBarUI.SetInteractiveAllButton(!lockOptionMode);
         }
 
         // オプションモード解除

@@ -17,10 +17,31 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1b4e678f191f33e4fb56810b59df28fb
   m_SerializeEntries:
+  - m_GUID: 05bf3c71a89739144b701b6556687133
+    m_Address: BlueBigDisplay
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cb0572778dbff74f9d288872fa62d6d
     m_Address: Assets/Localize/ScreenTable Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49bc2f2b9b5401c41b62ccb979470a3f
+    m_Address: RedBigDisplay
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9424b331b24f5f419afb5429d29cc57
+    m_Address: BB7BIGDisplay
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc071bb6f3b6f7b40bdcad4679f814e6
     m_Address: Assets/Localize/TextData Shared Data.asset

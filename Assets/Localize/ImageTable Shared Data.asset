@@ -55,6 +55,18 @@ MonoBehaviour:
     m_Key: HowToPlayImage9
     m_Metadata:
       m_Items: []
+  - m_Id: 9710575832326144
+    m_Key: BIGSymbolRed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9710650855841792
+    m_Key: BIGSymbolBlue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9710652302876672
+    m_Key: BIGSymbolBlack
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 4813485255415824412
@@ -115,6 +127,18 @@ MonoBehaviour:
           - ja
           - en
         - m_KeyId: 1456599504576512
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 9710575832326144
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 9710650855841792
+          m_TableCodes:
+          - ja
+          - en
+        - m_KeyId: 9710652302876672
           m_TableCodes:
           - ja
           - en

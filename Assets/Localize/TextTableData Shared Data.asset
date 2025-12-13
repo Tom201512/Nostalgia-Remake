@@ -171,6 +171,22 @@ MonoBehaviour:
     m_Key: SlotMainDataInfo1
     m_Metadata:
       m_Items: []
+  - m_Id: 9744566589382656
+    m_Key: GenericEnable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9744648390893568
+    m_Key: GenericDisable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9758787163185152
+    m_Key: AutoSpinTimeSelectSub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9763470141349888
+    m_Key: GenericEnterSetting
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

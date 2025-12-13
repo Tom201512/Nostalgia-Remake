@@ -1,11 +1,9 @@
 using ReelSpinGame_Option.Button;
-using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using TMPro;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine.UI;
 
 namespace ReelSpinGame_Option
@@ -23,14 +21,14 @@ namespace ReelSpinGame_Option
         [SerializeField] List<LocalizedString> textDisplayList; // テキストのローカライズリスト
         [SerializeField] List<LocalizedSprite> imageDisplayList; // 画像のローカライズリスト
 
-        [SerializeField] LocalizedString localText;
-
         // ローカライズ用の画像、テキスト
         [SerializeField] TextMeshProUGUI selectText;    // 選択項目のテキスト
         [SerializeField] Image selectImage;   // 選択項目の画像
 
         // 設定項目
         public int CurrentSettingID { get; private set; } // 現在選択しているID
+
+        int contentListCount; // コンテンツの数
 
         // ローカライズ
         LocalizeStringEvent selectTextLocalize;    // 選択項目のテキスト
@@ -43,6 +41,17 @@ namespace ReelSpinGame_Option
             selectImageLocalize = selectImage.GetComponent<LocalizeSpriteEvent>();
             nextContentButton.ButtonPushedEvent += OnNextPressed;
             previousContentButton.ButtonPushedEvent += OnPreviousPressed;
+
+            // メニュー数の取得
+            contentListCount = textDisplayList.Count;
+
+            // テキストの個数より画像の方が多ければ更新
+            if(contentListCount < imageDisplayList.Count)
+            {
+                contentListCount = imageDisplayList.Count;
+            }
+
+            Debug.Log("ContentCount:" + contentListCount);
         }
 
         void Start()
@@ -58,10 +67,13 @@ namespace ReelSpinGame_Option
 
         // func(public)
         // データ読み込み
-        public void LoadOptionData(int dataID)
+        public void LoadOptionData(int dataID) => CurrentSettingID = dataID;
+
+        // 選択ボタンの有効化設定
+        public void SetInteractive(bool value)
         {
-            CurrentSettingID = dataID;
-            UpdateScreen();
+            nextContentButton.ToggleInteractive(value);
+            previousContentButton.ToggleInteractive(value);
         }
 
         // func(private)
@@ -70,7 +82,7 @@ namespace ReelSpinGame_Option
         void OnNextPressed(int signalID)
         {
             CurrentSettingID += 1;
-            if (CurrentSettingID > (int)AutoPlaySpeed.Quick)
+            if (CurrentSettingID == contentListCount)
             {
                 CurrentSettingID = 0;
             }
@@ -83,7 +95,7 @@ namespace ReelSpinGame_Option
             CurrentSettingID -= 1;
             if (CurrentSettingID < 0)
             {
-                CurrentSettingID = (int)AutoPlaySpeed.Quick;
+                CurrentSettingID = contentListCount - 1;
             }
 
             UpdateScreen();
@@ -92,26 +104,24 @@ namespace ReelSpinGame_Option
         // 画面更新
         void UpdateScreen()
         {
+            selectText.gameObject.SetActive(false);
+            selectImage.gameObject.SetActive(false);
+
             // 対応するテキストがあれば表示する
-            if(CurrentSettingID < textDisplayList.Count && textDisplayList[CurrentSettingID] != null)
+            if(CurrentSettingID < textDisplayList.Count)
             {
                 selectText.gameObject.SetActive(true);
                 selectTextLocalize.StringReference = textDisplayList[CurrentSettingID];
             }
-            else
-            {
-                selectText.gameObject.SetActive(false);
-            }
 
-            // 対応する画像があれば表示する
-            if (CurrentSettingID < imageDisplayList.Count && imageDisplayList[CurrentSettingID] != null)
+            if(!selectText.IsActive())
             {
-                selectImage.gameObject.SetActive(true);
-                selectImageLocalize.AssetReference = imageDisplayList[CurrentSettingID];
-            }
-            else
-            {
-                selectImage.gameObject.SetActive(false);
+                // 対応する画像があれば表示する
+                if (CurrentSettingID < imageDisplayList.Count)
+                {
+                    selectImage.gameObject.SetActive(true);
+                    selectImageLocalize.AssetReference = imageDisplayList[CurrentSettingID];
+                }
             }
         }
     }

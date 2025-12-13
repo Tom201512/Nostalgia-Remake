@@ -1,3 +1,4 @@
+using ReelSpinGame_Option.AutoSetting;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace ReelSpinGame_Option.MenuContent
         public bool CanInteract { get; set; }
 
         // var
+        // 各種操作
+        [SerializeField] AutoSettingManager autoSettingManager; // オート設定変更マネージャー
         [SerializeField] ButtonComponent closeButton; // クローズボタン
 
         // 画面を閉じたときのイベント
@@ -47,6 +50,7 @@ namespace ReelSpinGame_Option.MenuContent
             CanInteract = true;
             Debug.Log("Interact :" + CanInteract);
             // ボタン有効化
+            autoSettingManager.SetInteractiveButtons(true);
             closeButton.ToggleInteractive(true);
         }
 
@@ -57,6 +61,7 @@ namespace ReelSpinGame_Option.MenuContent
             if (CanInteract)
             {
                 Debug.Log("Closed AutoSetting");
+                autoSettingManager.SetInteractiveButtons(false);
                 closeButton.ToggleInteractive(false);
             }
         }
