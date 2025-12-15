@@ -3,6 +3,8 @@ using ReelSpinGame_Lots.FlagCounter;
 using ReelSpinGame_Save.Bonus;
 using ReelSpinGame_Save.Medal;
 using ReelSpinGame_Save.Player.ReelSpinGame_System;
+using ReelSpinGame_Save.Database.Option;
+using ReelSpinGame_Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,71 +14,19 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Save.Database
 {
-    // オート設定
-    public struct AutoOptionData
-    {
-        public AutoPlaySpeed AutoSpeedID;               // オート速度
-        public AutoStopOrderOptions AutoStopOrders;     // オート時の押し順
-        public bool HasTechnicalPlay;                   // 技術介入をするか
-        public BigColor PlayerSelectedBigColor;         // 揃えるBIG色
-        public AutoSpecificConditionID SpecificConditionBinary; // 一定条件のバイナリ値
-        public AutoSpinTimeConditionID SpinConditionID; // 回転条件 
-    }
-
-    // その他設定
-    public struct OtherOptionData
-    {
-        // 音量設定(0~8)
-        public int MusicVolumeSetting;   // BGM音量
-        public int SoundVolumeSetting;   // SE音量
-
-        // その他
-        public bool ShowMiniReelSetting;    // ミニリール表示設定
-        public List<int> AssistMarkerPos;   // 目押しアシスト位置指定
-        public bool HasWaitCut;             // ウェイトカット設定
-        public bool HasDelayDisplay;        // スベリコマ表示設定
-    }
-
     // オプション用のデータベース
-    public class OptionSave
+    public class OptionSave : ISavable
     {
         // const
 
         // var
-
-
-        private AutoOptionData autoOptionData;      // オートオプションのデータ
-        private OtherOptionData otherOptionData;    // その他設定のデータ
+        public AutoOptionData AutoOptionData { get; private set; }          // オートオプションのデータ
+        public OtherOptionData OtherOptionData { get; private set; }       // その他オプションの設定
 
         public OptionSave()
         {
-            autoOptionData = new AutoOptionData();
-
-            // オート設定初期化
-            autoOptionData.AutoSpeedID = AutoPlaySpeed.Normal;
-            autoOptionData.AutoStopOrders = AutoStopOrderOptions.LMR;
-            autoOptionData.HasTechnicalPlay = true;
-            autoOptionData.PlayerSelectedBigColor = BigColor.None;
-            autoOptionData.SpecificConditionBinary = AutoSpecificConditionID.None;
-            autoOptionData.SpinConditionID = AutoSpinTimeConditionID.None;
-
-            // その他設定初期化
-            otherOptionData = new OtherOptionData();
-
-            // 音量初期化
-            otherOptionData.MusicVolumeSetting = 5;
-            otherOptionData.SoundVolumeSetting = 5;
-
-            // その他設定
-            otherOptionData.ShowMiniReelSetting = false;
-            otherOptionData.AssistMarkerPos = new List<int>()
-            {
-                -1,
-                -1,
-                -1,
-            };
-            otherOptionData.HasWaitCut = false;
-            otherOptionData.HasDelayDisplay = false;
+            AutoOptionData = new AutoOptionData();
+            OtherOptionData = new OtherOptionData();
         }
 
         // func
@@ -84,37 +34,28 @@ namespace ReelSpinGame_Save.Database
         // データを初期化
         public void InitializeSave()
         {
-            // オート設定初期化
-            autoOptionData.AutoSpeedID = AutoPlaySpeed.Normal;
-            autoOptionData.AutoStopOrders = AutoStopOrderOptions.LMR;
-            autoOptionData.HasTechnicalPlay = true;
-            autoOptionData.PlayerSelectedBigColor = BigColor.None;
-            autoOptionData.SpecificConditionBinary = AutoSpecificConditionID.None;
-            autoOptionData.SpinConditionID = AutoSpinTimeConditionID.None;
-
-            // 音量初期化
-            otherOptionData.MusicVolumeSetting = 5;
-            otherOptionData.SoundVolumeSetting = 5;
-
-            // その他設定
-            otherOptionData.ShowMiniReelSetting = false;
-            otherOptionData.AssistMarkerPos = new List<int>()
-            {
-                -1,
-                -1,
-                -1,
-            };
-            otherOptionData.HasWaitCut = false;
-            otherOptionData.HasDelayDisplay = false;
+            AutoOptionData.InitializeData();
+            OtherOptionData.InitializeData();
         }
 
         // データ記録
-        public void RecordData(AutoOptionData autoOptionData, OtherOptionData otherOptionData)
+        // オート設定
+        public void RecordAutoData(AutoOptionData autoOptionData)
         {
-            this.autoOptionData = autoOptionData;
-            this.otherOptionData = otherOptionData;
+            AutoOptionData.SetAutoSpeed(autoOptionData.AutoSpeedID);
+            AutoOptionData.SetAutoStopOrder(autoOptionData.AutoStopOrdersID);
+            AutoOptionData.SetBigColor(autoOptionData.BigColorLineUpID);
+            AutoOptionData.SetTechnicalPlay(autoOptionData.HasTechnicalPlay);
+            AutoOptionData.SetSpecificCondition(autoOptionData.SpecificConditionBinary);
+            AutoOptionData.SetSpinCondition(autoOptionData.SpinConditionID);
 
-            Debug.Log(this.autoOptionData.AutoStopOrders);
+            Debug.Log(AutoOptionData.AutoStopOrdersID);
+        }
+
+        // その他設定
+        public void RecordOtherData(OtherOptionData otherOptionData)
+        {
+            OtherOptionData = otherOptionData;
         }
 
         // セーブ
@@ -124,47 +65,47 @@ namespace ReelSpinGame_Save.Database
             List<int> data = new List<int>();
 
             // オート設定
-            data.Add((int)autoOptionData.AutoSpeedID);  // 回数
-            Debug.Log("AutoSpeed:" + autoOptionData.AutoSpeedID);
+            data.Add((int)AutoOptionData.AutoSpeedID);  // 回数
+            Debug.Log("AutoSpeed:" + AutoOptionData.AutoSpeedID);
 
-            data.Add((int)autoOptionData.AutoStopOrders); // 押し順
-            Debug.Log("AutoOrder:" + autoOptionData.AutoStopOrders);
+            data.Add((int)AutoOptionData.AutoStopOrdersID); // 押し順
+            Debug.Log("AutoOrder:" + AutoOptionData.AutoStopOrdersID);
 
-            data.Add(autoOptionData.HasTechnicalPlay ? 1 : 0); // 技術介入
-            Debug.Log("AutoTechnical:" + autoOptionData.HasTechnicalPlay);
+            data.Add(AutoOptionData.HasTechnicalPlay ? 1 : 0); // 技術介入
+            Debug.Log("AutoTechnical:" + AutoOptionData.HasTechnicalPlay);
 
-            data.Add((int)autoOptionData.PlayerSelectedBigColor); // BIG時の色選択
-            Debug.Log("AutoBigColor:" + autoOptionData.PlayerSelectedBigColor);
+            data.Add((int)AutoOptionData.BigColorLineUpID); // BIG時の色選択
+            Debug.Log("AutoBigColor:" + AutoOptionData.BigColorLineUpID);
 
-            data.Add((int)autoOptionData.SpecificConditionBinary); // 一定条件のバイナリ
-            Debug.Log("AutoSpecific:" + autoOptionData.SpecificConditionBinary);
+            data.Add((int)AutoOptionData.SpecificConditionBinary); // 一定条件のバイナリ
+            Debug.Log("AutoSpecific:" + AutoOptionData.SpecificConditionBinary);
 
-            data.Add((int)autoOptionData.SpinConditionID); // 回転条件
-            Debug.Log("AutoSpin:" + autoOptionData.SpinConditionID);
+            data.Add((int)AutoOptionData.SpinConditionID); // 回転条件
+            Debug.Log("AutoSpin:" + AutoOptionData.SpinConditionID);
 
 
             // その他設定
-            data.Add(otherOptionData.MusicVolumeSetting); // 音量
-            Debug.Log("MusicVol:" + otherOptionData.MusicVolumeSetting);
+            data.Add(OtherOptionData.MusicVolumeSetting); // 音量
+            Debug.Log("MusicVol:" + OtherOptionData.MusicVolumeSetting);
 
-            data.Add(otherOptionData.SoundVolumeSetting); // 効果音
-            Debug.Log("SoundVol:" + otherOptionData.SoundVolumeSetting);
+            data.Add(OtherOptionData.SoundVolumeSetting); // 効果音
+            Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
 
-            data.Add(otherOptionData.ShowMiniReelSetting ? 1 : 0); // ミニリール表示
-            Debug.Log("MiniReel:" + otherOptionData.ShowMiniReelSetting);
+            data.Add(OtherOptionData.ShowMiniReelSetting ? 1 : 0); // ミニリール表示
+            Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
             // マーカー位置記録
-            foreach (int i in otherOptionData.AssistMarkerPos)
+            foreach (int i in OtherOptionData.AssistMarkerPos)
             {
                 data.Add(i);
                 Debug.Log("Marker:" + i);
             }
 
-            data.Add(otherOptionData.HasWaitCut ? 1 : 0); // ウェイトカット
-            Debug.Log("WaitCut:" + otherOptionData.HasWaitCut);
+            data.Add(OtherOptionData.HasWaitCut ? 1 : 0); // ウェイトカット
+            Debug.Log("WaitCut:" + OtherOptionData.HasWaitCut);
 
-            data.Add(otherOptionData.HasDelayDisplay ? 1 : 0); // スベリコマ表示
-            Debug.Log("DelayDisplay:" + otherOptionData.HasDelayDisplay);
+            data.Add(OtherOptionData.HasDelayDisplay ? 1 : 0); // スベリコマ表示
+            Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
 
             return data;
         }
@@ -175,57 +116,56 @@ namespace ReelSpinGame_Save.Database
             try
             {
                 // オート読み込み
-
                 // 速度
-                autoOptionData.AutoSpeedID = (AutoPlaySpeed)Enum.ToObject(typeof(AutoPlaySpeed), br.ReadInt32());
-                Debug.Log("AutoSpeed:" + autoOptionData.AutoSpeedID);
+                AutoOptionData.SetAutoSpeed((AutoPlaySpeed)Enum.ToObject(typeof(AutoPlaySpeed), br.ReadInt32()));
+                Debug.Log("AutoSpeed:" + AutoOptionData.AutoSpeedID);
 
                 // 押し順
-                autoOptionData.AutoStopOrders = (AutoStopOrderOptions)Enum.ToObject(typeof(AutoStopOrderOptions), br.ReadInt32());
-                Debug.Log("AutoOrder:" + autoOptionData.AutoStopOrders);
+                AutoOptionData.SetAutoStopOrder((AutoStopOrderOptions)Enum.ToObject(typeof(AutoStopOrderOptions), br.ReadInt32()));
+                Debug.Log("AutoOrder:" + AutoOptionData.AutoStopOrdersID);
 
                 // 技術介入
-                autoOptionData.HasTechnicalPlay = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("AutoTechnical:" + autoOptionData.HasTechnicalPlay);
+                AutoOptionData.SetTechnicalPlay(br.ReadInt32() == 1 ? true : false);
+                Debug.Log("AutoTechnical:" + AutoOptionData.HasTechnicalPlay);
 
                 // BIG時の色
-                autoOptionData.PlayerSelectedBigColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
-                Debug.Log("AutoBigColor:" + autoOptionData.PlayerSelectedBigColor);
+                AutoOptionData.SetBigColor((BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32()));
+                Debug.Log("AutoBigColor:" + AutoOptionData.BigColorLineUpID);
 
                 // 一定条件のバイナリ
-                autoOptionData.SpecificConditionBinary = (AutoSpecificConditionID)Enum.ToObject(typeof(AutoSpecificConditionID), br.ReadInt32());
-                Debug.Log("AutoSpecific:" + autoOptionData.SpecificConditionBinary);
+                AutoOptionData.SetSpecificCondition((byte)br.ReadInt32());
+                Debug.Log("AutoSpecific:" + AutoOptionData.SpecificConditionBinary);
 
                 // 回転条件
-                autoOptionData.SpinConditionID = (AutoSpinTimeConditionID)Enum.ToObject(typeof(AutoSpinTimeConditionID), br.ReadInt32());
-                Debug.Log("AutoSpin:" + autoOptionData.SpinConditionID);
+                AutoOptionData.SetSpinCondition((AutoSpinTimeConditionID)Enum.ToObject(typeof(AutoSpinTimeConditionID), br.ReadInt32()));
+                Debug.Log("AutoSpin:" + AutoOptionData.SpinConditionID);
 
                 // その他設定
                 // 音楽音量
-                otherOptionData.MusicVolumeSetting = br.ReadInt32();
-                Debug.Log("MusicVol:" + otherOptionData.MusicVolumeSetting);
+                OtherOptionData.SetMusicVolume(br.ReadInt32());
+                Debug.Log("MusicVol:" + OtherOptionData.MusicVolumeSetting);
 
                 // 効果音
-                otherOptionData.SoundVolumeSetting = br.ReadInt32();
-                Debug.Log("SoundVol:" + otherOptionData.SoundVolumeSetting);
+                OtherOptionData.SetSoundVolume(br.ReadInt32());
+                Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
 
                 // ミニリール表示
-                otherOptionData.ShowMiniReelSetting = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("MiniReel:" + otherOptionData.ShowMiniReelSetting);
+                OtherOptionData.SetMiniReel(br.ReadInt32() == 1 ? true : false);
+                Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
                 // マーカー位置記録
                 for(int i = 0; i < ReelSpinGame_Reels.ReelManagerModel.ReelAmount; i++)
                 {
-                    otherOptionData.AssistMarkerPos[i] = br.ReadInt32();
-                    Debug.Log("Marker [" + i + "]:" + otherOptionData.AssistMarkerPos[i]);
+                    OtherOptionData.AssistMarkerPos[i] = br.ReadInt32();
+                    Debug.Log("Marker [" + i + "]:" + OtherOptionData.AssistMarkerPos[i]);
                 }
                 // ウェイトカット
-                otherOptionData.HasWaitCut = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("WaitCut:" + otherOptionData.HasWaitCut);
+                OtherOptionData.SetHasWaitCut(br.ReadInt32() == 1 ? true : false);
+                Debug.Log("WaitCut:" + OtherOptionData.HasWaitCut);
 
                 // スベリコマ表示
-                otherOptionData.HasDelayDisplay = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("DelayDisplay:" + otherOptionData.HasDelayDisplay);
+                OtherOptionData.SetHasDelayDisplay(br.ReadInt32() == 1 ? true : false);
+                Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
             }
             catch (Exception e)
             {
@@ -239,9 +179,5 @@ namespace ReelSpinGame_Save.Database
             Debug.Log("Option Read is done");
             return true;
         }
-
-        // オートの設定を渡す
-        public AutoOptionData GetAutoOption() => autoOptionData;
-        public OtherOptionData GetOtherOption() => otherOptionData;
     }
 }

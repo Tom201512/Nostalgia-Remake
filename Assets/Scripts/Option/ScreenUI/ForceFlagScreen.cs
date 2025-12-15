@@ -30,9 +30,9 @@ namespace ReelSpinGame_Option.MenuContent
         public int CurrentSelectFlagID { get; private set; } // 選択中のフラグ番号 (-1はフラグなしとする)
         public int CurrentSelectRandomID { get; private set; } // 選択中のランダム数値 (0はランダムとする)
 
-        // フラグ選択中時点でのボーナス状態
-        BonusStatus currentBonusStatus;
-        BonusTypeID holdingBonusID;
+        // 設定が変更された時のイベント
+        public delegate void OnSomethingChanged();
+        public event OnSomethingChanged OnSomethingChangedEvent;
 
         // 画面を閉じたときのイベント
         public delegate void OnClosedScreen();
@@ -57,11 +57,6 @@ namespace ReelSpinGame_Option.MenuContent
             CurrentSelectRandomID = 0;
         }
 
-        private void Start()
-        {
-
-        }
-
         private void OnDestroy()
         {
             // 登録解除
@@ -83,7 +78,6 @@ namespace ReelSpinGame_Option.MenuContent
             CanInteract = true;
             Debug.Log("Interact :" + CanInteract);
             // ボタン有効化
-            SetFlagButtonInteractive();
             randomNextButton.ToggleInteractive(true);
             randomPreviousButton.ToggleInteractive(true);
             resetButton.ToggleInteractive(true);
@@ -109,29 +103,15 @@ namespace ReelSpinGame_Option.MenuContent
             }
         }
 
-        // ボーナス状態を受け取る
-        public void SetBonusStatus(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID)
-        { 
-            this.currentBonusStatus = currentBonusStatus;
-            this.holdingBonusID = holdingBonusID;
-        }
-
-        // フラグ設定をリセットする
-        public void ResetFlagSetting()
-        {
-            CurrentSelectFlagID = -1;
-            CurrentSelectRandomID = 0;
-        }
-
-        // ボーナス状態ごとのボタン有効化設定
-        void SetFlagButtonInteractive()
+        // 各種フラグボタンの有効化設定をボーナス状態に合わせて変更する
+        public void SetFlagButtonsInteractive(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID)
         {
             // 通常時にいない場合はボーナスフラグボタンは無効にする
-            if(currentBonusStatus != BonusStatus.BonusNone)
+            if (currentBonusStatus != BonusStatus.BonusNone)
             {
                 SetBonusFlagButtonInteractive(false);
                 // JAC中なら小役(ハズレ含む)フラグボタンは無効にする
-                if(currentBonusStatus == BonusStatus.BonusJACGames)
+                if (currentBonusStatus == BonusStatus.BonusJACGames)
                 {
                     SetSymbolFlagButtonInteractive(false);
                 }
@@ -144,7 +124,7 @@ namespace ReelSpinGame_Option.MenuContent
             // 通常時にいる場合はボーナスが成立していればボーナスフラグボタンは無効にする
             else
             {
-                if(holdingBonusID != BonusTypeID.BonusNone)
+                if (holdingBonusID != BonusTypeID.BonusNone)
                 {
                     SetBonusFlagButtonInteractive(false);
                 }
@@ -155,6 +135,14 @@ namespace ReelSpinGame_Option.MenuContent
 
                 SetSymbolFlagButtonInteractive(true);
             }
+        }
+
+        // フラグ設定をリセットする
+        public void ResetFlagSetting()
+        {
+            CurrentSelectFlagID = -1;
+            CurrentSelectRandomID = 0;
+            OnSomethingChangedEvent?.Invoke();
         }
 
         // ボーナスフラグ設定ボタンの有効化設定

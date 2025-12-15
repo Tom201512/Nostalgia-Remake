@@ -2187,7 +2187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 0}
   text: {fileID: 152497316}
-  signalID: 0
+  signalID: -1
 --- !u!114 &160405096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2705,11 +2705,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 424692679499895601, guid: c3c960a07db24f240a4ef2e49def76df, type: 3}
       propertyPath: textDisplayList.Array.data[0].m_TableEntryReference.m_KeyId
-      value: 9744566589382656
+      value: 9744648390893568
       objectReference: {fileID: 0}
     - target: {fileID: 424692679499895601, guid: c3c960a07db24f240a4ef2e49def76df, type: 3}
       propertyPath: textDisplayList.Array.data[1].m_TableEntryReference.m_KeyId
-      value: 9744648390893568
+      value: 9744566589382656
       objectReference: {fileID: 0}
     - target: {fileID: 424692679499895601, guid: c3c960a07db24f240a4ef2e49def76df, type: 3}
       propertyPath: textDisplayList.Array.data[2].m_TableEntryReference.m_KeyId
@@ -4559,6 +4559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoSettingManager: {fileID: 1393153740}
   closeButton: {fileID: 1772953287}
+  resetButton: {fileID: 160405095}
 --- !u!1001 &389362974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5293,14 +5294,13 @@ MonoBehaviour:
   optionManagerObj: {fileID: 2003992387}
   playerUI: {fileID: 535727126}
   slotDataScreen: {fileID: 2045587107}
+  statusPanel: {fileID: 326547722}
   medalUI: {fileID: 938366606}
   lotsUI: {fileID: 341618353}
   waitUI: {fileID: 2088607537}
   reelUI: {fileID: 1227000794}
   bonusUI: {fileID: 660297972}
   autoUI: {fileID: 1956132309}
-  debugSetting: 6
-  statusPanel: {fileID: 326547722}
   keyToDebugToggle: 100
   keyCameraModeChange: 99
   keyToAutoOrderChange: 111
@@ -5308,6 +5308,7 @@ MonoBehaviour:
   keyToWaitCutToggle: 119
   dontSaveFlag: 0
   deleteSaveFlag: 0
+  debugSetting: 6
 --- !u!4 &460868893
 Transform:
   m_ObjectHideFlags: 0
@@ -14549,6 +14550,7 @@ MonoBehaviour:
   bigColorSelect: {fileID: 1036603966}
   technicalSelect: {fileID: 199189449}
   autoEndTimingCheckBoxes: {fileID: 907759418}
+  spinConditionSelect: {fileID: 1455194467}
 --- !u!1 &1399519888
 GameObject:
   m_ObjectHideFlags: 0
@@ -15593,6 +15595,17 @@ MonoBehaviour:
   turnOnValue: 255
   turnOffValue: 60
   flashFrames: 5
+--- !u!114 &1455194467 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 424692679499895601, guid: c3c960a07db24f240a4ef2e49def76df, type: 3}
+  m_PrefabInstance: {fileID: 397524548}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e116d7ea719c254ea3b2343c4b7f21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1459666510
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 namespace ReelSpinGame_Option.Button
 {
@@ -21,6 +22,7 @@ namespace ReelSpinGame_Option.Button
 
         public bool CanInteractable { get; private set; } // ボタンが押せる状態か
         public bool IsSelected { get; private set; } // 選択状態にあるか
+        public int SignalID { get { return signalID; } } // 信号番号
 
         // ボタンを押したときのイベント
         /// <summary>
@@ -157,6 +159,41 @@ namespace ReelSpinGame_Option.Button
 
                 ChangeCheckBoxImageColor(new Color(0.4f, 0.4f, 0.4f, 1f));
             }
+        }
+
+        // 選択状態を変更する
+        public void ToggleSelecting(bool value)
+        {
+            IsSelected = value;
+
+            if (CanInteractable)
+            {
+                if (IsSelected)
+                {
+                    ChangeCheckBoxTextColor(new Color(0.7f, 0.7f, 0f, 1f));
+                }
+                else
+                {
+                    ChangeCheckBoxTextColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+                }
+
+                ChangeCheckBoxImageColor(new Color(0.7f, 0.7f, 0.7f, 1f));
+            }
+            else
+            {
+                if (IsSelected)
+                {
+                    ChangeCheckBoxTextColor(new Color(0.4f, 0.4f, 0f, 1f));
+                }
+                else
+                {
+                    ChangeCheckBoxTextColor(new Color(0.4f, 0.4f, 0.4f, 1f));
+                }
+
+                ChangeCheckBoxImageColor(new Color(0.4f, 0.4f, 0.4f, 1f));
+            }
+
+            UpdateCheckBoxIcon();
         }
 
         // 画像の更新

@@ -34,6 +34,10 @@ namespace ReelSpinGame_Option
         LocalizeStringEvent selectTextLocalize;    // 選択項目のテキスト
         LocalizeSpriteEvent selectImageLocalize;   // 選択項目の画像
 
+        // 設定項目が変わったときのイベント
+        public delegate void ContentChanged();
+        public event ContentChanged ContentChangedEvent;
+
         void Awake()
         {
             CurrentSettingID = 0;
@@ -56,7 +60,7 @@ namespace ReelSpinGame_Option
 
         void Start()
         {
-            UpdateScreen();
+            //UpdateScreen();
         }
 
         void OnDestroy()
@@ -67,7 +71,11 @@ namespace ReelSpinGame_Option
 
         // func(public)
         // データ読み込み
-        public void LoadOptionData(int dataID) => CurrentSettingID = dataID;
+        public void LoadOptionData(int dataID)
+        {
+            CurrentSettingID = dataID;
+            UpdateScreen();
+        }
 
         // 選択ボタンの有効化設定
         public void SetInteractive(bool value)
@@ -88,6 +96,7 @@ namespace ReelSpinGame_Option
             }
 
             UpdateScreen();
+            ContentChangedEvent?.Invoke();
         }
 
         void OnPreviousPressed(int signalID)
@@ -99,6 +108,7 @@ namespace ReelSpinGame_Option
             }
 
             UpdateScreen();
+            ContentChangedEvent?.Invoke();
         }
 
         // 画面更新

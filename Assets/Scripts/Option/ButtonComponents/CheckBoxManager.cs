@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReelSpinGame_Option.Button
@@ -10,7 +9,7 @@ namespace ReelSpinGame_Option.Button
 
         // var
         CheckBoxComponent[] checkBoxList; // チェックボックスリスト
-        byte currentSelectFlag; // 現在の選択フラグ
+        public byte CurrentSelectFlag { get; private set; } // 現在の選択フラグ
 
         // チェックボックスの更新が行われた時のイベント
         /// <summary>
@@ -40,6 +39,24 @@ namespace ReelSpinGame_Option.Button
         }
 
         // func public
+        // データの読み込み
+        public void LoadOptionData(byte value)
+        {
+            CurrentSelectFlag = value;
+            // 対応するシグナルのチェックボックスを有効化する
+            foreach(CheckBoxComponent check in checkBoxList)
+            {
+                if((check.SignalID & CurrentSelectFlag) == check.SignalID)
+                {
+                    check.ToggleSelecting(true);
+                }
+                else
+                {
+                    check.ToggleSelecting(false);
+                }
+            }
+        }
+
         // チェックボックスの有効化設定を変更する
         public void ChangeCheckBoxInteractive(bool value)
         {
@@ -54,8 +71,8 @@ namespace ReelSpinGame_Option.Button
         // チェックボックス更新時のイベント
         void OnCheckBoxUpdated(int signalID)
         {
-            currentSelectFlag ^= (byte)signalID;
-            Debug.Log("CurrentSelectFlagData:" + currentSelectFlag);
+            CurrentSelectFlag ^= (byte)signalID;
+            Debug.Log("CurrentSelectFlagData:" + CurrentSelectFlag);
             CheckBoxUpdatedEvent?.Invoke();
         }
     }

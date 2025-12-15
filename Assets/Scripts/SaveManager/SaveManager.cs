@@ -211,7 +211,7 @@ namespace ReelSpinGame_System
                 // ファイルの復号化をする
                 using (FileStream file = File.OpenRead(path))
                 {
-                    string optionData = DecodeFile(file, keyPath); // プレイヤーのデータ
+                    string optionData = DecodeFile(file, keyPath); // 設定データ
 
                     // 文字列をバイト配列に戻し復元開始。ハッシュ値参照も行う
                     using (MemoryStream ms = new MemoryStream(GetBytesFromString(optionData)))

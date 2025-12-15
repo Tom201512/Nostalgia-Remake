@@ -9,7 +9,6 @@ using ReelSpinGame_Save.Database;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -24,20 +23,15 @@ public class GameManager : MonoBehaviour
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight }
 
     // var
-    // メインカメラ
-    [SerializeField] private SlotCamera slotCam;
+    [SerializeField] private SlotCamera slotCam;    // メインカメラ
 
     // 各種マネージャー
-    // リール情報
-    [SerializeField] private ReelRotateManager reelManagerObj;
-    // 演出
-    [SerializeField] private EffectPresenter effectManagerObj;
-    // オプション画面
-    [SerializeField] private OptionManager optionManagerObj;
-    // プレイヤーUI
-    [SerializeField] PlayerUI playerUI;
-    // スロット情報データ画面UI
-    [SerializeField] SlotDataScreen slotDataScreen;
+    [SerializeField] private ReelRotateManager reelManagerObj;      // リール情報
+    [SerializeField] private EffectPresenter effectManagerObj;      // 演出
+    [SerializeField] private OptionManager optionManagerObj;        // オプション画面
+    [SerializeField] PlayerUI playerUI;                             // プレイヤーUI
+    [SerializeField] SlotDataScreen slotDataScreen;                 // スロット情報データ画面UI
+    [SerializeField] StatusPanel statusPanel;                       // ステータスパネル
 
     // デバッグ用
     [SerializeField] MedalTestUI medalUI;
@@ -47,8 +41,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] BonusTestUI bonusUI;
     [SerializeField] AutoTestUI autoUI;
 
-    // デバッグ用設定値
-    [Range(0, 6), SerializeField] private int debugSetting;
+    [SerializeField] private KeyCode keyToDebugToggle;          // <デバッグ用> デバッグUI表示用
+    [SerializeField] private KeyCode keyCameraModeChange;       // カメラの視点変更
+    [SerializeField] private KeyCode keyToAutoOrderChange;      // <デバッグ用> オートの押し順設定
+    [SerializeField] private KeyCode keyToAutoSpeedChange;      // <デバッグ用> オートスピード変更
+    [SerializeField] private KeyCode keyToWaitCutToggle;        // <デバッグ用> ウェイトカットの有無設定
+    [SerializeField] private bool dontSaveFlag;         // <デバッグ用>セーブをしない
+    [SerializeField] private bool deleteSaveFlag;       // <デバッグ用> 開始時にセーブ消去
+
+    [Range(0, 6), SerializeField] private int debugSetting;         // デバッグ用設定値
 
     // 各種マネージャー
     public InputManager InputManager { get; private set; }              // 入力マネージャー
@@ -59,87 +60,48 @@ public class GameManager : MonoBehaviour
     public BonusManager Bonus { get; private set; }                     // ボーナス管理マネージャー
     public EffectPresenter Effect { get { return effectManagerObj; } }  // 演出管理マネージャー
     public OptionManager Option { get { return optionManagerObj; } }    // オプションマネージャー
+    public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
 
     // プレイヤー関連
-    public PlayerDatabase Player;                               // プレイヤー情報
-    public PlayerUI PlayerUI { get { return playerUI; } }       // プレイヤーUI
+    public PlayerDatabase Player;                                                   // プレイヤー情報
+    public PlayerUI PlayerUI { get { return playerUI; } }                           // プレイヤーUI
+    public SaveDatabase PlayerSave { get { return saveManager.PlayerSaveData; } }   // プレイヤーのセーブ
+    public OptionSave OptionSave { get { return saveManager.OptionSave; } }         // オプションのセーブ
+    public StatusPanel Status { get; private set; }                                 // ステータスパネル
 
-    public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
-    public SaveDatabase PlayerSave { get { return saveManager.PlayerSaveData; } }    // プレイヤーのセーブ
-    public OptionSave OptionSave { get { return saveManager.OptionSave; } } // オプションのセーブ
+    public int Setting { get; private set; }                // 台設定値
+    public MainGameFlow MainFlow { get; private set; }      // ゲームステート用
 
-    // ステータスパネル
-    [SerializeField] StatusPanel statusPanel;
-    public StatusPanel Status { get; private set; }
-
-    // <デバッグ用> デバッグUI表示用
-    [SerializeField] private KeyCode keyToDebugToggle;
-    // カメラの視点変更
-    [SerializeField] private KeyCode keyCameraModeChange;
-    // <デバッグ用> オートの押し順設定
-    [SerializeField] private KeyCode keyToAutoOrderChange;
-    // <デバッグ用> オートスピード変更
-    [SerializeField] private KeyCode keyToAutoSpeedChange;
-    // <デバッグ用> ウェイトカットの有無設定
-    [SerializeField] private KeyCode keyToWaitCutToggle;
-
-    // <デバッグ用>セーブをしない
-    [SerializeField] private bool dontSaveFlag;
-    // <デバッグ用> 開始時にセーブ消去
-    [SerializeField] private bool deleteSaveFlag;
-
-    // <デバッグ用> デバッグUI表示するか
-    private bool hasDebugUI;
-
-    // 設定値
-    public int Setting { get; private set; }
-
-    // ゲームステート用
-    public MainGameFlow MainFlow { get; private set; }
-
-    private SaveManager saveManager;    // セーブ機能
+    private SaveManager saveManager;                        // セーブ機能
+    private bool hasDebugUI;    // <デバッグ用> デバッグUI表示するか
 
     private void Awake()
     {
-        // 画面サイズ初期化
-        Screen.SetResolution(1600, 900, false);
 
-        // FPS固定
-        Application.targetFrameRate = 60;
+        Screen.SetResolution(1600, 900, false);        // 画面サイズ初期化
+        Application.targetFrameRate = 60;        // FPS固定
 
-        // 操作
-        InputManager = GetComponent<InputManager>();
-        // メダル管理
-        Medal = GetComponent<MedalManager>();
-        // フラグ管理
-        Lots = GetComponent<FlagLots>();
-        // ウェイト
-        Wait = GetComponent<WaitManager>();
-        // ボーナス
-        Bonus = GetComponent<BonusManager>();
-        // メインフロー作成
-        MainFlow = new MainGameFlow(this);
-        // ステータスパネル
-        Status = statusPanel;
-        // プレイヤー情報
-        Player = new PlayerDatabase();
-        // オート機能
-        Auto = new AutoPlayFunction();
-        // セーブ機能
-        saveManager = new SaveManager();
+        InputManager = GetComponent<InputManager>();        // 操作
+        Medal = GetComponent<MedalManager>();               // メダル管理
+        Lots = GetComponent<FlagLots>();                    // フラグ管理
+        Wait = GetComponent<WaitManager>();                 // ウェイト
+        Bonus = GetComponent<BonusManager>();               // ボーナス
+        MainFlow = new MainGameFlow(this);                  // メインフロー作成
+        Status = statusPanel;                               // ステータスパネル
+        Player = new PlayerDatabase();                      // プレイヤー情報
+        Auto = new AutoPlayFunction();                      // オート機能
+        saveManager = new SaveManager();                    // セーブ機能
 
-        // デバッグUIの表示
-        hasDebugUI = false;
+        hasDebugUI = false;        // デバッグUIの表示
+        Option.AutoSettingChangedEvent += OnAutoSettingChanged;        // イベント登録
     }
 
     private void Start()
     {
-        // 読み込みに失敗したか
-        bool loadFailed = false;
-        // プレイヤーファイルのみ読み込みが失敗したか
-        bool playerLoadFailed = false;
+        bool loadFailed = false;            // 読み込みに失敗したか
+        bool playerLoadFailed = false;      // プレイヤーファイルのみ読み込みが失敗したか
 
-        if(deleteSaveFlag)
+        if (deleteSaveFlag)
         {
             Debug.LogWarning("セーブを削除しました。");
             saveManager.DeletePlayerSave();
@@ -190,8 +152,7 @@ public class GameManager : MonoBehaviour
 
         // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
-
-        Auto.SetAutoOrder(OptionSave.GetAutoOption().AutoStopOrders);
+        Option.LoadAutoSettingFromSave(OptionSave.AutoOptionData);
 
         // デバッグをすべて非表示
         ToggleDebugUI(false);
@@ -209,7 +170,7 @@ public class GameManager : MonoBehaviour
         {
             if(!Option.hasOptionMode)
             {
-                Auto.ChangeAutoMode(AutoEndConditionID.None, 0, true, false, false, BigColor.None);
+                Auto.ChangeAutoMode();
 
                 if(Auto.HasAuto)
                 {
@@ -237,20 +198,6 @@ public class GameManager : MonoBehaviour
             Option.ToggleOptionScreen(-1);
         }
 
-        // オート押し順変更
-        if (Input.GetKeyDown(keyToAutoOrderChange))
-        {
-            Auto.ChangeAutoOrder();
-            UpdateOptionSetting();
-        }
-
-        // オートスピード変更
-        if(Input.GetKeyDown(keyToAutoSpeedChange))
-        {
-            Auto.ChangeAutoSpeed();
-            UpdateOptionSetting();
-        }
-
         // ウェイトカット
         if (Input.GetKeyDown(keyToWaitCutToggle))
         {
@@ -274,8 +221,11 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        // イベント登録解除
+        Option.AutoSettingChangedEvent -= OnAutoSettingChanged;
+
         // セーブ開始
-        if(!dontSaveFlag)
+        if (!dontSaveFlag)
         {
             saveManager.GenerateSaveFolder();
             saveManager.GeneratePlayerSave();
@@ -290,7 +240,7 @@ public class GameManager : MonoBehaviour
         // 例外処理
         if (setting < 0 && setting > 6) 
         { 
-            throw new System.Exception("Invalid Setting, must be within 0~6");
+            throw new Exception("Invalid Setting, must be within 0~6");
         }
         // 0ならランダムを選ぶ
         else if (setting == 0)
@@ -303,38 +253,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // オプション内容変更
-    public void UpdateOptionSetting()
+    // オート設定変更時の挙動
+    void OnAutoSettingChanged()
     {
-        AutoOptionData autoOptionData = new AutoOptionData();
+        Debug.Log("Received AutoSetting Changed");
+        Auto.SetAutoSpeed(Option.GetAutoOptionData().AutoSpeedID);
+        Auto.SetAutoOrder(Option.GetAutoOptionData().AutoStopOrdersID);
+        Auto.SetBigColorLineUp(Option.GetAutoOptionData().BigColorLineUpID);
+        Auto.SetTechnicalPlay(Option.GetAutoOptionData().HasTechnicalPlay);
+        Auto.SetSpecificCondition(Option.GetAutoOptionData().SpecificConditionBinary);
+        Auto.SetSpinTimes(Option.GetAutoOptionData().SpinConditionID);
+        // セーブに記録する
+        OptionSave.RecordAutoData(Option.GetAutoOptionData());
+    }
 
-        // オート設定初期化
-        autoOptionData.AutoSpeedID = (AutoPlaySpeed)Enum.ToObject(typeof(AutoPlaySpeed), Auto.AutoSpeedID);
-        autoOptionData.AutoStopOrders = (AutoStopOrderOptions)Enum.ToObject(typeof(AutoStopOrderOptions), Auto.AutoOrderID);
-        autoOptionData.HasTechnicalPlay = Auto.GetHasTechnicalPlay();
-        autoOptionData.PlayerSelectedBigColor = Auto.GetBigColorLineUP();
-        autoOptionData.SpecificConditionBinary = AutoSpecificConditionID.None;
-        autoOptionData.SpinConditionID = AutoSpinTimeConditionID.None;
+    // その他設定変更時の挙動
+    void OnOtherSettingChanged()
+    {
+        Debug.Log("Received OtherSetting Changed");
 
-        // その他設定初期化
-        OtherOptionData otherOptionData = new OtherOptionData();
-
-        // 音量初期化
-        otherOptionData.MusicVolumeSetting = 5;
-        otherOptionData.SoundVolumeSetting = 5;
-
-        // その他設定
-        otherOptionData.ShowMiniReelSetting = false;
-        otherOptionData.AssistMarkerPos = new List<int>()
-            {
-                -1,
-                -1,
-                -1,
-            };
-        otherOptionData.HasWaitCut = false;
-        otherOptionData.HasDelayDisplay = false;
-
-        OptionSave.RecordData(autoOptionData, otherOptionData);
+        // セーブに記録する
     }
 
     // デバッグをつける機能(デバッグ用)

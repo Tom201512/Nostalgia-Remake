@@ -13,18 +13,12 @@ namespace ReelSpinGame_AutoPlay.AI
         // const
 
         // var
-
-        // 技術介入をするか
-        public bool HasTechnicalPlay { get; set; }
-        // ボーナス成立時、リーチ目を狙うか
-        public bool HasRiichiStop { get; set; }
-        // リーチ目を止めたか
-        public bool HasStoppedRiichiPtn { get; set; }
-        // ボーナスを1枚掛けで揃えさせるか
-        public bool HasOneBetBonusLineUp { get; set; }
-
-        // 揃えるBIG色
-        public BigColor PlayerSelectedBigColor {  get; set; }
+        public bool HasTechnicalPlay { get; set; }              // 技術介入をするか
+        public bool HasRiichiStop { get; set; }                 // ボーナス成立時、リーチ目を狙うか
+        public bool HasStoppedRiichiPtn { get; set; }           // リーチ目を止めたか
+        public bool HasOneBetBonusLineUp { get; set; }          // ボーナスを1枚掛けで揃えさせるか
+        public BigColor PlayerSelectedBigColor {  get; set; }   // 揃えるBIG色
+        public int[] CustomStopPos { get; set; }
 
         public AutoPlayAI()
         {
@@ -33,6 +27,12 @@ namespace ReelSpinGame_AutoPlay.AI
             HasStoppedRiichiPtn = false;
             HasOneBetBonusLineUp = false;
             PlayerSelectedBigColor = BigColor.None;
+            CustomStopPos = new int[ReelAmount]
+            {
+                -1,
+                -1,
+                -1
+            };
         }
 
         // func

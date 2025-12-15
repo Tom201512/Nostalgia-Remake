@@ -16,22 +16,15 @@ namespace ReelSpinGame_Save.Player
 
             // var
             // ゲーム数情報
-            // 総ゲーム数(ボーナス中除く)
-            public int TotalGames { get; private set; }
-            // ボーナス間ゲーム数
-            public int CurrentGames { get; private set; }
 
-            // ビッグチャンス成立回数
-            public int BigTimes { get; private set; }
-            // ボーナスゲーム成立回数
-            public int RegTimes { get; private set; }
+            public int TotalGames { get; private set; }             // 総ゲーム数(ボーナス中除く)
+            public int CurrentGames { get; private set; }           // ボーナス間ゲーム数
+            public int BigTimes { get; private set; }               // ビッグチャンス成立回数
+            public int RegTimes { get; private set; }               // ボーナスゲーム成立回数
 
-            // メダル情報
-            public PlayerMedalData PlayerMedalData { get; private set; }
-            // 当選させたボーナス(IDごとに)
-            public List<BonusHitData> BonusHitRecord { get; private set; }
-            // 解析データ
-            public AnalyticsData PlayerAnalyticsData { get; private set; }
+            public PlayerMedalData PlayerMedalData { get; private set; }            // メダル情報
+            public List<BonusHitData> BonusHitRecord { get; private set; }          // 当選させたボーナス(IDごとに)
+            public AnalyticsData PlayerAnalyticsData { get; private set; }          // 解析データ
 
             // コンストラクタ
             public PlayerSave()

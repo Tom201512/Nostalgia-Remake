@@ -1,6 +1,7 @@
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Option.MenuBar;
 using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_Save.Database.Option;
 using UnityEngine;
 
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -25,27 +26,42 @@ namespace ReelSpinGame_Option
         public bool hasOptionMode { get; private set; } // 設定変更中か(ゲームの操作ができなくなる)
         public bool lockOptionMode { get; private set; } // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
 
+        // 設定変更時のイベント
+        // オート設定
+        public delegate void AutoSettingChanged();
+        public event AutoSettingChanged AutoSettingChangedEvent;
+
+        // システム設定
+        public delegate void OtherSettingChanged();
+        public event OtherSettingChanged OtherSettingChangedEvent;
+
         private void Awake()
         {
             hasOptionScreen = false;
             hasOptionMode = false;
             lockOptionMode = false;
+
+            // イベント登録
             openButton.ButtonPushedEvent += ToggleOptionScreen;
             menuBarUI.OnPressedMenuEvent += EnterOptionMode;
             menuBarUI.OnClosedScreenEvent += DisableOptionMode;
+            autoPlaySettingScreen.SettingChangedEvent += OnAutoSettingChanged;
         }
 
         private void Start()
         {
+            // ボタン有効化設定を変更
             openButton.ToggleInteractive(true);
             menuBarUI.gameObject.SetActive(false);
         }
 
         private void OnDestroy()
         {
+            // イベント登録解除
             openButton.ButtonPushedEvent -= ToggleOptionScreen;
             menuBarUI.OnPressedMenuEvent -= EnterOptionMode;
             menuBarUI.OnClosedScreenEvent -= DisableOptionMode;
+            autoPlaySettingScreen.SettingChangedEvent -= OnAutoSettingChanged;
         }
 
         // func
@@ -60,10 +76,9 @@ namespace ReelSpinGame_Option
             }
         }
 
-        // ロック状態の設定
+        // 設定変更のロック
         public void ToggleOptionLock(bool value)
         {
-            // 遊技中はメニューバー操作ができないようにする
             lockOptionMode = value;
             menuBarUI.SetInteractiveAllButton(!value);
             Debug.Log("Lock:" + value);
@@ -73,23 +88,17 @@ namespace ReelSpinGame_Option
         public int GetForceFlagSelectID() => forceFlagScreen.CurrentSelectFlagID; // 選択したフラグ値
         public int GetForceFlagRandomID() => forceFlagScreen.CurrentSelectRandomID; // 選択したランダム値
 
+        public AutoOptionData GetAutoOptionData() => autoPlaySettingScreen.GetAutoSettingData(); // オート設定
+
         // 各画面の設定情報変更
+        // セーブからオート設定を読み込む
+        public void LoadAutoSettingFromSave(AutoOptionData autoOptionData) => autoPlaySettingScreen.LoadSettingData(autoOptionData);
 
         // 強制フラグのボタン有効化設定を変更
-        public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID)
-        {
-            forceFlagScreen.SetBonusStatus(currentBonusStatus, holdingBonusID);
-        }
+        public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID) => forceFlagScreen.SetFlagButtonsInteractive(currentBonusStatus, holdingBonusID);
 
         // 強制フラグの設定リセット
         public void ResetForceFlagSetting() => forceFlagScreen.ResetFlagSetting();
-
-        // オート設定変更
-
-        public void SetAutoSetting()
-        {
-
-        }
 
         // オプションモードに入れる
         void EnterOptionMode()
@@ -104,5 +113,11 @@ namespace ReelSpinGame_Option
             hasOptionMode = false;
             openButton.ToggleInteractive(true);
         }
+
+        // オート設定が変更された時の処理
+        void OnAutoSettingChanged() => AutoSettingChangedEvent?.Invoke();
+
+        // その他設定が変更された時の処理
+        void OnOtherSettingChanged() => OtherSettingChangedEvent?.Invoke();
     }
 }

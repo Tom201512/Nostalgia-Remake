@@ -47,7 +47,7 @@ namespace ReelSpinGame_Option.MenuBar
             howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent += SlotDataClose;
             forceFlagScreen.OnClosedScreenEvent += ForceFlagClose;
-            autoPlaySettingScreen.OnClosedScreenEvent += AutoPlayClose;
+            autoPlaySettingScreen.ClosedScreenEvent += AutoPlayClose;
         }
 
         private void Start()
@@ -70,7 +70,7 @@ namespace ReelSpinGame_Option.MenuBar
             howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent -= SlotDataClose;
             forceFlagScreen.OnClosedScreenEvent -= ForceFlagClose;
-            autoPlaySettingScreen.OnClosedScreenEvent -= AutoPlayClose;
+            autoPlaySettingScreen.ClosedScreenEvent -= AutoPlayClose;
         }
 
         // func(public)

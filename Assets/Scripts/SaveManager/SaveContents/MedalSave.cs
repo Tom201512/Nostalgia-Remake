@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Medal.MedalBehavior;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace ReelSpinGame_Save.Medal
 {
@@ -14,14 +13,10 @@ namespace ReelSpinGame_Save.Medal
         // const
 
         // var
-        // クレジット枚数
-        public int Credit { get; private set; }
-        // 最高ベット枚数
-        public int MaxBetAmount { get; private set; }
-        // 最後にかけたメダル枚数
-        public int LastBetAmount { get; private set; }
-        // リプレイ状態か
-        public bool HasReplay { get; private set; }
+        public int Credit { get; private set; }             // クレジット枚数
+        public int MaxBetAmount { get; private set; }       // 最高ベット枚数
+        public int LastBetAmount { get; private set; }      // 最後にかけたメダル枚数
+        public bool HasReplay { get; private set; }         // リプレイ状態か
 
         public MedalSave()
         {
@@ -37,13 +32,13 @@ namespace ReelSpinGame_Save.Medal
         public void RecordData(MedalSystemData medal)
         {
             Credit = medal.Credit;
-            Debug.Log("Credit:" + Credit);
+            //Debug.Log("Credit:" + Credit);
             MaxBetAmount = medal.MaxBetAmount;
-            Debug.Log("MaxBetAmount:" + MaxBetAmount);
+            //Debug.Log("MaxBetAmount:" + MaxBetAmount);
             LastBetAmount = medal.LastBetAmount;
-            Debug.Log("LastBetAmount:" + LastBetAmount);
+            //Debug.Log("LastBetAmount:" + LastBetAmount);
             HasReplay = medal.HasReplay;
-            Debug.Log("HasReplay:" + HasReplay);
+            //Debug.Log("HasReplay:" + HasReplay);
         }
 
         // セーブ
@@ -52,13 +47,13 @@ namespace ReelSpinGame_Save.Medal
             // 変数を格納
             List<int> data = new List<int>();
             data.Add(Credit);
-            Debug.Log("Credit:" + Credit);
+            //Debug.Log("Credit:" + Credit);
             data.Add(MaxBetAmount);
-            Debug.Log("MaxBetAmount:" + MaxBetAmount);
+            //Debug.Log("MaxBetAmount:" + MaxBetAmount);
             data.Add(LastBetAmount);
-            Debug.Log("LastBetAmount:" + LastBetAmount);
+            //Debug.Log("LastBetAmount:" + LastBetAmount);
             data.Add(HasReplay ? 1 : 0);
-            Debug.Log("HasReplay:" + HasReplay);
+            //Debug.Log("HasReplay:" + HasReplay);
 
             return data;
         }
@@ -69,13 +64,13 @@ namespace ReelSpinGame_Save.Medal
             try
             {
                 Credit = br.ReadInt32();
-                Debug.Log("Credit:" + Credit);
+                //Debug.Log("Credit:" + Credit);
                 MaxBetAmount = br.ReadInt32();
-                Debug.Log("MaxBetAmount:" + MaxBetAmount);
+                //Debug.Log("MaxBetAmount:" + MaxBetAmount);
                 LastBetAmount = br.ReadInt32();
-                Debug.Log("LastBetAmount:" + LastBetAmount);
+                //Debug.Log("LastBetAmount:" + LastBetAmount);
                 HasReplay = (br.ReadInt32() == 1 ? true : false);
-                Debug.Log("HasReplay:" + HasReplay);
+                //Debug.Log("HasReplay:" + HasReplay);
             }
             catch (Exception e)
             {

@@ -19,7 +19,7 @@ public class AutoTestUI : UIBaseClass
 
         buffer += "Auto-" + "\n";
         buffer += "AutoEnabled:" + auto.HasAuto + "\n";
-        buffer += "AutoEndCondition:" + auto.GetConditionName() + "\n";
+        buffer += "AutoEndCondition:" + auto.GetConditionID() + "\n";
         buffer += "AutoSpeed:" + auto.GetSpeedName() + "\n";
         buffer += "AutoOrderOption:" + auto.GetOrderName() + "\n";
         buffer += "AutoPos: L:" + auto.AutoStopPos[(int)ReelLeft] + " M:" + auto.AutoStopPos[(int)ReelMiddle] + " R:" + auto.AutoStopPos[(int)ReelRight] + "\n";

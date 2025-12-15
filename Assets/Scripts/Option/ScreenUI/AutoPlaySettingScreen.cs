@@ -1,12 +1,7 @@
 using ReelSpinGame_Option.AutoSetting;
 using ReelSpinGame_Option.Button;
-using ReelSpinGame_Reels;
-using System.Collections.Generic;
-using TMPro;
+using ReelSpinGame_Save.Database.Option;
 using UnityEngine;
-using UnityEngine.UI;
-using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -19,28 +14,32 @@ namespace ReelSpinGame_Option.MenuContent
         // var
         // 各種操作
         [SerializeField] AutoSettingManager autoSettingManager; // オート設定変更マネージャー
-        [SerializeField] ButtonComponent closeButton; // クローズボタン
+        [SerializeField] ButtonComponent closeButton;           // クローズボタン
+        [SerializeField] ButtonComponent resetButton;           // リセットボタン
+
+        // 設定が変更された時のイベント
+        public delegate void SettingChanged();
+        public event SettingChanged SettingChangedEvent;
 
         // 画面を閉じたときのイベント
-        public delegate void OnClosedScreen();
-        public event OnClosedScreen OnClosedScreenEvent;
+        public delegate void ClosedScreen();
+        public event ClosedScreen ClosedScreenEvent;
 
         // func
         private void Awake()
         {
-            // ボタン登録
+            // イベント登録
             closeButton.ButtonPushedEvent += OnClosedPressed;
-        }
-
-        private void Start()
-        {
-
+            autoSettingManager.OnSettingChangedEvent += OnSettingChanged;
+            resetButton.ButtonPushedEvent += OnResetButtonPressed;
         }
 
         private void OnDestroy()
         {
-            // 登録解除
+            // イベント解除
             closeButton.ButtonPushedEvent -= OnClosedPressed;
+            autoSettingManager.OnSettingChangedEvent -= OnSettingChanged;
+            resetButton.ButtonPushedEvent -= OnResetButtonPressed;
         }
 
         // 画面表示&初期化
@@ -52,6 +51,7 @@ namespace ReelSpinGame_Option.MenuContent
             // ボタン有効化
             autoSettingManager.SetInteractiveButtons(true);
             closeButton.ToggleInteractive(true);
+            resetButton.ToggleInteractive(true);
         }
 
         // 画面を閉じる
@@ -63,11 +63,24 @@ namespace ReelSpinGame_Option.MenuContent
                 Debug.Log("Closed AutoSetting");
                 autoSettingManager.SetInteractiveButtons(false);
                 closeButton.ToggleInteractive(false);
+                resetButton.ToggleInteractive(false);
             }
         }
 
+        // データを得る
+        public AutoOptionData GetAutoSettingData() => autoSettingManager.CurrentAutoOptionData;
+
+        // 設定を読み込む
+        public void LoadSettingData(AutoOptionData autoOption) => autoSettingManager.LoadOptionData(autoOption);
+
         // 閉じるボタンを押したときの挙動
-        void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
+        void OnClosedPressed(int signalID) => ClosedScreenEvent?.Invoke();
+
+        // 設定変更時の挙動
+        void OnSettingChanged() => SettingChangedEvent?.Invoke();
+
+        // リセットボタンを押したときの挙動
+        void OnResetButtonPressed(int signalID) => autoSettingManager.ResetOptionData();
     }
 }
 
