@@ -5,7 +5,7 @@ using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;

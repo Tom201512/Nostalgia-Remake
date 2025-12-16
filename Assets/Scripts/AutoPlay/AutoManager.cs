@@ -1,15 +1,16 @@
 using ReelSpinGame_AutoPlay.AI;
+using UnityEngine;
 using System;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
+using TMPro;
 
 namespace ReelSpinGame_AutoPlay
 {
-    public class AutoPlayFunction
+    // オートプレイ機能
+    public class AutoManager : MonoBehaviour
     {
-        // オートプレイ機能
-
         // const
         public enum AutoStopOrder { First, Second, Third }                          // オート押し順の識別用
         public enum AutoStopOrderOptions { LMR, LRM, MLR, MRL, RLM, RML }           // オート押し順指定用(左:L, 中:M, 右:R))
@@ -39,6 +40,8 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // var
+        [SerializeField] TextMeshProUGUI autoModeText;              // オート中に表示するテキスト
+
         public bool HasAuto { get; private set; }                   // オートプレイ中か
         public int AutoSpeedID { get; private set; }                // オート速度
         public bool HasWaitingCancel { get; private set; }          // 高速オート解除待ちか
@@ -54,8 +57,7 @@ namespace ReelSpinGame_AutoPlay
 
         private AutoPlayAI autoAI;      // オート時の停止位置選択AI
 
-        // コンストラクタ
-        public AutoPlayFunction()
+        void Awake()
         {
             autoAI = new AutoPlayAI();
             HasAuto = false;
@@ -70,7 +72,10 @@ namespace ReelSpinGame_AutoPlay
             // 停止位置の配列作成
             AutoStopPos = new int[] { 0, 0, 0 };
             HasWaitingCancel = false;
+
+            autoModeText.gameObject.SetActive(false);
         }
+
 
         // func
         // 各種数値取得
@@ -112,6 +117,7 @@ namespace ReelSpinGame_AutoPlay
             else
             {
                 HasAuto = !HasAuto;
+
             }
 
             // 停止位置リセット
@@ -119,6 +125,8 @@ namespace ReelSpinGame_AutoPlay
 
             // 指定したオート終了条件を付与
             SetSpinTimes();
+            // テキスト表示
+            autoModeText.gameObject.SetActive(HasAuto);
         }
 
         // 高速オート終了チェック
@@ -187,6 +195,7 @@ namespace ReelSpinGame_AutoPlay
             HasStopPosDecided = false;
             RemainingAutoGames = 0;
             autoAI.HasStoppedWinningPattern = false;
+            autoModeText.gameObject.SetActive(false);
         }
         
         // オート停止位置をリセット

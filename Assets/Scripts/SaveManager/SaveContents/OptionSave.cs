@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Save.Database

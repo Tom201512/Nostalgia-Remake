@@ -10,7 +10,7 @@ using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
 using System;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_AutoPlay.AutoManager;
 
 // ゲームの管理
 public class GameManager : MonoBehaviour
@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] WaitTestUI waitUI;
     [SerializeField] ReelTestUI reelUI;
     [SerializeField] BonusTestUI bonusUI;
-    [SerializeField] AutoTestUI autoUI;
 
     [SerializeField] private KeyCode keyToDebugToggle;          // <デバッグ用> デバッグUI表示用
     [SerializeField] private KeyCode keyCameraModeChange;       // カメラの視点変更
@@ -55,11 +54,11 @@ public class GameManager : MonoBehaviour
     public MedalManager Medal { get; private set; }                     // メダルマネージャー
     public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
     public WaitManager Wait { get; private set; }                       // ウェイト管理マネージャー
-    public ReelRotateManager Reel { get { return reelManagerObj; } }          // リールマネージャー
+    public ReelRotateManager Reel { get { return reelManagerObj; } }    // リールマネージャー
     public BonusManager Bonus { get; private set; }                     // ボーナス管理マネージャー
     public EffectPresenter Effect { get { return effectManagerObj; } }  // 演出管理マネージャー
     public OptionManager Option { get { return optionManagerObj; } }    // オプションマネージャー
-    public AutoPlayFunction Auto { get; private set; }      // オートプレイ機能
+    public AutoManager Auto { get; private set; }                       // オートプレイ機能
 
     // プレイヤー関連
     public PlayerDatabase Player;                                                   // プレイヤー情報
@@ -88,7 +87,7 @@ public class GameManager : MonoBehaviour
         MainFlow = new MainGameFlow(this);                  // メインフロー作成
         Status = statusPanel;                               // ステータスパネル
         Player = new PlayerDatabase();                      // プレイヤー情報
-        Auto = new AutoPlayFunction();                      // オート機能
+        Auto = GetComponent<AutoManager>();                 // オート機能
         saveManager = new SaveManager();                    // セーブ機能
 
         hasDebugUI = false;        // デバッグUIの表示
@@ -147,7 +146,6 @@ public class GameManager : MonoBehaviour
 
         // UI 設定
         waitUI.SetWaitManager(Wait);
-        autoUI.SetAutoFunction(Auto);
 
         // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
@@ -285,7 +283,6 @@ public class GameManager : MonoBehaviour
     // デバッグUIの表示非表示(デバッグ用)
     private void ToggleDebugUI(bool value)
     {
-        autoUI.ToggleUI(value);
         medalUI.ToggleUI(value);
         lotsUI.ToggleUI(value);
         waitUI.ToggleUI(value);

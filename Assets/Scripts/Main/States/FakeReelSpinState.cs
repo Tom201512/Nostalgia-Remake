@@ -1,8 +1,8 @@
 using ReelSpinGame_Interface;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction.AutoStopOrder;
+using static ReelSpinGame_AutoPlay.AutoManager;
+using static ReelSpinGame_AutoPlay.AutoManager.AutoStopOrder;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 

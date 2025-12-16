@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using ReelSpinGame_Interface;
-using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_AutoPlay.AutoManager;
 
 namespace ReelSpinGame_State.LotsState
 {
