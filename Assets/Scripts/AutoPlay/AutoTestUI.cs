@@ -1,6 +1,6 @@
 using ReelSpinGame_AutoPlay;
 using TMPro;
-using static ReelSpinGame_Reels.ReelManagerModel.ReelID;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 public class AutoTestUI : UIBaseClass
 {
@@ -22,7 +22,7 @@ public class AutoTestUI : UIBaseClass
         buffer += "AutoEndCondition:" + auto.GetConditionID() + "\n";
         buffer += "AutoSpeed:" + auto.GetSpeedName() + "\n";
         buffer += "AutoOrderOption:" + auto.GetOrderName() + "\n";
-        buffer += "AutoPos: L:" + auto.AutoStopPos[(int)ReelLeft] + " M:" + auto.AutoStopPos[(int)ReelMiddle] + " R:" + auto.AutoStopPos[(int)ReelRight] + "\n";
+        buffer += "AutoPos: L:" + auto.AutoStopPos[(int)ReelID.ReelLeft] + " M:" + auto.AutoStopPos[(int)ReelID.ReelMiddle] + " R:" + auto.AutoStopPos[(int)ReelID.ReelRight] + "\n";
         buffer += "AutoPosDecided:" + auto.HasStopPosDecided + "\n";
         buffer += "RemainingG:" + auto.RemainingAutoGames;
 

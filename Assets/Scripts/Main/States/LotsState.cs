@@ -1,8 +1,11 @@
-﻿using ReelSpinGame_Interface;
-using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Bonus.BonusSystemData;
-using UnityEngine;
+﻿using ReelSpinGame_AutoPlay.AI;
+using ReelSpinGame_Interface;
 using System;
+using UnityEngine;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction;
+using static ReelSpinGame_AutoPlay.AutoPlayFunction.AutoStopOrder;
+using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -62,8 +65,33 @@ namespace ReelSpinGame_State.LotsState
             // オートモードがある場合、ここでオート停止位置の設定
             if (gM.Auto.HasAuto)
             {
-                gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(),gM.Bonus.GetHoldingBonusID(), 
-                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());
+                // BIG中の場合、(JAC回数が残り1回, 残りゲーム数が9G以上)ならJACハズシをする
+                if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
+                    gM.Bonus.GetRemainingBigGames() > 8 && gM.Bonus.GetRemainingJacIn() == 1)
+                {
+                    gM.Auto.SetAutoOrder(AutoStopOrderOptions.RML);
+                }
+                // ボーナス成立後であれば左押しに固定する
+                else if (gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone)
+                {
+                    gM.Auto.SetAutoOrder(AutoStopOrderOptions.LMR);
+                }
+                // それ以外はオプションで設定した押し順を使う
+                else
+                {
+                    gM.Auto.SetAutoOrder(gM.OptionSave.AutoOptionData.AutoStopOrdersID);
+                }
+
+                // 条件を作成
+                AutoAIConditionClass autoAICondition = new AutoAIConditionClass();
+                autoAICondition.Flag = gM.Lots.GetCurrentFlag();
+                autoAICondition.FirstPush = gM.Auto.AutoStopOrders[(int)First];
+                autoAICondition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
+                autoAICondition.BigChanceGames = gM.Bonus.GetRemainingBigGames();
+                autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
+                autoAICondition.BetAmount = gM.Medal.GetLastBetAmount();
+
+                gM.Auto.GetAutoStopPos(autoAICondition);
             }
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);

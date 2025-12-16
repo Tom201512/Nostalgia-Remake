@@ -11,7 +11,6 @@ using ReelSpinGame_UI.Player;
 using System;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
-using static ReelSpinGame_Bonus.BonusSystemData;
 
 // ゲームの管理
 public class GameManager : MonoBehaviour
@@ -78,8 +77,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
 
-        Screen.SetResolution(1600, 900, false);        // 画面サイズ初期化
-        Application.targetFrameRate = 60;        // FPS固定
+        Screen.SetResolution(1600, 900, false);         // 画面サイズ初期化
+        Application.targetFrameRate = 60;               // FPS固定
 
         InputManager = GetComponent<InputManager>();        // 操作
         Medal = GetComponent<MedalManager>();               // メダル管理
@@ -170,6 +169,14 @@ public class GameManager : MonoBehaviour
         {
             if(!Option.hasOptionMode)
             {
+                // 設定を反映する
+                Auto.SetAutoSpeed(Option.GetAutoOptionData().AutoSpeedID);
+                Auto.SetAutoOrder(Option.GetAutoOptionData().AutoStopOrdersID);
+                Auto.SetBigColorLineUp(Option.GetAutoOptionData().BigColorLineUpID);
+                Auto.SetTechnicalPlay(Option.GetAutoOptionData().HasTechnicalPlay);
+                Auto.SetSpecificCondition(Option.GetAutoOptionData().SpecificConditionBinary);
+                Auto.SetSpinTimes(Option.GetAutoOptionData().SpinConditionID);
+
                 Auto.ChangeAutoMode();
 
                 if(Auto.HasAuto)
@@ -256,13 +263,6 @@ public class GameManager : MonoBehaviour
     // オート設定変更時の挙動
     void OnAutoSettingChanged()
     {
-        Debug.Log("Received AutoSetting Changed");
-        Auto.SetAutoSpeed(Option.GetAutoOptionData().AutoSpeedID);
-        Auto.SetAutoOrder(Option.GetAutoOptionData().AutoStopOrdersID);
-        Auto.SetBigColorLineUp(Option.GetAutoOptionData().BigColorLineUpID);
-        Auto.SetTechnicalPlay(Option.GetAutoOptionData().HasTechnicalPlay);
-        Auto.SetSpecificCondition(Option.GetAutoOptionData().SpecificConditionBinary);
-        Auto.SetSpinTimes(Option.GetAutoOptionData().SpinConditionID);
         // セーブに記録する
         OptionSave.RecordAutoData(Option.GetAutoOptionData());
     }

@@ -1,35 +1,27 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Datas.Reels;
-using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Reels.Table
 {
+    // リールテーブル管理用
     public class ReelTableManager
     {
-        // リールテーブル管理用
-
         // const
-        // いずれかのボーナスが入っている条件を示す数字
-        public const int BonusAnyValueID = 3;
 
-        // 第一、第二、第三停止の配列で使う識別子
-        public enum StopOrder { First, Second, Third }
+        public const int BonusAnyValueID = 3;               // いずれかのボーナスが入っている条件を示す数字
+        public enum StopOrder { First, Second, Third }      // 第一、第二、第三停止の配列で使う識別子
 
         // var
-        // 最後に使用したリールテーブルID
-        public int[] UsedReelTableTID { get; private set; }
-        // 各リールの最後に使用した組み合わせID
-        public int[] UsedReelTableCID { get; private set; }
 
-        // 停止させたリール順のリールID
-        public ReelID[] PushedReelIdOrder { get; private set; }
-        // テーブルID
-        public int[] PushedReelTidOrder { get; private set; }
-        // 組み合わせID
-        public int[] PushedReelCidOrder { get; private set; }
+        public int[] UsedReelTableTID { get; private set; }         // 最後に使用したリールテーブルID
+        public int[] UsedReelTableCID { get; private set; }         // 各リールの最後に使用した組み合わせID
+        public ReelID[] PushedReelIdOrder { get; private set; }     // 停止させたリール順のリールID
+        public int[] PushedReelTidOrder { get; private set; }       // テーブルID
+        public int[] PushedReelCidOrder { get; private set; }       // 組み合わせID
 
         // コンストラクタ
         public ReelTableManager()

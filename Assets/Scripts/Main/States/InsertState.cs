@@ -122,9 +122,8 @@ namespace ReelSpinGame_State.InsertState
             // オート時サウンド再生設定を変更
             gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
 
-            // 1枚掛けで揃える設定がある場合、リーチ目出現後は1枚掛けで揃える
-            if(gM.Auto.GetHasRiichiStop() && gM.Auto.GetHasOneBetBonusLineUp() &&
-                gM.Auto.GetHasStoppedRiichiPtn() && gM.Medal.GetCurrentBet() != 1)
+            // ボーナス成立後であれば1枚掛けをする
+            if(gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone && gM.Medal.GetCurrentBet() != 1)
             {
                 BetAction(1, gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
             }

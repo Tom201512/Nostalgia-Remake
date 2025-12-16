@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ReelSpinGame_Reels.Table;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Reels
 {
@@ -8,39 +9,22 @@ namespace ReelSpinGame_Reels
         // リールマネージャーのデータ
 
         // const 
-        // リール数
-        public const int ReelAmount = 3;
-        // リール識別用ID
-        public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
-        // 最大 ランダムテーブル数(1~6)
-        public const int MaxRandomLots = 6;
+        public const int ReelAmount = 3;                // リール数
+        public const int MaxRandomLots = 6;             // 最大 ランダムテーブル数(1~6)
 
         // var
-        // 全リールが動作中か
-        public bool IsReelWorking { get; set; }
-        // 動作完了したか
-        public bool IsReelFinished { get; set; }
-        // 停止可能になったか(リール速度が一定になって0.5秒後)
-        public bool CanStopReels { get; set; }
-        // 強制停止が発動しているか
-        public bool HasForceStop { get; set; }
-        // 第一停止をしたか
-        public bool IsFirstReelPushed { get; set; }
-        // 最初に止めたリール番号
-        public ReelID FirstPushReel { get; set; }
-        // 第一停止リールの停止位置
-        public int FirstPushPos { get; set; }
-        // 停止したリール数
-        public int StoppedReelCount { get; set; }
+        public bool IsReelWorking { get; set; }         // 全リールが動作中か
+        public bool IsReelFinished { get; set; }        // 動作完了したか
+        public bool CanStopReels { get; set; }          // 停止可能か
+        public bool HasForceStop { get; set; }          // 強制停止が発動しているか
+        public bool IsFirstReelPushed { get; set; }     // 第一停止をしたか
+        public ReelID FirstPushReel { get; set; }       // 最初に止めたリール番号
+        public int FirstPushPos { get; set; }           // 第一停止リールの停止位置
+        public int StoppedReelCount { get; set; }       // 停止したリール数
 
-        // リール制御
-        public ReelTableManager ReelTableManager { get; private set; }
-
-        // 最後に止めたリールのデータ
-        public LastStoppedReelData LastStoppedReelData { get; private set; }
-
-        // リールテーブルのランダム数値
-        public int RandomValue { get; set; }
+        public ReelTableManager ReelTableManager { get; private set; }          // リール制御
+        public LastStoppedReelData LastStoppedReelData { get; private set; }    // 最後に止めたリールのデータ
+        public int RandomValue { get; set; }                                    // リールテーブルのランダム数値
 
         // コンストラクタ
         public ReelManagerModel()

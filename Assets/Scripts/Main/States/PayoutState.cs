@@ -2,7 +2,7 @@
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Payout.PayoutChecker;
-using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using UnityEngine;
 

@@ -1,5 +1,5 @@
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_AutoPlay.AI
 {

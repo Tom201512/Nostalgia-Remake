@@ -1,10 +1,10 @@
-﻿using ReelSpinGame_Interface;
-using ReelSpinGame_Util.OriginalInputs;
+﻿using ReelSpinGame_AutoPlay.AI;
+using ReelSpinGame_Interface;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction;
 using static ReelSpinGame_AutoPlay.AutoPlayFunction.AutoStopOrder;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_State.PlayingState
@@ -25,7 +25,6 @@ namespace ReelSpinGame_State.PlayingState
         public PlayingState(GameManager gameManager)
         {
             hasInput = false;
-
             State = MainGameFlow.GameStates.Playing;
             gM = gameManager;
         }
@@ -39,8 +38,8 @@ namespace ReelSpinGame_State.PlayingState
             }
 
             // 強制フラグ設定のリセット
-            gM.Option.ResetForceFlagSetting();
-            // リール始動(高速オート時は1.5倍のリールスピードになる)
+            gM.Option.ResetForceFlagSetting(); 
+            // リール始動
             gM.Reel.StartReels(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
@@ -82,7 +81,6 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                // リールを止める
                 gM.Reel.StopSelectedReel(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
             }
         }
@@ -92,7 +90,6 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                // リールを止める
                 gM.Reel.StopSelectedReelFast(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
             }
         }
@@ -103,8 +100,33 @@ namespace ReelSpinGame_State.PlayingState
             // オート停止位置が決まっているかチェック。決まっていなければすぐ決める
             if (!gM.Auto.HasStopPosDecided)
             {
-                gM.Auto.GetAutoStopPos(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(),
-                    gM.Bonus.GetRemainingBigGames(), gM.Bonus.GetRemainingJacIn(), gM.Medal.GetLastBetAmount());
+                // BIG中の場合、(JAC回数が残り1回, 残りゲーム数が9G以上)ならJACハズシをする
+                if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
+                    gM.Bonus.GetRemainingBigGames() > 8 && gM.Bonus.GetRemainingJacIn() == 1)
+                {
+                    gM.Auto.SetAutoOrder(AutoStopOrderOptions.RML);
+                }
+                // ボーナス成立後であれば左押しに固定する
+                else if(gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone)
+                {
+                    gM.Auto.SetAutoOrder(AutoStopOrderOptions.LMR);
+                }
+                // それ以外はオプションで設定した押し順を使う
+                else
+                {
+                    gM.Auto.SetAutoOrder(gM.OptionSave.AutoOptionData.AutoStopOrdersID);
+                }
+
+                // 条件を作成
+                AutoAIConditionClass autoAICondition = new AutoAIConditionClass();
+                autoAICondition.Flag = gM.Lots.GetCurrentFlag();
+                autoAICondition.FirstPush = gM.Auto.AutoStopOrders[(int)First];
+                autoAICondition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
+                autoAICondition.BigChanceGames = gM.Bonus.GetRemainingBigGames();
+                autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
+                autoAICondition.BetAmount = gM.Medal.GetLastBetAmount();
+
+                gM.Auto.GetAutoStopPos(autoAICondition);
             }
 
             // すべてのリールが止まっていたら払い出し処理をする
@@ -115,17 +137,7 @@ namespace ReelSpinGame_State.PlayingState
             // オート中は指定した押し順で押すようにする
             else
             {
-                // BIG中の場合、(JAC回数が残り1回, 残りゲーム数が9G以上)ならJACハズシをする
-                if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames &&
-                    gM.Bonus.GetRemainingBigGames() > 8 && gM.Bonus.GetRemainingJacIn() == 1)
-                {
-                    AutoJacAvoid();
-                }
-                // それ以外は指定した押し順で停止
-                else
-                {
-                    AutoStopBehavior();
-                }
+                AutoStopBehavior();
             }
         }
 
@@ -190,57 +202,18 @@ namespace ReelSpinGame_State.PlayingState
             }
         }
 
-        // JACハズシ時のオート制御
-        private void AutoJacAvoid()
-        {
-            // 押し順は右->中->左になる。
-            // 超高速オートなら即座に止めて払い出し状態へ
-            if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
-            {
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)ReelID.ReelRight], gM.Auto.AutoStopPos[(int)ReelID.ReelRight]);
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)ReelID.ReelMiddle], gM.Auto.AutoStopPos[(int)ReelID.ReelMiddle]);
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)ReelID.ReelLeft], gM.Auto.AutoStopPos[(int)ReelID.ReelLeft]);
-            }
-            // 高速、通常速度なら停止位置についたら停止
-            else
-            {
-                // 順番にリールが止まっていないものから停止させる
-                if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelStatus.Stopped)
-                {
-                    if (gM.Reel.GetReelPushedPos(ReelID.ReelRight) ==
-                        gM.Auto.AutoStopPos[(int)ReelID.ReelRight])
-                    {
-                        StopReel(ReelID.ReelRight);
-                    }
-                }
-                else if (gM.Reel.GetReelStatus(ReelID.ReelMiddle) != ReelStatus.Stopped)
-                {
-                    if (gM.Reel.GetReelPushedPos(ReelID.ReelMiddle) ==
-                        gM.Auto.AutoStopPos[(int)ReelID.ReelMiddle])
-                    {
-                        StopReel(ReelID.ReelMiddle);
-                    }
-                }
-                else if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelStatus.Stopped)
-                {
-                    if (gM.Reel.GetReelPushedPos(ReelID.ReelLeft) ==
-                        gM.Auto.AutoStopPos[(int)ReelID.ReelLeft])
-                    {
-                        StopReel(ReelID.ReelLeft);
-                    }
-                }
-            }
-        }
-
-        // JACハズシ以外のオート制御
+        // オート制御
         private void AutoStopBehavior()
         {
             // 超高速オートなら即座に止めて払い出し状態へ
             if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
             {
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)First], gM.Auto.AutoStopPos[(int)First]);
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)Second], gM.Auto.AutoStopPos[(int)Second]);
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)Third], gM.Auto.AutoStopPos[(int)Third]);
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)First], 
+                    gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)First]]);
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)Second],
+                    gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)Second]]);
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)Third],
+                    gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)Third]]);
             }
             else
             {

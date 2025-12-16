@@ -1,8 +1,7 @@
-﻿using ReelSpinGame_Util.OriginalInputs;
-using UnityEngine;
+﻿using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_AutoPlay.AI
 {
@@ -12,11 +11,10 @@ namespace ReelSpinGame_AutoPlay.AI
         // const
 
         // var
-        public bool HasTechnicalPlay { get; set; }              // 技術介入をするか
-        public bool HasRiichiStop { get; set; }                 // ボーナス成立時、リーチ目を狙うか
-        public bool HasStoppedRiichiPtn { get; set; }           // リーチ目を止めたか
-        public bool HasOneBetBonusLineUp { get; set; }          // ボーナスを1枚掛けで揃えさせるか
-        public BigColor PlayerSelectedBigColor {  get; set; }   // 揃えるBIG色
+        public bool HasTechnicalPlay { get; set; }                  // 技術介入をするか
+        public bool HasWinningPatternStop { get; set; }             // リーチ目を止める制御を取るか
+        public bool HasStoppedWinningPattern { get; set; }          // リーチ目を止めたか
+        public BigColor PlayerSelectedBigColor {  get; set; }       // 揃えるBIG色
 
         // 使用AI
         AutoRandomAI autoRandomAI;                              // 適当押し
@@ -36,9 +34,8 @@ namespace ReelSpinGame_AutoPlay.AI
         public AutoPlayAI()
         {
             HasTechnicalPlay = true;
-            HasRiichiStop = false;
-            HasStoppedRiichiPtn = false;
-            HasOneBetBonusLineUp = false;
+            HasWinningPatternStop = false;
+            HasStoppedWinningPattern = false;
             PlayerSelectedBigColor = BigColor.None;
 
             autoRandomAI = new AutoRandomAI();
@@ -59,36 +56,36 @@ namespace ReelSpinGame_AutoPlay.AI
         // func
 
         // 停止位置を小役、第一停止、現在の状態に合わせて返す
-        public int[] GetStopPos(FlagID flag, ReelID firstPush, BonusTypeID holdingBonus, int bigChanceGames, int remainingJacIn, int betAmount)
+        public int[] GetStopPos(AutoAIConditionClass autoAIConditions)
 		{
             // 技術介入ありの場合
             if(HasTechnicalPlay)
             {
                 // 小役ごとに挙動を変える
-                switch (flag)
+                switch (autoAIConditions.Flag)
                 {
                     // BIG時(リーチ目を止める場合は適当押しをする)
                     case FlagID.FlagBig:
-                        if(HasRiichiStop && !HasStoppedRiichiPtn)
+                        if(HasWinningPatternStop && !HasStoppedWinningPattern)
                         {
-                            HasStoppedRiichiPtn = true;
+                            HasStoppedWinningPattern = true;
                             return autoRandomAI.SendStopPosData();
                         }
                         else
                         {
-                            return AimBigChance(flag, betAmount);
+                            return AimBigChance(autoAIConditions.Flag, autoAIConditions.BetAmount);
                         }
 
                     // REG時(リーチ目を止める場合は適当押しをする)
                     case FlagID.FlagReg:
-                        if (HasRiichiStop && !HasStoppedRiichiPtn)
+                        if (HasWinningPatternStop && !HasStoppedWinningPattern)
                         {
-                            HasStoppedRiichiPtn = true;
+                            HasStoppedWinningPattern = true;
                             return autoRandomAI.SendStopPosData();
                         }
                         else
                         {
-                            if(betAmount == 1)
+                            if(autoAIConditions.BetAmount == 1)
                             {
                                 return autoOneBetBonusGameAI.SendStopPosData();
                             }
@@ -101,7 +98,7 @@ namespace ReelSpinGame_AutoPlay.AI
                     // チェリー時
                     case FlagID.FlagCherry2:
                     case FlagID.FlagCherry4:
-                        return AICherryBehavior(flag, holdingBonus, betAmount);
+                        return AICherryBehavior(autoAIConditions.Flag, autoAIConditions.HoldingBonus, autoAIConditions.BetAmount);
 
                     // スイカ時
                     case FlagID.FlagMelon:
@@ -110,7 +107,7 @@ namespace ReelSpinGame_AutoPlay.AI
                     // ベル時
                     case FlagID.FlagBell:
                         // 変則押しかどうかで制御を変える
-                        if(firstPush != ReelID.ReelLeft || remainingJacIn == 1)
+                        if(autoAIConditions.FirstPush != ReelID.ReelLeft || autoAIConditions.RemainingJacIn == 1)
                         {
                             return autoNonLeftFirstBellAI.SendStopPosData();
                         }
@@ -122,11 +119,11 @@ namespace ReelSpinGame_AutoPlay.AI
                     // リプレイ時(BIG中はJAC-INまたはハズシ)
                     case FlagID.FlagReplayJacIn:
                         // 残りJACが1回の場合はJACハズシをする(残りゲーム数が8回になるまで)
-                        if (remainingJacIn == 1 && bigChanceGames > 8)
+                        if (autoAIConditions.RemainingJacIn == 1 && autoAIConditions.BigChanceGames > 8)
                         {
                             return autoJacAvoidAI.SendStopPosData();
                         }
-                        else if(firstPush != ReelID.ReelLeft)
+                        else if(autoAIConditions.FirstPush != ReelID.ReelLeft)
                         {
                             return autoNonLeftFirstReplayAI.SendStopPosData();
                         }
@@ -137,7 +134,7 @@ namespace ReelSpinGame_AutoPlay.AI
 
                     // はずれ、JAC中などははずれ制御
                     default:
-                        return AINoneBehavior(holdingBonus, betAmount);
+                        return AINoneBehavior(autoAIConditions.HoldingBonus, autoAIConditions.BetAmount);
                 }
             }
 

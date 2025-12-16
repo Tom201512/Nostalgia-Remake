@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_Datas

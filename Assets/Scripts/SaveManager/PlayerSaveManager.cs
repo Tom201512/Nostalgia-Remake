@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerModel.ReelID;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_System
@@ -59,8 +59,8 @@ namespace ReelSpinGame_System
                 dataBuffer.Add(i);
             }
 
-            Debug.Log("ReelPos:" + CurrentSave.LastReelPos[(int)ReelLeft] + "," +
-                CurrentSave.LastReelPos[(int)ReelMiddle] + "," + CurrentSave.LastReelPos[(int)ReelRight]);
+            Debug.Log("ReelPos:" + CurrentSave.LastReelPos[(int)ReelID.ReelLeft] + "," +
+                CurrentSave.LastReelPos[(int)ReelID.ReelMiddle] + "," + CurrentSave.LastReelPos[(int)ReelID.ReelRight]);
 
             // ボーナス情報
             foreach (int i in CurrentSave.Bonus.SaveData())
@@ -134,14 +134,14 @@ namespace ReelSpinGame_System
 
                     case (int)AddressID.Reel:
                         // 左
-                        CurrentSave.LastReelPos[(int)ReelLeft] = br.ReadInt32();
-                        Debug.Log("Left:" + CurrentSave.LastReelPos[(int)ReelLeft]);
+                        CurrentSave.LastReelPos[(int)ReelID.ReelLeft] = br.ReadInt32();
+                        Debug.Log("Left:" + CurrentSave.LastReelPos[(int)ReelID.ReelLeft]);
                         // 中
-                        CurrentSave.LastReelPos[(int)ReelMiddle] = br.ReadInt32();
-                        Debug.Log("Middle:" + CurrentSave.LastReelPos[(int)ReelMiddle]);
+                        CurrentSave.LastReelPos[(int)ReelID.ReelMiddle] = br.ReadInt32();
+                        Debug.Log("Middle:" + CurrentSave.LastReelPos[(int)ReelID.ReelMiddle]);
                         // 右
-                        CurrentSave.LastReelPos[(int)ReelRight] = br.ReadInt32();
-                        Debug.Log("Right:" + CurrentSave.LastReelPos[(int)ReelRight]);
+                        CurrentSave.LastReelPos[(int)ReelID.ReelRight] = br.ReadInt32();
+                        Debug.Log("Right:" + CurrentSave.LastReelPos[(int)ReelID.ReelRight]);
                         break;
 
                     // ボーナス情報

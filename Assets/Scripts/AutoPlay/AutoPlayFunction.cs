@@ -1,9 +1,8 @@
 using ReelSpinGame_AutoPlay.AI;
 using System;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
-using static ReelSpinGame_Reels.ReelManagerModel;
 
 namespace ReelSpinGame_AutoPlay
 {
@@ -82,10 +81,9 @@ namespace ReelSpinGame_AutoPlay
         public string GetConditionID() => Convert.ToString(CurrentEndCondition, 16).ToUpper();
 
         public bool GetHasTechnicalPlay() => autoAI.HasTechnicalPlay;                                                   // 技術介入の有無
-        public bool GetHasRiichiStop() => autoAI.HasRiichiStop;                                                         // リーチ目優先制御の有無
+        public bool GetHasRiichiStop() => autoAI.HasWinningPatternStop;                                                 // リーチ目優先制御の有無
         public BigColor GetBigColorLineUP() => autoAI.PlayerSelectedBigColor;                                           // BIG CHANCE図柄の色
-        public bool GetHasStoppedRiichiPtn() => autoAI.HasStoppedRiichiPtn;                                             // リーチ目を止めたか
-        public bool GetHasOneBetBonusLineUp() => autoAI.HasOneBetBonusLineUp;                                           // 1枚掛けボーナス揃えの有無
+        public bool GetHasStoppedRiichiPtn() => autoAI.HasStoppedWinningPattern;                                        // リーチ目を止めたか
 
         // 設定値変更
         public void SetAutoSpeed(AutoPlaySpeed autoSpeed) => AutoSpeedID = (int)autoSpeed;                              // オート速度設定
@@ -152,7 +150,7 @@ namespace ReelSpinGame_AutoPlay
         {
             // リーチ目出現時
             if ((CurrentEndCondition & (byte)AutoSpecificConditionID.WinningPattern) == (byte)AutoSpecificConditionID.WinningPattern
-                && autoAI.HasStoppedRiichiPtn)
+                && autoAI.HasStoppedWinningPattern)
             {
                 FinishAutoForce();
             }
@@ -188,7 +186,7 @@ namespace ReelSpinGame_AutoPlay
             HasWaitingCancel = false;
             HasStopPosDecided = false;
             RemainingAutoGames = 0;
-            autoAI.HasStoppedRiichiPtn = false;
+            autoAI.HasStoppedWinningPattern = false;
         }
         
         // オート停止位置をリセット
@@ -201,10 +199,10 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // オート押し順をフラグ、条件から得る
-        public void GetAutoStopPos(FlagID flag, BonusTypeID holdingBonus, int bigChanceGames, int remainingJac, int betAmount)
+        public void GetAutoStopPos(AutoAIConditionClass autoAICondition)
         {
             SetAutoStopOrder();
-            AutoStopPos = autoAI.GetStopPos(flag, AutoStopOrders[(int)AutoStopOrder.First], holdingBonus, bigChanceGames, remainingJac, betAmount);
+            AutoStopPos = autoAI.GetStopPos(autoAICondition);
             HasStopPosDecided = true;
         }
 
