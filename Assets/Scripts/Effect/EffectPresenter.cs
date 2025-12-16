@@ -2,6 +2,7 @@ using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
+using ReelSpinGame_Payout;
 using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using UnityEngine;
@@ -9,7 +10,6 @@ using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
-using static ReelSpinGame_Reels.Payout.PayoutChecker;
 
 namespace ReelSpinGame_Effect
 {

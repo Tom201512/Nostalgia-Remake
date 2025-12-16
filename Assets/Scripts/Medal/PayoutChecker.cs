@@ -1,47 +1,26 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
+using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
-namespace ReelSpinGame_Reels.Payout
+namespace ReelSpinGame_Payout
 {
+    // 図柄の判定用
     public class PayoutChecker : MonoBehaviour
     {
-        // 図柄の判定用
-
         // const
         public enum PayoutCheckMode { PayoutNormal, PayoutBIG, PayoutJAC };
 
         // var
-        // 払い出し結果
-        public class PayoutResultBuffer
-        {
-            public int Payout { get; set; }
-            public int BonusID { get; set; }
-            public bool IsReplayOrJacIn { get; set; }
-
-            // 払い出しのあったライン
-            public List<PayoutLineData> PayoutLines { get; set; }
-
-            public PayoutResultBuffer(int payout, int bonusID, bool isReplayOrJac)
-            {
-                Payout = payout;
-                BonusID = bonusID;
-                IsReplayOrJacIn = isReplayOrJac;
-                PayoutLines = new List<PayoutLineData>();
-            }
-        }
 
         // 払い出しデータベース
         [SerializeField] private PayoutDatabase payoutDatabase;
 
-        // 最後に当たった結果
-        public PayoutResultBuffer LastPayoutResult { get; private set; }
-
-        // 選択中のテーブル
-        public PayoutCheckMode CheckMode { get; set; }
+        public PayoutResultBuffer LastPayoutResult { get; private set; }    // 最後に当たった結果
+        public PayoutCheckMode CheckMode { get; set; }                      // 選択中のテーブル
 
         // func
         private void Awake()
@@ -77,8 +56,6 @@ namespace ReelSpinGame_Reels.Payout
                     {
                         // マイナス数値を配列番号に変換
                         int lineIndex = SymbolChange.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
-
-                        //Debug.Log("Symbol:" + reelResult[lineIndex]);
                         lineResult.Add(reelResult[lineIndex]);
                         reelIndex += 1;
                     }
