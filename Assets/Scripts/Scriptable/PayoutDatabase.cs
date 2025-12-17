@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Datas
 {

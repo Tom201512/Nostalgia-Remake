@@ -1,4 +1,5 @@
 ﻿using ReelSpinGame_AutoPlay.AI;
+using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoManager;
@@ -43,10 +44,16 @@ namespace ReelSpinGame_State.PlayingState
             gM.Reel.StartReels(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
+
             // スタート音再生
-            gM.Effect.StartLeverOnEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Bonus.GetCurrentBonusStatus());
+            LeverOnEffectCondition condition = new LeverOnEffectCondition();
+            condition.Flag = gM.Lots.GetCurrentFlag();
+            condition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
+            condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+            gM.Effect.StartLeverOnEffect(condition);
+
             // リール停止時に音を鳴らすよう変更
-            gM.Reel.HasSomeReelStopped += StopReelSound;
+            gM.Reel.SomeReelStoppedEvent += StopReelSound;
             // UI更新
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
         }
@@ -73,7 +80,7 @@ namespace ReelSpinGame_State.PlayingState
         public void StateEnd()
         {
             // リール停止時の音を外すようにする
-            gM.Reel.HasSomeReelStopped -= StopReelSound;
+            gM.Reel.SomeReelStoppedEvent -= StopReelSound;
         }
 
         // リール停止
@@ -188,18 +195,14 @@ namespace ReelSpinGame_State.PlayingState
             }
         }
 
-        // リール停止のサウンド
-        private void StopReelSound()
+        // リール停止の演出
+        void StopReelSound()
         {
-            // 停止音再生
-            gM.Effect.StartReelStopEffect();
-
-            // 通常時,第二停止でBIG図柄がリーチしていたら音を鳴らす
-            if (gM.Reel.GetStoppedCount() == 2 &&
-                gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
-            {
-                gM.Effect.StartRiichiEffect(gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 2));
-            }
+            ReelStoppedEffectCondition condition = new ReelStoppedEffectCondition();
+            condition.StoppedReelCount = gM.Reel.GetStoppedCount();
+            condition.RiichiBigColor = gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 2);
+            condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+            gM.Effect.StartReelStopEffect(condition);
         }
 
         // オート制御

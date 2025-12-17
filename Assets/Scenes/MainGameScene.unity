@@ -3209,11 +3209,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 286284037}
+  - component: {fileID: 286284044}
   - component: {fileID: 286284038}
   - component: {fileID: 286284041}
-  - component: {fileID: 286284042}
+  - component: {fileID: 286284043}
   m_Layer: 0
-  m_Name: ReelRotateManager
+  m_Name: ReelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3274,7 +3275,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &286284042
+--- !u!114 &286284043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3283,10 +3284,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 286284036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb536101fb89c4343852ece6963535ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cd30c931acac8d43a3fe282a0ad0fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reelObjects:
+  - {fileID: 1933351382769078780}
+  - {fileID: 1190830224200012641}
+  - {fileID: 1933351381669917605}
   payoutDatabase: {fileID: 11400000, guid: a47c33de0358c1840b1d8c65c3d18d0a, type: 2}
+--- !u!114 &286284044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286284036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410e8050328e96b4c875c6c5625b29ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &295609827
 GameObject:
   m_ObjectHideFlags: 0
@@ -5266,6 +5283,7 @@ GameObject:
   - component: {fileID: 460868896}
   - component: {fileID: 460868897}
   - component: {fileID: 460868898}
+  - component: {fileID: 460868901}
   - component: {fileID: 460868899}
   - component: {fileID: 460868900}
   m_Layer: 0
@@ -5288,7 +5306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotCam: {fileID: 963194230}
-  reelManagerObj: {fileID: 286284038}
+  reelManagerObj: {fileID: 286284044}
   effectManagerObj: {fileID: 1787737427}
   optionManagerObj: {fileID: 2003992387}
   playerUI: {fileID: 535727126}
@@ -5411,6 +5429,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoModeText: {fileID: 1956132310}
+--- !u!114 &460868901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460868891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c98cd5b043206d940ba93a93c97de107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  payoutDatabase: {fileID: 11400000, guid: a47c33de0358c1840b1d8c65c3d18d0a, type: 2}
 --- !u!1001 &470524867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12983,7 +13014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83023b3db3ffb5a438e9b2935cfbabed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reel: {fileID: 286284038}
+  reel: {fileID: 286284044}
 --- !u!1 &1229612620
 GameObject:
   m_ObjectHideFlags: 0
@@ -19486,6 +19517,8 @@ GameObject:
   - component: {fileID: 1787737426}
   - component: {fileID: 1787737428}
   - component: {fileID: 1787737429}
+  - component: {fileID: 1787737430}
+  - component: {fileID: 1787737431}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -19537,7 +19570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f8f3e346aaa6d4b83bd845be001ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasSPStartSound: 1
 --- !u!114 &1787737428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19571,6 +19603,30 @@ MonoBehaviour:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
   - {fileID: 1933351381669917605}
+--- !u!114 &1787737430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787737424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abced9e368d498747a166a21b80d4c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1787737431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787737424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c141934e64e81143b59a978e6a1d6b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1801798812
 PrefabInstance:
   m_ObjectHideFlags: 0

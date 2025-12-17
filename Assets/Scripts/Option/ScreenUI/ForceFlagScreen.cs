@@ -178,7 +178,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             CurrentSelectRandomID += 1;
             // ”’l‚ª6‚ð’´‚¦‚½‚çƒ‰ƒ“ƒ_ƒ€(0)‚É–ß‚·
-            if(CurrentSelectRandomID > ReelManagerModel.MaxRandomLots)
+            if(CurrentSelectRandomID > ReelSpinManagerModel.MaxRandomLots)
             {
                 CurrentSelectRandomID = 0;
             }

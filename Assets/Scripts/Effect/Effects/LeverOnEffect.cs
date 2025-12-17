@@ -1,9 +1,6 @@
-using ReelSpinGame_Reels.Effect;
-using ReelSpinGame_Reels.Flash;
+using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
@@ -11,18 +8,22 @@ using static ReelSpinGame_Lots.FlagBehaviour;
 namespace ReelSpinGame_Effect.Data
 {
     // レバーオン時の演出
-    public class LeverOnEffect : EffectData
+    public class LeverOnEffect : MonoBehaviour, IDoesEffect<LeverOnEffectCondition>
     {
-        public LeverOnEffect(ReelEffectManager reelEffect, FlashManager flash, SoundManager sound) : 
-            base(reelEffect, flash, sound) 
-        { 
+        // var
+        public bool HasEffect { get; }  // 演出処理中か
+        SoundManager sound; // サウンド
 
+        void Awake()
+        {
+            sound = GetComponent<SoundManager>();
         }
 
-        public void StartLeverOnEffect(FlagID flag, BonusTypeID holding, BonusStatus bonusStatus)
+        // レバーオン時のエフェクト
+        public void DoEffect(LeverOnEffectCondition leverOnEffectCondition)
         {
             // 通常時のみ特殊効果音再生
-            if (bonusStatus == BonusStatus.BonusNone)
+            if (leverOnEffectCondition.BonusStatus == BonusStatus.BonusNone)
             {
                 // 以下の確率で告知音で再生(成立前)
                 // BIG/REG成立時、成立後小役条件不問で1/4
@@ -32,10 +33,10 @@ namespace ReelSpinGame_Effect.Data
                 // リプレイ、発生しない
                 // はずれ、1/128
 
-                if (holding == BonusTypeID.BonusNone)
+                if (leverOnEffectCondition.HoldingBonus == BonusTypeID.BonusNone)
                 {
                     // BIG, REG
-                    switch (flag)
+                    switch (leverOnEffectCondition.Flag)
                     {
                         case FlagID.FlagBig:
                         case FlagID.FlagReg:
@@ -55,7 +56,7 @@ namespace ReelSpinGame_Effect.Data
                             break;
 
                         default:
-                            Sound.PlaySE(Sound.SoundDB.SE.Start);
+                            sound.PlaySE(sound.SoundDB.SE.Start);
                             break;
                     }
                 }
@@ -69,27 +70,27 @@ namespace ReelSpinGame_Effect.Data
             // その他の状態では鳴らさない
             else
             {
-                Sound.PlaySE(Sound.SoundDB.SE.Start);
+                sound.PlaySE(sound.SoundDB.SE.Start);
             }
         }
 
         // 指定した確率で再生音の抽選をする
-        private void LotStartSound(int probability)
+        void LotStartSound(int probability)
         {
             // 確率が0以下は通常スタート音
             if (probability <= 0)
             {
-                Sound.PlaySE(Sound.SoundDB.SE.Start);
+                sound.PlaySE(sound.SoundDB.SE.Start);
             }
             // 確率が1以上なら抽選
             else if (OriginalRandomLot.LotRandomByNum(probability))
             {
                 //Debug.Log("SP SOUND PLAYED");
-                Sound.PlaySE(Sound.SoundDB.SE.SpStart);
+                sound.PlaySE(sound.SoundDB.SE.SpStart);
             }
             else
             {
-                Sound.PlaySE(Sound.SoundDB.SE.Start);
+                sound.PlaySE(sound.SoundDB.SE.Start);
             }
         }
     }

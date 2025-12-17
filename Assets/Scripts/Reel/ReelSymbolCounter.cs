@@ -1,6 +1,7 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Payout;
 using System.Collections.Generic;
+using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
@@ -8,14 +9,43 @@ using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 namespace ReelSpinGame_Reels.Symbol
 {
     // 図柄カウント
-    public class ReelSymbolCounter
+    public class ReelSymbolCounter : MonoBehaviour
     {
+        // var
+        [SerializeField] List<ReelObjectPresenter> reelObjects;   // リールオブジェクト
+        [SerializeField] PayoutDatabase payoutDatabase;     // 払い出しのデータ
+
+        // func
+        // 揃っているBIG図柄の数を返す
+        public BigColor GetBigLinedUpCount(int betAmount, int checkAmount)
+        {
+            // 赤7
+            if (CountBonusSymbols(BigColor.Red, betAmount) == checkAmount)
+            {
+                return BigColor.Red;
+            }
+
+            // 青7
+            if (CountBonusSymbols(BigColor.Blue, betAmount) == checkAmount)
+            {
+                return BigColor.Blue;
+            }
+
+            // BB7
+            if (CountBonusSymbols(BigColor.Black, betAmount) == checkAmount)
+            {
+                return BigColor.Black;
+            }
+
+            return BigColor.None;
+        }
+
         // ビッグチャンス図柄がいくつ揃っているか確認する
-        public int CountBonusSymbols(BigColor bigColor, int betAmount, List<ReelObjectPresenter> reelObjects, List<PayoutLineData> payoutLines)
+        int CountBonusSymbols(BigColor bigColor, int betAmount)
         {
             int highestCount = 0;   // 最も多かった個数を記録
             // 払い出しラインとベット枚数から確認
-            foreach (PayoutLineData line in payoutLines)
+            foreach (PayoutLineData line in payoutDatabase.PayoutLines)
             {
                 // ベット条件を満たしているか確認
                 if (betAmount >= line.BetCondition)

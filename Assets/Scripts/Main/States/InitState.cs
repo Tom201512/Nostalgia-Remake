@@ -1,7 +1,7 @@
 ﻿using ReelSpinGame_Interface;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Payout.PayoutChecker;
+using static ReelSpinGame_Payout.PayoutManager;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -23,28 +23,19 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateStart()
         {
-            //Debug.Log("Start Init State");
+            InitializeSlot();    // スロット情報初期化
+            ApplyReplay();       // リプレイ状態割り当て
+            ApplyBonusStatus();  // ボーナス状態割り当て
+            BonusEffectUpdate(); // ボーナス演出の反映
 
-            // スロット情報初期化
-            InitializeSlot();
-            // リプレイ状態割り当て
-            ApplyReplay();
-            // ボーナス状態割り当て
-            ApplyBonusStatus();
-            // ボーナス演出の反映
-            BonusEffectUpdate();
-            // UI反映
-            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
-
-            // オプション設定反映
-            gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal); // UI反映
+            gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());  // オプション設定反映
         }
 
         public void StateUpdate()
         {
-            // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
-            TurnOnBackLight();
 
+            TurnOnBackLight();  // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
         }
 
@@ -56,20 +47,14 @@ namespace ReelSpinGame_State.LotsState
         // スロットの初期化
         private void InitializeSlot()
         {
-            // 設定反映
-            gM.ChangeSetting(gM.PlayerSave.Setting);
-            // プレイヤー情報反映
-            gM.Player.LoadSaveData(gM.PlayerSave.Player);
-            // メダル情報反映
-            gM.Medal.LoadSaveData(gM.PlayerSave.Medal);
-            // フラグ数値反映
-            gM.Lots.SetCounterValue(gM.PlayerSave.FlagCounter);
-            // リール位置反映
-            gM.Reel.SetReelPos(gM.PlayerSave.LastReelPos);
-            // ボーナス状態反映
-            gM.Bonus.LoadSaveData(gM.PlayerSave.Bonus);
-            // 演出マネージャーにボーナスの色を割り当てる
-            gM.Effect.SetBigColor(gM.PlayerSave.Bonus.BigChanceColor);
+
+            gM.ChangeSetting(gM.PlayerSave.Setting);                // 設定反映
+            gM.Player.LoadSaveData(gM.PlayerSave.Player);           // プレイヤー情報反映
+            gM.Medal.LoadSaveData(gM.PlayerSave.Medal);             // メダル情報反映
+            gM.Lots.SetCounterValue(gM.PlayerSave.FlagCounter);     // フラグ数値反映
+            gM.Reel.SetReelPos(gM.PlayerSave.LastReelPos);          // リール位置反映
+            gM.Bonus.LoadSaveData(gM.PlayerSave.Bonus);             // ボーナス状態反映
+            gM.Effect.SetBigColor(gM.PlayerSave.Bonus.BigChanceColor); // BGMの設定
         }
 
         // リプレイ状態の反映
@@ -103,7 +88,7 @@ namespace ReelSpinGame_State.LotsState
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
             {
                 gM.Lots.ChangeTable(FlagLotMode.BigBonus);
-                gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
+                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
                 gM.Medal.ChangeMaxBet(3);
                 gM.Lots.ResetCounter();
             }
@@ -113,14 +98,14 @@ namespace ReelSpinGame_State.LotsState
             {
                 gM.Medal.ChangeMaxBet(1);
                 gM.Lots.ChangeTable(FlagLotMode.JacGame);
-                gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
+                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
             }
 
             // 通常時の場合
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 gM.Lots.ChangeTable(FlagLotMode.Normal);
-                gM.Reel.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
+                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gM.Medal.ChangeMaxBet(3);
             }
         }

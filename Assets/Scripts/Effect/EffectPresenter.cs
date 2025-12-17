@@ -10,45 +10,34 @@ using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
+using ReelSpinGame_Effect.Data;
+using ReelSpinGame_Effect.Data.Condition;
 
 namespace ReelSpinGame_Effect
 {
+    // リールフラッシュやサウンドなどの演出管理
     public class EffectPresenter : MonoBehaviour
     {
-        // リールフラッシュやサウンドなどの演出管理
-
         // const
-        // リプレイ時に待機させる時間(秒)
-        const float ReplayWaitTime = 1.0f;
-        // Vフラッシュ時の待機時間(秒)
-        const float VFlashWaitTime = 2.0f;
+        const float ReplayWaitTime = 1.0f;        // リプレイ時に待機させる時間(秒)
+        const float VFlashWaitTime = 2.0f;        // Vフラッシュ時の待機時間(秒)
 
         // var
-        // リール演出マネージャー
-        private ReelEffectManager reelEffectManager;
-        // フラッシュ機能
-        private FlashManager flashManager;
-        // サウンド機能
-        private SoundManager soundManager;
+        public bool HasBeforePayoutEffect { get; private set; }         // 払い出し前演出処理中か
+        public bool HasPayoutEffectStart { get; private set; }          // 払い出し演出を開始したか
+        public bool HasAfterPayoutEffect { get; private set; }          // 払い出し後演出が処理中か
+        public bool HasBonusStart { get; private set; }        // ボーナスが開始されたか
+        public bool HasBonusFinished { get; private set; }      // ボーナスが終了したか
+        public BigColor BigChanceColor { get; private set; }    // ビッグチャンス時の色
 
-        // スタート音に予告音をつけるか
-        [SerializeField] private bool hasSPStartSound;
-        // 払い出し前演出処理中か
-        public bool HasBeforePayoutEffect { get; private set; }
-        // 払い出し演出を開始したか
-        public bool HasPayoutEffectStart { get; private set; }
-        // 払い出し後演出が処理中か
-        public bool HasAfterPayoutEffect { get; private set; }
+        private ReelEffectManager reelEffectManager;        // リール演出マネージャー
+        private FlashManager flashManager;                  // フラッシュ機能
+        private SoundManager soundManager;                  // サウンド機能
+        private BonusStatus lastBonusStatus;                // 直前のボーナス状態(同じBGMが再生されていないかチェック用)
 
-        // ビッグチャンス時の色
-        public BigColor BigChanceColor { get; private set; }
-        // 直前のボーナス状態(同じBGMが再生されていないかチェック用)
-        private BonusStatus lastBonusStatus;
-
-        // ボーナスが開始されたか
-        public bool HasBonusStart { get; private set; }
-        // ボーナスが終了したか
-        public bool HasBonusFinished { get; private set; }
+        // 各種演出処理
+        LeverOnEffect leverOnEffect;            // レバーオン時のエフェクト
+        ReelStoppedEffect reelStoppedEffect;    // リール停止時のエフェクト
 
         // func 
         private void Awake()
@@ -56,6 +45,9 @@ namespace ReelSpinGame_Effect
             reelEffectManager = GetComponent<ReelEffectManager>();
             flashManager = GetComponent<FlashManager>();
             soundManager = GetComponent<SoundManager>();
+
+            leverOnEffect = GetComponent<LeverOnEffect>();
+            reelStoppedEffect = GetComponent<ReelStoppedEffect>();
             HasBonusStart = false;
             HasBonusFinished = false;
             HasBeforePayoutEffect = false;
@@ -72,16 +64,14 @@ namespace ReelSpinGame_Effect
             StopAllCoroutines();
         }
 
-        // 疑似遊技中か
-        public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;
-        // フラッシュの待機中か
-        public bool GetHasFlashWait() => flashManager.HasFlashWait;
-        // 数値変更
-        public void SetHasPayoutEffectStart() => HasPayoutEffectStart = true;
-        // ボーナス開始されたか
-        public void SetHasBonusStarted() => HasBonusStart = true;
-        // ボーナスが終了したか
-        public void SetHasBonusFinished() => HasBonusFinished = true;
+        // func
+        // 数値を得る
+
+        public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;          // 疑似遊技中か
+        public bool GetHasFlashWait() => flashManager.HasFlashWait;             // フラッシュの待機中か
+        public void SetHasPayoutEffectStart() => HasPayoutEffectStart = true;   // 数値変更
+        public void SetHasBonusStarted() => HasBonusStart = true;               // ボーナス開始されたか
+        public void SetHasBonusFinished() => HasBonusFinished = true;           // ボーナスが終了したか
 
         // 疑似遊技関連
         // 疑似遊技を開始(試験用)
@@ -118,86 +108,10 @@ namespace ReelSpinGame_Effect
         public void StartWaitEffect() => soundManager.PlaySE(soundManager.SoundDB.SE.Wait);
 
         // スタート時の演出
-        public void StartLeverOnEffect(FlagID flag, BonusTypeID holding, BonusStatus bonusStatus)
-        {
-            if (hasSPStartSound)
-            {
-                // 通常時のみ特殊効果音再生
-                if (bonusStatus == BonusStatus.BonusNone)
-                {
-                    // 以下の確率で告知音で再生(成立前)
-                    // BIG/REG成立時、成立後小役条件不問で1/4
-                    // スイカ、1/8
-                    // チェリー、発生しない
-                    // ベル、1/32
-                    // リプレイ、発生しない
-                    // はずれ、1/128
-
-                    if (holding == BonusTypeID.BonusNone)
-                    {
-                        // BIG, REG
-                        switch (flag)
-                        {
-                            case FlagID.FlagBig:
-                            case FlagID.FlagReg:
-                                LotStartSound(4);
-                                break;
-
-                            case FlagID.FlagMelon:
-                                LotStartSound(8);
-                                break;
-
-                            case FlagID.FlagBell:
-                                LotStartSound(32);
-                                break;
-
-                            case FlagID.FlagNone:
-                                LotStartSound(128);
-                                break;
-
-                            default:
-                                soundManager.PlaySE(soundManager.SoundDB.SE.Start);
-                                break;
-                        }
-                    }
-                    // 成立後は1/4で再生
-                    else
-                    {
-                        LotStartSound(4);
-                    }
-
-                }
-                // その他の状態では鳴らさない
-                else
-                {
-                    soundManager.PlaySE(soundManager.SoundDB.SE.Start);
-                }
-            }
-            else
-            {
-                soundManager.PlaySE(soundManager.SoundDB.SE.Start);
-            }
-        }
+        public void StartLeverOnEffect(LeverOnEffectCondition leverOnEffectCondition) => leverOnEffect.DoEffect(leverOnEffectCondition);
 
         // リール停止時の演出
-        public void StartReelStopEffect() => soundManager.PlaySE(soundManager.SoundDB.SE.Stop);
-
-        // リーチ時演出
-        public void StartRiichiEffect(BigColor color)
-        {
-            switch (color)
-            {
-                case BigColor.Red:
-                    soundManager.PlaySE(soundManager.SoundDB.SE.RedRiichiSound);
-                    break;
-                case BigColor.Blue:
-                    soundManager.PlaySE(soundManager.SoundDB.SE.BlueRiichiSound);
-                    break;
-                case BigColor.Black:
-                    soundManager.PlaySE(soundManager.SoundDB.SE.BB7RiichiSound);
-                    break;
-            }
-        }
+        public void StartReelStopEffect(ReelStoppedEffectCondition reelStoppedEffectCondition) => reelStoppedEffect.DoEffect(reelStoppedEffectCondition);
 
         // 払い出し前演出開始
         public void StartBeforePayoutEffect(FlagID flagID, BonusTypeID holdingBonusID, BonusStatus bonusStatus, bool hasBita)
@@ -386,26 +300,6 @@ namespace ReelSpinGame_Effect
                         break;
                 }
                 lastBonusStatus = status;
-            }
-        }
-
-        // 指定した確率で再生音の抽選をする
-        private void LotStartSound(int probability)
-        {
-            // 確率が0以下は通常スタート音
-            if (probability <= 0)
-            {
-                soundManager.PlaySE(soundManager.SoundDB.SE.Start);
-            }
-            // 確率が1以上なら抽選
-            else if (OriginalRandomLot.LotRandomByNum(probability))
-            {
-                //Debug.Log("SP SOUND PLAYED");
-                soundManager.PlaySE(soundManager.SoundDB.SE.SpStart);
-            }
-            else
-            {
-                soundManager.PlaySE(soundManager.SoundDB.SE.Start);
             }
         }
 

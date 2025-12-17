@@ -1,6 +1,7 @@
 using ReelSpinGame_Reels;
 using System.Collections;
 using System.Collections.Generic;
+using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Save.Database.Option
 {
@@ -54,7 +55,7 @@ namespace ReelSpinGame_Save.Database.Option
             SoundVolumeSetting = 5;
             ShowMiniReelSetting = false;
             AssistMarkerPos.Clear();
-            for (int i = 0; i < ReelManagerModel.ReelAmount; i++)
+            for (int i = 0; i < ReelAmount; i++)
             {
                 AssistMarkerPos.Add(-1);
             }

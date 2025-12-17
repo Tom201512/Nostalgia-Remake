@@ -5,6 +5,8 @@ using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Option;
 using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_Payout;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SlotCamera slotCam;    // メインカメラ
 
     // 各種マネージャー
-    [SerializeField] private ReelRotateManager reelManagerObj;      // リール情報
+    [SerializeField] private ReelLogicManager reelManagerObj;      // リール情報
     [SerializeField] private EffectPresenter effectManagerObj;      // 演出
     [SerializeField] private OptionManager optionManagerObj;        // オプション画面
     [SerializeField] PlayerUI playerUI;                             // プレイヤーUI
@@ -54,7 +56,8 @@ public class GameManager : MonoBehaviour
     public MedalManager Medal { get; private set; }                     // メダルマネージャー
     public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
     public WaitManager Wait { get; private set; }                       // ウェイト管理マネージャー
-    public ReelRotateManager Reel { get { return reelManagerObj; } }    // リールマネージャー
+    public ReelLogicManager Reel { get { return reelManagerObj; } }     // リールマネージャー
+    public PayoutManager Payout { get; private set; }                   // 払い出しマネージャー
     public BonusManager Bonus { get; private set; }                     // ボーナス管理マネージャー
     public EffectPresenter Effect { get { return effectManagerObj; } }  // 演出管理マネージャー
     public OptionManager Option { get { return optionManagerObj; } }    // オプションマネージャー
@@ -84,6 +87,7 @@ public class GameManager : MonoBehaviour
         Lots = GetComponent<FlagLots>();                    // フラグ管理
         Wait = GetComponent<WaitManager>();                 // ウェイト
         Bonus = GetComponent<BonusManager>();               // ボーナス
+        Payout = GetComponent<PayoutManager>();             // 払い出し
         MainFlow = new MainGameFlow(this);                  // メインフロー作成
         Status = statusPanel;                               // ステータスパネル
         Player = new PlayerDatabase();                      // プレイヤー情報

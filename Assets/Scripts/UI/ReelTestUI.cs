@@ -1,3 +1,4 @@
+using ReelSpinGame_Reels;
 using TMPro;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
@@ -5,7 +6,7 @@ using static ReelSpinGame_Reels.ReelObjectPresenter;
 public class ReelTestUI : UIBaseClass
 {
     TextMeshProUGUI text;
-    [SerializeField] private ReelRotateManager reel;
+    [SerializeField] private ReelLogicManager reel;
 
     private void Awake()
     {

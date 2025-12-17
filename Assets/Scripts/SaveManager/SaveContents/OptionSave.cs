@@ -11,6 +11,7 @@ using System.IO;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Save.Database
 {
@@ -154,7 +155,7 @@ namespace ReelSpinGame_Save.Database
                 Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
                 // マーカー位置記録
-                for(int i = 0; i < ReelSpinGame_Reels.ReelManagerModel.ReelAmount; i++)
+                for(int i = 0; i < ReelAmount; i++)
                 {
                     OtherOptionData.AssistMarkerPos[i] = br.ReadInt32();
                     Debug.Log("Marker [" + i + "]:" + OtherOptionData.AssistMarkerPos[i]);

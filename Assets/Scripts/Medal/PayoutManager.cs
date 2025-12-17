@@ -3,13 +3,13 @@ using ReelSpinGame_Medal;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelManagerModel;
+using static ReelSpinGame_Reels.ReelLogicManager;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Payout
 {
-    // 図柄の判定用
-    public class PayoutChecker : MonoBehaviour
+    // 払い出しマネージャー
+    public class PayoutManager : MonoBehaviour
     {
         // const
         public enum PayoutCheckMode { PayoutNormal, PayoutBIG, PayoutJAC };
@@ -29,11 +29,15 @@ namespace ReelSpinGame_Payout
             LastPayoutResult = new PayoutResultBuffer(0, 0, false);
         }
 
-        // 払い出しライン
+        // func
+        // 払い出しラインを返す
         public List<PayoutLineData> GetPayoutLines() => payoutDatabase.PayoutLines;
 
-        // ライン判定
-        public void CheckPayoutLines(int betAmount, LastStoppedReelData lastStoppedData)
+        // 払い出しテーブルの変更
+        public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => CheckMode = checkMode;
+
+        // 払い出しがあるかチェックする
+        public void CheckPayouts(int betAmount, LastStoppedReelData lastStoppedData)
         {
             // 最終的な払い出し結果
             int finalPayout = 0;
