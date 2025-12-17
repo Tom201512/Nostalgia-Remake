@@ -120,7 +120,6 @@ namespace ReelSpinGame_AutoPlay
 
             }
 
-
             HasStopPosDecided = false;          // 停止位置リセット
             SetSpinTimes();                                 // 指定したオート終了条件を付与
             autoModeText.gameObject.SetActive(HasAuto);     // テキスト表示

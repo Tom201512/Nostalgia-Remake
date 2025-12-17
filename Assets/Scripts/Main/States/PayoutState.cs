@@ -205,13 +205,8 @@ namespace ReelSpinGame_State.PayoutState
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
             gM.Player.SetLastBonusStart();
-
-            // ファンファーレ再生のフラグを立てる(通常オートで回している場合)
-            if (!gM.Auto.HasAuto ||
-             (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
-            {
-                gM.Bonus.SetHasBonusStarted(true);
-            }
+            // ファンファーレ再生のフラグを立てる
+            gM.Bonus.SetHasBonusStarted(true);
         }
 
         // ボーナスをストックさせる

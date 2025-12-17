@@ -49,6 +49,7 @@ namespace ReelSpinGame_Effect.Data
                 StartCoroutine(nameof(UpdateAfterPayoutEffect));
             }
         }
+
         // ファンファーレ再生
         void PlayFanfare()
         {
