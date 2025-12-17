@@ -149,7 +149,7 @@ namespace ReelSpinGame_State.PlayingState
         }
 
         // プレイヤー操作時の挙動
-        private void PlayerControl()
+        void PlayerControl()
         {
             // 何も入力が入っていなければ実行
             if (!hasInput)
@@ -206,7 +206,7 @@ namespace ReelSpinGame_State.PlayingState
         }
 
         // オート制御
-        private void AutoStopBehavior()
+        void AutoStopBehavior()
         {
             // 超高速オートなら即座に止めて払い出し状態へ
             if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Quick)
@@ -249,7 +249,7 @@ namespace ReelSpinGame_State.PlayingState
         }
 
         // 強制的に止める制御
-        private void ReelForcedStop()
+        void ReelForcedStop()
         {
             // 左->中->右から強制停止
             if (gM.Reel.GetReelStatus(ReelID.ReelLeft) != ReelStatus.Stopped)

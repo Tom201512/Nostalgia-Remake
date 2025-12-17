@@ -1,10 +1,7 @@
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Sound;
-using ReelSpinGame_Util.OriginalInputs;
-using System.Drawing;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_Effect.Data
 {
@@ -12,7 +9,7 @@ namespace ReelSpinGame_Effect.Data
     public class ReelStoppedEffect : MonoBehaviour, IDoesEffect<ReelStoppedEffectCondition>
     {
         // var
-        public bool HasEffect { get; }  // 演出処理中か
+        public bool HasEffect { get; set; }  // 演出処理中か
         SoundManager sound; // サウンド
 
         void Awake()

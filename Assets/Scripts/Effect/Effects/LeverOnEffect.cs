@@ -11,7 +11,7 @@ namespace ReelSpinGame_Effect.Data
     public class LeverOnEffect : MonoBehaviour, IDoesEffect<LeverOnEffectCondition>
     {
         // var
-        public bool HasEffect { get; }  // 演出処理中か
+        public bool HasEffect { get; set; }  // 演出処理中か
         SoundManager sound; // サウンド
 
         void Awake()

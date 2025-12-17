@@ -1,3 +1,4 @@
+using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
@@ -12,7 +13,9 @@ namespace ReelSpinGame_State.LotsState
 
         // ゲームマネージャ
         private GameManager gM;
-
+        
+        // 払い出しを始めたか
+        bool startPayout;
         // 払い出しが終わったか
         bool finishPayout;
 
@@ -21,6 +24,7 @@ namespace ReelSpinGame_State.LotsState
         {
             State = MainGameFlow.GameStates.Effect;
             gM = gameManager;
+            startPayout = false;
             finishPayout = false;
         }
 
@@ -31,13 +35,16 @@ namespace ReelSpinGame_State.LotsState
             if (!gM.Auto.HasAuto ||
                 (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
             {
-                EnableSounds();
-                // ビタ箇所を押したかチェック
-                bool hasBita = gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft) == 10 || gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft) == 16;
+                // BGM, SEのミュート解除
+                gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
 
                 // 演出開始
-                gM.Effect.StartBeforePayoutEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(),
-                    gM.Bonus.GetCurrentBonusStatus(), hasBita);
+                BeforePayoutEffectCondition condition = new BeforePayoutEffectCondition();
+                condition.Flag = gM.Lots.GetCurrentFlag();
+                condition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
+                condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+                condition.LastLeftStoppedPos = gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft);
+                gM.Effect.StartBeforePayoutEffect(condition);
             }
             else
             {
@@ -50,34 +57,40 @@ namespace ReelSpinGame_State.LotsState
             // UI更新
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
             // 払い出し前の演出を待つ
-            if(!gM.Effect.HasBeforePayoutEffect)
+            if(!gM.Effect.GetHasBeforeEffectActivating())
             {
                 // 払い出し開始
-                if(!gM.Effect.HasPayoutEffectStart)
+                if(!startPayout && !finishPayout)
                 {
                     gM.Medal.ChangeSegmentUpdate(true);
-                    gM.Effect.StartPayoutEffect(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus(),
-                        gM.Payout.LastPayoutResult, gM.Reel.GetLastStoppedReelData());
+                    PayoutEffectCondition condition = 
+                        new PayoutEffectCondition(gM.Payout.LastPayoutResult, gM.Reel.GetLastStoppedReelData());
+
+                    condition.Flag = gM.Lots.GetCurrentFlag();
+                    condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+                    gM.Effect.StartPayoutEffect(condition);
+                    startPayout = true;
                 }
 
                 // 払い出しが終わるまで待機
-                if (gM.Medal.GetRemainingPayout() == 0 && !finishPayout)
+                else if (startPayout && !finishPayout && !gM.Effect.GetPayoutEffectActivating())
                 {
                     // クレジット、払い出し枚数セグメントの処理終了
                     gM.Medal.ChangeSegmentUpdate(false);
-                    // ループしている音を停止
-                    gM.Effect.StopLoopSound();
                     // 払い出し後演出を始める
-                    gM.Effect.StartAfterPayoutEffect(gM.Payout.LastPayoutResult, gM.Bonus.GetCurrentBonusStatus());
+                    AfterPayoutEffectCondition condition = new AfterPayoutEffectCondition(gM.Payout.LastPayoutResult);
+
+                    condition.HasBonusStarted = gM.Bonus.GetHasBonusStarted();
+                    condition.HasBonusFinished = gM.Bonus.GetHasBonusFinished();
+                    condition.BigColor = gM.Bonus.GetBigChanceColor();
+                    condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+                    gM.Effect.StartAfterPayoutEffect(condition);
                     finishPayout = true;
                 }
-                else if(finishPayout)
+                // 払い出し後演出が終わったらメダル投入へ移行
+                else if (finishPayout && !gM.Effect.GetAfterPayoutEffectActivating())
                 {
-                    // 払い出し後演出が終わったらメダル投入へ移行
-                    if (!gM.Effect.HasAfterPayoutEffect)
-                    {
-                        gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
-                    }
+                    gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
                 }
             }
         }
@@ -93,6 +106,15 @@ namespace ReelSpinGame_State.LotsState
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
             // ボーナス演出更新
             BonusEffectUpdate();
+
+            startPayout = false;
+            finishPayout = false;
+            if(gM.Bonus.GetHasBonusFinished())
+            {
+                gM.Bonus.ResetBigColor();
+            }
+            gM.Bonus.SetHasBonusStarted(false);
+            gM.Bonus.SetHasBonusFinished(false);
         }
 
         // ボーナス関連の演出更新
@@ -101,14 +123,10 @@ namespace ReelSpinGame_State.LotsState
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
-            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), false);
-        }
-
-        // 高速オート処理終了時のSE,BGMの再生
-        private void EnableSounds()
-        {
-            // BGM, SEのミュート解除
-            gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
+            BonusEffectCondition condition = new BonusEffectCondition();
+            condition.BigColor = gM.Bonus.GetBigChanceColor();
+            condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+            gM.Effect.StartBonusEffect(condition);
         }
     }
 }

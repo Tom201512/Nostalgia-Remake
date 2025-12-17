@@ -1,4 +1,5 @@
-﻿using ReelSpinGame_Interface;
+﻿using ReelSpinGame_Effect.Data.Condition;
+using ReelSpinGame_Interface;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Payout.PayoutManager;
@@ -54,7 +55,6 @@ namespace ReelSpinGame_State.LotsState
             gM.Lots.SetCounterValue(gM.PlayerSave.FlagCounter);     // フラグ数値反映
             gM.Reel.SetReelPos(gM.PlayerSave.LastReelPos);          // リール位置反映
             gM.Bonus.LoadSaveData(gM.PlayerSave.Bonus);             // ボーナス状態反映
-            gM.Effect.SetBigColor(gM.PlayerSave.Bonus.BigChanceColor); // BGMの設定
         }
 
         // リプレイ状態の反映
@@ -115,8 +115,11 @@ namespace ReelSpinGame_State.LotsState
         {
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
-            // ボーナス中のBGM処理
-            gM.Effect.PlayBonusBGM(gM.Bonus.GetCurrentBonusStatus(), false);
+
+            BonusEffectCondition condition = new BonusEffectCondition();
+            condition.BigColor = gM.Bonus.GetBigChanceColor();
+            condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+            gM.Effect.StartBonusEffect(condition);
         }
     }
 }

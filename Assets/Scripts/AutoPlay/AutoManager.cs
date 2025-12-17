@@ -85,18 +85,18 @@ namespace ReelSpinGame_AutoPlay
         // オート終了条件のバイナリ
         public string GetConditionID() => Convert.ToString(CurrentEndCondition, 16).ToUpper();
 
-        public bool GetHasTechnicalPlay() => autoAI.HasTechnicalPlay;                                                   // 技術介入の有無
-        public bool GetHasRiichiStop() => autoAI.HasWinningPatternStop;                                                 // リーチ目優先制御の有無
-        public BigColor GetBigColorLineUP() => autoAI.PlayerSelectedBigColor;                                           // BIG CHANCE図柄の色
-        public bool GetHasStoppedRiichiPtn() => autoAI.HasStoppedWinningPattern;                                        // リーチ目を止めたか
+        public bool GetHasTechnicalPlay() => autoAI.HasTechnicalPlay;                           // 技術介入の有無
+        public bool GetHasRiichiStop() => autoAI.HasWinningPatternStop;                         // リーチ目優先制御の有無
+        public BigColor GetBigColorLineUP() => autoAI.PlayerSelectedBigColor;                   // BIG CHANCE図柄の色
+        public bool GetHasStoppedRiichiPtn() => autoAI.HasStoppedWinningPattern;                // リーチ目を止めたか
 
         // 設定値変更
-        public void SetAutoSpeed(AutoPlaySpeed autoSpeed) => AutoSpeedID = (int)autoSpeed;                              // オート速度設定
-        public void SetAutoOrder(AutoStopOrderOptions autoOrder) => AutoOrderID = (int)autoOrder;                       // オート押し順設定
-        public void SetBigColorLineUp(BigColor color) => autoAI.PlayerSelectedBigColor = color;                         // オートBIG揃い色設定
-        public void SetTechnicalPlay(bool isEnabled) => autoAI.HasTechnicalPlay = isEnabled;                            // 技術介入設定変更
-        public void SetSpecificCondition(byte conditionBinary) => CurrentEndCondition = conditionBinary;                // 終了タイミング
-        public void SetSpinTimes(AutoSpinTimeConditionID spinCondition) => SpinTimeConditionID = spinCondition;         // 回転数
+        public void SetAutoSpeed(AutoPlaySpeed autoSpeed) => AutoSpeedID = (int)autoSpeed;                          // オート速度設定
+        public void SetAutoOrder(AutoStopOrderOptions autoOrder) => AutoOrderID = (int)autoOrder;                   // オート押し順設定
+        public void SetBigColorLineUp(BigColor color) => autoAI.PlayerSelectedBigColor = color;                     // オートBIG揃い色設定
+        public void SetTechnicalPlay(bool isEnabled) => autoAI.HasTechnicalPlay = isEnabled;                        // 技術介入設定変更
+        public void SetSpecificCondition(byte conditionBinary) => CurrentEndCondition = conditionBinary;            // 終了タイミング
+        public void SetSpinTimes(AutoSpinTimeConditionID spinCondition) => SpinTimeConditionID = spinCondition;     // 回転数
 
         // オート機能の切り替え
         public void ChangeAutoMode()
@@ -120,13 +120,10 @@ namespace ReelSpinGame_AutoPlay
 
             }
 
-            // 停止位置リセット
-            HasStopPosDecided = false;
 
-            // 指定したオート終了条件を付与
-            SetSpinTimes();
-            // テキスト表示
-            autoModeText.gameObject.SetActive(HasAuto);
+            HasStopPosDecided = false;          // 停止位置リセット
+            SetSpinTimes();                                 // 指定したオート終了条件を付与
+            autoModeText.gameObject.SetActive(HasAuto);     // テキスト表示
         }
 
         // 高速オート終了チェック
@@ -211,6 +208,9 @@ namespace ReelSpinGame_AutoPlay
         public void GetAutoStopPos(AutoAIConditionClass autoAICondition)
         {
             SetAutoStopOrder();
+            autoAI.HasWinningPatternStop = ((CurrentEndCondition & 
+                (byte)AutoSpecificConditionID.EndBonus) == (byte)AutoSpecificConditionID.EndBonus);
+
             AutoStopPos = autoAI.GetStopPos(autoAICondition);
             HasStopPosDecided = true;
         }

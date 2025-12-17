@@ -66,9 +66,18 @@ namespace ReelSpinGame_Bonus
         // 最終連チャン区間での枚数
         public int GetLastZonePayout() => data.LastZonePayout;
 
+        // ボーナスが開始したかを得る
+        public bool GetHasBonusStarted() => data.HasBonusStarted;
+        // ボーナスが終了したかを得る
+        public bool GetHasBonusFinished() => data.HasBonusFinished;
+
         // 獲得枚数の増減
         public void ChangeBonusPayout(int amount) => data.CurrentBonusPayout += amount;
         public void ChangeZonePayout(int amount) => data.CurrentZonePayout += amount;
+
+        // ボーナスを開始したかを変更
+        public void SetHasBonusStarted(bool value) => data.HasBonusStarted = value;
+        public void SetHasBonusFinished(bool value) => data.HasBonusFinished = value;
 
         // 連チャン区間枚数を消す
         public void ResetZonePayout()
@@ -142,7 +151,6 @@ namespace ReelSpinGame_Bonus
             {
                 data.RemainingJacIn -= 1;
             }
-            //Debug.Log("BONUS GAME start");
             // BIG中でない場合はボーナス払い出し枚数リセット
             if (data.CurrentBonusStatus != BonusStatus.BonusBIGGames)
             {
@@ -236,20 +244,22 @@ namespace ReelSpinGame_Bonus
             }
         }
 
+        // BIG時の色をリセットする
+        public void ResetBigColor() => data.BigChanceColor = BigColor.None;
+
         // ボーナスの終了処理
-        private void EndBonusStatus()
+        void EndBonusStatus()
         {
             data.RemainingBigGames = 0;
             data.RemainingJacIn = 0;
             data.RemainingJacGames = 0;
             data.RemainingJacHits = 0;
             data.CurrentBonusStatus = BonusStatus.BonusNone;
-            data.BigChanceColor = BigColor.None;
             DisplayingTotalCount = true;
         }
 
         // 獲得枚数を点滅させる
-        private IEnumerator UpdateShowPayout()
+        IEnumerator UpdateShowPayout()
         {
             StartCoroutine(nameof(ChangeShowType));
 
@@ -271,7 +281,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // 獲得枚数とゾーン区間を切り替える
-        private IEnumerator ChangeShowType()
+        IEnumerator ChangeShowType()
         {
             while(DisplayingTotalCount)
             {
@@ -280,7 +290,6 @@ namespace ReelSpinGame_Bonus
                 DisplayingZoneCount = true;
                 yield return new WaitForSeconds(DisplayChangeTime);
             }
-
         }
     }
 }

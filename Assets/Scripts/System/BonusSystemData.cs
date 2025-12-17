@@ -4,63 +4,39 @@ using System.IO;
 
 namespace ReelSpinGame_Bonus
 {
-	public class BonusSystemData
+    // ボーナス情報
+    public class BonusSystemData
 	{
-        // ボーナス情報
         // const
+        public enum BonusTypeID { BonusNone, BonusBIG, BonusREG }               // ボーナスの種類
+        public enum BonusStatus { BonusNone, BonusBIGGames, BonusJACGames };    // ボーナスの状態
+        public enum BigColor {None, Red, Blue, Black};                          // BIGボーナスで当選した色
 
-        // ボーナスの種類
-        public enum BonusTypeID { BonusNone, BonusBIG, BonusREG }
+        public const int BigGames = 30;         // 残り小役ゲーム数
+        public const int JacInTimes = 3;        // 残りJACIN
+        public const int JacGames = 12;         // 残りJACゲーム数
+        public const int JacHits = 8;           // 残り当選回数
 
-        // ボーナスの状態
-        public enum BonusStatus { BonusNone, BonusBIGGames, BonusJACGames };
-
-        // BIGボーナスで当選した色
-        public enum BigColor {None, Red, Blue, Black};
-
-        // 残り小役ゲーム数
-        public const int BigGames = 30;
-        // 残りJACIN
-        public const int JacInTimes = 3;
-        // JACゲーム中
-        // 残りJACゲーム数
-        public const int JacGames = 12;
-        // 残り当選回数
-        public const int JacHits = 8;
-
-        // 最高で記録できる獲得枚数
-        public const int MaxRecordPayout = 99999;
-        // 連チャン区間であるゲーム数
-        public const int MaxZoneGames = 50;
+        public const int MaxRecordPayout = 99999;       // 最高で記録できる獲得枚数
+        public const int MaxZoneGames = 50;             // 連チャン区間であるゲーム数
 
         // var
-        // 現在ストックしているボーナス
-        public BonusTypeID HoldingBonusID { get; set; }
-        // ボーナス状態
-        public BonusStatus CurrentBonusStatus { get; set; }
-        // BIGボーナス当選時の色
-        public BigColor BigChanceColor { get; set; }
+        public BonusTypeID HoldingBonusID { get; set; }         // 現在ストックしているボーナス
+        public BonusStatus CurrentBonusStatus { get; set; }     // ボーナス状態
+        public BigColor BigChanceColor { get; set; }            // BIGボーナス当選時の色
 
-        // 小役ゲーム中
-        // 残り小役ゲーム数
-        public int RemainingBigGames { get; set; }
-        // 残りJACIN
-        public int RemainingJacIn { get; set; }
+        public int RemainingBigGames { get; set; }          // 残り小役ゲーム数
+        public int RemainingJacIn { get; set; }             // 残りJACIN
+        public int RemainingJacGames { get; set; }          // 残りJACゲーム数
+        public int RemainingJacHits { get; set; }           // 残り当選回数
 
-        // JACゲーム中
-        // 残りJACゲーム数
-        public int RemainingJacGames { get; set; }
-        // 残り当選回数
-        public int RemainingJacHits { get; set; }
+        public int CurrentBonusPayout { get; set; }         // このボーナスでの獲得枚数\
+        public int CurrentZonePayout { get; set; }          // 連チャン区間中のボーナス枚数
+        public bool HasZone { get; set; }                   // 連チャン区間にいるか
+        public int LastZonePayout { get; set; }             // 最後に獲得した連チャン区間の枚数
 
-        // このボーナスでの獲得枚数
-        public int CurrentBonusPayout { get; set; }
-        // 連チャン区間中のボーナス枚数
-        public int CurrentZonePayout { get; set; }
-        // 連チャン区間にいるか
-        public bool HasZone { get; set; }
-        // 最後に獲得した連チャン区間の枚数
-        public int LastZonePayout { get; set; }
+        public bool HasBonusStarted { get; set; }           // ボーナスが開始したか
+        public bool HasBonusFinished { get; set; }          // ボーナスが終了したか
 
         public BonusSystemData()
         {
@@ -75,6 +51,8 @@ namespace ReelSpinGame_Bonus
             CurrentZonePayout = 0;
             LastZonePayout = 0;
             HasZone = false;
+            HasBonusStarted = false;
+            HasBonusFinished = false;
         }
 
         // セーブ
