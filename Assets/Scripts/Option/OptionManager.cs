@@ -95,7 +95,7 @@ namespace ReelSpinGame_Option
         public void LoadAutoSettingFromSave(AutoOptionData autoOptionData) => autoPlaySettingScreen.LoadSettingData(autoOptionData);
 
         // 強制フラグのボタン有効化設定を変更
-        public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID) => forceFlagScreen.SetFlagButtonsInteractive(currentBonusStatus, holdingBonusID);
+        public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID) => forceFlagScreen.SetBonusStatus(currentBonusStatus, holdingBonusID);
 
         // 強制フラグの設定リセット
         public void ResetForceFlagSetting() => forceFlagScreen.ResetFlagSetting();

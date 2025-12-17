@@ -26,9 +26,11 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] ButtonComponent randomPreviousButton; // ランダム数値変更ボタン(左)
         [SerializeField] ButtonComponent resetButton; // フラグ設定リセットボタン
 
-
         public int CurrentSelectFlagID { get; private set; } // 選択中のフラグ番号 (-1はフラグなしとする)
         public int CurrentSelectRandomID { get; private set; } // 選択中のランダム数値 (0はランダムとする)
+
+        BonusStatus currentBonusStatus;    // 設定時のボーナス状態
+        BonusTypeID holdingBonusID; // ストック中のボーナス
 
         // 設定が変更された時のイベント
         public delegate void OnSomethingChanged();
@@ -78,6 +80,7 @@ namespace ReelSpinGame_Option.MenuContent
             CanInteract = true;
             Debug.Log("Interact :" + CanInteract);
             // ボタン有効化
+            SetFlagButtonInteractive();
             randomNextButton.ToggleInteractive(true);
             randomPreviousButton.ToggleInteractive(true);
             resetButton.ToggleInteractive(true);
@@ -103,9 +106,25 @@ namespace ReelSpinGame_Option.MenuContent
             }
         }
 
-        // 各種フラグボタンの有効化設定をボーナス状態に合わせて変更する
-        public void SetFlagButtonsInteractive(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID)
+        // ボーナス設定を割り当てる
+        public void SetBonusStatus(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID)
         {
+            this.currentBonusStatus = currentBonusStatus;
+            this.holdingBonusID = holdingBonusID;
+        }
+
+        // フラグ設定をリセットする
+        public void ResetFlagSetting()
+        {
+            CurrentSelectFlagID = -1;
+            CurrentSelectRandomID = 0;
+            OnSomethingChangedEvent?.Invoke();
+        }
+
+        // フラグ設定ボタンの有効化設定
+        void SetFlagButtonInteractive()
+        {
+
             // 通常時にいない場合はボーナスフラグボタンは無効にする
             if (currentBonusStatus != BonusStatus.BonusNone)
             {
@@ -135,14 +154,6 @@ namespace ReelSpinGame_Option.MenuContent
 
                 SetSymbolFlagButtonInteractive(true);
             }
-        }
-
-        // フラグ設定をリセットする
-        public void ResetFlagSetting()
-        {
-            CurrentSelectFlagID = -1;
-            CurrentSelectRandomID = 0;
-            OnSomethingChangedEvent?.Invoke();
         }
 
         // ボーナスフラグ設定ボタンの有効化設定
