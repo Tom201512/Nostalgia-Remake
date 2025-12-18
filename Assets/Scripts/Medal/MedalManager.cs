@@ -9,7 +9,7 @@ using static ReelSpinGame_Medal.MedalBehavior;
 namespace ReelSpinGame_Medal
 {
     //スロット内部のメダル管理
-    public class MedalManager : MonoBehaviour, IHasSave
+    public class MedalManager : MonoBehaviour, IHasSave<MedalSave>
     {
         // const
         // メダル更新の間隔(ミリ秒)
@@ -59,7 +59,7 @@ namespace ReelSpinGame_Medal
         public bool GetHasReplay() => data.system.HasReplay;
 
         // セーブデータにする
-        public ISavable MakeSaveData()
+        public MedalSave MakeSaveData()
         {
             MedalSave save = new MedalSave();
             save.RecordData(data.system);
@@ -67,23 +67,12 @@ namespace ReelSpinGame_Medal
         }
 
         // セーブを読み込む
-        public bool LoadSaveData(ISavable loadData)
+        public void LoadSaveData(MedalSave loadData)
         {
-            if(loadData.GetType() == typeof(MedalSave))
-            {
-                MedalSave save = loadData as MedalSave;
-
-                data.system.Credit = save.Credit;
-                data.system.MaxBetAmount = save.MaxBetAmount;
-                data.system.LastBetAmount = save.LastBetAmount;
-                data.system.HasReplay = save.HasReplay;
-                return true;
-            }
-            else
-            {
-                Debug.LogError("Loaded data is not MedalData");
-                return false;
-            }
+            data.system.Credit = loadData.Credit;
+            data.system.MaxBetAmount = loadData.MaxBetAmount;
+            data.system.LastBetAmount = loadData.LastBetAmount;
+            data.system.HasReplay = loadData.HasReplay;
         }
 
         // MAXベット枚数変更
@@ -197,7 +186,7 @@ namespace ReelSpinGame_Medal
             }
         }
 
-        // メダル処理終了
+        // メダル処理終了-
         public void FinishMedalInsert()
         {
             data.CurrentBet = 0;

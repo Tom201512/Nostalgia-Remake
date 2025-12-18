@@ -21,9 +21,9 @@ namespace ReelSpinGame_Interface
     }
 
     // セーブ機能を持つ
-    public interface IHasSave
+    public interface IHasSave<T>
     {
-        ISavable MakeSaveData();
-        bool LoadSaveData(ISavable save);
+        T MakeSaveData();
+        void LoadSaveData(T save);
     }
 }

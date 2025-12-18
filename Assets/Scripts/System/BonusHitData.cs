@@ -1,9 +1,7 @@
 ﻿using ReelSpinGame_Interface;
-using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
@@ -62,8 +60,6 @@ namespace ReelSpinGame_Datas
             BonusReelPos[(int)ReelID.ReelLeft] = reelPos[(int)ReelID.ReelLeft];
             BonusReelPos[(int)ReelID.ReelMiddle] = reelPos[(int)ReelID.ReelMiddle];
             BonusReelPos[(int)ReelID.ReelRight] = reelPos[(int)ReelID.ReelRight];
-            //Debug.Log("ReelPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," +
-                    //BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
         }
 
         // 成立時の押し順セット
@@ -80,8 +76,6 @@ namespace ReelSpinGame_Datas
             BonusReelDelay[(int)ReelID.ReelLeft] = reelDelay[(int)ReelID.ReelLeft];
             BonusReelDelay[(int)ReelID.ReelMiddle] = reelDelay[(int)ReelID.ReelMiddle];
             BonusReelDelay[(int)ReelID.ReelRight] = reelDelay[(int)ReelID.ReelRight];
-            //Debug.Log("ReelDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," +
-                   //BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
         }
 
         // セーブ

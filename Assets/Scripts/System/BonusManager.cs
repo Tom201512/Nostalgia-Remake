@@ -5,10 +5,9 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Bonus
 {
-    public class BonusManager : MonoBehaviour, IHasSave
+    // ボーナス処理
+    public class BonusManager : MonoBehaviour, IHasSave<BonusSave>
     {
-        // ボーナス処理
-
         // var
         [SerializeField] private BonusSevenSegment bonusSegments;        // ボーナス状態のセグメント
 
@@ -63,7 +62,7 @@ namespace ReelSpinGame_Bonus
         }
 
         // セーブデータにする
-        public ISavable MakeSaveData()
+        public BonusSave MakeSaveData()
         {
             BonusSave save = new BonusSave();
             save.RecordData(data);
@@ -72,31 +71,19 @@ namespace ReelSpinGame_Bonus
         }
 
         // セーブを読み込む
-        public bool LoadSaveData(ISavable loadData)
+        public void LoadSaveData(BonusSave loadData)
         {
-            if (loadData.GetType() == typeof(BonusSave))
-            {
-                BonusSave save = loadData as BonusSave;
-
-                data.HoldingBonusID = save.HoldingBonusID;
-                data.CurrentBonusStatus = save.CurrentBonusStatus;
-                data.BigChanceColor = save.BigChanceColor;
-                data.RemainingBigGames = save.RemainingBigGames;
-                data.RemainingJacIn = save.RemainingJacIn;
-                data.RemainingJacHits = save.RemainingJacHits;
-                data.RemainingJacGames = save.RemainingJacGames;
-                data.CurrentBonusPayout = save.CurrentBonusPayout;
-                data.CurrentZonePayout = save.CurrentZonePayout;
-                data.LastZonePayout = save.LastZonePayout;
-                data.HasZone = save.HasZone;
-
-                return true;
-            }
-            else
-            {
-                Debug.LogError("Loaded data is not BonusData");
-                return false;
-            }
+            data.HoldingBonusID = loadData.HoldingBonusID;
+            data.CurrentBonusStatus = loadData.CurrentBonusStatus;
+            data.BigChanceColor = loadData.BigChanceColor;
+            data.RemainingBigGames = loadData.RemainingBigGames;
+            data.RemainingJacIn = loadData.RemainingJacIn;
+            data.RemainingJacHits = loadData.RemainingJacHits;
+            data.RemainingJacGames = loadData.RemainingJacGames;
+            data.CurrentBonusPayout = loadData.CurrentBonusPayout;
+            data.CurrentZonePayout = loadData.CurrentZonePayout;
+            data.LastZonePayout = loadData.LastZonePayout;
+            data.HasZone = loadData.HasZone;
         }
 
         // ボーナスストック状態の更新

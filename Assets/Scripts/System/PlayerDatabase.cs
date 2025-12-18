@@ -9,7 +9,7 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_System
 {
-    public class PlayerDatabase : IHasSave
+    public class PlayerDatabase : IHasSave<PlayerSave>
     {
         // プレイヤー情報
 
@@ -52,7 +52,7 @@ namespace ReelSpinGame_System
 
         // func
         // セーブデータにする
-        public ISavable MakeSaveData()
+        public PlayerSave MakeSaveData()
         {
             PlayerSave save = new PlayerSave();
             save.RecordData(this);
@@ -61,27 +61,15 @@ namespace ReelSpinGame_System
         }
 
         // セーブを読み込む
-        public bool LoadSaveData(ISavable loadData)
+        public void LoadSaveData(PlayerSave loadData)
         {
-            if (loadData.GetType() == typeof(PlayerSave))
-            {
-                PlayerSave save = new PlayerSave();
-                save = loadData as PlayerSave;
-
-                TotalGames = save.TotalGames;
-                CurrentGames = save.CurrentGames;
-                BigTimes = save.BigTimes;
-                RegTimes = save.RegTimes;
-                PlayerMedalData.SetData(save.PlayerMedalData);
-                BonusHitRecord = save.BonusHitRecord;
-                PlayerAnalyticsData = save.PlayerAnalyticsData;
-                return true;
-            }
-            else
-            {
-                Debug.LogError("Loaded data is not PlayerData");
-                return false;
-            }
+            TotalGames = loadData.TotalGames;
+            CurrentGames = loadData.CurrentGames;
+            BigTimes = loadData.BigTimes;
+            RegTimes = loadData.RegTimes;
+            PlayerMedalData.SetData(loadData.PlayerMedalData);
+            BonusHitRecord = loadData.BonusHitRecord;
+            PlayerAnalyticsData = loadData.PlayerAnalyticsData;
         }
 
         // 各種データ数値変更
@@ -92,6 +80,7 @@ namespace ReelSpinGame_System
             TotalGames += 1;
             CurrentGames += 1;
         }
+
         // ボーナス間ゲーム数リセット
         public void ResetCurrentGame() => CurrentGames = 0;
 
@@ -119,6 +108,7 @@ namespace ReelSpinGame_System
                 RegTimes += 1;
             }
         }
+
         // 直近のビッグチャンス時の色を記録
         public void SetLastBigChanceColor(BigColor color) => BonusHitRecord[^1].SetBigChanceColor(color);
         // 現在のボーナス履歴に払い出しを追加する

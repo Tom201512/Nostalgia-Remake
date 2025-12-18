@@ -73,10 +73,10 @@ public class GameManager : MonoBehaviour
     public int Setting { get; private set; }                // 台設定値
     public MainGameFlow MainFlow { get; private set; }      // ゲームステート用
 
-    private SaveManager saveManager;                        // セーブ機能
+    SaveManager saveManager;                        // セーブ機能
     private bool hasDebugUI;    // <デバッグ用> デバッグUI表示するか
 
-    private void Awake()
+    void Awake()
     {
 
         Screen.SetResolution(1600, 900, false);         // 画面サイズ初期化
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
         Option.AutoSettingChangedEvent += OnAutoSettingChanged;        // イベント登録
     }
 
-    private void Start()
+    void Start()
     {
         bool loadFailed = false;            // 読み込みに失敗したか
         bool playerLoadFailed = false;      // プレイヤーファイルのみ読み込みが失敗したか
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
         MainFlow.stateManager.StartState();
     }
 
-    private void Update()
+    void Update()
     {
         // 画面サイズ調整
 
@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
         MainFlow.UpdateState();
     }
 
-    private void OnApplicationQuit()
+    void OnApplicationQuit()
     {
         // イベント登録解除
         Option.AutoSettingChangedEvent -= OnAutoSettingChanged;
@@ -263,11 +263,7 @@ public class GameManager : MonoBehaviour
     }
 
     // オート設定変更時の挙動
-    void OnAutoSettingChanged()
-    {
-        // セーブに記録する
-        OptionSave.RecordAutoData(Option.GetAutoOptionData());
-    }
+    void OnAutoSettingChanged() => OptionSave.RecordAutoData(Option.GetAutoOptionData());
 
     // その他設定変更時の挙動
     void OnOtherSettingChanged()

@@ -1,8 +1,7 @@
 ﻿using ReelSpinGame_Interface;
-using ReelSpinGame_Util.OriginalInputs;
-using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_AutoPlay.AutoManager;
 using UnityEngine;
+using static ReelSpinGame_AutoPlay.AutoManager;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_State.InsertState
 {
