@@ -41,7 +41,6 @@ namespace ReelSpinGame_Effect.Data
             {
                 StartCoroutine(nameof(UpdateBonusEndFanfare));
             }
-
             // ƒŠƒvƒŒƒC”­¶‚Í‘Ò‹@‚³‚¹‚é
             else if (afterPayoutEffectCondition.PayoutResult.IsReplayOrJacIn &&
                 afterPayoutEffectCondition.BonusStatus == BonusStatus.BonusNone)

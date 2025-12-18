@@ -1,94 +1,104 @@
 using System;
 using UnityEngine;
+using ReelSpinGame_Lamps;
 
-public class MedalSevenSegment : MonoBehaviour
+using static ReelSpinGame_Lamps.SegmentLampUtil;
+using System.Collections;
+
+namespace ReelSpinGame_Medal.Segment
 {
-    // メダル用セグメント
-
-    // const
-    // 桁数のID
-    public enum DigitID{SecondDigit, FirstDigit}
-
-    // var
-    // 7セグ
-    private Segment[] segments;
-
-    // func
-
-    private void Awake()
+    public class MedalSevenSegment : MonoBehaviour
     {
-        segments = GetComponentsInChildren<Segment>();
+        // メダル用セグメント
+
+        // const
+        public enum DigitID { SecondDigit, FirstDigit }         // 桁数のID
+        public const float SegmentUpdateFrame = 0.12f;          // 数値更新の間隔(ミリ秒)
+
+        // var
+        public bool HasSegmentUpdate {  get; private set; } // セグメントを更新中か
+
+        SegmentLamp[] segments;    // 7セグ
+        int tweenFromValue;  // 補完の起点
+        int tweenToValue;    // 補完の終点
+
+        // func
+        void Awake()
+        {
+            HasSegmentUpdate = false;
+            segments = GetComponentsInChildren<SegmentLamp>();
+            tweenFromValue = 0;
+            tweenToValue = 0;
+        }
+
+        void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
+        // 指定した桁数のメダルを表示
+        public void ShowSegmentByNumber(int num)
+        {
+            num = Math.Clamp(num, 0, 99);        // 0~99に調整
+                                                 // 各桁ごとの数値を得る
+            int secondDigit = GetDigitValue(num, 2);
+            int firstDigit = GetDigitValue(num, 1);
+
+            // セグメントに反映
+            segments[(int)DigitID.FirstDigit].TurnOnLampByNumber(firstDigit);
+
+            // 2桁目以降は10以上でないと非表示
+            if (secondDigit > 0)
+            {
+                segments[(int)DigitID.SecondDigit].TurnOnLampByNumber(secondDigit);
+            }
+            else
+            {
+                segments[(int)DigitID.SecondDigit].TurnOffAll();
+            }
+        }
+
+        // 指定した数値までセグメントを増減させる
+        public void DoSegmentTween(int fromValue, int toValue)
+        {
+            Debug.Log("From:" + fromValue + " To:" + toValue);
+            tweenFromValue = fromValue;
+            tweenToValue = toValue;
+            StartCoroutine(nameof(SegmentTweenUpdate));
+        }
+
+        // セグメントをすべて消す
+        public void TurnOffAllSegments()
+        {
+            foreach (SegmentLamp segment in segments)
+            {
+                segment.TurnOffAll();
+            }
+        }
+
+        // 数値増加、減少の補完
+        IEnumerator SegmentTweenUpdate()
+        {
+            HasSegmentUpdate = true;
+
+            int tweenValue = tweenFromValue;
+            // 補完処理
+            while (tweenValue != tweenToValue)
+            {
+                if(tweenValue > tweenToValue)
+                {
+                    tweenValue -= 1;
+                }
+                else
+                {
+                    tweenValue += 1;
+                }
+                Debug.Log("Tween:" + tweenValue);
+                ShowSegmentByNumber(tweenValue);
+                yield return new WaitForSeconds(SegmentUpdateFrame);
+            }
+
+            HasSegmentUpdate = false;
+        }
     }
-
-    // 指定した桁数のメダルを表示
-    public void ShowSegmentByNumber(int num)
-    {
-        // 0~99に調整
-        num = Math.Clamp(num, 0, 99);
-
-        // 10の桁を得る
-        int SecondDigit = GetDigitValue(num, 2);
-
-        // 1の桁を得る
-        int FirstDigit = GetDigitValue(num, 1);
-
-        // セグメントに反映
-        segments[(int)DigitID.FirstDigit].TurnOnLampByNumber(FirstDigit);
-
-        // 2桁目以降は10以上でないと非表示
-        if(SecondDigit > 0)
-        {
-            segments[(int)DigitID.SecondDigit].TurnOnLampByNumber(SecondDigit);
-        }
-        else
-        {
-            segments[(int)DigitID.SecondDigit].TurnOffAll();
-        }
-    }
-
-    // セグメントをすべて消す
-    public void TurnOffAllSegments()
-    {
-        foreach(Segment segment in segments)
-        {
-            segment.TurnOffAll();
-        }
-    }
-
-    // 桁数を計算する
-    public static int GetDigitCount(int value)
-    {
-        int sum = 0;
-        int digitsCount = 0;
-
-        // 0の場合は1桁を返す
-        if(value == 0)
-        {
-            return 1;
-        }
-        // 指定桁数まで数字を出す
-        while(value != 0)
-        {
-            sum = (value % 10);
-            value = (value / 10);
-            digitsCount += 1;
-        }
-
-        return digitsCount;
-    }
-
-    // 指定した桁にある数字を求める
-    public static int GetDigitValue(int value, int digit)
-    {
-        int sum = 0;
-        // 指定桁数まで数字を出す
-        for (int i = 0; i < digit; i++)
-        {
-            sum = (value % 10);
-            value = (value / 10);
-        }
-
-        return sum;
-    }
-
 }

@@ -1,5 +1,6 @@
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
+using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 
@@ -118,7 +119,7 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // ボーナス関連の演出更新
-        private void BonusEffectUpdate()
+        void BonusEffectUpdate()
         {
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();

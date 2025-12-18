@@ -78,7 +78,7 @@ namespace ReelSpinGame_State.InsertState
                 gM.Status.TurnOnStartLamp();
 
                 // 獲得枚数を表示している場合はセグメントを消す
-                if (gM.Bonus.DisplayingTotalCount)
+                if (gM.Bonus.GetIsDisplayingPayout())
                 {
                     gM.Bonus.TurnOffSegments();
                     gM.Player.ResetCurrentGame();
@@ -142,19 +142,16 @@ namespace ReelSpinGame_State.InsertState
             {
                 BetAction(gM.Medal.GetMaxBet(), false);
             }
-
             // BET1
             if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetOne))
             {
                 BetAction(1, false);
             }
-
             // BET2
             if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetTwo))
             {
                 BetAction(2, false);
             }
-
             // ベット終了 または MAXBET
             if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StartAndMax))
             {
@@ -178,7 +175,6 @@ namespace ReelSpinGame_State.InsertState
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gM.Bonus.ChangeBonusPayout(-gM.Medal.GetLastBetAmount());
-                //gM.Player.ChangeLastBonusPayout(-gM.Medal.GetLastBetAmount());
             }
 
             // 連チャン区間にいる場合は連チャン区間枚数を減らす

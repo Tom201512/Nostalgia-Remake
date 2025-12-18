@@ -1,7 +1,5 @@
 ﻿using ReelSpinGame_Interface;
 using ReelSpinGame_Save.Bonus;
-using System;
-using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
@@ -11,28 +9,15 @@ namespace ReelSpinGame_Bonus
     {
         // ボーナス処理
 
-        // const
-        // 獲得枚数の点滅時に点滅させる時間(秒)
-        const float PayoutSegFlashTime = 0.5f;
-
-        // 獲得枚数とゾーン獲得枚数の表示を切り替えるタイミング(秒)
-        const float DisplayChangeTime = 2.0f;
-
         // var
-        // ボーナス処理のデータ
-        private BonusSystemData data;
-        // ボーナス状態のセグメント
-        [SerializeField] private BonusSevenSegment bonusSegments;
-        // 獲得枚数を表示しているか
-        public bool DisplayingTotalCount { get; private set; }
-        // ゾーン区間を表示中か
-        public bool DisplayingZoneCount { get; private set; }
+        [SerializeField] private BonusSevenSegment bonusSegments;        // ボーナス状態のセグメント
+
+        private BonusSystemData data;        // ボーナス処理のデータ
 
         // func
         private void Awake()
         {
             data = new BonusSystemData();
-            DisplayingTotalCount = false;
         }
 
         private void OnDestroy()
@@ -41,39 +26,28 @@ namespace ReelSpinGame_Bonus
         }
 
         // 各種数値を得る
-        // ストック中のボーナス
-        public BonusTypeID GetHoldingBonusID() => data.HoldingBonusID;
-        // ボーナス状態
-        public BonusStatus GetCurrentBonusStatus() => data.CurrentBonusStatus;
-        // BIGボーナス当選時の色
-        public BigColor GetBigChanceColor() => data.BigChanceColor;
+        public BonusTypeID GetHoldingBonusID() => data.HoldingBonusID;              // ストック中のボーナス
+        public BonusStatus GetCurrentBonusStatus() => data.CurrentBonusStatus;      // ボーナス状態
+        public BigColor GetBigChanceColor() => data.BigChanceColor;                 // BIGボーナス当選時の色
 
-        // 残り小役ゲーム数
-        public int GetRemainingBigGames() => data.RemainingBigGames;
-        // 残りJAC-IN回数
-        public int GetRemainingJacIn() => data.RemainingJacIn;
-        // 残りJACゲーム数
-        public int GetRemainingJacGames() => data.RemainingJacGames;
-        // 残りJACゲーム当選回数
-        public int GetRemainingJacHits() => data.RemainingJacHits;
+        public int GetRemainingBigGames() => data.RemainingBigGames;                // 残り小役ゲーム数
+        public int GetRemainingJacIn() => data.RemainingJacIn;                      // 残りJAC-IN回数
+        public int GetRemainingJacGames() => data.RemainingJacGames;                // 残りJACゲーム数
+        public int GetRemainingJacHits() => data.RemainingJacHits;                  // 残りJACゲーム当選回数
 
-        // 獲得した枚数を表示
-        public int GetCurrentBonusPayout() => data.CurrentBonusPayout;
-        // 連チャン区間中の枚数を表示
-        public int GetCurrentZonePayout() => data.CurrentZonePayout;
-        // 連チャン区間にいるか
-        public bool GetHasZone() => data.HasZone;
-        // 最終連チャン区間での枚数
-        public int GetLastZonePayout() => data.LastZonePayout;
+        public int GetCurrentBonusPayout() => data.CurrentBonusPayout;      // 獲得した枚数を表示
+        public int GetCurrentZonePayout() => data.CurrentZonePayout;        // 連チャン区間中の枚数を表示
+        public bool GetHasZone() => data.HasZone;                           // 連チャン区間にいるか
+        public int GetLastZonePayout() => data.LastZonePayout;              // 最終連チャン区間での枚数
 
-        // ボーナスが開始したかを得る
-        public bool GetHasBonusStarted() => data.HasBonusStarted;
-        // ボーナスが終了したかを得る
-        public bool GetHasBonusFinished() => data.HasBonusFinished;
+        public bool GetHasBonusStarted() => data.HasBonusStarted;           // ボーナスが開始したかを得る
+        public bool GetHasBonusFinished() => data.HasBonusFinished;         // ボーナスが終了したかを得る
 
         // 獲得枚数の増減
         public void ChangeBonusPayout(int amount) => data.CurrentBonusPayout += amount;
         public void ChangeZonePayout(int amount) => data.CurrentZonePayout += amount;
+
+        public bool GetIsDisplayingPayout() => bonusSegments.IsDisplaying;   // ボーナス獲得枚数を表示中か
 
         // ボーナスを開始したかを変更
         public void SetHasBonusStarted(bool value) => data.HasBonusStarted = value;
@@ -131,7 +105,6 @@ namespace ReelSpinGame_Bonus
         // ビッグチャンスの開始
         public void StartBigChance(BigColor bigColor)
         {
-            //Debug.Log("BIG CHANCE start");
             // ビッグチャンスの初期化
             data.CurrentBonusPayout = 0;
             data.RemainingBigGames = BigGames;
@@ -168,7 +141,7 @@ namespace ReelSpinGame_Bonus
         public void UpdateSegments()
         {
             // BIG中
-            if(data.CurrentBonusStatus == BonusStatus.BonusBIGGames)
+            if (data.CurrentBonusStatus == BonusStatus.BonusBIGGames)
             {
                 bonusSegments.ShowBigStatus(data.RemainingJacIn, data.RemainingBigGames);
             }
@@ -178,18 +151,20 @@ namespace ReelSpinGame_Bonus
                 bonusSegments.ShowJacStatus(data.RemainingJacIn + 1, data.RemainingJacHits);
             }
             // 通常時に戻った場合は獲得枚数表示とリセット
-            else if(DisplayingTotalCount)
+            else if (data.HasBonusFinished)
             {
-                StartCoroutine(nameof(UpdateShowPayout));
+                bonusSegments.StartDisplayBonusPayout(data.CurrentBonusPayout, data.CurrentZonePayout, data.HasZone);
             }
         }
 
         // セグメントをすべて消す
         public void TurnOffSegments()
         {
-            StopAllCoroutines();
             bonusSegments.TurnOffAllSegments();
-            DisplayingTotalCount = false;
+            if(bonusSegments.IsDisplaying)
+            {
+                bonusSegments.EndDisplayBonusPayout();
+            }
         }
 
         // 小役ゲーム数、JACゲーム数を減らす
@@ -255,41 +230,6 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacGames = 0;
             data.RemainingJacHits = 0;
             data.CurrentBonusStatus = BonusStatus.BonusNone;
-            DisplayingTotalCount = true;
-        }
-
-        // 獲得枚数を点滅させる
-        IEnumerator UpdateShowPayout()
-        {
-            StartCoroutine(nameof(ChangeShowType));
-
-            while(DisplayingTotalCount)
-            {
-                if(data.HasZone && DisplayingZoneCount)
-                {
-                    bonusSegments.ShowTotalPayout(data.CurrentZonePayout);
-                }
-                else
-                {
-                    bonusSegments.ShowTotalPayout(data.CurrentBonusPayout);
-                }
-
-                yield return new WaitForSeconds(PayoutSegFlashTime);
-                bonusSegments.TurnOffAllSegments();
-                yield return new WaitForSeconds(PayoutSegFlashTime);
-            }
-        }
-
-        // 獲得枚数とゾーン区間を切り替える
-        IEnumerator ChangeShowType()
-        {
-            while(DisplayingTotalCount)
-            {
-                DisplayingZoneCount = false;
-                yield return new WaitForSeconds(DisplayChangeTime);
-                DisplayingZoneCount = true;
-                yield return new WaitForSeconds(DisplayChangeTime);
-            }
         }
     }
 }

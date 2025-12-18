@@ -141,44 +141,11 @@ namespace ReelSpinGame_State.PayoutState
             }
         }
 
-        // ボーナス状態によるデータ変更
-        void BonusStatusUpdate()
-        {
-            // ビッグチャンス中に移行した場合
-            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
-            {
-                gM.Lots.ChangeTable(FlagLotMode.BigBonus);
-                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
-                gM.Medal.ChangeMaxBet(3);
-                gM.Lots.ResetCounter();
-            }
-            // ボーナスゲーム中に移行した場合
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
-            {
-                gM.Medal.ChangeMaxBet(1);
-                gM.Lots.ChangeTable(FlagLotMode.JacGame);
-                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
-            }
-            // 通常時に移行した場合
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
-            {
-                gM.Lots.ChangeTable(FlagLotMode.Normal);
-                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
-                gM.Medal.ChangeMaxBet(3);
-
-                // 終了ファンファーレ再生のフラグを立てる(通常オートで回している場合)
-                if (!gM.Auto.HasAuto ||
-                 (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
-                {
-                    gM.Bonus.SetHasBonusFinished(true);
-                }
-            }
-        }
-
         //　ボーナス開始
         void StartBonus()
         {
             // リールから揃ったボーナス図柄の色を得る
+            gM.Bonus.ResetBigColor();
             BigColor color = gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 3);
 
             // ビッグチャンスの場合
@@ -205,7 +172,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
             gM.Player.SetLastBonusStart();
-            // ファンファーレ再生のフラグを立てる
+            // ボーナス開始を記録
             gM.Bonus.SetHasBonusStarted(true);
         }
 
@@ -278,6 +245,36 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
             {
                 gM.Bonus.ResetZonePayout();
+            }
+        }
+
+        // ボーナス状態によるデータ変更
+        void BonusStatusUpdate()
+        {
+            // ビッグチャンス中に移行した場合
+            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
+            {
+                gM.Lots.ChangeTable(FlagLotMode.BigBonus);
+                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
+                gM.Medal.ChangeMaxBet(3);
+                gM.Lots.ResetCounter();
+            }
+            // ボーナスゲーム中に移行した場合
+            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
+            {
+                gM.Medal.ChangeMaxBet(1);
+                gM.Lots.ChangeTable(FlagLotMode.JacGame);
+                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
+            }
+            // 通常時に移行した場合
+            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            {
+                gM.Lots.ChangeTable(FlagLotMode.Normal);
+                gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
+                gM.Medal.ChangeMaxBet(3);
+
+                // ボーナス終了フラグを立てる
+                gM.Bonus.SetHasBonusFinished(true);
             }
         }
     }

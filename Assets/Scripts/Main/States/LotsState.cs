@@ -1,7 +1,6 @@
 ﻿using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Interface;
 using System;
-using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_AutoPlay.AutoManager.AutoStopOrder;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -27,8 +26,6 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateStart()
         {
-            //Debug.Log("Start Lots.FlagBehaviour.State");
-
             // 強制役フラグの指定があれば強制役を設定する
             if(gM.Option.GetForceFlagSelectID() != -1)
             {

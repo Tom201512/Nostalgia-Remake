@@ -35,7 +35,6 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateUpdate()
         {
-
             TurnOnBackLight();  // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
         }
@@ -46,9 +45,8 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // スロットの初期化
-        private void InitializeSlot()
+        void InitializeSlot()
         {
-
             gM.ChangeSetting(gM.PlayerSave.Setting);                // 設定反映
             gM.Player.LoadSaveData(gM.PlayerSave.Player);           // プレイヤー情報反映
             gM.Medal.LoadSaveData(gM.PlayerSave.Medal);             // メダル情報反映
@@ -58,7 +56,7 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // リプレイ状態の反映
-        private void ApplyReplay()
+        void ApplyReplay()
         {
             if(gM.Medal.GetHasReplay())
             {
@@ -67,7 +65,7 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // リールバックライトの点灯
-        private void TurnOnBackLight()
+        void TurnOnBackLight()
         {
             // リプレイ、またはボーナス中ならライトを点灯させる
             if (gM.Medal.GetHasReplay() || gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
@@ -82,7 +80,7 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // ボーナス状態の反映
-        private void ApplyBonusStatus()
+        void ApplyBonusStatus()
         {
             // ビッグチャンスの場合
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
@@ -111,7 +109,7 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // ボーナス関連演出の反映
-        private void BonusEffectUpdate()
+        void BonusEffectUpdate()
         {
             // ボーナス中のランプ処理
             gM.Bonus.UpdateSegments();
