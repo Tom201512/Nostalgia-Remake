@@ -108,7 +108,6 @@ namespace ReelSpinGame_System
                 return false;
             }
 
-            Debug.Log("Save Encryption is succeeded");
             return true;
         }
 
@@ -153,11 +152,9 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.Log("Load failed");
                 return false;
             }
 
-            Debug.Log("Load with Decryption is done");
             return true;
         }
 
@@ -172,7 +169,6 @@ namespace ReelSpinGame_System
             {
                 DeleteSave(path, keyPath);
             }
-
             try
             {
                 using (FileStream file = File.OpenWrite(path))
@@ -190,7 +186,6 @@ namespace ReelSpinGame_System
                 return false;
             }
 
-            Debug.Log("Save Encryption is succeeded");
             return true;
         }
 
@@ -235,11 +230,9 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.Log("Load failed");
                 return false;
             }
 
-            Debug.Log("Load with Decryption is done");
             return true;
         }
 
@@ -265,7 +258,6 @@ namespace ReelSpinGame_System
                 return false;
             }
 
-            Debug.Log("Save deletion succeeded");
             return true;
         }
 
@@ -287,7 +279,6 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.Log("Decode failed");
                 throw e;
             }
 
@@ -322,14 +313,11 @@ namespace ReelSpinGame_System
                     return false;
                 }
 
-                Debug.Log("Hash is correct");
-
                 baseStream.Position = 0;
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.Log("Hash Check failed");
                 return false;
             }
 

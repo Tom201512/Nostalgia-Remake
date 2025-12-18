@@ -23,11 +23,11 @@ namespace ReelSpinGame_Medal
         public bool HasMedalUpdate { get; private set; }            // メダルの更新処理中か
         public bool HasSegmentUpdate { get; private set; }          // セグメントを更新中か
 
-        private MedalBehavior data;        // メダル処理のデータ
-
         // メダルが投入された時のイベント
         public delegate void MedalHasInsertEvent();
-        public event MedalHasInsertEvent HasMedalInsert;
+        public event MedalHasInsertEvent HasMedalInsertEvent;
+
+        private MedalBehavior data;        // メダル処理のデータ
 
         private void Awake()
         {
@@ -38,25 +38,24 @@ namespace ReelSpinGame_Medal
 
         private void Start()
         {
-            // クレジット更新
             creditSegments.ShowSegmentByNumber(data.system.Credit);
         }
 
-        // タイマー処理の破棄
         private void OnDestroy() 
         {
             StopAllCoroutines();
         }
 
         // 数値を得る
-        public int GetCredit() => data.system.Credit;
-        public int GetCurrentBet() => data.CurrentBet;
-        public int GetRemainingPayout() => data.RemainingPayout;
-        public int GetMaxBet() => data.system.MaxBetAmount;
-        public int GetLastBetAmount() => data.system.LastBetAmount;
-        public int GetLastPayout() => data.LastPayoutAmount;
-        public bool GetBetFinished() => data.FinishedBet;
-        public bool GetHasReplay() => data.system.HasReplay;
+        public int GetCredit() => data.system.Credit;                   // クレジット
+        public int GetCurrentBet() => data.CurrentBet;                  // ベット枚数
+        public int GetRemainingBet() => data.RemainingBet;              // 残りベット
+        public int GetRemainingPayout() => data.RemainingPayout;        // 残り払い出し
+        public int GetMaxBet() => data.system.MaxBetAmount;             // 最大ベット枚数
+        public int GetLastBetAmount() => data.system.LastBetAmount;     // 直前のベット
+        public int GetLastPayout() => data.LastPayoutAmount;            // 直前の払い出し
+        public bool GetBetFinished() => data.FinishedBet;               // 払出が終了したか
+        public bool GetHasReplay() => data.system.HasReplay;            // リプレイ
 
         // セーブデータにする
         public MedalSave MakeSaveData()
@@ -222,8 +221,7 @@ namespace ReelSpinGame_Medal
             {
                 // メダル投入
                 data.InsertOneMedal();
-                // イベント送信
-                HasMedalInsert.Invoke();
+                HasMedalInsertEvent?.Invoke();
                 // ランプ、セグメント更新
                 medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
                 // 0.12秒待機

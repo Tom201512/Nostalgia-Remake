@@ -47,8 +47,6 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Mouse entered");
-
                 if(IsSelected)
                 {
                     ChangeCheckBoxTextColor(new Color(1, 1, 0, 1f));
@@ -66,8 +64,6 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Mouse leaved");
-
                 if (IsSelected)
                 {
                     ChangeCheckBoxTextColor(new Color(0.7f, 0.7f, 0f, 1f));
@@ -85,13 +81,10 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Pointer:" + eventData.button);
                 if (eventData.button == 0)
                 {
                     IsSelected = !IsSelected;
                     ButtonPushedEvent?.Invoke(signalID);
-                    Debug.Log(name + " Pushed");
-                    Debug.Log("Selected:" + IsSelected);
 
                     if (IsSelected)
                     {
@@ -112,7 +105,6 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Mouse up");
                 if (IsSelected)
                 {
                     ChangeCheckBoxTextColor(new Color(1, 1, 0, 1f));
@@ -213,7 +205,6 @@ namespace ReelSpinGame_Option.Button
             if (text != null)
             {
                 text.color = color;
-                Debug.Log("Changed text color");
             }
         }
 
@@ -223,7 +214,6 @@ namespace ReelSpinGame_Option.Button
             if (checkBoxImage != null)
             {
                 checkBoxImage.color = color;
-                Debug.Log("Changed icon color");
             }
         }
     }

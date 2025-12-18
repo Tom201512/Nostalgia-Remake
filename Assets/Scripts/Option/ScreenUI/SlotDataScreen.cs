@@ -1,11 +1,7 @@
 using ReelSpinGame_Option.Button;
-using ReelSpinGame_Reels;
 using ReelSpinGame_System;
-using ReelSpinGame_Util.OriginalInputs;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -76,9 +72,7 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            Debug.Log("Initialized SlotData");
             CanInteract = true;
-            Debug.Log("Interact :" + CanInteract);
             currentPage = 0;
             UpdateScreen();
 
@@ -94,7 +88,6 @@ namespace ReelSpinGame_Option.MenuContent
             if (CanInteract)
             {
                 DisactivateAllScreen();
-                Debug.Log("Closed SlotData");
                 closeButton.ToggleInteractive(false); ;
                 nextButton.ToggleInteractive(false);
                 previousButton.ToggleInteractive(false);
@@ -110,7 +103,6 @@ namespace ReelSpinGame_Option.MenuContent
         // 次ボタンを押したときの挙動
         private void OnNextPushed(int signalID)
         {
-            Debug.Log("Next pressed");
             if (currentPage + 1 == maxPage)
             {
                 currentPage = 0;
@@ -126,7 +118,6 @@ namespace ReelSpinGame_Option.MenuContent
         // 前ボタンを押したときの挙動
         private void OnPreviousPushed(int signalID)
         {
-            Debug.Log("Previous pressed");
             if (currentPage - 1 < 0)
             {
                 currentPage = maxPage - 1;
@@ -146,8 +137,6 @@ namespace ReelSpinGame_Option.MenuContent
         private void UpdateScreen()
         {
             DisactivateAllScreen();
-
-            Debug.Log("Page:" + currentPage + 1);
             // ページごとに処理を行う
 
             switch (currentPage)

@@ -10,14 +10,10 @@ using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.MenuContent
 {
+    // 遊び方ガイド画面
     public class HowToPlayScreen : MonoBehaviour, IOptionScreenBase
     {
-        // 遊び方ガイド画面
-
         // const
-
-        // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract { get; set; }
 
         // var
         [SerializeField] ButtonComponent nextButton;        // 次ボタン
@@ -31,6 +27,9 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] LocalizeStringEvent titleText; // タイトルテキスト
         [SerializeField] LocalizeSpriteEvent screen;    // 表示する画面
 
+        // 操作ができる状態か(アニメーション中などはつけないこと)
+        public bool CanInteract { get; set; }
+
         private int currentPage;    // 表示中のページ番号
 
         // 画面を閉じたときのイベント
@@ -38,8 +37,7 @@ namespace ReelSpinGame_Option.MenuContent
         public event OnClosedScreen OnClosedScreenEvent;
 
         // func
-
-        private void Awake()
+        void Awake()
         {
             currentPage = 0;
             // ボタン登録
@@ -48,12 +46,12 @@ namespace ReelSpinGame_Option.MenuContent
             previousButton.ButtonPushedEvent += OnPreviousPushed;
         }
 
-        private void Start()
+        void Start()
         {
             UpdateScreen();
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             nextButton.ButtonPushedEvent -= OnNextPushed;
@@ -63,9 +61,7 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            Debug.Log("Initialized How To Play");
             CanInteract = true;
-            Debug.Log("Interact :" + CanInteract);
             currentPage = 0;
 
             UpdateScreen();
@@ -78,10 +74,8 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面を閉じる
         public void CloseScreen()
         {
-            Debug.Log("Interact :" + CanInteract);
             if (CanInteract)
             {
-                Debug.Log("Closed How To Play");
                 closeButton.ToggleInteractive(false); ;
                 nextButton.ToggleInteractive(false);
                 previousButton.ToggleInteractive(false);
@@ -89,9 +83,8 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 次ボタンを押したときの挙動
-        private void OnNextPushed(int signalID)
+        void OnNextPushed(int signalID)
         {
-            Debug.Log("Next pressed");
             if (currentPage + 1 == screenList.Count)
             {
                 currentPage = 0;
@@ -105,9 +98,8 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 前ボタンを押したときの挙動
-        private void OnPreviousPushed(int signalID)
+        void OnPreviousPushed(int signalID)
         {
-            Debug.Log("Previous pressed");
             if (currentPage - 1 < 0)
             {
                 currentPage = screenList.Count - 1;
@@ -121,16 +113,13 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 閉じるボタンを押したときの挙動
-        private void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
+        void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
 
         // 画像の反映処理
-        private void UpdateScreen()
+        void UpdateScreen()
         {
-            Debug.Log("Page:" + currentPage + 1);
             titleText.StringReference = titleTextList[currentPage];
             screen.AssetReference = screenList[currentPage];
-            
-            pageCount.text = (currentPage + 1) + "/" + screenList.Count;
         }
     }
 }

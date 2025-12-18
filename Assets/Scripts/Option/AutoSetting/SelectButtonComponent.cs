@@ -54,8 +54,6 @@ namespace ReelSpinGame_Option
             {
                 contentListCount = imageDisplayList.Count;
             }
-
-            Debug.Log("ContentCount:" + contentListCount);
         }
 
         void Start()

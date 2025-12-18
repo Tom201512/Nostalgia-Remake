@@ -73,7 +73,6 @@ namespace ReelSpinGame_System
                 return false;
             }
 
-            Debug.Log("Load with Decryption is done");
             return true;
         }
 

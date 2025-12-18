@@ -5,18 +5,15 @@ using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Spin
-{
+{   
+    // リール回転用のプレゼンター
     public class ReelSpinPresenter : MonoBehaviour
     {
-        // リール回転用のプレゼンター
-
         // var
         // 回転時のRPM
         [SerializeField] [Range(0, 80.0f)] private float defaultReelSpinRPM;
         // リール配列データ
         [SerializeField] ReelArrayData reelArrayDataFile;
-        // 図柄マネージャー
-        private SymbolManager symbolManager;
 
         // 図柄位置が変わったことを伝えるイベント
         public delegate void ReelPositionChanged();
@@ -30,13 +27,10 @@ namespace ReelSpinGame_Reels.Spin
         public delegate void ReelStoppedEvent();
         public event ReelStoppedEvent HasReelStopped;
 
-        // モデル
-        private ReelSpinModel reelSpinModel;
-
-        // モーションブラー
-        private PostProcessVolume postVolume;
-        // ブラー部分のプロファイル
-        private MotionBlur motionBlur;
+        ReelSpinModel reelSpinModel;        // データ
+        SymbolManager symbolManager;        // 図柄マネージャー
+        PostProcessVolume postVolume;       // モーションブラー
+        MotionBlur motionBlur;              // ブラー部分のプロファイル
 
         private void Awake()
         {
@@ -126,22 +120,16 @@ namespace ReelSpinGame_Reels.Spin
         // リールの停止処理を開始する
         public void StartStopReelSpin(int pushedPos, int pushOrder, int delay)
         {
-            Debug.Log("Received ReelStop");
-            Debug.Log("Delay:" + delay);
             reelSpinModel.LastPushedPos = pushedPos;
             reelSpinModel.WillStopLowerPos = ReelObjectPresenter.OffsetReelPos(pushedPos, delay);
             reelSpinModel.LastStoppedOrder = pushOrder;
             reelSpinModel.LastStoppedDelay = delay;
             reelSpinModel.CurrentReelStatus = ReelStatus.RecieveStop;
-
-            Debug.Log("WillStop:" + (reelSpinModel.WillStopLowerPos + 1));
         }
 
         // リールを強制停止させる
         public void StopReelImmediately(int pushedPos, int pushOrder, int delay)
         {
-            Debug.Log("Received ReelStop");
-            Debug.Log("Delay:" + delay);
             reelSpinModel.LastPushedPos = pushedPos;
             reelSpinModel.WillStopLowerPos = ReelObjectPresenter.OffsetReelPos(pushedPos, delay);
             reelSpinModel.LastStoppedOrder = pushOrder;
@@ -155,7 +143,7 @@ namespace ReelSpinGame_Reels.Spin
         public void UpdateReelSymbols(int currentLower) => symbolManager.UpdateSymbolsObjects(currentLower, reelSpinModel.ReelArray);
 
         // リールの回転
-        private void RotateReel()
+        void RotateReel()
         {
             float rotationAngle;
             rotationAngle = Math.Clamp((reelSpinModel.ReturnDegreePerSecond()) * Time.deltaTime * reelSpinModel.RotateSpeed, -360, 360);
@@ -166,7 +154,7 @@ namespace ReelSpinGame_Reels.Spin
         }
 
         // 図柄位置を変更する
-        private void ChangeReelPos()
+        void ChangeReelPos()
         {
             // 一定角度に達したら図柄の更新(17.14286度)
             // 逆回転の場合
@@ -200,14 +188,13 @@ namespace ReelSpinGame_Reels.Spin
                 // 停止位置になったら停止処理
                 if (reelSpinModel.CurrentLower == reelSpinModel.WillStopLowerPos && reelSpinModel.CurrentReelStatus == ReelStatus.RecieveStop)
                 {
-                    Debug.Log("Reached stop pos");
                     FinishReelSpin();
                 }
             }
         }
 
         // 回転を遅くする
-        private void SlowDownReelSpeed()
+        void SlowDownReelSpeed()
         {
             // 一定角度に達したらリール速度を落とす(15.14286度)
             // 逆回転の場合
@@ -226,9 +213,8 @@ namespace ReelSpinGame_Reels.Spin
         }
 
         // リールの回転を終了する
-        private void FinishReelSpin()
+        void FinishReelSpin()
         {
-            Debug.Log("Finished ReelSpin");
             transform.rotation = Quaternion.identity;
             reelSpinModel.FinishReelSpin();
             HasReelStopped?.Invoke();

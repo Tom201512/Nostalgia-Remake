@@ -145,7 +145,6 @@ namespace ReelSpinGame_Reels
         {
             if (ReelEffectManager.HasJacBrightnessCalculate)
             {
-                Debug.Log("Calculating");
                 ReelEffectManager.CalculateJacBrightness(reelSpinPresenter.GetMaxSpeed());
             }
         }

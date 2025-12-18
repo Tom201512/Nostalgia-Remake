@@ -81,7 +81,6 @@ namespace ReelSpinGame_Medal
             // 多い場合(1枚以上ベットされていること)
             if (amount > CurrentBet && CurrentBet > 0)
             {
-                ////Debug.Log("You bet more than current bet");
                 RemainingBet = Math.Clamp(amount - CurrentBet, 0, MaxBetLimit);
             }
 

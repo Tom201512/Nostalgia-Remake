@@ -61,7 +61,6 @@ namespace ReelSpinGame_Medal.Segment
         // 指定した数値までセグメントを増減させる
         public void DoSegmentTween(int fromValue, int toValue)
         {
-            Debug.Log("From:" + fromValue + " To:" + toValue);
             tweenFromValue = fromValue;
             tweenToValue = toValue;
             StartCoroutine(nameof(SegmentTweenUpdate));
@@ -93,7 +92,6 @@ namespace ReelSpinGame_Medal.Segment
                 {
                     tweenValue += 1;
                 }
-                Debug.Log("Tween:" + tweenValue);
                 ShowSegmentByNumber(tweenValue);
                 yield return new WaitForSeconds(SegmentUpdateFrame);
             }

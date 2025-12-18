@@ -1,7 +1,9 @@
 ﻿using ReelSpinGame_Interface;
 using UnityEngine;
+using ReelSpinGame_Effect.Data;
 using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
+using ReelSpinGame_Effect.Data.Condition;
 
 namespace ReelSpinGame_State.InsertState
 {
@@ -22,14 +24,18 @@ namespace ReelSpinGame_State.InsertState
         // func
         public void StateStart()
         {
-            gM.Medal.HasMedalInsert += BetSound;
-
+            // イベント登録
+            gM.Medal.HasMedalInsertEvent += OnMedalInserted;
             // リプレイなら処理を開始しリプレイランプ点灯
             if (gM.Medal.GetHasReplay())
             {
                 gM.Medal.StartReplayInsert(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
                 gM.Status.TurnOnReplayLamp();
                 gM.Status.TurnOnStartLamp();
+
+                BetEffectCondition condition = new BetEffectCondition();
+                condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+                gM.Effect.StartBetEffect(condition);
             }
             // リプレイでなければINSERTランプ表示
             else
@@ -57,8 +63,8 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateEnd()
         {
+            gM.Medal.HasMedalInsertEvent -= OnMedalInserted;
             gM.Status.TurnOffInsertAndStartlamp();
-            gM.Medal.HasMedalInsert -= BetSound;
             gM.Medal.FinishMedalInsert();
 
             // 設定画面を開けなくする
@@ -67,10 +73,15 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // ベット処理
-        private void BetAction(int amount, bool cutCoroutine)
+        void BetAction(int amount, bool cutCoroutine)
         {
             gM.Medal.StartBet(amount, cutCoroutine);
-            StopReelFlash();
+
+            // 演出開始
+            BetEffectCondition condition = new BetEffectCondition();
+            condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+            gM.Effect.StartBetEffect(condition);
+
             // ベットがある場合はランプを消す
             if (gM.Medal.GetCurrentBet() > 0)
             {
@@ -85,23 +96,8 @@ namespace ReelSpinGame_State.InsertState
             }
         }
 
-        // フラッシュを止める
-        private void StopReelFlash()
-        {
-            gM.Effect.StopReelFlash();
-            // リール点灯(JAC中は中段のみ点灯させ、回転中に明るさを計算させる)
-            gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
-
-        }
-
-        // サウンド再生
-        private void BetSound()
-        {
-            gM.Effect.StartBetEffect();
-        }
-
         // ベット終了とMAXBETを押したときの制御
-        private void BetAndStartFunction(bool cutCoroutine)
+        void BetAndStartFunction(bool cutCoroutine)
         {
             // ベットが終了していたら
             if (gM.Medal.GetBetFinished())
@@ -116,7 +112,7 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // オート中の制御
-        private void AutoBetBehavior()
+        void AutoBetBehavior()
         {
             // オート時サウンド再生設定を変更
             gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
@@ -134,7 +130,7 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // プレイヤー操作の管理
-        private void PlayerControl()
+        void PlayerControl()
         {
             // MAX BET
             if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.MaxBet))
@@ -159,7 +155,7 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // ベット終了処理
-        private void EndInsertState()
+        void EndInsertState()
         {
             // 投入枚数を反映する(リプレイ時以外)
             if(!gM.Medal.GetHasReplay())
@@ -191,5 +187,7 @@ namespace ReelSpinGame_State.InsertState
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);
         }
+
+        void OnMedalInserted() => gM.Effect.StartPlayBetSound();
     }
 }

@@ -1,5 +1,3 @@
-using ReelSpinGame_Option.Button;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,12 +5,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 namespace ReelSpinGame_UI.Bonus
 {
     // ボーナス履歴表示オブジェクト
-    public class BonusLogDisplay : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
+    public class BonusLogDisplay : MonoBehaviour, IPointerDownHandler
     {
         // const
 
@@ -53,40 +50,14 @@ namespace ReelSpinGame_UI.Bonus
             CanInteractable = true;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (CanInteractable)
-            {
-                Debug.Log("BonusLog Mouse entered");
-            }
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (CanInteractable)
-            {
-                Debug.Log("BonusLog Mouse leaved");
-            }
-        }
-
         public void OnPointerDown(PointerEventData eventData)
         {
             if (CanInteractable)
             {
-                Debug.Log("BonusLog Pointer:" + eventData.button);
                 if (eventData.button == 0)
                 {
                     OnBonusLogPressedEvent?.Invoke(BonusIndexNumber);
-                    Debug.Log("BonusLog Pushed:" + BonusIndexNumber);
                 }
-            }
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (CanInteractable)
-            {
-                Debug.Log("BonusLog Mouse up");
             }
         }
 
@@ -136,12 +107,6 @@ namespace ReelSpinGame_UI.Bonus
         }
 
         // func (private)
-        // ボーナス履歴が押された時の処理
-        void OnButtonPressedBehavior()
-        {
-            Debug.Log("LogPressed");
-            OnBonusLogPressedEvent?.Invoke(BonusIndexNumber);
-        }
     }
 }
 

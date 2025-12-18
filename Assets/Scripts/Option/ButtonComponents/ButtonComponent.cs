@@ -38,7 +38,6 @@ namespace ReelSpinGame_Option.Button
         {
             if(CanInteractable)
             {
-                Debug.Log("Mouse entered");
                 ChangeButtonContentColor(new Color(1, 1, 1, 1f));
             }
         }
@@ -47,7 +46,6 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Mouse leaved");
                 ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
             }
         }
@@ -56,11 +54,9 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Pointer:" + eventData.button);
                 if (eventData.button == 0)
                 {
                     ButtonPushedEvent?.Invoke(signalID);
-                    Debug.Log(name + " Pushed");
                     ChangeButtonContentColor(new Color(0.5f, 0.5f, 0.5f, 1f));
                 }
             }
@@ -70,7 +66,6 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                Debug.Log("Mouse up");
                 ChangeButtonContentColor(new Color(1, 1, 1, 1f));
             }
         }
@@ -96,13 +91,11 @@ namespace ReelSpinGame_Option.Button
             if (iconImage != null)
             {
                 iconImage.color = color;
-                Debug.Log("Changed material color");
             }
 
             if (text != null)
             {
                 text.color = color;
-                Debug.Log("Changed text color");
             }
         }
     }

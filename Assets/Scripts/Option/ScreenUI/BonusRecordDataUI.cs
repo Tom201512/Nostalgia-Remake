@@ -15,9 +15,9 @@ namespace ReelSpinGame_Option.MenuContent
         // const
 
         // var
-        [SerializeField] BonusLogDisplayList bonusLogDisplayList; // ボーナス履歴リスト
-        [SerializeField] ReelDisplayUI reelDisplayUI; // 当選時出目表示機能
-        [SerializeField] TextMeshProUGUI noDataText; // データがないときに表示するテキスト
+        [SerializeField] BonusLogDisplayList bonusLogDisplayList;   // ボーナス履歴リスト
+        [SerializeField] ReelDisplayUI reelDisplayUI;               // 当選時出目表示機能
+        [SerializeField] TextMeshProUGUI noDataText;                // データがないときに表示するテキスト
 
         public List<BonusDisplayData> BonusDisplayDatas { get; private set; } // ボーナス履歴のデータ
 
@@ -59,7 +59,6 @@ namespace ReelSpinGame_Option.MenuContent
                 }
                 GenerateBonusDisplayData(bonusData, index); // データを記録
                 bonusLogDisplayList.AddBonusData(BonusDisplayDatas[index]); // 表示用画像を作成
-                Debug.Log("Generated Data, Index:" + index);
 
                 index += 1;
             }
@@ -88,26 +87,6 @@ namespace ReelSpinGame_Option.MenuContent
             bonusDisplayData.BonusReelPos = new List<int>(bonusHitData.BonusReelPos);
             bonusDisplayData.BonusReelPushOrder = new List<int>(bonusHitData.BonusReelPushOrder);
             bonusDisplayData.BonusReelDelay = new List<int>(bonusHitData.BonusReelDelay);
-
-            Debug.Log("Log:" + bonusDisplayData.BonusLogNumber);
-            Debug.Log("Color:" + bonusDisplayData.BigColor);
-            Debug.Log("Payouts:" + bonusDisplayData.Payouts);
-
-            Debug.Log("BonusReelPos:" + 
-                bonusDisplayData.BonusReelPos[(int)ReelID.ReelLeft] +
-                bonusDisplayData.BonusReelPos[(int)ReelID.ReelMiddle] +
-                bonusDisplayData.BonusReelPos[(int)ReelID.ReelRight]);
-
-            Debug.Log("BonusReelPushOrder:" +
-                bonusDisplayData.BonusReelPushOrder[(int)ReelID.ReelLeft] +
-                bonusDisplayData.BonusReelPushOrder[(int)ReelID.ReelMiddle] +
-                bonusDisplayData.BonusReelPushOrder[(int)ReelID.ReelRight]);
-
-            Debug.Log("BonusReelDelay:" +
-                bonusDisplayData.BonusReelDelay[(int)ReelID.ReelLeft] +
-                bonusDisplayData.BonusReelDelay[(int)ReelID.ReelMiddle] +
-                bonusDisplayData.BonusReelDelay[(int)ReelID.ReelRight]);
-
             BonusDisplayDatas.Add(bonusDisplayData);
         }
 

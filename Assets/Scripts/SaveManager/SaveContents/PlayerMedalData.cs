@@ -43,11 +43,6 @@ namespace ReelSpinGame_Datas
                 CurrentInMedal = data.CurrentInMedal;
                 CurrentOutMedal = data.CurrentOutMedal;
                 MedalSlumpGraph = new List<int>(data.MedalSlumpGraph);
-
-                for (int i = 0; i < MedalSlumpGraph.Count; i++)
-                {
-                    Debug.Log("Slump [" + i + "]:" + MedalSlumpGraph[i]);
-                }
             }
             else
             {
@@ -83,21 +78,16 @@ namespace ReelSpinGame_Datas
             // 変数を格納
             List<int> data = new List<int>();
             data.Add(CurrentPlayerMedal);
-            Debug.Log("CurrentPlayerMedal:" + CurrentPlayerMedal);
             data.Add(CurrentInMedal);
-            Debug.Log("CurrentInMedal:" + CurrentInMedal);
             data.Add(CurrentOutMedal);
-            Debug.Log("CurrentOutMedal:" + CurrentOutMedal);
 
             // 差枚数のデータ数を読み込み
             int loadCount = MedalSlumpGraph.Count;
-            Debug.Log("SlumpGraphCount:" +  loadCount);
             data.Add(loadCount);
 
             for (int i = 0; i < loadCount; i++)
             {
                 data.Add(MedalSlumpGraph[i]);
-                Debug.Log("Slump [" + i + "]:" + MedalSlumpGraph[i]);
             }
 
             return data;
@@ -109,18 +99,13 @@ namespace ReelSpinGame_Datas
             try
             {
                 CurrentPlayerMedal = br.ReadInt32();
-                Debug.Log("Current Medal:" + CurrentPlayerMedal);
                 CurrentInMedal = br.ReadInt32();
-                Debug.Log("Current IN:" + CurrentInMedal);
                 CurrentOutMedal = br.ReadInt32();
-                Debug.Log("Current OUT:" + CurrentOutMedal);
 
                 int loadCount = br.ReadInt32();
-                Debug.Log("LoadCount:" + loadCount);
                 for (int i = 0; i < loadCount; i++)
                 {
                     MedalSlumpGraph.Add(br.ReadInt32());
-                    Debug.Log("Slump [" + i + "]:" + MedalSlumpGraph[i]);
                 }
             }
             catch (Exception e)
@@ -128,8 +113,6 @@ namespace ReelSpinGame_Datas
                 Debug.LogException(e);
                 return false;
             }
-
-            Debug.Log("Medal Load is done");
             return true;
         }
     }

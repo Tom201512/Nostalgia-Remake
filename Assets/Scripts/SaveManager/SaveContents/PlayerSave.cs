@@ -59,15 +59,9 @@ namespace ReelSpinGame_Save.Player
                 List<int> data = new List<int>();
 
                 data.Add(TotalGames);
-                Debug.Log("TotalGames:" + TotalGames);
                 data.Add(CurrentGames);
-                Debug.Log("CurrentGames:" + CurrentGames);
-
-                // BIG/REG回数
                 data.Add(BigTimes);
-                Debug.Log("BigTimes:" + BigTimes);
                 data.Add(RegTimes);
-                Debug.Log("RegTimes:" + RegTimes);
 
                 // メダル情報
                 foreach (int list in PlayerMedalData.SaveData())
@@ -77,7 +71,6 @@ namespace ReelSpinGame_Save.Player
 
                 // ボーナス情報の数
                 data.Add(BonusHitRecord.Count);
-                Debug.Log("BonusData count :" + BonusHitRecord.Count);
 
                 // ボーナス情報
                 for (int i = 0; i < BonusHitRecord.Count; i++)
@@ -102,20 +95,10 @@ namespace ReelSpinGame_Save.Player
             {
                 try
                 {
-                    // ゲーム数読み込み
                     TotalGames = br.ReadInt32();
-                    Debug.Log("TotalGames:" + TotalGames);
-
                     CurrentGames = br.ReadInt32();
-                    Debug.Log("CurrentGames:" + CurrentGames);
-
-                    // BIG回数
                     BigTimes = br.ReadInt32();
-                    Debug.Log("BigTimes:" + BigTimes);
-
-                    // REG回数
                     RegTimes = br.ReadInt32();
-                    Debug.Log("RegTimes:" + RegTimes);
 
                     // メダル情報読み込み
                     PlayerMedalData.LoadData(br);
@@ -124,12 +107,10 @@ namespace ReelSpinGame_Save.Player
                     // ボーナス履歴数
 
                     int bonusResultCount = br.ReadInt32();
-                    Debug.Log("BonusResultCount:" + bonusResultCount);
 
                     // 履歴分読み込む
                     for (int i = 0; i < bonusResultCount; i++)
                     {
-                        Debug.Log("BonusResult[" + i + "]:");
                         BonusHitData buffer = new BonusHitData();
                         buffer.LoadData(br);
                         BonusHitRecord.Add(buffer);
@@ -137,9 +118,6 @@ namespace ReelSpinGame_Save.Player
 
                     // 解析情報読み込み
                     PlayerAnalyticsData.LoadData(br);
-
-                    Debug.Log("PlyaerLoad END");
-
                 }
                 catch (Exception e)
                 {

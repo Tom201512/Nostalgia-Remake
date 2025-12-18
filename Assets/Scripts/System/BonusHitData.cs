@@ -12,22 +12,14 @@ namespace ReelSpinGame_Datas
     public class BonusHitData : ISavable
     {
         // var
-        // 当選ボーナスID
-        public BonusTypeID BonusID { get; private set; }
-        // 成立時ゲーム数(成立時点でのゲーム数)
-        public int BonusHitGame { get; private set; }
-        // 入賞時ゲーム数(ボーナスを入賞させたゲーム)
-        public int BonusStartGame { get; private set; }
-        // ボーナス獲得枚数
-        public int BonusPayout { get; private set; }
-        // BIG当選時の色
-        public BigColor BigColor { get; private set; }
-        // ボーナス成立時のリール位置
-        public List<int> BonusReelPos { get; private set; }
-        // ボーナス成立時の押し順
-        public List<int> BonusReelPushOrder { get; private set; }
-        // ボーナス成立時のスベリコマ数
-        public List<int> BonusReelDelay { get; private set; }
+        public BonusTypeID BonusID { get; private set; }            // 当選ボーナスID
+        public int BonusHitGame { get; private set; }               // 成立時ゲーム数(成立時点でのゲーム数)
+        public int BonusStartGame { get; private set; }             // 入賞時ゲーム数(ボーナスを入賞させたゲーム)
+        public int BonusPayout { get; private set; }                // ボーナス獲得枚数
+        public BigColor BigColor { get; private set; }              // BIG当選時の色
+        public List<int> BonusReelPos { get; private set; }         // ボーナス成立時のリール位置
+        public List<int> BonusReelPushOrder { get; private set; }   // ボーナス成立時の押し順
+        public List<int> BonusReelDelay { get; private set; }       // ボーナス成立時のスベリコマ数
 
         // コンストラクタ
         public BonusHitData()
@@ -43,16 +35,11 @@ namespace ReelSpinGame_Datas
         }
 
         // func
-        // 成立ボーナスセット
-        public void SetBonusType(BonusTypeID bonusID) => BonusID = bonusID;
-        // 成立時ゲーム数セット
-        public void SetBonusHitGame(int game) => BonusHitGame = game;
-        // 入賞時ゲーム数セット
-        public void SetBonusStartGame(int game) => BonusStartGame = game;
-        // ボーナス獲得枚数変更
-        public void ChangeBonusPayout(int amount) => BonusPayout = amount;
-        // ビッグチャンス時の色セット
-        public void SetBigChanceColor(BigColor color) => BigColor = color;
+        public void SetBonusType(BonusTypeID bonusID) => BonusID = bonusID;         // 成立ボーナスセット
+        public void SetBonusHitGame(int game) => BonusHitGame = game;               // 成立時ゲーム数セット
+        public void SetBonusStartGame(int game) => BonusStartGame = game;           // 入賞時ゲーム数セット
+        public void ChangeBonusPayout(int amount) => BonusPayout = amount;          // ボーナス獲得枚数変更
+        public void SetBigChanceColor(BigColor color) => BigColor = color;          // ビッグチャンス時の色セット
 
         // 成立時のリール停止位置セット
         public void SetBonusReelPos(List<int> reelPos)
@@ -84,33 +71,25 @@ namespace ReelSpinGame_Datas
             // 変数を格納
             List<int> data = new List<int>();
             data.Add((int)BonusID);
-            //Debug.Log("BonusID:" + BonusID);
             data.Add(BonusHitGame);
-            //Debug.Log("BonusHitGame:" + BonusHitGame);
             data.Add(BonusStartGame);
-            //Debug.Log("BonusStartGame:" + BonusStartGame);
             data.Add(BonusPayout);
-            //Debug.Log("BonusPayout:" + BonusPayout);
             data.Add((int)BigColor);
-            //Debug.Log("BigColor:" + BigColor);
 
             foreach(int pos in BonusReelPos)
             {
                 data.Add(pos);
             }
-            //Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
 
             foreach (int pos in BonusReelPushOrder)
             {
                 data.Add(pos);
             }
-            //Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
 
             foreach (int delay in BonusReelDelay)
             {
                 data.Add(delay);
             }
-            //Debug.Log("ReelStopDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," + BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
 
             return data;
         }
@@ -121,35 +100,25 @@ namespace ReelSpinGame_Datas
             try
             {
                 BonusID = (BonusTypeID)Enum.ToObject(typeof(BonusTypeID), br.ReadInt32());
-                Debug.Log("BonusID:" + BonusID);
                 BonusHitGame = br.ReadInt32();
-                Debug.Log("BonusHitGame:" + BonusHitGame);
                 BonusStartGame = br.ReadInt32();
-                Debug.Log("BonusStartGame:" + BonusStartGame);
                 BonusPayout = br.ReadInt32();
-                Debug.Log("BonusPayout:" + BonusStartGame);
                 BigColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
-                Debug.Log("BigColor:" + BigColor);
 
                 for (int i = 0; i < BonusReelPos.Count; i++)
                 {
                     BonusReelPos[i] = br.ReadInt32();
                 }
 
-                Debug.Log("ReelStopPos:" + BonusReelPos[(int)ReelID.ReelLeft] + "," + BonusReelPos[(int)ReelID.ReelMiddle] + "," + BonusReelPos[(int)ReelID.ReelRight]);
-
-
                 for (int i = 0; i < BonusReelPushOrder.Count; i++)
                 {
                     BonusReelPushOrder[i] = br.ReadInt32();
                 }
-                Debug.Log("ReelStopOrder:" + BonusReelPushOrder[(int)ReelID.ReelLeft] + "," + BonusReelPushOrder[(int)ReelID.ReelMiddle] + "," + BonusReelPushOrder[(int)ReelID.ReelRight]);
 
                 for (int i = 0; i < BonusReelDelay.Count; i++)
                 {
                     BonusReelDelay[i] = br.ReadInt32();
                 }
-                Debug.Log("ReelStopDelay:" + BonusReelDelay[(int)ReelID.ReelLeft] + "," + BonusReelDelay[(int)ReelID.ReelMiddle] + "," + BonusReelDelay[(int)ReelID.ReelRight]);
             }
             catch (Exception e)
             {
@@ -157,7 +126,6 @@ namespace ReelSpinGame_Datas
                 return false;
             }
 
-            Debug.Log("BonusData end");
             return true;
         }
     }

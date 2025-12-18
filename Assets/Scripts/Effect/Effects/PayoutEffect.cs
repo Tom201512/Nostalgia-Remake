@@ -13,7 +13,7 @@ namespace ReelSpinGame_Effect.Data
     {
         // const
         const float ReplayWaitTime = 1.0f;                  // リプレイ時に待機させる時間(秒)
-        public const float MedalUpdateTime = 0.12f;         // メダル更新の間隔(ミリ秒)
+        const float MedalUpdateTime = 0.12f;         // メダル更新の間隔(ミリ秒)
 
         // var
         public bool HasEffect { get; set; }  // 演出処理中か
@@ -28,6 +28,11 @@ namespace ReelSpinGame_Effect.Data
             remainingPayout = 0;
             flash = GetComponent<FlashManager>();
             sound = GetComponent<SoundManager>();
+        }
+
+        void OnDestroy()
+        {
+            StopAllCoroutines();
         }
 
         // レバーオン時のエフェクト
@@ -83,7 +88,6 @@ namespace ReelSpinGame_Effect.Data
             // 払い出し処理
             while (remainingPayout > 0)
             {
-                Debug.Log("Remaining:" + remainingPayout);
                 remainingPayout -= 1;
                 yield return new WaitForSeconds(MedalUpdateTime);
             }

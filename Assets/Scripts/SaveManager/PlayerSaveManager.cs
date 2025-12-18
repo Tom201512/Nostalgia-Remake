@@ -35,7 +35,6 @@ namespace ReelSpinGame_System
 
             // 台設定
             dataBuffer.Add(CurrentSave.Setting);
-            Debug.Log("Setting:" + CurrentSave.Setting);
 
             // プレイヤーデータ
             foreach (int i in CurrentSave.Player.SaveData())
@@ -51,16 +50,12 @@ namespace ReelSpinGame_System
 
             // フラグカウンタ
             dataBuffer.Add(CurrentSave.FlagCounter);
-            Debug.Log("FlagCounter:" + CurrentSave.FlagCounter);
 
             //リール停止位置
             foreach (int i in CurrentSave.LastReelPos)
             {
                 dataBuffer.Add(i);
             }
-
-            Debug.Log("ReelPos:" + CurrentSave.LastReelPos[(int)ReelID.ReelLeft] + "," +
-                CurrentSave.LastReelPos[(int)ReelID.ReelMiddle] + "," + CurrentSave.LastReelPos[(int)ReelID.ReelRight]);
 
             // ボーナス情報
             foreach (int i in CurrentSave.Bonus.SaveData())
@@ -99,11 +94,9 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.Log("Load failed");
                 return false;
             }
 
-            Debug.Log("Load with Decryption is done");
             return true;
         }
 
@@ -116,7 +109,6 @@ namespace ReelSpinGame_System
                 {
                     case (int)AddressID.Setting:
                         CurrentSave.RecordSlotSetting(br.ReadInt32());
-                        Debug.Log("Setting:" + CurrentSave.Setting);
                         break;
 
                     case (int)AddressID.Player:
@@ -129,22 +121,14 @@ namespace ReelSpinGame_System
 
                     case (int)AddressID.FlagC:
                         CurrentSave.RecordFlagCounter(br.ReadInt32());
-                        Debug.Log("FlagCounter:" + CurrentSave.FlagCounter);
                         break;
 
                     case (int)AddressID.Reel:
-                        // 左
                         CurrentSave.LastReelPos[(int)ReelID.ReelLeft] = br.ReadInt32();
-                        Debug.Log("Left:" + CurrentSave.LastReelPos[(int)ReelID.ReelLeft]);
-                        // 中
                         CurrentSave.LastReelPos[(int)ReelID.ReelMiddle] = br.ReadInt32();
-                        Debug.Log("Middle:" + CurrentSave.LastReelPos[(int)ReelID.ReelMiddle]);
-                        // 右
                         CurrentSave.LastReelPos[(int)ReelID.ReelRight] = br.ReadInt32();
-                        Debug.Log("Right:" + CurrentSave.LastReelPos[(int)ReelID.ReelRight]);
                         break;
 
-                    // ボーナス情報
                     case (int)AddressID.Bonus:
                         CurrentSave.Bonus.LoadData(br);
                         break;

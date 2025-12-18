@@ -1,12 +1,10 @@
 using ReelSpinGame_Effect.Data;
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Payout;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using UnityEngine;
 using static ReelSpinGame_AutoPlay.AutoManager;
-using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Effect
 {
@@ -19,9 +17,9 @@ namespace ReelSpinGame_Effect
         private ReelEffectManager reelEffectManager;        // リール演出マネージャー
         private FlashManager flashManager;                  // フラッシュ機能
         private SoundManager soundManager;                  // サウンド機能
-        private BonusStatus lastBonusStatus;                // 直前のボーナス状態(同じBGMが再生されていないかチェック用)
 
         // 各種演出処理
+        BetButtonEffect betButtonEffect;            // ベットボタン
         LeverOnEffect leverOnEffect;                // レバーオン時
         ReelStoppedEffect reelStoppedEffect;        // リール停止時
         BeforePayoutEffect beforePayoutEffect;      // 払い出し前
@@ -37,6 +35,7 @@ namespace ReelSpinGame_Effect
             flashManager = GetComponent<FlashManager>();
             soundManager = GetComponent<SoundManager>();
 
+            betButtonEffect = GetComponent<BetButtonEffect>();
             leverOnEffect = GetComponent<LeverOnEffect>();
             reelStoppedEffect = GetComponent<ReelStoppedEffect>();
             beforePayoutEffect = GetComponent<BeforePayoutEffect>();
@@ -45,22 +44,16 @@ namespace ReelSpinGame_Effect
             bonusEffect = GetComponent<BonusEffect>();
         }
 
-        private void Start()
+        void Start()
         {
             flashManager.SetReelEffectManager(reelEffectManager);
-        }
-
-        private void OnDestroy()
-        {
-            StopAllCoroutines();
         }
 
         // func
         // 数値を得る
 
-        public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;          // 疑似遊技中か
-        public bool GetHasFlashWait() => flashManager.HasFlashWait;             // フラッシュの待機中か
-
+        public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;                  // 疑似遊技中か
+        public bool GetHasFlashWait() => flashManager.HasFlashWait;                     // フラッシュの待機中か
         public bool GetHasBeforeEffectActivating() => beforePayoutEffect.HasEffect;     // 払い出し前の演出が実行中か
         public bool GetPayoutEffectActivating() => payoutEffect.HasEffect;              // 払い出し中演出が実行中か
         public bool GetAfterPayoutEffectActivating() => afterPayoutEffect.HasEffect;    // 払い出し後演出が実行中か
@@ -93,9 +86,13 @@ namespace ReelSpinGame_Effect
         // リールライト全消灯
         public void TurnOffAllReels() => flashManager.TurnOffAllReels();
 
-        // サウンド
+        // 演出開始
+        // ベット時の演出
+        public void StartBetEffect(BetEffectCondition condition) => betButtonEffect.DoEffect(condition);
+
         // ベット音再生
-        public void StartBetEffect() => soundManager.PlaySE(soundManager.SoundDB.SE.Bet);
+        public void StartPlayBetSound() => soundManager.PlaySE(soundManager.SoundDB.SE.Bet);
+
         // ウェイト音再生
         public void StartWaitEffect() => soundManager.PlaySE(soundManager.SoundDB.SE.Wait);
 

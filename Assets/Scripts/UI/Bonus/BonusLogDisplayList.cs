@@ -45,8 +45,7 @@ public class BonusLogDisplayList : MonoBehaviour
         foreach (BonusLogDisplay bonus in bonusLogDisplays)
         {
             bonus.OnBonusLogPressedEvent -= OnBonusLogPressed;
-            bonus.transform.SetParent(null);
-            Destroy(bonus);
+            Destroy(bonus.gameObject);
         }
         bonusLogDisplays.Clear();
     }

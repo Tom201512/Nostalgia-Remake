@@ -28,6 +28,11 @@ namespace ReelSpinGame_Effect.Data
             sound = GetComponent<SoundManager>();
         }
 
+        void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
         // レバーオン時のエフェクト
         public void DoEffect(BeforePayoutEffectCondition beforePayoutEffectCondition)
         {

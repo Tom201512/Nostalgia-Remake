@@ -8,72 +8,47 @@ using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_Datas.Analytics
 {
-
     // 解析情報
     public class AnalyticsData : ISavable
     {
         // var
-        // 小役、JAC、通常時を含めた全ゲーム回転数
-        public int TotalAllGamesCount { get; private set; }
-        // BIG小役ゲーム中のゲーム数
-        public int BigGamesCount { get; private set; }
-        // JACゲーム中のゲーム数
-        public int JacGamesCount { get; private set; }
+        public int TotalAllGamesCount { get; private set; }         // 小役、JAC、通常時を含めた全ゲーム回転数
+        public int BigGamesCount { get; private set; }              // BIG小役ゲーム中のゲーム数
+        public int JacGamesCount { get; private set; }              // JACゲーム中のゲーム数
 
         // 通常時各小役の入賞回数(リプレイを除く)
-        // 成立と入賞は別々にカウントする
 
         // 成立
-        // ベル
-        public int NormalBellHitCount { get; private set; }
-        // スイカ
-        public int NormalMelonHitCount { get; private set; }
-        // 2枚チェリー
-        public int NormalCherry2HitCount { get; private set; }
-        // 4枚チェリー
-        public int NormalCherry4HitCount { get; private set; }
+        public int NormalBellHitCount { get; private set; }         // ベル
+        public int NormalMelonHitCount { get; private set; }        // スイカ
+        public int NormalCherry2HitCount { get; private set; }      // 2枚チェリー
+        public int NormalCherry4HitCount { get; private set; }      // 4枚チェリー
 
-        // ベル
-        public int NormalBellLineUpCount { get; private set; }
-        // スイカ
-        public int NormalMelonLineUpCount { get; private set; }
-        // 2枚チェリー
-        public int NormalCherry2LineUpCount { get; private set; }
-        // 4枚チェリー
-        public int NormalCherry4LineUpCount { get; private set; }
+        // 入賞
+        public int NormalBellLineUpCount { get; private set; }      // ベル
+        public int NormalMelonLineUpCount { get; private set; }     // スイカ
+        public int NormalCherry2LineUpCount { get; private set; }   // 2枚チェリー
+        public int NormalCherry4LineUpCount { get; private set; }   // 4枚チェリー
 
         // BIG中成立
-        // ベル
-        public int BigBellHitCount { get; private set; }
-        // スイカ
-        public int BigMelonHitCount { get; private set; }
-        // 2枚チェリー
-        public int BigCherry2HitCount { get; private set; }
-        // 4枚チェリー
-        public int BigCherry4HitCount { get; private set; }
+        public int BigBellHitCount { get; private set; }        // ベル
+        public int BigMelonHitCount { get; private set; }       // スイカ
+        public int BigCherry2HitCount { get; private set; }     // 2枚チェリー
+        public int BigCherry4HitCount { get; private set; }     // 4枚チェリー
 
         // BIG中入賞
-        // ベル
-        public int BigBellLineUpCount { get; private set; }
-        // スイカ
-        public int BigMelonLineUpCount { get; private set; }
-        // 2枚チェリー
-        public int BigCherry2LineUpCount { get; private set; }
-        // 4枚チェリー
-        public int BigCherry4LineUpCount { get; private set; }
+        public int BigBellLineUpCount { get; private set; }         // ベル
+        public int BigMelonLineUpCount { get; private set; }        // スイカ
+        public int BigCherry2LineUpCount { get; private set; }      // 2枚チェリー
+        public int BigCherry4LineUpCount { get; private set; }      // 4枚チェリー
 
         // ビタ押し精度用
-        // JAC-IN発生回数
-        public int BigJacInTimes { get; private set; }
-        // JACはずし成功回数
-        public int BigJacAvoidTimes { get; private set; }
-        // JACビタはずし成功回数
-        public int BigJacPerfectAvoidTimes { get; private set; }
-        // アシストはずし成功回数
-        public int BigJacAssistedAvoidTimes { get; private set; }
+        public int BigJacInTimes { get; private set; }              // JAC-IN発生回数
+        public int BigJacAvoidTimes { get; private set; }           // JACはずし成功回数
+        public int BigJacPerfectAvoidTimes { get; private set; }    // JACビタはずし成功回数
+        public int BigJacAssistedAvoidTimes { get; private set; }   // アシストはずし成功回数
 
-        // JAC中はずれ回数
-        public int JacGameNoneTimes { get; private set; }
+        public int JacGameNoneTimes { get; private set; }           // JAC中はずれ回数
 
         // コンストラクタ
         public AnalyticsData()
@@ -112,53 +87,6 @@ namespace ReelSpinGame_Datas.Analytics
         }
 
         // func
-        // データからセットする
-        public bool SetData(ISavable analyticsData)
-        {
-            if (analyticsData.GetType() == typeof(AnalyticsData))
-            {
-                AnalyticsData data = analyticsData as AnalyticsData;
-
-                TotalAllGamesCount = 0;
-                BigGamesCount = 0;
-                JacGamesCount = 0;
-
-                NormalBellHitCount = 0;
-                NormalMelonHitCount = 0;
-                NormalCherry2HitCount = 0;
-                NormalCherry4HitCount = 0;
-
-                NormalBellLineUpCount = 0;
-                NormalMelonLineUpCount = 0;
-                NormalCherry2LineUpCount = 0;
-                NormalCherry4LineUpCount = 0;
-
-                BigBellHitCount = 0;
-                BigMelonHitCount = 0;
-                BigCherry2HitCount = 0;
-                BigCherry4HitCount = 0;
-
-                BigBellLineUpCount = 0;
-                BigMelonLineUpCount = 0;
-                BigCherry2LineUpCount = 0;
-                BigCherry4LineUpCount = 0;
-
-                BigJacInTimes = 0;
-                BigJacAvoidTimes = 0;
-                BigJacPerfectAvoidTimes = 0;
-                BigJacAssistedAvoidTimes = 0;
-
-                JacGameNoneTimes = 0;
-
-                return true;
-            }
-            else
-            {
-                Debug.LogError("Data is not AnalyticsData");
-                return false;
-            }
-        }
-
         // トータルゲーム数加算
         public void IncreaseTotalAllGameCounts(BonusStatus bonusStatus)
         {
@@ -182,25 +110,20 @@ namespace ReelSpinGame_Datas.Analytics
                 {
                     case FlagID.FlagCherry2:
                         BigCherry2HitCount += 1;
-                        Debug.Log("BigCherry2 Hit:" + BigCherry2HitCount);
                         break;
                     case FlagID.FlagCherry4:
                         BigCherry4HitCount += 1;
-                        Debug.Log("BigCherry4 Hit:" + BigCherry4HitCount);
                         break;
                     case FlagID.FlagMelon:
                         BigMelonHitCount += 1;
-                        Debug.Log("BigFlagMelon Hit:" + BigMelonHitCount);
                         break;
                     case FlagID.FlagBell:
                         BigBellHitCount += 1;
-                        Debug.Log("BigFlagBell Hit:" + BigBellHitCount);
                         break;
 
                     // BIG中はJAC-IN成立も含める(入賞はカウントしない)
                     case FlagID.FlagReplayJacIn:
                         BigJacInTimes += 1;
-                        Debug.Log("Big JAC-IN Hit:" + BigJacInTimes);
                         break;
                 }
             }
@@ -209,7 +132,6 @@ namespace ReelSpinGame_Datas.Analytics
                 if(flagID == FlagID.FlagNone)
                 {
                     JacGameNoneTimes += 1;
-                    Debug.Log("JAC GAME None Hit:" + JacGameNoneTimes);
                 }
             }
             else
@@ -218,19 +140,15 @@ namespace ReelSpinGame_Datas.Analytics
                 {
                     case FlagID.FlagCherry2:
                         NormalCherry2HitCount += 1;
-                        Debug.Log("Cherry2 Hit:" + NormalCherry2HitCount);
                         break;
                     case FlagID.FlagCherry4:
                         NormalCherry4HitCount += 1;
-                        Debug.Log("Cherry4 Hit:" + NormalCherry4HitCount);
                         break;
                     case FlagID.FlagMelon:
                         NormalMelonHitCount += 1;
-                        Debug.Log("Melon Hit:" + NormalMelonHitCount);
                         break;
                     case FlagID.FlagBell:
                         NormalBellHitCount += 1;
-                        Debug.Log("Bell Hit:" + NormalBellHitCount);
                         break;
                 }
             }
@@ -245,19 +163,15 @@ namespace ReelSpinGame_Datas.Analytics
                 {
                     case FlagID.FlagCherry2:
                         BigCherry2LineUpCount += 1;
-                        Debug.Log("BigCherry2 LineUp:" + BigCherry2LineUpCount);
                         break;
                     case FlagID.FlagCherry4:
                         BigCherry4LineUpCount += 1;
-                        Debug.Log("BigCherry4 LineUp:" + BigCherry4LineUpCount);
                         break;
                     case FlagID.FlagMelon:
                         BigMelonLineUpCount += 1;
-                        Debug.Log("BigMelon LineUp:" + BigMelonLineUpCount);
                         break;
                     case FlagID.FlagBell:
                         BigBellLineUpCount += 1;
-                        Debug.Log("BigBell LineUp:" + BigBellLineUpCount);
                         break;
                 }
             }
@@ -268,19 +182,15 @@ namespace ReelSpinGame_Datas.Analytics
                 {
                     case FlagID.FlagCherry2:
                         NormalCherry2LineUpCount += 1;
-                        Debug.Log("Cherry2 LineUp:" + NormalCherry2LineUpCount);
                         break;
                     case FlagID.FlagCherry4:
                         NormalCherry4LineUpCount += 1;
-                        Debug.Log("Cherry4 LineUp:" + NormalCherry4LineUpCount);
                         break;
                     case FlagID.FlagMelon:
                         NormalMelonLineUpCount += 1;
-                        Debug.Log("Melon LineUp:" + NormalMelonLineUpCount);
                         break;
                     case FlagID.FlagBell:
                         NormalBellLineUpCount += 1;
-                        Debug.Log("Bell LineUp:" + NormalBellLineUpCount);
                         break;
                 }
             }
@@ -294,8 +204,6 @@ namespace ReelSpinGame_Datas.Analytics
             {
                 BigJacAvoidTimes += 1;
                 BigJacPerfectAvoidTimes += 1;
-                Debug.Log("JacAvoid:" + BigJacAvoidTimes);
-                Debug.Log("JacPerfectAvoid:" + BigJacPerfectAvoidTimes);
             }
             // アシスト入りで外したかのチェック(乱数が偶数であること)
             else if((leftPushedPos == 9 || leftPushedPos == 15) &&
@@ -303,8 +211,6 @@ namespace ReelSpinGame_Datas.Analytics
             {
                 BigJacAvoidTimes += 1;
                 BigJacAssistedAvoidTimes += 1;
-                Debug.Log("JacAvoid:" + BigJacAvoidTimes);
-                Debug.Log("JacAssistedAvoid:" + BigJacAssistedAvoidTimes);
             }
         }
 
@@ -314,59 +220,35 @@ namespace ReelSpinGame_Datas.Analytics
             // 変数を格納
             List<int> data = new List<int>();
             data.Add(TotalAllGamesCount);
-            Debug.Log("TotalAllGamesCount" + TotalAllGamesCount);
             data.Add(BigGamesCount);
-            Debug.Log("BigGamesCount" + BigGamesCount);
             data.Add(JacGamesCount);
-            Debug.Log("JacGamesCount" + JacGamesCount);
 
             data.Add(NormalBellHitCount);
-            Debug.Log("NormalBellHitCount" + NormalBellHitCount);
             data.Add(NormalMelonHitCount);
-            Debug.Log("NormalMelonHitCount" + NormalMelonHitCount);
             data.Add(NormalCherry2HitCount);
-            Debug.Log("NormalCherry2HitCount" + NormalCherry2HitCount);
             data.Add(NormalCherry4HitCount);
-            Debug.Log("NormalCherry4HitCount" + NormalCherry4HitCount);
 
             data.Add(NormalBellLineUpCount);
-            Debug.Log("NormalBellLineUpCount" + NormalBellLineUpCount);
             data.Add(NormalMelonLineUpCount);
-            Debug.Log("NormalMelonLineUpCount" + NormalMelonLineUpCount);
             data.Add(NormalCherry2LineUpCount);
-            Debug.Log("NormalCherry2LineUpCount" + NormalCherry2LineUpCount);
             data.Add(NormalCherry4LineUpCount);
-            Debug.Log("NormalCherry4LineUpCount" + NormalCherry4LineUpCount);
 
             data.Add(BigBellHitCount);
-            Debug.Log("BigBellHitCount" + BigBellHitCount);
             data.Add(BigMelonHitCount);
-            Debug.Log("BigMelonHitCount" + BigMelonHitCount);
             data.Add(BigCherry2HitCount);
-            Debug.Log("BigCherry2HitCount" + BigCherry2HitCount);
             data.Add(BigCherry4HitCount);
-            Debug.Log("BigCherry4HitCount" + BigCherry4HitCount);
 
             data.Add(BigBellLineUpCount);
-            Debug.Log("BigBellLineUpCount" + BigBellLineUpCount);
             data.Add(BigMelonLineUpCount);
-            Debug.Log("BigMelonLineUpCount" + BigMelonLineUpCount);
             data.Add(BigCherry2LineUpCount);
-            Debug.Log("BigCherry2LineUpCount" + BigCherry2LineUpCount);
             data.Add(BigCherry4LineUpCount);
-            Debug.Log("BigCherry4LineUpCount" + BigCherry4LineUpCount);
 
             data.Add(BigJacInTimes);
-            Debug.Log("BigJacInTimes" + BigJacInTimes);
             data.Add(BigJacAvoidTimes);
-            Debug.Log("BigJacAvoidTimes" + BigJacAvoidTimes);
             data.Add(BigJacPerfectAvoidTimes);
-            Debug.Log("BigJacPerfectAvoidTimes" + BigJacPerfectAvoidTimes);
             data.Add(BigJacAssistedAvoidTimes);
-            Debug.Log("BigJacAssistedAvoidTimes" + BigJacAssistedAvoidTimes);
 
             data.Add(JacGameNoneTimes);
-            Debug.Log("JacGameNoneTimes" + JacGameNoneTimes);
 
             return data;
         }
@@ -377,59 +259,35 @@ namespace ReelSpinGame_Datas.Analytics
             try
             {
                 TotalAllGamesCount = br.ReadInt32();
-                Debug.Log("TotalAllGamesCount" + TotalAllGamesCount);
                 BigGamesCount = br.ReadInt32();
-                Debug.Log("BigGamesCount" + BigGamesCount);
                 JacGamesCount = br.ReadInt32();
-                Debug.Log("JacGamesCount" + JacGamesCount);
 
                 NormalBellHitCount = br.ReadInt32();
-                Debug.Log("NormalBellHitCount" + NormalBellHitCount);
                 NormalMelonHitCount = br.ReadInt32();
-                Debug.Log("NormalMelonHitCount" + NormalMelonHitCount);
                 NormalCherry2HitCount = br.ReadInt32();
-                Debug.Log("NormalCherry2HitCount" + NormalCherry2HitCount);
                 NormalCherry4HitCount = br.ReadInt32();
-                Debug.Log("NormalCherry4HitCount" + NormalCherry4HitCount);
 
                 NormalBellLineUpCount = br.ReadInt32();
-                Debug.Log("NormalBellLineUpCount" + NormalBellLineUpCount);
                 NormalMelonLineUpCount = br.ReadInt32();
-                Debug.Log("NormalMelonLineUpCount" + NormalMelonLineUpCount);
                 NormalCherry2LineUpCount = br.ReadInt32();
-                Debug.Log("NormalCherry2LineUpCount" + NormalCherry2LineUpCount);
                 NormalCherry4LineUpCount = br.ReadInt32();
-                Debug.Log("NormalCherry4LineUpCount" + NormalCherry4LineUpCount);
 
                 BigBellHitCount = br.ReadInt32();
-                Debug.Log("BigBellHitCount" + BigBellHitCount);
                 BigMelonHitCount = br.ReadInt32();
-                Debug.Log("BigMelonHitCount" + BigMelonHitCount);
                 BigCherry2HitCount = br.ReadInt32();
-                Debug.Log("BigCherry2HitCount" + BigCherry2HitCount);
                 BigCherry4HitCount = br.ReadInt32();
-                Debug.Log("BigCherry4HitCount" + BigCherry4HitCount);
 
                 BigBellLineUpCount = br.ReadInt32();
-                Debug.Log("BigBellLineUpCount" + BigBellLineUpCount);
                 BigMelonLineUpCount = br.ReadInt32();
-                Debug.Log("BigMelonLineUpCount" + BigMelonLineUpCount);
                 BigCherry2LineUpCount = br.ReadInt32();
-                Debug.Log("BigCherry2LineUpCount" + BigCherry2LineUpCount);
                 BigCherry4LineUpCount = br.ReadInt32();
-                Debug.Log("BigCherry4LineUpCount" + BigCherry4LineUpCount);
 
                 BigJacInTimes = br.ReadInt32();
-                Debug.Log("BigJacInTimes" + BigJacInTimes);
                 BigJacAvoidTimes = br.ReadInt32();
-                Debug.Log("BigCherry4LineUpCount" + BigCherry4LineUpCount);
                 BigJacPerfectAvoidTimes = br.ReadInt32();
-                Debug.Log("BigCherry4LineUpCount" + BigCherry4LineUpCount);
                 BigJacAssistedAvoidTimes = br.ReadInt32();
-                Debug.Log("BigCherry4LineUpCount" + BigCherry4LineUpCount);
 
                 JacGameNoneTimes = br.ReadInt32();
-                Debug.Log("JacGameNoneTimes" + JacGameNoneTimes);
             }
             catch (Exception e)
             {

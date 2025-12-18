@@ -49,8 +49,6 @@ namespace ReelSpinGame_Save.Database
             AutoOptionData.SetTechnicalPlay(autoOptionData.HasTechnicalPlay);
             AutoOptionData.SetSpecificCondition(autoOptionData.SpecificConditionBinary);
             AutoOptionData.SetSpinCondition(autoOptionData.SpinConditionID);
-
-            Debug.Log(AutoOptionData.AutoStopOrdersID);
         }
 
         // その他設定
@@ -67,23 +65,11 @@ namespace ReelSpinGame_Save.Database
 
             // オート設定
             data.Add((int)AutoOptionData.AutoSpeedID);  // 回数
-            Debug.Log("AutoSpeed:" + AutoOptionData.AutoSpeedID);
-
             data.Add((int)AutoOptionData.AutoStopOrdersID); // 押し順
-            Debug.Log("AutoOrder:" + AutoOptionData.AutoStopOrdersID);
-
             data.Add(AutoOptionData.HasTechnicalPlay ? 1 : 0); // 技術介入
-            Debug.Log("AutoTechnical:" + AutoOptionData.HasTechnicalPlay);
-
             data.Add((int)AutoOptionData.BigColorLineUpID); // BIG時の色選択
-            Debug.Log("AutoBigColor:" + AutoOptionData.BigColorLineUpID);
-
             data.Add((int)AutoOptionData.SpecificConditionBinary); // 一定条件のバイナリ
-            Debug.Log("AutoSpecific:" + AutoOptionData.SpecificConditionBinary);
-
             data.Add((int)AutoOptionData.SpinConditionID); // 回転条件
-            Debug.Log("AutoSpin:" + AutoOptionData.SpinConditionID);
-
 
             // その他設定
             data.Add(OtherOptionData.MusicVolumeSetting); // 音量
@@ -119,27 +105,16 @@ namespace ReelSpinGame_Save.Database
                 // オート読み込み
                 // 速度
                 AutoOptionData.SetAutoSpeed((AutoPlaySpeed)Enum.ToObject(typeof(AutoPlaySpeed), br.ReadInt32()));
-                Debug.Log("AutoSpeed:" + AutoOptionData.AutoSpeedID);
-
                 // 押し順
                 AutoOptionData.SetAutoStopOrder((AutoStopOrderOptions)Enum.ToObject(typeof(AutoStopOrderOptions), br.ReadInt32()));
-                Debug.Log("AutoOrder:" + AutoOptionData.AutoStopOrdersID);
-
                 // 技術介入
                 AutoOptionData.SetTechnicalPlay(br.ReadInt32() == 1 ? true : false);
-                Debug.Log("AutoTechnical:" + AutoOptionData.HasTechnicalPlay);
-
                 // BIG時の色
                 AutoOptionData.SetBigColor((BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32()));
-                Debug.Log("AutoBigColor:" + AutoOptionData.BigColorLineUpID);
-
                 // 一定条件のバイナリ
                 AutoOptionData.SetSpecificCondition((byte)br.ReadInt32());
-                Debug.Log("AutoSpecific:" + AutoOptionData.SpecificConditionBinary);
-
                 // 回転条件
                 AutoOptionData.SetSpinCondition((AutoSpinTimeConditionID)Enum.ToObject(typeof(AutoSpinTimeConditionID), br.ReadInt32()));
-                Debug.Log("AutoSpin:" + AutoOptionData.SpinConditionID);
 
                 // その他設定
                 // 音楽音量
@@ -177,7 +152,7 @@ namespace ReelSpinGame_Save.Database
             {
 
             }
-            Debug.Log("Option Read is done");
+
             return true;
         }
     }

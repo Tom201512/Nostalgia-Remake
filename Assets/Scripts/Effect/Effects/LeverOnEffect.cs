@@ -16,7 +16,13 @@ namespace ReelSpinGame_Effect.Data
 
         void Awake()
         {
+            HasEffect = false;
             sound = GetComponent<SoundManager>();
+        }
+
+        void OnDestroy()
+        {
+            StopAllCoroutines();
         }
 
         // レバーオン時のエフェクト
