@@ -8,13 +8,10 @@ namespace ReelSpinGame_AutoPlay.AI
 	// オートプレイ時のAI
 	public class AutoPlayAI
 	{
-        // const
-
-        // var
         public bool HasTechnicalPlay { get; set; }                  // 技術介入をするか
         public bool HasWinningPatternStop { get; set; }             // リーチ目を止める制御を取るか
         public bool HasStoppedWinningPattern { get; set; }          // リーチ目を止めたか
-        public BigColor PlayerSelectedBigColor {  get; set; }       // 揃えるBIG色
+        public BigColor BigLineUpSymbol {  get; set; }       // 揃えるBIG色
 
         // 使用AI
         AutoRandomAI autoRandomAI;                              // 適当押し
@@ -36,7 +33,7 @@ namespace ReelSpinGame_AutoPlay.AI
             HasTechnicalPlay = true;
             HasWinningPatternStop = false;
             HasStoppedWinningPattern = false;
-            PlayerSelectedBigColor = BigColor.None;
+            BigLineUpSymbol = BigColor.None;
 
             autoRandomAI = new AutoRandomAI();
             autoNonLeftFirstReplayAI = new AutoNonLeftFirstReplayAI();
@@ -52,8 +49,6 @@ namespace ReelSpinGame_AutoPlay.AI
             autoOneBetBB7BigAI = new AutoOneBetBB7BigAI();
             autoJacAvoidAI = new AutoJacAvoidAI();
         }
-
-        // func
 
         // 停止位置を小役、第一停止、現在の状態に合わせて返す
         public int[] GetStopPos(AutoAIConditionClass autoAIConditions)
@@ -148,6 +143,11 @@ namespace ReelSpinGame_AutoPlay.AI
 		// はずれ時
 		private int[] AINoneBehavior(BonusTypeID holdingBonus, int betAmount)
 		{
+            // リーチ目で止める設定があれば、リーチ目を止めたことにする
+            if(HasWinningPatternStop &&  holdingBonus != BonusTypeID.BonusNone)
+            {
+                HasStoppedWinningPattern = true;
+            }
             // ボーナスがある場合はそのボーナスを狙うように
             if (holdingBonus == BonusTypeID.BonusBIG)
             {
@@ -204,13 +204,13 @@ namespace ReelSpinGame_AutoPlay.AI
             int colorID = 0;
 
             // 揃えるBIGの色指定がなければランダムで選択
-            if (PlayerSelectedBigColor == BigColor.None)
+            if (BigLineUpSymbol == BigColor.None)
             {
                 colorID = Random.Range((int)BigColor.Red, (int)BigColor.Black + 1);
             }
             else
             {
-                colorID = (int)PlayerSelectedBigColor;
+                colorID = (int)BigLineUpSymbol;
             }
 
             switch (colorID)

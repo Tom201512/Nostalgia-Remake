@@ -1,5 +1,5 @@
-﻿using ReelSpinGame_Interface;
-using static ReelSpinGame_AutoPlay.AutoManager;
+﻿using ReelSpinGame_AutoPlay;
+using ReelSpinGame_Interface;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Payout.PayoutManager;
@@ -33,10 +33,12 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Player.SetBonusHitDelay(gM.Reel.GetLastStoppedReelData().LastReelDelay);
             }
 
-            gM.Auto.CheckFastAutoCancelled(); // 高速オートが解除されたかチェック
+            // 高速オートが解除されたかチェック
+            gM.Auto.CheckFastAutoCancelled(); 
 
-            gM.Payout.CheckPayouts(gM.Medal.GetLastBetAmount(), gM.Reel.GetLastStoppedReelData()); // 払い出し確認
-            PayoutUpdate(); // 払い出しの結果をデータに反映
+            // 払い出し確認
+            gM.Payout.CheckPayouts(gM.Medal.GetLastBetAmount(), gM.Reel.GetLastStoppedReelData());
+            PayoutUpdate();
 
             // 小役カウンタの増減(通常時のみ)
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
@@ -47,18 +49,20 @@ namespace ReelSpinGame_State.PayoutState
                 }
             }
 
-            CheckGameModeStatusChange(); // 状態遷移
-
+            // 状態遷移
+            CheckGameModeStatusChange();
             // 払い出し開始
-            gM.Medal.StartPayout(gM.Payout.LastPayoutResult.Payout, 
-                gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+            gM.Medal.StartPayout(gM.Payout.LastPayoutResult.Payout, gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
+            // リプレイ処理
+            UpdateReplay();
 
-            UpdateReplay(); // リプレイ処理
-
+            // 通常時のみの処理
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                gM.Auto.CheckRemainingAuto(); // オート残りゲーム数が0になったかチェック(ボーナス中以外)
-                gM.Player.PlayerMedalData.CountCurrentSlumpGraph(); // 差枚数のカウント(通常時のみ)
+                // オート残りゲーム数が0になったかチェック(ボーナス中以外)
+                gM.Auto.DecreaseAutoSpin();
+                // 差枚数のカウント(通常時のみ)
+                gM.Player.PlayerMedalData.CountCurrentSlumpGraph();
             }
 
             // 小役成立回数の記録
@@ -69,18 +73,18 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
             }
-
             // JACハズシの記録
             if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
             {
                 gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
             }
 
-            SaveData(); // セーブ処理
-
+            // セーブ処理
+            SaveData();
             // オプション設定の反映
             gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.EffectState);            // 演出処理へ
+            // 演出処理へ
+            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.EffectState);
         }
 
         public void StateUpdate()
@@ -154,7 +158,6 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Bonus.StartBigChance(color);
                 gM.Player.SetLastBigChanceColor(color);
             }
-
             // ボーナスゲームの場合
             else if (gM.Payout.LastPayoutResult.BonusID == (int)BonusTypeID.BonusREG)
             {
@@ -177,7 +180,7 @@ namespace ReelSpinGame_State.PayoutState
         }
 
         // ボーナスをストックさせる
-        private void StockBonus()
+        void StockBonus()
         {
             // ボーナス未成立でいずれかのボーナスが成立した場合はストック
             if (gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
@@ -194,7 +197,7 @@ namespace ReelSpinGame_State.PayoutState
         }
 
         // 各ゲームモード時の状態チェック
-        private void CheckGameModeStatusChange()
+        void CheckGameModeStatusChange()
         {
             // 通常時
             if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
@@ -229,14 +232,13 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Bonus.CheckBonusGameStatus(gM.Payout.LastPayoutResult.Payout > 0);
 
                 }
-                
                 // オートがあり終了条件がボーナス終了時の場合はここで判定する
                 if(gM.Auto.HasAuto)
                 {
                     gM.Auto.CheckAutoEndByBonusFinish((int)gM.Bonus.GetCurrentBonusStatus());
                 }
-
-                BonusStatusUpdate();        // ボーナス状態更新
+                // ボーナス状態更新
+                BonusStatusUpdate();
             }
 
             // 連チャン区間の処理
@@ -251,7 +253,7 @@ namespace ReelSpinGame_State.PayoutState
         // ボーナス状態によるデータ変更
         void BonusStatusUpdate()
         {
-            // ビッグチャンス中に移行した場合
+            // ビッグチャンス中に移行した場合はMAXBETを3, BIG中の抽選、払出テーブルへ変更
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
             {
                 gM.Lots.ChangeTable(FlagLotMode.BigBonus);
@@ -259,14 +261,14 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Medal.ChangeMaxBet(3);
                 gM.Lots.ResetCounter();
             }
-            // ボーナスゲーム中に移行した場合
+            // ボーナスゲーム中に移行した場合はMAXBETを1, JAC中の抽選、払出テーブルへ変更
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
             {
                 gM.Medal.ChangeMaxBet(1);
                 gM.Lots.ChangeTable(FlagLotMode.JacGame);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
             }
-            // 通常時に移行した場合
+            // 通常時に移行した場合はMAXBETを3, 通常時の抽選、払出テーブルへ変更
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 gM.Lots.ChangeTable(FlagLotMode.Normal);

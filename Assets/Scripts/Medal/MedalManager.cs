@@ -132,7 +132,7 @@ namespace ReelSpinGame_Medal
                     data.RemainingPayout = Math.Clamp(amount, 0, MaxPayout);
                     // 払い出す前と払い出し後のクレジット枚数を記録
                     int previousCredit = Math.Clamp(data.system.Credit, 0, MaxCredit);
-                    int toCredit = Math.Clamp(data.system.Credit + data.RemainingPayout, 0, MaxCredit);
+                    int toCredit = Math.Clamp(previousCredit + data.RemainingPayout, 0, MaxCredit);
 
                     // クレジットの増加
                     data.ChangeCredit(data.RemainingPayout);

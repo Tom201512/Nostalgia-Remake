@@ -172,32 +172,26 @@ public class GameManager : MonoBehaviour
             if(!Option.hasOptionMode)
             {
                 // ê›íËÇîΩâfÇ∑ÇÈ
-                Auto.SetAutoSpeed(Option.GetAutoOptionData().AutoSpeedID);
-                Auto.SetAutoOrder(Option.GetAutoOptionData().AutoStopOrdersID);
-                Auto.SetBigColorLineUp(Option.GetAutoOptionData().BigColorLineUpID);
-                Auto.SetTechnicalPlay(Option.GetAutoOptionData().HasTechnicalPlay);
-                Auto.SetSpecificCondition(Option.GetAutoOptionData().SpecificConditionBinary);
-                Auto.SetSpinTimes(Option.GetAutoOptionData().SpinConditionID);
+                Auto.CurrentSpeed = Option.GetAutoOptionData().CurrentSpeed;
+                Auto.CurrentStopOrder = Option.GetAutoOptionData().CurrentStopOrder;
+                Auto.BigLineUpSymbol = Option.GetAutoOptionData().BigLineUpSymbol;
+                Auto.HasTechnicalPlay = Option.GetAutoOptionData().HasTechnicalPlay;
+                Auto.EndConditionFlag = Option.GetAutoOptionData().EndConditionFlag;
+                Auto.SpinTimeCondition = Option.GetAutoOptionData().SpinConditionID;
 
                 Auto.ChangeAutoMode();
 
                 if(Auto.HasAuto)
                 {
                     Option.ToggleOptionLock(true);
-                    Debug.Log("Option lock enabled");
                 }
-                else if(Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal)
+                else if(Auto.CurrentSpeed == (int)AutoSpeedName.Normal)
                 {
                     if(!Option.lockOptionMode)
                     {
                         Option.ToggleOptionLock(false);
                     }
-                    Debug.Log("Option lock disabled");
                 }
-            }
-            else
-            {
-                Debug.LogAssertion("Can't activate auto because you're in option mode");
             }
         }
 

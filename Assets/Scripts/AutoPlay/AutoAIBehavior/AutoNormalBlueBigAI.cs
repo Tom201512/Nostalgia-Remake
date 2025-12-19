@@ -21,7 +21,7 @@ namespace ReelSpinGame_AutoPlay.AI
             // ’†ƒŠ[ƒ‹‚ÍŒó•â‚©‚ç‘_‚¤
             stopPos[(int)ReelID.ReelMiddle] = bluePosM[Random.Range(0, bluePosM.Length)];
             // ‰E‚Í10”Ô‚ğ‘_‚¤
-            stopPos[(int)ReelID.ReelRight] = 10;
+            stopPos[(int)ReelID.ReelRight] = 9;
 
             return stopPos;
         }

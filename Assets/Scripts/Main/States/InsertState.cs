@@ -1,35 +1,32 @@
-﻿using ReelSpinGame_Interface;
-using UnityEngine;
-using ReelSpinGame_Effect.Data;
-using static ReelSpinGame_AutoPlay.AutoManager;
-using static ReelSpinGame_Bonus.BonusSystemData;
+﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
+using ReelSpinGame_Interface;
+using UnityEngine;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_State.InsertState
 {
     public class InsertState : IGameStatement
     {
-        // var
-        // このゲームの状態
-        public MainGameFlow.GameStates State { get; }
-        // ゲームマネージャ
-        private GameManager gM;
-        // コンストラクタ
+        public MainGameFlow.GameStates State { get; }        // このゲームの状態
+
+        private GameManager gM;                              // ゲームマネージャ
+
         public InsertState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Insert;
             gM = gameManager;
         }
 
-        // func
         public void StateStart()
         {
             // イベント登録
             gM.Medal.HasMedalInsertEvent += OnMedalInserted;
+
             // リプレイなら処理を開始しリプレイランプ点灯
             if (gM.Medal.GetHasReplay())
             {
-                gM.Medal.StartReplayInsert(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+                gM.Medal.StartReplayInsert(gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
                 gM.Status.TurnOnReplayLamp();
                 gM.Status.TurnOnStartLamp();
 
@@ -63,13 +60,16 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateEnd()
         {
+            // イベント解除
             gM.Medal.HasMedalInsertEvent -= OnMedalInserted;
+
+            // INSERT, STARTランプの消灯
             gM.Status.TurnOffInsertAndStartlamp();
+            // メダル処理を終了させる
             gM.Medal.FinishMedalInsert();
 
             // 設定画面を開けなくする
             gM.Option.ToggleOptionLock(true);
-            Debug.Log("Option locked");
         }
 
         // ベット処理
@@ -115,17 +115,17 @@ namespace ReelSpinGame_State.InsertState
         void AutoBetBehavior()
         {
             // オート時サウンド再生設定を変更
-            gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
+            gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.CurrentSpeed);
 
             // ボーナス成立後であれば1枚掛けをする
             if(gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone && gM.Medal.GetCurrentBet() != 1)
             {
-                BetAction(1, gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+                BetAction(1, gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
             }
             // その他の設定
             else
             {
-                BetAndStartFunction(gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal);
+                BetAndStartFunction(gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
             }
         }
 

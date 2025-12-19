@@ -1,6 +1,6 @@
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_AutoPlay.AI
 {
@@ -13,9 +13,9 @@ namespace ReelSpinGame_AutoPlay.AI
         {
             int[] stopPos = new int[] { 0, 0, 0 };
             // ç∂ÇÕ5î‘, 17î‘Ç≈å≈íË
-            int[] replayPosL = new int[] { 4, 16 };
+            int[] cherryPosL = new int[] { 4, 16 };
 
-            stopPos[(int)ReelID.ReelLeft] = replayPosL[Random.Range(0, replayPosL.Length)];
+            stopPos[(int)ReelID.ReelLeft] = cherryPosL[Random.Range(0, cherryPosL.Length)];
             stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray);
             stopPos[(int)ReelID.ReelRight] = Random.Range(0, MaxReelArray);
 

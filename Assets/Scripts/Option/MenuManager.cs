@@ -1,7 +1,5 @@
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Option.MenuContent;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuBar

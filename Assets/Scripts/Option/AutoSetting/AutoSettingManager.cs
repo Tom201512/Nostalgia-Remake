@@ -2,8 +2,7 @@ using ReelSpinGame_Option.Button;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using UnityEngine;
-
-using static ReelSpinGame_AutoPlay.AutoManager;
+using ReelSpinGame_AutoPlay;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Option.AutoSetting
@@ -68,11 +67,11 @@ namespace ReelSpinGame_Option.AutoSetting
         // 設定を読み込む
         public void LoadOptionData(AutoOptionData autoOption)
         {
-            speedSelect.LoadOptionData((int)autoOption.AutoSpeedID);
-            orderSelect.LoadOptionData((int)autoOption.AutoStopOrdersID);
-            bigColorSelect.LoadOptionData((int)autoOption.BigColorLineUpID);
+            speedSelect.LoadOptionData((int)autoOption.CurrentSpeed);
+            orderSelect.LoadOptionData((int)autoOption.CurrentStopOrder);
+            bigColorSelect.LoadOptionData((int)autoOption.BigLineUpSymbol);
             technicalSelect.LoadOptionData(autoOption.HasTechnicalPlay ? 1 : 0);
-            autoEndTimingCheckBoxes.LoadOptionData(autoOption.SpecificConditionBinary);
+            autoEndTimingCheckBoxes.LoadOptionData(autoOption.EndConditionFlag);
             spinConditionSelect.LoadOptionData((int)autoOption.SpinConditionID);
             UpdateOptionData();
         }
@@ -81,11 +80,11 @@ namespace ReelSpinGame_Option.AutoSetting
         public void ResetOptionData()
         {
             CurrentAutoOptionData.InitializeData();
-            speedSelect.LoadOptionData((int)CurrentAutoOptionData.AutoSpeedID);
-            orderSelect.LoadOptionData((int)CurrentAutoOptionData.AutoStopOrdersID);
-            bigColorSelect.LoadOptionData((int)CurrentAutoOptionData.BigColorLineUpID);
+            speedSelect.LoadOptionData((int)CurrentAutoOptionData.CurrentSpeed);
+            orderSelect.LoadOptionData((int)CurrentAutoOptionData.CurrentStopOrder);
+            bigColorSelect.LoadOptionData((int)CurrentAutoOptionData.BigLineUpSymbol);
             technicalSelect.LoadOptionData(CurrentAutoOptionData.HasTechnicalPlay ? 1 : 0);
-            autoEndTimingCheckBoxes.LoadOptionData(CurrentAutoOptionData.SpecificConditionBinary);
+            autoEndTimingCheckBoxes.LoadOptionData(CurrentAutoOptionData.EndConditionFlag);
             spinConditionSelect.LoadOptionData((int)CurrentAutoOptionData.SpinConditionID);
             UpdateOptionData();
         }
@@ -94,12 +93,12 @@ namespace ReelSpinGame_Option.AutoSetting
         // データ更新
         void UpdateOptionData()
         {
-            CurrentAutoOptionData.SetAutoSpeed((AutoPlaySpeed)Enum.ToObject(typeof(AutoPlaySpeed), speedSelect.CurrentSettingID));
-            CurrentAutoOptionData.SetAutoStopOrder((AutoStopOrderOptions)Enum.ToObject(typeof(AutoStopOrderOptions), orderSelect.CurrentSettingID));
-            CurrentAutoOptionData.SetBigColor((BigColor)Enum.ToObject(typeof(BigColor), bigColorSelect.CurrentSettingID));
-            CurrentAutoOptionData.SetTechnicalPlay(technicalSelect.CurrentSettingID == 1 ? true : false);
-            CurrentAutoOptionData.SetSpecificCondition(autoEndTimingCheckBoxes.CurrentSelectFlag);
-            CurrentAutoOptionData.SetSpinCondition((AutoSpinTimeConditionID)Enum.ToObject(typeof(AutoSpinTimeConditionID), spinConditionSelect.CurrentSettingID));
+            CurrentAutoOptionData.CurrentSpeed = ((AutoSpeedName)Enum.ToObject(typeof(AutoSpeedName), speedSelect.CurrentSettingID));
+            CurrentAutoOptionData.CurrentStopOrder = ((StopOrderOptionName)Enum.ToObject(typeof(StopOrderOptionName), orderSelect.CurrentSettingID));
+            CurrentAutoOptionData.BigLineUpSymbol = (BigColor)Enum.ToObject(typeof(BigColor), bigColorSelect.CurrentSettingID);
+            CurrentAutoOptionData.HasTechnicalPlay = technicalSelect.CurrentSettingID == 1 ? true : false;
+            CurrentAutoOptionData.EndConditionFlag = autoEndTimingCheckBoxes.CurrentSelectFlag;
+            CurrentAutoOptionData.SpinConditionID = (SpinTimeConditionName)Enum.ToObject(typeof(SpinTimeConditionName), spinConditionSelect.CurrentSettingID);
             OnSettingChangedEvent?.Invoke();
         }
     }

@@ -1,3 +1,4 @@
+using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using UnityEngine;
@@ -34,10 +35,10 @@ namespace ReelSpinGame_State.LotsState
             finishPayout = false;
             // 高速オートが切れていれば演出に入る
             if (!gM.Auto.HasAuto ||
-                (gM.Auto.HasAuto && gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal))
+                (gM.Auto.HasAuto && gM.Auto.CurrentSpeed == AutoSpeedName.Normal))
             {
                 // BGM, SEのミュート解除
-                gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.AutoSpeedID);
+                gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.CurrentSpeed);
 
                 // 演出開始
                 BeforePayoutEffectCondition condition = new BeforePayoutEffectCondition();

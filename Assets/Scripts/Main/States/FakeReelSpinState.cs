@@ -1,31 +1,15 @@
 using ReelSpinGame_Interface;
-using ReelSpinGame_Util.OriginalInputs;
-using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoManager;
-using static ReelSpinGame_AutoPlay.AutoManager.AutoStopOrder;
-using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_State.PlayingState
 {
+    // 疑似遊技ステート
     public class FakeReelSpinState : IGameStatement
     {
-        // 疑似遊技
-        // const
-        // var
-        // キー入力があったか
-        bool hasInput;
+        public MainGameFlow.GameStates State { get; }   // このゲームの状態
+        private GameManager gM;                         // ゲームマネージャ
 
-        // このゲームの状態
-        public MainGameFlow.GameStates State { get; }
-        // ゲームマネージャ
-        private GameManager gM;
-
-        // コンストラクタ
         public FakeReelSpinState(GameManager gameManager)
         {
-            hasInput = false;
-
             State = MainGameFlow.GameStates.FakeReel;
             gM = gameManager;
         }

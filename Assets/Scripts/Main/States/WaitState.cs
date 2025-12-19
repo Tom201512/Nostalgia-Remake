@@ -1,31 +1,26 @@
-﻿using UnityEngine;
+﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Interface;
-using static ReelSpinGame_AutoPlay.AutoManager;
 
 namespace ReelSpinGame_State.LotsState
 {
+    // ウェイト状態のステート
     public class WaitState : IGameStatement
     {
-        // var
-        // このゲームの状態
-        public MainGameFlow.GameStates State { get; }
-
-        // ゲームマネージャ
-        private GameManager gM;
+        public MainGameFlow.GameStates State { get; }        // このゲームの状態
+        private GameManager gM;                              // ゲームマネージャ
 
         // コンストラクタ
         public WaitState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Wait;
-            this.gM = gameManager;
+            gM = gameManager;
         }
 
         public void StateStart()
         {
-            //Debug.Log("Start Wait State");
             // 高速オート時はウェイトを即無効にする
             // ウェイトカットがある場合も即無効にする
-            if(gM.Auto.HasAuto && gM.Auto.AutoSpeedID > (int)AutoPlaySpeed.Normal)
+            if(gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal)
             {
                 gM.Wait.DisableWaitTimer();
             }
@@ -54,13 +49,11 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateEnd()
         {
-            //Debug.Log("End Wait State");
-
             // オートの有無で条件を変える
             if(gM.Auto.HasAuto)
             {
                 // オート速度が通常ならウェイトタイマーを起動(ウェイトカットあり時は無効)
-                if (gM.Auto.AutoSpeedID == (int)AutoPlaySpeed.Normal)
+                if (gM.Auto.CurrentSpeed == AutoSpeedName.Normal)
                 {
                     gM.Wait.SetWaitTimer();
                 }

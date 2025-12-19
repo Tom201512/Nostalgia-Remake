@@ -1,34 +1,29 @@
+using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoManager;
 
 namespace ReelSpinGame_Effect
 {
     // リールフラッシュやサウンドなどの演出管理
     public class EffectPresenter : MonoBehaviour
     {
-        // const
-
-        // var
         private ReelEffectManager reelEffectManager;        // リール演出マネージャー
         private FlashManager flashManager;                  // フラッシュ機能
         private SoundManager soundManager;                  // サウンド機能
 
         // 各種演出処理
-        BetButtonEffect betButtonEffect;            // ベットボタン
-        LeverOnEffect leverOnEffect;                // レバーオン時
-        ReelStoppedEffect reelStoppedEffect;        // リール停止時
-        BeforePayoutEffect beforePayoutEffect;      // 払い出し前
-        PayoutEffect payoutEffect;                  // 払い出し中
-        AfterPayoutEffect afterPayoutEffect;        // 払い出し後
-        BonusEffect bonusEffect;                    // ボーナス中
+        private BetButtonEffect betButtonEffect;            // ベットボタン
+        private LeverOnEffect leverOnEffect;                // レバーオン時
+        private ReelStoppedEffect reelStoppedEffect;        // リール停止時
+        private BeforePayoutEffect beforePayoutEffect;      // 払い出し前
+        private PayoutEffect payoutEffect;                  // 払い出し中
+        private AfterPayoutEffect afterPayoutEffect;        // 払い出し後
+        private BonusEffect bonusEffect;                    // ボーナス中
 
-
-        // func 
         private void Awake()
         {
             reelEffectManager = GetComponent<ReelEffectManager>();
@@ -85,6 +80,38 @@ namespace ReelSpinGame_Effect
 
         // リールライト全消灯
         public void TurnOffAllReels() => flashManager.TurnOffAllReels();
+        // フラッシュ停止
+        public void StopReelFlash() => flashManager.ForceStopFlash();
+        // ループしている音を止める
+        public void StopLoopSound() => soundManager.StopLoopSE();
+
+        // SEボリューム変更 (0.0 ~ 1.0)
+        public void ChangeSEVolume(float volume) => soundManager.ChangeSEVolume(volume);
+        // BGMボリューム変更(0.0 ~ 1.0)
+        public void ChangeBGMVolume(float volume) => soundManager.ChangeBGMVolume(volume);
+
+        // オート機能時の効果音、音楽解除
+        public void ChangeSoundSettingByAuto(bool hasAuto, AutoSpeedName autoSpeedID)
+        {
+            if (hasAuto && autoSpeedID > AutoSpeedName.Normal)
+            {
+                // 高速以上でSE再生不可能に
+                soundManager.ChangeMuteSEPlayer(true);
+                soundManager.ChangeLockSEPlayer(true);
+
+                // オート速度が超高速ならBGMはミュート
+                if (autoSpeedID == AutoSpeedName.Quick)
+                {
+                    soundManager.ChangeMuteBGMPlayer(true);
+                }
+            }
+            else
+            {
+                soundManager.ChangeMuteSEPlayer(false);
+                soundManager.ChangeMuteBGMPlayer(false);
+                soundManager.ChangeLockSEPlayer(false);
+            }
+        }
 
         // 演出開始
         // ベット時の演出
@@ -114,37 +141,5 @@ namespace ReelSpinGame_Effect
         // ボーナス中演出開始
         public void StartBonusEffect(BonusEffectCondition condition) => bonusEffect.DoEffect(condition);
 
-        // フラッシュ停止
-        public void StopReelFlash() => flashManager.ForceStopFlash();
-        // ループしている音を止める
-        public void StopLoopSound() => soundManager.StopLoopSE();
-
-        // SEボリューム変更 (0.0 ~ 1.0)
-        public void ChangeSEVolume(float volume) => soundManager.ChangeSEVolume(volume);
-        // BGMボリューム変更(0.0 ~ 1.0)
-        public void ChangeBGMVolume(float volume) => soundManager.ChangeBGMVolume(volume);
-
-        // オート機能時の効果音、音楽解除
-        public void ChangeSoundSettingByAuto(bool hasAuto, int autoSpeedID)
-        {
-            if (hasAuto && autoSpeedID > (int)AutoPlaySpeed.Normal)
-            {
-                // 高速以上でSE再生不可能に
-                soundManager.ChangeMuteSEPlayer(true);
-                soundManager.ChangeLockSEPlayer(true);
-
-                // オート速度が超高速ならBGMはミュート
-                if (autoSpeedID == (int)AutoPlaySpeed.Quick)
-                {
-                    soundManager.ChangeMuteBGMPlayer(true);
-                }
-            }
-            else
-            {
-                soundManager.ChangeMuteSEPlayer(false);
-                soundManager.ChangeMuteBGMPlayer(false);
-                soundManager.ChangeLockSEPlayer(false);
-            }
-        }
     }
 }

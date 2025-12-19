@@ -13,7 +13,7 @@ namespace ReelSpinGame_AutoPlay.AI
         {
             int[] stopPos = new int[] { 0, 0, 0 };
             // ç∂ÇÃÉäÉvÉåÉCÇÕ1î‘Ç‹ÇΩÇÕ5î‘Ç≈å≈íË
-            int[] replayPosL = new int[] { 1, 5 };
+            int[] replayPosL = new int[] { 0, 4 };
 
             stopPos[(int)ReelID.ReelLeft] = replayPosL[Random.Range(0, replayPosL.Length)];
             stopPos[(int)ReelID.ReelMiddle] = Random.Range(0, MaxReelArray);
