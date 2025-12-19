@@ -193,6 +193,20 @@ MonoBehaviour:
     m_Localized: Enter setting
     m_Metadata:
       m_Items: []
+  - m_Id: 11973778301837312
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11973814658064384
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11974288153042944
+    m_Localized: 'Click the reel position
+
+      to lock.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

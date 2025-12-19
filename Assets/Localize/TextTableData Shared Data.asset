@@ -187,6 +187,18 @@ MonoBehaviour:
     m_Key: GenericEnterSetting
     m_Metadata:
       m_Items: []
+  - m_Id: 11973778301837312
+    m_Key: GenericReset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11973814658064384
+    m_Key: GenericConfirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11974288153042944
+    m_Key: AutoStopPosSettingText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
