@@ -58,7 +58,7 @@ public class BonusLogDisplayList : MonoBehaviour
         // ƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚Æ‚«‚Ì‹““®‚ð“o˜^
         bonusData.OnBonusLogPressedEvent += OnBonusLogPressed;
         // ’Ç‰Á‚·‚é
-        bonusData.transform.SetParent(transform);
+        bonusData.transform.SetParent(transform, false);
         bonusLogDisplays.Add(bonusData);
     }
 
