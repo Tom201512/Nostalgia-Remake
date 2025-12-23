@@ -3314,7 +3314,6 @@ GameObject:
   - component: {fileID: 286284037}
   - component: {fileID: 286284044}
   - component: {fileID: 286284038}
-  - component: {fileID: 286284041}
   - component: {fileID: 286284043}
   m_Layer: 0
   m_Name: ReelManager
@@ -3357,27 +3356,6 @@ MonoBehaviour:
   - {fileID: 1933351382769078780}
   - {fileID: 1190830224200012641}
   - {fileID: 1933351381669917605}
---- !u!95 &286284041
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286284036}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b0ad6fc097aa08144b165ff8f269e581, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &286284043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16308,7 +16286,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2070315494}
   m_HandleRect: {fileID: 2070315493}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -20083,7 +20061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc3a7cbc6c835b408628e8ec849ed93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testAssetList:
+  flashDataList:
   - {fileID: 4900000, guid: 50ab29c0d7cca6c4487f814604e56e66, type: 3}
 --- !u!114 &1787737427
 MonoBehaviour:

@@ -10,14 +10,11 @@ namespace ReelSpinGame_Reels.Effect
     // リールエフェクトマネージャー
     public class ReelEffectManager : MonoBehaviour
     {
-        // var
-        // リールオブジェクトプレゼンター
-        [SerializeField] List<ReelObjectPresenter> reelObjects;
+        [SerializeField] List<ReelObjectPresenter> reelObjects;        // リールオブジェクトプレゼンター
 
-        // 疑似遊技中か
-        public bool HasFakeSpin { get; private set; }
+        public bool HasFakeSpin { get; private set; }        // 疑似遊技中か
 
-        private void Awake()
+        void Awake()
         {
             HasFakeSpin = false;
         }

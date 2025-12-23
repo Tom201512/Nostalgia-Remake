@@ -39,11 +39,6 @@ namespace ReelSpinGame_Effect
             bonusEffect = GetComponent<BonusEffect>();
         }
 
-        void Start()
-        {
-            flashManager.SetReelEffectManager(reelEffectManager);
-        }
-
         public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;                  // 疑似遊技中か
         public bool GetHasFlashWait() => flashManager.HasFlashWait;                     // フラッシュの待機中か
         public bool GetHasBeforeEffectActivating() => beforePayoutEffect.HasEffect;     // 払い出し前の演出が実行中か

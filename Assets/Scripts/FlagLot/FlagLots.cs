@@ -22,7 +22,6 @@ namespace ReelSpinGame_Lots.Flag
         }
 
         // 各数値を得る
-
         public FlagID GetCurrentFlag() => flagLotsModel.CurrentFlag;             // 現在のフラグ
         public FlagLotTable GetCurrentTable() => flagLotsModel.CurrentTable;     // 現在のテーブル
         public int GetCounter() => flagCounter.Counter;

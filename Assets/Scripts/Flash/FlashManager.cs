@@ -14,71 +14,49 @@ using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Reels.Flash
 {
+    // リールフラッシュ機能
     public class FlashManager : MonoBehaviour
     {
-        // リールフラッシュ機能
 
-        // const
-        // リールフラッシュの間隔(秒間隔)
-        public const float ReelFlashTime = 0.01f;
-        // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
-        public const int PayoutFlashFrames = 15;
-        // シーク位置オフセット用
-        const int SeekOffset = 4;
-        // 変更しないときの数値
-        const int NoChangeValue = -1;
+        public const float ReelFlashTime = 0.01f;       // リールフラッシュの間隔(秒間隔)
+        public const int PayoutFlashFrames = 15;        // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
 
-        // デフォルトのフラッシュID
-        public enum FlashID { V_Flash };
-        // 払い出しラインのID
-        public enum PayoutLineID { PayoutMiddle, PayoutLower, PayoutUpper, PayoutDiagonalA, PayoutDiagonalB };
+        const int SeekOffset = 4;                       // シーク位置オフセット用
+        const int NoChangeValue = -1;                   // 変更しないときの数値
 
-        // var
-        // リール演出マネージャー
-        public ReelEffectManager ReelEffectManager { get; private set; }
+        public enum FlashID { V_Flash };                // デフォルトのフラッシュID
 
-        // 最後の払い出し結果
-        private PayoutResultBuffer lastPayoutResult;
-        // 最後に止めたリール結果
-        private LastStoppedReelData lastStoppedReelData;
+        [SerializeField] List<TextAsset> flashDataList;             // フラッシュデータ
 
-        // 現在のフレーム数(1フレーム0.1秒)
-        private int currentFrame;
-        // フラッシュ中か
-        public bool HasFlash { get; set; }
-        // フラッシュで待機中か
-        public bool HasFlashWait { get; set; }
-        // 現在のフラッシュID
-        public int CurrentFlashID { get; set; }
-        // フラッシュデータ
-        public List<FlashData> FlashDatabase { get; private set; }
-        [SerializeField] private List<TextAsset> testAssetList;
+        public bool HasFlash { get; set; }                          // フラッシュ中か
+        public bool HasFlashWait { get; set; }                      // フラッシュで待機中か
+        public int CurrentFlashID { get; set; }                     // 現在のフラッシュID
+        public List<FlashData> FlashDatabase { get; private set; }  // フラッシュデータ
 
-        // func
-        private void Awake()
+        private ReelEffectManager reelEffectManager;        // リール演出マネージャー
+        private PayoutResultBuffer lastPayoutResult;        // 最後の払い出し結果
+        private LastStoppedReelData lastStoppedReelData;    // 最後に止めたリール結果
+        private int currentFrame;                           // 現在のフレーム数(1フレーム0.1秒)
+
+        void Awake()
         {
             HasFlash = false;
             HasFlashWait = false;
             CurrentFlashID = 0;
             FlashDatabase = new List<FlashData>();
+            reelEffectManager = GetComponent<ReelEffectManager>();
 
-            foreach (TextAsset textAsset in testAssetList)
+            foreach (TextAsset textAsset in flashDataList)
             {
                 StringReader buffer = new StringReader(textAsset.text);
                 FlashDatabase.Add(new FlashData(buffer));
             }
-
-            ////Debug.Log("FlashManager awaken");
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             StopAllCoroutines();
         }
-
-        // func
-        // リール演出機能のセット
-        public void SetReelEffectManager(ReelEffectManager reelEffectManager) => ReelEffectManager = reelEffectManager;
 
         // リールフラッシュを再生させる
         public void StartReelFlash(float waitSeconds, FlashID flashID)
@@ -120,18 +98,17 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // リールライトをすべて明るくする
-        public void TurnOnAllReels() => ReelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOnValue);
+        public void TurnOnAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOnValue);
 
         // リールライトをすべて暗くする
-        public void TurnOffAllReels() => ReelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOffValue);
+        public void TurnOffAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOffValue);
 
         // JAC GAME時のライト点灯
-        public void EnableJacGameLight() => ReelEffectManager.EnableJacGameLight();
+        public void EnableJacGameLight() => reelEffectManager.EnableJacGameLight();
 
-        // 真ん中に近くなったリールを徐々に光らせる
 
         // フラッシュデータの処理を反映する
-        private void ReadFlashData()
+        void ReadFlashData()
         {
             if (CurrentFlashID >= FlashDatabase.Count)
             {
@@ -150,9 +127,9 @@ namespace ReelSpinGame_Reels.Flash
                     int bodyBright = flashData[(int)FlashData.PropertyID.Body + i * SeekOffset];
                     if (bodyBright != NoChangeValue)
                     {
-                        ReelEffectManager.ChangeReelBackLight(i, (byte)bodyBright);
-                        ReelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Lower2nd, (byte)bodyBright);
-                        ReelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Upper2nd, (byte)bodyBright);
+                        reelEffectManager.ChangeReelBackLight(i, (byte)bodyBright);
+                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Lower2nd, (byte)bodyBright);
+                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Upper2nd, (byte)bodyBright);
                     }
 
                     // 図柄の明るさ変更
@@ -163,7 +140,7 @@ namespace ReelSpinGame_Reels.Flash
                         //Debug.Log("Symbol:" + j + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
-                            ReelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);
+                            reelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);
                         }
                     }
                 }
@@ -194,7 +171,7 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // 払い出し時のフラッシュ
-        private void PayoutFlash()
+        void PayoutFlash()
         {
             // 暗くする量を計算
             byte brightness = CalculateBrightness(SymbolLight.TurnOffValue, PayoutFlashFrames);
@@ -204,7 +181,7 @@ namespace ReelSpinGame_Reels.Flash
                 for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
                 {
                     // 図柄点灯
-                    ReelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
+                    reelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
                     if (lastStoppedReelData.LastSymbols[(int)ReelID.ReelLeft]
@@ -222,16 +199,16 @@ namespace ReelSpinGame_Reels.Flash
             }
         }
 
-        private byte CalculateBrightness(int turnOffValue, int frame)
+        // 明るさ計算
+        byte CalculateBrightness(int turnOffValue, int frame)
         {
             // 明るさの計算(0.01秒で25下げる)
             int distance = SymbolLight.TurnOnValue - turnOffValue;
             float changeValue = distance / frame;
             // 0.01秒で下げる明るさの量(0.08秒でもとに戻る)
             float result = SymbolLight.TurnOnValue - currentFrame * changeValue;
-            // 数値を超えないように調整
+            // 数値を超えないように調整して結果を返す
             result = Math.Clamp(result, SymbolLight.TurnOffValue, SymbolLight.TurnOnValue);
-            // byte型に変換
             return (byte)Math.Round(result);
         }
 
@@ -259,7 +236,6 @@ namespace ReelSpinGame_Reels.Flash
         private IEnumerator SetTimeOut(float waitSeconds)
         {
             yield return new WaitForSeconds(waitSeconds);
-            ////Debug.Log("Replay Finished");
             HasFlashWait = false;
             HasFlash = false;
             TurnOnAllReels();
@@ -269,7 +245,6 @@ namespace ReelSpinGame_Reels.Flash
         private IEnumerator SetFlashWait(float waitSeconds)
         {
             yield return new WaitForSeconds(waitSeconds);
-            ////Debug.Log("Replay Finished");
             HasFlashWait = false;
         }
     }

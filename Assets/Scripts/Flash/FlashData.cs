@@ -1,25 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 namespace ReelSpinGame_Flash
 {
-	public class FlashData
+    // フラッシュのデータ
+    public class FlashData
 	{
-		// フラッシュのデータ
-
-		// const
 		// プロパティのシリアライズ
 		public enum PropertyID { FrameID, Body, SymbolLower, LoopPosition = 13};
 
-		// var 
-		// フラッシュのデータ
-		public List<int[]> FlashArray { get; private set; }
-		// 現在の読み込み位置
-		public int CurrentSeekPos { get; private set; }
+		public List<int[]> FlashArray { get; private set; }     // フラッシュのデータ
+        public int CurrentSeekPos { get; private set; }			// 現在の読み込み位置
 
-		// コンストラクタ
-		public FlashData(StringReader buffer)
+        // コンストラクタ
+        public FlashData(StringReader buffer)
 		{
 			CurrentSeekPos = 0;
             FlashArray = new List<int[]>();
