@@ -10,18 +10,15 @@ namespace ReelSpinGame_Effect.Data
     // 払い出し後の演出
     public class AfterPayoutEffect : MonoBehaviour, IDoesEffect<AfterPayoutEffectCondition>
     {
-        // const
+        public bool HasEffect { get; set; } // 演出処理中か
 
-        // var
-        public bool HasEffect { get; set; }  // 演出処理中か
-        FlashManager flash; // リールフラッシュ
-        SoundManager sound; // サウンド
-
-        BigColor currentBigColor;      // 現在のBIG図柄色
+        BigColor bigSymbolColor;    // 現在のBIG図柄色
+        FlashManager flash;         // リールフラッシュ
+        SoundManager sound;         // サウンド
 
         void Awake()
         {
-            currentBigColor = BigColor.None;
+            bigSymbolColor = BigColor.None;
             HasEffect = false;
             flash = GetComponent<FlashManager>();
             sound = GetComponent<SoundManager>();
@@ -35,7 +32,8 @@ namespace ReelSpinGame_Effect.Data
         // レバーオン時のエフェクト
         public void DoEffect(AfterPayoutEffectCondition afterPayoutEffectCondition)
         {
-            currentBigColor = afterPayoutEffectCondition.BigColor;
+            // BIG当選時の図柄を登録
+            bigSymbolColor = afterPayoutEffectCondition.BigColor;
 
             // ボーナス開始、終了していれば演出を行う
             if (afterPayoutEffectCondition.HasBonusStarted)
@@ -57,7 +55,7 @@ namespace ReelSpinGame_Effect.Data
         // ファンファーレ再生
         void PlayFanfare()
         {
-            switch (currentBigColor)
+            switch (bigSymbolColor)
             {
                 case BigColor.Red:
                     sound.PlaySE(sound.SoundDB.SE.RedStart);
@@ -77,7 +75,7 @@ namespace ReelSpinGame_Effect.Data
         // 終了ジングル再生(BIGのみ)
         void PlayBigEndFanfare()
         {
-            switch (currentBigColor)
+            switch (bigSymbolColor)
             {
                 case BigColor.Red:
                     sound.PlaySE(sound.SoundDB.SE.RedEnd);
@@ -91,7 +89,6 @@ namespace ReelSpinGame_Effect.Data
             }
         }
 
-        // コルーチン
         // 払い出し後演出処理
         private IEnumerator UpdateAfterPayoutEffect()
         {
@@ -140,10 +137,10 @@ namespace ReelSpinGame_Effect.Data
             // 音楽停止
             sound.StopBGM();
             // BIGの時のみファンファーレを鳴らす
-            if (currentBigColor != BigColor.None)
+            if (bigSymbolColor != BigColor.None)
             {
                 PlayBigEndFanfare();
-                currentBigColor = BigColor.None;
+                bigSymbolColor = BigColor.None;
                 // 今鳴らしているファンファーレが止まるのを待つ
                 while (!sound.GetJingleStopped())
                 {

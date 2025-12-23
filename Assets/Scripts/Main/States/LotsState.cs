@@ -1,9 +1,9 @@
 ﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Lots;
 using System;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_State.LotsState
 {

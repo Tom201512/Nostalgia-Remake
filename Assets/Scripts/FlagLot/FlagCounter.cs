@@ -1,26 +1,15 @@
-using UnityEngine;
-
-namespace ReelSpinGame_Lots.FlagCounter
+namespace ReelSpinGame_Lots
 {
+    // 小役カウンタ
     public class FlagCounter
     {
-        // 小役カウンタ
+        const int CounterDecrease = 256;            // 小役カウンタ減少値
+        const int CounterIncreaseDefault = 100;     // 小役カウンタ増加値(設定1~4)
+        const int CounterIncrease5 = 102;           // 小役カウンタ増加値(設定5)
+        const int CounterIncrease6 = 104;           // 小役カウンタ増加値(設定6)
 
-        // const
-        //小役カウンタ減少値
-        const int CounterDecrease = 256;
-        //小役カウンタ増加値
-        const int CounterIncreaseDefault = 100;
-        // 設定5時
-        const int CounterIncrease5 = 102;
-        // 設定6時
-        const int CounterIncrease6 = 104;
+        public int Counter { get; private set; }    // 現在の小役カウンタ
 
-        // var
-        // 小役カウンタ
-        public int Counter { get; private set; }
-
-        // コンストラクタ
         public FlagCounter()
         {
             Counter = 0;
@@ -34,7 +23,6 @@ namespace ReelSpinGame_Lots.FlagCounter
         public void IncreaseCounter(int payoutAmount)
         {
             Counter += CounterDecrease * payoutAmount;
-            //Debug.Log("Increased Counter Current:" + Counter);
         }
 
         // 小役カウンタの減少

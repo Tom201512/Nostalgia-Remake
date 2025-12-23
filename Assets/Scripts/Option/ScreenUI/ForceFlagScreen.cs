@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
+using ReelSpinGame_Lots;
 
 namespace ReelSpinGame_Option.MenuContent
 {

@@ -1,4 +1,4 @@
-﻿using ReelSpinGame_Payout;
+﻿using ReelSpinGame_Lots;
 using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Symbol;
 using ReelSpinGame_Reels.Table;
@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.ReelSpinManagerModel;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;

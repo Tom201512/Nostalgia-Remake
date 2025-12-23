@@ -44,23 +44,18 @@ namespace ReelSpinGame_Effect
             flashManager.SetReelEffectManager(reelEffectManager);
         }
 
-        // func
-        // 数値を得る
-
         public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;                  // 疑似遊技中か
         public bool GetHasFlashWait() => flashManager.HasFlashWait;                     // フラッシュの待機中か
         public bool GetHasBeforeEffectActivating() => beforePayoutEffect.HasEffect;     // 払い出し前の演出が実行中か
         public bool GetPayoutEffectActivating() => payoutEffect.HasEffect;              // 払い出し中演出が実行中か
         public bool GetAfterPayoutEffectActivating() => afterPayoutEffect.HasEffect;    // 払い出し後演出が実行中か
 
-        // 疑似遊技関連
         // 疑似遊技を開始(試験用)
         public void StartFakeReelSpin()
         {
             reelEffectManager.StartFakeSpin();
         }
 
-        // フラッシュ関連
         // リール全点灯
         public void TurnOnAllReels(bool isJacGame)
         {
@@ -82,9 +77,9 @@ namespace ReelSpinGame_Effect
         public void TurnOffAllReels() => flashManager.TurnOffAllReels();
         // フラッシュ停止
         public void StopReelFlash() => flashManager.ForceStopFlash();
+
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSE();
-
         // SEボリューム変更 (0.0 ~ 1.0)
         public void ChangeSEVolume(float volume) => soundManager.ChangeSEVolume(volume);
         // BGMボリューム変更(0.0 ~ 1.0)
@@ -116,30 +111,21 @@ namespace ReelSpinGame_Effect
         // 演出開始
         // ベット時の演出
         public void StartBetEffect(BetEffectCondition condition) => betButtonEffect.DoEffect(condition);
-
         // ベット音再生
         public void StartPlayBetSound() => soundManager.PlaySE(soundManager.SoundDB.SE.Bet);
-
         // ウェイト音再生
         public void StartWaitEffect() => soundManager.PlaySE(soundManager.SoundDB.SE.Wait);
-
         // スタート時の演出
         public void StartLeverOnEffect(LeverOnEffectCondition condition) => leverOnEffect.DoEffect(condition);
-
         // リール停止時の演出
         public void StartReelStopEffect(ReelStoppedEffectCondition condition) => reelStoppedEffect.DoEffect(condition);
-
         // 払い出し前演出開始
         public void StartBeforePayoutEffect(BeforePayoutEffectCondition condition) => beforePayoutEffect.DoEffect(condition);
-
         // 払い出し演出開始
         public void StartPayoutEffect(PayoutEffectCondition condition) => payoutEffect.DoEffect(condition);
-
         // 払い出し後演出開始
         public void StartAfterPayoutEffect(AfterPayoutEffectCondition condition) => afterPayoutEffect.DoEffect(condition);
-
         // ボーナス中演出開始
         public void StartBonusEffect(BonusEffectCondition condition) => bonusEffect.DoEffect(condition);
-
     }
 }

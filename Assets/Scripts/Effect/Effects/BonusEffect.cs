@@ -9,22 +9,17 @@ namespace ReelSpinGame_Effect.Data
     // ボーナス中の演出
     public class BonusEffect : MonoBehaviour, IDoesEffect<BonusEffectCondition>
     {
-        // const
+        public bool HasEffect { get; set; }     // 演出処理中か
+        SoundManager sound;                     // サウンド
 
-        // var
-        public bool HasEffect { get; set; }  // 演出処理中か
-        FlashManager flash; // リールフラッシュ
-        SoundManager sound; // サウンド
-
-        BigColor currentBigColor;       // 現在のBIG図柄色
+        BigColor bigSymbolColor;       // 現在のBIG図柄色
         BonusStatus lastBonusStatus;    // 直近のボーナス状態
 
         void Awake()
         {
-            currentBigColor = BigColor.None;
+            bigSymbolColor = BigColor.None;
             lastBonusStatus = BonusStatus.BonusNone;
             HasEffect = false;
-            flash = GetComponent<FlashManager>();
             sound = GetComponent<SoundManager>();
         }
 
@@ -36,7 +31,8 @@ namespace ReelSpinGame_Effect.Data
         // レバーオン時のエフェクト
         public void DoEffect(BonusEffectCondition bonusEffectCondition)
         {
-            currentBigColor = bonusEffectCondition.BigColor;
+            // BIG時の図柄色を登録
+            bigSymbolColor = bonusEffectCondition.BigColor;
             // 前回とボーナス状態が変わっていればBGM再生(オート終了時も再生)
             if (lastBonusStatus != bonusEffectCondition.BonusStatus)
             {
@@ -59,7 +55,7 @@ namespace ReelSpinGame_Effect.Data
         // 小役ゲーム中のBGM再生
         void PlayBigGameBGM()
         {
-            switch (currentBigColor)
+            switch (bigSymbolColor)
             {
                 case BigColor.Red:
                     sound.PlayBGM(sound.SoundDB.BGM.RedBGM);
@@ -79,7 +75,7 @@ namespace ReelSpinGame_Effect.Data
         // ボーナスゲーム中のBGM再生
         void PlayBonusGameBGM()
         {
-            switch (currentBigColor)
+            switch (bigSymbolColor)
             {
                 case BigColor.Red:
                     sound.PlayBGM(sound.SoundDB.BGM.RedJAC);

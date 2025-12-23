@@ -3,16 +3,15 @@ using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
+using ReelSpinGame_Lots;
 
 namespace ReelSpinGame_Effect.Data
 {
     // レバーオン時の演出
     public class LeverOnEffect : MonoBehaviour, IDoesEffect<LeverOnEffectCondition>
     {
-        // var
-        public bool HasEffect { get; set; }  // 演出処理中か
-        SoundManager sound; // サウンド
+        public bool HasEffect { get; set; } // 演出処理中か
+        SoundManager sound;                 // サウンド
 
         void Awake()
         {
@@ -31,14 +30,7 @@ namespace ReelSpinGame_Effect.Data
             // 通常時のみ特殊効果音再生
             if (leverOnEffectCondition.BonusStatus == BonusStatus.BonusNone)
             {
-                // 以下の確率で告知音で再生(成立前)
-                // BIG/REG成立時、成立後小役条件不問で1/4
-                // スイカ、1/8
-                // チェリー、発生しない
-                // ベル、1/32
-                // リプレイ、発生しない
-                // はずれ、1/128
-
+                // ボーナスを抱えていない場合はフラグごとに(1/n)の確率で特殊効果音を鳴らす
                 if (leverOnEffectCondition.HoldingBonus == BonusTypeID.BonusNone)
                 {
                     // BIG, REG
@@ -83,7 +75,7 @@ namespace ReelSpinGame_Effect.Data
         // 指定した確率で再生音の抽選をする
         void LotStartSound(int probability)
         {
-            // 確率が0以下は通常スタート音
+            // 確率が0以下は鳴らさない
             if (probability <= 0)
             {
                 sound.PlaySE(sound.SoundDB.SE.Start);

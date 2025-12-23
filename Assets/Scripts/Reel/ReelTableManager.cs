@@ -1,9 +1,9 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Datas.Reels;
+using ReelSpinGame_Lots;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Reels.Table
 {

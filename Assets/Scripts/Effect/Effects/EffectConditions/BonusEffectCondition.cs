@@ -6,9 +6,8 @@ namespace ReelSpinGame_Effect.Data.Condition
     // ボーナス状態の演出
     public class BonusEffectCondition
     {
-        // var
-        public BigColor BigColor { get; set; }                      // BIG時の色
-        public BonusStatus BonusStatus { get; set; }                // ボーナス中の状態
+        public BigColor BigColor { get; set; }          // BIG時の色
+        public BonusStatus BonusStatus { get; set; }    // ボーナス中の状態
 
         public BonusEffectCondition()
         {

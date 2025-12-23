@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using ReelSpinGame_Lots;
+using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_AutoPlay.AI
@@ -11,7 +11,7 @@ namespace ReelSpinGame_AutoPlay.AI
         public bool HasTechnicalPlay { get; set; }                  // 技術介入をするか
         public bool HasWinningPatternStop { get; set; }             // リーチ目を止める制御を取るか
         public bool HasStoppedWinningPattern { get; set; }          // リーチ目を止めたか
-        public BigColor BigLineUpSymbol {  get; set; }       // 揃えるBIG色
+        public BigColor BigLineUpSymbol {  get; set; }              // 揃えるBIG色
 
         // 使用AI
         AutoRandomAI autoRandomAI;                              // 適当押し

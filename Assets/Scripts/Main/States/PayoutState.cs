@@ -1,7 +1,7 @@
 ﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Lots;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Payout.PayoutManager;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 
@@ -256,7 +256,7 @@ namespace ReelSpinGame_State.PayoutState
             // ビッグチャンス中に移行した場合はMAXBETを3, BIG中の抽選、払出テーブルへ変更
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
             {
-                gM.Lots.ChangeTable(FlagLotMode.BigBonus);
+                gM.Lots.ChangeTable(FlagLotTable.BigBonus);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
                 gM.Medal.ChangeMaxBet(3);
                 gM.Lots.ResetCounter();
@@ -265,13 +265,13 @@ namespace ReelSpinGame_State.PayoutState
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
             {
                 gM.Medal.ChangeMaxBet(1);
-                gM.Lots.ChangeTable(FlagLotMode.JacGame);
+                gM.Lots.ChangeTable(FlagLotTable.JacGame);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
             }
             // 通常時に移行した場合はMAXBETを3, 通常時の抽選、払出テーブルへ変更
             else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                gM.Lots.ChangeTable(FlagLotMode.Normal);
+                gM.Lots.ChangeTable(FlagLotTable.Normal);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
                 gM.Medal.ChangeMaxBet(3);
 

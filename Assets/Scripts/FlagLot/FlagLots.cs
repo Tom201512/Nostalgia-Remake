@@ -1,41 +1,34 @@
 using ReelSpinGame_Datas;
 using UnityEngine;
-using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Lots.Flag
 {
+    // フラグ抽選
     public class FlagLots : MonoBehaviour
     {
-        // フラグ抽選
-        // var
-        // フラグ抽選中のデータ
-        private FlagBehaviour data;
-        // フラグデータベース
-        [SerializeField] FlagDatabase flagDatabase;
+        [SerializeField] FlagDatabase flagDatabase;         // フラグデータベース
 
-        public bool UseForceFlag { get; private set; } // 強制役を使用するか
-        public FlagID ForceFlagID { get; private set; } // 使用する強制役フラグ
+        public bool UseForceFlag { get; private set; }      // 強制役を使用するか
+        public FlagID ForceFlagID { get; private set; }     // 使用する強制役フラグ
 
-        // func
+        private FlagLotsModel flagLotsModel;                // フラグ抽選中のデータ
+        private FlagCounter flagCounter;                    // フラグカウンタ
+
         private void Awake()
         {
-            data = new FlagBehaviour();
+            flagLotsModel = new FlagLotsModel();
+            flagCounter = new FlagCounter();
         }
 
         // 各数値を得る
-        // 現在のフラグ
-        public FlagID GetCurrentFlag() => data.CurrentFlag;
-        // 現在のテーブル
-        public FlagLotMode GetCurrentTable() => data.CurrentTable;
-        // カウンタ
-        public int GetCounter() => data.FlagCounter.Counter;
 
-        // 数値変更
-        public void SetCounterValue(int value) => data.FlagCounter.SetCounter(value);
+        public FlagID GetCurrentFlag() => flagLotsModel.CurrentFlag;             // 現在のフラグ
+        public FlagLotTable GetCurrentTable() => flagLotsModel.CurrentTable;     // 現在のテーブル
+        public int GetCounter() => flagCounter.Counter;
 
-        // テーブル変更
-        public void ChangeTable(FlagLotMode mode) => data.CurrentTable = mode;
+        public void SetCounterValue(int value) => flagCounter.SetCounter(value);        // 小役カウンタ数値セット
+        public void ChangeTable(FlagLotTable mode) => flagLotsModel.CurrentTable = mode;     // テーブル変更
 
         // 強制フラグの設定
         public void SetForceFlag(FlagID forceFlagID)
@@ -50,29 +43,29 @@ namespace ReelSpinGame_Lots.Flag
             if (UseForceFlag)
             {
                 // 強制役を発動させる。その後は強制役を切る
-                data.CurrentFlag = ForceFlagID;
+                flagLotsModel.CurrentFlag = ForceFlagID;
                 UseForceFlag = false;
             }
             else
             {
-                data.GetFlagLots(setting, betAmount, flagDatabase);
+                flagLotsModel.GetFlagLots(flagCounter.Counter, setting, betAmount, flagDatabase);
             }
 
             // 何らかのボーナスが成立中にBIGまたはREGフラグが引かれた場合ははずれに置き換える
             if (holdingBonusID != BonusTypeID.BonusNone &&
-               (data.CurrentFlag == FlagID.FlagBig || data.CurrentFlag == FlagID.FlagReg))
+               (flagLotsModel.CurrentFlag == FlagID.FlagBig || flagLotsModel.CurrentFlag == FlagID.FlagReg))
             {
-                data.CurrentFlag = FlagID.FlagNone;
+                flagLotsModel.CurrentFlag = FlagID.FlagNone;
             }
         }
 
         // 小役カウンタ増加
-        public void IncreaseCounter(int payoutAmount) => data.FlagCounter.IncreaseCounter(payoutAmount);
+        public void IncreaseCounter(int payoutAmount) => flagCounter.IncreaseCounter(payoutAmount);
 
         // 小役カウンタ減少
-        public void DecreaseCounter(int setting, int lastBetAmount) =>data.FlagCounter.DecreaseCounter(setting, lastBetAmount);
+        public void DecreaseCounter(int setting, int lastBetAmount) => flagCounter.DecreaseCounter(setting, lastBetAmount);
 
         // カウンタリセット
-        public void ResetCounter() => data.FlagCounter.ResetCounter();
+        public void ResetCounter() => flagCounter.SetCounter(0);
     }
 }

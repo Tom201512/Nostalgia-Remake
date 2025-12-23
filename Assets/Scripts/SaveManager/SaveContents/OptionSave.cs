@@ -1,18 +1,12 @@
-using ReelSpinGame_Datas;
-using ReelSpinGame_Lots.FlagCounter;
-using ReelSpinGame_Save.Bonus;
-using ReelSpinGame_Save.Medal;
-using ReelSpinGame_Save.Player.ReelSpinGame_System;
-using ReelSpinGame_Save.Database.Option;
+using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Save.Database.Option;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelLogicManager;
-using ReelSpinGame_AutoPlay;
 
 namespace ReelSpinGame_Save.Database
 {

@@ -1,11 +1,11 @@
 using ReelSpinGame_Effect.Data.Condition;
+using ReelSpinGame_Lots;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 
 namespace ReelSpinGame_Effect.Data
@@ -13,13 +13,11 @@ namespace ReelSpinGame_Effect.Data
     // 払い出し前の演出
     public class BeforePayoutEffect : MonoBehaviour, IDoesEffect<BeforePayoutEffectCondition>
     {
-        // const
-        const float VFlashWaitTime = 2.0f;        // Vフラッシュ時の待機時間(秒)
+        const float VFlashWaitTime = 2.0f;      // Vフラッシュ時の待機時間(秒)
 
-        // var
-        public bool HasEffect { get; set; }  // 演出処理中か
-        FlashManager flash; // リールフラッシュ
-        SoundManager sound; // サウンド
+        public bool HasEffect { get; set; } // 演出処理中か
+        FlashManager flash;                 // リールフラッシュ
+        SoundManager sound;                 // サウンド
 
         void Awake()
         {
@@ -79,7 +77,7 @@ namespace ReelSpinGame_Effect.Data
             }
         }
 
-        // コルーチン処理
+        // 払い出し前演出の処理
         IEnumerator UpdateBeforePayoutEffect()
         {
             HasEffect = true;

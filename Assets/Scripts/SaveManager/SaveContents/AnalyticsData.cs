@@ -1,10 +1,10 @@
 using ReelSpinGame_Interface;
+using ReelSpinGame_Lots;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Lots.FlagBehaviour;
 
 namespace ReelSpinGame_Datas.Analytics
 {

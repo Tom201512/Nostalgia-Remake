@@ -8,9 +8,8 @@ namespace ReelSpinGame_Effect.Data
     // リール停止時のエフェクト
     public class ReelStoppedEffect : MonoBehaviour, IDoesEffect<ReelStoppedEffectCondition>
     {
-        // var
-        public bool HasEffect { get; set; }  // 演出処理中か
-        SoundManager sound; // サウンド
+        public bool HasEffect { get; set; } // 演出処理中か
+        SoundManager sound;                 // サウンド
 
         void Awake()
         {

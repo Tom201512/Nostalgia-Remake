@@ -12,18 +12,14 @@ namespace ReelSpinGame_Effect.Data
     // ベットボタン時の演出
     public class BetButtonEffect : MonoBehaviour, IDoesEffect<BetEffectCondition>
     {
-        // const
-
-        // var
         public bool HasEffect { get; set; }  // 演出処理中か
-        SoundManager sound; // サウンド
-        FlashManager flash; // フラッシュ
-        ReelEffectManager reel; // リール演出
+
+        FlashManager flash;         // フラッシュ
+        ReelEffectManager reel;     // リール演出
 
         void Awake()
         {
             HasEffect = false;
-            sound = GetComponent<SoundManager>();
             flash = GetComponent<FlashManager>();
             reel = GetComponent<ReelEffectManager>();
         }
@@ -43,6 +39,7 @@ namespace ReelSpinGame_Effect.Data
             {
                 flash.TurnOnAllReels();
             }
+
             reel.SetJacBrightnessCalculation(leverOnEffectCondition.BonusStatus == BonusStatus.BonusJACGames);
         }
     }
