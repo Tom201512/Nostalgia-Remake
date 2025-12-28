@@ -1,6 +1,6 @@
+using ReelSpinGame_Reels;
 using UnityEngine;
 using UnityEngine.UI;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_UI.Reel
 {

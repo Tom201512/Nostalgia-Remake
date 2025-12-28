@@ -2,8 +2,6 @@ using ReelSpinGame_Reels.Symbol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Effect
 {

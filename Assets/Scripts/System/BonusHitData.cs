@@ -1,17 +1,16 @@
 ﻿using ReelSpinGame_Interface;
+using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Datas
 {
     // 当選ボーナス情報
     public class BonusHitData : ISavable
     {
-        // var
         public BonusTypeID BonusID { get; private set; }            // 当選ボーナスID
         public int BonusHitGame { get; private set; }               // 成立時ゲーム数(成立時点でのゲーム数)
         public int BonusStartGame { get; private set; }             // 入賞時ゲーム数(ボーナスを入賞させたゲーム)
@@ -21,7 +20,6 @@ namespace ReelSpinGame_Datas
         public List<int> BonusReelPushOrder { get; private set; }   // ボーナス成立時の押し順
         public List<int> BonusReelDelay { get; private set; }       // ボーナス成立時のスベリコマ数
 
-        // コンストラクタ
         public BonusHitData()
         {
             BonusID = BonusTypeID.BonusNone;

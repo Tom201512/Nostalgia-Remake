@@ -1,26 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
+using ReelSpinGame_Reels.Symbol;
 
 namespace ReelSpinGame_Reels
 {
+    // 最後に止めたリールのデータ
     public class LastStoppedReelData
     {
-        // 最後に止めたリールのデータ
+        public List<int> LastPos { get; private set; }                      // 最後に止めた位置
+        public List<int> LastPushOrder { get; private set; }                // 最後に止めたときの押し順
+        public List<int> LastReelDelay { get; private set; }                // 最後に止めたときのスベリコマ数
+        public List<List<ReelSymbols>> LastSymbols { get; private set; }    // 最後に止まった出目
 
-        // const
-
-        // var
-        // 最後に止めた位置
-        public List<int> LastPos { get; private set; }
-        // 最後に止めたときの押し順
-        public List<int> LastPushOrder { get; private set; }
-        // 最後に止めたときのスベリコマ数
-        public List<int> LastReelDelay { get; private set; }
-        // 最後に止まった出目
-        public List<List<ReelSymbols>> LastSymbols { get; private set; }
-
-        // コンストラクタ
         public LastStoppedReelData()
         {
             LastPos = new List<int>();
@@ -44,8 +35,8 @@ namespace ReelSpinGame_Reels
             for (int i = 0; i < reelObjects.Count; i++)
             {
                 LastPos.Add(reelObjects[i].GetReelPos((sbyte)ReelPosID.Lower));
-                LastPushOrder.Add(reelObjects[i].GetLastStoppedOrder());
-                LastReelDelay.Add(reelObjects[i].GetLastDelay());
+                LastPushOrder.Add(reelObjects[i].LastStoppedOrder);
+                LastReelDelay.Add(reelObjects[i].LastDelay);
                 posBuffer += LastPos[i];
                 // データ作成
                 LastSymbols.Add(new List<ReelSymbols>());
@@ -60,7 +51,6 @@ namespace ReelSpinGame_Reels
             // 各リールごとに表示(デバッグ)
             foreach (List<ReelSymbols> reelResult in LastSymbols)
             {
-                //Debug.Log("Reel:");
                 for (int i = 0; i < reelResult.Count; i++)
                 {
                     Debug.Log(reelResult[i]);

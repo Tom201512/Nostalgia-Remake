@@ -2,9 +2,8 @@
 using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Reels;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -81,7 +80,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.Reel.StopSelectedReel(reelID, gM.Medal.LastBetAmount, gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
+                gM.Reel.StopSelectedReel(reelID, gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Medal.LastBetAmount);
             }
         }
 
@@ -90,7 +89,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.Reel.StopSelectedReelFast(reelID, gM.Medal.LastBetAmount, gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
+                gM.Reel.StopSelectedReelFast(reelID, gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), gM.Medal.LastBetAmount, autoStopPos);
             }
         }
 

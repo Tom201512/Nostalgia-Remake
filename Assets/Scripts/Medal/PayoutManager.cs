@@ -1,10 +1,10 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.Symbol;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelLogicManager;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Payout
 {

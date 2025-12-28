@@ -3,20 +3,19 @@ using ReelSpinGame_Reels.Symbol;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels
 {
     // リールのロジック管理マネージャー
     public class ReelLogicManager : MonoBehaviour
     {
-        // const
-        public const int ReelAmount = 3;                // リール数
+        public const int ReelAmount = 3;    // リール数
 
-        // var
         ReelSpinManager spinManager;        // リール回転
-        ReelSymbolCounter symbolCounter;        // 図柄カウント
+        ReelSymbolCounter symbolCounter;    // 図柄カウント
+
+        // プロパティ
+
 
         // リールが停止したときのイベント
         public delegate void SomeReelStopped();
@@ -39,16 +38,19 @@ namespace ReelSpinGame_Reels
         // 数値を得る
 
         // マネージャー
-        public bool GetIsReelWorking() => spinManager.GetIsReelWorking();           // リールが動作中か
-        public bool GetIsReelFinished() => spinManager.GetIsReelFinished();         // リールの動作が終了したか
-        public bool GetCanStopReels() => spinManager.GetCanStopReels();             // 停止できる状態か
-        public bool HasForceStop() => spinManager.GetHasForceStop();                // オートストップ状態
-        public bool GetIsFirstReelPushed() => spinManager.GetIsFirstReelPushed();   // 第一停止をしたか
-        public ReelID GetFirstPushReel() => spinManager.GetFirstPushReel();         // 第一停止したリールのID
-        public int GetStoppedCount() => spinManager.GetStoppedCount();          // 停止したリール数
-        public int GetRandomValue() => spinManager.GetRandomValue();                // 得たランダム数値
+        public bool GetIsReelWorking() => spinManager.IsReelWorking;           // リールが動作中か
+        public bool GetIsReelFinished() => spinManager.IsReelFinished;         // リールの動作が終了したか
+        public bool GetCanStopReels() => spinManager.CanStopReels;             // 停止できる状態か
+        public bool HasForceStop() => spinManager.HasForceStop;                // オートストップ状態
+        public bool GetIsFirstReelPushed() => spinManager.IsFirstReelPushed;   // 第一停止をしたか
+        public ReelID GetFirstPushReel() => spinManager.FirstPushReel;         // 第一停止したリールのID
+        public int GetStoppedCount() => spinManager.StoppedReelCount;          // 停止したリール数
+        public int GetRandomValue() => spinManager.RandomValue;                // 得たランダム数値
 
-        // リール
+        // 最後に止めたリールデータを返す
+        public LastStoppedReelData GetLastStoppedReelData() => spinManager.GetLastStoppedReelData();
+
+        // リールごとの情報を得る
         public byte[] GetArrayContents(ReelID reelID) => spinManager.GetArrayContents(reelID);            // 図柄配列
         public int GetCurrentReelPos(ReelID reelID) => spinManager.GetCurrentReelPos(reelID);             // 現在位置(下段)
         public int GetReelPushedPos(ReelID reelID) => spinManager.GetReelPushedPos(reelID);               // 押した位置(中段の位置)
@@ -64,9 +66,6 @@ namespace ReelSpinGame_Reels
         // 揃っているBIG図柄の数
         public BigColor GetBigLinedUpCount(int betAmount, int checkAmount) => symbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
 
-        // 最後に止めたリールデータを返す
-        public LastStoppedReelData GetLastStoppedReelData() => spinManager.GetLastStoppedReelData();
-
         // 強制フラグのランダム数値設定
         public void SetForceRandomValue(int value) => spinManager.SetForceRandomValue(value);
 
@@ -77,15 +76,27 @@ namespace ReelSpinGame_Reels
         public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto) => spinManager.StartReels(currentBonusStatus, usingFastAuto);
 
         // リールの停止(通常)
-        public void StopSelectedReel(ReelID reelID, int bet, FlagID flagID, BonusTypeID bonusID)
+        public void StopSelectedReel(ReelID reelID, FlagID flag, BonusTypeID holdingBonus, int betAmount)
         {
-            spinManager.StopSelectedReel(reelID, bet, flagID, bonusID);
+            ReelMainCondition condition = new ReelMainCondition();
+            condition.Flag = flag;
+            condition.Bonus = holdingBonus;
+            condition.Bet = betAmount;
+            condition.Random = spinManager.RandomValue;
+
+            spinManager.StopSelectedReel(reelID, condition);
         }
 
         // リール停止(高速)
-        public void StopSelectedReelFast(ReelID reelID, int bet, FlagID flagID, BonusTypeID bonusID, int pushedPos)
+        public void StopSelectedReelFast(ReelID reelID, FlagID flag, BonusTypeID holdingBonus, int betAmount, int pushedPos)
         {
-            spinManager.StopSelectedReelFast(reelID, bet, flagID, bonusID, pushedPos);
+            ReelMainCondition condition = new ReelMainCondition();
+            condition.Flag = flag;
+            condition.Bonus = holdingBonus;
+            condition.Bet = betAmount;
+            condition.Random = spinManager.RandomValue;
+
+            spinManager.StopSelectedReelFast(reelID, condition, pushedPos);
         }
 
         // リールが停止したときのイベント

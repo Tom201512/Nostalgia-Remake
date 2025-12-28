@@ -2,19 +2,15 @@ using ReelSpinGame_Datas;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Symbol
 {
     // 図柄カウント
     public class ReelSymbolCounter : MonoBehaviour
     {
-        // var
-        [SerializeField] List<ReelObjectPresenter> reelObjects;   // リールオブジェクト
-        [SerializeField] PayoutDatabase payoutDatabase;     // 払い出しのデータ
+        [SerializeField] List<ReelObjectPresenter> reelObjects;     // リールオブジェクト
+        [SerializeField] PayoutDatabase payoutDatabase;             // 払い出しのデータ
 
-        // func
         // 揃っているBIG図柄の数を返す
         public BigColor GetBigLinedUpCount(int betAmount, int checkAmount)
         {
@@ -53,7 +49,7 @@ namespace ReelSpinGame_Reels.Symbol
                     // 停止状態になっている停止予定位置のリールからリーチ状態か確認
                     for (int i = 0; i < reelObjects.Count; i++)
                     {
-                        if (reelObjects[i].GetCurrentReelStatus() != ReelStatus.Stopped)
+                        if (reelObjects[i].ReelStatus != ReelStatus.Stopped)
                         {
                             continue;
                         }

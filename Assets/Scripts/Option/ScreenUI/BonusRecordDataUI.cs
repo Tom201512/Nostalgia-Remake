@@ -1,9 +1,9 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Reels;
 using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 namespace ReelSpinGame_Option.MenuContent

@@ -1,8 +1,8 @@
+using ReelSpinGame_Reels;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Reel;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Option.MenuContent
 {

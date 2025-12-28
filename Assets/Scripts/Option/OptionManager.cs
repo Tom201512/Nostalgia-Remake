@@ -65,7 +65,6 @@ namespace ReelSpinGame_Option
         {
             if (openButton.CanInteractable)
             {
-                Debug.Log("option clicked");
                 menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);
                 menuBarUI.SetInteractiveAllButton(!lockOptionMode);
             }
@@ -76,7 +75,6 @@ namespace ReelSpinGame_Option
         {
             lockOptionMode = value;
             menuBarUI.SetInteractiveAllButton(!value);
-            Debug.Log("Lock:" + value);
         }
 
         // äeâÊñ ÇÃê›íËèÓïÒéÊìæ

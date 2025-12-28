@@ -5,8 +5,8 @@ namespace ReelSpinGame_Option.Button
     // チェックボックス管理マネージャー
     public class CheckBoxManager : MonoBehaviour
     {
-        CheckBoxComponent[] checkBoxList; // チェックボックスリスト
-        public byte CurrentSelectFlag { get; private set; } // 現在の選択フラグ
+        CheckBoxComponent[] checkBoxList;       // チェックボックスリスト
+        public byte CurrentSelectFlag { get; private set; }         // 現在の選択フラグ
 
         // チェックボックスの更新が行われた時のイベント
         /// <summary>

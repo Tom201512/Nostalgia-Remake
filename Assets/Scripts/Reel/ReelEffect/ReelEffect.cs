@@ -8,17 +8,13 @@ namespace ReelSpinGame_Reels
     // リールエフェクト(バックライトの点滅、シンボル点灯など)
     public class ReelEffect : MonoBehaviour
     {
-        // JAC時の光度調整数値
-        const float JacLightOffset = 0.4f;
+        const float JacLightOffset = 0.4f;        // JAC時の光度調整数値
 
-        // リール本体
-        [SerializeField] ReelBase reelBase;
-        [SerializeField] SymbolLightManager symbolLight;
+        [SerializeField] ReelBase reelBase;                 // リール本体
+        [SerializeField] SymbolLightManager symbolLight;    // 図柄部分のライト
 
-        // JAC中の明るさ計算をするか
-        public bool HasJacBrightnessCalculate { get; private set; }
+        public bool HasJacBrightnessCalculate { get; private set; }        // JAC中の明るさ計算をするか
 
-        // func
         // リール本体の明るさ変更
         public void ChangeReelBrightness(byte brightness) => reelBase.ChangeBrightness(brightness);
 

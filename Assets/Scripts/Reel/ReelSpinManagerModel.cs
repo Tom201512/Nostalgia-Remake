@@ -1,15 +1,12 @@
 using System.Collections.Generic;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Reels
 {
     // リール回転マネージャーのデータ
     public class ReelSpinManagerModel
     {
-        // const 
         public const int MaxRandomLots = 6;             // 最大 ランダムテーブル数(1~6)
 
-        // var
         public bool IsReelWorking { get; set; }         // 全リールが動作中か
         public bool IsReelFinished { get; set; }        // 動作完了したか
         public bool CanStopReels { get; set; }          // 停止可能か

@@ -1,8 +1,8 @@
+using ReelSpinGame_Reels;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelLogicManager;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Datas
 {
@@ -10,7 +10,6 @@ namespace ReelSpinGame_Datas
 #if UNITY_EDITOR
     public class ScriptableGen : EditorWindow
     {
-        // const
         // 読み込み時のパス
         private const string DataPath = "Assets/DataFile";
 
@@ -20,7 +19,6 @@ namespace ReelSpinGame_Datas
         // JACはずれデフォルト値
         private const float JacNoneDefault = 256f;
 
-        // var
         // 各リールを作る際に選んだボタン番号
         private int reelSelection;
 

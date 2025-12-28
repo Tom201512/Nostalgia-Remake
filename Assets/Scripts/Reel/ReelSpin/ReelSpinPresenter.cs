@@ -3,17 +3,40 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
+using ReelSpinGame_Reels.Symbol;
 
 namespace ReelSpinGame_Reels.Spin
 {
     // リール回転用のプレゼンター
     public class ReelSpinPresenter : MonoBehaviour
     {
-        // var
-        // 回転時のRPM
-        [SerializeField][Range(0, 80.0f)] private float defaultReelSpinRPM;
-        // リール配列データ
-        [SerializeField] ReelArrayData reelArrayDataFile;
+
+        [SerializeField][Range(0, 80.0f)] float defaultReelSpinRPM;        // 回転時のRPM
+        [SerializeField] ReelArrayData reelArrayDataFile;                  // リール配列データ
+
+        // プロパティ
+        public byte[] ReelArray { get => reelSpinModel.ReelArray; }                 // リール配列                                                              
+        public ReelStatus ReelStatus { get => reelSpinModel.CurrentReelStatus; }    // 現在のリール情報
+        public float RotateSpeed { get => reelSpinModel.RotateSpeed; }              // 回転速度
+        public float MaxSpeed { get => reelSpinModel.MaxSpeed; }                    // 現在の最高速度
+        public float CurrentDegree { get => transform.rotation.eulerAngles.x; }     // 現在の角度
+        public int WillStopLowerPos { get => reelSpinModel.WillStopLowerPos; }      // 停止予定位置
+        public int LastStoppedOrder { get => reelSpinModel.LastStoppedOrder; }     // 停止したときの押し順
+        public int LastStoppedDelay { get => reelSpinModel.LastStoppedDelay; }      // 最後に止めたときのスベリコマ数
+
+        // 現在の下段位置
+        public int CurrentLower 
+        { 
+            get => reelSpinModel.CurrentLower;
+            set => reelSpinModel.CurrentLower = value;
+        }
+        
+        // 停止位置
+        public int LastPushedPos 
+        {
+            get => reelSpinModel.LastPushedPos; 
+            set => reelSpinModel.LastPushedPos = value;
+        } 
 
         // 図柄位置が変わったことを伝えるイベント
         public delegate void ReelPositionChanged();
@@ -56,38 +79,11 @@ namespace ReelSpinGame_Reels.Spin
             }
         }
 
-        // リール配列情報を渡す
-        public byte[] GetReelArray() => reelSpinModel.ReelArray;
-
-        // 現在のリール情報を返す
-        public ReelStatus GetCurrentReelStatus() => reelSpinModel.CurrentReelStatus;
-        // 現在の速度を返す
-        public float GetCurrentSpeed() => reelSpinModel.RotateSpeed;
-        // 現在の最高速度を返す
-        public float GetMaxSpeed() => reelSpinModel.MaxSpeed;
-        // 現在の角度を返す
-        public float GetCurrentDegree() => transform.rotation.eulerAngles.x;
-
         // 最高速度状態か返す
         public bool IsMaximumSpeed() => reelSpinModel.RotateSpeed == reelSpinModel.MaxSpeed;
 
-        // 現在の下段位置を得る
-        public int GetCurrentLower() => reelSpinModel.CurrentLower;
-        // 最後に停止させた位置を得る
-        public int GetLastPushedPos() => reelSpinModel.LastPushedPos;
-        // 停止予定位置を得る
-        public int GetWillStopLowerPos() => reelSpinModel.WillStopLowerPos;
-        // 停止したときの押し順を得る
-        public int GetLastStoppedOrder() => reelSpinModel.LastStoppedOrder;
-        // 最後に止めたときのスベリコマ数を得る
-        public int GetLastStoppedDelay() => reelSpinModel.LastStoppedDelay;
-
-        // 現在の下段位置を設定する
-        public void SetCurrentLower(int lowerPos) => reelSpinModel.CurrentLower = lowerPos;
-        // 最後に押した位置を設定する
-        public void SetLastPushedPos(int pushedPos) => reelSpinModel.LastPushedPos = pushedPos;
-        // 停止予定位置を設定する
-        public void SetWillStopLowerPos(int delay)
+        // スベリコマ数から停止位置予定を作成
+        public void SetStopPosFromDelay(int delay)
         {
             reelSpinModel.WillStopLowerPos = ReelObjectPresenter.OffsetReelPos(reelSpinModel.CurrentLower, delay);
             reelSpinModel.LastStoppedDelay = delay;
@@ -95,11 +91,10 @@ namespace ReelSpinGame_Reels.Spin
 
         // ブラー設定
         public void ChangeBlurSetting(bool value) => motionBlur.enabled.value = value;
-
         // 指定位置からのリール位置を得る
-        public int GetReelPos(int currentLower, sbyte posID) => ReelObjectPresenter.OffsetReelPos(currentLower, posID);
+        public int GetReelPos(int lowerPos, sbyte posID) => ReelObjectPresenter.OffsetReelPos(lowerPos, posID);
         // 指定位置からのリール図柄を得る
-        public ReelSymbols GetReelSymbol(int currentLower, sbyte posID) => symbolManager.ReturnSymbol(reelSpinModel.ReelArray[ReelObjectPresenter.OffsetReelPos(currentLower, posID)]);
+        public ReelSymbols GetReelSymbol(int lowerPos, sbyte posID) => symbolManager.ReturnSymbol(reelSpinModel.ReelArray[ReelObjectPresenter.OffsetReelPos(lowerPos, posID)]);
         // 指定位置からのリール図柄画像を得る
         public Sprite GetReelSymbolSprite(int reelPos) => symbolManager.GetSymbolImage(GetReelSymbol(reelPos, (int)ReelPosID.Lower));
 
@@ -160,7 +155,6 @@ namespace ReelSpinGame_Reels.Spin
             // 逆回転の場合
             if (Math.Sign(reelSpinModel.RotateSpeed) == -1 && transform.rotation.eulerAngles.x < 180 && transform.rotation.eulerAngles.x > ChangeAngle)
             {
-                //Debug.Log("Symbol changed");
                 reelSpinModel.CurrentLower = ReelObjectPresenter.OffsetReelPos(reelSpinModel.CurrentLower, -1);
                 // 角度をもとに戻す
                 transform.Rotate(Vector3.right, ChangeAngle * -1);

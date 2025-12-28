@@ -5,10 +5,9 @@ namespace ReelSpinGame_Reels.Symbol
     // リールシンボルライトのマネージャー
     public class SymbolLightManager : MonoBehaviour
     {
-        // var
-        public SymbolLight[] SymbolLightObj { get; private set; }
+        public SymbolLight[] SymbolLightObj { get; private set; }       // 図柄のライト部分
 
-        private void Awake()
+        void Awake()
         {
             SymbolLightObj = GetComponentsInChildren<SymbolLight>();
         }

@@ -1,21 +1,18 @@
+using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_System
 {
     // プレイヤーのセーブ機能
     public class PlayerSaveManager : ISaveManage
     {
-        // const
         // アドレス番地
         private enum AddressID { Setting, Player, Medal, FlagC, Reel, Bonus }
 
-        // var
         // 現在のセーブデータ
         public SaveDatabase CurrentSave { get; private set; }
 

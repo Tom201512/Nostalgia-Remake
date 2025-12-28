@@ -1,7 +1,6 @@
 using ReelSpinGame_Lots;
-
+using ReelSpinGame_Reels;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_AutoPlay.AI
 {

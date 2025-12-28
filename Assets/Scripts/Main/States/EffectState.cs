@@ -1,7 +1,7 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
+using ReelSpinGame_Reels;
 
 namespace ReelSpinGame_State.LotsState
 {

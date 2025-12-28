@@ -1,3 +1,4 @@
+using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,19 +10,13 @@ namespace ReelSpinGame_Datas.Reels
     [Serializable]
     public class ReelFirstConditions : ReelBaseData
     {
-        // const
-        // 第一停止の停止条件読み込み位置
-        private const int FirstPushReadPos = ConditionMaxRead + 1;
-        // 第一停止のTID読み込み位置
-        private const int FirstPushTIDPos = FirstPushReadPos + 1;
-        // 第一停止のCID読み込み位置
-        private const int FirstPushCIDPos = FirstPushTIDPos + 1;
+        // 読み込み位置
+        private const int FirstPushReadPos = ConditionMaxRead + 1;          // 第一停止の停止条件
+        private const int FirstPushTIDPos = FirstPushReadPos + 1;           // 第一停止のTID
+        private const int FirstPushCIDPos = FirstPushTIDPos + 1;            // 第一停止のCID読み込み位置
 
-        // var
-        // 第一停止の停止条件
-        [SerializeField] private int firstStopPos;
+        [SerializeField] private int firstStopPos;        // 第一停止の停止条件
 
-        // コンストラクタ
         public ReelFirstConditions(StreamReader sReader)
         {
             string[] values = GetDataFromStream(sReader);
@@ -72,32 +67,21 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
-            //Debug.Log("MainCondition:" + MainConditions);
-            //Debug.Log("FirstStopPos:" + firstStopPos);
-            //Debug.Log("TID:" + TID);
-            //Debug.Log("CID:" + CID);
-
-            //Debug.Log("First Push Load Done");
         }
 
         // 条件チェック
-        public bool CheckFirstReelCondition(int flagID, int bonus, int bet, int random, int pushedPos)
+        public bool CheckFirstReelCondition(ReelMainCondition mainCondition, int pushedPos)
         {
             // メイン条件チェック
-            if (CheckMainCondition(flagID, bonus, bet, random))
+            if (CheckMainCondition(mainCondition))
             {
                 // 第一停止の条件が一致するかチェック。0はANY
                 // 第一停止の数値をビット演算で比較できるようにする
-                //Debug.Log("Pushed:" + pushedPos);
                 int checkValue = 1 << pushedPos + 1;
-                //Debug.Log("check:" + checkValue);
-                //Debug.Log("FirstPos:" + firstStopPos);
 
-                // 停止条件を確認
+                // 停止条件を確認する
                 if (firstStopPos == 0 || ((checkValue & firstStopPos) != 0))
                 {
-                    //Debug.Log("Stop Pos has match with condition");
-                    // 条件一致
                     return true;
                 }
             }
@@ -109,24 +93,17 @@ namespace ReelSpinGame_Datas.Reels
     [Serializable]
     public class ReelBaseData
     {
-        // const
-        // 条件を読み込むバイト数
-        public const int ConditionMaxRead = 4;
-        // 条件を読み込む際にずらすビット数
-        public const int ConditionBitOffset = 4;
+        public const int ConditionMaxRead = 4;          //条件を読み込むバイト数
+        public const int ConditionBitOffset = 4;        // 条件を読み込む際にずらすビット数
 
-        // いずれかのボーナスが入っている条件を示す数字
-        public const int BonusAnyValueID = 3;
+        public const int BonusAnyValueID = 3;           // いずれかのボーナスが入っている条件を示す数字
 
         // 条件のシリアライズ
         public enum ConditionID { Flag, Bonus, Bet, Random }
 
-        // フラグID, ボーナス, ベット枚数, ランダム制御の順で読み込む
-        [SerializeField] private int mainConditon;
-        // 使用するTID(テーブルID)
-        [SerializeField] private byte tid;
-        // 使用するCID(組み合わせID)
-        [SerializeField] private byte cid;
+        [SerializeField] private int mainConditon;      // メイン条件の数値ID
+        [SerializeField] private byte tid;              // 使用するTID(テーブルID)
+        [SerializeField] private byte cid;              // 使用するCID(組み合わせID)
 
         public int MainConditions { get { return mainConditon; } protected set { mainConditon = value; } }
         public byte TID { get { return tid; } protected set { tid = value; } }
@@ -136,47 +113,40 @@ namespace ReelSpinGame_Datas.Reels
         protected int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
 
         // メイン条件があっているかチェック
-        protected bool CheckMainCondition(int flagID, int bonus, int bet, int random)
+        protected bool CheckMainCondition(ReelMainCondition mainCondition)
         {
-            //Debug.Log("MainCondition:" + flagID + "," + bonus + "," + bet + "," + random);
-            // データを条件にする
+            // 条件を見る順番を決める
             int[] conditions = new int[]
             {
-                flagID,
-                bonus,
-                bet,
-                random,
+                (int)mainCondition.Flag,
+                (int)mainCondition.Bonus,
+                mainCondition.Bet,
+                mainCondition.Random,
             };
-
-            //Debug.Log("ConditionData:" + MainConditions);
 
             // メイン条件チェック
             for (int i = 0; i < ConditionMaxRead; i++)
             {
                 int checkData = GetConditionData(MainConditions, i);
-                //Debug.Log("checkData:" + checkData);
 
                 // フラグID以外の条件で0があった場合はパスする
                 if (i != (int)ConditionID.Flag && checkData == 0)
                 {
-                    //Debug.Log("No condition");
                     continue;
                 }
                 // ボーナス条件は3ならいずれかのボーナスが成立していればパス
                 else if (i == (int)ConditionID.Bonus && checkData == BonusAnyValueID &&
-                    bonus != (int)BonusTypeID.BonusNone)
+                    mainCondition.Bonus != BonusTypeID.BonusNone)
                 {
-                    //Debug.Log(bonus + "ANY BONUS");
                     continue;
                 }
                 // それ以外は受け取ったものと条件が合うか確認する
                 else if (conditions[i] != checkData)
                 {
-                    //Debug.Log("Condition not match");
                     return false;
                 }
             }
-            //Debug.Log("Condition Passed");
+
             return true;
         }
 
@@ -192,15 +162,11 @@ namespace ReelSpinGame_Datas.Reels
         protected string[] GetDataFromStream(StreamReader sReader)
         {
             // カンマ入りのデータがあるため、独自にパーサーを作成
-            // 読み込んだデータのテキスト
-            string loadedText = sReader.ReadLine();
-            // データに入れるバッファ
-            string bufferText = "";
-            // ダブルクォーテーションでパースしたデータ
-            string parseText = "";
-            List<string> dataBuffer = new List<string>();
 
-            // ダブルクオーテーションを発見したか
+            string loadedText = sReader.ReadLine();
+            string bufferText = "";    
+            string parseText = "";               
+            List<string> dataBuffer = new List<string>();
             bool findDoubleQuartation = false;
 
             foreach (char c in loadedText)

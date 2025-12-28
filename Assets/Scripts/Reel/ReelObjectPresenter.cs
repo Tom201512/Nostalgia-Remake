@@ -9,28 +9,33 @@ namespace ReelSpinGame_Reels
     {
         // リールオブジェクトプレゼンター
 
-        // const
-        // リール識別用ID
-        public enum ReelID { ReelLeft, ReelMiddle, ReelRight };
+        [SerializeField] ReelDelayTableData reelDatabaseFile;       // リール情報
+        [SerializeField] private ReelID reelID;                     // リール識別ID
 
-        // var
-        // リール情報
-        [SerializeField] ReelDelayTableData reelDatabaseFile;
-        // リール識別ID
-        [SerializeField] private ReelID reelID;
+        // プロパティ
+        public ReelID ReelID { get => reelID; }                                         // リールのID
+        public ReelStatus ReelStatus { get => reelSpinPresenter.ReelStatus; }           // 現在のリール状態
+                                                                                        
+        public byte[] ReelArray { get => reelSpinPresenter.ReelArray; }                 // リール配列を渡す
+        public float RotateSpeed { get => reelSpinPresenter.RotateSpeed; }              // 現在速度を返す
+        public float CurrentDegree { get => reelSpinPresenter.CurrentDegree; }          // 現在の角度を返す
+        public int CurrentLower { get => reelSpinPresenter.CurrentLower; }              // 現在の下段位置
+        public int LastPushedPos { get => reelSpinPresenter.LastPushedPos; }            // 最後に止めた下段位置
+        public int WillStopLowerPos => reelSpinPresenter.WillStopLowerPos;              // 停止予定位置
+        public int LastStoppedOrder { get => reelSpinPresenter.LastStoppedOrder; }      // 停止したときの押し順
+        public int LastDelay { get => reelSpinPresenter.LastStoppedDelay; }             // スベリコマ数
+
+        public bool HasJacModeLight { get; set; }        // JAC中の点灯をするか
+
+        // リール演出用マネージャー
+        public ReelEffect ReelEffectManager { get; private set; }
 
         // リールが停止したかのイベント(個別ごとのリール)
         public delegate void ReelStoppedEvent();
         public event ReelStoppedEvent HasReelStopped;
 
-        // リール演出用マネージャー
-        public ReelEffect ReelEffectManager { get; private set; }
-
         // リール回転用のプレゼンター
         private ReelSpinPresenter reelSpinPresenter;
-
-        // JAC中の点灯をするか
-        public bool HasJacModeLight { get; set; }
 
         private void Awake()
         {
@@ -53,55 +58,29 @@ namespace ReelSpinGame_Reels
             reelSpinPresenter.HasReelStopped -= OnReelHasStoppedCallback;
         }
 
-        // 数値を得る
-        // リールのID
-        public ReelID GetReelID() => reelID;
-
-        // 現在のリール状態
-        public ReelStatus GetCurrentReelStatus() => reelSpinPresenter.GetCurrentReelStatus();
-        // 現在の下段位置
-        public int GetCurrentLower() => reelSpinPresenter.GetCurrentLower();
-        // 最後に止めた下段位置
-        public int GetLastPushedLowerPos() => reelSpinPresenter.GetLastPushedPos();
-        // 停止予定位置
-        public int GetWillStopLowerPos() => reelSpinPresenter.GetWillStopLowerPos();
-        // 停止したときの押し順を返す
-        public int GetLastStoppedOrder() => reelSpinPresenter.GetLastStoppedOrder();
-        // 最後に止めたときのディレイ数
-        public int GetLastDelay() => reelSpinPresenter.GetLastStoppedDelay();
-
         // 指定した位置にあるリールの番号を返す
-        public int GetReelPos(sbyte posID) => reelSpinPresenter.GetReelPos(reelSpinPresenter.GetCurrentLower(), posID);
+        public int GetReelPos(sbyte posID) => reelSpinPresenter.GetReelPos(reelSpinPresenter.CurrentLower, posID);
         // 指定した位置にあるリールの図柄を返す
-        public ReelSymbols GetReelSymbol(sbyte posID) => reelSpinPresenter.GetReelSymbol(reelSpinPresenter.GetCurrentLower(), posID);
+        public ReelSymbols GetReelSymbol(sbyte posID) => reelSpinPresenter.GetReelSymbol(reelSpinPresenter.CurrentLower, posID);
         // 停止する位置から指定位置の図柄を返す
-        public ReelSymbols GetSymbolFromWillStop(sbyte posID) => reelSpinPresenter.GetReelSymbol(reelSpinPresenter.GetWillStopLowerPos(), posID);
-
+        public ReelSymbols GetSymbolFromWillStop(sbyte posID) => reelSpinPresenter.GetReelSymbol(reelSpinPresenter.WillStopLowerPos, posID);
         // 指定した位置の図柄を得る
         public Sprite GetReelSymbolSprite(int reelPos) => reelSpinPresenter.GetReelSymbolSprite(reelPos);
-
-        // 現在速度を返す
-        public float GetCurrentSpeed() => reelSpinPresenter.GetCurrentSpeed();
-        // 現在の角度を返す
-        public float GetCurrentDegree() => reelSpinPresenter.GetCurrentDegree();
-
         // リール条件を渡す
         public ReelDelayTableData GetReelDatabase() => reelDatabaseFile;
-        // リール配列を渡す
-        public byte[] GetReelArrayData() => reelSpinPresenter.GetReelArray();
 
         // リールの初期化
         public void InitializeReel(int initialLowerPos)
         {
-            reelSpinPresenter.SetCurrentLower(initialLowerPos);
-            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
+            reelSpinPresenter.CurrentLower = initialLowerPos;
+            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.CurrentLower);
         }
 
         // 下段位置の変更
         public void ChangeCurrentLower(int lowerPos)
         {
-            reelSpinPresenter.SetCurrentLower(lowerPos);
-            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
+            reelSpinPresenter.CurrentLower = lowerPos;
+            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.CurrentLower);
         }
 
         // JAC中の明るさ計算の設定
@@ -124,7 +103,7 @@ namespace ReelSpinGame_Reels
         public void StopReelFast(int pushedPos, int pushOrder, int delay)
         {
             reelSpinPresenter.StopReelImmediately(pushedPos, pushOrder, delay);
-            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
+            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.CurrentLower);
         }
 
         // リール位置が変わったときのコールバック
@@ -133,9 +112,9 @@ namespace ReelSpinGame_Reels
             // JAC中であれば回転時の明るさ計算をリセット
             if (ReelEffectManager.HasJacBrightnessCalculate)
             {
-                ReelEffectManager.ResetJacBrightnessCalculate(reelSpinPresenter.GetMaxSpeed());
+                ReelEffectManager.ResetJacBrightnessCalculate(reelSpinPresenter.MaxSpeed);
             }
-            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
+            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.CurrentLower);
         }
 
         // リール角度が変わったときのコールバック
@@ -143,7 +122,7 @@ namespace ReelSpinGame_Reels
         {
             if (ReelEffectManager.HasJacBrightnessCalculate)
             {
-                ReelEffectManager.CalculateJacBrightness(reelSpinPresenter.GetMaxSpeed());
+                ReelEffectManager.CalculateJacBrightness(reelSpinPresenter.MaxSpeed);
             }
         }
 

@@ -1,40 +1,27 @@
+using ReelSpinGame_Reels;
 using System;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Datas.Reels
 {
     [Serializable]
     public class ReelThirdConditions : ReelBaseData
     {
-        // const
-        // 第一停止したリールIDを読み込む位置
-        private const int FirstPushedReelIDPos = ConditionMaxRead + 1;
-        // 第一停止したリールのCIDを読み込む位置
-        private const int FirstPushedCIDPos = FirstPushedReelIDPos + 1;
-        // 第二停止したリールIDを読み込む位置
-        private const int SecondPushedReedPos = FirstPushedCIDPos + 1;
-        // 第二停止したリールのCIDを読み込む位置
-        private const int SecondPushedTIDPos = SecondPushedReedPos + 1;
-        // 第三停止のTID読み込み位置
-        private const int ThirdPushTIDPos = SecondPushedTIDPos + 1;
-        // 第三停止のCID読み込み位置
-        private const int ThirdPushCIDPos = ThirdPushTIDPos + 1;
+        // 読み込み位置
+        const int FirstPushedReelIDPos = ConditionMaxRead + 1;          // 第一停止したリールID
+        const int FirstPushedCIDPos = FirstPushedReelIDPos + 1;         // 第一停止したリールのCID
+        const int SecondPushedReedPos = FirstPushedCIDPos + 1;          // 第二停止したリールID
+        const int SecondPushedTIDPos = SecondPushedReedPos + 1;         // 第二停止したリールのCID
+        const int ThirdPushTIDPos = SecondPushedTIDPos + 1;             // 第三停止のTID
+        const int ThirdPushCIDPos = ThirdPushTIDPos + 1;                // 第三停止のCID
 
-        // var
-        // 第二停止の停止条件
 
-        // 第一停止したリールのID
-        [SerializeField] private byte firstStopReelID;
-        // 第一停止したリールのCID
-        [SerializeField] private byte firstStopCID;
-        // 第二停止したリールのID
-        [SerializeField] private byte secondStopReelID;
-        // 第二停止したリールのCID
-        [SerializeField] private byte secondStopCID;
+        [SerializeField] private byte firstStopReelID;      // 第一停止したリールのID
+        [SerializeField] private byte firstStopCID;         // 第一停止したリールのCID
+        [SerializeField] private byte secondStopReelID;     // 第二停止したリールのID
+        [SerializeField] private byte secondStopCID;        // 第二停止したリールのCID
 
-        // コンストラクタ
         public ReelThirdConditions(StreamReader sReader)
         {
             string[] values = GetDataFromStream(sReader);
@@ -92,24 +79,13 @@ namespace ReelSpinGame_Datas.Reels
                 }
                 indexNum += 1;
             }
-
-            //Debug.Log("MainCondition:" + MainConditions);
-            //Debug.Log("FirstPushedReelID:" + firstStopReelID);
-            //Debug.Log("FirstPushedCID:" + firstStopCID);
-            //Debug.Log("SecondPushedReelID:" + secondStopReelID);
-            //Debug.Log("SecondPushedCID:" + secondStopCID);
-            //Debug.Log("TID:" + TID);
-            //Debug.Log("CID:" + CID);
-
-            //Debug.Log("Third Push Load Done");
         }
 
         // 条件チェック
-        public bool CheckThirdReelCondition(int flagID, int bonus, int bet, int random,
-            ReelID firstStopReelID, int firstStopCID, ReelID secondStopReelID, int secondStopReelCID)
+        public bool CheckThirdReelCondition(ReelMainCondition mainCondition, ReelID firstStopReelID, int firstStopCID, ReelID secondStopReelID, int secondStopReelCID)
         {
             // メイン条件チェック
-            if (CheckMainCondition(flagID, bonus, bet, random))
+            if (CheckMainCondition(mainCondition))
             {
                 // 第一と第二停止のリールID, CIDが一致するかチェック
                 return ThirdReelCIDCheck(firstStopReelID, firstStopCID, secondStopReelID, secondStopReelCID);
@@ -123,16 +99,10 @@ namespace ReelSpinGame_Datas.Reels
             bool first = false;
             bool second = false;
 
-            // 第一停止
-
-            //Debug.Log("FirstStopReel Condition: " + this.firstStopReelID);
-            //Debug.Log("FirstStop Check: " + (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID));
-
             // 第一停止リールIDの条件が正しいかチェック(0はANY)
             if (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID)
             {
                 // 第一停止のCIDをチェック
-                //Debug.Log("CID Check" + (this.firstStopCID == 0 || firstStopCID == this.firstStopCID));
                 first = this.firstStopCID == 0 || firstStopCID == this.firstStopCID;
             }
             else
@@ -140,16 +110,10 @@ namespace ReelSpinGame_Datas.Reels
                 return false;
             }
 
-            // 第二停止
-
-            //Debug.Log("SecondStopReel Condition: " + this.secondStopReelID);
-            //Debug.Log("SecondStop Check: " + (this.secondStopReelID == 0 || (int)secondStopReelID + 1 == this.secondStopReelID));
-
             // 第二停止リールIDの条件が正しいかチェック(0はANY)
             if (this.secondStopReelID == 0 || (int)secondStopReelID + 1 == this.secondStopReelID)
             {
                 // 第二停止のCIDをチェック
-                //Debug.Log("CID Check" + (this.secondStopCID == 0 || firstStopCID == this.secondStopCID));
                 second = this.secondStopCID == 0 || secondStopCID == this.secondStopCID;
             }
             else

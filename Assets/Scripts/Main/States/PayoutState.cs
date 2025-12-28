@@ -3,7 +3,7 @@ using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
+using ReelSpinGame_Reels;
 
 namespace ReelSpinGame_State.PayoutState
 {

@@ -5,25 +5,19 @@ namespace ReelSpinGame_Reels.Symbol
     // シンボルのライト部分
     public class SymbolLight : MonoBehaviour
     {
-        // const
-        // デフォルトの明るさ(点灯時)
-        public const byte TurnOnValue = 255;
-        // デフォルトの暗さ(消灯時)
-        public const byte TurnOffValue = 120;
+        public const byte TurnOnValue = 255;        // デフォルトの明るさ(点灯時)
+        public const byte TurnOffValue = 120;       // デフォルトの暗さ(消灯時)
 
-        // 表示部分
-        private SpriteRenderer sprite;
+        private SpriteRenderer sprite;      // 表示部分
+        private byte lastBrightness;        // 表示部分
 
-        // 明るさ
-        private byte lastBrightness;
-
-        private void Awake()
+        void Awake()
         {
             sprite = GetComponent<SpriteRenderer>();
             lastBrightness = 0;
         }
 
-        private void Start()
+        void Start()
         {
             ChangeBrightness(TurnOffValue);
         }

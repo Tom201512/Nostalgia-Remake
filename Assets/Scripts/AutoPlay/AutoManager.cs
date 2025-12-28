@@ -1,9 +1,9 @@
 using ReelSpinGame_AutoPlay.AI;
+using ReelSpinGame_Reels;
 using System;
 using TMPro;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_AutoPlay
 {
