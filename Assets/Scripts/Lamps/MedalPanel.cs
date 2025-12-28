@@ -1,31 +1,60 @@
 using UnityEngine;
 
-public class MedalPanel : MonoBehaviour
+namespace ReelSpinGame_Lamps
 {
     // メダルパネル部分
-    // var
-    // メダル1枚ランプ
-    [SerializeField] private LampComponent medal1;
-    // メダル2枚ランプA(上)
-    [SerializeField] private LampComponent medal2A;
-    // メダル2枚ランプB(下)
-    [SerializeField] private LampComponent medal2B;
-    // メダル3枚ランプA(上)
-    [SerializeField] private LampComponent medal3A;
-    // メダル3枚ランプB(下)
-    [SerializeField] private LampComponent medal3B;
-
-    public void OnDestroy()
+    public class MedalPanel : MonoBehaviour
     {
-        StopAllCoroutines();
-    }
 
-    // ベット枚数からどのランプをつけるか判定する
-    public void UpdateLampByBet(int currentBet, int lastBetAmount)
-    {
-        if (currentBet == 0)
+        [SerializeField] private LampComponent medal1;          // 1枚掛けランプ
+        [SerializeField] private LampComponent medal2Up;        // 2枚掛けランプ上
+        [SerializeField] private LampComponent medal2Down;      // 2枚掛けランプ下
+        [SerializeField] private LampComponent medal3Up;        // 3枚掛けランプ上
+        [SerializeField] private LampComponent medal3Down;      // 3枚掛けランプ下
+
+        void OnDestroy()
         {
-            if (lastBetAmount >= 1)
+            StopAllCoroutines();
+        }
+
+        // ベット枚数からどのランプをつけるか判定する
+        public void UpdateLampByBet(int currentBet, int lastBetAmount)
+        {
+            if (currentBet == 0)
+            {
+                if (lastBetAmount >= 1)
+                {
+                    medal1.TurnOn();
+                }
+                else
+                {
+                    medal1.TurnOff();
+                }
+
+                if (lastBetAmount >= 2)
+                {
+                    medal2Up.TurnOn();
+                    medal2Down.TurnOn();
+                }
+                else
+                {
+                    medal2Up.TurnOff();
+                    medal2Down.TurnOff();
+                }
+
+                if (lastBetAmount >= 3)
+                {
+                    medal3Up.TurnOn();
+                    medal3Down.TurnOn();
+                }
+                else
+                {
+                    medal3Up.TurnOff();
+                    medal3Down.TurnOff();
+                }
+            }
+
+            if (currentBet >= 1)
             {
                 medal1.TurnOn();
             }
@@ -34,67 +63,37 @@ public class MedalPanel : MonoBehaviour
                 medal1.TurnOff();
             }
 
-            if (lastBetAmount >= 2)
+            if (currentBet >= 2)
             {
-                medal2A.TurnOn();
-                medal2B.TurnOn();
+                medal2Up.TurnOn();
+                medal2Down.TurnOn();
             }
             else
             {
-                medal2A.TurnOff();
-                medal2B.TurnOff();
+                medal2Up.TurnOff();
+                medal2Down.TurnOff();
             }
 
-            if (lastBetAmount >= 3)
+            if (currentBet >= 3)
             {
-                medal3A.TurnOn();
-                medal3B.TurnOn();
+                medal3Up.TurnOn();
+                medal3Down.TurnOn();
             }
             else
             {
-                medal3A.TurnOff();
-                medal3B.TurnOff();
+                medal3Up.TurnOff();
+                medal3Down.TurnOff();
             }
         }
 
-        if (currentBet >= 1)
-        {
-            medal1.TurnOn();
-        }
-        else
+        // 全てのランプを消す
+        public void TurnOffAllLamps()
         {
             medal1.TurnOff();
+            medal2Up.TurnOff();
+            medal2Down.TurnOff();
+            medal3Up.TurnOff();
+            medal3Down.TurnOff();
         }
-
-        if (currentBet >= 2)
-        {
-            medal2A.TurnOn();
-            medal2B.TurnOn();
-    }
-        else
-        {
-            medal2A.TurnOff();
-            medal2B.TurnOff();
-        }
-
-        if (currentBet >= 3)
-        {
-            medal3A.TurnOn();
-            medal3B.TurnOn();
-        }
-        else
-        {
-            medal3A.TurnOff();
-            medal3B.TurnOff();
-        }
-    }
-
-    public void TurnOffAllLamps()
-    {
-        medal1.TurnOff();
-        medal2A.TurnOff();
-        medal2B.TurnOff();
-        medal3A.TurnOff();
-        medal3B.TurnOff();
     }
 }

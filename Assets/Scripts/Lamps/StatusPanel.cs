@@ -1,97 +1,101 @@
 using System.Collections;
 using UnityEngine;
 
-public class StatusPanel : MonoBehaviour
+namespace ReelSpinGame_Lamps
 {
     // ステータスランプ部分
-    // const
-    // 定期的に点滅させるときの時間数(INSERTとSTARTの点滅)
-    private const float flashBetweenTime = 0.25f;
-
-    private bool hasInsertTurnOn;
-    private bool hasStartTurnOn;
-
-    // アニメーション中か
-    private bool hasAnimation;
-
-    // var
-    [SerializeField] LampComponent replayLamp;
-    [SerializeField] LampComponent waitLamp;
-    [SerializeField] LampComponent startLamp;
-    [SerializeField] LampComponent insertLamp;
-
-    private void Awake()
+    public class StatusPanel : MonoBehaviour
     {
-        hasInsertTurnOn = false;
-        hasStartTurnOn = false;
-    }
+        const float flashBetweenTime = 0.25f;   // 点滅時の待機秒数
 
-    public void OnDestroy()
-    {
-        StopAllCoroutines();
-    }
+        [SerializeField] LampComponent replayLamp;
+        [SerializeField] LampComponent waitLamp;
+        [SerializeField] LampComponent startLamp;
+        [SerializeField] LampComponent insertLamp;
 
-    public void TurnOnInsertLamp()
-    {
-        hasInsertTurnOn = true;
-        if(!hasAnimation)
+        private bool isInsertTurnOn;    // INSERTが点灯しているか
+        private bool isStartTurnOn;     // STARTが点灯しているか
+        private bool hasAnimation;      // アニメーション中か
+
+        void Awake()
         {
-            StartCoroutine(nameof(FlashInsertAndStart));
+            isInsertTurnOn = false;
+            isStartTurnOn = false;
         }
-    }
 
-    public void TurnOnStartLamp()
-    {
-        hasStartTurnOn = true;
-        if (!hasAnimation)
+        void OnDestroy()
         {
-            StartCoroutine(nameof(FlashInsertAndStart));
+            StopAllCoroutines();
         }
-    }
 
-    public void TurnOffInsertAndStartlamp()
-    {
-        hasInsertTurnOn = false;
-        hasStartTurnOn = false;
-        hasAnimation = false;
-        StopCoroutine(nameof(FlashInsertAndStart));
-
-        startLamp.TurnOff();
-        insertLamp.TurnOff();
-    }
-
-    public void TurnOnWaitLamp() => waitLamp.TurnOn();
-    public void TurnOffWaitLamp() => waitLamp.TurnOff();
-
-    public void TurnOnReplayLamp() => replayLamp.TurnOn();
-    public void TurnOffReplayLamp() => replayLamp.TurnOff();
-
-    // INSERTとSTARTを点滅させる
-
-    private IEnumerator FlashInsertAndStart()
-    {
-        hasAnimation = true;
-        while (hasInsertTurnOn || hasStartTurnOn)
+        // INSERT点灯
+        public void TurnOnInsertLamp()
         {
-            if(hasInsertTurnOn)
+            isInsertTurnOn = true;
+            if (!hasAnimation)
             {
-                insertLamp.TurnOn();
+                StartCoroutine(nameof(FlashInsertAndStart));
             }
-            if (hasStartTurnOn)
-            {
-                startLamp.TurnOff();
-            }
-            yield return new WaitForSeconds(flashBetweenTime);
+        }
 
-            if (hasInsertTurnOn)
+        // START点灯
+        public void TurnOnStartLamp()
+        {
+            isStartTurnOn = true;
+            if (!hasAnimation)
             {
-                insertLamp.TurnOff();
+                StartCoroutine(nameof(FlashInsertAndStart));
             }
-            if (hasStartTurnOn)
+        }
+
+        // INSERT, START消灯
+        public void TurnOffInsertAndStart()
+        {
+            isInsertTurnOn = false;
+            isStartTurnOn = false;
+            hasAnimation = false;
+            StopCoroutine(nameof(FlashInsertAndStart));
+
+            startLamp.TurnOff();
+            insertLamp.TurnOff();
+        }
+
+        // WAIT点灯
+        public void TurnOnWaitLamp() => waitLamp.TurnOn();
+        // WAIT消灯
+        public void TurnOffWaitLamp() => waitLamp.TurnOff();
+
+        // REPLAY点灯
+        public void TurnOnReplayLamp() => replayLamp.TurnOn();
+        // REPLAY消灯
+        public void TurnOffReplayLamp() => replayLamp.TurnOff();
+
+        // INSERTとSTARTを点滅させる時の処理
+        private IEnumerator FlashInsertAndStart()
+        {
+            hasAnimation = true;
+            while (isInsertTurnOn || isStartTurnOn)
             {
-                startLamp.TurnOn();
+                if (isInsertTurnOn)
+                {
+                    insertLamp.TurnOn();
+                }
+                if (isStartTurnOn)
+                {
+                    startLamp.TurnOff();
+                }
+                yield return new WaitForSeconds(flashBetweenTime);
+
+                if (isInsertTurnOn)
+                {
+                    insertLamp.TurnOff();
+                }
+                if (isStartTurnOn)
+                {
+                    startLamp.TurnOn();
+                }
+                yield return new WaitForSeconds(flashBetweenTime);
             }
-            yield return new WaitForSeconds(flashBetweenTime);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace ReelSpinGame_State.InsertState
             gM.Medal.HasMedalInsertEvent -= OnMedalInserted;
 
             // INSERT, STARTランプの消灯
-            gM.Status.TurnOffInsertAndStartlamp();
+            gM.Status.TurnOffInsertAndStart();
             // メダル処理を終了させる
             gM.Medal.FinishMedalInsert();
 

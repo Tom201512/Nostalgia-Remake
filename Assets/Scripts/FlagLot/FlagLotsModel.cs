@@ -28,8 +28,8 @@ namespace ReelSpinGame_Lots
     // フラグの処理
     public class FlagLotsModel
 	{
-        const int MaxFlagLots = 16384;                                      // 最大フラグ数
-        const int SeekNum = 6;                                              // テーブルシーク位置
+        const int MaxFlagLots = 16384;      // 最大フラグ数
+        const int SeekNum = 6;              // テーブルシーク位置
 
         public FlagID CurrentFlag { get; set; }                             // 現在のフラグ
         public FlagLotTable CurrentTable { get; set; }                      // 抽選テーブル
@@ -42,7 +42,8 @@ namespace ReelSpinGame_Lots
             {
                 case FlagLotTable.Normal:
 
-                    FlagID[] lotResultNormal = new FlagID[]
+                    // 抽選順の作成
+                    FlagID[] lotOrder = new FlagID[]
                     {
                         FlagID.FlagBig,
                         FlagID.FlagReg,
@@ -56,19 +57,20 @@ namespace ReelSpinGame_Lots
                     // カウンタが0より少ないなら高確率
                     if (counter < 0)
                     {
-                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalBTable, lotResultNormal);
+                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalBTable, lotOrder);
                     }
                     // カウンタが0以上の場合は低確率
                     else
                     {
-                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalATable, lotResultNormal);
+                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalATable, lotOrder);
                     }
 
                     break;
 
                 case FlagLotTable.BigBonus:
 
-                    FlagID[] lotResultBig = new FlagID[]
+                    // 抽選順の作成
+                    FlagID[] lotOrderBig = new FlagID[]
                     {
                          FlagID.FlagCherry2,
                          FlagID.FlagCherry4,
@@ -77,7 +79,7 @@ namespace ReelSpinGame_Lots
                          FlagID.FlagBell,
                     };
 
-                    CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.BigTable, lotResultBig);
+                    CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.BigTable, lotOrderBig);
                     break;
 
                 case FlagLotTable.JacGame:
@@ -91,25 +93,24 @@ namespace ReelSpinGame_Lots
         }
 
         // テーブル、設定値とベット枚数からフラグ判定
-        FlagID CheckResultByTable(int setting, int betAmount, FlagDataSets flagTable, FlagID[] lotResult)
+        FlagID CheckResultByTable(int setting, int betAmount, FlagDataSets flagTable, FlagID[] lotOrder)
         {
-            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選)
             int flagCheckNum = 0;
             int flag = GetFlag();
 
             // ベット枚数に合わせたテーブルを参照するようにする
             int offset = SeekNum * (betAmount - 1);
 
-            // 各フラグごとに
+            // 各フラグごとに抽選
             int index = 0;
             foreach (float f in flagTable.FlagDataBySettings[setting + offset - 1].FlagTable)
             {
-                //各役ごとに抽選
                 flagCheckNum += Mathf.RoundToInt(MaxFlagLots / f);
 
+                // 16384/小役確率で求め、これより少ないフラグを引いたら当選とする
                 if (flag < flagCheckNum)
                 {
-                    return lotResult[index];
+                    return lotOrder[index];
                 }
                 index += 1;
             }

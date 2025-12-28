@@ -2,24 +2,19 @@ using UnityEngine;
 
 namespace ReelSpinGame_Lamps
 {
+    // 7セグ
     public class SegmentLamp : MonoBehaviour
     {
-        // 7セグ
+        enum LampID { A, B, C, D, E, F, G }        // 各ランプの対応位置
 
-        // const
-        // 各ランプの対応位置
-        public enum LampID { A, B, C, D, E, F, G }
+        private LampComponent[] lamps;        // 各セグメントのランプ
 
-        // var 
-        // 各セグメントのランプ
-        private LampComponent[] lamps;
-
-        // func
-        private void Awake()
+        void Awake()
         {
             lamps = GetComponentsInChildren<LampComponent>();
         }
 
+        // 全て点灯
         public void TurnOffAll()
         {
             foreach (LampComponent lamp in lamps)
@@ -28,10 +23,11 @@ namespace ReelSpinGame_Lamps
             }
         }
 
+        // 数字に合わせたランプを点灯
         public void TurnOnLampByNumber(int num)
         {
+            TurnOffAll();
             LampComponent[] turnOnLamps;
-            LampComponent[] turnOffLamps;
 
             // 数字に合わせて点灯、消灯させるセグの配列を作る
             // 0(a,b,c,d,e,f)
@@ -47,12 +43,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.F],
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.G]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
             // 1(b,c)
@@ -64,16 +55,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.C],
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.A],
-                    lamps[(int)LampID.D],
-                    lamps[(int)LampID.E],
-                    lamps[(int)LampID.F],
-                    lamps[(int)LampID.G]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -89,13 +71,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G]
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.C],
-                    lamps[(int)LampID.F]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -111,13 +87,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G]
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.E],
-                    lamps[(int)LampID.F]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -132,14 +102,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G]
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.A],
-                    lamps[(int)LampID.D],
-                    lamps[(int)LampID.E]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -155,13 +118,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G]
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.B],
-                    lamps[(int)LampID.E]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -178,12 +135,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G]
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                lamps[(int)LampID.B]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -197,15 +149,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.C]
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.D],
-                    lamps[(int)LampID.E],
-                    lamps[(int)LampID.F],
-                    lamps[(int)LampID.G]
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -223,12 +167,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G],
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
@@ -245,43 +184,29 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.G],
                 };
 
-                turnOffLamps = new LampComponent[]
-                {
-                    lamps[(int)LampID.E],
-                };
-
-                TurnOnLamps(turnOnLamps, turnOffLamps);
+                TurnOnLamps(turnOnLamps);
                 return;
             }
 
-            ////Debug.Log("Invalid Number");
             TurnOffAll();
         }
 
         // ハイフンを表示
         public void TurnOnBar()
         {
+            TurnOffAll();
             LampComponent[] turnOnLamps = new LampComponent[]
             {
                 lamps[(int)LampID.G]
             };
 
-            LampComponent[] turnOffLamps = new LampComponent[]
-            {
-                lamps[(int)LampID.B],
-                lamps[(int)LampID.C],
-                lamps[(int)LampID.D],
-                lamps[(int)LampID.E],
-                lamps[(int)LampID.A],
-                lamps[(int)LampID.F],
-            };
-
-            TurnOnLamps(turnOnLamps, turnOffLamps);
+            TurnOnLamps(turnOnLamps);
         }
 
         // Jを表示(JACGAME中)
         public void TurnOnJAC()
         {
+            TurnOffAll();
             LampComponent[] turnOnLamps = new LampComponent[]
             {
                 lamps[(int)LampID.B],
@@ -290,25 +215,15 @@ namespace ReelSpinGame_Lamps
                 lamps[(int)LampID.E],
             };
 
-            LampComponent[] turnOffLamps = new LampComponent[]
-            {
-                lamps[(int)LampID.A],
-                lamps[(int)LampID.F],
-                lamps[(int)LampID.G],
-            };
-
-            TurnOnLamps(turnOnLamps, turnOffLamps);
+            TurnOnLamps(turnOnLamps);
         }
 
-        private void TurnOnLamps(LampComponent[] turnOnLamps, LampComponent[] turnOffLamps)
+        // 指定箇所のランプを点灯
+        private void TurnOnLamps(LampComponent[] turnOnLamps)
         {
             foreach (LampComponent lamp in turnOnLamps)
             {
                 lamp.TurnOn();
-            }
-            foreach (LampComponent lamp in turnOffLamps)
-            {
-                lamp.TurnOff();
             }
         }
     }

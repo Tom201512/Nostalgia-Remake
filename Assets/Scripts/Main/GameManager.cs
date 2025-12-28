@@ -1,6 +1,7 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
+using ReelSpinGame_Lamps;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Option;
@@ -12,7 +13,6 @@ using ReelSpinGame_System;
 using ReelSpinGame_UI.Player;
 using System;
 using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoManager;
 
 // ÉQÅ[ÉÄÇÃä«óù
 public class GameManager : MonoBehaviour

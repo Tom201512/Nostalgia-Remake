@@ -1,6 +1,7 @@
 using ReelSpinGame_Interface;
 using ReelSpinGame_Medal.Segment;
 using ReelSpinGame_Save.Medal;
+using ReelSpinGame_Lamps;
 using System;
 using System.Collections;
 using UnityEngine;
