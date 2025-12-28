@@ -1361,7 +1361,7 @@ GameObject:
   - component: {fileID: 122881646}
   - component: {fileID: 122881648}
   m_Layer: 5
-  m_Name: Medal3B
+  m_Name: Medal3Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11353,7 +11353,7 @@ GameObject:
   - component: {fileID: 999787687}
   - component: {fileID: 999787689}
   m_Layer: 5
-  m_Name: Medal2B
+  m_Name: Medal2Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14153,8 +14153,8 @@ RectTransform:
   m_Children:
   - {fileID: 1229648393}
   - {fileID: 1454763733}
-  - {fileID: 1448495709}
   - {fileID: 999787686}
+  - {fileID: 1448495709}
   - {fileID: 122881645}
   m_Father: {fileID: 997782537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14176,10 +14176,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   medal1: {fileID: 1229648396}
-  medal2A: {fileID: 1454763736}
-  medal2B: {fileID: 999787689}
-  medal3A: {fileID: 1448495712}
-  medal3B: {fileID: 122881648}
+  medal2Up: {fileID: 1454763736}
+  medal2Down: {fileID: 999787689}
+  medal3Up: {fileID: 1448495712}
+  medal3Down: {fileID: 122881648}
 --- !u!1001 &1338181556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15812,7 +15812,7 @@ GameObject:
   - component: {fileID: 1448495710}
   - component: {fileID: 1448495712}
   m_Layer: 5
-  m_Name: Medal3A
+  m_Name: Medal3Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15903,7 +15903,7 @@ GameObject:
   - component: {fileID: 1454763734}
   - component: {fileID: 1454763736}
   m_Layer: 5
-  m_Name: Medal2A
+  m_Name: Medal2Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
