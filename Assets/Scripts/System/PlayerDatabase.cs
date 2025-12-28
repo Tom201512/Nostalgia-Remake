@@ -1,10 +1,8 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Datas.Analytics;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Save.Player.ReelSpinGame_System;
-using ReelSpinGame_Datas.Analytics;
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_System
@@ -50,7 +48,6 @@ namespace ReelSpinGame_System
             PlayerAnalyticsData = new AnalyticsData();
         }
 
-        // func
         // セーブデータにする
         public PlayerSave MakeSaveData()
         {

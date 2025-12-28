@@ -33,7 +33,7 @@ public class UIMain : MonoBehaviour
     // Å‘åŒö–ñ”‚ğ‹‚ß‚é
     private int GetGCD(int x, int y)
     {
-        if(y == 0)
+        if (y == 0)
         {
             return x;
         }

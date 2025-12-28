@@ -8,13 +8,9 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Option
 {
+    // オプションマネージャー
     public class OptionManager : MonoBehaviour
     {
-        // オプションマネージャー
-
-        // const
-
-        // var
         [SerializeField] private ButtonComponent openButton; // メニュー開閉ボタン
         [SerializeField] private MenuManager menuBarUI; // メニューバーのUI
 
@@ -35,7 +31,7 @@ namespace ReelSpinGame_Option
         public delegate void OtherSettingChanged();
         public event OtherSettingChanged OtherSettingChangedEvent;
 
-        private void Awake()
+        void Awake()
         {
             hasOptionScreen = false;
             hasOptionMode = false;
@@ -48,14 +44,14 @@ namespace ReelSpinGame_Option
             autoPlaySettingScreen.SettingChangedEvent += OnAutoSettingChanged;
         }
 
-        private void Start()
+        void Start()
         {
             // ボタン有効化設定を変更
             openButton.ToggleInteractive(true);
             menuBarUI.gameObject.SetActive(false);
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             // イベント登録解除
             openButton.ButtonPushedEvent -= ToggleOptionScreen;
@@ -64,11 +60,10 @@ namespace ReelSpinGame_Option
             autoPlaySettingScreen.SettingChangedEvent -= OnAutoSettingChanged;
         }
 
-        // func
         // オプション画面を開く
         public void ToggleOptionScreen(int signalID)
         {
-            if(openButton.CanInteractable)
+            if (openButton.CanInteractable)
             {
                 Debug.Log("option clicked");
                 menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);

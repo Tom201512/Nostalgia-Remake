@@ -8,14 +8,12 @@ namespace ReelSpinGame_Option.MenuContent
     // オート設定画面
     public class AutoPlaySettingScreen : MonoBehaviour, IOptionScreenBase
     {
-        // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract { get; set; }
-
-        // var
         // 各種操作
         [SerializeField] AutoSettingManager autoSettingManager; // オート設定変更マネージャー
         [SerializeField] ButtonComponent closeButton;           // クローズボタン
         [SerializeField] ButtonComponent resetButton;           // リセットボタン
+
+        public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
         // 設定が変更された時のイベント
         public delegate void SettingChanged();
@@ -25,8 +23,7 @@ namespace ReelSpinGame_Option.MenuContent
         public delegate void ClosedScreen();
         public event ClosedScreen ClosedScreenEvent;
 
-        // func
-        private void Awake()
+        void Awake()
         {
             // イベント登録
             closeButton.ButtonPushedEvent += OnClosedPressed;
@@ -34,7 +31,7 @@ namespace ReelSpinGame_Option.MenuContent
             resetButton.ButtonPushedEvent += OnResetButtonPressed;
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             // イベント解除
             closeButton.ButtonPushedEvent -= OnClosedPressed;

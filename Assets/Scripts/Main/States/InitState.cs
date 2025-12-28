@@ -1,19 +1,17 @@
 ﻿using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
-using static ReelSpinGame_Bonus.BonusSystemData;
 using ReelSpinGame_Lots;
+using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
 
 namespace ReelSpinGame_State.LotsState
 {
+    // 初期化ステート
     public class InitState : IGameStatement
     {
-        // var
-        // このゲームの状態
-        public MainGameFlow.GameStates State { get; }
+        public MainGameFlow.GameStates State { get; }   // ステート名
 
-        // ゲームマネージャ
-        private GameManager gM;
+        private GameManager gM;         // ゲームマネージャ
 
         // コンストラクタ
         public InitState(GameManager gameManager)
@@ -58,7 +56,7 @@ namespace ReelSpinGame_State.LotsState
         // リプレイ状態の反映
         void ApplyReplay()
         {
-            if(gM.Medal.GetHasReplay())
+            if (gM.Medal.GetHasReplay())
             {
                 gM.Medal.EnableReplay();
             }

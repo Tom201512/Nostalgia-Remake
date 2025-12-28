@@ -1,30 +1,21 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
-using UnityEngine;
-using static ReelSpinGame_AutoPlay.AutoManager;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_State.LotsState
 {
+    // 演出ステート
     public class EffectState : IGameStatement
     {
-        // var
-        // このゲームの状態
-        public MainGameFlow.GameStates State { get; }
+        public MainGameFlow.GameStates State { get; }   // ステート名
+        private GameManager gM;     // ゲームマネージャー
 
-        // ゲームマネージャ
-        private GameManager gM;
-        
-        // 払い出しを始めたか
-        bool startPayout;
-        // 払い出しが終わったか
-        bool finishPayout;
+        private bool startPayout;       // 払い出しを始めたか
+        private bool finishPayout;      // 払い出しが終わったか
 
-        // コンストラクタ
         public EffectState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.Effect;
             gM = gameManager;
             startPayout = false;
             finishPayout = false;
@@ -59,13 +50,13 @@ namespace ReelSpinGame_State.LotsState
             // UI更新
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
             // 払い出し前の演出を待つ
-            if(!gM.Effect.GetHasBeforeEffectActivating())
+            if (!gM.Effect.GetHasBeforeEffectActivating())
             {
                 // 払い出し開始
-                if(!startPayout && !finishPayout)
+                if (!startPayout && !finishPayout)
                 {
                     gM.Medal.ChangeSegmentUpdate(true);
-                    PayoutEffectCondition condition = 
+                    PayoutEffectCondition condition =
                         new PayoutEffectCondition(gM.Payout.LastPayoutResult, gM.Reel.GetLastStoppedReelData());
 
                     condition.Flag = gM.Lots.GetCurrentFlag();
@@ -111,7 +102,7 @@ namespace ReelSpinGame_State.LotsState
 
             startPayout = false;
             finishPayout = false;
-            if(gM.Bonus.GetHasBonusFinished())
+            if (gM.Bonus.GetHasBonusFinished())
             {
                 gM.Bonus.ResetBigColor();
             }

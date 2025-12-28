@@ -3,20 +3,19 @@ using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_State.PlayingState
 {
+    // 遊技中ステート
     public class PlayingState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }       // このゲームの状態
+        public MainGameFlow.GameStates State { get; }       // ステート名
         private GameManager gM;                             // ゲームマネージャ
 
         private bool hasInput;                              // キー入力があったか
 
-        // コンストラクタ
         public PlayingState(GameManager gameManager)
         {
             hasInput = false;
@@ -27,13 +26,13 @@ namespace ReelSpinGame_State.PlayingState
         public void StateStart()
         {
             // 強制役でランダム数値が使われていれば使う
-            if(gM.Option.GetForceFlagSelectID() != -1 && gM.Option.GetForceFlagRandomID() != 0)
+            if (gM.Option.GetForceFlagSelectID() != -1 && gM.Option.GetForceFlagRandomID() != 0)
             {
                 gM.Reel.SetForceRandomValue(gM.Option.GetForceFlagRandomID());
             }
 
             // 強制フラグ設定のリセット
-            gM.Option.ResetForceFlagSetting(); 
+            gM.Option.ResetForceFlagSetting();
             // リール始動
             gM.Reel.StartReels(gM.Bonus.GetCurrentBonusStatus(), gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
             // ボーナス中のランプ処理
@@ -55,12 +54,12 @@ namespace ReelSpinGame_State.PlayingState
         public void StateUpdate()
         {
             // オートがある場合
-            if(gM.Auto.HasAuto)
+            if (gM.Auto.HasAuto)
             {
                 AutoControl();
             }
             // 強制停止が発動した場合
-            else if(gM.Reel.HasForceStop())
+            else if (gM.Reel.HasForceStop())
             {
                 ReelForcedStop();
             }
@@ -192,7 +191,7 @@ namespace ReelSpinGame_State.PlayingState
             // 超高速オートなら即座に止めて払い出し状態へ
             if (gM.Auto.CurrentSpeed == AutoSpeedName.Quick)
             {
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.First], 
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.First],
                     gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.First]]);
                 StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.Second],
                     gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.Second]]);

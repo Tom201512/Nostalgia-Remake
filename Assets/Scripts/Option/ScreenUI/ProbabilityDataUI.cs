@@ -1,19 +1,14 @@
 using ReelSpinGame_System;
-using System;
 using TMPro;
 using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuContent
 {
+    // 確率などの情報
     public class ProbabilityDataUI : MonoBehaviour
     {
-        // 確率などの情報
-
-        // データ部分
-        // 通常時
-        [SerializeField] TextMeshProUGUI normalDataTextUI;
-        // BIG時
-        [SerializeField] TextMeshProUGUI bigDataTextUI;
+        [SerializeField] TextMeshProUGUI normalDataTextUI;      // 通常時
+        [SerializeField] TextMeshProUGUI bigDataTextUI;         // BIG時
 
         public void UpdateText(PlayerDatabase player)
         {

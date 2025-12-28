@@ -1,5 +1,3 @@
-using ReelSpinGame_Reels;
-using System.Collections;
 using System.Collections.Generic;
 using static ReelSpinGame_Reels.ReelLogicManager;
 
@@ -10,14 +8,14 @@ namespace ReelSpinGame_Save.Database.Option
     {
         // const
         // var
-        public int MusicVolumeSetting {get; private set;}           // BGM音量 (0~7)
-        public int SoundVolumeSetting {get; private set;}           // SE音量 (0~7)
-        public bool ShowMiniReelSetting {get; private set;}         // ミニリール表示
-        public List<int> AssistMarkerPos {get; private set;}        // アシストマーカー位置
-        public bool HasWaitCut {get; private set;}                  // ウェイトカット
-        public bool HasDelayDisplay { get; private set;}            // スベリコマ表示設定
+        public int MusicVolumeSetting { get; private set; }           // BGM音量 (0~7)
+        public int SoundVolumeSetting { get; private set; }           // SE音量 (0~7)
+        public bool ShowMiniReelSetting { get; private set; }         // ミニリール表示
+        public List<int> AssistMarkerPos { get; private set; }        // アシストマーカー位置
+        public bool HasWaitCut { get; private set; }                  // ウェイトカット
+        public bool HasDelayDisplay { get; private set; }            // スベリコマ表示設定
 
-        public OtherOptionData() 
+        public OtherOptionData()
         {
             MusicVolumeSetting = 5;
             SoundVolumeSetting = 5;
@@ -32,9 +30,7 @@ namespace ReelSpinGame_Save.Database.Option
             HasDelayDisplay = false;
         }
 
-        // func(public)
         // 各種数値設定
-
         public void SetMusicVolume(int volume) => MusicVolumeSetting = volume;
         public void SetSoundVolume(int volume) => SoundVolumeSetting = volume;
         public void SetMiniReel(bool isEnabled) => ShowMiniReelSetting = isEnabled;

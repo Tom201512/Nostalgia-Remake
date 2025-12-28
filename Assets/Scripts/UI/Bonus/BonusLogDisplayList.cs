@@ -1,4 +1,3 @@
-using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_UI.Bonus;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,17 +27,6 @@ public class BonusLogDisplayList : MonoBehaviour
         bonusLogDisplays = new List<BonusLogDisplay>();
     }
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    // func(public)
     // 初期化
     public void InitializeData()
     {
@@ -62,7 +50,6 @@ public class BonusLogDisplayList : MonoBehaviour
         bonusLogDisplays.Add(bonusData);
     }
 
-    // func(private)
     // 選択リストの全解除
     void ResetSelection()
     {
@@ -72,7 +59,7 @@ public class BonusLogDisplayList : MonoBehaviour
             Debug.Log("Deselected:" + bonus.BonusIndexNumber);
         }
     }
-    
+
     // ボーナス履歴を押したときのイベント
     void OnBonusLogPressed(int indexNum)
     {

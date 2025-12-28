@@ -6,7 +6,7 @@ namespace ReelSpinGame_Effect.Data.Condition
     // レバーオン時演出の条件
     public class LeverOnEffectCondition
     {
-        public FlagID Flag {  get; set; }                   // フラグ
+        public FlagID Flag { get; set; }                   // フラグ
         public BonusTypeID HoldingBonus { get; set; }       // ストック中のボーナス 
         public BonusStatus BonusStatus { get; set; }        // ボーナス中の状態 
 

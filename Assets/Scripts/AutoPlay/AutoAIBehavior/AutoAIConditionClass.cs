@@ -13,8 +13,8 @@ namespace ReelSpinGame_AutoPlay.AI
         public BonusStatus BonusStatus { get; set; }    // ボーナス状態
         public BonusTypeID HoldingBonus { get; set; }   // ストック中のボーナス
         public int BigChanceGames { get; set; }         // 残りビッグチャンスゲーム数
-        public int RemainingJacIn {  get; set; }        // 残りJAC-IN
-        public int BetAmount {  get; set; }             // ベット枚数
+        public int RemainingJacIn { get; set; }        // 残りJAC-IN
+        public int BetAmount { get; set; }             // ベット枚数
 
         public AutoAIConditionClass()
         {

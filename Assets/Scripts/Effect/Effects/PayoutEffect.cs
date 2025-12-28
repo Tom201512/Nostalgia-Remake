@@ -1,10 +1,10 @@
 using ReelSpinGame_Effect.Data.Condition;
+using ReelSpinGame_Lots;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using ReelSpinGame_Lots;
 
 namespace ReelSpinGame_Effect.Data
 {
@@ -68,10 +68,10 @@ namespace ReelSpinGame_Effect.Data
             }
 
             // 通常時のリプレイならフラッシュとSEを再生
-            else if (payoutEffectCondition.PayoutResult.IsReplayOrJacIn && 
+            else if (payoutEffectCondition.PayoutResult.IsReplayOrJacIn &&
                 payoutEffectCondition.BonusStatus == BonusStatus.BonusNone)
             {
-                flash.StartPayoutFlash(ReplayWaitTime, 
+                flash.StartPayoutFlash(ReplayWaitTime,
                     payoutEffectCondition.PayoutResult, payoutEffectCondition.LastStoppedReel);
                 sound.PlaySE(sound.SoundDB.SE.Replay);
             }

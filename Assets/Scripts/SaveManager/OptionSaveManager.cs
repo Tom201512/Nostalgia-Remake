@@ -9,19 +9,12 @@ namespace ReelSpinGame_System
     // オプションのセーブマネージャー
     public class OptionSaveManager : ISaveManage
     {
-        // const
+        public OptionSave CurrentSave { get; private set; }        // 現在のセーブデータ
 
-        // var
-        // 現在のセーブデータ
-        public OptionSave CurrentSave { get; private set; }
-
-        // コンストラクタ
         public OptionSaveManager()
         {
             CurrentSave = new OptionSave();
         }
-
-        // func
 
         // バッファ作成
         public List<int> GenerateDataBuffer()

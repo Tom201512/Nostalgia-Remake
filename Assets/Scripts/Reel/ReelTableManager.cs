@@ -29,12 +29,11 @@ namespace ReelSpinGame_Reels.Table
             UsedReelTableTID = new int[ReelAmount] { 0, 0, 0 };
             UsedReelTableCID = new int[ReelAmount] { 0, 0, 0 };
 
-            PushedReelIdOrder = new ReelID[ReelAmount] {ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
+            PushedReelIdOrder = new ReelID[ReelAmount] { ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
             PushedReelTidOrder = new int[ReelAmount] { 0, 0, 0 };
             PushedReelCidOrder = new int[ReelAmount] { 0, 0, 0 };
         }
 
-        // func
         // スベリコマを得る
         public int GetDelay(int stoppedCount, int pushedPos, ReelDelayTableData reelDatabase,
             FlagID flagID, ReelID pushReelID, BonusTypeID bonus, int bet, int random)

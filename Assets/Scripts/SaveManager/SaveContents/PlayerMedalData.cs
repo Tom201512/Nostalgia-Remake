@@ -1,13 +1,13 @@
 ﻿using ReelSpinGame_Interface;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System;
 
 namespace ReelSpinGame_Datas
 {
     // プレイヤーのメダル情報
-    public class PlayerMedalData: ISavable
+    public class PlayerMedalData : ISavable
     {
         // const
         // プレイヤー初期メダル枚数
@@ -32,11 +32,10 @@ namespace ReelSpinGame_Datas
             MedalSlumpGraph = new List<int>();
         }
 
-        // func
         // データからセットする
         public void SetData(ISavable playerMedalData)
         {
-            if(playerMedalData.GetType() == typeof(PlayerMedalData))
+            if (playerMedalData.GetType() == typeof(PlayerMedalData))
             {
                 PlayerMedalData data = playerMedalData as PlayerMedalData;
                 CurrentPlayerMedal = data.CurrentPlayerMedal;

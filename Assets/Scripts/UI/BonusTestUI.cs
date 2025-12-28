@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using ReelSpinGame_Bonus;
+using TMPro;
+using UnityEngine;
 
 public class BonusTestUI : UIBaseClass
 {
@@ -29,11 +29,11 @@ public class BonusTestUI : UIBaseClass
 
         // JACíÜÇÃèÛë‘
         buffer += "JAC_Games:" + bonusManager.GetRemainingJacGames() + "\n";
-        buffer += "JAC_Hits:" + bonusManager.GetRemainingJacHits()+ "\n" + "\n";
+        buffer += "JAC_Hits:" + bonusManager.GetRemainingJacHits() + "\n" + "\n";
 
         // älìæñáêîï\é¶
-        buffer += "TotalPayout:" + bonusManager.GetCurrentBonusPayout()+ "\n";
-        buffer += "ZonePayout:" + bonusManager.GetCurrentZonePayout()+ "\n";
+        buffer += "TotalPayout:" + bonusManager.GetCurrentBonusPayout() + "\n";
+        buffer += "ZonePayout:" + bonusManager.GetCurrentZonePayout() + "\n";
         buffer += "HasZone:" + bonusManager.GetHasZone() + "\n";
         buffer += "LastZone:" + bonusManager.GetLastZonePayout() + "\n";
 

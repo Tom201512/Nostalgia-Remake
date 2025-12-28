@@ -7,15 +7,12 @@ using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_State.PayoutState
 {
+    // 払い出しステート
     public class PayoutState : IGameStatement
     {
-        // const
+        public MainGameFlow.GameStates State { get; }   // ステート名
+        private GameManager gM;         // ゲームマネージャ
 
-        // var
-        public MainGameFlow.GameStates State { get; }       // このゲームの状態
-        private GameManager gM;                             // ゲームマネージャ
-
-        // コンストラクタ
         public PayoutState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Payout;
@@ -34,7 +31,7 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 高速オートが解除されたかチェック
-            gM.Auto.CheckFastAutoCancelled(); 
+            gM.Auto.CheckFastAutoCancelled();
 
             // 払い出し確認
             gM.Payout.CheckPayouts(gM.Medal.GetLastBetAmount(), gM.Reel.GetLastStoppedReelData());
@@ -69,12 +66,12 @@ namespace ReelSpinGame_State.PayoutState
             gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
 
             // 小役入賞回数の記録(払い出しがあれば)
-            if(gM.Payout.LastPayoutResult.Payout > 0 || gM.Medal.GetHasReplay())
+            if (gM.Payout.LastPayoutResult.Payout > 0 || gM.Medal.GetHasReplay())
             {
                 gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
             }
             // JACハズシの記録
-            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
+            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
             {
                 gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
             }
@@ -167,7 +164,7 @@ namespace ReelSpinGame_State.PayoutState
             // 15枚の払い出しを記録
             gM.Bonus.ChangeBonusPayout(gM.Payout.LastPayoutResult.Payout);
             // 連チャン区間中なら枚数記録
-            if(gM.Bonus.GetHasZone())
+            if (gM.Bonus.GetHasZone())
             {
                 gM.Bonus.ChangeZonePayout(gM.Payout.LastPayoutResult.Payout);
             }
@@ -200,7 +197,7 @@ namespace ReelSpinGame_State.PayoutState
         void CheckGameModeStatusChange()
         {
             // 通常時
-            if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 // ボーナスがあればボーナス開始
                 if (gM.Payout.LastPayoutResult.BonusID != (int)BonusTypeID.BonusNone)
@@ -233,7 +230,7 @@ namespace ReelSpinGame_State.PayoutState
 
                 }
                 // オートがあり終了条件がボーナス終了時の場合はここで判定する
-                if(gM.Auto.HasAuto)
+                if (gM.Auto.HasAuto)
                 {
                     gM.Auto.CheckAutoEndByBonusFinish((int)gM.Bonus.GetCurrentBonusStatus());
                 }

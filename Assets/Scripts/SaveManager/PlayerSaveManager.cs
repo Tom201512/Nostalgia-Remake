@@ -25,8 +25,6 @@ namespace ReelSpinGame_System
             CurrentSave = new SaveDatabase();
         }
 
-        // func
-
         // バッファ作成
         public List<int> GenerateDataBuffer()
         {

@@ -56,7 +56,7 @@ namespace ReelSpinGame_Sound
         // ÉãÅ[Évçƒê∂
         public void PlayLoopAudio(AudioClip soundSource)
         {
-            if(!HasLockPlaying)
+            if (!HasLockPlaying)
             {
                 audioSource.loop = true;
                 audioSource.clip = soundSource;

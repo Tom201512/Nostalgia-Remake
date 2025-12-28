@@ -5,18 +5,15 @@ using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.Button
 {
-    // チェックボックス用
+    // チェックボックスコンポーネント
     public class CheckBoxComponent : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
     {
-        // const
-
-        // var
         [SerializeField] private Sprite unselectedImage; // 非選択時のアイコン
         [SerializeField] private Sprite selectedImage; // 選択時のアイコン
 
-        [SerializeField] Image checkBoxImage; // チェックボックスのアイコン画像
-        [SerializeField] private TextMeshProUGUI text; // テキスト
-        [SerializeField] int signalID; // 送る信号番号
+        [SerializeField] Image checkBoxImage;           // チェックボックスのアイコン画像
+        [SerializeField] private TextMeshProUGUI text;  // テキスト
+        [SerializeField] int signalID;                  // 送る信号番号
 
         public bool CanInteractable { get; private set; } // ボタンが押せる状態か
         public bool IsSelected { get; private set; } // 選択状態にあるか
@@ -47,7 +44,7 @@ namespace ReelSpinGame_Option.Button
         {
             if (CanInteractable)
             {
-                if(IsSelected)
+                if (IsSelected)
                 {
                     ChangeCheckBoxTextColor(new Color(1, 1, 0, 1f));
                 }
@@ -189,7 +186,7 @@ namespace ReelSpinGame_Option.Button
         // 画像の更新
         void UpdateCheckBoxIcon()
         {
-            if(IsSelected)
+            if (IsSelected)
             {
                 checkBoxImage.sprite = selectedImage;
             }

@@ -1,10 +1,8 @@
-using ReelSpinGame_Datas.Reels;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Datas
 {
@@ -166,7 +164,7 @@ namespace ReelSpinGame_Datas
             using StreamReader second = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "2nd.csv"));
             using StreamReader third = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "3rd.csv"));
 
-            reelDatabase.SetReelConditions(ReelDatabaseGen.MakeReelFirstData(first), ReelDatabaseGen.MakeReelSecondData(second),ReelDatabaseGen.MakeReelThirdData(third));
+            reelDatabase.SetReelConditions(ReelDatabaseGen.MakeReelFirstData(first), ReelDatabaseGen.MakeReelSecondData(second), ReelDatabaseGen.MakeReelThirdData(third));
 
             // ディレイテーブル作成
             using StreamReader table = new StreamReader(Path.Combine(DataPath, reelName, ReelFileStartPath + reelName + "Table.csv"));

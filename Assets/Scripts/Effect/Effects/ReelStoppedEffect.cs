@@ -22,7 +22,7 @@ namespace ReelSpinGame_Effect.Data
             sound.PlaySE(sound.SoundDB.SE.Stop);
 
             // 通常時でBIG図柄がテンパイしていたらリーチ音を再生
-            if(reelStoppedEffectCondition.StoppedReelCount == 2 &&
+            if (reelStoppedEffectCondition.StoppedReelCount == 2 &&
                 reelStoppedEffectCondition.BonusStatus == BonusStatus.BonusNone)
             {
                 switch (reelStoppedEffectCondition.RiichiBigColor)

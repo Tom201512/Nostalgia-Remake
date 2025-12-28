@@ -15,7 +15,6 @@ namespace ReelSpinGame_Lots
             Counter = 0;
         }
 
-        // func
         // カウンタ値のセット
         public void SetCounter(int value) => Counter = value;
 
@@ -29,13 +28,13 @@ namespace ReelSpinGame_Lots
         public void DecreaseCounter(int settingNum, int betAmount)
         {
             // 設定5
-            if(settingNum == 5)
+            if (settingNum == 5)
             {
                 Counter -= betAmount * CounterIncrease5;
             }
 
             // 設定6
-            else if(settingNum == 6)
+            else if (settingNum == 6)
             {
                 Counter -= betAmount * CounterIncrease6;
             }

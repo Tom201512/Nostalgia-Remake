@@ -1,30 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ReelSpinGame_UI.Graph
 {
+    // グラフを描画するスクリプト
     public class GraphDrawer : MonoBehaviour
     {
-        // グラフを描画するスクリプト
-
-        // const
-
-        // var
         // 線描画コンポーネント
         private LineRenderer lineRenderer;
 
         // 座標位置
         private List<Vector3> positions;
 
-        private void Awake()
+        void Awake()
         {
             lineRenderer = GetComponent<LineRenderer>();
             positions = new List<Vector3>();
         }
-
-        // func
 
         // 描画のリセット
         public void ResetDraw()
@@ -44,7 +36,7 @@ namespace ReelSpinGame_UI.Graph
         // 描画を行う
         public void StartDraw()
         {
-            foreach(Vector3 position in positions)
+            foreach (Vector3 position in positions)
             {
                 Debug.Log("Position X:" + position.x + " Y:" + position.y);
             }

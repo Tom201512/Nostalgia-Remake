@@ -1,4 +1,5 @@
 ﻿using ReelSpinGame_Interface;
+using ReelSpinGame_Lamps;
 using ReelSpinGame_Save.Bonus;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -8,18 +9,16 @@ namespace ReelSpinGame_Bonus
     // ボーナス処理
     public class BonusManager : MonoBehaviour, IHasSave<BonusSave>
     {
-        // var
         [SerializeField] private BonusSevenSegment bonusSegments;        // ボーナス状態のセグメント
 
         private BonusSystemData data;        // ボーナス処理のデータ
 
-        // func
-        private void Awake()
+        void Awake()
         {
             data = new BonusSystemData();
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             StopAllCoroutines();
         }
@@ -148,7 +147,7 @@ namespace ReelSpinGame_Bonus
         public void TurnOffSegments()
         {
             bonusSegments.TurnOffAllSegments();
-            if(bonusSegments.IsDisplaying)
+            if (bonusSegments.IsDisplaying)
             {
                 bonusSegments.EndDisplayBonusPayout();
             }

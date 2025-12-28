@@ -11,7 +11,7 @@ namespace ReelSpinGame_Datas
     {
         // var
         // 各払い出しラインのデータ
-        [SerializeField]private List<PayoutLineData> payoutLineDatas;
+        [SerializeField] private List<PayoutLineData> payoutLineDatas;
 
         // 各種払い出し構成のテーブル
         // 通常時
@@ -21,12 +21,11 @@ namespace ReelSpinGame_Datas
         // JACゲーム中
         [SerializeField] private List<PayoutResultData> jacPayoutDatas;
 
-        public List<PayoutLineData> PayoutLines { get { return payoutLineDatas; }}
+        public List<PayoutLineData> PayoutLines { get { return payoutLineDatas; } }
         public List<PayoutResultData> NormalPayoutDatas { get { return normalPayoutDatas; } }
-        public List<PayoutResultData> BigPayoutDatas { get { return bigPayoutDatas; }  }
+        public List<PayoutResultData> BigPayoutDatas { get { return bigPayoutDatas; } }
         public List<PayoutResultData> JacPayoutDatas { get { return jacPayoutDatas; } }
 
-        // func
         public void SetPayoutLines(List<PayoutLineData> payoutLines) => payoutLineDatas = payoutLines;
         public void SetNormalPayout(List<PayoutResultData> normalPayoutDatas) => this.normalPayoutDatas = normalPayoutDatas;
         public void SetBigPayout(List<PayoutResultData> bigPayoutDatas) => this.bigPayoutDatas = bigPayoutDatas;
@@ -37,7 +36,6 @@ namespace ReelSpinGame_Datas
     [Serializable]
     public class PayoutLineData
     {
-        // const
         // バッファからデータを読み込む位置
         public enum ReadPos { BetCondition = 0, PayoutLineStart }
 
@@ -47,7 +45,7 @@ namespace ReelSpinGame_Datas
         [SerializeField] private List<sbyte> payoutLines;
 
         public byte BetCondition { get { return betCondition; } }
-        public List<sbyte> PayoutLines { get { return payoutLines; }}
+        public List<sbyte> PayoutLines { get { return payoutLines; } }
 
         public PayoutLineData(StreamReader loadedData)
         {
@@ -76,7 +74,6 @@ namespace ReelSpinGame_Datas
     [Serializable]
     public class PayoutResultData
     {
-        // const
         // バッファからデータを読み込む位置
         public enum ReadPos { FlagID = 0, CombinationStart = 1, Payout = 4, Bonus, IsReplay }
         // ANYの判定用ID
@@ -94,7 +91,7 @@ namespace ReelSpinGame_Datas
         // リプレイか(またはJAC-IN)
         [SerializeField] private bool hasReplayOrJac;
 
-        public byte FlagID { get { return flagID; }}
+        public byte FlagID { get { return flagID; } }
         public List<byte> Combination { get { return combination; } }
         public byte Payout { get { return payout; } }
         public byte BonusType { get { return bonusType; } }
@@ -128,7 +125,7 @@ namespace ReelSpinGame_Datas
 
             //デバッグ用
             //Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payout:" + payout +
-                //"Bonus:" + bonusType + "HasReplay:" + hasReplayOrJac);
+            //"Bonus:" + bonusType + "HasReplay:" + hasReplayOrJac);
         }
     }
 }

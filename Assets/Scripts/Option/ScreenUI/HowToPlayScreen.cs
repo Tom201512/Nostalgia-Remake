@@ -1,42 +1,34 @@
 using ReelSpinGame_Option.Button;
-using ReelSpinGame_Option.MenuContent;
-using ReelSpinGame_Util.OriginalInputs;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.MenuContent
 {
     // 遊び方ガイド画面
     public class HowToPlayScreen : MonoBehaviour, IOptionScreenBase
     {
-        // const
-
-        // var
         [SerializeField] ButtonComponent nextButton;        // 次ボタン
         [SerializeField] ButtonComponent previousButton;    // 前ボタン
         [SerializeField] ButtonComponent closeButton;       // クローズボタン
         [SerializeField] TextMeshProUGUI pageCount;         // ページ表記
 
         // ローカライズ用
-        [SerializeField] List<LocalizedString> titleTextList; // テキストリスト
-        [SerializeField] List<LocalizedSprite> screenList; // 画像リスト
-        [SerializeField] LocalizeStringEvent titleText; // タイトルテキスト
-        [SerializeField] LocalizeSpriteEvent screen;    // 表示する画面
+        [SerializeField] List<LocalizedString> titleTextList;   // テキストリスト
+        [SerializeField] List<LocalizedSprite> screenList;      // 画像リスト
+        [SerializeField] LocalizeStringEvent titleText;         // タイトルテキスト
+        [SerializeField] LocalizeSpriteEvent screen;            // 表示する画面
 
-        // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract { get; set; }
-
-        private int currentPage;    // 表示中のページ番号
+        public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
         // 画面を閉じたときのイベント
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
-        // func
+        private int currentPage;    // 表示中のページ番号
+
         void Awake()
         {
             currentPage = 0;

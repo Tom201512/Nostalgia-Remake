@@ -22,7 +22,6 @@ namespace ReelSpinGame_Reels
         public delegate void SomeReelStopped();
         public event SomeReelStopped SomeReelStoppedEvent;
 
-        // func
         void Awake()
         {
             spinManager = GetComponent<ReelSpinManager>();
@@ -37,7 +36,6 @@ namespace ReelSpinGame_Reels
             spinManager.HasSomeReelStopped -= OnSomeReelStopped;
         }
 
-        // func
         // 数値を得る
 
         // マネージャー

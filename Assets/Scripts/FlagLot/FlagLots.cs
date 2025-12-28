@@ -26,8 +26,10 @@ namespace ReelSpinGame_Lots.Flag
         public FlagLotTable GetCurrentTable() => flagLotsModel.CurrentTable;     // 現在のテーブル
         public int GetCounter() => flagCounter.Counter;
 
-        public void SetCounterValue(int value) => flagCounter.SetCounter(value);        // 小役カウンタ数値セット
-        public void ChangeTable(FlagLotTable mode) => flagLotsModel.CurrentTable = mode;     // テーブル変更
+        // 小役カウンタ数値セット
+        public void SetCounterValue(int value) => flagCounter.SetCounter(value);
+        // テーブル変更
+        public void ChangeTable(FlagLotTable mode) => flagLotsModel.CurrentTable = mode;
 
         // 強制フラグの設定
         public void SetForceFlag(FlagID forceFlagID)

@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 入力マネージャー
 public class InputManager : MonoBehaviour
 {
-    // const
     // 各種操作のシリアライズ
     public enum ControlKeys { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight, ToggleAuto, ToggleOption }
 
@@ -23,24 +20,13 @@ public class InputManager : MonoBehaviour
 
     private bool hasInputOnLastFrame = false;   // 最後のフレームでキー入力があったか
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    // func(public)
     // 指定したキーが一度押されたか確認する
     public bool CheckOneKeyInput(ControlKeys controlKey)
     {
         // 何も入力がなければ入力を有効にする
-        if (!Input.anyKey) 
-        { 
-            hasInputOnLastFrame = false; 
+        if (!Input.anyKey)
+        {
+            hasInputOnLastFrame = false;
         }
 
         // 入力がなければチェック
@@ -57,11 +43,10 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
-    // func(private)
     // 指定したキーを返す
-    private KeyCode GetKeyCode(ControlKeys controlKeys)
+    KeyCode GetKeyCode(ControlKeys controlKeys)
     {
-        switch(controlKeys)
+        switch (controlKeys)
         {
             case ControlKeys.MaxBet:
                 return maxBetKey;

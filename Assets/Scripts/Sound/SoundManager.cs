@@ -1,8 +1,8 @@
 using ReelSpinGame_Datas;
+using ReelSpinGame_Sound.BGM;
+using ReelSpinGame_Sound.SE;
 using System.Collections.Generic;
 using UnityEngine;
-using ReelSpinGame_Sound.SE;
-using ReelSpinGame_Sound.BGM;
 
 namespace ReelSpinGame_Sound
 {
@@ -45,7 +45,7 @@ namespace ReelSpinGame_Sound
         {
             if (databaseID >= SoundDatabases.Count && databaseID < 0)
             {
-               throw new System.Exception("Selected sound data is not found");
+                throw new System.Exception("Selected sound data is not found");
             }
 
             SoundDB = SoundDatabases[databaseID];
@@ -54,7 +54,7 @@ namespace ReelSpinGame_Sound
         // SE再生
         public void PlaySE(SeFile se)
         {
-            switch(se.SeType)
+            switch (se.SeType)
             {
                 case SeFile.SeFileType.Oneshot:
                     sePlayer.PlayAudioOneShot(se.SourceFile);
@@ -80,7 +80,7 @@ namespace ReelSpinGame_Sound
         // ループ中のSE停止
         public void StopLoopSE()
         {
-            if(sePlayer.HasLoop)
+            if (sePlayer.HasLoop)
             {
                 sePlayer.StopAudio();
             }
@@ -89,7 +89,7 @@ namespace ReelSpinGame_Sound
         // 指定した音楽再生
         public void PlayBGM(BgmFile bgm)
         {
-            if(bgm.HasLoop)
+            if (bgm.HasLoop)
             {
                 bgmPlayer.PlayBGMLoop(bgm.SourceFile, bgm.LoopStart, bgm.LoopLength);
             }

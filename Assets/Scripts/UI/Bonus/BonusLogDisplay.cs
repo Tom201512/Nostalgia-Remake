@@ -71,7 +71,6 @@ namespace ReelSpinGame_UI.Bonus
 
         }
 
-        // func (public)
         // 選択状態の切り替え
         public void ToggleSelection(bool isSelected)
         {
@@ -88,7 +87,7 @@ namespace ReelSpinGame_UI.Bonus
             numberText.text = "No." + bonusDisplayData.BonusLogNumber;
 
             // ボーナス種類
-            if(bonusDisplayData.BigColor != BigColor.None)
+            if (bonusDisplayData.BigColor != BigColor.None)
             {
                 bonusTypeText.color = Color.red;
                 bonusTypeText.text = "BIG";
@@ -105,8 +104,6 @@ namespace ReelSpinGame_UI.Bonus
             // 払い出し枚数
             payoutText.text = bonusDisplayData.Payouts.ToString();
         }
-
-        // func (private)
     }
 }
 

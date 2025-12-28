@@ -84,7 +84,7 @@ namespace ReelSpinGame_Datas.Reels
         public bool CheckFirstReelCondition(int flagID, int bonus, int bet, int random, int pushedPos)
         {
             // メイン条件チェック
-            if(CheckMainCondition(flagID, bonus, bet, random))
+            if (CheckMainCondition(flagID, bonus, bet, random))
             {
                 // 第一停止の条件が一致するかチェック。0はANY
                 // 第一停止の数値をビット演算で比較できるようにする
@@ -203,20 +203,20 @@ namespace ReelSpinGame_Datas.Reels
             // ダブルクオーテーションを発見したか
             bool findDoubleQuartation = false;
 
-            foreach(char c in loadedText)
+            foreach (char c in loadedText)
             {
                 // 空白以外読み込む
-                if(c != ' ')
+                if (c != ' ')
                 {
                     // ダブルクォーテーションなら別テキストに移す(カンマも取り入れる)
-                    if(c == '"')
+                    if (c == '"')
                     {
                         findDoubleQuartation = !findDoubleQuartation;
                         parseText += c;
                     }
-                    else 
+                    else
                     {
-                        if(findDoubleQuartation)
+                        if (findDoubleQuartation)
                         {
                             parseText += c;
                         }
@@ -224,10 +224,10 @@ namespace ReelSpinGame_Datas.Reels
                         else
                         {
                             // カンマを読み込んだらバッファテキストを取り込む
-                            if(c == ',')
+                            if (c == ',')
                             {
                                 // パースした文章がある場合はその文章をバッファに取り込む
-                                if(parseText != "")
+                                if (parseText != "")
                                 {
                                     dataBuffer.Add(parseText);
                                     parseText = "";

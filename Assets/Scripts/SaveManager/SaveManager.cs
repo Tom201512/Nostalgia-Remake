@@ -26,7 +26,7 @@ namespace ReelSpinGame_System
         const string OptionKeyPath = "/Nostalgia/core.key"; // オプション暗号鍵
 
         // アドレス番地
-        private enum AddressID { Setting, Player, Medal, FlagC, Reel, Bonus}
+        private enum AddressID { Setting, Player, Medal, FlagC, Reel, Bonus }
 
         // var
         // プレイヤーのセーブデータ
@@ -46,7 +46,6 @@ namespace ReelSpinGame_System
             optionSaveManager = new OptionSaveManager();
         }
 
-        // func
         // セーブフォルダ作成
         public bool GenerateSaveFolder()
         {
@@ -63,7 +62,7 @@ namespace ReelSpinGame_System
             {
                 Directory.CreateDirectory(path);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.LogException(e);
                 return false;
@@ -137,7 +136,7 @@ namespace ReelSpinGame_System
                         using (Stream baseStream = br.BaseStream)
                         {
                             // ハッシュ値が正しければデータ読み込み
-                            if(CheckHash(baseStream, br))
+                            if (CheckHash(baseStream, br))
                             {
                                 playerSaveManager.LoadDataBuffer(baseStream, br);
                             }
@@ -348,8 +347,8 @@ namespace ReelSpinGame_System
         {
             List<byte> bytes = new List<byte>();
             string[] buffer = byteString.Split("-");
-            
-            foreach(string s in buffer)
+
+            foreach (string s in buffer)
             {
                 bytes.Add(Convert.ToByte(s, 16));
             }

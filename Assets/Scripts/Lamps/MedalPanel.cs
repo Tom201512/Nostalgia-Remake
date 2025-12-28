@@ -5,7 +5,6 @@ namespace ReelSpinGame_Lamps
     // メダルパネル部分
     public class MedalPanel : MonoBehaviour
     {
-
         [SerializeField] private LampComponent medal1;          // 1枚掛けランプ
         [SerializeField] private LampComponent medal2Up;        // 2枚掛けランプ上
         [SerializeField] private LampComponent medal2Down;      // 2枚掛けランプ下

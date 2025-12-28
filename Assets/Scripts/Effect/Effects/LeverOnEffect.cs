@@ -1,9 +1,9 @@
 using ReelSpinGame_Effect.Data.Condition;
+using ReelSpinGame_Lots;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using ReelSpinGame_Lots;
 
 namespace ReelSpinGame_Effect.Data
 {

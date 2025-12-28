@@ -4,14 +4,9 @@ using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuBar
 {
+    // メニューリストの管理マネージャー
     public class MenuManager : MonoBehaviour
     {
-        // メニューリストの管理マネージャー
-
-        // const
-
-        // var
-
         // 各種ボタン
         [SerializeField] ButtonComponent howToPlayButton;       // 遊び方ガイド
         [SerializeField] ButtonComponent slotDataButton;        // スロット情報画面
@@ -32,9 +27,7 @@ namespace ReelSpinGame_Option.MenuBar
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
-        // オプションデータ
-
-        private void Awake()
+        void Awake()
         {
             // ボタン登録
             howToPlayButton.ButtonPushedEvent += HowToPlayOpen;
@@ -48,7 +41,7 @@ namespace ReelSpinGame_Option.MenuBar
             autoPlaySettingScreen.ClosedScreenEvent += AutoPlayClose;
         }
 
-        private void Start()
+        void Start()
         {
             // 画面を非表示にする
             howToPlayScreen.gameObject.SetActive(false);
@@ -57,7 +50,7 @@ namespace ReelSpinGame_Option.MenuBar
             autoPlaySettingScreen.gameObject.SetActive(false);
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             // ボタン登録解除
             howToPlayButton.ButtonPushedEvent -= HowToPlayOpen;
@@ -71,7 +64,6 @@ namespace ReelSpinGame_Option.MenuBar
             autoPlaySettingScreen.ClosedScreenEvent -= AutoPlayClose;
         }
 
-        // func(public)
         // 全メニューのロック設定
         public void SetInteractiveAllButton(bool value)
         {
@@ -81,14 +73,12 @@ namespace ReelSpinGame_Option.MenuBar
             autoSettingButton.ToggleInteractive(value);
         }
 
-        // func(private)
         // 遊び方ガイドを開いた時の処理
         void HowToPlayOpen(int signalID)
         {
             howToPlayScreen.gameObject.SetActive(true);
             howToPlayScreen.OpenScreen();
             OnPressedBehaviour();
-            Debug.Log("Open HowToPlay");
         }
 
         // 遊び方ガイドを閉じた時の処理
@@ -97,7 +87,6 @@ namespace ReelSpinGame_Option.MenuBar
             howToPlayScreen.CloseScreen();
             howToPlayScreen.gameObject.SetActive(false);
             OnClosedBehaviour();
-            Debug.Log("Close HowToPlay");
         }
 
         // スロット情報を開いた時の処理
@@ -106,7 +95,6 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataScreen.gameObject.SetActive(true);
             slotDataScreen.OpenScreen();
             OnPressedBehaviour();
-            Debug.Log("Open SlotData");
         }
 
         // スロット情報を閉じた時の処理
@@ -115,7 +103,6 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataScreen.CloseScreen();
             slotDataScreen.gameObject.SetActive(false);
             OnClosedBehaviour();
-            Debug.Log("Close SlotData");
         }
 
         // 強制役設定画面を開いた時の処理
@@ -124,7 +111,6 @@ namespace ReelSpinGame_Option.MenuBar
             forceFlagScreen.gameObject.SetActive(true);
             forceFlagScreen.OpenScreen();
             OnPressedBehaviour();
-            Debug.Log("Open ForceFlag");
         }
 
         // 強制役設定画面を閉じた時の処理
@@ -133,7 +119,6 @@ namespace ReelSpinGame_Option.MenuBar
             forceFlagScreen.CloseScreen();
             forceFlagScreen.gameObject.SetActive(false);
             OnClosedBehaviour();
-            Debug.Log("Close ForceFlag");
         }
 
         // オートプレイ設定画面を開いた時の処理
@@ -142,7 +127,6 @@ namespace ReelSpinGame_Option.MenuBar
             autoPlaySettingScreen.gameObject.SetActive(true);
             autoPlaySettingScreen.OpenScreen();
             OnPressedBehaviour();
-            Debug.Log("Open ForceFlag");
         }
 
         // オートプレイ設定画面を閉じた時の処理
@@ -151,7 +135,6 @@ namespace ReelSpinGame_Option.MenuBar
             autoPlaySettingScreen.CloseScreen();
             autoPlaySettingScreen.gameObject.SetActive(false);
             OnClosedBehaviour();
-            Debug.Log("Close ForceFlag");
         }
 
         // 画面を開いたときの処理

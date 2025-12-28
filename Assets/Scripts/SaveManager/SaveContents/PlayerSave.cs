@@ -38,8 +38,6 @@ namespace ReelSpinGame_Save.Player
                 PlayerAnalyticsData = new AnalyticsData();
             }
 
-            // func
-
             // データ記録
             public void RecordData(PlayerDatabase playerData)
             {
@@ -82,7 +80,7 @@ namespace ReelSpinGame_Save.Player
                 }
 
                 // 解析情報
-                foreach(int list in PlayerAnalyticsData.SaveData())
+                foreach (int list in PlayerAnalyticsData.SaveData())
                 {
                     data.Add(list);
                 }

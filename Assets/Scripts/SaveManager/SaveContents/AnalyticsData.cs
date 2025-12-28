@@ -86,16 +86,15 @@ namespace ReelSpinGame_Datas.Analytics
             JacGameNoneTimes = 0;
         }
 
-        // func
         // トータルゲーム数加算
         public void IncreaseTotalAllGameCounts(BonusStatus bonusStatus)
         {
             TotalAllGamesCount += 1;
-            if(bonusStatus == BonusStatus.BonusBIGGames)
+            if (bonusStatus == BonusStatus.BonusBIGGames)
             {
                 BigGamesCount += 1;
             }
-            else if(bonusStatus == BonusStatus.BonusJACGames)
+            else if (bonusStatus == BonusStatus.BonusJACGames)
             {
                 JacGamesCount += 1;
             }
@@ -104,7 +103,7 @@ namespace ReelSpinGame_Datas.Analytics
         // 小役成立カウント増加
         public void IncreaseHitCountByFlag(FlagID flagID, BonusStatus bonusStatus)
         {
-            if(bonusStatus == BonusStatus.BonusBIGGames)
+            if (bonusStatus == BonusStatus.BonusBIGGames)
             {
                 switch (flagID)
                 {
@@ -127,9 +126,9 @@ namespace ReelSpinGame_Datas.Analytics
                         break;
                 }
             }
-            else if(bonusStatus == BonusStatus.BonusJACGames)
+            else if (bonusStatus == BonusStatus.BonusJACGames)
             {
-                if(flagID == FlagID.FlagNone)
+                if (flagID == FlagID.FlagNone)
                 {
                     JacGameNoneTimes += 1;
                 }
@@ -200,13 +199,13 @@ namespace ReelSpinGame_Datas.Analytics
         public void CountJacAvoidCounts(int leftPushedPos, int random)
         {
             // ビタ押しでの判定
-            if(leftPushedPos == 10 || leftPushedPos == 16)
+            if (leftPushedPos == 10 || leftPushedPos == 16)
             {
                 BigJacAvoidTimes += 1;
                 BigJacPerfectAvoidTimes += 1;
             }
             // アシスト入りで外したかのチェック(乱数が偶数であること)
-            else if((leftPushedPos == 9 || leftPushedPos == 15) &&
+            else if ((leftPushedPos == 9 || leftPushedPos == 15) &&
                 random % 2 == 0)
             {
                 BigJacAvoidTimes += 1;

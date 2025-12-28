@@ -1,8 +1,8 @@
+using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using UnityEngine;
-using ReelSpinGame_AutoPlay;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Option.AutoSetting
@@ -10,9 +10,6 @@ namespace ReelSpinGame_Option.AutoSetting
     // オート設定マネージャー
     public class AutoSettingManager : MonoBehaviour
     {
-        // const
-
-        // var
         // 選択ボタン
         [SerializeField] SelectButtonComponent speedSelect;         // スピード変更
         [SerializeField] SelectButtonComponent orderSelect;         // 押し順変更
@@ -26,7 +23,6 @@ namespace ReelSpinGame_Option.AutoSetting
         // 設定が変更された時のイベント
         public delegate void OnSettingChanged();
         public event OnSettingChanged OnSettingChangedEvent;
-        
 
         void Awake()
         {
@@ -52,7 +48,6 @@ namespace ReelSpinGame_Option.AutoSetting
             spinConditionSelect.ContentChangedEvent -= UpdateOptionData;
         }
 
-        // func(public)
         // 各種選択ボタンの有効化設定
         public void SetInteractiveButtons(bool value)
         {
@@ -89,7 +84,6 @@ namespace ReelSpinGame_Option.AutoSetting
             UpdateOptionData();
         }
 
-        // func(private)
         // データ更新
         void UpdateOptionData()
         {

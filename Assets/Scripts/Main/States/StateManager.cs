@@ -2,10 +2,9 @@
 
 namespace ReelSpinGame_State
 {
+    // ステート管理マネージャー
     public class StateManager
     {
-        // ゲーム状態の管理をする
-
         // 現在のゲーム状態
         public IGameStatement CurrentState { get; private set; }
 

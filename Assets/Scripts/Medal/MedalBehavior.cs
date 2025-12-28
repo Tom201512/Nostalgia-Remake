@@ -1,47 +1,28 @@
 ﻿using System;
-using UnityEngine;
 
 namespace ReelSpinGame_Medal
 {
-	public class MedalBehavior
-	{
-        // メダルの処理
+    // メダルの処理
+    public class MedalBehavior
+    {
+        public const int MaxCredit = 50;        // 最大クレジット枚数
+        public const int MinCredit = -3;        // 最小クレジット枚数
+        public const int MaxBetLimit = 3;       // 最大ベット枚数
+        public const int MaxPayout = 15;        // 最大払い出し
 
-        // const 
-        // 最大クレジット枚数
-        public const int MaxCredit = 50;
-        // 最小クレジット枚数(0より少ない場合はセグに表示はしない)
-        public const int MinCredit = -3;
-        // 最大ベット枚数
-        public const int MaxBetLimit = 3;
-        // 最大払い出し
-        public const int MaxPayout = 15;
-
-        // var
-
-        // 残りベット枚数
-        public int RemainingBet { get; set; }
-        // ベット枚数
-        public int CurrentBet { get; set; }
-        // 払い出し枚数
-        public int RemainingPayout { get; set; }
-        // 最後に払い出したメダル枚数
-        public int LastPayoutAmount { get; set; }
-        // ベット完了しているか
-        public bool FinishedBet { get;  set; }
+        public int RemainingBet { get; set; }       // 残りベット枚数
+        public int CurrentBet { get; set; }         // ベット枚数
+        public int RemainingPayout { get; set; }    // 払い出し枚数
+        public int LastPayoutAmount { get; set; }   // 最後に払い出したメダル枚数
+        public bool FinishedBet { get; set; }      // ベット完了しているか
 
         // セーブ用のデータ
         public class MedalSystemData
         {
-            // var
-            // クレジット枚数
-            public int Credit { get; set; }
-            // 最高ベット枚数
-            public int MaxBetAmount { get; set; }
-            // 最後にかけたメダル枚数
-            public int LastBetAmount { get; set; }
-            // リプレイ状態か
-            public bool HasReplay { get; set; }
+            public int Credit { get; set; }             // クレジット枚数
+            public int MaxBetAmount { get; set; }       // 最高ベット枚数
+            public int LastBetAmount { get; set; }      // 最後にかけたメダル枚数
+            public bool HasReplay { get; set; }         // リプレイ状態か
 
             public MedalSystemData()
             {
@@ -52,10 +33,8 @@ namespace ReelSpinGame_Medal
             }
         }
 
-        // メダル情報(セーブに使う)
-        public MedalSystemData system { get; set; }
+        public MedalSystemData system { get; set; }     // メダル情報データ
 
-        // コンストラクタ
         public MedalBehavior()
         {
             CurrentBet = 0;
@@ -65,8 +44,6 @@ namespace ReelSpinGame_Medal
 
             system = new MedalSystemData();
         }
-
-        // func
 
         // 残りベット枚数を設定
         public void SetRemainingBet(int amount)
@@ -114,7 +91,7 @@ namespace ReelSpinGame_Medal
             }
 
             // 残り枚数が0になったら終了
-            if(RemainingBet == 0)
+            if (RemainingBet == 0)
             {
                 FinishedBet = true;
             }

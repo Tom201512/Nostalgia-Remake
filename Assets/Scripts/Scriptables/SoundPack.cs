@@ -1,5 +1,5 @@
-﻿using ReelSpinGame_Sound.SE;
-using ReelSpinGame_Sound.BGM;
+﻿using ReelSpinGame_Sound.BGM;
+using ReelSpinGame_Sound.SE;
 using UnityEngine;
 
 namespace ReelSpinGame_Datas
@@ -15,7 +15,7 @@ namespace ReelSpinGame_Datas
         [SerializeField] private BgmPack bgm;
 
         public SePack SE
-        { 
+        {
             get { return se; }
         }
         public BgmPack BGM

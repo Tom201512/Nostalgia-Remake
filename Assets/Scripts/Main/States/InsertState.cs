@@ -1,16 +1,16 @@
 ﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
-using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_State.InsertState
 {
+    // 投入ステート
     public class InsertState : IGameStatement
     {
         public MainGameFlow.GameStates State { get; }        // このゲームの状態
 
-        private GameManager gM;                              // ゲームマネージャ
+        private GameManager gM;         // ゲームマネージャ
 
         public InsertState(GameManager gameManager)
         {
@@ -44,7 +44,7 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateUpdate()
         {
-            if(!gM.Option.hasOptionMode)
+            if (!gM.Option.hasOptionMode)
             {
                 // オートの有無に合わせて操作受付を変える
                 if (gM.Auto.HasAuto)
@@ -62,7 +62,6 @@ namespace ReelSpinGame_State.InsertState
         {
             // イベント解除
             gM.Medal.HasMedalInsertEvent -= OnMedalInserted;
-
             // INSERT, STARTランプの消灯
             gM.Status.TurnOffInsertAndStart();
             // メダル処理を終了させる
@@ -118,7 +117,7 @@ namespace ReelSpinGame_State.InsertState
             gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.CurrentSpeed);
 
             // ボーナス成立後であれば1枚掛けをする
-            if(gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone && gM.Medal.GetCurrentBet() != 1)
+            if (gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone && gM.Medal.GetCurrentBet() != 1)
             {
                 BetAction(1, gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
             }
@@ -158,7 +157,7 @@ namespace ReelSpinGame_State.InsertState
         void EndInsertState()
         {
             // 投入枚数を反映する(リプレイ時以外)
-            if(!gM.Medal.GetHasReplay())
+            if (!gM.Medal.GetHasReplay())
             {
                 gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmount());
             }

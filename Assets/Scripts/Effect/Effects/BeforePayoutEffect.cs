@@ -41,7 +41,7 @@ namespace ReelSpinGame_Effect.Data
                 case FlagID.FlagBig:
                 case FlagID.FlagReg:
                 case FlagID.FlagNone:
-                    if (beforePayoutEffectCondition.HoldingBonus != BonusTypeID.BonusNone && 
+                    if (beforePayoutEffectCondition.HoldingBonus != BonusTypeID.BonusNone &&
                         OriginalRandomLot.LotRandomByNum(6))
                     {
                         flash.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
@@ -62,7 +62,7 @@ namespace ReelSpinGame_Effect.Data
                 // リプレイの場合
                 case FlagID.FlagReplayJacIn:
                     // 小役ゲーム中にJACINが成立しビタハズシをした場合
-                    if (beforePayoutEffectCondition.BonusStatus == BonusStatus.BonusBIGGames && 
+                    if (beforePayoutEffectCondition.BonusStatus == BonusStatus.BonusBIGGames &&
                         (beforePayoutEffectCondition.LastLeftStoppedPos == 10 ||
                         beforePayoutEffectCondition.LastLeftStoppedPos == 16))
                     {

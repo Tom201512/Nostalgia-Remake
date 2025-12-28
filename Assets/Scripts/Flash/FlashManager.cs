@@ -8,9 +8,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static ReelSpinGame_Reels.ReelLogicManager;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
-using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Reels.Flash
 {
@@ -121,7 +121,7 @@ namespace ReelSpinGame_Reels.Flash
             if (currentFrame == flashData[(int)FlashData.PropertyID.FrameID])
             {
                 // リール全て変更
-                for(int i = 0; i < ReelAmount; i++)
+                for (int i = 0; i < ReelAmount; i++)
                 {
                     // 本体と枠下枠上の図柄変更
                     int bodyBright = flashData[(int)FlashData.PropertyID.Body + i * SeekOffset];

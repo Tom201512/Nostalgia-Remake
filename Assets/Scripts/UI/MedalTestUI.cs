@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class MedalTestUI : UIBaseClass
 {
-    // var
     TextMeshProUGUI text;
     // ƒƒ_ƒ‹‚Ìˆ—
     [SerializeField] private MedalManager medal;
 
-    // func
-    private void Awake()
+    void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    private void Update()
+    void Update()
     {
         string buffer = "";
 

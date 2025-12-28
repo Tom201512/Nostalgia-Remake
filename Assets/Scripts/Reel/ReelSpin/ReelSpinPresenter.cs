@@ -5,13 +5,13 @@ using UnityEngine.Rendering.PostProcessing;
 using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Spin
-{   
+{
     // リール回転用のプレゼンター
     public class ReelSpinPresenter : MonoBehaviour
     {
         // var
         // 回転時のRPM
-        [SerializeField] [Range(0, 80.0f)] private float defaultReelSpinRPM;
+        [SerializeField][Range(0, 80.0f)] private float defaultReelSpinRPM;
         // リール配列データ
         [SerializeField] ReelArrayData reelArrayDataFile;
 
@@ -51,14 +51,14 @@ namespace ReelSpinGame_Reels.Spin
 
                 if (reelSpinModel.CurrentReelStatus == ReelStatus.Stopping)
                 {
-                   SlowDownReelSpeed();
+                    SlowDownReelSpeed();
                 }
             }
         }
 
         // リール配列情報を渡す
         public byte[] GetReelArray() => reelSpinModel.ReelArray;
- 
+
         // 現在のリール情報を返す
         public ReelStatus GetCurrentReelStatus() => reelSpinModel.CurrentReelStatus;
         // 現在の速度を返す

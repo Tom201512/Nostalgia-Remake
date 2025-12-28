@@ -13,7 +13,7 @@ public class SlotCamera : MonoBehaviour
     }
 
     // func
-    
+
     // ƒJƒƒ‰‚Ì•\Ž¦•ûŽ®‚Ì•ÏX
     public void ChangeCameraMode() => slotCam.orthographic = !slotCam.orthographic;
 }

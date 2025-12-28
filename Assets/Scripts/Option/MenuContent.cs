@@ -1,37 +1,16 @@
 using ReelSpinGame_Option.Button;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuBar
 {
+    // メニューバー用コンポーネント
     public class MenuContent : MonoBehaviour
     {
-        // メニューバー用コンポーネント
-
-        // var
         // 各種ボタン
-        // 説明画面表示
-        [SerializeField] ButtonComponent howToPlayButton;
-        // データ表示
-        [SerializeField] ButtonComponent slotDataButton;
-        // 強制役セット画面表示
-        [SerializeField] ButtonComponent instantFlagButton;
-        // オート設定画面表示
-        [SerializeField] ButtonComponent autoSettingButton;
-        // その他設定画面表示
-        [SerializeField] ButtonComponent optionButton;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        [SerializeField] ButtonComponent howToPlayButton;       // 説明画面表示
+        [SerializeField] ButtonComponent slotDataButton;        // データ表示
+        [SerializeField] ButtonComponent instantFlagButton;     // 強制役セット画面表示
+        [SerializeField] ButtonComponent autoSettingButton;     // オート設定画面表示
+        [SerializeField] ButtonComponent optionButton;          // その他設定画面表示
     }
 }

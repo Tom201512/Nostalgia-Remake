@@ -7,16 +7,13 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_State.LotsState
 {
+    // 抽選ステート
     public class LotsState : IGameStatement
     {
-        // var
-        // このゲームの状態
-        public MainGameFlow.GameStates State { get; }
+        public MainGameFlow.GameStates State { get; }   // ステート名
 
-        // ゲームマネージャ
-        private GameManager gM;
+        private GameManager gM;        // ゲームマネージャ
 
-        // コンストラクタ
         public LotsState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.FlagLots;
@@ -26,7 +23,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateStart()
         {
             // 強制役フラグの指定があれば強制役を設定する
-            if(gM.Option.GetForceFlagSelectID() != -1)
+            if (gM.Option.GetForceFlagSelectID() != -1)
             {
                 FlagID selectedFlagID = (FlagID)Enum.ToObject(typeof(FlagID), gM.Option.GetForceFlagSelectID());
                 gM.Lots.SetForceFlag(selectedFlagID);
@@ -47,7 +44,7 @@ namespace ReelSpinGame_State.LotsState
             // 総ゲーム数の加算
             gM.Player.PlayerAnalyticsData.IncreaseTotalAllGameCounts(gM.Bonus.GetCurrentBonusStatus());
 
-            
+
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
             if (gM.Lots.GetCurrentFlag() == FlagID.FlagBig)
             {

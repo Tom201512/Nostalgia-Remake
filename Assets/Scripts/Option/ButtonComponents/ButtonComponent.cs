@@ -5,17 +5,14 @@ using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.Button
 {
+    // ボタンコンポーネント
     public class ButtonComponent : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
     {
-        // ボタン用
+        [SerializeField] private Image iconImage;       // アイコン
+        [SerializeField] private TextMeshProUGUI text;  // テキスト
+        [SerializeField] int signalID;                  // 送る信号番号
 
-        // const
-        // アイコン
-        [SerializeField] private Image iconImage;
-        // テキスト
-        [SerializeField] private TextMeshProUGUI text;
-        // 送る信号番号
-        [SerializeField] int signalID;
+        public bool CanInteractable { get; private set; }      // ボタンが押せる状態か
 
         // ボタンを押したときのイベント
         /// <summary>
@@ -25,9 +22,6 @@ namespace ReelSpinGame_Option.Button
         public delegate void ButtonPushed(int signalID);
         public event ButtonPushed ButtonPushedEvent;
 
-        // ボタンが押せる状態か
-        public bool CanInteractable {  get; private set; }
-
         void Awake()
         {
             CanInteractable = false;
@@ -36,7 +30,7 @@ namespace ReelSpinGame_Option.Button
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if(CanInteractable)
+            if (CanInteractable)
             {
                 ChangeButtonContentColor(new Color(1, 1, 1, 1f));
             }
@@ -75,7 +69,7 @@ namespace ReelSpinGame_Option.Button
         {
             CanInteractable = value;
 
-            if(CanInteractable)
+            if (CanInteractable)
             {
                 ChangeButtonContentColor(new Color(0.7f, 0.7f, 0.7f, 1f));
             }

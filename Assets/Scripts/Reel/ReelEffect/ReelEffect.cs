@@ -1,4 +1,3 @@
-using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Symbol;
 using System;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace ReelSpinGame_Reels
         [SerializeField] SymbolLightManager symbolLight;
 
         // JAC中の明るさ計算をするか
-        public bool HasJacBrightnessCalculate {  get; private set; }
+        public bool HasJacBrightnessCalculate { get; private set; }
 
         // func
         // リール本体の明るさ変更

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ReelSpinGame_Reels.Table;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 namespace ReelSpinGame_Reels

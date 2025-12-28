@@ -1,17 +1,13 @@
 using ReelSpinGame_System;
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ReelSpinGame_UI.Graph
 {
+    // グラフ用のコンポーネント
     public class GraphComponent : MonoBehaviour
     {
-        // グラフ用のコンポーネント
-
-        // const
         // グラフX座標最大値
         const float GraphMaxPosX = 2400.0f;
         // グラフY座標最大値
@@ -23,7 +19,6 @@ namespace ReelSpinGame_UI.Graph
         // Y座標分割値
         const float GraphYPosOffset = GraphMiddlePosY / 1000;
 
-        // var
         // グラフ用のカメラ
         [SerializeField] private Camera graphCamera;
         // グラフを描く対象のオブジェクト
@@ -35,17 +30,6 @@ namespace ReelSpinGame_UI.Graph
         // ゲーム数表示テキスト
         [SerializeField] private TextMeshProUGUI gameCountText;
 
-        private void Awake()
-        {
-
-        }
-
-        private void Start()
-        {
-
-        }
-        
-        // func
         // グラフの描画を開始する
         public void StartDrawGraph(PlayerDatabase playerData)
         {
@@ -57,13 +41,13 @@ namespace ReelSpinGame_UI.Graph
             int highest = 0;
             int lowest = 0;
 
-            foreach(int i in playerData.PlayerMedalData.MedalSlumpGraph)
+            foreach (int i in playerData.PlayerMedalData.MedalSlumpGraph)
             {
-                if(i > highest)
+                if (i > highest)
                 {
                     highest = i;
                 }
-                if(i < lowest)
+                if (i < lowest)
                 {
                     lowest = i;
                 }
@@ -74,9 +58,9 @@ namespace ReelSpinGame_UI.Graph
             // 1000枚ごとの区切りをつける
             int differenceOffset = 1;
             // 最低でも-1000枚~1000枚から表示する。超えている場合は高い方の数値を基準に表示
-            if(highest > 1000 || lowest < -1000)
+            if (highest > 1000 || lowest < -1000)
             {
-                if(highest >= lowest)
+                if (highest >= lowest)
                 {
                     differenceOffset = highest / 1000 + 1;
                 }
@@ -102,7 +86,7 @@ namespace ReelSpinGame_UI.Graph
 
             // 差枚数ごとに座標を求めて描画する
             Debug.Log("Load count:" + playerData.PlayerMedalData.MedalSlumpGraph.Count);
-            while(true)
+            while (true)
             {
                 float posX = 0.0f;
                 float posY = 0.0f;
@@ -114,7 +98,7 @@ namespace ReelSpinGame_UI.Graph
                 graphDrawer.AddPosition(posX, posY);
 
                 // スランプグラフのデータ数分読み込んだ場合は終了させる(桁あふれした場合)
-                if(index == playerData.PlayerMedalData.MedalSlumpGraph.Count - 1)
+                if (index == playerData.PlayerMedalData.MedalSlumpGraph.Count - 1)
                 {
                     Debug.Log("Finished");
                     break;
@@ -144,12 +128,12 @@ namespace ReelSpinGame_UI.Graph
 
             // ゲーム数を表示する(1000G区切り。9万Gを超える場合は 99999Gと表記)
             int gameCountValue = (playerData.TotalGames / 1000 + 1) * 1000;
-            
-            if(gameCountValue > 90000)
+
+            if (gameCountValue > 90000)
             {
                 gameCountValue = 99999;
             }
-            gameCountText.text = gameCountValue + "G" ;
+            gameCountText.text = gameCountValue + "G";
         }
-    } 
+    }
 }

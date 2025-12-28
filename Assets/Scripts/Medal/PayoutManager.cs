@@ -11,10 +11,8 @@ namespace ReelSpinGame_Payout
     // 払い出しマネージャー
     public class PayoutManager : MonoBehaviour
     {
-        // const
+        // 払い出しモード
         public enum PayoutCheckMode { PayoutNormal, PayoutBIG, PayoutJAC };
-
-        // var
 
         // 払い出しデータベース
         [SerializeField] private PayoutDatabase payoutDatabase;
@@ -22,14 +20,12 @@ namespace ReelSpinGame_Payout
         public PayoutResultBuffer LastPayoutResult { get; private set; }    // 最後に当たった結果
         public PayoutCheckMode CheckMode { get; set; }                      // 選択中のテーブル
 
-        // func
-        private void Awake()
+        void Awake()
         {
             CheckMode = PayoutCheckMode.PayoutNormal;
             LastPayoutResult = new PayoutResultBuffer(0, 0, false);
         }
 
-        // func
         // 払い出しラインを返す
         public List<PayoutLineData> GetPayoutLines() => payoutDatabase.PayoutLines;
 
@@ -99,14 +95,14 @@ namespace ReelSpinGame_Payout
             // 最終的な払い出し枚数をイベントに送る
 
             // デバッグ用
-            for(int i = 0; i < finalPayoutLine.Count; i++)
+            for (int i = 0; i < finalPayoutLine.Count; i++)
             {
                 string buffer = "";
-                for(int j = 0; j < finalPayoutLine[i].PayoutLines.Count; j++)
+                for (int j = 0; j < finalPayoutLine[i].PayoutLines.Count; j++)
                 {
                     buffer += finalPayoutLine[i].PayoutLines[j].ToString();
 
-                    if(j != finalPayoutLine[i].PayoutLines.Count - 1)
+                    if (j != finalPayoutLine[i].PayoutLines.Count - 1)
                     {
                         buffer += ",";
                     }
@@ -114,7 +110,7 @@ namespace ReelSpinGame_Payout
             }
 
             // 最大払い出しを超える枚数だった場合は切り捨てる
-            if(finalPayout > MedalBehavior.MaxPayout)
+            if (finalPayout > MedalBehavior.MaxPayout)
             {
                 finalPayout = MedalBehavior.MaxPayout;
             }
@@ -126,7 +122,7 @@ namespace ReelSpinGame_Payout
         }
 
         // 図柄の判定(配列を返す)
-        private int CheckHasPayout(List<ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
+        int CheckHasPayout(List<ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
         {
             // 全て同じ図柄が揃っていたらHITを返す
             // ANY(10番)は無視
@@ -154,8 +150,6 @@ namespace ReelSpinGame_Payout
                 // 同じ図柄(ANY含め)がリールの数と合えば当選とみなす
                 if (sameSymbolCount == ReelAmount)
                 {
-                    //Debug.Log("HIT!:" + payoutResult[indexNum].Payout + "Bonus:" + payoutResult[indexNum].BonusType + "Replay:" + payoutResult[indexNum].HasReplayOrJac);
-
                     // 配列番号を送る
                     return indexNum;
                 }
@@ -167,9 +161,8 @@ namespace ReelSpinGame_Payout
         }
 
         // 払い出し結果をテーブルごとに得る
-        private List<PayoutResultData> GetPayoutResultData(PayoutCheckMode payoutCheckMode)
+        List<PayoutResultData> GetPayoutResultData(PayoutCheckMode payoutCheckMode)
         {
-            //Debug.Log(payoutCheckMode.ToString());
             switch (payoutCheckMode)
             {
                 case PayoutCheckMode.PayoutNormal:

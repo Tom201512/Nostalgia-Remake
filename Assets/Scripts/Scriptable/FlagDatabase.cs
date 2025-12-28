@@ -63,7 +63,7 @@ namespace ReelSpinGame_Datas
             // ”z—ñ‚É•ÏŠ·
             flagTable = Array.ConvertAll(values, float.Parse);
 
-            foreach(float f in flagTable)
+            foreach (float f in flagTable)
             {
                 buffer += f + ",";
             }

@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Symbol
 {

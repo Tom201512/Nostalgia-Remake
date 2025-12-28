@@ -34,7 +34,6 @@ namespace ReelSpinGame_Datas
             BonusReelDelay = new List<int> { 0, 0, 0, };
         }
 
-        // func
         public void SetBonusType(BonusTypeID bonusID) => BonusID = bonusID;         // 成立ボーナスセット
         public void SetBonusHitGame(int game) => BonusHitGame = game;               // 成立時ゲーム数セット
         public void SetBonusStartGame(int game) => BonusStartGame = game;           // 入賞時ゲーム数セット
@@ -76,7 +75,7 @@ namespace ReelSpinGame_Datas
             data.Add(BonusPayout);
             data.Add((int)BigColor);
 
-            foreach(int pos in BonusReelPos)
+            foreach (int pos in BonusReelPos)
             {
                 data.Add(pos);
             }

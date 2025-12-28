@@ -31,7 +31,7 @@ namespace ReelSpinGame_Util.OriginalInputs
         // 1/nの確率を抽選する
         public static bool LotRandomByNum(int probability)
         {
-            if(probability < 0)
+            if (probability < 0)
             {
                 return false;
             }

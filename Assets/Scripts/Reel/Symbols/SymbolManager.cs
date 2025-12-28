@@ -40,7 +40,7 @@ public class SymbolManager : MonoBehaviour
             symbol.ChangeSymbol(symbolImages[(int)reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, (sbyte)symbol.GetPosID())]]);
 
             // ‚à‚µÅŒã‚ÌˆÊ’u‚É‚ ‚é}•¿‚Ìê‡‚ÍØ‚ê–Ú‚ÌˆÊ’u‚ğ“®‚©‚·
-            if(!hasLastPosSymbol && currentLower == 20)
+            if (!hasLastPosSymbol && currentLower == 20)
             {
                 hasLastPosSymbol = true;
                 Underline.transform.SetPositionAndRotation(symbol.transform.position, symbol.transform.rotation);

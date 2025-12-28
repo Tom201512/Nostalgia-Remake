@@ -1,3 +1,4 @@
+using ReelSpinGame_Lots;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
@@ -5,32 +6,26 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static ReelSpinGame_Bonus.BonusSystemData;
-using ReelSpinGame_Lots;
 
 namespace ReelSpinGame_Option.MenuContent
 {
     // 強制フラグ設定画面
     public class ForceFlagScreen : MonoBehaviour, IOptionScreenBase
     {
-        // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract { get; set; }
-
-        // var
         [SerializeField] List<ButtonComponent> flagButtons; // フラグボタン
-        [SerializeField] List<Sprite> flagImages; // フラグ画像リスト
-        [SerializeField] Image flagDisplayImage; // 選択中のフラグを表示するための画像
+        [SerializeField] List<Sprite> flagImages;           // フラグ画像リスト
+        [SerializeField] Image flagDisplayImage;            // 選択中のフラグを表示するための画像
 
-        [SerializeField] TextMeshProUGUI randomValueText; // ランダム数値
-        [SerializeField] ButtonComponent closeButton; // クローズボタン
-        [SerializeField] ButtonComponent randomNextButton; // ランダム数値変更ボタン(右)
-        [SerializeField] ButtonComponent randomPreviousButton; // ランダム数値変更ボタン(左)
-        [SerializeField] ButtonComponent resetButton; // フラグ設定リセットボタン
+        [SerializeField] TextMeshProUGUI randomValueText;       // ランダム数値
+        [SerializeField] ButtonComponent closeButton;           // クローズボタン
+        [SerializeField] ButtonComponent randomNextButton;      // ランダム数値変更ボタン(右)
+        [SerializeField] ButtonComponent randomPreviousButton;  // ランダム数値変更ボタン(左)
+        [SerializeField] ButtonComponent resetButton;           // フラグ設定リセットボタン
+
+        public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
         public int CurrentSelectFlagID { get; private set; } // 選択中のフラグ番号 (-1はフラグなしとする)
         public int CurrentSelectRandomID { get; private set; } // 選択中のランダム数値 (0はランダムとする)
-
-        BonusStatus currentBonusStatus;    // 設定時のボーナス状態
-        BonusTypeID holdingBonusID; // ストック中のボーナス
 
         // 設定が変更された時のイベント
         public delegate void OnSomethingChanged();
@@ -40,11 +35,13 @@ namespace ReelSpinGame_Option.MenuContent
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
-        // func
-        private void Awake()
+        private BonusStatus currentBonusStatus;    // 設定時のボーナス状態
+        private BonusTypeID holdingBonusID; // ストック中のボーナス
+
+        void Awake()
         {
             // ボタン登録
-            foreach(ButtonComponent flagButton in flagButtons)
+            foreach (ButtonComponent flagButton in flagButtons)
             {
                 flagButton.ButtonPushedEvent += SetSelectedFlag;
             }
@@ -59,7 +56,7 @@ namespace ReelSpinGame_Option.MenuContent
             CurrentSelectRandomID = 0;
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             // 登録解除
             foreach (ButtonComponent flagButton in flagButtons)
@@ -189,7 +186,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             CurrentSelectRandomID += 1;
             // 数値が6を超えたらランダム(0)に戻す
-            if(CurrentSelectRandomID > ReelSpinManagerModel.MaxRandomLots)
+            if (CurrentSelectRandomID > ReelSpinManagerModel.MaxRandomLots)
             {
                 CurrentSelectRandomID = 0;
             }
@@ -226,7 +223,7 @@ namespace ReelSpinGame_Option.MenuContent
         void UpdateFlagSelectImage()
         {
             // フラグ選択がされていれば更新
-            if(CurrentSelectFlagID > -1)
+            if (CurrentSelectFlagID > -1)
             {
                 flagDisplayImage.gameObject.SetActive(true);
                 flagDisplayImage.sprite = flagImages[CurrentSelectFlagID];
@@ -240,7 +237,7 @@ namespace ReelSpinGame_Option.MenuContent
         // 数値テキスト変更
         void UpdateRandomValueText()
         {
-            if(CurrentSelectRandomID == 0)
+            if (CurrentSelectRandomID == 0)
             {
                 randomValueText.text = "?";
             }

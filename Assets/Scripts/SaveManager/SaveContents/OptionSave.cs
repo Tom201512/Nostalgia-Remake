@@ -110,7 +110,7 @@ namespace ReelSpinGame_Save.Database
                 OtherOptionData.SetMiniReel(br.ReadInt32() == 1 ? true : false);
                 Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
-                for(int i = 0; i < ReelAmount; i++)
+                for (int i = 0; i < ReelAmount; i++)
                 {
                     OtherOptionData.AssistMarkerPos[i] = br.ReadInt32();
                     Debug.Log("Marker [" + i + "]:" + OtherOptionData.AssistMarkerPos[i]);

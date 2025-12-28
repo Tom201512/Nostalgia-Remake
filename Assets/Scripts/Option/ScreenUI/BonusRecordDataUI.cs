@@ -7,14 +7,10 @@ using static ReelSpinGame_Reels.ReelObjectPresenter;
 using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 namespace ReelSpinGame_Option.MenuContent
-{
+{        
+    // ボーナス履歴を表示するUI
     public class BonusRecordDataUI : MonoBehaviour
     {
-        // ボーナス履歴を表示するUI
-
-        // const
-
-        // var
         [SerializeField] BonusLogDisplayList bonusLogDisplayList;   // ボーナス履歴リスト
         [SerializeField] ReelDisplayUI reelDisplayUI;               // 当選時出目表示機能
         [SerializeField] TextMeshProUGUI noDataText;                // データがないときに表示するテキスト
@@ -27,22 +23,11 @@ namespace ReelSpinGame_Option.MenuContent
             reelDisplayUI.gameObject.SetActive(false);
         }
 
-        void Start()
-        {
-            
-        }
-
-        void Update()
-        {
-            
-        }
-
-        // func(public)
         // ボーナス履歴をデータから作成する
         public void GenerateBonusResult(List<BonusHitData> bonusHitDatas)
         {
             int index = 0; // 配列要素番号
-            if(bonusHitDatas.Count == 0)
+            if (bonusHitDatas.Count == 0)
             {
                 noDataText.gameObject.SetActive(true);
             }
@@ -76,7 +61,6 @@ namespace ReelSpinGame_Option.MenuContent
             reelDisplayUI.gameObject.SetActive(false);
         }
 
-        // func(private)
         // ボーナス表示データの作成
         void GenerateBonusDisplayData(BonusHitData bonusHitData, int index)
         {

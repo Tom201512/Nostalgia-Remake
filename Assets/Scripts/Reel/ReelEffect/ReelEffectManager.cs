@@ -2,8 +2,8 @@ using ReelSpinGame_Reels.Symbol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using static ReelSpinGame_Reels.ReelObjectPresenter;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Effect
 {
@@ -80,7 +80,7 @@ namespace ReelSpinGame_Reels.Effect
         private IEnumerator FakeSpinTestA()
         {
             Debug.Log("‹^——V‹Z‚ğŠJn‚µ‚Ü‚µ‚½B");
-            
+
             Debug.Log("‰EƒŠ[ƒ‹‚ğ1•bŒã‚É‰ñ“]‚³‚¹‚Ü‚·B");
             yield return new WaitForSeconds(1.0f);
             reelObjects[(int)ReelID.ReelRight].StartReel(0.98f, true);

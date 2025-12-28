@@ -22,7 +22,7 @@ namespace ReelSpinGame_Reels.Spin
         const float MaxSpeedReelTime = 0.3f;
 
         // リールの状態(停止、回転、停止信号受理、停止中)
-        public enum ReelStatus { Stopped, Spinning, RecieveStop, Stopping}
+        public enum ReelStatus { Stopped, Spinning, RecieveStop, Stopping }
 
         // var
         // リール配列
@@ -97,7 +97,7 @@ namespace ReelSpinGame_Reels.Spin
             else
             {
                 if (RotateSpeed < MaxSpeed)
-                { 
+                {
                     RotateSpeed = Mathf.Clamp(RotateSpeed += ReturnReelAccerateSpeed() * Time.deltaTime * 1, 0, MaxSpeed);
                 }
                 else if (RotateSpeed > MaxSpeed)

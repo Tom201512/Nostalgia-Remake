@@ -6,22 +6,22 @@ namespace ReelSpinGame_Sound.SE
     // 効果音のデータセット
     [CreateAssetMenu(fileName = "SE_Pack", menuName = "Nostalgia/GenerateSEPack", order = 2)]
     [Serializable]
-	public class SePack : ScriptableObject
-	{
+    public class SePack : ScriptableObject
+    {
         // const
-		// var
+        // var
         [SerializeField] private SeFile bet;
-		[SerializeField] private SeFile wait;
-		[SerializeField] private SeFile start;
-		[SerializeField] private SeFile spStart;
-		[SerializeField] private SeFile stop;
-		[SerializeField] private SeFile redRiichiSound;
-		[SerializeField] private SeFile blueRiichiSound;
-		[SerializeField] private SeFile bb7RiichiSound;
-		[SerializeField] private SeFile replay;
-		[SerializeField] private SeFile normalPayout;
-		[SerializeField] private SeFile maxPayout;
-		[SerializeField] private SeFile jacPayout;
+        [SerializeField] private SeFile wait;
+        [SerializeField] private SeFile start;
+        [SerializeField] private SeFile spStart;
+        [SerializeField] private SeFile stop;
+        [SerializeField] private SeFile redRiichiSound;
+        [SerializeField] private SeFile blueRiichiSound;
+        [SerializeField] private SeFile bb7RiichiSound;
+        [SerializeField] private SeFile replay;
+        [SerializeField] private SeFile normalPayout;
+        [SerializeField] private SeFile maxPayout;
+        [SerializeField] private SeFile jacPayout;
         [SerializeField] private SeFile redStart;
         [SerializeField] private SeFile redEnd;
         [SerializeField] private SeFile blueStart;

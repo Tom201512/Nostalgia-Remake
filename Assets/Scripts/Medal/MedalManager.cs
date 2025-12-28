@@ -1,7 +1,7 @@
 using ReelSpinGame_Interface;
+using ReelSpinGame_Lamps;
 using ReelSpinGame_Medal.Segment;
 using ReelSpinGame_Save.Medal;
-using ReelSpinGame_Lamps;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -12,11 +12,8 @@ namespace ReelSpinGame_Medal
     //スロット内部のメダル管理
     public class MedalManager : MonoBehaviour, IHasSave<MedalSave>
     {
-        // const
-        // メダル更新の間隔(ミリ秒)
-        public const float MedalUpdateTime = 0.12f;
+        public const float MedalUpdateTime = 0.12f;        // メダル更新の間隔(ミリ秒)
 
-        // var
         [SerializeField] private MedalPanel medalPanel;                 // メダルのUI
         [SerializeField] private MedalSevenSegment creditSegments;      // クレジットセグメント
         [SerializeField] private MedalSevenSegment payoutSegments;      // 払い出しセグメント
@@ -42,7 +39,7 @@ namespace ReelSpinGame_Medal
             creditSegments.ShowSegmentByNumber(data.system.Credit);
         }
 
-        private void OnDestroy() 
+        private void OnDestroy()
         {
             StopAllCoroutines();
         }
@@ -170,7 +167,7 @@ namespace ReelSpinGame_Medal
         public void StartReplayInsert(bool hasCoroutineCut)
         {
             // コルーチンを無視する場合
-            if(hasCoroutineCut)
+            if (hasCoroutineCut)
             {
                 // ベット枚数設定
                 data.CurrentBet = data.system.LastBetAmount;
@@ -186,14 +183,12 @@ namespace ReelSpinGame_Medal
             }
         }
 
-        // メダル処理終了-
+        // メダル処理終了
         public void FinishMedalInsert()
         {
             data.CurrentBet = 0;
             data.FinishedBet = false;
         }
-
-        // func
 
         // メダル投入のセグメント更新を行う
         void StartInsertTween(int previousCredit, int betAmount)
@@ -237,7 +232,7 @@ namespace ReelSpinGame_Medal
             HasMedalUpdate = true;
 
             // セグメント更新が入るまで待機
-            while(!HasSegmentUpdate)
+            while (!HasSegmentUpdate)
             {
                 yield return new WaitForEndOfFrame();
             }

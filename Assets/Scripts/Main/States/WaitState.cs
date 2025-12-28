@@ -3,13 +3,12 @@ using ReelSpinGame_Interface;
 
 namespace ReelSpinGame_State.LotsState
 {
-    // ウェイト状態のステート
+    // ウェイト状態ステート
     public class WaitState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }        // このゲームの状態
+        public MainGameFlow.GameStates State { get; }        // ステート名
         private GameManager gM;                              // ゲームマネージャ
 
-        // コンストラクタ
         public WaitState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Wait;
@@ -20,11 +19,11 @@ namespace ReelSpinGame_State.LotsState
         {
             // 高速オート時はウェイトを即無効にする
             // ウェイトカットがある場合も即無効にする
-            if(gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal)
+            if (gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal)
             {
                 gM.Wait.DisableWaitTimer();
             }
-            else if(gM.Wait.HasWaitCut)
+            else if (gM.Wait.HasWaitCut)
             {
                 gM.Wait.DisableWaitTimer();
             }
@@ -40,8 +39,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             // ウェイトが切れるまで待つ
-            //Debug.Log("Update Wait State");
-            if(!gM.Wait.HasWait)
+            if (!gM.Wait.HasWait)
             {
                 gM.MainFlow.stateManager.ChangeState(gM.MainFlow.PlayingState);
             }
@@ -50,7 +48,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateEnd()
         {
             // オートの有無で条件を変える
-            if(gM.Auto.HasAuto)
+            if (gM.Auto.HasAuto)
             {
                 // オート速度が通常ならウェイトタイマーを起動(ウェイトカットあり時は無効)
                 if (gM.Auto.CurrentSpeed == AutoSpeedName.Normal)

@@ -5,9 +5,6 @@ namespace ReelSpinGame_Option.Button
     // チェックボックス管理マネージャー
     public class CheckBoxManager : MonoBehaviour
     {
-        // const
-
-        // var
         CheckBoxComponent[] checkBoxList; // チェックボックスリスト
         public byte CurrentSelectFlag { get; private set; } // 現在の選択フラグ
 
@@ -23,7 +20,7 @@ namespace ReelSpinGame_Option.Button
         {
             checkBoxList = GetComponentsInChildren<CheckBoxComponent>();
             // チェックボックスボタンのイベント登録
-            foreach(CheckBoxComponent check in checkBoxList)
+            foreach (CheckBoxComponent check in checkBoxList)
             {
                 check.ButtonPushedEvent += OnCheckBoxUpdated;
             }
@@ -32,21 +29,20 @@ namespace ReelSpinGame_Option.Button
         void OnDestroy()
         {
             // チェックボックスボタンのイベント解除
-            foreach(CheckBoxComponent check in checkBoxList)
+            foreach (CheckBoxComponent check in checkBoxList)
             {
                 check.ButtonPushedEvent -= OnCheckBoxUpdated;
             }
         }
 
-        // func public
         // データの読み込み
         public void LoadOptionData(byte value)
         {
             CurrentSelectFlag = value;
             // 対応するシグナルのチェックボックスを有効化する
-            foreach(CheckBoxComponent check in checkBoxList)
+            foreach (CheckBoxComponent check in checkBoxList)
             {
-                if((check.SignalID & CurrentSelectFlag) == check.SignalID)
+                if ((check.SignalID & CurrentSelectFlag) == check.SignalID)
                 {
                     check.ToggleSelecting(true);
                 }
@@ -66,13 +62,10 @@ namespace ReelSpinGame_Option.Button
             }
         }
 
-        // func private
-
         // チェックボックス更新時のイベント
         void OnCheckBoxUpdated(int signalID)
         {
             CurrentSelectFlag ^= (byte)signalID;
-            Debug.Log("CurrentSelectFlagData:" + CurrentSelectFlag);
             CheckBoxUpdatedEvent?.Invoke();
         }
     }

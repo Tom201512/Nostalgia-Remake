@@ -48,7 +48,7 @@ namespace ReelSpinGame_Sound
             if (HasLoop)
             {
                 // ループ時間を過ぎたら次のトラックを準備
-                if(AudioSettings.dspTime + 1.0 >= LoopTime)
+                if (AudioSettings.dspTime + 1.0 >= LoopTime)
                 {
                     PrepareLoopTrack();
                 }
@@ -60,8 +60,6 @@ namespace ReelSpinGame_Sound
             StopAudio();
             StopAllCoroutines();
         }
-
-        // func
 
         // 再生
         public void PlayBGM(AudioClip soundSource)

@@ -1,8 +1,6 @@
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
-using ReelSpinGame_Sound;
-using System.Collections;
 using UnityEngine;
 
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -31,7 +29,7 @@ namespace ReelSpinGame_Effect.Data
             flash.ForceStopFlash();
 
             // JAC中かでフラッシュの点灯方法を変える
-            if(leverOnEffectCondition.BonusStatus == BonusStatus.BonusJACGames)
+            if (leverOnEffectCondition.BonusStatus == BonusStatus.BonusJACGames)
             {
                 flash.EnableJacGameLight();
             }

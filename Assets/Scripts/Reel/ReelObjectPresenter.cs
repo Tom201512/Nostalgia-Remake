@@ -53,8 +53,6 @@ namespace ReelSpinGame_Reels
             reelSpinPresenter.HasReelStopped -= OnReelHasStoppedCallback;
         }
 
-        // func
-
         // 数値を得る
         // リールのID
         public ReelID GetReelID() => reelID;
@@ -125,7 +123,7 @@ namespace ReelSpinGame_Reels
         // リール停止(高速版)
         public void StopReelFast(int pushedPos, int pushOrder, int delay)
         {
-            reelSpinPresenter.StopReelImmediately(pushedPos, pushOrder,delay);
+            reelSpinPresenter.StopReelImmediately(pushedPos, pushOrder, delay);
             reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.GetCurrentLower());
         }
 
@@ -133,7 +131,7 @@ namespace ReelSpinGame_Reels
         private void OnReelPosChangedCallback()
         {
             // JAC中であれば回転時の明るさ計算をリセット
-            if(ReelEffectManager.HasJacBrightnessCalculate)
+            if (ReelEffectManager.HasJacBrightnessCalculate)
             {
                 ReelEffectManager.ResetJacBrightnessCalculate(reelSpinPresenter.GetMaxSpeed());
             }

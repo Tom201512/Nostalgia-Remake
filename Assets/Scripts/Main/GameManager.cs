@@ -17,17 +17,15 @@ using UnityEngine;
 // ゲームの管理
 public class GameManager : MonoBehaviour
 {
-    // const
     public const int MaxSlotSetting = 6;    // 最高設定値
 
     // 各種操作のシリアライズ
     public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight }
 
-    // var
     [SerializeField] private SlotCamera slotCam;    // メインカメラ
 
     // 各種マネージャー
-    [SerializeField] private ReelLogicManager reelManagerObj;      // リール情報
+    [SerializeField] private ReelLogicManager reelManagerObj;       // リール情報
     [SerializeField] private EffectPresenter effectManagerObj;      // 演出
     [SerializeField] private OptionManager optionManagerObj;        // オプション画面
     [SerializeField] PlayerUI playerUI;                             // プレイヤーUI
@@ -78,7 +76,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-
         Screen.SetResolution(1600, 900, false);         // 画面サイズ初期化
         Application.targetFrameRate = 60;               // FPS固定
 
@@ -109,13 +106,13 @@ public class GameManager : MonoBehaviour
             saveManager.DeletePlayerSave();
         }
 
-        if(!dontSaveFlag)
+        if (!dontSaveFlag)
         {
             // セーブ読み込み。セーブがない場合は新規作成
             // セーブフォルダの作成
 
             // セーブがない場合は新規にデータ作成
-            if(saveManager.GenerateSaveFolder())
+            if (saveManager.GenerateSaveFolder())
             {
                 loadFailed = true;
             }
@@ -131,7 +128,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 読み込みに失敗した場合はセーブを初期化
-        if(loadFailed)
+        if (loadFailed)
         {
             Debug.LogWarning("セーブファイルが破損しています。全てのファイルをリセットしました。");
             OptionSave.InitializeSave();
@@ -140,7 +137,7 @@ public class GameManager : MonoBehaviour
             saveManager.DeletePlayerSave();
             PlayerSave.RecordSlotSetting(debugSetting);
         }
-        else if(playerLoadFailed)
+        else if (playerLoadFailed)
         {
             Debug.LogWarning("プレイヤーセーブの読み込みに失敗しました。新規にプレイします。");
             PlayerSave.InitializeSave();
@@ -169,7 +166,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
-            if(!Option.hasOptionMode)
+            if (!Option.hasOptionMode)
             {
                 // 設定を反映する
                 Auto.CurrentSpeed = Option.GetAutoOptionData().CurrentSpeed;
@@ -181,13 +178,13 @@ public class GameManager : MonoBehaviour
 
                 Auto.ChangeAutoMode();
 
-                if(Auto.HasAuto)
+                if (Auto.HasAuto)
                 {
                     Option.ToggleOptionLock(true);
                 }
-                else if(Auto.CurrentSpeed == (int)AutoSpeedName.Normal)
+                else if (Auto.CurrentSpeed == (int)AutoSpeedName.Normal)
                 {
-                    if(!Option.lockOptionMode)
+                    if (!Option.lockOptionMode)
                     {
                         Option.ToggleOptionLock(false);
                     }
@@ -236,13 +233,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // func
     // 設定値変更
     public void ChangeSetting(int setting)
     {
         // 例外処理
-        if (setting < 0 && setting > 6) 
-        { 
+        if (setting < 0 && setting > 6)
+        {
             throw new Exception("Invalid Setting, must be within 0~6");
         }
         // 0ならランダムを選ぶ

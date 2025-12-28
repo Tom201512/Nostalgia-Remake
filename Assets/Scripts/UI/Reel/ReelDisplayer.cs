@@ -2,7 +2,6 @@ using ReelSpinGame_Reels;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_UI.Reel
 {
@@ -28,7 +27,7 @@ namespace ReelSpinGame_UI.Reel
         // 指定した下の位置を基準にリール図柄を表示
         public void DisplayReelSymbols(int lowerPos, ReelObjectPresenter reelObjectPresetner)
         {
-            foreach(SymbolDisplayUI symbol in reelSymbols)
+            foreach (SymbolDisplayUI symbol in reelSymbols)
             {
                 Sprite sprite = reelObjectPresetner.GetReelSymbolSprite(ReelObjectPresenter.OffsetReelPos(lowerPos, (int)symbol.GetPosID()));
                 symbol.ChangeSymbol(sprite);
@@ -49,7 +48,7 @@ namespace ReelSpinGame_UI.Reel
         // 停止順番を表示
         public void DisplayOrder(int order)
         {
-            switch(order)
+            switch (order)
             {
                 case 1:
                     reelPushOrderText.text = "1st";

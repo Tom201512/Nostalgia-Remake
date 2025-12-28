@@ -23,25 +23,13 @@ namespace ReelSpinGame_UI.Bonus
             image = GetComponent<Image>();
         }
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
-
-        // func(public)
-
         // 図柄の表示
         public void ShowBonusDisplay(BigColor bigColor)
         {
             // BIG当選時の色がNone以外であればBIG図柄を表示
-            if((int)bigColor > (int)BigColor.None)
+            if ((int)bigColor > (int)BigColor.None)
             {
-                if((int)bigColor - 1 < bigDisplayImages.Count)
+                if ((int)bigColor - 1 < bigDisplayImages.Count)
                 {
                     image.sprite = bigDisplayImages[(int)bigColor - 1];
                 }

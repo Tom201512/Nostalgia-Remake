@@ -10,7 +10,7 @@ namespace ReelSpinGame_Sound.SE
     {
         // const
         // 音声ファイルのタイプ(Oneshot: 一度だけ鳴らす, Wait: 鳴らしたら一度待機させる, Jignle:鳴らしたら待機&BGMとして再生、Loop: 鳴らしたらループさせる)
-        public enum SeFileType {Oneshot, Wait, Jingle, Loop}
+        public enum SeFileType { Oneshot, Wait, Jingle, Loop }
 
         // var
         // 音源ファイル

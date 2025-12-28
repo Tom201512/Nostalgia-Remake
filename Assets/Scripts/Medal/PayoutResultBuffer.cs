@@ -6,12 +6,11 @@ namespace ReelSpinGame_Payout
     // 払い出し結果
     public class PayoutResultBuffer
     {
-        public int Payout { get; set; }
-        public int BonusID { get; set; }
-        public bool IsReplayOrJacIn { get; set; }
+        public int Payout { get; set; }             // 払い出し枚数
+        public int BonusID { get; set; }            // 当選ボーナスID
+        public bool IsReplayOrJacIn { get; set; }   // リプレイか
 
-        // 払い出しのあったライン
-        public List<PayoutLineData> PayoutLines { get; set; }
+        public List<PayoutLineData> PayoutLines { get; set; }   // 払い出しのあったライン
 
         public PayoutResultBuffer(int payout, int bonusID, bool isReplayOrJac)
         {

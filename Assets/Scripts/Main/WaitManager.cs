@@ -1,17 +1,12 @@
 using UnityEngine;
 
+// ウェイト管理
 public class WaitManager : MonoBehaviour
 {
-    // ウェイト管理
+    public const float WaitTime = 4.1f;     // ウェイトに必要な時間(ミリ秒)
 
-    // const
-    // ウェイトに必要な時間(ミリ秒)
-    public const float WaitTime = 4.1f;
-    // var
-    // ウェイトが有効か
-    public bool HasWait { get; private set; }
-    // ウェイトを無効にしているか
-    public bool HasWaitCut { get; private set; }
+    public bool HasWait { get; private set; }       // ウェイトが有効か
+    public bool HasWaitCut { get; private set; }    // ウェイトを無効にしているか
 
     private void Awake()
     {
@@ -19,7 +14,6 @@ public class WaitManager : MonoBehaviour
         HasWaitCut = false;
     }
 
-    // func
     // ウェイトカットの設定
     public void SetWaitCutSetting(bool hasWaitCut) => HasWaitCut = hasWaitCut;
 
@@ -37,7 +31,7 @@ public class WaitManager : MonoBehaviour
     // ウェイト状態を強制解除する(オート用)
     public void DisableWaitTimer()
     {
-        if(HasWait)
+        if (HasWait)
         {
             HasWait = false;
         }

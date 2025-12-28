@@ -1,9 +1,8 @@
 using ReelSpinGame_Medal;
 using ReelSpinGame_System;
+using ReelSpinGame_UI.Player.Bonus;
 using ReelSpinGame_UI.Player.Games;
 using ReelSpinGame_UI.Player.Medal;
-using ReelSpinGame_UI.Player.Bonus;
-using TMPro;
 using UnityEngine;
 
 namespace ReelSpinGame_UI.Player
@@ -114,7 +113,7 @@ namespace ReelSpinGame_UI.Player
         }*/
 
         //public void SetPlayerData(PlayerDatabase playingDatabase) => this.playerDatabase = playingDatabase;
-       //public void SetMedalManager(MedalManager medalManager) => this.medalManager = medalManager;
+        //public void SetMedalManager(MedalManager medalManager) => this.medalManager = medalManager;
 
         // UIXV
         public void UpdatePlayerUI(PlayerDatabase playerDatabase, MedalManager medalManager)

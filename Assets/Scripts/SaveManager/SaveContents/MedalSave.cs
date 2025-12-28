@@ -10,9 +10,6 @@ namespace ReelSpinGame_Save.Medal
     // メダル情報のセーブ
     public class MedalSave : ISavable
     {
-        // const
-
-        // var
         public int Credit { get; private set; }             // クレジット枚数
         public int MaxBetAmount { get; private set; }       // 最高ベット枚数
         public int LastBetAmount { get; private set; }      // 最後にかけたメダル枚数
@@ -26,19 +23,13 @@ namespace ReelSpinGame_Save.Medal
             HasReplay = false;
         }
 
-        // func
-
         // データ記録
         public void RecordData(MedalSystemData medal)
         {
             Credit = medal.Credit;
-            //Debug.Log("Credit:" + Credit);
             MaxBetAmount = medal.MaxBetAmount;
-            //Debug.Log("MaxBetAmount:" + MaxBetAmount);
             LastBetAmount = medal.LastBetAmount;
-            //Debug.Log("LastBetAmount:" + LastBetAmount);
             HasReplay = medal.HasReplay;
-            //Debug.Log("HasReplay:" + HasReplay);
         }
 
         // セーブ

@@ -27,7 +27,7 @@ namespace ReelSpinGame_Lots
 
     // フラグの処理
     public class FlagLotsModel
-	{
+    {
         const int MaxFlagLots = 16384;      // 最大フラグ数
         const int SeekNum = 6;              // テーブルシーク位置
 

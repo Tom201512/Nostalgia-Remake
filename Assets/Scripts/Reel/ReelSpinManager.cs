@@ -75,8 +75,6 @@ public class ReelSpinManager : MonoBehaviour
         StopAllCoroutines();
     }
 
-    // func
-
     // 数値を得る
     public bool GetIsReelWorking() => reelSpinManagerModel.IsReelWorking;           // リールが動作中か
     public bool GetIsReelFinished() => reelSpinManagerModel.IsReelFinished;         // リールの動作が終了したか
@@ -107,7 +105,7 @@ public class ReelSpinManager : MonoBehaviour
     public void SetReelPos(List<int> lastReelPos)
     {
         int index = 0;
-        foreach(int pos  in lastReelPos)
+        foreach (int pos in lastReelPos)
         {
             reelObjects[index].ChangeCurrentLower(pos);
             index += 1;
@@ -162,7 +160,7 @@ public class ReelSpinManager : MonoBehaviour
     public void StopSelectedReel(ReelID reelID, int bet, FlagID flagID, BonusTypeID bonusID)
     {
         // 全リール速度が最高速度になっていれば
-        if(reelSpinManagerModel.CanStopReels)
+        if (reelSpinManagerModel.CanStopReels)
         {
             // 回転中なら停止
             if (reelObjects[(int)reelID].GetCurrentReelStatus() == ReelStatus.Spinning)

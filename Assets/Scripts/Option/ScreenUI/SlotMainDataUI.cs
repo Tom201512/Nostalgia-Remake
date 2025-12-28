@@ -1,5 +1,4 @@
 using ReelSpinGame_System;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -8,17 +7,17 @@ namespace ReelSpinGame_Option.MenuContent
     public class SlotMainDataUI : MonoBehaviour
     {
         // スロット基本情報画面のスクリプト
+        [SerializeField] TextMeshProUGUI dataTextUI;        // データテキスト1
+        [SerializeField] TextMeshProUGUI dataTextUI2;       // データテキスト2
 
-        // データ部分1
-        [SerializeField] TextMeshProUGUI dataTextUI;
-        [SerializeField] TextMeshProUGUI dataTextUI2;
-
+        // 画面更新
         public void UpdateText(PlayerDatabase player)
         {
             DisplayGamesAndBonus(player);
             DisplayMedal(player);
         }
 
+        // ゲーム数、ボーナス情報表示
         private void DisplayGamesAndBonus(PlayerDatabase player)
         {
             string data = "\n";

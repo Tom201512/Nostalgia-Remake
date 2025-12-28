@@ -1,5 +1,4 @@
 using ReelSpinGame_Datas.Reels;
-using ReelSpinGame_Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,23 +10,17 @@ namespace ReelSpinGame_Datas
     // リールのスベリコマデータ
     public class ReelDelayTableData : ScriptableObject
     {
-        // var
         // リール条件
-        // 第一停止
-        [SerializeField] private List<ReelFirstConditions> first;
-        // 第二停止
-        [SerializeField] private List<ReelSecondConditions> second;
-        // 第三停止
-        [SerializeField] private List<ReelThirdConditions> third;
-        // ディレイテーブル
-        [SerializeField] private List<ReelTableData> tables;
 
-        public List<ReelFirstConditions> FirstCondition { get { return first; } }
-        public List<ReelSecondConditions> SecondCondition { get { return second; } }
-        public List<ReelThirdConditions> ThirdCondition { get { return third; } }
-        public List<ReelTableData> Tables { get { return tables; } }
+        [SerializeField] private List<ReelFirstConditions> first;       // 第一停止
+        [SerializeField] private List<ReelSecondConditions> second;     // 第二停止
+        [SerializeField] private List<ReelThirdConditions> third;       // 第三停止
+        [SerializeField] private List<ReelTableData> tables;            // スベリコマテーブル
 
-        // func
+        public List<ReelFirstConditions> FirstCondition { get { return first; } }       // 第一停止条件のリスト
+        public List<ReelSecondConditions> SecondCondition { get { return second; } }    // 第二停止条件のリスト
+        public List<ReelThirdConditions> ThirdCondition { get { return third; } }       // 第三停止条件のリスト
+        public List<ReelTableData> Tables { get { return tables; } }                    // スベリコマテーブルのリスト
 
         // リール条件セット
         public void SetReelConditions(List<ReelFirstConditions> first, List<ReelSecondConditions> second, List<ReelThirdConditions> third)
@@ -45,27 +38,17 @@ namespace ReelSpinGame_Datas
     [Serializable]
     public class ReelConditionsData
     {
-        // const
-        // 条件を読み込むバイト数
-        public const int ConditionMaxRead = 5;
-        // 第一停止リール停止位置を読み込むバイト数
-        public const int FirstReelPosMaxRead = ConditionMaxRead + 10;
-        // テーブルIDの読み込むバイト数
-        public const int ReelTableIDMaxRead = FirstReelPosMaxRead + 1;
-        // 条件を読み込む際にずらすビット数
-        public const int ConditionBitOffset = 4;
+        public const int ConditionMaxRead = 5;                              // 条件を読み込むバイト数
+        public const int FirstReelPosMaxRead = ConditionMaxRead + 10;       // 第一停止リール停止位置を読み込むバイト数
+        public const int ReelTableIDMaxRead = FirstReelPosMaxRead + 1;      // テーブルIDの読み込むバイト数
+        public const int ConditionBitOffset = 4;                            // 条件を読み込む際にずらすビット数
 
-        // enum
         // 条件のシリアライズ
         public enum ConditionID { Flag, FirstPush, Bet, Bonus, Random }
 
-        // var
-        // フラグID, 第一停止, ボーナス, ベット枚数, ランダム制御の順で読み込む
-        [SerializeField] private int mainConditions;
-        // 第一停止したリールの位置(これをもとにテーブルの変更をする)
-        [SerializeField] private int firstReelPosition;
-        // 使用するテーブル番号
-        [SerializeField] byte reelTableNumber;
+        [SerializeField] private int mainConditions;        // メイン条件数値
+        [SerializeField] private int firstReelPosition;     // 第一停止したリールの位置
+        [SerializeField] byte reelTableNumber;              // 使用するテーブル番号
 
         public int MainConditions { get { return mainConditions; } set { mainConditions = value; } }
         public int FirstReelPosition { get { return firstReelPosition; } set { firstReelPosition = value; } }
@@ -137,7 +120,6 @@ namespace ReelSpinGame_Datas
             }
         }
 
-        // func
         // 各条件の数値を返す
         public static int GetConditionData(int condition, int conditionID) => ((condition >> ConditionBitOffset * conditionID) & 0xF);
 

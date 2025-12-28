@@ -1,5 +1,6 @@
 namespace ReelSpinGame_Option.MenuContent
 {
+    // オプション画面のインターフェース
     public interface IOptionScreenBase
     {
         // 画面を開いた時の挙動

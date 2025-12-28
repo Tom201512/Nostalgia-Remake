@@ -11,24 +11,20 @@ namespace ReelSpinGame_Option
     // 左右セレクトボタンのコンポーネント
     public class SelectButtonComponent : MonoBehaviour
     {
-        // const
-
-        // var
         // 選択ボタン
         [SerializeField] ButtonComponent nextContentButton;       // 次ボタン
         [SerializeField] ButtonComponent previousContentButton;   // 前ボタン
 
-        [SerializeField] List<LocalizedString> textDisplayList; // テキストのローカライズリスト
-        [SerializeField] List<LocalizedSprite> imageDisplayList; // 画像のローカライズリスト
+        [SerializeField] List<LocalizedString> textDisplayList;     // テキストのローカライズリスト
+        [SerializeField] List<LocalizedSprite> imageDisplayList;    // 画像のローカライズリスト
 
         // ローカライズ用の画像、テキスト
         [SerializeField] TextMeshProUGUI selectText;    // 選択項目のテキスト
-        [SerializeField] Image selectImage;   // 選択項目の画像
+        [SerializeField] Image selectImage;             // 選択項目の画像
 
-        // 設定項目
-        public int CurrentSettingID { get; private set; } // 現在選択しているID
+        public int CurrentSettingID { get; private set; } // 現在選択している項目ID
 
-        int contentListCount; // コンテンツの数
+        private int contentListCount; // コンテンツの数
 
         // ローカライズ
         LocalizeStringEvent selectTextLocalize;    // 選択項目のテキスト
@@ -50,15 +46,10 @@ namespace ReelSpinGame_Option
             contentListCount = textDisplayList.Count;
 
             // テキストの個数より画像の方が多ければ更新
-            if(contentListCount < imageDisplayList.Count)
+            if (contentListCount < imageDisplayList.Count)
             {
                 contentListCount = imageDisplayList.Count;
             }
-        }
-
-        void Start()
-        {
-            //UpdateScreen();
         }
 
         void OnDestroy()
@@ -67,7 +58,6 @@ namespace ReelSpinGame_Option
             previousContentButton.ButtonPushedEvent -= OnPreviousPressed;
         }
 
-        // func(public)
         // データ読み込み
         public void LoadOptionData(int dataID)
         {
@@ -81,8 +71,6 @@ namespace ReelSpinGame_Option
             nextContentButton.ToggleInteractive(value);
             previousContentButton.ToggleInteractive(value);
         }
-
-        // func(private)
 
         // 速度選択変更ボタンのイベント
         void OnNextPressed(int signalID)
@@ -116,13 +104,13 @@ namespace ReelSpinGame_Option
             selectImage.gameObject.SetActive(false);
 
             // 対応するテキストがあれば表示する
-            if(CurrentSettingID < textDisplayList.Count)
+            if (CurrentSettingID < textDisplayList.Count)
             {
                 selectText.gameObject.SetActive(true);
                 selectTextLocalize.StringReference = textDisplayList[CurrentSettingID];
             }
 
-            if(!selectText.IsActive())
+            if (!selectText.IsActive())
             {
                 // 対応する画像があれば表示する
                 if (CurrentSettingID < imageDisplayList.Count)

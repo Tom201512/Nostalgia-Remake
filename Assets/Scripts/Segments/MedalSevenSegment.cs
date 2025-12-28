@@ -1,9 +1,8 @@
-using System;
-using UnityEngine;
 using ReelSpinGame_Lamps;
-
-using static ReelSpinGame_Lamps.SegmentLampUtil;
+using System;
 using System.Collections;
+using UnityEngine;
+using static ReelSpinGame_Lamps.SegmentLampUtil;
 
 namespace ReelSpinGame_Medal.Segment
 {
@@ -16,13 +15,12 @@ namespace ReelSpinGame_Medal.Segment
         public const float SegmentUpdateFrame = 0.12f;          // 数値更新の間隔(ミリ秒)
 
         // var
-        public bool HasSegmentUpdate {  get; private set; } // セグメントを更新中か
+        public bool HasSegmentUpdate { get; private set; } // セグメントを更新中か
 
         SegmentLamp[] segments;    // 7セグ
         int tweenFromValue;  // 補完の起点
         int tweenToValue;    // 補完の終点
 
-        // func
         void Awake()
         {
             HasSegmentUpdate = false;
@@ -84,7 +82,7 @@ namespace ReelSpinGame_Medal.Segment
             // 補完処理
             while (tweenValue != tweenToValue)
             {
-                if(tweenValue > tweenToValue)
+                if (tweenValue > tweenToValue)
                 {
                     tweenValue -= 1;
                 }

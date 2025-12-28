@@ -5,51 +5,36 @@ using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuContent
 {
+    // スロット情報画面
     public class SlotDataScreen : MonoBehaviour, IOptionScreenBase
     {
-        // スロット情報画面
-
-        // const
-        private const int maxPage = 5;
-
-        // var
+        const int maxPage = 5;
 
         // 各種画面
-        // メイン情報
-        [SerializeField] private SlotMainDataUI slotMainDataUI;
-        // 通常時小役確率
-        [SerializeField] private ProbabilityDataUI probabilityDataUI;
-        // 直近ボーナス情報、JACハズシ確率など
-        [SerializeField] private BonusDataUI bonusDataUI;
-        // スランプグラフ
-        [SerializeField] private SlumpGraphDataUI slumpGraphDataUI;
-        // ボーナス履歴
-        [SerializeField] private BonusRecordDataUI bonusRecordDataUI;
 
-        // 次ボタン
-        [SerializeField] private ButtonComponent nextButton;
-        // 前ボタン
-        [SerializeField] private ButtonComponent previousButton;
-        // クローズボタン
-        [SerializeField] private ButtonComponent closeButton;
-        // ページ表記
-        [SerializeField] private TextMeshProUGUI pageCount;
+        [SerializeField] private SlotMainDataUI slotMainDataUI;             // メイン情報
+        [SerializeField] private ProbabilityDataUI probabilityDataUI;       // 通常時小役確率
+        [SerializeField] private BonusDataUI bonusDataUI;                   // 直近ボーナス情報、JACハズシ確率など
+        [SerializeField] private SlumpGraphDataUI slumpGraphDataUI;         // スランプグラフ
+        [SerializeField] private BonusRecordDataUI bonusRecordDataUI;       // ボーナス履歴
 
-        // 操作ができる状態か(アニメーション中などはつけないこと)
-        public bool CanInteract { get; set; }
+        [SerializeField] private ButtonComponent nextButton;        // 次ボタン
+        [SerializeField] private ButtonComponent previousButton;    // 前ボタン
+        [SerializeField] private ButtonComponent closeButton;       // クローズボタン
+        [SerializeField] private TextMeshProUGUI pageCount;         // ページ表記
+
+        public PlayerDatabase PlayerData;        // プレイヤーデータのアドレス
 
         // 画面を閉じたときのイベント
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
+        public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
+
         // 表示中のページ番号
         private int currentPage = 0;
 
-        // プレイヤーデータのアドレス
-        public PlayerDatabase PlayerData;
-
-        // func
-        private void Awake()
+        void Awake()
         {
             // ボタン登録
             closeButton.ButtonPushedEvent += OnClosedPressed;
@@ -57,12 +42,12 @@ namespace ReelSpinGame_Option.MenuContent
             previousButton.ButtonPushedEvent += OnPreviousPushed;
         }
 
-        private void Start()
+        void Start()
         {
             UpdateScreen();
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             nextButton.ButtonPushedEvent -= OnNextPushed;

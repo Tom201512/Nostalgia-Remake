@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 using UnityEngine;
+using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels
 {
-	public class LastStoppedReelData
-	{
+    public class LastStoppedReelData
+    {
         // 最後に止めたリールのデータ
 
         // const

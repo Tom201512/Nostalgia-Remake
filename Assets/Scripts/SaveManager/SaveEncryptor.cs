@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-using UnityEngine;
 
 namespace ReelSpinGame_Save.Encryption
 {
@@ -61,7 +59,7 @@ namespace ReelSpinGame_Save.Encryption
         }
 
         // 復号
-        
+
         public string DecryptData(string cipherText, string keyPath)
         {
             //Debug.Log("Cipher:" + cipherText);
@@ -70,7 +68,7 @@ namespace ReelSpinGame_Save.Encryption
             string plainText = null;
 
             // 復号されたバイト配列
-            byte[] decryptedBytes = new byte[] {0};
+            byte[] decryptedBytes = new byte[] { 0 };
 
             using (Aes aes = Aes.Create())
             {
@@ -107,7 +105,7 @@ namespace ReelSpinGame_Save.Encryption
             // ランダム生成
             int seed = (int)DateTime.Now.Ticks;
             //Debug.Log("Seed:" + seed);
-            
+
             try
             {
                 using (FileStream fs = File.OpenWrite(path))
@@ -119,7 +117,7 @@ namespace ReelSpinGame_Save.Encryption
                     bw.Write(seed);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.ToString());
             }

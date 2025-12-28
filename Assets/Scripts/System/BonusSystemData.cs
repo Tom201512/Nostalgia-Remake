@@ -6,11 +6,11 @@ namespace ReelSpinGame_Bonus
 {
     // ボーナス情報
     public class BonusSystemData
-	{
+    {
         // const
         public enum BonusTypeID { BonusNone, BonusBIG, BonusREG }               // ボーナスの種類
         public enum BonusStatus { BonusNone, BonusBIGGames, BonusJACGames };    // ボーナスの状態
-        public enum BigColor {None, Red, Blue, Black};                          // BIGボーナスで当選した色
+        public enum BigColor { None, Red, Blue, Black };                          // BIGボーナスで当選した色
 
         public const int BigGames = 30;         // 残り小役ゲーム数
         public const int JacInTimes = 3;        // 残りJACIN

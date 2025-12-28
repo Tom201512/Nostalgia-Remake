@@ -105,7 +105,7 @@ namespace ReelSpinGame_Datas.Reels
         }
 
         // 条件チェック
-        public bool CheckThirdReelCondition(int flagID, int bonus, int bet, int random, 
+        public bool CheckThirdReelCondition(int flagID, int bonus, int bet, int random,
             ReelID firstStopReelID, int firstStopCID, ReelID secondStopReelID, int secondStopReelCID)
         {
             // メイン条件チェック

@@ -101,20 +101,20 @@ namespace ReelSpinGame_AutoPlay
         // 高速オート終了チェック
         public void CheckFastAutoCancelled()
         {
-            if(HasWaitingCancel)
+            if (HasWaitingCancel)
             {
                 FinishAutoForce();
             }
         }
 
-       // 残りオート回数を減らす
+        // 残りオート回数を減らす
         public void DecreaseAutoSpin()
         {
-            if(SpinTimeCondition != SpinTimeConditionName.None)
+            if (SpinTimeCondition != SpinTimeConditionName.None)
             {
                 RemainingAutoGames -= 1;
 
-                if(RemainingAutoGames == 0)
+                if (RemainingAutoGames == 0)
                 {
                     FinishAutoForce();
                 }
@@ -154,7 +154,7 @@ namespace ReelSpinGame_AutoPlay
                 FinishAutoForce();
             }
         }
-        
+
         // オート停止位置リセット
         public void ResetAutoStopPos()
         {
@@ -182,7 +182,7 @@ namespace ReelSpinGame_AutoPlay
             // 押し順設定
             SetAutoStopOrder();
             // リーチ目で止めるかの設定
-            autoAI.HasWinningPatternStop = ((EndConditionFlag & (byte)SpecificConditionFlag.WinningPattern) 
+            autoAI.HasWinningPatternStop = ((EndConditionFlag & (byte)SpecificConditionFlag.WinningPattern)
                 == (byte)SpecificConditionFlag.WinningPattern);
             // 停止位置決定
             AutoStopPos = autoAI.GetStopPos(condition);
@@ -202,8 +202,8 @@ namespace ReelSpinGame_AutoPlay
 
         // オート押し順の設定反映
         void SetAutoStopOrder()
-        {       
-            switch(CurrentStopOrder)
+        {
+            switch (CurrentStopOrder)
             {
                 case StopOrderOptionName.LMR:
                     ChangeAutoStopOrder(ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight);
@@ -235,7 +235,7 @@ namespace ReelSpinGame_AutoPlay
         void ChangeAutoStopOrder(ReelID first, ReelID second, ReelID third)
         {
             // 同じ押し順がないかチェック
-            if(first != second && second != third)
+            if (first != second && second != third)
             {
                 AutoStopOrders[(int)StopOrderID.First] = first;
                 AutoStopOrders[(int)StopOrderID.Second] = second;
@@ -246,7 +246,7 @@ namespace ReelSpinGame_AutoPlay
         // 回転数の反映
         void SetSpinTimes()
         {
-            switch(SpinTimeCondition)
+            switch (SpinTimeCondition)
             {
                 case SpinTimeConditionName.Spin1000G:
                     RemainingAutoGames = 1000;

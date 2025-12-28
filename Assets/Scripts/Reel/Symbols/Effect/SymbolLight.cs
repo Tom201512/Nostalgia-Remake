@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace ReelSpinGame_Reels.Symbol
 {
@@ -32,7 +31,7 @@ namespace ReelSpinGame_Reels.Symbol
         // êFïœçX
         public void ChangeBrightness(byte brightness)
         {
-            if(lastBrightness != brightness)
+            if (lastBrightness != brightness)
             {
                 sprite.material.SetColor("_Color", new Color32(brightness, brightness, brightness, 255));
                 lastBrightness = brightness;
