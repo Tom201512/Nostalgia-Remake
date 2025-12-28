@@ -17,7 +17,6 @@ namespace ReelSpinGame_Reels.Flash
     // リールフラッシュ機能
     public class FlashManager : MonoBehaviour
     {
-
         public const float ReelFlashTime = 0.01f;       // リールフラッシュの間隔(秒間隔)
         public const int PayoutFlashFrames = 15;        // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
 

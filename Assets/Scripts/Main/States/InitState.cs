@@ -56,7 +56,7 @@ namespace ReelSpinGame_State.LotsState
         // リプレイ状態の反映
         void ApplyReplay()
         {
-            if (gM.Medal.GetHasReplay())
+            if (gM.Medal.HasReplay)
             {
                 gM.Medal.EnableReplay();
             }
@@ -66,7 +66,7 @@ namespace ReelSpinGame_State.LotsState
         void TurnOnBackLight()
         {
             // リプレイ、またはボーナス中ならライトを点灯させる
-            if (gM.Medal.GetHasReplay() || gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
+            if (gM.Medal.HasReplay || gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
                 gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
             }

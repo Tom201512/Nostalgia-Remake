@@ -34,7 +34,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.Auto.CheckFastAutoCancelled();
 
             // 払い出し確認
-            gM.Payout.CheckPayouts(gM.Medal.GetLastBetAmount(), gM.Reel.GetLastStoppedReelData());
+            gM.Payout.CheckPayouts(gM.Medal.LastBetAmount, gM.Reel.GetLastStoppedReelData());
             PayoutUpdate();
 
             // 小役カウンタの増減(通常時のみ)
@@ -66,7 +66,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
 
             // 小役入賞回数の記録(払い出しがあれば)
-            if (gM.Payout.LastPayoutResult.Payout > 0 || gM.Medal.GetHasReplay())
+            if (gM.Payout.LastPayoutResult.Payout > 0 || gM.Medal.HasReplay)
             {
                 gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
             }
@@ -111,10 +111,10 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Payout.LastPayoutResult.IsReplayOrJacIn)
             {
                 // 最後に賭けた枚数をOUTに反映
-                gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Medal.GetLastBetAmount());
+                gM.Player.PlayerMedalData.IncreaseOutMedal(gM.Medal.LastBetAmount);
                 gM.Medal.EnableReplay();
             }
-            else if (gM.Medal.GetHasReplay())
+            else if (gM.Medal.HasReplay)
             {
                 gM.Medal.DisableReplay();
             }
@@ -147,7 +147,7 @@ namespace ReelSpinGame_State.PayoutState
         {
             // リールから揃ったボーナス図柄の色を得る
             gM.Bonus.ResetBigColor();
-            BigColor color = gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 3);
+            BigColor color = gM.Reel.GetBigLinedUpCount(gM.Medal.LastBetAmount, 3);
 
             // ビッグチャンスの場合
             if (gM.Payout.LastPayoutResult.BonusID == (int)BonusTypeID.BonusBIG)

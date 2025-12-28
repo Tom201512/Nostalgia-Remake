@@ -24,7 +24,7 @@ namespace ReelSpinGame_State.InsertState
             gM.Medal.HasMedalInsertEvent += OnMedalInserted;
 
             // リプレイなら処理を開始しリプレイランプ点灯
-            if (gM.Medal.GetHasReplay())
+            if (gM.Medal.HasReplay)
             {
                 gM.Medal.StartReplayInsert(gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
                 gM.Status.TurnOnReplayLamp();
@@ -82,7 +82,7 @@ namespace ReelSpinGame_State.InsertState
             gM.Effect.StartBetEffect(condition);
 
             // ベットがある場合はランプを消す
-            if (gM.Medal.GetCurrentBet() > 0)
+            if (gM.Medal.CurrentBet > 0)
             {
                 gM.Status.TurnOnStartLamp();
 
@@ -99,14 +99,14 @@ namespace ReelSpinGame_State.InsertState
         void BetAndStartFunction(bool cutCoroutine)
         {
             // ベットが終了していたら
-            if (gM.Medal.GetBetFinished())
+            if (gM.Medal.IsFinishedBet)
             {
                 EndInsertState();
             }
             // そうでない場合はMAX BET
             else
             {
-                BetAction(gM.Medal.GetMaxBet(), cutCoroutine);
+                BetAction(gM.Medal.MaxBetAmount, cutCoroutine);
             }
         }
 
@@ -117,7 +117,7 @@ namespace ReelSpinGame_State.InsertState
             gM.Effect.ChangeSoundSettingByAuto(gM.Auto.HasAuto, gM.Auto.CurrentSpeed);
 
             // ボーナス成立後であれば1枚掛けをする
-            if (gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone && gM.Medal.GetCurrentBet() != 1)
+            if (gM.Bonus.GetHoldingBonusID() != BonusTypeID.BonusNone && gM.Medal.CurrentBet != 1)
             {
                 BetAction(1, gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
             }
@@ -134,7 +134,7 @@ namespace ReelSpinGame_State.InsertState
             // MAX BET
             if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.MaxBet))
             {
-                BetAction(gM.Medal.GetMaxBet(), false);
+                BetAction(gM.Medal.MaxBetAmount, false);
             }
             // BET1
             if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetOne))
@@ -157,31 +157,31 @@ namespace ReelSpinGame_State.InsertState
         void EndInsertState()
         {
             // 投入枚数を反映する(リプレイ時以外)
-            if (!gM.Medal.GetHasReplay())
+            if (!gM.Medal.HasReplay)
             {
-                gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.GetLastBetAmount());
+                gM.Player.PlayerMedalData.DecreasePlayerMedal(gM.Medal.LastBetAmount);
             }
 
             // IN枚数反映
-            gM.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.GetLastBetAmount());
+            gM.Player.PlayerMedalData.IncreaseInMedal(gM.Medal.LastBetAmount);
 
             // ボーナス中なら払い出し枚数を減らす
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
             {
-                gM.Bonus.ChangeBonusPayout(-gM.Medal.GetLastBetAmount());
+                gM.Bonus.ChangeBonusPayout(-gM.Medal.LastBetAmount);
             }
 
             // 連チャン区間にいる場合は連チャン区間枚数を減らす
             if (gM.Bonus.GetHasZone())
             {
-                gM.Bonus.ChangeZonePayout(-gM.Medal.GetLastBetAmount());
+                gM.Bonus.ChangeZonePayout(-gM.Medal.LastBetAmount);
             }
 
             // 小役カウンタ減少
             // リプレイでは増やさない(0増加)
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.GetLastBetAmount());
+                gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.LastBetAmount);
             }
 
             gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);

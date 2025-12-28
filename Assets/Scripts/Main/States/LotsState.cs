@@ -28,7 +28,7 @@ namespace ReelSpinGame_State.LotsState
                 FlagID selectedFlagID = (FlagID)Enum.ToObject(typeof(FlagID), gM.Option.GetForceFlagSelectID());
                 gM.Lots.SetForceFlag(selectedFlagID);
             }
-            gM.Lots.StartFlagLots(gM.Setting, gM.Medal.GetLastBetAmount(), gM.Bonus.GetHoldingBonusID());
+            gM.Lots.StartFlagLots(gM.Setting, gM.Medal.LastBetAmount, gM.Bonus.GetHoldingBonusID());
 
             // ボーナス中ならここでゲーム数を減らす
             if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
@@ -69,7 +69,7 @@ namespace ReelSpinGame_State.LotsState
                 autoAICondition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
                 autoAICondition.BigChanceGames = gM.Bonus.GetRemainingBigGames();
                 autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
-                autoAICondition.BetAmount = gM.Medal.GetLastBetAmount();
+                autoAICondition.BetAmount = gM.Medal.LastBetAmount;
 
                 gM.Auto.SetAutoStopPos(autoAICondition);
             }

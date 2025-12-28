@@ -18,14 +18,14 @@ public class MedalTestUI : UIBaseClass
         string buffer = "";
 
         buffer += "Medal-" + "\n";
-        buffer += "Credit:" + medal.GetCredit() + "\n";
-        buffer += "Bet:" + medal.GetCurrentBet() + "\n";
-        buffer += "MaxBet:" + medal.GetMaxBet() + "\n";
-        buffer += "LastBet:" + medal.GetLastBetAmount() + "\n";
-        buffer += "Payout:" + medal.GetRemainingPayout() + "\n";
-        buffer += "LastPayout:" + medal.GetLastPayout() + "\n";
-        buffer += "BetFinished:" + medal.GetBetFinished() + "\n";
-        buffer += "Replay:" + medal.GetHasReplay();
+        buffer += "Credit:" + medal.Credit + "\n";
+        buffer += "Bet:" + medal.CurrentBet + "\n";
+        buffer += "MaxBet:" + medal.MaxBetAmount + "\n";
+        buffer += "LastBet:" + medal.LastBetAmount + "\n";
+        buffer += "Payout:" + medal.RemainingPayout + "\n";
+        buffer += "LastPayout:" + medal.LastPayoutAmount + "\n";
+        buffer += "BetFinished:" + medal.IsFinishedBet + "\n";
+        buffer += "Replay:" + medal.HasReplay;
 
         text.text = buffer;
     }

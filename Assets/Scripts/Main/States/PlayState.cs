@@ -81,7 +81,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.Reel.StopSelectedReel(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
+                gM.Reel.StopSelectedReel(reelID, gM.Medal.LastBetAmount, gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID());
             }
         }
 
@@ -90,7 +90,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.Reel.GetCanStopReels() && gM.Reel.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.Reel.StopSelectedReelFast(reelID, gM.Medal.GetLastBetAmount(), gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
+                gM.Reel.StopSelectedReelFast(reelID, gM.Medal.LastBetAmount, gM.Lots.GetCurrentFlag(), gM.Bonus.GetHoldingBonusID(), autoStopPos);
             }
         }
 
@@ -111,7 +111,7 @@ namespace ReelSpinGame_State.PlayingState
                 autoAICondition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
                 autoAICondition.BigChanceGames = gM.Bonus.GetRemainingBigGames();
                 autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
-                autoAICondition.BetAmount = gM.Medal.GetLastBetAmount();
+                autoAICondition.BetAmount = gM.Medal.LastBetAmount;
 
                 gM.Auto.SetAutoStopPos(autoAICondition);
             }
@@ -180,7 +180,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             ReelStoppedEffectCondition condition = new ReelStoppedEffectCondition();
             condition.StoppedReelCount = gM.Reel.GetStoppedCount();
-            condition.RiichiBigColor = gM.Reel.GetBigLinedUpCount(gM.Medal.GetLastBetAmount(), 2);
+            condition.RiichiBigColor = gM.Reel.GetBigLinedUpCount(gM.Medal.LastBetAmount, 2);
             condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
             gM.Effect.StartReelStopEffect(condition);
         }

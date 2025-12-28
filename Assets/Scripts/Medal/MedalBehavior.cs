@@ -14,7 +14,7 @@ namespace ReelSpinGame_Medal
         public int CurrentBet { get; set; }         // ベット枚数
         public int RemainingPayout { get; set; }    // 払い出し枚数
         public int LastPayoutAmount { get; set; }   // 最後に払い出したメダル枚数
-        public bool FinishedBet { get; set; }      // ベット完了しているか
+        public bool IsFinishedBet { get; set; }      // ベット完了しているか
 
         // セーブ用のデータ
         public class MedalSystemData
@@ -40,7 +40,7 @@ namespace ReelSpinGame_Medal
             CurrentBet = 0;
             RemainingPayout = 0;
             LastPayoutAmount = 0;
-            FinishedBet = false;
+            IsFinishedBet = false;
 
             system = new MedalSystemData();
         }
@@ -48,7 +48,7 @@ namespace ReelSpinGame_Medal
         // 残りベット枚数を設定
         public void SetRemainingBet(int amount)
         {
-            FinishedBet = false;
+            IsFinishedBet = false;
             // 最後に払い出したメダルリセット
             LastPayoutAmount = 0;
 
@@ -93,7 +93,7 @@ namespace ReelSpinGame_Medal
             // 残り枚数が0になったら終了
             if (RemainingBet == 0)
             {
-                FinishedBet = true;
+                IsFinishedBet = true;
             }
         }
 
