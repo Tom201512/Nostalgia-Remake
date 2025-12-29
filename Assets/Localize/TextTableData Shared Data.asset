@@ -31,46 +31,6 @@ MonoBehaviour:
     m_Key: AutoEndBonus
     m_Metadata:
       m_Items: []
-  - m_Id: 358265708544
-    m_Key: HowToPlay01
-    m_Metadata:
-      m_Items: []
-  - m_Id: 474510843904
-    m_Key: HowToPlay02
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1380065271808
-    m_Key: HowToPlay03
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1495719010304
-    m_Key: HowToPlay04
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1603768475648
-    m_Key: HowToPlay05
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1868865265664
-    m_Key: HowToPlay06
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2003435315200
-    m_Key: HowToPlay07
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2149787164672
-    m_Key: HowToPlay08
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2461453312000
-    m_Key: HowToPlay09
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2520983068672
-    m_Key: HowToPlay10
-    m_Metadata:
-      m_Items: []
   - m_Id: 9455116319776768
     m_Key: AutoEndConditionTitle
     m_Metadata:
@@ -119,6 +79,10 @@ MonoBehaviour:
     m_Key: AutoSettingTitle
     m_Metadata:
       m_Items: []
+  - m_Id: 9458348785983488
+    m_Key: AutoSpeedFast
+    m_Metadata:
+      m_Items: []
   - m_Id: 9458163351609344
     m_Key: AutoSpeedSettingTitle
     m_Metadata:
@@ -127,12 +91,12 @@ MonoBehaviour:
     m_Key: AutoSpeedSlow
     m_Metadata:
       m_Items: []
-  - m_Id: 9458348785983488
-    m_Key: AutoSpeedFast
-    m_Metadata:
-      m_Items: []
   - m_Id: 9458350006525952
     m_Key: AutoSpeedVeryFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458614952321024
+    m_Key: AutoSpinTimes10000G
     m_Metadata:
       m_Items: []
   - m_Id: 9458485734203392
@@ -147,8 +111,8 @@ MonoBehaviour:
     m_Key: AutoSpinTimes5000G
     m_Metadata:
       m_Items: []
-  - m_Id: 9458614952321024
-    m_Key: AutoSpinTimes10000G
+  - m_Id: 9758787163185152
+    m_Key: AutoSpinTimeSelectSub
     m_Metadata:
       m_Items: []
   - m_Id: 9458671671894016
@@ -159,28 +123,32 @@ MonoBehaviour:
     m_Key: AutoStopPosLockTitle
     m_Metadata:
       m_Items: []
+  - m_Id: 11974288153042944
+    m_Key: AutoStopPosSettingText
+    m_Metadata:
+      m_Items: []
   - m_Id: 9460232397578240
     m_Key: AutoTechnicalTitle
     m_Metadata:
       m_Items: []
-  - m_Id: 9461064698486784
-    m_Key: SlotMain01
+  - m_Id: 15798207301607424
+    m_Key: BonusRecordInfo
     m_Metadata:
       m_Items: []
-  - m_Id: 9461551464243200
-    m_Key: SlotMainDataInfo1
+  - m_Id: 15798617114468352
+    m_Key: BonusRecordTitle
     m_Metadata:
       m_Items: []
-  - m_Id: 9744566589382656
-    m_Key: GenericEnable
+  - m_Id: 11973814658064384
+    m_Key: GenericConfirm
     m_Metadata:
       m_Items: []
   - m_Id: 9744648390893568
     m_Key: GenericDisable
     m_Metadata:
       m_Items: []
-  - m_Id: 9758787163185152
-    m_Key: AutoSpinTimeSelectSub
+  - m_Id: 9744566589382656
+    m_Key: GenericEnable
     m_Metadata:
       m_Items: []
   - m_Id: 9763470141349888
@@ -191,12 +159,136 @@ MonoBehaviour:
     m_Key: GenericReset
     m_Metadata:
       m_Items: []
-  - m_Id: 11973814658064384
-    m_Key: GenericConfirm
+  - m_Id: 358265708544
+    m_Key: HowToPlay01
     m_Metadata:
       m_Items: []
-  - m_Id: 11974288153042944
-    m_Key: AutoStopPosSettingText
+  - m_Id: 474510843904
+    m_Key: HowToPlay02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1380065271808
+    m_Key: HowToPlay03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1495719010304
+    m_Key: HowToPlay04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1603768475648
+    m_Key: HowToPlay05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1868865265664
+    m_Key: HowToPlay06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2003435315200
+    m_Key: HowToPlay07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2149787164672
+    m_Key: HowToPlay08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2461453312000
+    m_Key: HowToPlay09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2520983068672
+    m_Key: HowToPlay10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795777503551488
+    m_Key: SlotBonusDataInfo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795237944090624
+    m_Key: SlotBonusDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461551464243200
+    m_Key: SlotMainDataInfo1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15792320486891520
+    m_Key: SlotMainDataInfo2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461064698486784
+    m_Key: SlotMainDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795217136148480
+    m_Key: SlotProbabilityBIG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15793696629645312
+    m_Key: SlotProbabilityDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15793916356648960
+    m_Key: SlotProbabilityNormal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798205900709888
+    m_Key: SlumpGraphTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15797864761188352
+    m_Key: WinningPatternTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800194340544512
+    m_Key: ForceFlagTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800197884731392
+    m_Key: ForceSelectingFlag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800554614480896
+    m_Key: BonusSelectTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800639226175488
+    m_Key: SymbolsSelectTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801226424541184
+    m_Key: BIG CHANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801293076226048
+    m_Key: BONUS GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801382419095552
+    m_Key: Cherry2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801423355502592
+    m_Key: Cherry4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801461745967104
+    m_Key: Melon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801600946528256
+    m_Key: Bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801602351620096
+    m_Key: Replay/JAC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801603270172672
+    m_Key: None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801770174111744
+    m_Key: RandomValue
     m_Metadata:
       m_Items: []
   m_Metadata:

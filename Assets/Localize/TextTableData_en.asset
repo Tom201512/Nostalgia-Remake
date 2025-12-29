@@ -172,9 +172,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9461551464243200
     m_Localized: "Games:\n\tTotal games:\n\tCurrent games:\n\tNormal games:\n\tBIG
-      CHANCE games:\n\tBONUS GAME games:\n\nBonus probability:\n\tBIG CHANCE:\n\tLine
-      up count:\n\tProbability:\n\n\tBONUS GAME:\n\t\tLine up count:\n\t\tProbability:\n\n\tTotal
-      probability:"
+      CHANCE games:\n\tBONUS GAME games:\n\nBonus probability:\n\tBIG CHANCE:\n\t\tLine
+      up count:\n\t\tProbability:\n\n\tBONUS GAME:\n\t\tLine up count:\n\t\tProbability:\n\n\tTotal:"
     m_Metadata:
       m_Items: []
   - m_Id: 9744566589382656
@@ -205,6 +204,104 @@ MonoBehaviour:
     m_Localized: 'Click the reel position
 
       to lock.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15792320486891520
+    m_Localized: "Medal:\n\tCurrent: \n\tIN:\n\tOUT:\n\tDifference:\n\tPayout rate:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15793696629645312
+    m_Localized: 'Probability:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15793916356648960
+    m_Localized: "Normal mode:\nBell:\n\tProbability:\n\tHit:\n\tLine up:\n\nMelon:\n\tProbability:\n\tHit:\n\tLine
+      up:\n\nCherry2:\n\tProbability:\n\tHit:\n\tLine up:\n\nCherry4:\n\tProbability:\n\tHit:\n\tLine
+      up:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795217136148480
+    m_Localized: "BIG CHANCE:\nBell:\n\tProbability:\n\tHit:\n\tLine up:\n\nMelon:\n\tProbability:\n\tHit:\n\tLine
+      up:\n\nCherry2:\n\tProbability:\n\tHit:\n\tLine up:\n\nCherry4:\n\tProbability:\n\tHit:\n\tLine
+      up:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795237944090624
+    m_Localized: 'Bonus data:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795777503551488
+    m_Localized: "Latest bonus info:\n\tBonus hit game:\n\tBonus line up game:\n\tPayout:\n\nJAC-Avoid:\n\tJAC-Avoid
+      Success:\n\tPerfect-Avoid:\n\tAssisted-Avoid:\n\tAccuracy:\n\tPerfect-Accuracy:\n\nBONUS
+      GAME No payout\n\tTimes:\n\tProbability:\n\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15797864761188352
+    m_Localized: 'Winning-Pattern:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798205900709888
+    m_Localized: 'Medal graph:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798617114468352
+    m_Localized: 'Bonus record:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798207301607424
+    m_Localized: Click results to see winning-pattern.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800194340544512
+    m_Localized: 'Force flag:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800197884731392
+    m_Localized: 'Current flag:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800554614480896
+    m_Localized: 'Bonus:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800639226175488
+    m_Localized: 'Other:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801226424541184
+    m_Localized: BIG CHANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801293076226048
+    m_Localized: BONUS GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801382419095552
+    m_Localized: Cherry2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801423355502592
+    m_Localized: Cherry4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801461745967104
+    m_Localized: Melon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801600946528256
+    m_Localized: Bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801602351620096
+    m_Localized: Replay/JAC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801603270172672
+    m_Localized: None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801770174111744
+    m_Localized: 'Random:'
     m_Metadata:
       m_Items: []
   references:
