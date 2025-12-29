@@ -199,7 +199,7 @@ namespace ReelSpinGame_AutoPlay.AI
         }
 
         // ビッグチャンスを狙う
-        private int[] AimBigChance(FlagID flag, int betAmount)
+        int[] AimBigChance(FlagID flag, int betAmount)
         {
             int typeID = 0;
 

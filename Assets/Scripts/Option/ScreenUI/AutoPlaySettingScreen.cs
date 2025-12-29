@@ -1,6 +1,8 @@
 using ReelSpinGame_Option.AutoSetting;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Save.Database.Option;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuContent
@@ -21,19 +23,21 @@ namespace ReelSpinGame_Option.MenuContent
 
         // 画面を閉じたときのイベント
         public delegate void ClosedScreen();
-        public event ClosedScreen ClosedScreenEvent;
+        public event ClosedScreen OnClosedScreenEvent;
+
+        private CanvasGroup canvasGroup;    // フェードイン、アウト用
 
         void Awake()
         {
-            // イベント登録
             closeButton.ButtonPushedEvent += OnClosedPressed;
             autoSettingManager.OnSettingChangedEvent += OnSettingChanged;
             resetButton.ButtonPushedEvent += OnResetButtonPressed;
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void OnDestroy()
         {
-            // イベント解除
+            StopAllCoroutines();
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             autoSettingManager.OnSettingChangedEvent -= OnSettingChanged;
             resetButton.ButtonPushedEvent -= OnResetButtonPressed;
@@ -42,25 +46,18 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            Debug.Log("Initialized AutoSetting");
-            CanInteract = true;
-            Debug.Log("Interact :" + CanInteract);
-            // ボタン有効化
-            autoSettingManager.SetInteractiveButtons(true);
-            closeButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
+            StartCoroutine(nameof(FadeInBehavior));
         }
 
         // 画面を閉じる
         public void CloseScreen()
         {
-            Debug.Log("Interact :" + CanInteract);
             if (CanInteract)
             {
-                Debug.Log("Closed AutoSetting");
                 autoSettingManager.SetInteractiveButtons(false);
                 closeButton.ToggleInteractive(false);
                 resetButton.ToggleInteractive(false);
+                StartCoroutine(nameof(FadeOutBehavior));
             }
         }
 
@@ -71,13 +68,46 @@ namespace ReelSpinGame_Option.MenuContent
         public void LoadSettingData(AutoOptionData autoOption) => autoSettingManager.LoadOptionData(autoOption);
 
         // 閉じるボタンを押したときの挙動
-        void OnClosedPressed(int signalID) => ClosedScreenEvent?.Invoke();
+        void OnClosedPressed(int signalID) => CloseScreen();
 
         // 設定変更時の挙動
         void OnSettingChanged() => SettingChangedEvent?.Invoke();
 
         // リセットボタンを押したときの挙動
         void OnResetButtonPressed(int signalID) => autoSettingManager.ResetOptionData();
+
+        // フェードイン
+        IEnumerator FadeInBehavior()
+        {
+            canvasGroup.alpha = 0;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha + fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            CanInteract = true;
+            autoSettingManager.SetInteractiveButtons(true);
+            closeButton.ToggleInteractive(true);
+            resetButton.ToggleInteractive(true);
+        }
+
+        // フェードアウト
+        IEnumerator FadeOutBehavior()
+        {
+            canvasGroup.alpha = 1;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha - fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            OnClosedScreenEvent?.Invoke();
+        }
     }
 }
 

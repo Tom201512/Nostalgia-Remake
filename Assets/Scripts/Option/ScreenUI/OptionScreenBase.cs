@@ -9,4 +9,9 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面を閉じた時の挙動
         public void CloseScreen();
     }
+
+    public class OptionScreenFade
+    {
+        public const float FadeTime = 0.3f;     // フェード時間
+    }
 }

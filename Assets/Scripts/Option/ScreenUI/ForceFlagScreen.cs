@@ -1,6 +1,8 @@
 using ReelSpinGame_Lots;
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_Reels;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -35,12 +37,12 @@ namespace ReelSpinGame_Option.MenuContent
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
-        private BonusStatus currentBonusStatus;    // 設定時のボーナス状態
-        private BonusTypeID holdingBonusID; // ストック中のボーナス
+        private BonusStatus currentBonusStatus;     // 設定時のボーナス状態
+        private BonusTypeID holdingBonusID;         // ストック中のボーナス
+        private CanvasGroup canvasGroup;            // フェードイン、アウト用
 
         void Awake()
         {
-            // ボタン登録
             foreach (ButtonComponent flagButton in flagButtons)
             {
                 flagButton.ButtonPushedEvent += SetSelectedFlag;
@@ -50,14 +52,15 @@ namespace ReelSpinGame_Option.MenuContent
             randomPreviousButton.ButtonPushedEvent += DecreaseRandomValue;
             resetButton.ButtonPushedEvent += ResetFlagSetting;
             closeButton.ButtonPushedEvent += OnClosedPressed;
-
-            // 最初のみ初期化
             CurrentSelectFlagID = -1;
             CurrentSelectRandomID = 0;
+
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void OnDestroy()
         {
+            StopAllCoroutines();
             // 登録解除
             foreach (ButtonComponent flagButton in flagButtons)
             {
@@ -73,33 +76,23 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            Debug.Log("Initialized ForceFlag");
-            CanInteract = true;
-            Debug.Log("Interact :" + CanInteract);
-            // ボタン有効化
-            SetFlagButtonInteractive();
-            randomNextButton.ToggleInteractive(true);
-            randomPreviousButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
-            closeButton.ToggleInteractive(true);
-
             UpdateFlagSelectImage();
             UpdateRandomValueText();
+            StartCoroutine(nameof(FadeInBehavior));
         }
 
         // 画面を閉じる
         public void CloseScreen()
         {
-            Debug.Log("Interact :" + CanInteract);
             if (CanInteract)
             {
-                Debug.Log("Closed ForceFlag");
                 SetBonusFlagButtonInteractive(false);
                 SetBonusFlagButtonInteractive(false);
                 randomNextButton.ToggleInteractive(false);
                 randomPreviousButton.ToggleInteractive(false);
                 resetButton.ToggleInteractive(false);
                 closeButton.ToggleInteractive(false);
+                StartCoroutine(nameof(FadeOutBehavior));
             }
         }
 
@@ -121,7 +114,6 @@ namespace ReelSpinGame_Option.MenuContent
         // フラグ設定ボタンの有効化設定
         void SetFlagButtonInteractive()
         {
-
             // 通常時にいない場合はボーナスフラグボタンは無効にする
             if (currentBonusStatus != BonusStatus.BonusNone)
             {
@@ -172,7 +164,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 閉じるボタンを押したときの挙動
-        void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
+        void OnClosedPressed(int signalID) => CloseScreen();
 
         // 選択したフラグを割り当てる
         void SetSelectedFlag(int signalID)
@@ -245,6 +237,41 @@ namespace ReelSpinGame_Option.MenuContent
             {
                 randomValueText.text = CurrentSelectRandomID.ToString();
             }
+        }
+
+        // フェードイン
+        IEnumerator FadeInBehavior()
+        {
+            canvasGroup.alpha = 0;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha + fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            CanInteract = true;
+            SetFlagButtonInteractive();
+            randomNextButton.ToggleInteractive(true);
+            randomPreviousButton.ToggleInteractive(true);
+            resetButton.ToggleInteractive(true);
+            closeButton.ToggleInteractive(true);
+        }
+
+        // フェードアウト
+        IEnumerator FadeOutBehavior()
+        {
+            canvasGroup.alpha = 1;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha - fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            OnClosedScreenEvent?.Invoke();
         }
     }
 }

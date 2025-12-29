@@ -1,5 +1,7 @@
 using ReelSpinGame_Option.Button;
 using ReelSpinGame_System;
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -8,10 +10,9 @@ namespace ReelSpinGame_Option.MenuContent
     // スロット情報画面
     public class SlotDataScreen : MonoBehaviour, IOptionScreenBase
     {
-        const int maxPage = 5;
+        const int maxPage = 5;      // 最大ページ数
 
         // 各種画面
-
         [SerializeField] private SlotMainDataUI slotMainDataUI;             // メイン情報
         [SerializeField] private ProbabilityDataUI probabilityDataUI;       // 通常時小役確率
         [SerializeField] private BonusDataUI bonusDataUI;                   // 直近ボーナス情報、JACハズシ確率など
@@ -31,8 +32,8 @@ namespace ReelSpinGame_Option.MenuContent
 
         public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
-        // 表示中のページ番号
-        private int currentPage = 0;
+        private int currentPage = 0;        // 表示中のページ番号
+        private CanvasGroup canvasGroup;    // フェードイン、アウト用
 
         void Awake()
         {
@@ -40,6 +41,7 @@ namespace ReelSpinGame_Option.MenuContent
             closeButton.ButtonPushedEvent += OnClosedPressed;
             nextButton.ButtonPushedEvent += OnNextPushed;
             previousButton.ButtonPushedEvent += OnPreviousPushed;
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void Start()
@@ -49,6 +51,7 @@ namespace ReelSpinGame_Option.MenuContent
 
         void OnDestroy()
         {
+            StopAllCoroutines();
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             nextButton.ButtonPushedEvent -= OnNextPushed;
             previousButton.ButtonPushedEvent -= OnPreviousPushed;
@@ -57,25 +60,20 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            CanInteract = true;
             currentPage = 0;
             UpdateScreen();
-
-            closeButton.ToggleInteractive(true);
-            nextButton.ToggleInteractive(true);
-            previousButton.ToggleInteractive(true);
+            StartCoroutine(nameof(FadeInBehavior));
         }
 
         // 画面を閉じる
         public void CloseScreen()
         {
-            Debug.Log("Interact :" + CanInteract);
             if (CanInteract)
             {
-                DisactivateAllScreen();
                 closeButton.ToggleInteractive(false); ;
                 nextButton.ToggleInteractive(false);
                 previousButton.ToggleInteractive(false);
+                StartCoroutine(nameof(FadeOutBehavior));
             }
         }
 
@@ -86,7 +84,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 次ボタンを押したときの挙動
-        private void OnNextPushed(int signalID)
+        void OnNextPushed(int signalID)
         {
             if (currentPage + 1 == maxPage)
             {
@@ -101,7 +99,7 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 前ボタンを押したときの挙動
-        private void OnPreviousPushed(int signalID)
+        void OnPreviousPushed(int signalID)
         {
             if (currentPage - 1 < 0)
             {
@@ -116,10 +114,10 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 閉じるボタンを押したときの挙動
-        private void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
+        void OnClosedPressed(int signalID) => CloseScreen();
 
         // 画像の反映処理
-        private void UpdateScreen()
+        void UpdateScreen()
         {
             DisactivateAllScreen();
             // ページごとに処理を行う
@@ -159,7 +157,8 @@ namespace ReelSpinGame_Option.MenuContent
             pageCount.text = (currentPage + 1) + "/" + maxPage;
         }
 
-        private void DisactivateAllScreen()
+        // 全ての画面を非アクティブにする
+        void DisactivateAllScreen()
         {
             bonusRecordDataUI.CloseBonusResult();
 
@@ -168,6 +167,40 @@ namespace ReelSpinGame_Option.MenuContent
             bonusDataUI.gameObject.SetActive(false);
             slumpGraphDataUI.gameObject.SetActive(false);
             bonusRecordDataUI.gameObject.SetActive(false);
+        }
+
+        // フェードイン
+        IEnumerator FadeInBehavior()
+        {
+            canvasGroup.alpha = 0;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha + fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            CanInteract = true;
+            closeButton.ToggleInteractive(true);
+            nextButton.ToggleInteractive(true);
+            previousButton.ToggleInteractive(true);
+        }
+
+        // フェードアウト
+        IEnumerator FadeOutBehavior()
+        {
+            canvasGroup.alpha = 1;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha - fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            DisactivateAllScreen();
+            OnClosedScreenEvent?.Invoke();
         }
     }
 }

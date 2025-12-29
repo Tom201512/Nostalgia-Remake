@@ -38,7 +38,7 @@ namespace ReelSpinGame_Option.MenuBar
             howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent += SlotDataClose;
             forceFlagScreen.OnClosedScreenEvent += ForceFlagClose;
-            autoPlaySettingScreen.ClosedScreenEvent += AutoPlayClose;
+            autoPlaySettingScreen.OnClosedScreenEvent += AutoPlayClose;
         }
 
         void Start()
@@ -61,7 +61,7 @@ namespace ReelSpinGame_Option.MenuBar
             howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent -= SlotDataClose;
             forceFlagScreen.OnClosedScreenEvent -= ForceFlagClose;
-            autoPlaySettingScreen.ClosedScreenEvent -= AutoPlayClose;
+            autoPlaySettingScreen.OnClosedScreenEvent -= AutoPlayClose;
         }
 
         // 全メニューのロック設定

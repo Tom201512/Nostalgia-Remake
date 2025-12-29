@@ -1,4 +1,6 @@
 using ReelSpinGame_Option.Button;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -27,15 +29,16 @@ namespace ReelSpinGame_Option.MenuContent
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
-        private int currentPage;    // 表示中のページ番号
+        private int currentPage;            // 表示中のページ番号
+        private CanvasGroup canvasGroup;    // フェードイン、アウト用
 
         void Awake()
         {
             currentPage = 0;
-            // ボタン登録
             closeButton.ButtonPushedEvent += OnClosedPressed;
             nextButton.ButtonPushedEvent += OnNextPushed;
             previousButton.ButtonPushedEvent += OnPreviousPushed;
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void Start()
@@ -45,6 +48,7 @@ namespace ReelSpinGame_Option.MenuContent
 
         void OnDestroy()
         {
+            StopAllCoroutines();
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             nextButton.ButtonPushedEvent -= OnNextPushed;
             previousButton.ButtonPushedEvent -= OnPreviousPushed;
@@ -53,14 +57,9 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面表示&初期化
         public void OpenScreen()
         {
-            CanInteract = true;
             currentPage = 0;
-
             UpdateScreen();
-
-            closeButton.ToggleInteractive(true);
-            nextButton.ToggleInteractive(true);
-            previousButton.ToggleInteractive(true);
+            StartCoroutine(nameof(FadeInBehavior));
         }
 
         // 画面を閉じる
@@ -71,6 +70,7 @@ namespace ReelSpinGame_Option.MenuContent
                 closeButton.ToggleInteractive(false); ;
                 nextButton.ToggleInteractive(false);
                 previousButton.ToggleInteractive(false);
+                StartCoroutine(nameof(FadeOutBehavior));
             }
         }
 
@@ -105,13 +105,47 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // 閉じるボタンを押したときの挙動
-        void OnClosedPressed(int signalID) => OnClosedScreenEvent?.Invoke();
+        void OnClosedPressed(int signalID) => CloseScreen();
 
         // 画像の反映処理
         void UpdateScreen()
         {
             titleText.StringReference = titleTextList[currentPage];
             screen.AssetReference = screenList[currentPage];
+            pageCount.text = (currentPage + 1) + "/" + screenList.Count;
+        }
+
+        // フェードイン
+        IEnumerator FadeInBehavior()
+        {
+            canvasGroup.alpha = 0;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha + fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            CanInteract = true;
+            closeButton.ToggleInteractive(true);
+            nextButton.ToggleInteractive(true);
+            previousButton.ToggleInteractive(true);
+        }
+
+        // フェードアウト
+        IEnumerator FadeOutBehavior()
+        {
+            canvasGroup.alpha = 1;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha - fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            OnClosedScreenEvent?.Invoke();
         }
     }
 }

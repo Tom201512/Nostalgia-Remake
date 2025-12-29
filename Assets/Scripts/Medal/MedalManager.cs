@@ -210,7 +210,6 @@ namespace ReelSpinGame_Medal
         // コルーチン用
         private IEnumerator UpdateInsert()
         {
-            ////Debug.Log("StartBet");
             HasMedalUpdate = true;
             // 残りベット枚数がなくなるまで処理
             while (data.RemainingBet > 0)
@@ -218,9 +217,7 @@ namespace ReelSpinGame_Medal
                 // メダル投入
                 data.InsertOneMedal();
                 HasMedalInsertEvent?.Invoke();
-                // ランプ、セグメント更新
                 medalPanel.UpdateLampByBet(data.CurrentBet, data.system.LastBetAmount);
-                // 0.12秒待機
                 yield return new WaitForSeconds(MedalUpdateTime);
             }
 

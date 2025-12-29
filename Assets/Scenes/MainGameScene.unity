@@ -4570,6 +4570,7 @@ GameObject:
   - component: {fileID: 368860324}
   - component: {fileID: 368860323}
   - component: {fileID: 368860325}
+  - component: {fileID: 368860326}
   m_Layer: 5
   m_Name: AutoPlaySetting
   m_TagString: Untagged
@@ -4656,6 +4657,18 @@ MonoBehaviour:
   autoSettingManager: {fileID: 1393153740}
   closeButton: {fileID: 1772953287}
   resetButton: {fileID: 160405095}
+--- !u!225 &368860326
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368860320}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &389362974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7740,7 +7753,6 @@ MonoBehaviour:
   sources:
   - {fileID: 201193789}
   - {fileID: 1672246098}
-  HasLockPlaying: 0
 --- !u!1 &660297967
 GameObject:
   m_ObjectHideFlags: 0
@@ -9779,6 +9791,7 @@ GameObject:
   - component: {fileID: 897966411}
   - component: {fileID: 897966410}
   - component: {fileID: 897966409}
+  - component: {fileID: 897966412}
   m_Layer: 5
   m_Name: HowToPlay
   m_TagString: Untagged
@@ -9997,6 +10010,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897966408}
   m_CullTransparentMesh: 1
+--- !u!225 &897966412
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897966408}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &907759416
 GameObject:
   m_ObjectHideFlags: 0
@@ -20348,6 +20373,7 @@ GameObject:
   - component: {fileID: 1802575307}
   - component: {fileID: 1802575306}
   - component: {fileID: 1802575308}
+  - component: {fileID: 1802575309}
   m_Layer: 5
   m_Name: ForceFlag
   m_TagString: Untagged
@@ -20458,6 +20484,18 @@ MonoBehaviour:
   randomNextButton: {fileID: 1765987039}
   randomPreviousButton: {fileID: 130495690}
   resetButton: {fileID: 860266586}
+--- !u!225 &1802575309
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802575304}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1808581470 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3427556461075178618, guid: ecb49fac316fe314092a18b38c6b2f32, type: 3}
@@ -23140,6 +23178,7 @@ GameObject:
   - component: {fileID: 2045587109}
   - component: {fileID: 2045587108}
   - component: {fileID: 2045587107}
+  - component: {fileID: 2045587110}
   m_Layer: 5
   m_Name: SlotData
   m_TagString: Untagged
@@ -23234,6 +23273,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045587105}
   m_CullTransparentMesh: 1
+--- !u!225 &2045587110
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045587105}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &2049445460
 PrefabInstance:
   m_ObjectHideFlags: 0
