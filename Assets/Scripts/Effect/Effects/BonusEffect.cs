@@ -11,12 +11,12 @@ namespace ReelSpinGame_Effect.Data
         public bool HasEffect { get; set; }     // 演出処理中か
         SoundManager sound;                     // サウンド
 
-        BigColor bigSymbolColor;       // 現在のBIG図柄色
+        BigType bigType;       // 現在のBIG種類
         BonusStatus lastBonusStatus;    // 直近のボーナス状態
 
         void Awake()
         {
-            bigSymbolColor = BigColor.None;
+            bigType = BigType.None;
             lastBonusStatus = BonusStatus.BonusNone;
             HasEffect = false;
             sound = GetComponent<SoundManager>();
@@ -30,8 +30,8 @@ namespace ReelSpinGame_Effect.Data
         // レバーオン時のエフェクト
         public void DoEffect(BonusEffectCondition bonusEffectCondition)
         {
-            // BIG時の図柄色を登録
-            bigSymbolColor = bonusEffectCondition.BigColor;
+            // BIG時の図柄を登録
+            bigType = bonusEffectCondition.BigType;
             // 前回とボーナス状態が変わっていればBGM再生(オート終了時も再生)
             if (lastBonusStatus != bonusEffectCondition.BonusStatus)
             {
@@ -54,15 +54,15 @@ namespace ReelSpinGame_Effect.Data
         // 小役ゲーム中のBGM再生
         void PlayBigGameBGM()
         {
-            switch (bigSymbolColor)
+            switch (bigType)
             {
-                case BigColor.Red:
+                case BigType.Red:
                     sound.PlayBGM(sound.SoundDB.BGM.RedBGM);
                     break;
-                case BigColor.Blue:
+                case BigType.Blue:
                     sound.PlayBGM(sound.SoundDB.BGM.BlueBGM);
                     break;
-                case BigColor.Black:
+                case BigType.Black:
                     sound.PlayBGM(sound.SoundDB.BGM.BlackBGM);
                     break;
                 default:
@@ -74,15 +74,15 @@ namespace ReelSpinGame_Effect.Data
         // ボーナスゲーム中のBGM再生
         void PlayBonusGameBGM()
         {
-            switch (bigSymbolColor)
+            switch (bigType)
             {
-                case BigColor.Red:
+                case BigType.Red:
                     sound.PlayBGM(sound.SoundDB.BGM.RedJAC);
                     break;
-                case BigColor.Blue:
+                case BigType.Blue:
                     sound.PlayBGM(sound.SoundDB.BGM.BlueJAC);
                     break;
-                case BigColor.Black:
+                case BigType.Black:
                     sound.PlayBGM(sound.SoundDB.BGM.BlackJAC);
                     break;
                 default:

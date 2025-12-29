@@ -1,8 +1,6 @@
-﻿using ReelSpinGame_Interface;
-using ReelSpinGame_Save.Bonus;
+﻿using ReelSpinGame_Save.Bonus;
 using ReelSpinGame_Save.Medal;
-using ReelSpinGame_Save.Player.ReelSpinGame_System;
-using System;
+using ReelSpinGame_Save.Player;
 using System.Collections.Generic;
 
 namespace ReelSpinGame_Save.Database
@@ -10,22 +8,14 @@ namespace ReelSpinGame_Save.Database
     // セーブ用のデータベース
     public class SaveDatabase
     {
-        // システム
 
-        // 台設定
-        public int Setting { get; private set; }
-        // プレイヤー情報
-        public PlayerSave Player { get; private set; }
-        // メダル情報
-        public MedalSave Medal { get; private set; }
-        // フラグカウンタ数値
-        public int FlagCounter { get; private set; }
-        // 最後に止まったリール位置
-        public List<int> LastReelPos { get; private set; }
-        // 最後に止めたリールのスベリコマ
-        public List<int> LastReelDelay { get; private set; }
-        // ボーナス情報
-        public BonusSave Bonus { get; private set; }
+        public int Setting { get; set; }                        // 台設定
+        public PlayerSave Player { get; private set; }          // プレイヤー情報
+        public MedalSave Medal { get; private set; }            // メダル情報
+        public int FlagCounter { get; private set; }            // フラグカウンタ数値
+        public List<int> LastReelPos { get; private set; }      // 最後に止まったリール位置
+        public List<int> LastReelDelay { get; private set; }    // 最後に止めたリールのスベリコマ
+        public BonusSave Bonus { get; private set; }            // ボーナス情報
 
         public SaveDatabase()
         {
@@ -38,12 +28,6 @@ namespace ReelSpinGame_Save.Database
             Bonus = new BonusSave();
         }
 
-        // func
-
-        // 各種情報記録
-        // 台設定
-        public void RecordSlotSetting(int setting) => Setting = setting;
-
         // データを初期化
         public void InitializeSave()
         {
@@ -52,8 +36,6 @@ namespace ReelSpinGame_Save.Database
             LastReelPos = null;
             LastReelDelay = null;
             Bonus = null;
-
-            GC.Collect();
 
             Setting = 6;
             Player = new PlayerSave();
@@ -65,30 +47,10 @@ namespace ReelSpinGame_Save.Database
         }
 
         // プレイヤー情報
-        public void RecordPlayerSave(ISavable player)
-        {
-            if (player.GetType() == typeof(PlayerSave))
-            {
-                Player = player as PlayerSave;
-            }
-            else
-            {
-                throw new Exception("Save data is not PlayerSave");
-            }
-        }
+        public void RecordPlayerSave(PlayerSave player) => Player = player;
 
         // メダル情報
-        public void RecordMedalSave(ISavable medal)
-        {
-            if (medal.GetType() == typeof(MedalSave))
-            {
-                Medal = medal as MedalSave;
-            }
-            else
-            {
-                throw new Exception("Save data is not MedalData");
-            }
-        }
+        public void RecordMedalSave(MedalSave medal) => Medal = medal;
 
         // フラグカウンタ
         public void RecordFlagCounter(int flagCounter) => FlagCounter = flagCounter;
@@ -100,18 +62,6 @@ namespace ReelSpinGame_Save.Database
         public void RecordLastReelDelay(List<int> lastReelDelay) => LastReelDelay = lastReelDelay;
 
         // ボーナス情報
-        public void RecordBonusData(ISavable bonus)
-        {
-            {
-                if (bonus.GetType() == typeof(BonusSave))
-                {
-                    Bonus = bonus as BonusSave;
-                }
-                else
-                {
-                    throw new Exception("Save data is not BonusSave");
-                }
-            }
-        }
+        public void RecordBonusData(BonusSave bonus) => Bonus = bonus;
     }
 }

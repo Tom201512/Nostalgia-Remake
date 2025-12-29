@@ -41,7 +41,7 @@ namespace ReelSpinGame_State.LotsState
             }
             else
             {
-                gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
             }
         }
 
@@ -75,7 +75,7 @@ namespace ReelSpinGame_State.LotsState
 
                     condition.HasBonusStarted = gM.Bonus.GetHasBonusStarted();
                     condition.HasBonusFinished = gM.Bonus.GetHasBonusFinished();
-                    condition.BigColor = gM.Bonus.GetBigChanceColor();
+                    condition.BigType = gM.Bonus.GetBigChanceType();
                     condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
                     gM.Effect.StartAfterPayoutEffect(condition);
                     finishPayout = true;
@@ -83,7 +83,7 @@ namespace ReelSpinGame_State.LotsState
                 // 払い出し後演出が終わったらメダル投入へ移行
                 else if (finishPayout && !gM.Effect.GetAfterPayoutEffectActivating())
                 {
-                    gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
+                    gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace ReelSpinGame_State.LotsState
             finishPayout = false;
             if (gM.Bonus.GetHasBonusFinished())
             {
-                gM.Bonus.ResetBigColor();
+                gM.Bonus.ResetBigType();
             }
             gM.Bonus.SetHasBonusStarted(false);
             gM.Bonus.SetHasBonusFinished(false);
@@ -117,7 +117,7 @@ namespace ReelSpinGame_State.LotsState
             gM.Bonus.UpdateSegments();
             // ボーナス中のBGM処理
             BonusEffectCondition condition = new BonusEffectCondition();
-            condition.BigColor = gM.Bonus.GetBigChanceColor();
+            condition.BigType = gM.Bonus.GetBigChanceType();
             condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
             gM.Effect.StartBonusEffect(condition);
         }

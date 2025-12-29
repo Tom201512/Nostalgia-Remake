@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using static ReelSpinGame_Datas.ReelConditionsData;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Datas
 {
@@ -15,21 +14,10 @@ namespace ReelSpinGame_Datas
             // 配列読み込み
             string[] values = arrayFile.ReadLine().Split(',');
             // 配列に変換
-            byte[] result = Array.ConvertAll(values, byte.Parse);
-
-            foreach (byte value in result)
-            {
-                //Debug.Log(value + "Symbol:" + ReelData.ReturnSymbol(value));
-            }
-
-            for (int i = 0; i < MaxReelArray; i++)
-            {
-                //Debug.Log("No." + i + " Symbol:" + ReelData.ReturnSymbol(result[i]));
-            }
-
-            return result;
+            return Array.ConvertAll(values, byte.Parse); ;
         }
 
+        // リール条件読み込み
         public static List<ReelConditionsData> MakeReelConditions(StreamReader conditionsFile)
         {
             List<ReelConditionsData> finalResult = new List<ReelConditionsData>();
@@ -49,13 +37,12 @@ namespace ReelSpinGame_Datas
                 {
                     ConditionDebug += GetConditionData(condition.MainConditions, i).ToString() + ",";
                 }
-
-                //Debug.Log("Condition:" + condition.MainConditions + "Details:" + ConditionDebug + "FirstReel:" + condition.FirstReelPosition + "ReelTableNum" + condition.ReelTableNumber);
             }
 
             return finalResult;
         }
 
+        // 第一停止テーブル作成
         public static List<ReelFirstConditions> MakeReelFirstData(StreamReader reelFirstDataFile)
         {
             List<ReelFirstConditions> finalResult = new List<ReelFirstConditions>();
@@ -69,6 +56,7 @@ namespace ReelSpinGame_Datas
             return finalResult;
         }
 
+        // 第二停止テーブル作成
         public static List<ReelSecondConditions> MakeReelSecondData(StreamReader reelSecondFile)
         {
             List<ReelSecondConditions> finalResult = new List<ReelSecondConditions>();
@@ -82,6 +70,7 @@ namespace ReelSpinGame_Datas
             return finalResult;
         }
 
+        // 第三停止テーブル作成
         public static List<ReelThirdConditions> MakeReelThirdData(StreamReader conditionsFile)
         {
             List<ReelThirdConditions> finalResult = new List<ReelThirdConditions>();
@@ -95,6 +84,7 @@ namespace ReelSpinGame_Datas
             return finalResult;
         }
 
+        // スベリコマテーブル作成
         public static List<ReelTableData> MakeTableDatas(StreamReader tablesFile)
         {
             List<ReelTableData> finalResult = new List<ReelTableData>();

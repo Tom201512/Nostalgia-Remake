@@ -7,7 +7,7 @@ using UnityEngine;
 using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 namespace ReelSpinGame_Option.MenuContent
-{        
+{
     // ボーナス履歴を表示するUI
     public class BonusRecordDataUI : MonoBehaviour
     {
@@ -66,7 +66,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             BonusDisplayData bonusDisplayData = new BonusDisplayData();
             bonusDisplayData.BonusLogNumber = index + 1;
-            bonusDisplayData.BigColor = bonusHitData.BigColor;
+            bonusDisplayData.BigColor = bonusHitData.BigType;
             bonusDisplayData.Payouts = bonusHitData.BonusPayout;
             bonusDisplayData.BonusReelPos = new List<int>(bonusHitData.BonusReelPos);
             bonusDisplayData.BonusReelPushOrder = new List<int>(bonusHitData.BonusReelPushOrder);

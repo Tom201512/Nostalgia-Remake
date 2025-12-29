@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace ReelSpinGame_Datas.Reels
 {
+    // ‘æ“ñ’â~‚ÌğŒƒNƒ‰ƒX
     [Serializable]
     public class ReelSecondConditions : ReelBaseData
     {

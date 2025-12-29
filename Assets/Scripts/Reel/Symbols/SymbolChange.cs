@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels.Symbol
@@ -20,10 +19,5 @@ namespace ReelSpinGame_Reels.Symbol
 
         // 位置IDを返す
         public ReelPosID GetPosID() => posID;
-
-        // リール配列の番号を図柄へ変更
-        public static ReelSymbols ReturnSymbol(byte symbolID) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), symbolID);
-        // リール位置を配列要素に置き換える
-        public static int GetReelArrayIndex(int posID) => posID + (int)ReelPosID.Lower2nd * -1;
     }
 }

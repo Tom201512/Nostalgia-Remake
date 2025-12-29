@@ -1,4 +1,6 @@
+using ReelSpinGame_Save;
 using ReelSpinGame_Save.Database;
+using ReelSpinGame_Save.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,7 +31,7 @@ namespace ReelSpinGame_System
 
             // ハッシュ値書き込み
             // 文字列にしてハッシュコードにする
-            int hash = BitConverter.ToString(SaveManager.GetBytesFromList(dataBuffer)).GetHashCode();
+            int hash = BitConverter.ToString(ByteArrayUtil.GetBytesFromList(dataBuffer)).GetHashCode();
             dataBuffer.Add(hash);
 
             return dataBuffer;
@@ -62,7 +64,7 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.Log("Load failed");
+                Debug.LogError("Load failed");
                 return false;
             }
 

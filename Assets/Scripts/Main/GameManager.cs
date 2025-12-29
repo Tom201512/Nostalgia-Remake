@@ -135,14 +135,14 @@ public class GameManager : MonoBehaviour
             PlayerSave.InitializeSave();
             saveManager.DeleteOptionSave();
             saveManager.DeletePlayerSave();
-            PlayerSave.RecordSlotSetting(debugSetting);
+            PlayerSave.Setting = debugSetting;
         }
         else if (playerLoadFailed)
         {
             Debug.LogWarning("プレイヤーセーブの読み込みに失敗しました。新規にプレイします。");
             PlayerSave.InitializeSave();
             saveManager.DeletePlayerSave();
-            PlayerSave.RecordSlotSetting(debugSetting);
+            PlayerSave.Setting = debugSetting;
         }
 
         // UI 設定
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
         ToggleDebugUI(false);
 
         // ステート開始
-        MainFlow.stateManager.StartState();
+        MainFlow.StateManager.StartState();
     }
 
     void Update()

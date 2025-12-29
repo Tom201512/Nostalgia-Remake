@@ -16,7 +16,6 @@ namespace ReelSpinGame_Reels.Table
         public int[] PushedReelTidOrder { get; private set; }       // テーブルID
         public int[] PushedReelCidOrder { get; private set; }       // 組み合わせID
 
-        // コンストラクタ
         public ReelTableManager()
         {
             UsedReelTableTID = new int[ReelAmount] { 0, 0, 0 };
@@ -30,7 +29,6 @@ namespace ReelSpinGame_Reels.Table
         // スベリコマを得る
         public int GetDelay(ReelID pushReelID, int stoppedCount, int pushedPos, ReelDelayTableData reelDatabase, ReelMainCondition mainCondition)
         {
-
             int findTID = -1;       // 見つけたテーブルID
             int findCID = -1;       // 見つけた組み合わせID
 
@@ -54,7 +52,7 @@ namespace ReelSpinGame_Reels.Table
                 case 1:
                     foreach (ReelSecondConditions second in reelDatabase.SecondCondition)
                     {
-                        if (second.CheckSecondReelCondition(mainCondition, PushedReelIdOrder[(int)StopOrder.First], 
+                        if (second.CheckSecondReelCondition(mainCondition, PushedReelIdOrder[(int)StopOrder.First],
                             PushedReelCidOrder[(int)StopOrder.First], pushedPos))
                         {
                             findTID = second.TID;

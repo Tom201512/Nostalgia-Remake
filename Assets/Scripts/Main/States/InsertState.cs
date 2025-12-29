@@ -184,7 +184,7 @@ namespace ReelSpinGame_State.InsertState
                 gM.Lots.DecreaseCounter(gM.Setting, gM.Medal.LastBetAmount);
             }
 
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.LotsState);
+            gM.MainFlow.StateManager.ChangeState(gM.MainFlow.LotsState);
         }
 
         void OnMedalInserted() => gM.Effect.StartPlayBetSound();

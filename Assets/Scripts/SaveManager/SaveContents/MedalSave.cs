@@ -35,16 +35,11 @@ namespace ReelSpinGame_Save.Medal
         // ÉZÅ[Éu
         public List<int> SaveData()
         {
-            // ïœêîÇäiî[
             List<int> data = new List<int>();
             data.Add(Credit);
-            //Debug.Log("Credit:" + Credit);
             data.Add(MaxBetAmount);
-            //Debug.Log("MaxBetAmount:" + MaxBetAmount);
             data.Add(LastBetAmount);
-            //Debug.Log("LastBetAmount:" + LastBetAmount);
             data.Add(HasReplay ? 1 : 0);
-            //Debug.Log("HasReplay:" + HasReplay);
 
             return data;
         }
@@ -55,13 +50,9 @@ namespace ReelSpinGame_Save.Medal
             try
             {
                 Credit = br.ReadInt32();
-                //Debug.Log("Credit:" + Credit);
                 MaxBetAmount = br.ReadInt32();
-                //Debug.Log("MaxBetAmount:" + MaxBetAmount);
                 LastBetAmount = br.ReadInt32();
-                //Debug.Log("LastBetAmount:" + LastBetAmount);
                 HasReplay = (br.ReadInt32() == 1 ? true : false);
-                //Debug.Log("HasReplay:" + HasReplay);
             }
             catch (Exception e)
             {

@@ -1,4 +1,5 @@
 using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.Util;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace ReelSpinGame_UI.Reel
         {
             foreach (SymbolDisplayUI symbol in reelSymbols)
             {
-                Sprite sprite = reelObjectPresetner.GetReelSymbolSprite(ReelObjectPresenter.OffsetReelPos(lowerPos, (int)symbol.GetPosID()));
+                Sprite sprite = reelObjectPresetner.GetReelSymbolSprite(ReelSymbolPosCalc.OffsetReelPos(lowerPos, (int)symbol.GetPosID()));
                 symbol.ChangeSymbol(sprite);
             }
         }
@@ -40,7 +41,7 @@ namespace ReelSpinGame_UI.Reel
             // 図柄位置のフォント表示
             for (int i = 0; i < reelPosTexts.Count; i++)
             {
-                string pos = (ReelObjectPresenter.OffsetReelPos(lowerPos, i) + 1).ToString();
+                string pos = (ReelSymbolPosCalc.OffsetReelPos(lowerPos, i) + 1).ToString();
                 reelPosTexts[i].text = pos;
             }
         }

@@ -11,28 +11,25 @@ namespace ReelSpinGame_UI.Bonus
     // ボーナス履歴表示オブジェクト
     public class BonusLogDisplay : MonoBehaviour, IPointerDownHandler
     {
-        // const
+        [SerializeField] Image selection;                       // 選択カーソル
+        [SerializeField] TextMeshProUGUI numberText;            // 履歴番号テキスト
+        [SerializeField] TextMeshProUGUI bonusTypeText;         // ボーナスタイプのテキスト
+        [SerializeField] BonusTypeDisplay bonusTypeDisplay;     // ボーナスタイプ表示画像
+        [SerializeField] TextMeshProUGUI payoutText;            // 払い出し枚数テキスト
 
-        // var
-        [SerializeField] Image selection; // 選択カーソル
-        [SerializeField] TextMeshProUGUI numberText; // 履歴番号テキスト
-        [SerializeField] TextMeshProUGUI bonusTypeText; // ボーナスタイプのテキスト
-        [SerializeField] BonusTypeDisplay bonusTypeDisplay; // ボーナスタイプ表示画像
-        [SerializeField] TextMeshProUGUI payoutText; // 払い出し枚数テキスト
-
-        public int BonusIndexNumber { get; private set; } // ボーナスの配列要素番号
-        public bool HasSelect { get; private set; } // 選択されているか
-        public bool CanInteractable { get; private set; } // ボタンが押せる状態か
+        public int BonusIndexNumber { get; private set; }       // ボーナスの配列要素番号
+        public bool HasSelect { get; private set; }             // 選択されているか
+        public bool CanInteractable { get; private set; }       // ボタンが押せる状態か
 
         // 登録データ
         public struct BonusDisplayData
         {
-            public int BonusLogNumber; // ボーナス履歴番号
-            public BigColor BigColor; // ビッグ時の色
-            public int Payouts; // 当該ボーナスの払い出し枚数
-            public List<int> BonusReelPos; // ボーナス成立時のリール位置
-            public List<int> BonusReelPushOrder; // ボーナス成立時の押し順
-            public List<int> BonusReelDelay; // ボーナス成立時のスベリコマ数
+            public int BonusLogNumber;              // ボーナス履歴番号
+            public BigType BigColor;                // ビッグ時の色
+            public int Payouts;                     // 当該ボーナスの払い出し枚数
+            public List<int> BonusReelPos;          // ボーナス成立時のリール位置
+            public List<int> BonusReelPushOrder;    // ボーナス成立時の押し順
+            public List<int> BonusReelDelay;        // ボーナス成立時のスベリコマ数
         }
 
         // ボタンが押された時のイベント
@@ -61,16 +58,6 @@ namespace ReelSpinGame_UI.Bonus
             }
         }
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
-
         // 選択状態の切り替え
         public void ToggleSelection(bool isSelected)
         {
@@ -81,13 +68,11 @@ namespace ReelSpinGame_UI.Bonus
         // データ登録
         public void SetData(BonusDisplayData bonusDisplayData)
         {
-            // 配列要素番号
             BonusIndexNumber = bonusDisplayData.BonusLogNumber - 1;
-            // 履歴番号
             numberText.text = "No." + bonusDisplayData.BonusLogNumber;
 
             // ボーナス種類
-            if (bonusDisplayData.BigColor != BigColor.None)
+            if (bonusDisplayData.BigColor != BigType.None)
             {
                 bonusTypeText.color = Color.red;
                 bonusTypeText.text = "BIG";
@@ -98,10 +83,7 @@ namespace ReelSpinGame_UI.Bonus
                 bonusTypeText.text = "REG";
             }
 
-            // ボーナス画像
             bonusTypeDisplay.ShowBonusDisplay(bonusDisplayData.BigColor);
-
-            // 払い出し枚数
             payoutText.text = bonusDisplayData.Payouts.ToString();
         }
     }

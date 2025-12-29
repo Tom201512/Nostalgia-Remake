@@ -8,8 +8,6 @@ namespace ReelSpinGame_Sound.SE
     [Serializable]
     public class SePack : ScriptableObject
     {
-        // const
-        // var
         [SerializeField] private SeFile bet;
         [SerializeField] private SeFile wait;
         [SerializeField] private SeFile start;
@@ -32,153 +30,153 @@ namespace ReelSpinGame_Sound.SE
 
         public SeFile Bet
         {
-            get { return bet; }
+            get => bet;
 #if UNITY_EDITOR
-            set { bet = value; }
+            set => bet = value;
 #endif
         }
 
         public SeFile Wait
         {
-            get { return wait; }
+            get => wait;
 #if UNITY_EDITOR
-            set { wait = value; }
+            set => wait = value;
 #endif
         }
 
         public SeFile Start
         {
-            get { return start; }
+            get => start;
 #if UNITY_EDITOR
-            set { start = value; }
+            set => start = value;
 #endif
         }
 
         public SeFile SpStart
         {
-            get { return spStart; }
+            get => spStart;
 #if UNITY_EDITOR
-            set { spStart = value; }
+            set => spStart = value;
 #endif
         }
 
         public SeFile Stop
         {
-            get { return stop; }
+            get => stop;
 #if UNITY_EDITOR
-            set { stop = value; }
+            set => stop = value;
 #endif
         }
 
         public SeFile RedRiichiSound
         {
-            get { return redRiichiSound; }
+            get => redRiichiSound;
 #if UNITY_EDITOR
-            set { redRiichiSound = value; }
+            set => redRiichiSound = value;
 #endif
         }
 
         public SeFile BlueRiichiSound
         {
-            get { return blueRiichiSound; }
+            get => blueRiichiSound;
 #if UNITY_EDITOR
-            set { blueRiichiSound = value; }
+            set => blueRiichiSound = value;
 #endif
         }
 
         public SeFile BB7RiichiSound
         {
-            get { return bb7RiichiSound; }
+            get => bb7RiichiSound;
 #if UNITY_EDITOR
-            set { bb7RiichiSound = value; }
+            set => bb7RiichiSound = value;
 #endif
         }
 
         public SeFile Replay
         {
-            get { return replay; }
+            get => replay;
 #if UNITY_EDITOR
-            set { replay = value; }
+            set => replay = value;
 #endif
         }
 
         public SeFile NormalPayout
         {
-            get { return normalPayout; }
+            get => normalPayout;
 #if UNITY_EDITOR
-            set { normalPayout = value; }
+            set => normalPayout = value;
 #endif
         }
 
         public SeFile MaxPayout
         {
-            get { return maxPayout; }
+            get => maxPayout;
 #if UNITY_EDITOR
-            set { maxPayout = value; }
+            set => maxPayout = value;
 #endif
         }
 
         public SeFile JacPayout
         {
-            get { return jacPayout; }
+            get => jacPayout;
 #if UNITY_EDITOR
-            set { jacPayout = value; }
+            set => jacPayout = value;
 #endif
         }
 
         public SeFile RedStart
         {
-            get { return redStart; }
+            get => redStart;
 #if UNITY_EDITOR
-            set { redStart = value; }
+            set => redStart = value;
 #endif
         }
 
         public SeFile RedEnd
         {
-            get { return redEnd; }
+            get => redEnd;
 #if UNITY_EDITOR
-            set { redEnd = value; }
+            set => redEnd = value;
 #endif
         }
 
         public SeFile BlueStart
         {
-            get { return blueStart; }
+            get => blueStart;
 #if UNITY_EDITOR
-            set { blueStart = value; }
+            set => blueStart = value;
 #endif
         }
 
         public SeFile BlueEnd
         {
-            get { return blueEnd; }
+            get => blueEnd;
 #if UNITY_EDITOR
-            set { blueEnd = value; }
+            set => blueEnd = value;
 #endif
         }
 
         public SeFile BlackStart
         {
-            get { return blackStart; }
+            get => blackStart;
 #if UNITY_EDITOR
-            set { blackStart = value; }
+            set => blackStart = value;
 #endif
         }
 
         public SeFile BlackEnd
         {
-            get { return blackEnd; }
+            get => blackEnd;
 #if UNITY_EDITOR
-            set { blackEnd = value; }
+            set => blackEnd = value;
 #endif
         }
 
         public SeFile RegStart
         {
-            get { return regStart; }
+            get => regStart;
 #if UNITY_EDITOR
-            set { regStart = value; }
+            set => regStart = value;
 #endif
         }
 

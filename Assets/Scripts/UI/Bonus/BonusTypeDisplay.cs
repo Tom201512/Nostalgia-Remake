@@ -8,15 +8,10 @@ namespace ReelSpinGame_UI.Bonus
     // 当選ボーナス表示
     public class BonusTypeDisplay : MonoBehaviour
     {
-        // const
+        [SerializeField] List<Sprite> bigDisplayImages;     // BIG表示画像
+        [SerializeField] Sprite regDisplayImages;           // REG表示画像
 
-        // var
-        // 当選色ごとのBIG表示画像
-        [SerializeField] List<Sprite> bigDisplayImages;
-        // REG表示画像
-        [SerializeField] Sprite regDisplayImages;
-        // 画像部分
-        Image image;
+        private Image image;        // 画像部分
 
         void Awake()
         {
@@ -24,10 +19,10 @@ namespace ReelSpinGame_UI.Bonus
         }
 
         // 図柄の表示
-        public void ShowBonusDisplay(BigColor bigColor)
+        public void ShowBonusDisplay(BigType bigColor)
         {
-            // BIG当選時の色がNone以外であればBIG図柄を表示
-            if ((int)bigColor > (int)BigColor.None)
+            // BIG当選時の種類がNone以外であればBIG図柄を表示
+            if ((int)bigColor > (int)BigType.None)
             {
                 if ((int)bigColor - 1 < bigDisplayImages.Count)
                 {

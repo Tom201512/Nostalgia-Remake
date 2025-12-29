@@ -189,7 +189,7 @@ public class ReelSpinManager : MonoBehaviour
     }
 
     // 揃っているBIG図柄の数を返す
-    public BigColor GetBigLinedUpCount(int betAmount, int checkAmount) => reelSymbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
+    public BigType GetBigLinedUpCount(int betAmount, int checkAmount) => reelSymbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
 
     // ランダム数値の決定
     void SetRandomValue()
@@ -218,7 +218,7 @@ public class ReelSpinManager : MonoBehaviour
         }
 
         // ディレイ(スベリコマ)を得る
-        int delay = tableManager.GetDelay(pushReelID, reelSpinManagerModel.StoppedReelCount, pushedPos, 
+        int delay = tableManager.GetDelay(pushReelID, reelSpinManagerModel.StoppedReelCount, pushedPos,
             reelObjects[(int)pushReelID].GetReelDatabase(), mainCondition);
 
         return delay;

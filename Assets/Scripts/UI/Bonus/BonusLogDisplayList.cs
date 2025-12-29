@@ -6,9 +6,6 @@ using static ReelSpinGame_UI.Bonus.BonusLogDisplay;
 
 public class BonusLogDisplayList : MonoBehaviour
 {
-    // const
-
-    // var
     [SerializeField] private BonusLogDisplay bonusDataPrefab; // ボーナスデータのプレハブ
 
     // ボーナス履歴のリスト
@@ -43,9 +40,7 @@ public class BonusLogDisplayList : MonoBehaviour
     {
         BonusLogDisplay bonusData = Instantiate(bonusDataPrefab);
         bonusData.SetData(bonusDisplayData);
-        // ボタンを押したときの挙動を登録
         bonusData.OnBonusLogPressedEvent += OnBonusLogPressed;
-        // 追加する
         bonusData.transform.SetParent(transform, false);
         bonusLogDisplays.Add(bonusData);
     }
@@ -56,7 +51,6 @@ public class BonusLogDisplayList : MonoBehaviour
         foreach (BonusLogDisplay bonus in bonusLogDisplays)
         {
             bonus.ToggleSelection(false);
-            Debug.Log("Deselected:" + bonus.BonusIndexNumber);
         }
     }
 
@@ -64,7 +58,6 @@ public class BonusLogDisplayList : MonoBehaviour
     void OnBonusLogPressed(int indexNum)
     {
         ResetSelection();
-        Debug.Log("Index selected:" + indexNum);
         bonusLogDisplays[indexNum].ToggleSelection(true);
         OnBonusLogSelectedEvent?.Invoke(indexNum);
     }

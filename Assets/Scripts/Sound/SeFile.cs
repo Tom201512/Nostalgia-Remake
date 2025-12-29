@@ -8,23 +8,21 @@ namespace ReelSpinGame_Sound.SE
     [Serializable]
     public class SeFile : ScriptableObject
     {
-        // const
-        // 音声ファイルのタイプ(Oneshot: 一度だけ鳴らす, Wait: 鳴らしたら一度待機させる, Jignle:鳴らしたら待機&BGMとして再生、Loop: 鳴らしたらループさせる)
+        // 音声ファイルのタイプ
         public enum SeFileType { Oneshot, Wait, Jingle, Loop }
 
-        // var
         // 音源ファイル
         [SerializeField] private AudioClip sourceFile;
         [SerializeField] private SeFileType seType;
 
         public AudioClip SourceFile
         {
-            get { return sourceFile; }
+            get => sourceFile;
 #if UNITY_EDITOR
-            set { sourceFile = value; }
+            set => sourceFile = value;
 #endif
         }
 
-        public SeFileType SeType { get { return seType; } }
+        public SeFileType SeType { get => seType; }
     }
 }

@@ -74,7 +74,7 @@ namespace ReelSpinGame_State.LotsState
                 gM.Auto.SetAutoStopPos(autoAICondition);
             }
 
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
+            gM.MainFlow.StateManager.ChangeState(gM.MainFlow.WaitState);
         }
 
         public void StateUpdate()

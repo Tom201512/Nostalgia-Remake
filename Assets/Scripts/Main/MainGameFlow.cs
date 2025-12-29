@@ -10,7 +10,7 @@ public class MainGameFlow
     //ゲーム状態シリアライズ
     public enum GameStates { Init, Insert, FlagLots, FakeReel, Wait, Playing, Payout, Effect }
 
-    public StateManager stateManager { get; private set; }    // 現在のゲーム状態
+    public StateManager StateManager { get; private set; }    // 現在のゲーム状態
 
     // ゲーム状態
     public InitState InitState { get; private set; }                    // 初期化状態
@@ -33,9 +33,9 @@ public class MainGameFlow
         PayoutState = new PayoutState(gameManager);
         EffectState = new EffectState(gameManager);
 
-        stateManager = new StateManager(InitState);
+        StateManager = new StateManager(InitState);
     }
 
     // ステート更新
-    public void UpdateState() => stateManager.StatementUpdate();
+    public void UpdateState() => StateManager.StatementUpdate();
 }

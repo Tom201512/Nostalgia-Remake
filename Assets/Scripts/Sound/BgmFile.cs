@@ -8,20 +8,16 @@ namespace ReelSpinGame_Sound.BGM
     [Serializable]
     public class BgmFile : ScriptableObject
     {
-        // 音源ファイル
-        [SerializeField] private AudioClip sourceFile;
-        // ループするか
-        [SerializeField] private bool hasLoop;
-        // ループ始点
-        [SerializeField] private int loopStart = -1;
-        // ループ長さ
-        [SerializeField] private int loopLength = -1;
+        [SerializeField] private AudioClip sourceFile;      // 音源ファイル
+        [SerializeField] private bool hasLoop;              // ループするか
+        [SerializeField] private int loopStart = -1;        // ループ始点
+        [SerializeField] private int loopLength = -1;       // ループ長さ
 
         public AudioClip SourceFile
         {
-            get { return sourceFile; }
+            get => sourceFile;
 #if UNITY_EDITOR
-            set { sourceFile = value; }
+            set => sourceFile = value;
 #endif
         }
 

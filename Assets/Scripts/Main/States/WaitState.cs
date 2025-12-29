@@ -41,7 +41,7 @@ namespace ReelSpinGame_State.LotsState
             // ウェイトが切れるまで待つ
             if (!gM.Wait.HasWait)
             {
-                gM.MainFlow.stateManager.ChangeState(gM.MainFlow.PlayingState);
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PlayingState);
             }
         }
 

@@ -11,7 +11,6 @@ namespace ReelSpinGame_Datas.Analytics
     // 解析情報
     public class AnalyticsData : ISavable
     {
-        // var
         public int TotalAllGamesCount { get; private set; }         // 小役、JAC、通常時を含めた全ゲーム回転数
         public int BigGamesCount { get; private set; }              // BIG小役ゲーム中のゲーム数
         public int JacGamesCount { get; private set; }              // JACゲーム中のゲーム数
@@ -50,7 +49,6 @@ namespace ReelSpinGame_Datas.Analytics
 
         public int JacGameNoneTimes { get; private set; }           // JAC中はずれ回数
 
-        // コンストラクタ
         public AnalyticsData()
         {
             TotalAllGamesCount = 0;
@@ -61,7 +59,6 @@ namespace ReelSpinGame_Datas.Analytics
             NormalMelonHitCount = 0;
             NormalCherry2HitCount = 0;
             NormalCherry4HitCount = 0;
-
             NormalBellLineUpCount = 0;
             NormalMelonLineUpCount = 0;
             NormalCherry2LineUpCount = 0;
@@ -71,8 +68,6 @@ namespace ReelSpinGame_Datas.Analytics
             BigMelonHitCount = 0;
             BigCherry2HitCount = 0;
             BigCherry4HitCount = 0;
-
-
             BigBellLineUpCount = 0;
             BigMelonLineUpCount = 0;
             BigCherry2LineUpCount = 0;
@@ -221,32 +216,26 @@ namespace ReelSpinGame_Datas.Analytics
             data.Add(TotalAllGamesCount);
             data.Add(BigGamesCount);
             data.Add(JacGamesCount);
-
             data.Add(NormalBellHitCount);
             data.Add(NormalMelonHitCount);
             data.Add(NormalCherry2HitCount);
             data.Add(NormalCherry4HitCount);
-
             data.Add(NormalBellLineUpCount);
             data.Add(NormalMelonLineUpCount);
             data.Add(NormalCherry2LineUpCount);
             data.Add(NormalCherry4LineUpCount);
-
             data.Add(BigBellHitCount);
             data.Add(BigMelonHitCount);
             data.Add(BigCherry2HitCount);
             data.Add(BigCherry4HitCount);
-
             data.Add(BigBellLineUpCount);
             data.Add(BigMelonLineUpCount);
             data.Add(BigCherry2LineUpCount);
             data.Add(BigCherry4LineUpCount);
-
             data.Add(BigJacInTimes);
             data.Add(BigJacAvoidTimes);
             data.Add(BigJacPerfectAvoidTimes);
             data.Add(BigJacAssistedAvoidTimes);
-
             data.Add(JacGameNoneTimes);
 
             return data;

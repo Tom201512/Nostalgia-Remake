@@ -7,6 +7,7 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Datas.Reels
 {
+    // 第一停止時の条件クラス
     [Serializable]
     public class ReelFirstConditions : ReelBaseData
     {
@@ -164,8 +165,8 @@ namespace ReelSpinGame_Datas.Reels
             // カンマ入りのデータがあるため、独自にパーサーを作成
 
             string loadedText = sReader.ReadLine();
-            string bufferText = "";    
-            string parseText = "";               
+            string bufferText = "";
+            string parseText = "";
             List<string> dataBuffer = new List<string>();
             bool findDoubleQuartation = false;
 

@@ -11,10 +11,9 @@ namespace ReelSpinGame_Save.Bonus
     // ボーナス情報のセーブ
     public class BonusSave : ISavable
     {
-        // var
         public BonusTypeID HoldingBonusID { get; set; }         // 現在ストックしているボーナス
         public BonusStatus CurrentBonusStatus { get; set; }     // ボーナス状態
-        public BigColor BigChanceColor { get; set; }            // BIGボーナス当選時の色
+        public BigType BigChanceType { get; set; }            // BIGボーナス当選時の種類
 
         public int RemainingBigGames { get; set; }          // 残り小役ゲーム数
         public int RemainingJacIn { get; set; }             // 残りJACIN
@@ -30,7 +29,7 @@ namespace ReelSpinGame_Save.Bonus
         {
             HoldingBonusID = BonusTypeID.BonusNone;
             CurrentBonusStatus = BonusStatus.BonusNone;
-            BigChanceColor = BigColor.None;
+            BigChanceType = BigType.None;
             RemainingBigGames = 0;
             RemainingJacIn = 0;
             RemainingJacHits = 0;
@@ -46,7 +45,7 @@ namespace ReelSpinGame_Save.Bonus
         {
             HoldingBonusID = bonus.HoldingBonusID;
             CurrentBonusStatus = bonus.CurrentBonusStatus;
-            BigChanceColor = bonus.BigChanceColor;
+            BigChanceType = bonus.BigChanceType;
             RemainingBigGames = bonus.RemainingBigGames;
             RemainingJacIn = bonus.RemainingJacIn;
             RemainingJacHits = bonus.RemainingJacHits;
@@ -65,7 +64,7 @@ namespace ReelSpinGame_Save.Bonus
 
             data.Add((int)HoldingBonusID);
             data.Add((int)CurrentBonusStatus);
-            data.Add((int)BigChanceColor);
+            data.Add((int)BigChanceType);
             data.Add(RemainingBigGames);
             data.Add(RemainingJacIn);
             data.Add(RemainingJacHits);
@@ -85,7 +84,7 @@ namespace ReelSpinGame_Save.Bonus
             {
                 HoldingBonusID = (BonusTypeID)Enum.ToObject(typeof(BonusTypeID), br.ReadInt32());
                 CurrentBonusStatus = (BonusStatus)Enum.ToObject(typeof(BonusStatus), br.ReadInt32());
-                BigChanceColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
+                BigChanceType = (BigType)Enum.ToObject(typeof(BigType), br.ReadInt32());
                 RemainingBigGames = br.ReadInt32();
                 RemainingJacIn = br.ReadInt32();
                 RemainingJacHits = br.ReadInt32();

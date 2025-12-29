@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 // ウェイト管理
@@ -8,10 +9,15 @@ public class WaitManager : MonoBehaviour
     public bool HasWait { get; private set; }       // ウェイトが有効か
     public bool HasWaitCut { get; private set; }    // ウェイトを無効にしているか
 
-    private void Awake()
+    void Awake()
     {
         HasWait = false;
         HasWaitCut = false;
+    }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 
     // ウェイトカットの設定
@@ -24,16 +30,20 @@ public class WaitManager : MonoBehaviour
         if (!HasWaitCut && !HasWait)
         {
             HasWait = true;
-            Invoke("DisableWaitTimer", WaitTime);
+            StartCoroutine(nameof(WaitBehaivior));
         }
     }
 
-    // ウェイト状態を強制解除する(オート用)
+    // ウェイトタイマーを解除
     public void DisableWaitTimer()
     {
-        if (HasWait)
-        {
-            HasWait = false;
-        }
+        StopAllCoroutines();
+        HasWait = false;
+    }
+
+    IEnumerator WaitBehaivior()
+    {
+        yield return new WaitForSeconds(WaitTime);
+        HasWait = false;
     }
 }

@@ -1,7 +1,6 @@
 using ReelSpinGame_Reels;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
 
 public class ReelTestUI : UIBaseClass
 {

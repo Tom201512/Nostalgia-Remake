@@ -10,8 +10,6 @@ namespace ReelSpinGame_Datas
     // リールのスベリコマデータ
     public class ReelDelayTableData : ScriptableObject
     {
-        // リール条件
-
         [SerializeField] private List<ReelFirstConditions> first;       // 第一停止
         [SerializeField] private List<ReelSecondConditions> second;     // 第二停止
         [SerializeField] private List<ReelThirdConditions> third;       // 第三停止
@@ -54,7 +52,6 @@ namespace ReelSpinGame_Datas
         public int FirstReelPosition { get { return firstReelPosition; } set { firstReelPosition = value; } }
         public byte ReelTableNumber { get { return reelTableNumber; } set { reelTableNumber = value; } }
 
-        // コンストラクタ
         public ReelConditionsData(StringReader buffer)
         {
             string[] values = buffer.ReadLine().Split(',');
@@ -163,23 +160,17 @@ namespace ReelSpinGame_Datas
 
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;
-            // デバッグ用
-            string debugBuffer = "";
 
             // 読み込み開始
             foreach (string value in values)
             {
-                //Debug.Log(value);
                 // リールデータを読み込む
                 if (indexNum < MaxReelArray)
                 {
                     tableData.Add(Convert.ToByte(value));
-                    debugBuffer += tableData[indexNum];
                 }
                 indexNum++;
             }
-
-            //Debug.Log("Array:" + debugBuffer);
         }
 
         // コンストラクタ
@@ -189,18 +180,14 @@ namespace ReelSpinGame_Datas
 
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;
-            // デバッグ用
-            string debugBuffer = "";
 
             // 読み込み開始
             foreach (string value in values)
             {
-                //Debug.Log(value);
                 // リールデータを読み込む
                 if (indexNum < MaxReelArray)
                 {
                     tableData.Add(Convert.ToByte(value));
-                    debugBuffer += tableData[indexNum];
                 }
 
                 // 最後の一行は読まない(テーブル名)

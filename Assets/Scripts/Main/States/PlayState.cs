@@ -118,7 +118,7 @@ namespace ReelSpinGame_State.PlayingState
             // すべてのリールが止まっていたら払い出し処理をする
             if (gM.Reel.GetIsReelFinished())
             {
-                gM.MainFlow.stateManager.ChangeState(gM.MainFlow.PayoutState);
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
             }
             // オート中は指定した押し順で押すようにする
             else
@@ -161,7 +161,7 @@ namespace ReelSpinGame_State.PlayingState
                 // 入力がなくすべてのリールが止まっていたら払い出し処理をする
                 else if (gM.Reel.GetIsReelFinished())
                 {
-                    gM.MainFlow.stateManager.ChangeState(gM.MainFlow.PayoutState);
+                    gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
                 }
             }
             // 前回のフレームで入力があった場合は入力がなくなるまで待機
@@ -179,7 +179,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             ReelStoppedEffectCondition condition = new ReelStoppedEffectCondition();
             condition.StoppedReelCount = gM.Reel.GetStoppedCount();
-            condition.RiichiBigColor = gM.Reel.GetBigLinedUpCount(gM.Medal.LastBetAmount, 2);
+            condition.RiichiBigType = gM.Reel.GetBigLinedUpCount(gM.Medal.LastBetAmount, 2);
             condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
             gM.Effect.StartReelStopEffect(condition);
         }

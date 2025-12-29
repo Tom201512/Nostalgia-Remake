@@ -9,14 +9,11 @@ namespace ReelSpinGame_UI.Player.Medal
     // メダル枚数表示用
     public class MedalInfoUI : MonoBehaviour
     {
-        // 最大表示可能メダル枚数
-        private const int MaximumGameCount = 99999;
+        const int MaximumGameCount = 99999;         // 最大表示可能メダル枚数
+        const float MaximumPayoutRatio = 999.99f;   // 最大表示可能機械割
 
-        // 最大表示可能機械割
-        private const float MaximumPayoutRatio = 999.99f;
-
-        [SerializeField] private TextMeshProUGUI medalUI;
-        [SerializeField] private TextMeshProUGUI payoutRateUI;
+        [SerializeField] private TextMeshProUGUI medalUI;           // メダル枚数
+        [SerializeField] private TextMeshProUGUI payoutRateUI;      // 機械割
 
         // メダル情報更新
         public void UpdateMedalUI(PlayerMedalData playerMedalData, MedalManager medalManager)
@@ -27,9 +24,8 @@ namespace ReelSpinGame_UI.Player.Medal
                 , 0, MaximumGameCount).ToString();
 
             // 機械割計算
-
             float payoutRate = 0f;
-            // 機械割
+
             if (playerMedalData.CurrentInMedal > 0 && playerMedalData.CurrentOutMedal > 0)
             {
                 payoutRate = (float)(playerMedalData.CurrentOutMedal - medalManager.RemainingPayout) / playerMedalData.CurrentInMedal * 100;

@@ -1,42 +1,28 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Datas.Analytics;
 using ReelSpinGame_Interface;
-using ReelSpinGame_Save.Player.ReelSpinGame_System;
+using ReelSpinGame_Save.Player;
 using System.Collections.Generic;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_System
 {
+    // プレイヤー情報
     public class PlayerDatabase : IHasSave<PlayerSave>
     {
-        // プレイヤー情報
+        public const int MaximumTotalGames = 99999;        // 記録可能ゲーム数
 
-        // const
-        // 記録可能ゲーム数
-        public const int MaximumTotalGames = 99999;
 
-        // var
-        // ゲーム数情報
-        // 総ゲーム数(ボーナス中除く)
-        public int TotalGames { get; private set; }
-        // ボーナス間ゲーム数
-        public int CurrentGames { get; private set; }
+        public int TotalGames { get; private set; }         // 総ゲーム数(ボーナス中除く)
+        public int CurrentGames { get; private set; }       // ボーナス間ゲーム数
+        public int BigTimes { get; private set; }           // ビッグチャンス成立回数
+        public int RegTimes { get; private set; }           // ボーナスゲーム成立回数
 
-        // ビッグチャンス成立回数
-        public int BigTimes { get; private set; }
-        // ボーナスゲーム成立回数
-        public int RegTimes { get; private set; }
 
-        // メダル情報
-        public PlayerMedalData PlayerMedalData { get; private set; }
+        public PlayerMedalData PlayerMedalData { get; private set; }        // メダル情報
+        public List<BonusHitData> BonusHitRecord { get; private set; }      // 当選させたボーナス(IDごとに)
+        public AnalyticsData PlayerAnalyticsData { get; private set; }      // 解析データ
 
-        // 当選させたボーナス(IDごとに)
-        public List<BonusHitData> BonusHitRecord { get; private set; }
-
-        // 解析データ
-        public AnalyticsData PlayerAnalyticsData { get; private set; }
-
-        // コンストラクタ
         public PlayerDatabase()
         {
             TotalGames = 0;
@@ -68,8 +54,6 @@ namespace ReelSpinGame_System
             BonusHitRecord = loadData.BonusHitRecord;
             PlayerAnalyticsData = loadData.PlayerAnalyticsData;
         }
-
-        // 各種データ数値変更
 
         // ゲーム数を増やす
         public void IncreaseGameValue()
@@ -106,8 +90,8 @@ namespace ReelSpinGame_System
             }
         }
 
-        // 直近のビッグチャンス時の色を記録
-        public void SetLastBigChanceColor(BigColor color) => BonusHitRecord[^1].SetBigChanceColor(color);
+        // 直近のビッグチャンス時の種類を記録
+        public void SetLastBigChanceColor(BigType color) => BonusHitRecord[^1].SetBigType(color);
         // 現在のボーナス履歴に払い出しを追加する
         public void ChangeLastBonusPayout(int payout) => BonusHitRecord[^1].ChangeBonusPayout(payout);
         // 現在のボーナス履歴の成立時出目を記録

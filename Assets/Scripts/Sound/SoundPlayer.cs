@@ -3,35 +3,28 @@ using UnityEngine;
 
 namespace ReelSpinGame_Sound
 {
+    // 効果音再生
     public class SoundPlayer : MonoBehaviour
     {
-        // サウンドプレイヤー
+        public bool HasSoundStopped { get; private set; }       // 再生が終了したか
+        public bool HasLoop { get; private set; }               // ループしている音があるか
+        public bool HasLockPlaying;                             // 鳴らさないようにするか
 
-        // var
-        // コンポーネント
-        private AudioSource audioSource;
+        private AudioSource audioSource;        // 鳴らさないようにするか
 
-        // 再生が終了したか
-        public bool HasSoundStopped { get; private set; }
-        // ループしている音があるか
-        public bool HasLoop { get; private set; }
-        // 鳴らさないようにするか
-        public bool HasLockPlaying;
-
-        private void Awake()
+        void Awake()
         {
             HasSoundStopped = true;
             HasLockPlaying = false;
             audioSource = GetComponent<AudioSource>();
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             StopAudio();
             StopAllCoroutines();
         }
 
-        // func
         // 一回だけ再生(重複可能)
         public void PlayAudioOneShot(AudioClip soundSource)
         {
@@ -82,7 +75,7 @@ namespace ReelSpinGame_Sound
         public void ChangeLockPlaying(bool value) => HasLockPlaying = value;
 
         // 音声が止まったかの処理
-        private IEnumerator CheckAudioStopped()
+        IEnumerator CheckAudioStopped()
         {
             HasSoundStopped = false;
 

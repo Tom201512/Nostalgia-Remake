@@ -8,7 +8,7 @@ namespace ReelSpinGame_Effect.Data.Condition
     {
         public bool HasBonusStarted { get; set; }                   // ボーナスが開始したか
         public bool HasBonusFinished { get; set; }                  // ボーナスが終了したか
-        public BigColor BigColor { get; set; }                      // BIG時の色
+        public BigType BigType { get; set; }                      // BIG時の種類
         public BonusStatus BonusStatus { get; set; }                // ボーナス中の状態
 
         public PayoutResultBuffer PayoutResult { get; private set; }        // 払い出し結果
@@ -17,7 +17,7 @@ namespace ReelSpinGame_Effect.Data.Condition
         {
             HasBonusStarted = false;
             HasBonusFinished = false;
-            BigColor = BigColor.None;
+            BigType = BigType.None;
             BonusStatus = BonusStatus.BonusNone;
 
             PayoutResult = payoutResult;

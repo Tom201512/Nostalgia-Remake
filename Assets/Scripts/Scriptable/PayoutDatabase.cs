@@ -9,27 +9,35 @@ namespace ReelSpinGame_Datas
     // 払い出しデータベース
     public class PayoutDatabase : ScriptableObject
     {
-        // var
-        // 各払い出しラインのデータ
-        [SerializeField] private List<PayoutLineData> payoutLineDatas;
+        [SerializeField] List<PayoutLineData> payoutLineDatas;        // 各払い出しラインのデータ
 
         // 各種払い出し構成のテーブル
-        // 通常時
-        [SerializeField] private List<PayoutResultData> normalPayoutDatas;
-        // 小役ゲーム中
-        [SerializeField] private List<PayoutResultData> bigPayoutDatas;
-        // JACゲーム中
-        [SerializeField] private List<PayoutResultData> jacPayoutDatas;
 
-        public List<PayoutLineData> PayoutLines { get { return payoutLineDatas; } }
-        public List<PayoutResultData> NormalPayoutDatas { get { return normalPayoutDatas; } }
-        public List<PayoutResultData> BigPayoutDatas { get { return bigPayoutDatas; } }
-        public List<PayoutResultData> JacPayoutDatas { get { return jacPayoutDatas; } }
+        [SerializeField] List<PayoutResultData> normalPayoutDatas;      // 通常時
+        [SerializeField] List<PayoutResultData> bigPayoutDatas;         // 小役ゲーム中
+        [SerializeField] List<PayoutResultData> jacPayoutDatas;         // JACゲーム中
 
-        public void SetPayoutLines(List<PayoutLineData> payoutLines) => payoutLineDatas = payoutLines;
-        public void SetNormalPayout(List<PayoutResultData> normalPayoutDatas) => this.normalPayoutDatas = normalPayoutDatas;
-        public void SetBigPayout(List<PayoutResultData> bigPayoutDatas) => this.bigPayoutDatas = bigPayoutDatas;
-        public void SetJacPayout(List<PayoutResultData> jacPayoutDatas) => this.jacPayoutDatas = jacPayoutDatas;
+        // プロパティ
+        public List<PayoutLineData> PayoutLines
+        {
+            get => payoutLineDatas;
+            set => payoutLineDatas = value;
+        }
+        public List<PayoutResultData> NormalPayoutDatas
+        {
+            get => normalPayoutDatas;
+            set => normalPayoutDatas = value;
+        }
+        public List<PayoutResultData> BigPayoutDatas
+        {
+            get => bigPayoutDatas;
+            set => bigPayoutDatas = value;
+        }
+        public List<PayoutResultData> JacPayoutDatas
+        {
+            get => jacPayoutDatas;
+            set => jacPayoutDatas = value;
+        }
     }
 
     // 払い出しラインのデータ
@@ -39,34 +47,24 @@ namespace ReelSpinGame_Datas
         // バッファからデータを読み込む位置
         public enum ReadPos { BetCondition = 0, PayoutLineStart }
 
-        // 有効に必要なベット枚数
-        [SerializeField] private byte betCondition;
-        // 払い出しライン(符号付きbyte)
-        [SerializeField] private List<sbyte> payoutLines;
+        [SerializeField] private byte betCondition;             // 有効に必要なベット枚数
+        [SerializeField] private List<sbyte> payoutLines;       // 払い出しライン(符号付きbyte)
 
-        public byte BetCondition { get { return betCondition; } }
-        public List<sbyte> PayoutLines { get { return payoutLines; } }
+        public byte BetCondition { get => betCondition; }
+        public List<sbyte> PayoutLines { get => payoutLines; }
 
         public PayoutLineData(StreamReader loadedData)
         {
             // ストリームからデータを得る
             sbyte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), sbyte.Parse);
-            // 払い出しラインのデータ
             payoutLines = new List<sbyte>();
-            // デバッグ用
-            string combinationBuffer = "";
-            //Debug.Log(byteBuffer[0]);
 
             betCondition = (byte)byteBuffer[(int)ReadPos.BetCondition];
             // 読み込み
             for (int i = 0; i < ReelAmount; i++)
             {
                 payoutLines.Add(byteBuffer[i + (int)ReadPos.PayoutLineStart]);
-                combinationBuffer += payoutLines[i];
             }
-
-            //デバッグ用
-            //Debug.Log("Condition:" + byteBuffer[(int)ReadPos.BetCondition] + "Lines" + combinationBuffer);
         }
     }
 
@@ -76,26 +74,21 @@ namespace ReelSpinGame_Datas
     {
         // バッファからデータを読み込む位置
         public enum ReadPos { FlagID = 0, CombinationStart = 1, Payout = 4, Bonus, IsReplay }
-        // ANYの判定用ID
-        public const int AnySymbol = 7;
 
-        // var
-        // フラグID
-        [SerializeField] private byte flagID;
-        // 図柄構成
-        [SerializeField] private List<byte> combination;
-        // 払い出し枚数
-        [SerializeField] private byte payout;
-        // 当選するボーナス
-        [SerializeField] private byte bonusType;
-        // リプレイか(またはJAC-IN)
-        [SerializeField] private bool hasReplayOrJac;
+        public const int AnySymbol = 7;     // ANYの判定用ID
 
-        public byte FlagID { get { return flagID; } }
-        public List<byte> Combination { get { return combination; } }
-        public byte Payout { get { return payout; } }
-        public byte BonusType { get { return bonusType; } }
-        public bool HasReplayOrJac { get { return hasReplayOrJac; } }
+        [SerializeField] byte flagID;               // フラグID
+        [SerializeField] List<byte> combination;    // 組み合わせ
+        [SerializeField] byte payout;               // 払い出し枚数
+        [SerializeField] byte bonusType;            // 当選するボーナス
+        [SerializeField] bool hasReplayOrJac;       // リプレイか(またはJAC-IN)
+
+        // プロパティ
+        public byte FlagID { get => flagID; }
+        public List<byte> Combination { get => combination; }
+        public byte Payout { get => payout; }
+        public byte BonusType { get => bonusType; }
+        public bool HasReplayOrJac { get => hasReplayOrJac; }
 
         public PayoutResultData(StreamReader loadedData)
         {
@@ -103,29 +96,18 @@ namespace ReelSpinGame_Datas
             byte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), byte.Parse);
             // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
             combination = new List<byte>();
-            // デバッグ用
-            string combinationBuffer = "";
 
             // データ作成
-            // フラグID
             flagID = byteBuffer[(int)ReadPos.FlagID];
 
-            // 組み合わせ
             for (int i = 0; i < ReelAmount; i++)
             {
                 combination.Add(byteBuffer[i + (int)ReadPos.CombinationStart]);
-                combinationBuffer += combination[i];
             }
-            // 払い出し
-            payout = byteBuffer[(int)ReadPos.Payout];
-            // ボーナス
-            bonusType = byteBuffer[(int)ReadPos.Bonus];
-            // リプレイの有無
-            hasReplayOrJac = byteBuffer[(int)ReadPos.IsReplay] == 1;
 
-            //デバッグ用
-            //Debug.Log("Flag:" + flagID + "Combination:" + combinationBuffer + "Payout:" + payout +
-            //"Bonus:" + bonusType + "HasReplay:" + hasReplayOrJac);
+            payout = byteBuffer[(int)ReadPos.Payout];
+            bonusType = byteBuffer[(int)ReadPos.Bonus];
+            hasReplayOrJac = byteBuffer[(int)ReadPos.IsReplay] == 1;
         }
     }
 }

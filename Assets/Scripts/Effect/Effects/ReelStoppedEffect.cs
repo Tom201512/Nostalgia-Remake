@@ -25,15 +25,15 @@ namespace ReelSpinGame_Effect.Data
             if (reelStoppedEffectCondition.StoppedReelCount == 2 &&
                 reelStoppedEffectCondition.BonusStatus == BonusStatus.BonusNone)
             {
-                switch (reelStoppedEffectCondition.RiichiBigColor)
+                switch (reelStoppedEffectCondition.RiichiBigType)
                 {
-                    case BigColor.Red:
+                    case BigType.Red:
                         sound.PlaySE(sound.SoundDB.SE.RedRiichiSound);
                         break;
-                    case BigColor.Blue:
+                    case BigType.Blue:
                         sound.PlaySE(sound.SoundDB.SE.BlueRiichiSound);
                         break;
-                    case BigColor.Black:
+                    case BigType.Black:
                         sound.PlaySE(sound.SoundDB.SE.BB7RiichiSound);
                         break;
                 }

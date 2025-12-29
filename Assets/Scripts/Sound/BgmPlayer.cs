@@ -3,36 +3,25 @@ using UnityEngine;
 
 namespace ReelSpinGame_Sound
 {
+    // BGMプレイヤー
     public class BgmPlayer : MonoBehaviour
     {
-        // BGMプレイヤー
-
-        // const
         // サンプリングレート
         const double SampleRate = 44100.0;
 
-        // var
-        // コンポーネント
-        [SerializeField] AudioSource[] sources;
+        [SerializeField] AudioSource[] sources;     // オーディオファイル
 
-        // 再生が終了したか
-        public bool HasSoundStopped { get; private set; }
-        // ループしている音があるか
-        public bool HasLoop { get; private set; }
-        // ループ開始位置
-        public int LoopStart { get; private set; }
-        // ループ長さ
-        public int LoopLength { get; private set; }
-        // 鳴らさないようにするか
-        public bool HasLockPlaying;
+        public bool HasSoundStopped { get; private set; }       // 再生が終了したか
+        public bool HasLockPlaying { get; private set; }        // 鳴らさないようにするか
 
-        // ループ時の時間
-        public double LoopTime { get; private set; }
+        public bool HasLoop { get; private set; }               // ループしている音があるか
+        public int LoopStart { get; private set; }              // ループ開始位置
+        public int LoopLength { get; private set; }             // ループ長さ
+        public double LoopTime { get; private set; }            // ループ時の時間
 
-        // 使用中のトラック
-        private int usingTrackIndex;
+        private int usingTrackIndex;        // 使用中のトラック
 
-        private void Awake()
+        void Awake()
         {
             HasSoundStopped = true;
             HasLockPlaying = false;
@@ -43,7 +32,7 @@ namespace ReelSpinGame_Sound
             LoopTime = 0;
         }
 
-        private void Update()
+        void Update()
         {
             if (HasLoop)
             {
@@ -55,7 +44,7 @@ namespace ReelSpinGame_Sound
             }
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             StopAudio();
             StopAllCoroutines();
@@ -110,16 +99,11 @@ namespace ReelSpinGame_Sound
                     LoopLength = sources[usingTrackIndex].clip.samples;
                 }
 
-                //Debug.Log("Loop start at:" + AudioSettings.dspTime);
-
                 // 最初のトラックを再生。ループのスタート位置になったらトラックを切り替える
                 // 初回は0.1秒ほど遅らせる
                 LoopTime = AudioSettings.dspTime + 0.1;
                 sources[usingTrackIndex].PlayScheduled(LoopTime);
                 LoopTime += (double)LoopStart / SampleRate;
-                // ループさせる長さのサンプルを計算
-                //Debug.Log("Loop Samples:" + samples);
-                //Debug.Log("Loop start at:" + LoopTime);
             }
         }
 
@@ -155,7 +139,6 @@ namespace ReelSpinGame_Sound
         {
             // 今鳴らしている方を終了させる
             sources[usingTrackIndex].SetScheduledEndTime(LoopTime);
-            //Debug.Log("Current:" + usingTrackIndex);
             // トラック切り替え
             if (usingTrackIndex < sources.Length - 1)
             {
@@ -169,11 +152,7 @@ namespace ReelSpinGame_Sound
             // ループを準備
             sources[usingTrackIndex].timeSamples = LoopStart;
             sources[usingTrackIndex].PlayScheduled(LoopTime);
-
-            //Debug.Log("Loop Samples:" + samples);
             LoopTime += (double)LoopLength / SampleRate;
-            //Debug.Log("Next loop is:" + LoopTime);
-            //Debug.Log("Prepared Loop");
         }
 
         // 音声が止まったかの処理
@@ -187,7 +166,6 @@ namespace ReelSpinGame_Sound
             }
 
             HasSoundStopped = true;
-            //Debug.Log("Sound Stopped");
         }
     }
 }

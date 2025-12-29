@@ -7,13 +7,13 @@ namespace ReelSpinGame_Effect.Data.Condition
     {
         // var
         public int StoppedReelCount { get; set; }           // リールの停止数
-        public BigColor RiichiBigColor { get; set; }        // テンパイしたBIG色
+        public BigType RiichiBigType { get; set; }          // テンパイしたBIGの種類
         public BonusStatus BonusStatus { get; set; }        // ボーナス中の状態 
 
         public ReelStoppedEffectCondition()
         {
             StoppedReelCount = 0;
-            RiichiBigColor = BigColor.None;
+            RiichiBigType = BigType.None;
             BonusStatus = BonusStatus.BonusNone;
         }
     }

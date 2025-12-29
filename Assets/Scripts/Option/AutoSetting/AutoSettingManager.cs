@@ -89,7 +89,7 @@ namespace ReelSpinGame_Option.AutoSetting
         {
             CurrentAutoOptionData.CurrentSpeed = ((AutoSpeedName)Enum.ToObject(typeof(AutoSpeedName), speedSelect.CurrentSettingID));
             CurrentAutoOptionData.CurrentStopOrder = ((StopOrderOptionName)Enum.ToObject(typeof(StopOrderOptionName), orderSelect.CurrentSettingID));
-            CurrentAutoOptionData.BigLineUpSymbol = (BigColor)Enum.ToObject(typeof(BigColor), bigColorSelect.CurrentSettingID);
+            CurrentAutoOptionData.BigLineUpSymbol = (BigType)Enum.ToObject(typeof(BigType), bigColorSelect.CurrentSettingID);
             CurrentAutoOptionData.HasTechnicalPlay = technicalSelect.CurrentSettingID == 1 ? true : false;
             CurrentAutoOptionData.EndConditionFlag = autoEndTimingCheckBoxes.CurrentSelectFlag;
             CurrentAutoOptionData.SpinConditionID = (SpinTimeConditionName)Enum.ToObject(typeof(SpinTimeConditionName), spinConditionSelect.CurrentSettingID);

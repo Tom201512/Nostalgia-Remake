@@ -8,7 +8,7 @@ namespace ReelSpinGame_Datas
         // ƒŠ[ƒ‹”z—ñ
         [SerializeField] private byte[] array;
 
-        public byte[] Array { get { return array; } }
+        public byte[] Array { get => array; }
 
         // ”z—ñİ’è
         public void SetArray(byte[] array) => this.array = array;

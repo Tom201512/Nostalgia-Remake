@@ -34,7 +34,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             TurnOnBackLight();  // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.InsertState);
+            gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
         }
 
         public void StateEnd()
@@ -113,7 +113,7 @@ namespace ReelSpinGame_State.LotsState
             gM.Bonus.UpdateSegments();
 
             BonusEffectCondition condition = new BonusEffectCondition();
-            condition.BigColor = gM.Bonus.GetBigChanceColor();
+            condition.BigType = gM.Bonus.GetBigChanceType();
             condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
             gM.Effect.StartBonusEffect(condition);
         }

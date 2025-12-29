@@ -11,7 +11,7 @@ namespace ReelSpinGame_AutoPlay.AI
         public bool HasTechnicalPlay { get; set; }                  // 技術介入をするか
         public bool HasWinningPatternStop { get; set; }             // リーチ目を止める制御を取るか
         public bool HasStoppedWinningPattern { get; set; }          // リーチ目を止めたか
-        public BigColor BigLineUpSymbol { get; set; }              // 揃えるBIG色
+        public BigType BigLineUpSymbol { get; set; }              // 揃えるBIGの種類
 
         // 使用AI
         AutoRandomAI autoRandomAI;                              // 適当押し
@@ -33,7 +33,7 @@ namespace ReelSpinGame_AutoPlay.AI
             HasTechnicalPlay = true;
             HasWinningPatternStop = false;
             HasStoppedWinningPattern = false;
-            BigLineUpSymbol = BigColor.None;
+            BigLineUpSymbol = BigType.None;
 
             autoRandomAI = new AutoRandomAI();
             autoNonLeftFirstReplayAI = new AutoNonLeftFirstReplayAI();
@@ -201,27 +201,27 @@ namespace ReelSpinGame_AutoPlay.AI
         // ビッグチャンスを狙う
         private int[] AimBigChance(FlagID flag, int betAmount)
         {
-            int colorID = 0;
+            int typeID = 0;
 
-            // 揃えるBIGの色指定がなければランダムで選択
-            if (BigLineUpSymbol == BigColor.None)
+            // 揃えるBIGの指定がなければランダムで選択
+            if (BigLineUpSymbol == BigType.None)
             {
-                colorID = Random.Range((int)BigColor.Red, (int)BigColor.Black + 1);
+                typeID = Random.Range((int)BigType.Red, (int)BigType.Black + 1);
             }
             else
             {
-                colorID = (int)BigLineUpSymbol;
+                typeID = (int)BigLineUpSymbol;
             }
 
-            switch (colorID)
+            switch (typeID)
             {
-                case (int)BigColor.Red:
+                case (int)BigType.Red:
                     return autoNormalRedBigAI.SendStopPosData();
 
-                case (int)BigColor.Blue:
+                case (int)BigType.Blue:
                     return autoNormalBlueBigAI.SendStopPosData();
 
-                case (int)BigColor.Black:
+                case (int)BigType.Black:
                     // 4枚チェリーまたは1枚掛け
                     if (flag == FlagID.FlagCherry4 || betAmount == 1)
                     {

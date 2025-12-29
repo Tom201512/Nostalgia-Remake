@@ -8,25 +8,23 @@ namespace ReelSpinGame_Sound.BGM
     [Serializable]
     public class BgmPack : ScriptableObject
     {
-        // var
-
         // Ô7
         [SerializeField] private BgmFile redBGM;
         [SerializeField] private BgmFile redJAC;
 
         public BgmFile RedBGM
         {
-            get { return redBGM; }
+            get => redBGM;
 #if UNITY_EDITOR
-            set { redBGM = value; }
+            set => redBGM = value;
 #endif
         }
 
         public BgmFile RedJAC
         {
-            get { return redJAC; }
+            get => redJAC;
 #if UNITY_EDITOR
-            set { redJAC = value; }
+            set => redJAC = value;
 #endif
         }
 
@@ -36,7 +34,7 @@ namespace ReelSpinGame_Sound.BGM
 
         public BgmFile BlueBGM
         {
-            get { return blueBGM; }
+            get => blueBGM;
 #if UNITY_EDITOR
             set { blueBGM = value; }
 #endif
@@ -44,9 +42,9 @@ namespace ReelSpinGame_Sound.BGM
 
         public BgmFile BlueJAC
         {
-            get { return blueJAC; }
+            get => blueJAC;
 #if UNITY_EDITOR
-            set { blueJAC = value; }
+            set => blueJAC = value;
 #endif
         }
 
@@ -56,17 +54,17 @@ namespace ReelSpinGame_Sound.BGM
 
         public BgmFile BlackBGM
         {
-            get { return blackBGM; }
+            get => blackBGM;
 #if UNITY_EDITOR
-            set { blackBGM = value; }
+            set => blackBGM = value;
 #endif
         }
 
         public BgmFile BlackJAC
         {
-            get { return blackJAC; }
+            get => blackJAC;
 #if UNITY_EDITOR
-            set { blackJAC = value; }
+            set => blackJAC = value;
 #endif
         }
 
@@ -74,9 +72,9 @@ namespace ReelSpinGame_Sound.BGM
         [SerializeField] private BgmFile regJAC;
         public BgmFile RegJAC
         {
-            get { return regJAC; }
+            get => regJAC;
 #if UNITY_EDITOR
-            set { regJAC = value; }
+            set => regJAC = value;
 #endif
         }
 

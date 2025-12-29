@@ -9,21 +9,14 @@ namespace ReelSpinGame_Datas
     // プレイヤーのメダル情報
     public class PlayerMedalData : ISavable
     {
-        // const
-        // プレイヤー初期メダル枚数
-        public const int DefaultPlayerMedal = 50;
+        public const int DefaultPlayerMedal = 50;        // プレイヤー初期メダル枚数
 
-        // var
-        // 所有メダル枚数
-        public int CurrentPlayerMedal { get; private set; }
-        // 投入したメダル枚数(IN)
-        public int CurrentInMedal { get; private set; }
-        // 獲得メダル枚数(OUT)
-        public int CurrentOutMedal { get; private set; }
-        // 99999Gまでの差枚数を記録
-        public List<int> MedalSlumpGraph { get; private set; }
+        public int CurrentPlayerMedal { get; private set; }         // 所有メダル枚数
+        public int CurrentInMedal { get; private set; }             // 投入したメダル枚数(IN)
+        public int CurrentOutMedal { get; private set; }            // 獲得メダル枚数(OUT)
 
-        // コンストラクタ
+        public List<int> MedalSlumpGraph { get; private set; }      // 99999Gまでの差枚数を記録
+
         public PlayerMedalData()
         {
             CurrentPlayerMedal = DefaultPlayerMedal;
@@ -32,7 +25,7 @@ namespace ReelSpinGame_Datas
             MedalSlumpGraph = new List<int>();
         }
 
-        // データからセットする
+        // データセット
         public void SetData(ISavable playerMedalData)
         {
             if (playerMedalData.GetType() == typeof(PlayerMedalData))
@@ -51,6 +44,7 @@ namespace ReelSpinGame_Datas
 
         // プレイヤーメダル増加
         public void IncreasePlayerMedal(int amount) => CurrentPlayerMedal += amount;
+
         // プレイヤーメダル減少
         public void DecreasePlayerMedal(int amount)
         {

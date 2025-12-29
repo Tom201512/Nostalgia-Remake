@@ -10,22 +10,15 @@ namespace ReelSpinGame_Datas
 #if UNITY_EDITOR
     public class ScriptableGen : EditorWindow
     {
-        // 読み込み時のパス
-        private const string DataPath = "Assets/DataFile";
 
-        // リールファイル先頭のファイル名
-        private const string ReelFileStartPath = "Nostalgia ReelSheet - ";
+        const string DataPath = "Assets/DataFile";                              // 読み込み時のパス
+        private const string ReelFileStartPath = "Nostalgia ReelSheet - ";      // リールファイル先頭のファイル名
+        private const float JacNoneDefault = 256f;                              // JACはずれデフォルト値
 
-        // JACはずれデフォルト値
-        private const float JacNoneDefault = 256f;
 
-        // 各リールを作る際に選んだボタン番号
-        private int reelSelection;
+        private int reelSelection;        // 各リールを作る際に選んだボタン番号
+        private float jacNoneProb;        // JACゲーム時のはずれ確率
 
-        // JACゲーム時のはずれ確率
-        private float jacNoneProb;
-
-        // func
         // リール配列の作成
         [MenuItem("ScriptableGen/Scriptable Generator")]
         private static void OpenWindow()
@@ -112,9 +105,7 @@ namespace ReelSpinGame_Datas
         // リール配列の作成
         private void MakeReelArrayData(string reelName)
         {
-            // ディレクトリの作成
             string path = "Assets/ReelData";
-            // ファイル名指定
             string fileName = reelName + "Array";
 
             // ファイルが無ければ新規作成
@@ -140,9 +131,7 @@ namespace ReelSpinGame_Datas
         // リールスベリコマデータの作成
         private void MakeReelDelayData(string reelName)
         {
-            // ディレクトリの作成
             string path = "Assets/ReelData";
-            // ファイル名指定
             string fileName = reelName + "Delay";
 
             // ファイルが無ければ新規作成
@@ -191,18 +180,18 @@ namespace ReelSpinGame_Datas
             // フラグテーブル作成
             // 通常時Aフラグテーブル作成
             using StreamReader normalA = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableNormalA.csv"));
-            flagDatabase.SetNormalATable(FlagDatabaseGen.MakeFlagTableSets(normalA));
+            flagDatabase.NormalATable = FlagDatabaseGen.MakeFlagTableSets(normalA);
 
             // 通常時Bフラグテーブル作成
             using StreamReader normalB = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableNormalB.csv"));
-            flagDatabase.SetNormalBTable(FlagDatabaseGen.MakeFlagTableSets(normalB));
+            flagDatabase.NormalBTable = FlagDatabaseGen.MakeFlagTableSets(normalB);
 
             // 小役ゲーム中フラグテーブル作成
             using StreamReader bigTable = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableBig.csv"));
-            flagDatabase.SetBIGTable(FlagDatabaseGen.MakeFlagTableSets(bigTable));
+            flagDatabase.BigTable = FlagDatabaseGen.MakeFlagTableSets(bigTable);
 
             // JAC時ハズレ
-            flagDatabase.SetJACNonePoss(jacNoneProb);
+            flagDatabase.JacNonePoss = jacNoneProb;
 
             // 保存処理
             GenerateFile(path, fileName, flagDatabase);
@@ -227,20 +216,20 @@ namespace ReelSpinGame_Datas
 
             // 払い出しライン作成
             using StreamReader payoutLine = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - PayoutLineData.csv"));
-            payoutDatabase.SetPayoutLines(PayoutDatabaseGen.MakePayoutLineDatas(payoutLine));
+            payoutDatabase.PayoutLines = PayoutDatabaseGen.MakePayoutLineDatas(payoutLine);
 
             // 払い出し組み合わせ表作成
             // 通常時
             using StreamReader normalPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - NormalPayout.csv"));
-            payoutDatabase.SetNormalPayout(PayoutDatabaseGen.MakeResultDatas(normalPayout));
+            payoutDatabase.NormalPayoutDatas = PayoutDatabaseGen.MakeResultDatas(normalPayout);
 
             // 小役ゲーム中
             using StreamReader bigPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - BigPayout.csv"));
-            payoutDatabase.SetBigPayout(PayoutDatabaseGen.MakeResultDatas(bigPayout));
+            payoutDatabase.BigPayoutDatas = PayoutDatabaseGen.MakeResultDatas(bigPayout);
 
             // JACゲーム中
             using StreamReader jacPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - JacPayout.csv"));
-            payoutDatabase.SetJacPayout(PayoutDatabaseGen.MakeResultDatas(jacPayout));
+            payoutDatabase.JacPayoutDatas = PayoutDatabaseGen.MakeResultDatas(jacPayout);
 
             // 保存処理
             GenerateFile(path, fileName, payoutDatabase);

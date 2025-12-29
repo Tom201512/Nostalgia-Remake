@@ -6,11 +6,9 @@ namespace ReelSpinGame_UI.Graph
     // グラフを描画するスクリプト
     public class GraphDrawer : MonoBehaviour
     {
-        // 線描画コンポーネント
-        private LineRenderer lineRenderer;
 
-        // 座標位置
-        private List<Vector3> positions;
+        private LineRenderer lineRenderer;      // 線描画コンポーネント
+        private List<Vector3> positions;        // 座標位置
 
         void Awake()
         {
@@ -36,11 +34,6 @@ namespace ReelSpinGame_UI.Graph
         // 描画を行う
         public void StartDraw()
         {
-            foreach (Vector3 position in positions)
-            {
-                Debug.Log("Position X:" + position.x + " Y:" + position.y);
-            }
-
             Vector3[] results = positions.ToArray();
             lineRenderer.SetPositions(results);
         }

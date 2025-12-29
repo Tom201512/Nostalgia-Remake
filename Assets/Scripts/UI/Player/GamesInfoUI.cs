@@ -8,13 +8,10 @@ namespace ReelSpinGame_UI.Player.Games
     // ゲーム数表示用UI
     public class GamesInfoUI : MonoBehaviour
     {
-        // const
-        // 最大表示可能ゲーム数
-        private const int MaximumGameCount = 99999;
+        const int MaximumGameCount = 99999;        // 最大表示可能ゲーム数
 
-        // var
-        [SerializeField] private TextMeshProUGUI games;
-        [SerializeField] private TextMeshProUGUI total;
+        [SerializeField] private TextMeshProUGUI games;     // ゲーム数テキスト
+        [SerializeField] private TextMeshProUGUI total;     // 総ゲーム数テキスト
 
         // ゲーム数UI更新
         public void UpdateGamesUI(PlayerDatabase playerDatabase)

@@ -1,3 +1,4 @@
+using ReelSpinGame_Reels.Util;
 using System;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ namespace ReelSpinGame_Reels.Symbol
             // 現在のリール下段を基準として位置を更新する。
             foreach (SymbolChange symbol in SymbolObj)
             {
-                symbol.ChangeSymbol(symbolImages[(int)reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, (sbyte)symbol.GetPosID())]]);
+                symbol.ChangeSymbol(symbolImages[reelArray[ReelSymbolPosCalc.OffsetReelPos(currentLower, (sbyte)symbol.GetPosID())]]);
 
                 // もし最後の位置にある図柄の場合は切れ目の位置を動かす
                 if (!hasLastPosSymbol && currentLower == 20)
@@ -40,7 +41,7 @@ namespace ReelSpinGame_Reels.Symbol
         }
 
         // リール図柄を得る
-        public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => SymbolChange.ReturnSymbol(reelArray[ReelObjectPresenter.OffsetReelPos(currentLower, posID)]);
+        public ReelSymbols GetReelSymbol(int currentLower, int posID, byte[] reelArray) => ReelSymbolPosCalc.ReturnSymbol(reelArray[ReelSymbolPosCalc.OffsetReelPos(currentLower, posID)]);
         // リール配列の番号を図柄へ変更
         public ReelSymbols ReturnSymbol(int reelIndex) => (ReelSymbols)Enum.ToObject(typeof(ReelSymbols), reelIndex);
         // 図柄を得る

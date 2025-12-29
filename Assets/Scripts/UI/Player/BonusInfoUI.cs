@@ -8,13 +8,10 @@ namespace ReelSpinGame_UI.Player.Bonus
     // ボーナス当選回数用
     public class BonusInfoUI : MonoBehaviour
     {
-        // const
-        // 最大表示可能ボーナス回数
-        private const int MaximumBonusCount = 999;
+        private const int MaximumBonusCount = 999;        // 最大表示可能ボーナス回数
 
-        // var
-        [SerializeField] private TextMeshProUGUI bigCount;
-        [SerializeField] private TextMeshProUGUI regCount;
+        [SerializeField] private TextMeshProUGUI bigCount;  // BIG回数
+        [SerializeField] private TextMeshProUGUI regCount;  // REG回数
 
         // ボーナス当選情報更新
         public void UpdateBonusUI(PlayerDatabase playerDatabase)

@@ -14,7 +14,7 @@ namespace ReelSpinGame_Save.Database
     public class OptionSave : ISavable
     {
         public AutoOptionData AutoOptionData { get; private set; }          // オートオプションのデータ
-        public OtherOptionData OtherOptionData { get; private set; }       // その他オプションの設定
+        public OtherOptionData OtherOptionData { get; private set; }        // その他オプションの設定
 
         public OptionSave()
         {
@@ -29,8 +29,7 @@ namespace ReelSpinGame_Save.Database
             OtherOptionData.InitializeData();
         }
 
-        // データ記録
-        // オート設定
+        // オート設定データの設定
         public void RecordAutoData(AutoOptionData autoOptionData)
         {
             AutoOptionData.CurrentSpeed = autoOptionData.CurrentSpeed;
@@ -50,10 +49,8 @@ namespace ReelSpinGame_Save.Database
         // セーブ
         public List<int> SaveData()
         {
-            // 変数データをすべて格納
             List<int> data = new List<int>();
 
-            // オート設定
             data.Add((int)AutoOptionData.CurrentSpeed);
             data.Add((int)AutoOptionData.CurrentStopOrder);
             data.Add(AutoOptionData.HasTechnicalPlay ? 1 : 0);
@@ -96,7 +93,7 @@ namespace ReelSpinGame_Save.Database
                 AutoOptionData.CurrentSpeed = (AutoSpeedName)Enum.ToObject(typeof(AutoSpeedName), br.ReadInt32());
                 AutoOptionData.CurrentStopOrder = (StopOrderOptionName)Enum.ToObject(typeof(StopOrderOptionName), br.ReadInt32());
                 AutoOptionData.HasTechnicalPlay = br.ReadInt32() == 1 ? true : false;
-                AutoOptionData.BigLineUpSymbol = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
+                AutoOptionData.BigLineUpSymbol = (BigType)Enum.ToObject(typeof(BigType), br.ReadInt32());
                 AutoOptionData.EndConditionFlag = (byte)br.ReadInt32();
                 AutoOptionData.SpinConditionID = (SpinTimeConditionName)Enum.ToObject(typeof(SpinTimeConditionName), br.ReadInt32());
 
@@ -126,10 +123,6 @@ namespace ReelSpinGame_Save.Database
             {
                 Debug.LogException(e);
                 return false;
-            }
-            finally
-            {
-
             }
 
             return true;

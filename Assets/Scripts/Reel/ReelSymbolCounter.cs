@@ -12,31 +12,31 @@ namespace ReelSpinGame_Reels.Symbol
         [SerializeField] PayoutDatabase payoutDatabase;             // 払い出しのデータ
 
         // 揃っているBIG図柄の数を返す
-        public BigColor GetBigLinedUpCount(int betAmount, int checkAmount)
+        public BigType GetBigLinedUpCount(int betAmount, int checkAmount)
         {
             // 赤7
-            if (CountBonusSymbols(BigColor.Red, betAmount) == checkAmount)
+            if (CountBonusSymbols(BigType.Red, betAmount) == checkAmount)
             {
-                return BigColor.Red;
+                return BigType.Red;
             }
 
             // 青7
-            if (CountBonusSymbols(BigColor.Blue, betAmount) == checkAmount)
+            if (CountBonusSymbols(BigType.Blue, betAmount) == checkAmount)
             {
-                return BigColor.Blue;
+                return BigType.Blue;
             }
 
             // BB7
-            if (CountBonusSymbols(BigColor.Black, betAmount) == checkAmount)
+            if (CountBonusSymbols(BigType.Black, betAmount) == checkAmount)
             {
-                return BigColor.Black;
+                return BigType.Black;
             }
 
-            return BigColor.None;
+            return BigType.None;
         }
 
         // ビッグチャンス図柄がいくつ揃っているか確認する
-        int CountBonusSymbols(BigColor bigColor, int betAmount)
+        int CountBonusSymbols(BigType bigColor, int betAmount)
         {
             int highestCount = 0;   // 最も多かった個数を記録
             // 払い出しラインとベット枚数から確認
@@ -55,20 +55,20 @@ namespace ReelSpinGame_Reels.Symbol
                         }
 
                         // 赤7
-                        if (bigColor == BigColor.Red &&
+                        if (bigColor == BigType.Red &&
                             reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.RedSeven)
                         {
                             currentCount += 1;
                         }
                         // 青7
-                        if (bigColor == BigColor.Blue &&
+                        if (bigColor == BigType.Blue &&
                             reelObjects[i].GetSymbolFromWillStop(line.PayoutLines[i]) == ReelSymbols.BlueSeven)
                         {
                             currentCount += 1;
                         }
 
                         // BB7
-                        if (bigColor == BigColor.Black)
+                        if (bigColor == BigType.Black)
                         {
                             // 右リールは赤7があるか確認
                             if (i == (int)ReelID.ReelRight &&

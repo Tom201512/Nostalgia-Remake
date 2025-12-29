@@ -3,14 +3,13 @@ using ReelSpinGame_Flash;
 using ReelSpinGame_Payout;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Symbol;
+using ReelSpinGame_Reels.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelLogicManager;
-using static ReelSpinGame_Reels.ReelObjectPresenter;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels.Flash
 {
@@ -184,7 +183,7 @@ namespace ReelSpinGame_Reels.Flash
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
                     if (lastStoppedReelData.LastSymbols[(int)ReelID.ReelLeft]
-                        [SymbolChange.GetReelArrayIndex(payoutLine.PayoutLines[(int)ReelID.ReelLeft])] == ReelSymbols.Cherry)
+                        [ReelSymbolPosCalc.GetReelArrayIndex(payoutLine.PayoutLines[(int)ReelID.ReelLeft])] == ReelSymbols.Cherry)
                     {
                         break;
                     }

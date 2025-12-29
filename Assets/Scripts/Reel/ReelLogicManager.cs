@@ -64,7 +64,7 @@ namespace ReelSpinGame_Reels
         public int GetUsedReelCID(ReelID reelID) => spinManager.GetUsedReelTID(reelID);                   // 使用した組み合わせID
 
         // 揃っているBIG図柄の数
-        public BigColor GetBigLinedUpCount(int betAmount, int checkAmount) => symbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
+        public BigType GetBigLinedUpCount(int betAmount, int checkAmount) => symbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
 
         // 強制フラグのランダム数値設定
         public void SetForceRandomValue(int value) => spinManager.SetForceRandomValue(value);

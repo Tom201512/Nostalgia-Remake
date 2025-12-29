@@ -1,9 +1,9 @@
 ﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
+using ReelSpinGame_Reels;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
-using ReelSpinGame_Reels;
 
 namespace ReelSpinGame_State.PayoutState
 {
@@ -81,7 +81,7 @@ namespace ReelSpinGame_State.PayoutState
             // オプション設定の反映
             gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());
             // 演出処理へ
-            gM.MainFlow.stateManager.ChangeState(gM.MainFlow.EffectState);
+            gM.MainFlow.StateManager.ChangeState(gM.MainFlow.EffectState);
         }
 
         public void StateUpdate()
@@ -145,9 +145,9 @@ namespace ReelSpinGame_State.PayoutState
         //　ボーナス開始
         void StartBonus()
         {
-            // リールから揃ったボーナス図柄の色を得る
-            gM.Bonus.ResetBigColor();
-            BigColor color = gM.Reel.GetBigLinedUpCount(gM.Medal.LastBetAmount, 3);
+            // リールから揃ったボーナス図柄を得る
+            gM.Bonus.ResetBigType();
+            BigType color = gM.Reel.GetBigLinedUpCount(gM.Medal.LastBetAmount, 3);
 
             // ビッグチャンスの場合
             if (gM.Payout.LastPayoutResult.BonusID == (int)BonusTypeID.BonusBIG)

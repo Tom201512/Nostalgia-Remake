@@ -12,13 +12,13 @@ namespace ReelSpinGame_Effect.Data
     {
         public bool HasEffect { get; set; } // 演出処理中か
 
-        BigColor bigSymbolColor;    // 現在のBIG図柄色
+        BigType bigType;    // 現在のBIG種類
         FlashManager flash;         // リールフラッシュ
         SoundManager sound;         // サウンド
 
         void Awake()
         {
-            bigSymbolColor = BigColor.None;
+            bigType = BigType.None;
             HasEffect = false;
             flash = GetComponent<FlashManager>();
             sound = GetComponent<SoundManager>();
@@ -33,7 +33,7 @@ namespace ReelSpinGame_Effect.Data
         public void DoEffect(AfterPayoutEffectCondition afterPayoutEffectCondition)
         {
             // BIG当選時の図柄を登録
-            bigSymbolColor = afterPayoutEffectCondition.BigColor;
+            bigType = afterPayoutEffectCondition.BigType;
 
             // ボーナス開始、終了していれば演出を行う
             if (afterPayoutEffectCondition.HasBonusStarted)
@@ -55,15 +55,15 @@ namespace ReelSpinGame_Effect.Data
         // ファンファーレ再生
         void PlayFanfare()
         {
-            switch (bigSymbolColor)
+            switch (bigType)
             {
-                case BigColor.Red:
+                case BigType.Red:
                     sound.PlaySE(sound.SoundDB.SE.RedStart);
                     break;
-                case BigColor.Blue:
+                case BigType.Blue:
                     sound.PlaySE(sound.SoundDB.SE.BlueStart);
                     break;
-                case BigColor.Black:
+                case BigType.Black:
                     sound.PlaySE(sound.SoundDB.SE.BlackStart);
                     break;
                 default:
@@ -75,15 +75,15 @@ namespace ReelSpinGame_Effect.Data
         // 終了ジングル再生(BIGのみ)
         void PlayBigEndFanfare()
         {
-            switch (bigSymbolColor)
+            switch (bigType)
             {
-                case BigColor.Red:
+                case BigType.Red:
                     sound.PlaySE(sound.SoundDB.SE.RedEnd);
                     break;
-                case BigColor.Blue:
+                case BigType.Blue:
                     sound.PlaySE(sound.SoundDB.SE.BlueEnd);
                     break;
-                case BigColor.Black:
+                case BigType.Black:
                     sound.PlaySE(sound.SoundDB.SE.BlackEnd);
                     break;
             }
@@ -137,10 +137,10 @@ namespace ReelSpinGame_Effect.Data
             // 音楽停止
             sound.StopBGM();
             // BIGの時のみファンファーレを鳴らす
-            if (bigSymbolColor != BigColor.None)
+            if (bigType != BigType.None)
             {
                 PlayBigEndFanfare();
-                bigSymbolColor = BigColor.None;
+                bigType = BigType.None;
                 // 今鳴らしているファンファーレが止まるのを待つ
                 while (!sound.GetJingleStopped())
                 {

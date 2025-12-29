@@ -1,3 +1,4 @@
+using ReelSpinGame_Reels.Util;
 using UnityEngine;
 
 namespace ReelSpinGame_Reels.Symbol
@@ -15,7 +16,7 @@ namespace ReelSpinGame_Reels.Symbol
         // éwíËÇµÇΩà íuÇÃñæÇÈÇ≥ïœçX
         public void ChangeSymbolBrightness(int posID, byte brightness)
         {
-            SymbolLightObj[SymbolChange.GetReelArrayIndex(posID)].ChangeBrightness(brightness);
+            SymbolLightObj[ReelSymbolPosCalc.GetReelArrayIndex(posID)].ChangeBrightness(brightness);
         }
     }
 }

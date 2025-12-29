@@ -26,7 +26,7 @@ namespace ReelSpinGame_State.PlayingState
             // ‹^——V‹Z‚ªI‚í‚é‚Ü‚Å‘Ò‚Â
             if (!gM.Effect.GetHasFakeSpin())
             {
-                gM.MainFlow.stateManager.ChangeState(gM.MainFlow.WaitState);
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.WaitState);
             }
         }
 

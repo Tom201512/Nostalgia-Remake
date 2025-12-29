@@ -39,7 +39,7 @@ namespace ReelSpinGame_AutoPlay
 
         public AutoSpeedName CurrentSpeed { get; set; }             // Œ»Ý‚ÌƒI[ƒg‘¬“x
         public StopOrderOptionName CurrentStopOrder { get; set; }   // Œ»Ý‚Ì’âŽ~‡
-        public BigColor BigLineUpSymbol                             // ‘µ‚¦‚éBIG}•¿
+        public BigType BigLineUpSymbol                             // ‘µ‚¦‚éBIG}•¿
         {
             get => autoAI.BigLineUpSymbol;
             set => autoAI.BigLineUpSymbol = value;

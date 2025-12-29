@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using ReelSpinGame_Reels.Symbol;
+﻿using ReelSpinGame_Reels.Util;
+using System.Collections.Generic;
 
 namespace ReelSpinGame_Reels
 {
@@ -47,18 +46,9 @@ namespace ReelSpinGame_Reels
                     LastSymbols[i].Add(reelObjects[i].GetReelSymbol(j));
                 }
             }
-
-            // 各リールごとに表示(デバッグ)
-            foreach (List<ReelSymbols> reelResult in LastSymbols)
-            {
-                for (int i = 0; i < reelResult.Count; i++)
-                {
-                    Debug.Log(reelResult[i]);
-                }
-            }
         }
 
         // 最後に止めた図柄を得る
-        public ReelSymbols GetLastStoppedSymbol(int reelID, int posID) => LastSymbols[reelID][SymbolChange.GetReelArrayIndex(posID)];
+        public ReelSymbols GetLastStoppedSymbol(int reelID, int posID) => LastSymbols[reelID][ReelSymbolPosCalc.GetReelArrayIndex(posID)];
     }
 }

@@ -11,7 +11,7 @@ namespace ReelSpinGame_Reels
         public int Bet { get; set; }                // ベット枚数
         public int Random { get; set; }             // ランダム数値
 
-        public ReelMainCondition() 
+        public ReelMainCondition()
         {
             Flag = FlagID.FlagNone;
             Bonus = BonusTypeID.BonusNone;

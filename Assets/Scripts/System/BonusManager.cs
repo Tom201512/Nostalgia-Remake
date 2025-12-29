@@ -26,7 +26,7 @@ namespace ReelSpinGame_Bonus
         // 各種数値を得る
         public BonusTypeID GetHoldingBonusID() => data.HoldingBonusID;              // ストック中のボーナス
         public BonusStatus GetCurrentBonusStatus() => data.CurrentBonusStatus;      // ボーナス状態
-        public BigColor GetBigChanceColor() => data.BigChanceColor;                 // BIGボーナス当選時の色
+        public BigType GetBigChanceType() => data.BigChanceType;                 // BIGボーナス当選時の種類
 
         public int GetRemainingBigGames() => data.RemainingBigGames;                // 残り小役ゲーム数
         public int GetRemainingJacIn() => data.RemainingJacIn;                      // 残りJAC-IN回数
@@ -74,7 +74,7 @@ namespace ReelSpinGame_Bonus
         {
             data.HoldingBonusID = loadData.HoldingBonusID;
             data.CurrentBonusStatus = loadData.CurrentBonusStatus;
-            data.BigChanceColor = loadData.BigChanceColor;
+            data.BigChanceType = loadData.BigChanceType;
             data.RemainingBigGames = loadData.RemainingBigGames;
             data.RemainingJacIn = loadData.RemainingJacIn;
             data.RemainingJacHits = loadData.RemainingJacHits;
@@ -89,7 +89,7 @@ namespace ReelSpinGame_Bonus
         public void SetBonusStock(BonusTypeID bonusType) => data.HoldingBonusID = bonusType;
 
         // ビッグチャンスの開始
-        public void StartBigChance(BigColor bigColor)
+        public void StartBigChance(BigType bigColor)
         {
             // ビッグチャンスの初期化
             data.CurrentBonusPayout = 0;
@@ -97,7 +97,7 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacIn = JacInTimes;
             data.CurrentBonusStatus = BonusStatus.BonusBIGGames;
             data.HoldingBonusID = BonusTypeID.BonusNone;
-            data.BigChanceColor = bigColor;
+            data.BigChanceType = bigColor;
             // 連チャン区間の記録開始
             data.HasZone = true;
         }
@@ -192,7 +192,6 @@ namespace ReelSpinGame_Bonus
             // JACゲーム数が0, または入賞回数が0の場合は終了(BIG中なら残りゲーム数0で終了)
             if (data.RemainingJacGames == 0 || data.RemainingJacHits == 0)
             {
-                //Debug.Log("End Bonus Game");
                 // BIG中なら残りJAC-INの数があれば小役ゲームへ移行
                 if (data.RemainingJacIn > 0 && data.RemainingBigGames > 0)
                 {
@@ -205,8 +204,8 @@ namespace ReelSpinGame_Bonus
             }
         }
 
-        // BIG時の色をリセットする
-        public void ResetBigColor() => data.BigChanceColor = BigColor.None;
+        // BIG時の種類をリセットする
+        public void ResetBigType() => data.BigChanceType = BigType.None;
 
         // ボーナスの終了処理
         void EndBonusStatus()

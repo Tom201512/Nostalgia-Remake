@@ -15,7 +15,7 @@ namespace ReelSpinGame_Datas
         public int BonusHitGame { get; private set; }               // 成立時ゲーム数(成立時点でのゲーム数)
         public int BonusStartGame { get; private set; }             // 入賞時ゲーム数(ボーナスを入賞させたゲーム)
         public int BonusPayout { get; private set; }                // ボーナス獲得枚数
-        public BigColor BigColor { get; private set; }              // BIG当選時の色
+        public BigType BigType { get; private set; }              // BIG当選時の種類
         public List<int> BonusReelPos { get; private set; }         // ボーナス成立時のリール位置
         public List<int> BonusReelPushOrder { get; private set; }   // ボーナス成立時の押し順
         public List<int> BonusReelDelay { get; private set; }       // ボーナス成立時のスベリコマ数
@@ -26,7 +26,7 @@ namespace ReelSpinGame_Datas
             BonusHitGame = 0;
             BonusStartGame = 0;
             BonusPayout = 0;
-            BigColor = BigColor.None;
+            BigType = BigType.None;
             BonusReelPos = new List<int> { 0, 0, 0, };
             BonusReelPushOrder = new List<int> { 0, 0, 0, };
             BonusReelDelay = new List<int> { 0, 0, 0, };
@@ -36,7 +36,7 @@ namespace ReelSpinGame_Datas
         public void SetBonusHitGame(int game) => BonusHitGame = game;               // 成立時ゲーム数セット
         public void SetBonusStartGame(int game) => BonusStartGame = game;           // 入賞時ゲーム数セット
         public void ChangeBonusPayout(int amount) => BonusPayout = amount;          // ボーナス獲得枚数変更
-        public void SetBigChanceColor(BigColor color) => BigColor = color;          // ビッグチャンス時の色セット
+        public void SetBigType(BigType type) => BigType = type;            // ビッグチャンスの種類のセット
 
         // 成立時のリール停止位置セット
         public void SetBonusReelPos(List<int> reelPos)
@@ -71,7 +71,7 @@ namespace ReelSpinGame_Datas
             data.Add(BonusHitGame);
             data.Add(BonusStartGame);
             data.Add(BonusPayout);
-            data.Add((int)BigColor);
+            data.Add((int)BigType);
 
             foreach (int pos in BonusReelPos)
             {
@@ -100,7 +100,7 @@ namespace ReelSpinGame_Datas
                 BonusHitGame = br.ReadInt32();
                 BonusStartGame = br.ReadInt32();
                 BonusPayout = br.ReadInt32();
-                BigColor = (BigColor)Enum.ToObject(typeof(BigColor), br.ReadInt32());
+                BigType = (BigType)Enum.ToObject(typeof(BigType), br.ReadInt32());
 
                 for (int i = 0; i < BonusReelPos.Count; i++)
                 {

@@ -1,7 +1,6 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Reels.Spin;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
 namespace ReelSpinGame_Reels
 {
@@ -15,7 +14,7 @@ namespace ReelSpinGame_Reels
         // プロパティ
         public ReelID ReelID { get => reelID; }                                         // リールのID
         public ReelStatus ReelStatus { get => reelSpinPresenter.ReelStatus; }           // 現在のリール状態
-                                                                                        
+
         public byte[] ReelArray { get => reelSpinPresenter.ReelArray; }                 // リール配列を渡す
         public float RotateSpeed { get => reelSpinPresenter.RotateSpeed; }              // 現在速度を返す
         public float CurrentDegree { get => reelSpinPresenter.CurrentDegree; }          // 現在の角度を返す
@@ -37,13 +36,13 @@ namespace ReelSpinGame_Reels
         // リール回転用のプレゼンター
         private ReelSpinPresenter reelSpinPresenter;
 
-        private void Awake()
+        void Awake()
         {
             ReelEffectManager = GetComponent<ReelEffect>();
             reelSpinPresenter = GetComponent<ReelSpinPresenter>();
         }
 
-        private void Start()
+        void Start()
         {
             reelSpinPresenter.ChangeBlurSetting(false);
             reelSpinPresenter.OnReelPositionChanged += OnReelPosChangedCallback;
@@ -51,7 +50,7 @@ namespace ReelSpinGame_Reels
             reelSpinPresenter.HasReelStopped += OnReelHasStoppedCallback;
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             reelSpinPresenter.OnReelPositionChanged -= OnReelPosChangedCallback;
             reelSpinPresenter.OnReelDegreeChanged -= OnReelDegreeChangedCallback;
@@ -136,22 +135,6 @@ namespace ReelSpinGame_Reels
                 ReelEffectManager.FinishJacBrightnessCalculate();
             }
             HasReelStopped?.Invoke();
-        }
-
-        // リール位置をオーバーフローしない数値で返す
-        public static int OffsetReelPos(int reelPos, int offset)
-        {
-            if (reelPos + offset < 0)
-            {
-                return MaxReelArray + reelPos + offset;
-            }
-
-            else if (reelPos + offset > MaxReelArray - 1)
-            {
-                return reelPos + offset - MaxReelArray;
-            }
-            // オーバーフローがないならそのまま返す
-            return reelPos + offset;
         }
     }
 }

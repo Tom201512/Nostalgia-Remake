@@ -6,33 +6,22 @@ using UnityEngine;
 
 namespace ReelSpinGame_Sound
 {
+    // サウンドマネージャー管理
     public class SoundManager : MonoBehaviour
     {
-        // 音管理
-
-        // const
-        // サウンドパック識別用ID
-        public enum SoundDatabaseID { DefaultSound, ArrangeSound };
-
-        // var
-        // 使用候補のサウンドパック]
-        [SerializeField] private List<SoundPack> SoundDatabases;
-        // SE再生
-        [SerializeField] private SoundPlayer sePlayer;
-        // ジングル再生(短いBGM)
-        [SerializeField] private SoundPlayer jinglePlayer;
-        // BGM再生用
-        [SerializeField] private BgmPlayer bgmPlayer;
+        [SerializeField] List<SoundPack> SoundDatabases;    // 使用候補のサウンドパック
+        [SerializeField] SoundPlayer sePlayer;              // SE再生
+        [SerializeField] SoundPlayer jinglePlayer;          // ジングル再生(短いBGM)
+        [SerializeField] BgmPlayer bgmPlayer;               // BGM再生用
 
         // 使用中のサウンドパック
         public SoundPack SoundDB { get; private set; }
 
-        private void Awake()
+        void Awake()
         {
-            ChangeSoundPack((int)SoundDatabaseID.DefaultSound);
+            ChangeSoundPack(0);
         }
 
-        // func
         // 効果音が停止したか確認
         public bool GetSoundStopped() => sePlayer.HasSoundStopped;
         // ジングルが停止したか確認

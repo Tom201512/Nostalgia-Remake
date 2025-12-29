@@ -6,8 +6,6 @@ namespace ReelSpinGame_Save.Database.Option
     // その他設定のデータ
     public class OtherOptionData
     {
-        // const
-        // var
         public int MusicVolumeSetting { get; private set; }           // BGM音量 (0~7)
         public int SoundVolumeSetting { get; private set; }           // SE音量 (0~7)
         public bool ShowMiniReelSetting { get; private set; }         // ミニリール表示

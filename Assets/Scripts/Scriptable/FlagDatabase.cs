@@ -8,25 +8,35 @@ namespace ReelSpinGame_Datas
     // フラグデータベース
     public class FlagDatabase : ScriptableObject
     {
-        // 通常時A(低確率)
-        [SerializeField] private FlagDataSets normalATable;
-        // 通常時B(高確率)
-        [SerializeField] private FlagDataSets normalBTable;
-        // 小役ゲーム中
-        [SerializeField] private FlagDataSets bigTable;
-        // JAC時のはずれ
-        [SerializeField] private float jacNonePoss;
+        [SerializeField] FlagDataSets normalATable;         // 通常時A(低確率)
+        [SerializeField] FlagDataSets normalBTable;         // 通常時B(高確率)
+        [SerializeField] FlagDataSets bigTable;             // 小役ゲーム中
+        [SerializeField] float jacNonePoss;                 // JAC時のはずれ
 
+        // プロパティ
+        public FlagDataSets NormalATable
+        {
+            get => normalATable;
+            set => normalATable = value;
+        }
 
-        public FlagDataSets NormalATable { get { return normalATable; } }
-        public FlagDataSets NormalBTable { get { return normalBTable; } }
-        public FlagDataSets BigTable { get { return bigTable; } }
-        public float JacNonePoss { get { return jacNonePoss; } }
+        public FlagDataSets NormalBTable
+        {
+            get => normalBTable;
+            set => normalBTable = value;
+        }
 
-        public void SetNormalATable(FlagDataSets normalATable) => this.normalATable = normalATable;
-        public void SetNormalBTable(FlagDataSets normalBTable) => this.normalBTable = normalBTable;
-        public void SetBIGTable(FlagDataSets bigTable) => this.bigTable = bigTable;
-        public void SetJACNonePoss(float jacNonePoss) => this.jacNonePoss = jacNonePoss;
+        public FlagDataSets BigTable
+        {
+            get => bigTable;
+            set => bigTable = value;
+        }
+
+        public float JacNonePoss
+        {
+            get => jacNonePoss;
+            set => jacNonePoss = value;
+        }
     }
 
     // 設定ごとにまとめたフラグ確率
@@ -34,6 +44,7 @@ namespace ReelSpinGame_Datas
     public class FlagDataSets
     {
         [SerializeField] List<FlagDataBySetting> flagDataBySettings;
+
         public List<FlagDataBySetting> FlagDataBySettings { get { return flagDataBySettings; } }
 
         public FlagDataSets(StreamReader loadedData)
@@ -51,7 +62,6 @@ namespace ReelSpinGame_Datas
     [Serializable]
     public class FlagDataBySetting
     {
-        // var
         // フラグ確率
         [SerializeField] private float[] flagTable;
         public float[] FlagTable { get { return flagTable; } }
