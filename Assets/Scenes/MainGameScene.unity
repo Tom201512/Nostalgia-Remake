@@ -6616,6 +6616,7 @@ MonoBehaviour:
   technicalSelect: {fileID: 2109495140}
   autoEndTimingCheckBoxes: {fileID: 477941733}
   spinConditionSelect: {fileID: 1665700753}
+  autoStopPosLockManager: {fileID: 0}
 --- !u!1 &460868891
 GameObject:
   m_ObjectHideFlags: 0
@@ -18922,6 +18923,7 @@ MonoBehaviour:
   technicalSelect: {fileID: 199189449}
   autoEndTimingCheckBoxes: {fileID: 907759418}
   spinConditionSelect: {fileID: 1455194467}
+  autoStopPosLockManager: {fileID: 1459666515}
 --- !u!1 &1399519888
 GameObject:
   m_ObjectHideFlags: 0
