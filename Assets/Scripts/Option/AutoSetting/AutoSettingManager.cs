@@ -1,5 +1,6 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Option.Button;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using UnityEngine;
@@ -11,12 +12,13 @@ namespace ReelSpinGame_Option.AutoSetting
     public class AutoSettingManager : MonoBehaviour
     {
         // 選択ボタン
-        [SerializeField] SelectButtonComponent speedSelect;         // スピード変更
-        [SerializeField] SelectButtonComponent orderSelect;         // 押し順変更
-        [SerializeField] SelectButtonComponent bigColorSelect;      // BIG時図柄変更
-        [SerializeField] SelectButtonComponent technicalSelect;     // 技術介入変更 
-        [SerializeField] CheckBoxManager autoEndTimingCheckBoxes;   // オート終了条件チェックボックス
-        [SerializeField] SelectButtonComponent spinConditionSelect; // オート回転数変更
+        [SerializeField] SelectButtonComponent speedSelect;                 // スピード変更
+        [SerializeField] SelectButtonComponent orderSelect;                 // 押し順変更
+        [SerializeField] SelectButtonComponent bigColorSelect;              // BIG時図柄変更
+        [SerializeField] SelectButtonComponent technicalSelect;             // 技術介入変更 
+        [SerializeField] CheckBoxManager autoEndTimingCheckBoxes;           // オート終了条件チェックボックス
+        [SerializeField] SelectButtonComponent spinConditionSelect;         // オート回転数変更
+        [SerializeField] AutoStopPosLockManager autoStopPosLockManager;     // オート停止位置指定
 
         public AutoOptionData CurrentAutoOptionData { get; private set; } // 現在のオート設定
 
@@ -35,6 +37,7 @@ namespace ReelSpinGame_Option.AutoSetting
             technicalSelect.ContentChangedEvent += UpdateOptionData;
             autoEndTimingCheckBoxes.CheckBoxUpdatedEvent += UpdateOptionData;
             spinConditionSelect.ContentChangedEvent += UpdateOptionData;
+            autoStopPosLockManager.SettingChangedEvent += UpdateOptionData;
         }
 
         void OnDestroy()
@@ -46,6 +49,7 @@ namespace ReelSpinGame_Option.AutoSetting
             technicalSelect.ContentChangedEvent -= UpdateOptionData;
             autoEndTimingCheckBoxes.CheckBoxUpdatedEvent += UpdateOptionData;
             spinConditionSelect.ContentChangedEvent -= UpdateOptionData;
+            autoStopPosLockManager.SettingChangedEvent -= UpdateOptionData;
         }
 
         // 各種選択ボタンの有効化設定
@@ -68,6 +72,7 @@ namespace ReelSpinGame_Option.AutoSetting
             technicalSelect.LoadOptionData(autoOption.HasTechnicalPlay ? 1 : 0);
             autoEndTimingCheckBoxes.LoadOptionData(autoOption.EndConditionFlag);
             spinConditionSelect.LoadOptionData((int)autoOption.SpinConditionID);
+            autoStopPosLockManager.LoadOptionData(autoOption.StopPosLockData);
             UpdateOptionData();
         }
 
@@ -81,6 +86,7 @@ namespace ReelSpinGame_Option.AutoSetting
             technicalSelect.LoadOptionData(CurrentAutoOptionData.HasTechnicalPlay ? 1 : 0);
             autoEndTimingCheckBoxes.LoadOptionData(CurrentAutoOptionData.EndConditionFlag);
             spinConditionSelect.LoadOptionData((int)CurrentAutoOptionData.SpinConditionID);
+            autoStopPosLockManager.LoadOptionData(CurrentAutoOptionData.StopPosLockData);
             UpdateOptionData();
         }
 
@@ -93,6 +99,9 @@ namespace ReelSpinGame_Option.AutoSetting
             CurrentAutoOptionData.HasTechnicalPlay = technicalSelect.CurrentSettingID == 1 ? true : false;
             CurrentAutoOptionData.EndConditionFlag = autoEndTimingCheckBoxes.CurrentSelectFlag;
             CurrentAutoOptionData.SpinConditionID = (SpinTimeConditionName)Enum.ToObject(typeof(SpinTimeConditionName), spinConditionSelect.CurrentSettingID);
+            CurrentAutoOptionData.StopPosLockData[(int)ReelID.ReelLeft] = autoStopPosLockManager.CurrentLeftSelect;
+            CurrentAutoOptionData.StopPosLockData[(int)ReelID.ReelMiddle] = autoStopPosLockManager.CurrentMiddleSelect;
+            CurrentAutoOptionData.StopPosLockData[(int)ReelID.ReelRight] = autoStopPosLockManager.CurrentRightSelect;
             OnSettingChangedEvent?.Invoke();
         }
     }

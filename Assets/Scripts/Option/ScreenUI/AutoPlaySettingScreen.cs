@@ -11,9 +11,11 @@ namespace ReelSpinGame_Option.MenuContent
     public class AutoPlaySettingScreen : MonoBehaviour, IOptionScreenBase
     {
         // 各種操作
-        [SerializeField] AutoSettingManager autoSettingManager; // オート設定変更マネージャー
-        [SerializeField] ButtonComponent closeButton;           // クローズボタン
-        [SerializeField] ButtonComponent resetButton;           // リセットボタン
+        [SerializeField] AutoSettingManager autoSettingManager;             // オート設定変更マネージャー
+        [SerializeField] AutoStopPosLockManager autoStopPosLockManager;     // 設定位置固定設定マネージャー
+        [SerializeField] ButtonComponent posLockSettingButton;              // オート位置設定ボタン
+        [SerializeField] ButtonComponent closeButton;                       // クローズボタン
+        [SerializeField] ButtonComponent resetButton;                       // リセットボタン
 
         public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
@@ -29,9 +31,13 @@ namespace ReelSpinGame_Option.MenuContent
 
         void Awake()
         {
+            autoStopPosLockManager.gameObject.SetActive(false);
+
             closeButton.ButtonPushedEvent += OnClosedPressed;
             autoSettingManager.OnSettingChangedEvent += OnSettingChanged;
             resetButton.ButtonPushedEvent += OnResetButtonPressed;
+            posLockSettingButton.ButtonPushedEvent += OnPosLockSettingButtonPressed;
+            autoStopPosLockManager.ClosedScreenEvent += OnPosLockSettingClosed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -41,6 +47,9 @@ namespace ReelSpinGame_Option.MenuContent
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             autoSettingManager.OnSettingChangedEvent -= OnSettingChanged;
             resetButton.ButtonPushedEvent -= OnResetButtonPressed;
+            posLockSettingButton.ButtonPushedEvent -= OnPosLockSettingButtonPressed;
+
+            autoStopPosLockManager.ClosedScreenEvent -= OnPosLockSettingClosed;
         }
 
         // 画面表示&初期化
@@ -57,6 +66,7 @@ namespace ReelSpinGame_Option.MenuContent
                 autoSettingManager.SetInteractiveButtons(false);
                 closeButton.ToggleInteractive(false);
                 resetButton.ToggleInteractive(false);
+                posLockSettingButton.ToggleInteractive(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
@@ -76,6 +86,27 @@ namespace ReelSpinGame_Option.MenuContent
         // リセットボタンを押したときの挙動
         void OnResetButtonPressed(int signalID) => autoSettingManager.ResetOptionData();
 
+        // オート位置設定移行ボタンを押したときの挙動
+        void OnPosLockSettingButtonPressed(int signalID)
+        {
+            autoSettingManager.SetInteractiveButtons(false);
+            closeButton.ToggleInteractive(false);
+            resetButton.ToggleInteractive(false);
+            posLockSettingButton.ToggleInteractive(false);
+            autoStopPosLockManager.gameObject.SetActive(true);
+            autoStopPosLockManager.OpenScreen();
+        }
+
+        // オート位置設定が閉じられた時の挙動
+        void OnPosLockSettingClosed()
+        {
+            autoSettingManager.SetInteractiveButtons(true);
+            closeButton.ToggleInteractive(true);
+            resetButton.ToggleInteractive(true);
+            posLockSettingButton.ToggleInteractive(true);
+            autoStopPosLockManager.gameObject.SetActive(false);
+        }
+
         // フェードイン
         IEnumerator FadeInBehavior()
         {
@@ -92,6 +123,7 @@ namespace ReelSpinGame_Option.MenuContent
             autoSettingManager.SetInteractiveButtons(true);
             closeButton.ToggleInteractive(true);
             resetButton.ToggleInteractive(true);
+            posLockSettingButton.ToggleInteractive(true);
         }
 
         // フェードアウト

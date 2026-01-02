@@ -1,5 +1,6 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Interface;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ namespace ReelSpinGame_Save.Database
             AutoOptionData.HasTechnicalPlay = autoOptionData.HasTechnicalPlay;
             AutoOptionData.EndConditionFlag = autoOptionData.EndConditionFlag;
             AutoOptionData.SpinConditionID = autoOptionData.SpinConditionID;
+            AutoOptionData.StopPosLockData[(int)ReelID.ReelLeft] = autoOptionData.StopPosLockData[(int)ReelID.ReelLeft];
+            AutoOptionData.StopPosLockData[(int)ReelID.ReelMiddle] = autoOptionData.StopPosLockData[(int)ReelID.ReelMiddle];
+            AutoOptionData.StopPosLockData[(int)ReelID.ReelRight] = autoOptionData.StopPosLockData[(int)ReelID.ReelRight];
         }
 
         // ÇªÇÃëºê›íË
@@ -57,6 +61,12 @@ namespace ReelSpinGame_Save.Database
             data.Add((int)AutoOptionData.BigLineUpSymbol);
             data.Add((int)AutoOptionData.EndConditionFlag);
             data.Add((int)AutoOptionData.SpinConditionID);
+
+            for (int i = 0; i < AutoOptionData.StopPosLockData.Count; i++)
+            {
+                data.Add(AutoOptionData.StopPosLockData[i]);
+                Debug.Log("StopPosLock[" + i + "]:" + AutoOptionData.StopPosLockData[i]);
+            }
 
             // ÇªÇÃëºê›íË
             data.Add(OtherOptionData.MusicVolumeSetting);
@@ -96,6 +106,11 @@ namespace ReelSpinGame_Save.Database
                 AutoOptionData.BigLineUpSymbol = (BigType)Enum.ToObject(typeof(BigType), br.ReadInt32());
                 AutoOptionData.EndConditionFlag = (byte)br.ReadInt32();
                 AutoOptionData.SpinConditionID = (SpinTimeConditionName)Enum.ToObject(typeof(SpinTimeConditionName), br.ReadInt32());
+
+                for(int i = 0; i < ReelAmount; i++)
+                {
+                    AutoOptionData.StopPosLockData[i] = br.ReadInt32();
+                }
 
                 // ÇªÇÃëºê›íË
                 OtherOptionData.SetMusicVolume(br.ReadInt32());

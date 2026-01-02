@@ -1,4 +1,6 @@
 using ReelSpinGame_AutoPlay;
+using ReelSpinGame_Reels;
+using System.Collections.Generic;
 using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Save.Database.Option
@@ -8,10 +10,11 @@ namespace ReelSpinGame_Save.Database.Option
     {
         public AutoSpeedName CurrentSpeed { get; set; }                 // オート速度
         public StopOrderOptionName CurrentStopOrder { get; set; }       // オート時の押し順
-        public BigType BigLineUpSymbol { get; set; }                   // 揃えるBIG図柄
+        public BigType BigLineUpSymbol { get; set; }                    // 揃えるBIG図柄
         public bool HasTechnicalPlay { get; set; }                      // 技術介入をするか
         public byte EndConditionFlag { get; set; }                      // 終了条件のフラグ
         public SpinTimeConditionName SpinConditionID { get; set; }      // 回転条件 
+        public List<int> StopPosLockData { get; set; }                  // 停止位置固定
 
         public AutoOptionData()
         {
@@ -21,6 +24,12 @@ namespace ReelSpinGame_Save.Database.Option
             BigLineUpSymbol = BigType.None;
             EndConditionFlag = 0;
             SpinConditionID = SpinTimeConditionName.None;
+            StopPosLockData = new List<int>()
+            {
+                -1,
+                -1,
+                -1
+            };
         }
 
         // 数値初期化
@@ -32,6 +41,12 @@ namespace ReelSpinGame_Save.Database.Option
             BigLineUpSymbol = BigType.None;
             EndConditionFlag = 0;
             SpinConditionID = SpinTimeConditionName.None;
+
+            StopPosLockData.Clear();
+            for(int i = 0; i < ReelLogicManager.ReelAmount; i++)
+            {
+                StopPosLockData.Add(-1);
+            }
         }
     }
 }

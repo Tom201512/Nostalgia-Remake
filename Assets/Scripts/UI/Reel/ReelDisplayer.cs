@@ -6,19 +6,14 @@ using UnityEngine;
 
 namespace ReelSpinGame_UI.Reel
 {
+    // リール結果を表示する
     public class ReelDisplayer : MonoBehaviour
     {
-        // リール結果を表示する
+        [SerializeField] private List<TextMeshProUGUI> reelPosTexts;        // コマ表示用フォント
+        [SerializeField] private TextMeshProUGUI reelPushOrderText;         // 押し順表示用フォント
+        [SerializeField] private TextMeshProUGUI reelDelayText;             // スベリコマ表示用フォント
 
-        // var
-        // 図柄部分
-        private SymbolDisplayUI[] reelSymbols;
-        // コマ表示用フォント
-        [SerializeField] private List<TextMeshProUGUI> reelPosTexts;
-        // 押し順表示用フォント
-        [SerializeField] private TextMeshProUGUI reelPushOrderText;
-        // スベリコマ表示用フォント
-        [SerializeField] private TextMeshProUGUI reelDelayText;
+        private SymbolDisplayUI[] reelSymbols;        // 図柄部分
 
         void Awake()
         {
