@@ -6,13 +6,11 @@ namespace ReelSpinGame_UI.Reel
 {
     public class SymbolDisplayUI : MonoBehaviour
     {
-        // 表示部分
-        private Image symbolImage;
+        [SerializeField] private ReelPosID posID;        // リール位置識別ID
 
-        // リール位置識別ID
-        [SerializeField] private ReelPosID posID;
+        private Image symbolImage;                       // 表示部分
 
-        private void Awake()
+        void Awake()
         {
             symbolImage = GetComponent<Image>();
         }

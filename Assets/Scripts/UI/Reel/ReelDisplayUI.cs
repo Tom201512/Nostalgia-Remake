@@ -4,22 +4,17 @@ using UnityEngine;
 
 namespace ReelSpinGame_UI.Reel
 {
+    // リール結果表示
     public class ReelDisplayUI : MonoBehaviour
     {
-        // リール結果表示
-
-        // var
-        // リールオブジェクト
-        [SerializeField] List<ReelObjectPresenter> ReelObjects;
-        // リールディスプレイ
-        [SerializeField] List<ReelDisplayer> ReelDisplayers;
+        [SerializeField] List<ReelDisplayer> ReelDisplayers;        // リールディスプレイ
 
         // リール図柄を表示させる
         public void DisplayReels(int leftLower, int middleLower, int rightLower)
         {
-            ReelDisplayers[(int)ReelID.ReelLeft].DisplayReelSymbols(leftLower, ReelObjects[(int)ReelID.ReelLeft]);
-            ReelDisplayers[(int)ReelID.ReelMiddle].DisplayReelSymbols(middleLower, ReelObjects[(int)ReelID.ReelMiddle]);
-            ReelDisplayers[(int)ReelID.ReelRight].DisplayReelSymbols(rightLower, ReelObjects[(int)ReelID.ReelRight]);
+            ReelDisplayers[(int)ReelID.ReelLeft].DisplayReelSymbols(leftLower);
+            ReelDisplayers[(int)ReelID.ReelMiddle].DisplayReelSymbols(middleLower);
+            ReelDisplayers[(int)ReelID.ReelRight].DisplayReelSymbols(rightLower);
         }
 
         // リール停止位置を表示させる

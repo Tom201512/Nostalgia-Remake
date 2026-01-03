@@ -46,8 +46,6 @@ namespace ReelSpinGame_UI.Graph
             }
 
             // 最高、最低差枚数の表示
-
-
             int differenceOffset = 1;
             // 最低でも-1000枚~1000枚から表示する。超えている場合は高い方の数値を基準に表示
             if (highest > 1000 || lowest < -1000)

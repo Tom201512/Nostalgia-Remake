@@ -8,6 +8,12 @@ namespace ReelSpinGame_Option.MenuContent
     public class SlumpGraphDataUI : MonoBehaviour
     {
         [SerializeField] private GraphComponent graphComponent;
-        public void UpdateData(PlayerDatabase player) => graphComponent.StartDrawGraph(player);
+        public void UpdateData(PlayerDatabase player)
+        {
+            if (player.PlayerMedalData.MedalSlumpGraph.Count > 0)
+            {
+                graphComponent.StartDrawGraph(player);
+            }
+        }
     }
 }

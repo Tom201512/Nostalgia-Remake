@@ -9,9 +9,10 @@ namespace ReelSpinGame_UI.Reel
     // リール結果を表示する
     public class ReelDisplayer : MonoBehaviour
     {
-        [SerializeField] private List<TextMeshProUGUI> reelPosTexts;        // コマ表示用フォント
-        [SerializeField] private TextMeshProUGUI reelPushOrderText;         // 押し順表示用フォント
-        [SerializeField] private TextMeshProUGUI reelDelayText;             // スベリコマ表示用フォント
+        [SerializeField] ReelObjectPresenter reelObject;            // リールオブジェクト
+        [SerializeField] List<TextMeshProUGUI> reelPosTexts;        // コマ表示用フォント
+        [SerializeField] TextMeshProUGUI reelPushOrderText;         // 押し順表示用フォント
+        [SerializeField] TextMeshProUGUI reelDelayText;             // スベリコマ表示用フォント
 
         private SymbolDisplayUI[] reelSymbols;        // 図柄部分
 
@@ -21,11 +22,11 @@ namespace ReelSpinGame_UI.Reel
         }
 
         // 指定した下の位置を基準にリール図柄を表示
-        public void DisplayReelSymbols(int lowerPos, ReelObjectPresenter reelObjectPresetner)
+        public void DisplayReelSymbols(int lowerPos)
         {
             foreach (SymbolDisplayUI symbol in reelSymbols)
             {
-                Sprite sprite = reelObjectPresetner.GetReelSymbolSprite(ReelSymbolPosCalc.OffsetReelPos(lowerPos, (int)symbol.GetPosID()));
+                Sprite sprite = reelObject.GetReelSymbolSprite(ReelSymbolPosCalc.OffsetReelPos(lowerPos, (int)symbol.GetPosID()));
                 symbol.ChangeSymbol(sprite);
             }
         }

@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ReelSpinGame_Option.AutoSetting
 {
@@ -83,9 +82,14 @@ namespace ReelSpinGame_Option.AutoSetting
         // ê›íËÇÃÉZÉbÉg
         public void LoadOptionData(List<int> stopPosLockSetting)
         {
-            reelArrayLeft.CurrentSelectPos = stopPosLockSetting[(int)ReelID.ReelLeft];
-            reelArrayMiddle.CurrentSelectPos = stopPosLockSetting[(int)ReelID.ReelMiddle];
-            reelArrayRight.CurrentSelectPos = stopPosLockSetting[(int)ReelID.ReelRight];
+            Debug.Log("count:" + stopPosLockSetting.Count);
+            Debug.Log("L:" + stopPosLockSetting[(int)ReelID.ReelLeft]);
+            Debug.Log("M:" + stopPosLockSetting[(int)ReelID.ReelMiddle]);
+            Debug.Log("R:" + stopPosLockSetting[(int)ReelID.ReelRight]);
+
+            reelArrayLeft.SetPosition(stopPosLockSetting[(int)ReelID.ReelLeft]);
+            reelArrayMiddle.SetPosition(stopPosLockSetting[(int)ReelID.ReelMiddle]);
+            reelArrayRight.SetPosition(stopPosLockSetting[(int)ReelID.ReelRight]);
             UpdateScreen();
         }
 
@@ -103,9 +107,9 @@ namespace ReelSpinGame_Option.AutoSetting
         {
             if (CanInteract)
             {
-                reelArrayLeft.CurrentSelectPos = -1;
-                reelArrayMiddle.CurrentSelectPos = -1;
-                reelArrayRight.CurrentSelectPos = -1;
+                reelArrayLeft.SetPosition(-1);
+                reelArrayMiddle.SetPosition(-1);
+                reelArrayRight.SetPosition(-1);
                 UpdateScreen();
             }
         }

@@ -1,6 +1,4 @@
 using ReelSpinGame_Option.Button;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReelSpinGame_UI.Reel
@@ -8,7 +6,8 @@ namespace ReelSpinGame_UI.Reel
     // リール配列選択
     public class ReelArraySelector : MonoBehaviour
     {
-        public int CurrentSelectPos { get; set; }       // 現在の選択位置
+        [SerializeField] ReelCursor selectCursorObject;        // 選択カーソルのオブジェクト
+        public int CurrentSelectPos { get; private set; }       // 現在の選択位置
 
         // リール図柄が選択された時のイベント
         public delegate void ArraySymbolSelected();
@@ -29,6 +28,11 @@ namespace ReelSpinGame_UI.Reel
             }
         }
 
+        void Start()
+        {
+            UpdateCursor();
+        }
+
         void OnDestroy()
         {
             // ボタン登録
@@ -47,11 +51,25 @@ namespace ReelSpinGame_UI.Reel
             }
         }
 
+        //指定位置にセット
+        public void SetPosition(int selectPos)
+        {
+            CurrentSelectPos = selectPos;
+            UpdateCursor();
+        }
+
         // リール図柄が押された時の挙動
         void OnReelSymbolPressed(int signalID)
         {
             CurrentSelectPos = signalID;
+            UpdateCursor();
             OnArraySymbolSelected?.Invoke();
+        }
+
+        // カーソル位置を更新
+        void UpdateCursor()
+        {
+            selectCursorObject.SetPosition(CurrentSelectPos, 0f);
         }
     }
 }
