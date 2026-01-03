@@ -19,7 +19,6 @@ namespace ReelSpinGame_Reels
 
         public LastStoppedReelData LastStoppedReelData { get; private set; }    // 最後に止めたリールのデータ
 
-        // コンストラクタ
         public ReelSpinManagerModel()
         {
             IsReelFinished = true;

@@ -28,11 +28,6 @@ namespace ReelSpinGame_UI.Reel
             }
         }
 
-        void Start()
-        {
-            UpdateCursor();
-        }
-
         void OnDestroy()
         {
             // ƒ{ƒ^ƒ““o˜^

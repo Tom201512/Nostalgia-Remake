@@ -6,19 +6,18 @@ public class InputManager : MonoBehaviour
     // 各種操作のシリアライズ
     public enum ControlKeys { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight, ToggleAuto, ToggleOption }
 
-    // var
     // キー設定
     [SerializeField] private KeyCode maxBetKey;             // MAXBET
     [SerializeField] private KeyCode betOneKey;             // 1BET
     [SerializeField] private KeyCode betTwoKey;             //2BET
     [SerializeField] private KeyCode startAndMaxBetKey;     // リール始動(またはMAX BET)
-    [SerializeField] private KeyCode stopLeftKey;         // 左停止
-    [SerializeField] private KeyCode stopMiddleKey;       // 中停止
-    [SerializeField] private KeyCode stopRightKey;        // 右停止
-    [SerializeField] private KeyCode toggleAutoKey;       // オート開始/停止ボタン
-    [SerializeField] private KeyCode toggleOptionKey;     // オプションボタン
+    [SerializeField] private KeyCode stopLeftKey;           // 左停止
+    [SerializeField] private KeyCode stopMiddleKey;         // 中停止
+    [SerializeField] private KeyCode stopRightKey;          // 右停止
+    [SerializeField] private KeyCode toggleAutoKey;         // オート開始/停止ボタン
+    [SerializeField] private KeyCode toggleOptionKey;       // オプションボタン
 
-    private bool hasInputOnLastFrame = false;   // 最後のフレームでキー入力があったか
+    private bool hasInputOnLastFrame = false;           // 最後のフレームでキー入力があったか
 
     // 指定したキーが一度押されたか確認する
     public bool CheckOneKeyInput(ControlKeys controlKey)

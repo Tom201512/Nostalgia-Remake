@@ -21,7 +21,6 @@ namespace ReelSpinGame_Datas.Reels
         [SerializeField] private byte firstStopCID;         // 第一停止したリールのCID
         [SerializeField] private int secondStopPos;         // 第二停止の停止位置
 
-        // コンストラクタ
         public ReelSecondConditions(StreamReader sReader)
         {
             string[] values = GetDataFromStream(sReader);

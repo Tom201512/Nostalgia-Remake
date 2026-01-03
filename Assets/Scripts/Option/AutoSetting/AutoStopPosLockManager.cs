@@ -48,11 +48,6 @@ namespace ReelSpinGame_Option.AutoSetting
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        void Start()
-        {
-            UpdateScreen();
-        }
-
         void OnDestroy()
         {
             reelArrayLeft.OnArraySymbolSelected -= OnArraySettingChanged;
@@ -82,11 +77,6 @@ namespace ReelSpinGame_Option.AutoSetting
         // ê›íËÇÃÉZÉbÉg
         public void LoadOptionData(List<int> stopPosLockSetting)
         {
-            Debug.Log("count:" + stopPosLockSetting.Count);
-            Debug.Log("L:" + stopPosLockSetting[(int)ReelID.ReelLeft]);
-            Debug.Log("M:" + stopPosLockSetting[(int)ReelID.ReelMiddle]);
-            Debug.Log("R:" + stopPosLockSetting[(int)ReelID.ReelRight]);
-
             reelArrayLeft.SetPosition(stopPosLockSetting[(int)ReelID.ReelLeft]);
             reelArrayMiddle.SetPosition(stopPosLockSetting[(int)ReelID.ReelMiddle]);
             reelArrayRight.SetPosition(stopPosLockSetting[(int)ReelID.ReelRight]);

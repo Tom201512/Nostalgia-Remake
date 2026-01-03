@@ -112,7 +112,7 @@ namespace ReelSpinGame_State.PlayingState
                 autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
                 autoAICondition.BetAmount = gM.Medal.LastBetAmount;
 
-                gM.Auto.SetAutoStopPos(autoAICondition);
+                gM.Auto.SetAutoStopPos(autoAICondition, gM.OptionSave.AutoOptionData.StopPosLockData);
             }
 
             // すべてのリールが止まっていたら払い出し処理をする

@@ -1,6 +1,7 @@
 using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Reels;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -165,7 +166,7 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // オート停止位置の設定
-        public void SetAutoStopPos(AutoAIConditionClass condition)
+        public void SetAutoStopPos(AutoAIConditionClass condition, List<int> stopLockPositon)
         {
             // BIG中の場合、(JAC回数が残り1回, 残りゲーム数が9G以上)ならJACハズシをする
             if (condition.BonusStatus == BonusStatus.BonusBIGGames &&
@@ -186,6 +187,21 @@ namespace ReelSpinGame_AutoPlay
                 == (byte)SpecificConditionFlag.WinningPattern);
             // 停止位置決定
             AutoStopPos = autoAI.GetStopPos(condition);
+
+            // 停止位置が固定されている場合、通常時3枚掛けであれば設定を反映する
+            if(condition.BonusStatus == BonusStatus.BonusNone && condition.BetAmount == 3)
+            {
+                int index = 0;
+                foreach(int i in stopLockPositon)
+                {
+                    if(i != -1)
+                    {
+                        AutoStopPos[index] = i;
+                        index += 1;
+                    }
+                }
+            }
+
             HasStopPosDecided = true;
         }
 

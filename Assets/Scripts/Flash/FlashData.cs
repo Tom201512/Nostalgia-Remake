@@ -12,7 +12,6 @@ namespace ReelSpinGame_Flash
         public List<int[]> FlashArray { get; private set; }     // フラッシュのデータ
         public int CurrentSeekPos { get; private set; }			// 現在の読み込み位置
 
-        // コンストラクタ
         public FlashData(StringReader buffer)
         {
             CurrentSeekPos = 0;

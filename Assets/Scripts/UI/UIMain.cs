@@ -5,8 +5,6 @@ public class UIMain : MonoBehaviour
 {
     // ‰æ–ÊUIƒƒCƒ“
 
-    // const
-
     // ‰ğ‘œ“x
     public const float AspectX = 16.0f;
     public const float AspectY = 9.0f;

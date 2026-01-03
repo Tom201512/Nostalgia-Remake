@@ -6,15 +6,12 @@ using static ReelSpinGame_Lamps.SegmentLampUtil;
 
 namespace ReelSpinGame_Medal.Segment
 {
+    // メダル用セグメント
     public class MedalSevenSegment : MonoBehaviour
     {
-        // メダル用セグメント
-
-        // const
         public enum DigitID { SecondDigit, FirstDigit }         // 桁数のID
         public const float SegmentUpdateFrame = 0.12f;          // 数値更新の間隔(ミリ秒)
 
-        // var
         public bool HasSegmentUpdate { get; private set; } // セグメントを更新中か
 
         SegmentLamp[] segments;    // 7セグ

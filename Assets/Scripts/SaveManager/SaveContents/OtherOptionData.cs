@@ -6,17 +6,21 @@ namespace ReelSpinGame_Save.Database.Option
     // その他設定のデータ
     public class OtherOptionData
     {
-        public int MusicVolumeSetting { get; private set; }           // BGM音量 (0~7)
-        public int SoundVolumeSetting { get; private set; }           // SE音量 (0~7)
-        public bool ShowMiniReelSetting { get; private set; }         // ミニリール表示
-        public List<int> AssistMarkerPos { get; private set; }        // アシストマーカー位置
-        public bool HasWaitCut { get; private set; }                  // ウェイトカット
-        public bool HasDelayDisplay { get; private set; }            // スベリコマ表示設定
+        const int MaxVolume = 100;      // 最大ボリューム
+
+        public int MusicVolumeSetting { get; set; }                 // BGM音量 (0~100)
+        public int SoundVolumeSetting { get; set; }                 // SE音量 (0~100)
+        public bool UseOrtographCamera {  get; set; }               // 平面投影カメラの有無
+        public bool ShowMiniReelSetting { get; set; }               // ミニリール表示
+        public List<int> AssistMarkerPos { get; private set; }      // アシストマーカー位置
+        public bool HasWaitCut { get; set; }                        // ウェイトカット
+        public bool HasDelayDisplay { get; set; }                   // スベリコマ表示設定
 
         public OtherOptionData()
         {
-            MusicVolumeSetting = 5;
-            SoundVolumeSetting = 5;
+            MusicVolumeSetting = 50;
+            SoundVolumeSetting = 50;
+            UseOrtographCamera = false;
             ShowMiniReelSetting = false;
             AssistMarkerPos = new List<int>()
             {
@@ -28,10 +32,7 @@ namespace ReelSpinGame_Save.Database.Option
             HasDelayDisplay = false;
         }
 
-        // 各種数値設定
-        public void SetMusicVolume(int volume) => MusicVolumeSetting = volume;
-        public void SetSoundVolume(int volume) => SoundVolumeSetting = volume;
-        public void SetMiniReel(bool isEnabled) => ShowMiniReelSetting = isEnabled;
+        // マーカー位置設定
         public void SetMarkerPos(int leftPos, int middlePos, int rightPos)
         {
             AssistMarkerPos.Clear();
@@ -39,14 +40,13 @@ namespace ReelSpinGame_Save.Database.Option
             AssistMarkerPos.Add(middlePos);
             AssistMarkerPos.Add(rightPos);
         }
-        public void SetHasWaitCut(bool isEnabled) => HasWaitCut = isEnabled;
-        public void SetHasDelayDisplay(bool isEnabled) => HasWaitCut = isEnabled;
 
         // データ初期化
         public void InitializeData()
         {
-            MusicVolumeSetting = 5;
-            SoundVolumeSetting = 5;
+            MusicVolumeSetting = 50;
+            SoundVolumeSetting = 50;
+            UseOrtographCamera = false;
             ShowMiniReelSetting = false;
             AssistMarkerPos.Clear();
             for (int i = 0; i < ReelAmount; i++)

@@ -71,7 +71,7 @@ namespace ReelSpinGame_State.LotsState
                 autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
                 autoAICondition.BetAmount = gM.Medal.LastBetAmount;
 
-                gM.Auto.SetAutoStopPos(autoAICondition);
+                gM.Auto.SetAutoStopPos(autoAICondition, gM.OptionSave.AutoOptionData.StopPosLockData);
             }
 
             gM.MainFlow.StateManager.ChangeState(gM.MainFlow.WaitState);

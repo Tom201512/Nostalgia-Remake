@@ -8,7 +8,6 @@ namespace ReelSpinGame_State
         // 現在のゲーム状態
         public IGameStatement CurrentState { get; private set; }
 
-        // コンストラクタ
         public StateManager(IGameStatement startingState)
         {
             CurrentState = startingState;

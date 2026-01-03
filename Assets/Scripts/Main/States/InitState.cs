@@ -13,7 +13,6 @@ namespace ReelSpinGame_State.LotsState
 
         private GameManager gM;         // ゲームマネージャ
 
-        // コンストラクタ
         public InitState(GameManager gameManager)
         {
             State = MainGameFlow.GameStates.Init;

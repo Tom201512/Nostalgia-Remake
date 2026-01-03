@@ -148,12 +148,10 @@ namespace ReelSpinGame_Datas
     [Serializable]
     public class ReelTableData
     {
-        // var
         // リール制御テーブル(ディレイを格納する)
         [SerializeField] private List<byte> tableData;
         public List<byte> TableData { get { return tableData; } }
 
-        // コンストラクタ
         public ReelTableData(StringReader LoadedData)
         {
             tableData = new List<byte>();
@@ -173,7 +171,6 @@ namespace ReelSpinGame_Datas
             }
         }
 
-        // コンストラクタ
         public ReelTableData(StreamReader LoadedData)
         {
             tableData = new List<byte>();

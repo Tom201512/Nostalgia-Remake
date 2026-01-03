@@ -32,20 +32,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] SlotDataScreen slotDataScreen;                 // スロット情報データ画面UI
     [SerializeField] StatusPanel statusPanel;                       // ステータスパネル
 
-    // デバッグ用
-    [SerializeField] MedalTestUI medalUI;
-    [SerializeField] LotsTestUI lotsUI;
-    [SerializeField] WaitTestUI waitUI;
-    [SerializeField] ReelTestUI reelUI;
-    [SerializeField] BonusTestUI bonusUI;
-
-    [SerializeField] private KeyCode keyToDebugToggle;          // <デバッグ用> デバッグUI表示用
-    [SerializeField] private KeyCode keyCameraModeChange;       // カメラの視点変更
-    [SerializeField] private KeyCode keyToAutoOrderChange;      // <デバッグ用> オートの押し順設定
-    [SerializeField] private KeyCode keyToAutoSpeedChange;      // <デバッグ用> オートスピード変更
-    [SerializeField] private KeyCode keyToWaitCutToggle;        // <デバッグ用> ウェイトカットの有無設定
-    [SerializeField] private bool dontSaveFlag;         // <デバッグ用>セーブをしない
-    [SerializeField] private bool deleteSaveFlag;       // <デバッグ用> 開始時にセーブ消去
+    [SerializeField] private bool dontSaveFlag;                 // <デバッグ用>セーブをしない
+    [SerializeField] private bool deleteSaveFlag;               // <デバッグ用> 開始時にセーブ消去
 
     [Range(0, 6), SerializeField] private int debugSetting;         // デバッグ用設定値
 
@@ -72,7 +60,6 @@ public class GameManager : MonoBehaviour
     public MainGameFlow MainFlow { get; private set; }      // ゲームステート用
 
     SaveManager saveManager;                        // セーブ機能
-    private bool hasDebugUI;    // <デバッグ用> デバッグUI表示するか
 
     void Awake()
     {
@@ -91,7 +78,6 @@ public class GameManager : MonoBehaviour
         Auto = GetComponent<AutoManager>();                 // オート機能
         saveManager = new SaveManager();                    // セーブ機能
 
-        hasDebugUI = false;        // デバッグUIの表示
         Option.AutoSettingChangedEvent += OnAutoSettingChanged;        // イベント登録
     }
 
@@ -145,15 +131,9 @@ public class GameManager : MonoBehaviour
             PlayerSave.Setting = debugSetting;
         }
 
-        // UI 設定
-        waitUI.SetWaitManager(Wait);
-
         // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
         Option.LoadAutoSettingFromSave(OptionSave.AutoOptionData);
-
-        // デバッグをすべて非表示
-        ToggleDebugUI(false);
 
         // ステート開始
         MainFlow.StateManager.StartState();
@@ -184,10 +164,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (Auto.CurrentSpeed == (int)AutoSpeedName.Normal)
                 {
-                    if (!Option.lockOptionMode)
-                    {
-                        Option.ToggleOptionLock(false);
-                    }
+                    Option.ToggleOptionLock(false);
                 }
             }
         }
@@ -196,24 +173,6 @@ public class GameManager : MonoBehaviour
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleOption))
         {
             Option.ToggleOptionScreen(-1);
-        }
-
-        // ウェイトカット
-        if (Input.GetKeyDown(keyToWaitCutToggle))
-        {
-            Wait.SetWaitCutSetting(!Wait.HasWaitCut);
-        }
-
-        // カメラ表示方法変更
-        if (Input.GetKeyDown(keyCameraModeChange))
-        {
-            slotCam.ChangeCameraMode();
-        }
-
-        // デバッグ表示
-        if (Input.GetKeyDown(keyToDebugToggle))
-        {
-            DebugButtonBehavior();
         }
 
         MainFlow.UpdateState();
@@ -261,22 +220,5 @@ public class GameManager : MonoBehaviour
         Debug.Log("Received OtherSetting Changed");
 
         // セーブに記録する
-    }
-
-    // デバッグをつける機能(デバッグ用)
-    private void DebugButtonBehavior()
-    {
-        hasDebugUI = !hasDebugUI;
-        ToggleDebugUI(hasDebugUI);
-    }
-
-    // デバッグUIの表示非表示(デバッグ用)
-    private void ToggleDebugUI(bool value)
-    {
-        medalUI.ToggleUI(value);
-        lotsUI.ToggleUI(value);
-        waitUI.ToggleUI(value);
-        reelUI.ToggleUI(value);
-        bonusUI.ToggleUI(value);
     }
 }

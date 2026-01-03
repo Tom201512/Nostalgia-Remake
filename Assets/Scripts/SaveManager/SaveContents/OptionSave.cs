@@ -65,7 +65,6 @@ namespace ReelSpinGame_Save.Database
             for (int i = 0; i < AutoOptionData.StopPosLockData.Count; i++)
             {
                 data.Add(AutoOptionData.StopPosLockData[i]);
-                Debug.Log("StopPosLock[" + i + "]:" + AutoOptionData.StopPosLockData[i]);
             }
 
             // ‚»‚Ì‘¼Ý’è
@@ -74,6 +73,9 @@ namespace ReelSpinGame_Save.Database
 
             data.Add(OtherOptionData.SoundVolumeSetting);
             Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
+
+            data.Add(OtherOptionData.UseOrtographCamera ? 1 : 0);
+            Debug.Log("2Dmode:" + OtherOptionData.UseOrtographCamera);
 
             data.Add(OtherOptionData.ShowMiniReelSetting ? 1 : 0);
             Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
@@ -113,13 +115,15 @@ namespace ReelSpinGame_Save.Database
                 }
 
                 // ‚»‚Ì‘¼Ý’è
-                OtherOptionData.SetMusicVolume(br.ReadInt32());
+                OtherOptionData.MusicVolumeSetting = br.ReadInt32();
                 Debug.Log("MusicVol:" + OtherOptionData.MusicVolumeSetting);
 
-                OtherOptionData.SetSoundVolume(br.ReadInt32());
+                OtherOptionData.SoundVolumeSetting = br.ReadInt32();
                 Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
 
-                OtherOptionData.SetMiniReel(br.ReadInt32() == 1 ? true : false);
+                OtherOptionData.UseOrtographCamera = br.ReadInt32() == 1 ? true : false;
+
+                OtherOptionData.ShowMiniReelSetting = br.ReadInt32() == 1 ? true : false;
                 Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
                 for (int i = 0; i < ReelAmount; i++)
@@ -128,10 +132,10 @@ namespace ReelSpinGame_Save.Database
                     Debug.Log("Marker [" + i + "]:" + OtherOptionData.AssistMarkerPos[i]);
                 }
 
-                OtherOptionData.SetHasWaitCut(br.ReadInt32() == 1 ? true : false);
+                OtherOptionData.HasWaitCut = br.ReadInt32() == 1 ? true : false;
                 Debug.Log("WaitCut:" + OtherOptionData.HasWaitCut);
 
-                OtherOptionData.SetHasDelayDisplay(br.ReadInt32() == 1 ? true : false);
+                OtherOptionData.HasDelayDisplay = br.ReadInt32() == 1 ? true : false;
                 Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
             }
             catch (Exception e)
