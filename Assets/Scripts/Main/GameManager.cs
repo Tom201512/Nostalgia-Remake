@@ -162,10 +162,6 @@ public class GameManager : MonoBehaviour
                 {
                     Option.ToggleOptionLock(true);
                 }
-                else if (Auto.CurrentSpeed == (int)AutoSpeedName.Normal)
-                {
-                    Option.ToggleOptionLock(false);
-                }
             }
         }
 

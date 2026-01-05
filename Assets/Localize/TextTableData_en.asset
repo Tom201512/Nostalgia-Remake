@@ -304,6 +304,74 @@ MonoBehaviour:
     m_Localized: 'Random:'
     m_Metadata:
       m_Items: []
+  - m_Id: 17558796042559488
+    m_Localized: 'Setting:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559275086602240
+    m_Localized: 'BGM Volume:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559389733707776
+    m_Localized: 'SE Volume:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559462060285952
+    m_Localized: 'Camera mode:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559521548099584
+    m_Localized: 'Set marker:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559849899188224
+    m_Localized: 'Mini reel:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559936045998080
+    m_Localized: 'Show delays:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560010037714944
+    m_Localized: 'Wait cut:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560076341272576
+    m_Localized: 'Language:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560242691563520
+    m_Localized: Exit game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560602315382784
+    m_Localized: Change lot setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560704597680128
+    m_Localized: DELETE ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560908717678592
+    m_Localized: Reset option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17562726323511296
+    m_Localized: 2D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17562752638574592
+    m_Localized: 3D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17564333383671808
+    m_Localized: "\u65E5\u672C\u8A9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17564389864169472
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

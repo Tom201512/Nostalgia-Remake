@@ -95,6 +95,7 @@ namespace ReelSpinGame_State.LotsState
             {
                 gM.Option.ToggleOptionLock(false);
             }
+
             // UI更新
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal);
             // ボーナス演出更新
