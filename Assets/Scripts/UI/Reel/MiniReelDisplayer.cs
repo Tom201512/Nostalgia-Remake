@@ -12,6 +12,7 @@ namespace ReelSpinGame_UI.Reel
         [SerializeField] List<ReelObjectPresenter> reelObjects;         // 監査対象のリールオブジェクト
         [SerializeField] List<ReelCursor> stoppedCursors;               // 停止位置のカーソル
         [SerializeField] List<ReelCursor> delayCursors;                 // スベリコマ位置のカーソル
+        [SerializeField] List<ReelCursor> markerCursors;                // マーカー用のカーソル
 
         public bool IsActivating { get; set; }              // ミニリールが稼働中か
 
@@ -52,6 +53,15 @@ namespace ReelSpinGame_UI.Reel
             for (int i = 0; i < delayCursors.Count; i++)
             {
                 stoppedCursors[i].SetPosition(reelPos[i], 0);
+            }
+        }
+
+        // マーカー位置カーソル設定
+        public void SetMarkerCursorPos(List<int> cursorPos)
+        {
+            for (int i = 0; i < markerCursors.Count; i++)
+            {
+                markerCursors[i].SetPosition(cursorPos[i], 0);
             }
         }
 

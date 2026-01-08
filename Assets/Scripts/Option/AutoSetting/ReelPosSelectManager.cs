@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace ReelSpinGame_Option.AutoSetting
+namespace ReelSpinGame_Option
 {
-    // オート停止位置の設定
-    public class AutoStopPosLockManager : MonoBehaviour, IOptionScreenBase
+    // リール位置選択用
+    public class ReelPosSelectManager : MonoBehaviour, IOptionScreenBase
     {
         [SerializeField] ReelArraySelector reelArrayLeft;       // リール配列セレクタ(左)
         [SerializeField] ReelArraySelector reelArrayMiddle;     // リール配列セレクタ(中)
@@ -75,18 +75,45 @@ namespace ReelSpinGame_Option.AutoSetting
         }
 
         // 設定のセット
-        public void LoadOptionData(List<int> stopPosLockSetting)
+        public void LoadOptionData(List<int> reelPos)
         {
-            reelArrayLeft.SetPosition(stopPosLockSetting[(int)ReelID.ReelLeft]);
-            reelArrayMiddle.SetPosition(stopPosLockSetting[(int)ReelID.ReelMiddle]);
-            reelArrayRight.SetPosition(stopPosLockSetting[(int)ReelID.ReelRight]);
+            reelArrayLeft.SetPosition(reelPos[(int)ReelID.ReelLeft]);
+            reelArrayMiddle.SetPosition(reelPos[(int)ReelID.ReelMiddle]);
+            reelArrayRight.SetPosition(reelPos[(int)ReelID.ReelRight]);
+
             UpdateScreen();
+            SettingChangedEvent?.Invoke();
         }
 
         // 画面の更新
         void UpdateScreen()
         {
-            selectingPosText.text = "L:" + CurrentLeftSelect + " M:" + CurrentMiddleSelect + " R:" + CurrentRightSelect;
+            if(CurrentLeftSelect != -1)
+            {
+                selectingPosText.text = "L:" + (CurrentLeftSelect + 1);
+            }
+            else
+            {
+                selectingPosText.text = "L:-1";
+            }
+
+            if (CurrentMiddleSelect != -1)
+            {
+                selectingPosText.text += " M:" + (CurrentMiddleSelect + 1);
+            }
+            else
+            {
+                selectingPosText.text += " M:-1";
+            }
+
+            if (CurrentRightSelect != -1)
+            {
+                selectingPosText.text += " R:" + (CurrentRightSelect + 1);
+            }
+            else
+            {
+                selectingPosText.text += " R:-1";
+            }
         }
 
         // 決定ボタンを押したときの挙動
@@ -101,6 +128,7 @@ namespace ReelSpinGame_Option.AutoSetting
                 reelArrayMiddle.SetPosition(-1);
                 reelArrayRight.SetPosition(-1);
                 UpdateScreen();
+                SettingChangedEvent?.Invoke();
             }
         }
 

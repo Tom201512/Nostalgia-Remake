@@ -1,4 +1,5 @@
 using ReelSpinGame_Option.Components;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace ReelSpinGame_Option.OtherSetting
         [SerializeField] SelectButtonComponent miniReelSelect;              // ミニリール設定変更
         [SerializeField] SelectButtonComponent waitCutSelect;               // ウェイトカット変更
         [SerializeField] SelectButtonComponent showDelaySelect;             // スベリコマ表示変更
+        [SerializeField] ReelPosSelectManager reelMarkerSelect;             // マーカー位置設定
 
         // 言語設定
         [SerializeField] ButtonComponent languageJPN;                       // 日本語に変更
@@ -41,6 +43,7 @@ namespace ReelSpinGame_Option.OtherSetting
             miniReelSelect.ContentChangedEvent += UpdateOptionData;
             waitCutSelect.ContentChangedEvent += UpdateOptionData;
             showDelaySelect.ContentChangedEvent += UpdateOptionData;
+            reelMarkerSelect.SettingChangedEvent += UpdateOptionData;
             //languageJPN.ContentChangedEvent += UpdateOptionData;
             //languageENG.ContentChangedEvent += UpdateOptionData;
         }
@@ -55,6 +58,7 @@ namespace ReelSpinGame_Option.OtherSetting
             miniReelSelect.ContentChangedEvent -= UpdateOptionData;
             waitCutSelect.ContentChangedEvent -= UpdateOptionData;
             showDelaySelect.ContentChangedEvent -= UpdateOptionData;
+            reelMarkerSelect.SettingChangedEvent -= UpdateOptionData;
             //languageJPN.ContentChangedEvent -= UpdateOptionData;
             //languageENG.ContentChangedEvent -= UpdateOptionData;
         }
@@ -83,6 +87,7 @@ namespace ReelSpinGame_Option.OtherSetting
             miniReelSelect.LoadOptionData(otherOption.ShowMiniReelSetting ? 1 : 0);
             waitCutSelect.LoadOptionData(otherOption.HasWaitCut ? 1 : 0);
             showDelaySelect.LoadOptionData(otherOption.HasDelayDisplay ? 1 : 0);
+            reelMarkerSelect.LoadOptionData(otherOption.AssistMarkerPos);
             UpdateOptionData();
         }
 
@@ -96,6 +101,9 @@ namespace ReelSpinGame_Option.OtherSetting
             CurrentOptionData.ShowMiniReelSetting = miniReelSelect.CurrentSettingID == 1 ? true : false;
             CurrentOptionData.HasWaitCut = waitCutSelect.CurrentSettingID == 1 ? true : false;
             CurrentOptionData.HasDelayDisplay = showDelaySelect.CurrentSettingID == 1 ? true : false;
+            CurrentOptionData.AssistMarkerPos[(int)ReelID.ReelLeft] = reelMarkerSelect.CurrentLeftSelect;
+            CurrentOptionData.AssistMarkerPos[(int)ReelID.ReelMiddle] = reelMarkerSelect.CurrentMiddleSelect;
+            CurrentOptionData.AssistMarkerPos[(int)ReelID.ReelRight] = reelMarkerSelect.CurrentRightSelect;
             OnSettingChangedEvent?.Invoke();
         }
     }

@@ -411,6 +411,12 @@ MonoBehaviour:
     m_Localized: '*WARNING: This option erases all save data including option settings.'
     m_Metadata:
       m_Items: []
+  - m_Id: 19316308836147200
+    m_Localized: 'Click the reel position
+
+      to set a marker.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

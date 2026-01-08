@@ -18,7 +18,7 @@ namespace ReelSpinGame_Option.AutoSetting
         [SerializeField] SelectButtonComponent technicalSelect;             // 技術介入変更 
         [SerializeField] CheckBoxManager autoEndTimingCheckBoxes;           // オート終了条件チェックボックス
         [SerializeField] SelectButtonComponent spinConditionSelect;         // オート回転数変更
-        [SerializeField] AutoStopPosLockManager autoStopPosLockManager;     // オート停止位置指定
+        [SerializeField] ReelPosSelectManager autoStopPosLockManager;     // オート停止位置指定
 
         public AutoOptionData CurrentAutoOptionData { get; private set; } // 現在のオート設定
 

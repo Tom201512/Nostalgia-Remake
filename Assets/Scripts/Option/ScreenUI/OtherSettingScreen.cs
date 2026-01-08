@@ -16,7 +16,7 @@ namespace ReelSpinGame_Option.MenuContent
         // 各種操作
         [SerializeField] OtherSettingManager otherSettingManager;           // 設定変更マネージャー
         [SerializeField] OtherExitGameManager otherExitGameManager;         // 終了画面
-        //[SerializeField] AutoStopPosLockManager autoStopPosLockManager;   // 設定位置固定設定マネージャー
+        [SerializeField] ReelPosSelectManager reelMarkerSelectManager;      // リールマーカー設定マネージャー
         [SerializeField] ButtonComponent markerSettingButton;               // マーカー表示位置設定ボタン
 
         [SerializeField] private ButtonComponent nextButton;                // 次ボタン
@@ -43,13 +43,15 @@ namespace ReelSpinGame_Option.MenuContent
             nextButton.OnButtonPushedEvent += OnNextPushed;
             previousButton.OnButtonPushedEvent += OnPreviousPushed;
             otherSettingManager.OnSettingChangedEvent += OnSettingChanged;
-            markerSettingButton.OnButtonPushedEvent += OnPosLockSettingButtonPressed;
+            markerSettingButton.OnButtonPushedEvent += OnReelMarkerSelectPushed;
+            reelMarkerSelectManager.ClosedScreenEvent += OnReelMarkerSelectClosed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void Start()
         {
             UpdateScreen();
+            reelMarkerSelectManager.gameObject.SetActive(false);
         }
 
         void OnDestroy()
@@ -59,7 +61,8 @@ namespace ReelSpinGame_Option.MenuContent
             nextButton.OnButtonPushedEvent -= OnNextPushed;
             previousButton.OnButtonPushedEvent -= OnPreviousPushed;
             otherSettingManager.OnSettingChangedEvent -= OnSettingChanged;
-            markerSettingButton.OnButtonPushedEvent -= OnPosLockSettingButtonPressed;
+            markerSettingButton.OnButtonPushedEvent -= OnReelMarkerSelectPushed;
+            reelMarkerSelectManager.ClosedScreenEvent -= OnReelMarkerSelectClosed;
         }
 
         // 画面表示&初期化
@@ -125,27 +128,27 @@ namespace ReelSpinGame_Option.MenuContent
         // 設定変更時の挙動
         void OnSettingChanged() => SettingChangedEvent?.Invoke();
 
-        // オート位置設定移行ボタンを押したときの挙動
-        void OnPosLockSettingButtonPressed(int signalID)
+        // マーカー位置設定を押したときの挙動
+        void OnReelMarkerSelectPushed(int signalID)
         {
             otherSettingManager.SetInteractiveButtons(false);
             closeButton.ToggleInteractive(false);
             nextButton.ToggleInteractive(false);
             previousButton.ToggleInteractive(false);
             markerSettingButton.ToggleInteractive(false);
-            //autoStopPosLockManager.gameObject.SetActive(true);
-            //autoStopPosLockManager.OpenScreen();
+            reelMarkerSelectManager.gameObject.SetActive(true);
+            reelMarkerSelectManager.OpenScreen();
         }
 
-        // オート位置設定が閉じられた時の挙動
-        void OnPosLockSettingClosed()
+        // マーカー位置設定が閉じられた時の挙動
+        void OnReelMarkerSelectClosed()
         {
             otherSettingManager.SetInteractiveButtons(true);
             closeButton.ToggleInteractive(true);
             nextButton.ToggleInteractive(true);
             previousButton.ToggleInteractive(true);
-            //posLockSettingButton.ToggleInteractive(true);
-            //autoStopPosLockManager.gameObject.SetActive(false);
+            markerSettingButton.ToggleInteractive(true);
+            reelMarkerSelectManager.gameObject.SetActive(false);
         }
 
         // 画像の反映処理
@@ -195,7 +198,7 @@ namespace ReelSpinGame_Option.MenuContent
             closeButton.ToggleInteractive(true);
             nextButton.ToggleInteractive(true);
             previousButton.ToggleInteractive(true);
-            //posLockSettingButton.ToggleInteractive(true);
+            markerSettingButton.ToggleInteractive(true);
         }
 
         // フェードアウト

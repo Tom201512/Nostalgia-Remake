@@ -98,11 +98,18 @@ public class ReelSpinManager : MonoBehaviour
     // リール位置設定
     public void SetReelPos(List<int> lastReelPos)
     {
-        int index = 0;
-        foreach (int pos in lastReelPos)
+        for(int i = 0; i < reelObjects.Count; i++)
         {
-            reelObjects[index].ChangeCurrentLower(pos);
-            index += 1;
+             reelObjects[i].ChangeCurrentLower(lastReelPos[i]);
+        }
+    }
+
+    // リールマーカー設定
+    public void SetReelMarkers(List<int> markerPos)
+    {
+        for (int i = 0; i < reelObjects.Count; i++)
+        {
+            reelObjects[i].SetMarker(markerPos[i]);
         }
     }
 

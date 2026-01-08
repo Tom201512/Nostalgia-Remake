@@ -12,7 +12,7 @@ namespace ReelSpinGame_Option.MenuContent
     {
         // 各種操作
         [SerializeField] AutoSettingManager autoSettingManager;             // オート設定変更マネージャー
-        [SerializeField] AutoStopPosLockManager autoStopPosLockManager;     // 設定位置固定設定マネージャー
+        [SerializeField] ReelPosSelectManager autoStopPosLockManager;       // 設定位置固定設定マネージャー
         [SerializeField] ButtonComponent posLockSettingButton;              // オート位置設定ボタン
         [SerializeField] ButtonComponent closeButton;                       // クローズボタン
         [SerializeField] ButtonComponent resetButton;                       // リセットボタン

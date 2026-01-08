@@ -81,6 +81,13 @@ namespace ReelSpinGame_Reels
             reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.CurrentLower);
         }
 
+        // マーカー位置指定
+        public void SetMarker(int markerPos)
+        {
+            reelSpinPresenter.CurrentMarkerPos = markerPos;
+            reelSpinPresenter.UpdateReelSymbols(reelSpinPresenter.CurrentLower);
+        }
+
         // JAC中の明るさ計算の設定
         public void SetJacBrightnessCalculate(bool value) => ReelEffectManager.SetJacBrightnessCalculate(value);
 

@@ -38,6 +38,13 @@ namespace ReelSpinGame_Reels.Spin
             set => reelSpinModel.LastPushedPos = value;
         }
 
+        // マーカー位置
+        public int CurrentMarkerPos
+        {
+            get => symbolManager.CurrentMarkerPos;
+            set => symbolManager.CurrentMarkerPos = value;
+        }
+
         // 図柄位置が変わったことを伝えるイベント
         public delegate void ReelPositionChanged();
         public event ReelPositionChanged OnReelPositionChanged;
@@ -132,7 +139,6 @@ namespace ReelSpinGame_Reels.Spin
             reelSpinModel.CurrentLower = reelSpinModel.WillStopLowerPos;
             FinishReelSpin();
         }
-
 
         // 図柄位置の更新
         public void UpdateReelSymbols(int currentLower) => symbolManager.UpdateSymbolsObjects(currentLower, reelSpinModel.ReelArray);

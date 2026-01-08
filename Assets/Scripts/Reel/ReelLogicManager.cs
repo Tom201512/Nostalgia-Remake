@@ -92,6 +92,13 @@ namespace ReelSpinGame_Reels
         // スベリコマ表示設定
         public void SetReelDelayVisible(bool value) => delayDisplay.gameObject.SetActive(value);
 
+        // マーカー位置設定
+        public void SetReelMarkers(List<int> markerPos)
+        {
+            spinManager.SetReelMarkers(markerPos);
+            miniReel.SetMarkerCursorPos(markerPos);
+        }
+
         // リール回転
         public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto)
         {

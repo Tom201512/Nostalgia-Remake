@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
         Reel.SetMiniReelVisible(Option.GetOtherOptionData().ShowMiniReelSetting);
         Wait.SetWaitCutSetting(Option.GetOtherOptionData().HasWaitCut);
         Reel.SetReelDelayVisible(Option.GetOtherOptionData().HasDelayDisplay);
+        Reel.SetReelMarkers(Option.GetOtherOptionData().AssistMarkerPos);
     }
 
     // オート設定変更時の挙動
