@@ -15819,8 +15819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfa7fe55cab93945a5ed2071bc952f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmVolumeChanger: {fileID: 8699865056493237101}
-  seVolumeChanger: {fileID: 1066646360}
+  musicVolumeChanger: {fileID: 8699865056493237101}
+  soundVolumeChanger: {fileID: 1066646360}
   resolutionSelect: {fileID: 494221836}
   cameraSelect: {fileID: 2109495140}
   miniReelSelect: {fileID: 1140978827}
@@ -18217,7 +18217,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638354515}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

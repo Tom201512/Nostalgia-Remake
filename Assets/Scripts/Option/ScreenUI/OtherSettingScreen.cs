@@ -39,11 +39,11 @@ namespace ReelSpinGame_Option.MenuContent
 
         void Awake()
         {
-            closeButton.ButtonPushedEvent += OnClosedPressed;
-            nextButton.ButtonPushedEvent += OnNextPushed;
-            previousButton.ButtonPushedEvent += OnPreviousPushed;
+            closeButton.OnButtonPushedEvent += OnClosedPressed;
+            nextButton.OnButtonPushedEvent += OnNextPushed;
+            previousButton.OnButtonPushedEvent += OnPreviousPushed;
             otherSettingManager.OnSettingChangedEvent += OnSettingChanged;
-            markerSettingButton.ButtonPushedEvent += OnPosLockSettingButtonPressed;
+            markerSettingButton.OnButtonPushedEvent += OnPosLockSettingButtonPressed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -55,11 +55,11 @@ namespace ReelSpinGame_Option.MenuContent
         void OnDestroy()
         {
             StopAllCoroutines();
-            closeButton.ButtonPushedEvent -= OnClosedPressed;
-            nextButton.ButtonPushedEvent -= OnNextPushed;
-            previousButton.ButtonPushedEvent -= OnPreviousPushed;
+            closeButton.OnButtonPushedEvent -= OnClosedPressed;
+            nextButton.OnButtonPushedEvent -= OnNextPushed;
+            previousButton.OnButtonPushedEvent -= OnPreviousPushed;
             otherSettingManager.OnSettingChangedEvent -= OnSettingChanged;
-            markerSettingButton.ButtonPushedEvent -= OnPosLockSettingButtonPressed;
+            markerSettingButton.OnButtonPushedEvent -= OnPosLockSettingButtonPressed;
         }
 
         // âÊñ ï\é¶&èâä˙âª

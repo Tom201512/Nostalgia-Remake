@@ -45,13 +45,13 @@ namespace ReelSpinGame_Option.MenuContent
         {
             foreach (ButtonComponent flagButton in flagButtons)
             {
-                flagButton.ButtonPushedEvent += SetSelectedFlag;
+                flagButton.OnButtonPushedEvent += SetSelectedFlag;
             }
 
-            randomNextButton.ButtonPushedEvent += IncreaseRandomValue;
-            randomPreviousButton.ButtonPushedEvent += DecreaseRandomValue;
-            resetButton.ButtonPushedEvent += ResetFlagSetting;
-            closeButton.ButtonPushedEvent += OnClosedPressed;
+            randomNextButton.OnButtonPushedEvent += IncreaseRandomValue;
+            randomPreviousButton.OnButtonPushedEvent += DecreaseRandomValue;
+            resetButton.OnButtonPushedEvent += ResetFlagSetting;
+            closeButton.OnButtonPushedEvent += OnClosedPressed;
             CurrentSelectFlagID = -1;
             CurrentSelectRandomID = 0;
 
@@ -64,13 +64,13 @@ namespace ReelSpinGame_Option.MenuContent
             // ìoò^âèú
             foreach (ButtonComponent flagButton in flagButtons)
             {
-                flagButton.ButtonPushedEvent -= SetSelectedFlag;
+                flagButton.OnButtonPushedEvent -= SetSelectedFlag;
             }
 
-            randomNextButton.ButtonPushedEvent -= IncreaseRandomValue;
-            randomPreviousButton.ButtonPushedEvent -= DecreaseRandomValue;
-            resetButton.ButtonPushedEvent -= ResetFlagSetting;
-            closeButton.ButtonPushedEvent -= OnClosedPressed;
+            randomNextButton.OnButtonPushedEvent -= IncreaseRandomValue;
+            randomPreviousButton.OnButtonPushedEvent -= DecreaseRandomValue;
+            resetButton.OnButtonPushedEvent -= ResetFlagSetting;
+            closeButton.OnButtonPushedEvent -= OnClosedPressed;
         }
 
         // âÊñ ï\é¶&èâä˙âª

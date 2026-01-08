@@ -39,7 +39,7 @@ namespace ReelSpinGame_Option
             lockOptionMode = false;
 
             // イベント登録
-            openButton.ButtonPushedEvent += ToggleOptionScreen;
+            openButton.OnButtonPushedEvent += ToggleOptionScreen;
             menuBarUI.OnPressedMenuEvent += EnterOptionMode;
             menuBarUI.OnClosedScreenEvent += DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent += OnAutoSettingChanged;
@@ -56,7 +56,7 @@ namespace ReelSpinGame_Option
         void OnDestroy()
         {
             // イベント登録解除
-            openButton.ButtonPushedEvent -= ToggleOptionScreen;
+            openButton.OnButtonPushedEvent -= ToggleOptionScreen;
             menuBarUI.OnPressedMenuEvent -= EnterOptionMode;
             menuBarUI.OnClosedScreenEvent -= DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent -= OnAutoSettingChanged;
@@ -85,10 +85,14 @@ namespace ReelSpinGame_Option
         public int GetForceFlagRandomID() => forceFlagScreen.CurrentSelectRandomID; // 選択したランダム値
 
         public AutoOptionData GetAutoOptionData() => autoPlaySettingScreen.GetAutoSettingData(); // オート設定
+        public OtherOptionData GetOtherOptionData() => otherSettingScreen.GetSettingData();      // その他設定       
 
         // 各画面の設定情報変更
         // セーブからオート設定を読み込む
         public void LoadAutoSettingFromSave(AutoOptionData autoOptionData) => autoPlaySettingScreen.LoadSettingData(autoOptionData);
+
+        // その他設定を読み込む
+        public void LoadOtherSettingFromSave(OtherOptionData otherOptionData) => otherSettingScreen.LoadSettingData(otherOptionData);
 
         // 強制フラグのボタン有効化設定を変更
         public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID) => forceFlagScreen.SetBonusStatus(currentBonusStatus, holdingBonusID);

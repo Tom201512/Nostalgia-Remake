@@ -1,4 +1,5 @@
 using ReelSpinGame_Option.Components;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database.Option;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace ReelSpinGame_Option.OtherSetting
     public class OtherSettingManager : MonoBehaviour
     {
         // 音量調整
-        [SerializeField] SliderComponent bgmVolumeChanger;                  // BGM変更
-        [SerializeField] SliderComponent seVolumeChanger;                   // SE変更
+        [SerializeField] SliderComponent musicVolumeChanger;                // BGM変更
+        [SerializeField] SliderComponent soundVolumeChanger;                // SE変更
 
         // 選択ボタン
         [SerializeField] SelectButtonComponent resolutionSelect;            // 解像度変更
@@ -33,6 +34,8 @@ namespace ReelSpinGame_Option.OtherSetting
             CurrentOptionData = new OtherOptionData();
 
             // 設定変更時の処理登録
+            musicVolumeChanger.OnSliderValueChanged += UpdateOptionData;
+            soundVolumeChanger.OnSliderValueChanged += UpdateOptionData;
             resolutionSelect.ContentChangedEvent += UpdateOptionData;
             cameraSelect.ContentChangedEvent += UpdateOptionData;
             miniReelSelect.ContentChangedEvent += UpdateOptionData;
@@ -45,6 +48,8 @@ namespace ReelSpinGame_Option.OtherSetting
         void OnDestroy()
         {
             // 設定変更時の処理登録解除
+            musicVolumeChanger.OnSliderValueChanged -= UpdateOptionData;
+            soundVolumeChanger.OnSliderValueChanged -= UpdateOptionData;
             resolutionSelect.ContentChangedEvent -= UpdateOptionData;
             cameraSelect.ContentChangedEvent -= UpdateOptionData;
             miniReelSelect.ContentChangedEvent -= UpdateOptionData;
@@ -57,6 +62,8 @@ namespace ReelSpinGame_Option.OtherSetting
         // 各種選択ボタンの有効化設定
         public void SetInteractiveButtons(bool value)
         {
+            musicVolumeChanger.SetInteractive(value);
+            soundVolumeChanger.SetInteractive(value);
             cameraSelect.SetInteractive(value);
             miniReelSelect.SetInteractive(value);
             waitCutSelect.SetInteractive(value);
@@ -68,33 +75,16 @@ namespace ReelSpinGame_Option.OtherSetting
         // 設定を読み込む
         public void LoadOptionData(OtherOptionData otherOption)
         {
-            //speedSelect.LoadOptionData((int)autoOption.CurrentSpeed);
-            //orderSelect.LoadOptionData((int)autoOption.CurrentStopOrder);
-            //bigColorSelect.LoadOptionData((int)autoOption.BigLineUpSymbol);
-            //technicalSelect.LoadOptionData(autoOption.HasTechnicalPlay ? 1 : 0);
-            //autoEndTimingCheckBoxes.LoadOptionData(autoOption.EndConditionFlag);
-            //spinConditionSelect.LoadOptionData((int)autoOption.SpinConditionID);
-            UpdateOptionData();
-        }
-
-        // 設定値リセット
-        public void ResetOptionData()
-        {
-            CurrentOptionData.InitializeData();
-            //speedSelect.LoadOptionData((int)CurrentAutoOptionData.CurrentSpeed);
-            //orderSelect.LoadOptionData((int)CurrentAutoOptionData.CurrentStopOrder);
-            //bigColorSelect.LoadOptionData((int)CurrentAutoOptionData.BigLineUpSymbol);
-            //technicalSelect.LoadOptionData(CurrentAutoOptionData.HasTechnicalPlay ? 1 : 0);
-            //autoEndTimingCheckBoxes.LoadOptionData(CurrentAutoOptionData.EndConditionFlag);
-            //spinConditionSelect.LoadOptionData((int)CurrentAutoOptionData.SpinConditionID);
-            //autoStopPosLockManager.LoadOptionData(CurrentAutoOptionData.StopPosLockData);
+            musicVolumeChanger.SetSliderBarValue(otherOption.MusicVolumeSetting);
+            soundVolumeChanger.SetSliderBarValue(otherOption.SoundVolumeSetting);
             UpdateOptionData();
         }
 
         // データ更新
         void UpdateOptionData()
         {
-            CurrentOptionData.MusicVolumeSetting = 0;
+            CurrentOptionData.MusicVolumeSetting = musicVolumeChanger.CurrentSliderValue;
+            CurrentOptionData.SoundVolumeSetting = soundVolumeChanger.CurrentSliderValue;
             OnSettingChangedEvent?.Invoke();
         }
     }

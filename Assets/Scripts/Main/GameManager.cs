@@ -78,7 +78,9 @@ public class GameManager : MonoBehaviour
         Auto = GetComponent<AutoManager>();                 // オート機能
         saveManager = new SaveManager();                    // セーブ機能
 
-        Option.AutoSettingChangedEvent += OnAutoSettingChanged;        // イベント登録
+        // イベント登録
+        Option.AutoSettingChangedEvent += OnAutoSettingChanged;
+        Option.OtherSettingChangedEvent += OnOtherSettingChanged;
     }
 
     void Start()
@@ -134,6 +136,8 @@ public class GameManager : MonoBehaviour
         // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
         Option.LoadAutoSettingFromSave(OptionSave.AutoOptionData);
+        Option.LoadOtherSettingFromSave(OptionSave.OtherOptionData);
+        ApplySetting();
 
         // ステート開始
         MainFlow.StateManager.StartState();
@@ -207,14 +211,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ApplySetting()
+    {
+        // 音量設定
+        Effect.ChangeMusicVolume(Option.GetOtherOptionData().MusicVolumeSetting);
+        Effect.ChangeSoundVolume(Option.GetOtherOptionData().SoundVolumeSetting);
+    }
+
     // オート設定変更時の挙動
     void OnAutoSettingChanged() => OptionSave.RecordAutoData(Option.GetAutoOptionData());
 
     // その他設定変更時の挙動
     void OnOtherSettingChanged()
     {
-        Debug.Log("Received OtherSetting Changed");
-
-        // セーブに記録する
+        OptionSave.RecordOtherData(Option.GetOtherOptionData());
+        ApplySetting();
     }
 }

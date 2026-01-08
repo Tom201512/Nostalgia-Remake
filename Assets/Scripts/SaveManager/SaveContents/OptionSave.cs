@@ -48,7 +48,15 @@ namespace ReelSpinGame_Save.Database
         // ÇªÇÃëºê›íË
         public void RecordOtherData(OtherOptionData otherOptionData)
         {
-            OtherOptionData = otherOptionData;
+            OtherOptionData.MusicVolumeSetting = otherOptionData.MusicVolumeSetting;
+            OtherOptionData.SoundVolumeSetting = otherOptionData.SoundVolumeSetting;
+            OtherOptionData.ResolutionSetting = otherOptionData.ResolutionSetting;
+            OtherOptionData.UseOrthographicCamera = otherOptionData.UseOrthographicCamera;
+            OtherOptionData.ShowMiniReelSetting = otherOptionData.ShowMiniReelSetting;
+            OtherOptionData.SetMarkerPos(otherOptionData.AssistMarkerPos);
+            OtherOptionData.HasWaitCut = otherOptionData.HasWaitCut;
+            OtherOptionData.HasDelayDisplay = otherOptionData.HasDelayDisplay;
+            OtherOptionData.CurrentLanguage = otherOptionData.CurrentLanguage;
         }
 
         // ÉZÅ[Éu
@@ -79,8 +87,8 @@ namespace ReelSpinGame_Save.Database
             Debug.Log("Resolution:" + (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), 
                 OtherOptionData.ResolutionSetting));
 
-            data.Add(OtherOptionData.UseOrtographCamera ? 1 : 0);
-            Debug.Log("2Dmode:" + OtherOptionData.UseOrtographCamera);
+            data.Add(OtherOptionData.UseOrthographicCamera ? 1 : 0);
+            Debug.Log("2Dmode:" + OtherOptionData.UseOrthographicCamera);
 
             data.Add(OtherOptionData.ShowMiniReelSetting ? 1 : 0);
             Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
@@ -133,9 +141,9 @@ namespace ReelSpinGame_Save.Database
                 OtherOptionData.ResolutionSetting = (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), br.ReadInt32());
                 Debug.Log("Resolution:" + OtherOptionData.ResolutionSetting);
 
-                Debug.Log("2Dmode:" + OtherOptionData.UseOrtographCamera);
+                Debug.Log("2Dmode:" + OtherOptionData.UseOrthographicCamera);
 
-                OtherOptionData.UseOrtographCamera = br.ReadInt32() == 1 ? true : false;
+                OtherOptionData.UseOrthographicCamera = br.ReadInt32() == 1 ? true : false;
 
                 OtherOptionData.ShowMiniReelSetting = br.ReadInt32() == 1 ? true : false;
                 Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);

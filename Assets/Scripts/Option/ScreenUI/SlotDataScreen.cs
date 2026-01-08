@@ -38,9 +38,9 @@ namespace ReelSpinGame_Option.MenuContent
         void Awake()
         {
             // É{É^Éììoò^
-            closeButton.ButtonPushedEvent += OnClosedPressed;
-            nextButton.ButtonPushedEvent += OnNextPushed;
-            previousButton.ButtonPushedEvent += OnPreviousPushed;
+            closeButton.OnButtonPushedEvent += OnClosedPressed;
+            nextButton.OnButtonPushedEvent += OnNextPushed;
+            previousButton.OnButtonPushedEvent += OnPreviousPushed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -52,9 +52,9 @@ namespace ReelSpinGame_Option.MenuContent
         void OnDestroy()
         {
             StopAllCoroutines();
-            closeButton.ButtonPushedEvent -= OnClosedPressed;
-            nextButton.ButtonPushedEvent -= OnNextPushed;
-            previousButton.ButtonPushedEvent -= OnPreviousPushed;
+            closeButton.OnButtonPushedEvent -= OnClosedPressed;
+            nextButton.OnButtonPushedEvent -= OnNextPushed;
+            previousButton.OnButtonPushedEvent -= OnPreviousPushed;
         }
 
         // âÊñ ï\é¶&èâä˙âª

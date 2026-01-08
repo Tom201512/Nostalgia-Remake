@@ -24,12 +24,10 @@ namespace ReelSpinGame_Save.Database.Option
             English = 1,
         }
 
-        const int MaxVolume = 100;      // 最大ボリューム
-
         public int MusicVolumeSetting { get; set; }                 // BGM音量 (0~100)
         public int SoundVolumeSetting { get; set; }                 // SE音量 (0~100)
         public ResolutionOptionID ResolutionSetting { get; set; }   // 解像度設定
-        public bool UseOrtographCamera {  get; set; }               // 平面投影カメラの有無
+        public bool UseOrthographicCamera {  get; set; }               // 平面投影カメラの有無
         public bool ShowMiniReelSetting { get; set; }               // ミニリール表示
         public List<int> AssistMarkerPos { get; private set; }      // アシストマーカー位置
         public bool HasWaitCut { get; set; }                        // ウェイトカット
@@ -41,7 +39,7 @@ namespace ReelSpinGame_Save.Database.Option
             MusicVolumeSetting = 50;
             SoundVolumeSetting = 50;
             ResolutionSetting = ResolutionOptionID.W1280H720;
-            UseOrtographCamera = false;
+            UseOrthographicCamera = false;
             ShowMiniReelSetting = false;
             AssistMarkerPos = new List<int>()
             {
@@ -55,12 +53,13 @@ namespace ReelSpinGame_Save.Database.Option
         }
 
         // マーカー位置設定
-        public void SetMarkerPos(int leftPos, int middlePos, int rightPos)
+        public void SetMarkerPos(List<int> markerPos)
         {
             AssistMarkerPos.Clear();
-            AssistMarkerPos.Add(leftPos);
-            AssistMarkerPos.Add(middlePos);
-            AssistMarkerPos.Add(rightPos);
+            foreach(int pos in markerPos)
+            {
+                AssistMarkerPos.Add(pos);
+            }
         }
 
         // データ初期化
@@ -69,7 +68,7 @@ namespace ReelSpinGame_Save.Database.Option
             MusicVolumeSetting = 50;
             SoundVolumeSetting = 50;
             ResolutionSetting = ResolutionOptionID.W1280H720;
-            UseOrtographCamera = false;
+            UseOrthographicCamera = false;
             ShowMiniReelSetting = false;
             AssistMarkerPos.Clear();
             for (int i = 0; i < ReelAmount; i++)

@@ -43,8 +43,8 @@ namespace ReelSpinGame_Option.AutoSetting
             reelArrayLeft.OnArraySymbolSelected += OnArraySettingChanged;
             reelArrayMiddle.OnArraySymbolSelected += OnArraySettingChanged;
             reelArrayRight.OnArraySymbolSelected += OnArraySettingChanged;
-            confirmButton.ButtonPushedEvent += OnConfirmPressed;
-            resetButton.ButtonPushedEvent += OnResetPressed;
+            confirmButton.OnButtonPushedEvent += OnConfirmPressed;
+            resetButton.OnButtonPushedEvent += OnResetPressed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -53,8 +53,8 @@ namespace ReelSpinGame_Option.AutoSetting
             reelArrayLeft.OnArraySymbolSelected -= OnArraySettingChanged;
             reelArrayMiddle.OnArraySymbolSelected -= OnArraySettingChanged;
             reelArrayRight.OnArraySymbolSelected -= OnArraySettingChanged;
-            confirmButton.ButtonPushedEvent -= OnConfirmPressed;
-            resetButton.ButtonPushedEvent -= OnResetPressed;
+            confirmButton.OnButtonPushedEvent -= OnConfirmPressed;
+            resetButton.OnButtonPushedEvent -= OnResetPressed;
         }
 
         // âÊñ ï\é¶&èâä˙âª

@@ -39,8 +39,8 @@ namespace ReelSpinGame_Option
             CurrentSettingID = 0;
             selectTextLocalize = selectText.GetComponent<LocalizeStringEvent>();
             selectImageLocalize = selectImage.GetComponent<LocalizeSpriteEvent>();
-            nextContentButton.ButtonPushedEvent += OnNextPressed;
-            previousContentButton.ButtonPushedEvent += OnPreviousPressed;
+            nextContentButton.OnButtonPushedEvent += OnNextPressed;
+            previousContentButton.OnButtonPushedEvent += OnPreviousPressed;
 
             // メニュー数の取得
             contentListCount = textDisplayList.Count;
@@ -54,8 +54,8 @@ namespace ReelSpinGame_Option
 
         void OnDestroy()
         {
-            nextContentButton.ButtonPushedEvent -= OnNextPressed;
-            previousContentButton.ButtonPushedEvent -= OnPreviousPressed;
+            nextContentButton.OnButtonPushedEvent -= OnNextPressed;
+            previousContentButton.OnButtonPushedEvent -= OnPreviousPressed;
         }
 
         // データ読み込み

@@ -32,11 +32,11 @@ namespace ReelSpinGame_Option.MenuBar
         void Awake()
         {
             // É{É^Éììoò^
-            howToPlayButton.ButtonPushedEvent += HowToPlayOpen;
-            slotDataButton.ButtonPushedEvent += SlotDataOpen;
-            forceFlagButton.ButtonPushedEvent += ForceFlagOpen;
-            autoSettingButton.ButtonPushedEvent += AutoPlayOpen;
-            otherSettingButton.ButtonPushedEvent += OtherSettingOpen;
+            howToPlayButton.OnButtonPushedEvent += HowToPlayOpen;
+            slotDataButton.OnButtonPushedEvent += SlotDataOpen;
+            forceFlagButton.OnButtonPushedEvent += ForceFlagOpen;
+            autoSettingButton.OnButtonPushedEvent += AutoPlayOpen;
+            otherSettingButton.OnButtonPushedEvent += OtherSettingOpen;
 
             howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent += SlotDataClose;
@@ -58,11 +58,11 @@ namespace ReelSpinGame_Option.MenuBar
         void OnDestroy()
         {
             // É{É^Éììoò^âèú
-            howToPlayButton.ButtonPushedEvent -= HowToPlayOpen;
-            slotDataButton.ButtonPushedEvent -= SlotDataOpen;
-            forceFlagButton.ButtonPushedEvent -= ForceFlagOpen;
-            autoSettingButton.ButtonPushedEvent -= AutoPlayOpen;
-            otherSettingButton.ButtonPushedEvent -= OtherSettingOpen;
+            howToPlayButton.OnButtonPushedEvent -= HowToPlayOpen;
+            slotDataButton.OnButtonPushedEvent -= SlotDataOpen;
+            forceFlagButton.OnButtonPushedEvent -= ForceFlagOpen;
+            autoSettingButton.OnButtonPushedEvent -= AutoPlayOpen;
+            otherSettingButton.OnButtonPushedEvent -= OtherSettingOpen;
 
             howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent -= SlotDataClose;

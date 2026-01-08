@@ -24,7 +24,7 @@ namespace ReelSpinGame_UI.Reel
             // ƒ{ƒ^ƒ““o˜^
             foreach (ButtonComponent button in buttons)
             {
-                button.ButtonPushedEvent += OnReelSymbolPressed;
+                button.OnButtonPushedEvent += OnReelSymbolPressed;
             }
         }
 
@@ -33,7 +33,7 @@ namespace ReelSpinGame_UI.Reel
             // ƒ{ƒ^ƒ““o˜^
             foreach (ButtonComponent button in buttons)
             {
-                button.ButtonPushedEvent -= OnReelSymbolPressed;
+                button.OnButtonPushedEvent -= OnReelSymbolPressed;
             }
         }
 

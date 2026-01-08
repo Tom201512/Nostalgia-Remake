@@ -4,6 +4,7 @@ using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
+using System;
 using UnityEngine;
 
 namespace ReelSpinGame_Effect
@@ -11,6 +12,8 @@ namespace ReelSpinGame_Effect
     // リールフラッシュやサウンドなどの演出管理
     public class EffectPresenter : MonoBehaviour
     {
+        const float maxVolume = 100f;
+
         private ReelEffectManager reelEffectManager;        // リール演出マネージャー
         private FlashManager flashManager;                  // フラッシュ機能
         private SoundManager soundManager;                  // サウンド機能
@@ -76,9 +79,9 @@ namespace ReelSpinGame_Effect
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSE();
         // SEボリューム変更 (0.0 ~ 1.0)
-        public void ChangeSEVolume(float volume) => soundManager.ChangeSEVolume(volume);
+        public void ChangeSoundVolume(float volume) => soundManager.ChangeSEVolume(Math.Clamp(volume / maxVolume, 0, 1));
         // BGMボリューム変更(0.0 ~ 1.0)
-        public void ChangeBGMVolume(float volume) => soundManager.ChangeBGMVolume(volume);
+        public void ChangeMusicVolume(float volume) => soundManager.ChangeBGMVolume(Math.Clamp(volume / maxVolume, 0, 1));
 
         // オート機能時の効果音、音楽解除
         public void ChangeSoundSettingByAuto(bool hasAuto, AutoSpeedName autoSpeedID)
