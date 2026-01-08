@@ -12,12 +12,14 @@ namespace ReelSpinGame_Option.MenuBar
         [SerializeField] ButtonComponent slotDataButton;        // スロット情報画面
         [SerializeField] ButtonComponent forceFlagButton;       // 強制フラグ
         [SerializeField] ButtonComponent autoSettingButton;     // オート設定
+        [SerializeField] ButtonComponent otherSettingButton;    // その他設定 
 
         // 各種画面
         [SerializeField] HowToPlayScreen howToPlayScreen;               // 遊び方ガイドの画面
         [SerializeField] SlotDataScreen slotDataScreen;                 // スロット情報画面
         [SerializeField] ForceFlagScreen forceFlagScreen;               // 強制役設定画面
         [SerializeField] AutoPlaySettingScreen autoPlaySettingScreen;   // オート設定画面
+        [SerializeField] OtherSettingScreen otherSettingScreen;         // その他設定画面
 
         // 何かしらのボタンを押したときのイベント
         public delegate void OnPressedMenu();
@@ -34,11 +36,13 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataButton.ButtonPushedEvent += SlotDataOpen;
             forceFlagButton.ButtonPushedEvent += ForceFlagOpen;
             autoSettingButton.ButtonPushedEvent += AutoPlayOpen;
+            otherSettingButton.ButtonPushedEvent += OtherSettingOpen;
 
             howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent += SlotDataClose;
             forceFlagScreen.OnClosedScreenEvent += ForceFlagClose;
             autoPlaySettingScreen.OnClosedScreenEvent += AutoPlayClose;
+            otherSettingScreen.OnClosedScreenEvent += OtherSettingClose;
         }
 
         void Start()
@@ -48,6 +52,7 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataScreen.gameObject.SetActive(false);
             forceFlagScreen.gameObject.SetActive(false);
             autoPlaySettingScreen.gameObject.SetActive(false);
+            otherSettingScreen.gameObject.SetActive(false);
         }
 
         void OnDestroy()
@@ -57,11 +62,13 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataButton.ButtonPushedEvent -= SlotDataOpen;
             forceFlagButton.ButtonPushedEvent -= ForceFlagOpen;
             autoSettingButton.ButtonPushedEvent -= AutoPlayOpen;
+            otherSettingButton.ButtonPushedEvent -= OtherSettingOpen;
 
             howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
             slotDataScreen.OnClosedScreenEvent -= SlotDataClose;
             forceFlagScreen.OnClosedScreenEvent -= ForceFlagClose;
             autoPlaySettingScreen.OnClosedScreenEvent -= AutoPlayClose;
+            otherSettingScreen.OnClosedScreenEvent -= OtherSettingClose;
         }
 
         // 全メニューのロック設定
@@ -71,6 +78,7 @@ namespace ReelSpinGame_Option.MenuBar
             slotDataButton.ToggleInteractive(value);
             forceFlagButton.ToggleInteractive(value);
             autoSettingButton.ToggleInteractive(value);
+            otherSettingButton.ToggleInteractive(value);
         }
 
         // 遊び方ガイドを開いた時の処理
@@ -134,6 +142,22 @@ namespace ReelSpinGame_Option.MenuBar
         {
             autoPlaySettingScreen.CloseScreen();
             autoPlaySettingScreen.gameObject.SetActive(false);
+            OnClosedBehaviour();
+        }
+
+        // オートプレイ設定画面を開いた時の処理
+        void OtherSettingOpen(int signalID)
+        {
+            otherSettingScreen.gameObject.SetActive(true);
+            otherSettingScreen.OpenScreen();
+            OnPressedBehaviour();
+        }
+
+        // オートプレイ設定画面を閉じた時の処理
+        void OtherSettingClose()
+        {
+            otherSettingScreen.CloseScreen();
+            otherSettingScreen.gameObject.SetActive(false);
             OnClosedBehaviour();
         }
 

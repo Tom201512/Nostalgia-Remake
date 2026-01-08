@@ -15,12 +15,13 @@ namespace ReelSpinGame_Option
         [SerializeField] private MenuManager menuBarUI; // メニューバーのUI
 
         // 各種設定画面のデータ
-        [SerializeField] ForceFlagScreen forceFlagScreen; // 強制フラグ
-        [SerializeField] AutoPlaySettingScreen autoPlaySettingScreen; // オートプレイ
+        [SerializeField] ForceFlagScreen forceFlagScreen;               // 強制フラグ
+        [SerializeField] AutoPlaySettingScreen autoPlaySettingScreen;   // オートプレイ
+        [SerializeField] OtherSettingScreen otherSettingScreen;         // その他設定
 
-        public bool hasOptionScreen { get; private set; } // オプション画面を開いているか(UIボタンの表示に使用する)
-        public bool hasOptionMode { get; private set; } // 設定変更中か(ゲームの操作ができなくなる)
-        public bool lockOptionMode { get; private set; } // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
+        public bool hasOptionScreen { get; private set; }       // オプション画面を開いているか(UIボタンの表示に使用する)
+        public bool hasOptionMode { get; private set; }         // 設定変更中か(ゲームの操作ができなくなる)
+        public bool lockOptionMode { get; private set; }        // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
 
         // 設定変更時のイベント
         // オート設定
@@ -42,6 +43,7 @@ namespace ReelSpinGame_Option
             menuBarUI.OnPressedMenuEvent += EnterOptionMode;
             menuBarUI.OnClosedScreenEvent += DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent += OnAutoSettingChanged;
+            otherSettingScreen.SettingChangedEvent += OnOtherSettingChanged;
         }
 
         void Start()
@@ -58,6 +60,7 @@ namespace ReelSpinGame_Option
             menuBarUI.OnPressedMenuEvent -= EnterOptionMode;
             menuBarUI.OnClosedScreenEvent -= DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent -= OnAutoSettingChanged;
+            otherSettingScreen.SettingChangedEvent -= OnOtherSettingChanged;
         }
 
         // オプション画面を開く
