@@ -17,6 +17,13 @@ namespace ReelSpinGame_Save.Database.Option
             W1920H1080 = 5,
         }
 
+        // 言語オプションのID
+        public enum LanguageOptionID
+        {
+            Japanese = 0,
+            English = 1,
+        }
+
         const int MaxVolume = 100;      // 最大ボリューム
 
         public int MusicVolumeSetting { get; set; }                 // BGM音量 (0~100)
@@ -27,6 +34,7 @@ namespace ReelSpinGame_Save.Database.Option
         public List<int> AssistMarkerPos { get; private set; }      // アシストマーカー位置
         public bool HasWaitCut { get; set; }                        // ウェイトカット
         public bool HasDelayDisplay { get; set; }                   // スベリコマ表示設定
+        public LanguageOptionID CurrentLanguage { get; set; }      // 言語設定
 
         public OtherOptionData()
         {
@@ -43,6 +51,7 @@ namespace ReelSpinGame_Save.Database.Option
             };
             HasWaitCut = false;
             HasDelayDisplay = false;
+            CurrentLanguage = LanguageOptionID.Japanese;
         }
 
         // マーカー位置設定
@@ -69,6 +78,8 @@ namespace ReelSpinGame_Save.Database.Option
             }
             HasWaitCut = false;
             HasDelayDisplay = false;
+
+            CurrentLanguage = LanguageOptionID.Japanese;
         }
     }
 }

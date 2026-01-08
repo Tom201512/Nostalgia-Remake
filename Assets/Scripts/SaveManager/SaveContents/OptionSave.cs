@@ -98,6 +98,10 @@ namespace ReelSpinGame_Save.Database
             data.Add(OtherOptionData.HasDelayDisplay ? 1 : 0);
             Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
 
+            data.Add((int)OtherOptionData.CurrentLanguage);
+            Debug.Log("Language:" + (LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID),
+                OtherOptionData.CurrentLanguage));
+
             return data;
         }
 
@@ -147,6 +151,9 @@ namespace ReelSpinGame_Save.Database
 
                 OtherOptionData.HasDelayDisplay = br.ReadInt32() == 1 ? true : false;
                 Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
+
+                OtherOptionData.CurrentLanguage = (LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID), br.ReadInt32());
+                Debug.Log("Language:" + OtherOptionData.CurrentLanguage);
             }
             catch (Exception e)
             {

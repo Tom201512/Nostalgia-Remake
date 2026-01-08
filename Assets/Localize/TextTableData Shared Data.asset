@@ -359,6 +359,42 @@ MonoBehaviour:
     m_Key: GenericEnglish
     m_Metadata:
       m_Items: []
+  - m_Id: 19134730864484352
+    m_Key: OtherResolutionSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19134939082317824
+    m_Key: WarningLotSettingChange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135538263810048
+    m_Key: ResolutionW960H540
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135664038404096
+    m_Key: ResolutionW1024H576
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135665384775680
+    m_Key: ResolutionW1280H720
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135666861170688
+    m_Key: ResolutionW1366H768
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135672179548160
+    m_Key: ResolutionW1600H900
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135672821276672
+    m_Key: ResolutionW1920H1080
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19138425517826048
+    m_Key: WarningDeleteAll
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

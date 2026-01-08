@@ -12,6 +12,7 @@ namespace ReelSpinGame_Option.OtherSetting
         [SerializeField] SliderComponent seVolumeChanger;                   // SE変更
 
         // 選択ボタン
+        [SerializeField] SelectButtonComponent resolutionSelect;            // 解像度変更
         [SerializeField] SelectButtonComponent cameraSelect;                // カメラモード変更
         [SerializeField] SelectButtonComponent miniReelSelect;              // ミニリール設定変更
         [SerializeField] SelectButtonComponent waitCutSelect;               // ウェイトカット変更
@@ -32,6 +33,7 @@ namespace ReelSpinGame_Option.OtherSetting
             CurrentOptionData = new OtherOptionData();
 
             // 設定変更時の処理登録
+            resolutionSelect.ContentChangedEvent += UpdateOptionData;
             cameraSelect.ContentChangedEvent += UpdateOptionData;
             miniReelSelect.ContentChangedEvent += UpdateOptionData;
             waitCutSelect.ContentChangedEvent += UpdateOptionData;
@@ -43,6 +45,7 @@ namespace ReelSpinGame_Option.OtherSetting
         void OnDestroy()
         {
             // 設定変更時の処理登録解除
+            resolutionSelect.ContentChangedEvent -= UpdateOptionData;
             cameraSelect.ContentChangedEvent -= UpdateOptionData;
             miniReelSelect.ContentChangedEvent -= UpdateOptionData;
             waitCutSelect.ContentChangedEvent -= UpdateOptionData;

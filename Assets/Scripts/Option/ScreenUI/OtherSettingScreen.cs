@@ -15,7 +15,6 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] OtherSettingManager otherSettingManager;           // 設定変更マネージャー
         //[SerializeField] AutoStopPosLockManager autoStopPosLockManager;   // 設定位置固定設定マネージャー
         [SerializeField] ButtonComponent markerSettingButton;               // マーカー表示位置設定ボタン
-        [SerializeField] ButtonComponent resetButton;                       // リセットボタン
 
         [SerializeField] private ButtonComponent nextButton;                // 次ボタン
         [SerializeField] private ButtonComponent previousButton;            // 前ボタン
@@ -40,7 +39,6 @@ namespace ReelSpinGame_Option.MenuContent
 
             closeButton.ButtonPushedEvent += OnClosedPressed;
             otherSettingManager.OnSettingChangedEvent += OnSettingChanged;
-            resetButton.ButtonPushedEvent += OnResetButtonPressed;
             markerSettingButton.ButtonPushedEvent += OnPosLockSettingButtonPressed;
             //autoStopPosLockManager.ClosedScreenEvent += OnPosLockSettingClosed;
             canvasGroup = GetComponent<CanvasGroup>();
@@ -51,7 +49,6 @@ namespace ReelSpinGame_Option.MenuContent
             StopAllCoroutines();
             closeButton.ButtonPushedEvent -= OnClosedPressed;
             otherSettingManager.OnSettingChangedEvent -= OnSettingChanged;
-            resetButton.ButtonPushedEvent -= OnResetButtonPressed;
             markerSettingButton.ButtonPushedEvent -= OnPosLockSettingButtonPressed;
 
             //autoStopPosLockManager.ClosedScreenEvent -= OnPosLockSettingClosed;
@@ -70,7 +67,6 @@ namespace ReelSpinGame_Option.MenuContent
             {
                 otherSettingManager.SetInteractiveButtons(false);
                 closeButton.ToggleInteractive(false);
-                resetButton.ToggleInteractive(false);
                 markerSettingButton.ToggleInteractive(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
@@ -96,7 +92,6 @@ namespace ReelSpinGame_Option.MenuContent
         {
             otherSettingManager.SetInteractiveButtons(false);
             closeButton.ToggleInteractive(false);
-            resetButton.ToggleInteractive(false);
             markerSettingButton.ToggleInteractive(false);
             //autoStopPosLockManager.gameObject.SetActive(true);
             //autoStopPosLockManager.OpenScreen();
@@ -107,7 +102,6 @@ namespace ReelSpinGame_Option.MenuContent
         {
             otherSettingManager.SetInteractiveButtons(true);
             closeButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
             //posLockSettingButton.ToggleInteractive(true);
             //autoStopPosLockManager.gameObject.SetActive(false);
         }
@@ -127,7 +121,6 @@ namespace ReelSpinGame_Option.MenuContent
             CanInteract = true;
             otherSettingManager.SetInteractiveButtons(true);
             closeButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
             //posLockSettingButton.ToggleInteractive(true);
         }
 
