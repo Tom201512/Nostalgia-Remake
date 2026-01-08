@@ -206,15 +206,12 @@ public class GameManager : MonoBehaviour
     // 設定反映
     void ApplySetting()
     {
-        // 音量設定
         Effect.ChangeMusicVolume(Option.GetOtherOptionData().MusicVolumeSetting);
         Effect.ChangeSoundVolume(Option.GetOtherOptionData().SoundVolumeSetting);
-        // 画面サイズ
         Screen.SetScreenSize(Option.GetOtherOptionData().ResolutionSetting);
         Screen.SetCameraMode(Option.GetOtherOptionData().UseOrthographicCamera);
-        // ウェイトカット
+        Reel.SetMiniReelVisible(Option.GetOtherOptionData().ShowMiniReelSetting);
         Wait.SetWaitCutSetting(Option.GetOtherOptionData().HasWaitCut);
-        //
     }
 
     // オート設定変更時の挙動

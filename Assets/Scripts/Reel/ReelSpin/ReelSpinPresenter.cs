@@ -11,7 +11,6 @@ namespace ReelSpinGame_Reels.Spin
     // リール回転用のプレゼンター
     public class ReelSpinPresenter : MonoBehaviour
     {
-
         [SerializeField][Range(0, 80.0f)] float defaultReelSpinRPM;        // 回転時のRPM
         [SerializeField] ReelArrayData reelArrayDataFile;                  // リール配列データ
 
@@ -20,9 +19,9 @@ namespace ReelSpinGame_Reels.Spin
         public ReelStatus ReelStatus { get => reelSpinModel.CurrentReelStatus; }    // 現在のリール情報
         public float RotateSpeed { get => reelSpinModel.RotateSpeed; }              // 回転速度
         public float MaxSpeed { get => reelSpinModel.MaxSpeed; }                    // 現在の最高速度
-        public float CurrentDegree { get => transform.rotation.eulerAngles.x; }     // 現在の角度
+        public float CurrentDegree { get => transform.rotation.eulerAngles.x; }     // 現在の角度               
         public int WillStopLowerPos { get => reelSpinModel.WillStopLowerPos; }      // 停止予定位置
-        public int LastStoppedOrder { get => reelSpinModel.LastStoppedOrder; }     // 停止したときの押し順
+        public int LastStoppedOrder { get => reelSpinModel.LastStoppedOrder; }      // 停止したときの押し順
         public int LastStoppedDelay { get => reelSpinModel.LastStoppedDelay; }      // 最後に止めたときのスベリコマ数
 
         // 現在の下段位置

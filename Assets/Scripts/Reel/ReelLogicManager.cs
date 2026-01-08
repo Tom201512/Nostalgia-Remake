@@ -1,5 +1,6 @@
 using ReelSpinGame_Lots;
 using ReelSpinGame_Reels.Symbol;
+using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
@@ -9,13 +10,12 @@ namespace ReelSpinGame_Reels
     // リールのロジック管理マネージャー
     public class ReelLogicManager : MonoBehaviour
     {
+        [SerializeField] MiniReelDisplayer miniReel;        // ミニリール機能
+
         public const int ReelAmount = 3;    // リール数
 
         ReelSpinManager spinManager;        // リール回転
         ReelSymbolCounter symbolCounter;    // 図柄カウント
-
-        // プロパティ
-
 
         // リールが停止したときのイベント
         public delegate void SomeReelStopped();
@@ -28,6 +28,11 @@ namespace ReelSpinGame_Reels
 
             // イベント登録
             spinManager.HasSomeReelStopped += OnSomeReelStopped;
+        }
+
+        void Start()
+        {
+            miniReel.gameObject.SetActive(false);
         }
 
         void OnDestroy()
@@ -70,7 +75,14 @@ namespace ReelSpinGame_Reels
         public void SetForceRandomValue(int value) => spinManager.SetForceRandomValue(value);
 
         // リール位置設定
-        public void SetReelPos(List<int> lastReelPos) => spinManager.SetReelPos(lastReelPos);
+        public void SetReelPos(List<int> lastReelPos)
+        {
+            spinManager.SetReelPos(lastReelPos);
+            miniReel.SetMiniReelPos(lastReelPos);
+        }
+
+        // ミニリール表示設定
+        public void SetMiniReelVisible(bool value) => miniReel.gameObject.SetActive(value);
 
         // リールの回転
         public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto) => spinManager.StartReels(currentBonusStatus, usingFastAuto);
