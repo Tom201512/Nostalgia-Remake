@@ -1,7 +1,9 @@
 using ReelSpinGame_Option.Components;
-using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database.Option;
+using ReelSpinGame_Option.OtherSetting;
+using System;
 using UnityEngine;
+using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Option.OtherSetting
 {
@@ -64,6 +66,7 @@ namespace ReelSpinGame_Option.OtherSetting
         {
             musicVolumeChanger.SetInteractive(value);
             soundVolumeChanger.SetInteractive(value);
+            resolutionSelect.SetInteractive(value);
             cameraSelect.SetInteractive(value);
             miniReelSelect.SetInteractive(value);
             waitCutSelect.SetInteractive(value);
@@ -77,6 +80,11 @@ namespace ReelSpinGame_Option.OtherSetting
         {
             musicVolumeChanger.SetSliderBarValue(otherOption.MusicVolumeSetting);
             soundVolumeChanger.SetSliderBarValue(otherOption.SoundVolumeSetting);
+            resolutionSelect.LoadOptionData((int)otherOption.ResolutionSetting);
+            cameraSelect.LoadOptionData(otherOption.UseOrthographicCamera ? 1 : 0);
+            miniReelSelect.LoadOptionData(otherOption.ShowMiniReelSetting ? 1 : 0);
+            waitCutSelect.LoadOptionData(otherOption.HasWaitCut ? 1 : 0);
+            showDelaySelect.LoadOptionData(otherOption.HasDelayDisplay ? 1 : 0);
             UpdateOptionData();
         }
 
@@ -85,6 +93,11 @@ namespace ReelSpinGame_Option.OtherSetting
         {
             CurrentOptionData.MusicVolumeSetting = musicVolumeChanger.CurrentSliderValue;
             CurrentOptionData.SoundVolumeSetting = soundVolumeChanger.CurrentSliderValue;
+            CurrentOptionData.ResolutionSetting = (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), resolutionSelect.CurrentSettingID);
+            CurrentOptionData.UseOrthographicCamera = cameraSelect.CurrentSettingID == 1 ? true : false;
+            CurrentOptionData.ShowMiniReelSetting = miniReelSelect.CurrentSettingID == 1 ? true : false;
+            CurrentOptionData.HasWaitCut = waitCutSelect.CurrentSettingID == 1 ? true : false;
+            CurrentOptionData.HasDelayDisplay = showDelaySelect.CurrentSettingID == 1 ? true : false;
             OnSettingChangedEvent?.Invoke();
         }
     }

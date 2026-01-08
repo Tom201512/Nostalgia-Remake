@@ -19,11 +19,6 @@ public class GameManager : MonoBehaviour
 {
     public const int MaxSlotSetting = 6;    // 最高設定値
 
-    // 各種操作のシリアライズ
-    public enum ControlSets { MaxBet, BetOne, BetTwo, StartAndMax, StopLeft, StopMiddle, StopRight }
-
-    [SerializeField] private SlotCamera slotCam;    // メインカメラ
-
     // 各種マネージャー
     [SerializeField] private ReelLogicManager reelManagerObj;       // リール情報
     [SerializeField] private EffectPresenter effectManagerObj;      // 演出
@@ -38,6 +33,7 @@ public class GameManager : MonoBehaviour
     [Range(0, 6), SerializeField] private int debugSetting;         // デバッグ用設定値
 
     // 各種マネージャー
+    public ScreenManager Screen { get; private set; }            // 画面マネージャー
     public InputManager InputManager { get; private set; }              // 入力マネージャー
     public MedalManager Medal { get; private set; }                     // メダルマネージャー
     public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
@@ -63,10 +59,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Screen.SetResolution(1280, 720, false);         // 画面サイズ初期化
-        Application.targetFrameRate = 60;               // FPS固定
-
         InputManager = GetComponent<InputManager>();        // 操作
+        Screen = GetComponent<ScreenManager>();             // 画面
         Medal = GetComponent<MedalManager>();               // メダル管理
         Lots = GetComponent<FlagLots>();                    // フラグ管理
         Wait = GetComponent<WaitManager>();                 // ウェイト
@@ -145,8 +139,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // 画面サイズ調整
-
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
@@ -211,11 +203,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // 設定反映
     void ApplySetting()
     {
         // 音量設定
         Effect.ChangeMusicVolume(Option.GetOtherOptionData().MusicVolumeSetting);
         Effect.ChangeSoundVolume(Option.GetOtherOptionData().SoundVolumeSetting);
+        // 画面サイズ
+        Screen.SetScreenSize(Option.GetOtherOptionData().ResolutionSetting);
+        Screen.SetCameraMode(Option.GetOtherOptionData().UseOrthographicCamera);
+        // ウェイトカット
+        Wait.SetWaitCutSetting(Option.GetOtherOptionData().HasWaitCut);
+        //
     }
 
     // オート設定変更時の挙動
