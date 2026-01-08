@@ -98,9 +98,9 @@ public class ReelSpinManager : MonoBehaviour
     // リール位置設定
     public void SetReelPos(List<int> lastReelPos)
     {
-        for(int i = 0; i < reelObjects.Count; i++)
+        for (int i = 0; i < reelObjects.Count; i++)
         {
-             reelObjects[i].ChangeCurrentLower(lastReelPos[i]);
+            reelObjects[i].ChangeCurrentLower(lastReelPos[i]);
         }
     }
 

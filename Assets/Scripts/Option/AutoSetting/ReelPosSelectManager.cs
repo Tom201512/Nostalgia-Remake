@@ -88,7 +88,7 @@ namespace ReelSpinGame_Option
         // âÊñ ÇÃçXêV
         void UpdateScreen()
         {
-            if(CurrentLeftSelect != -1)
+            if (CurrentLeftSelect != -1)
             {
                 selectingPosText.text = "L:" + (CurrentLeftSelect + 1);
             }

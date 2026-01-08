@@ -1,7 +1,6 @@
 using ReelSpinGame_Reels.Util;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ReelSpinGame_Reels.Symbol
 {
@@ -13,7 +12,7 @@ namespace ReelSpinGame_Reels.Symbol
         [SerializeField] SpriteRenderer reelMarker;             // マーカー
 
         public SymbolChange[] SymbolObj { get; private set; }   // リール内の図柄
-        public int CurrentMarkerPos { get;  set; }       // 現在のマーカー位置
+        public int CurrentMarkerPos { get; set; }       // 現在のマーカー位置
 
         void Awake()
         {
@@ -40,7 +39,7 @@ namespace ReelSpinGame_Reels.Symbol
                 if (!hasLastPosSymbol && ReelSymbolPosCalc.OffsetReelPos(currentLower, (sbyte)symbol.GetPosID()) == 20)
                 {
                     hasLastPosSymbol = true;
-                    underLine.transform.SetPositionAndRotation(symbol.transform.position + new Vector3(0,0,-0.2f), symbol.transform.rotation);
+                    underLine.transform.SetPositionAndRotation(symbol.transform.position + new Vector3(0, 0, -0.2f), symbol.transform.rotation);
                 }
 
                 // もしマーカーで指定した図柄があればマーカー表示する
