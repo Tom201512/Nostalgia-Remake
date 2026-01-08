@@ -10,7 +10,8 @@ namespace ReelSpinGame_Reels
     // リールのロジック管理マネージャー
     public class ReelLogicManager : MonoBehaviour
     {
-        [SerializeField] MiniReelDisplayer miniReel;        // ミニリール機能
+        [SerializeField] MiniReelDisplayer miniReel;            // ミニリール機能
+        [SerializeField] ReelDelayDisplayer delayDisplay;       // スベリコマ表示機能
 
         public const int ReelAmount = 3;    // リール数
 
@@ -33,6 +34,8 @@ namespace ReelSpinGame_Reels
         void Start()
         {
             miniReel.gameObject.SetActive(false);
+            delayDisplay.ResetAllDelay();
+            delayDisplay.gameObject.SetActive(false);
         }
 
         void OnDestroy()
@@ -82,10 +85,21 @@ namespace ReelSpinGame_Reels
         }
 
         // ミニリール表示設定
-        public void SetMiniReelVisible(bool value) => miniReel.gameObject.SetActive(value);
+        public void SetMiniReelVisible(bool value)
+        {
+            miniReel.gameObject.SetActive(value);
+            miniReel.IsActivating = value;
+        }
+
+        // スベリコマ表示設定
+        public void SetReelDelayVisible(bool value) => delayDisplay.gameObject.SetActive(value);
 
         // リールの回転
-        public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto) => spinManager.StartReels(currentBonusStatus, usingFastAuto);
+        public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto)
+        {
+            spinManager.StartReels(currentBonusStatus, usingFastAuto);
+            delayDisplay.ResetAllDelay();
+        }
 
         // リールの停止(通常)
         public void StopSelectedReel(ReelID reelID, FlagID flag, BonusTypeID holdingBonus, int betAmount)
@@ -112,8 +126,9 @@ namespace ReelSpinGame_Reels
         }
 
         // リールが停止したときのイベント
-        void OnSomeReelStopped()
+        void OnSomeReelStopped(ReelID reelID)
         {
+            delayDisplay.SetDelay(reelID, spinManager.GetLastDelay(reelID));
             SomeReelStoppedEvent?.Invoke();
         }
     }

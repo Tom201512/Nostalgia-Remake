@@ -94,7 +94,12 @@ namespace ReelSpinGame_Sound
         // ボリューム調整(SE)
         public void ChangeSEVolume(float volume) => sePlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
         // ボリューム調整(BGM
-        public void ChangeBGMVolume(float volume) => bgmPlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
+        public void ChangeBGMVolume(float volume)
+        {
+            jinglePlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
+            bgmPlayer.AdjustVolume(Mathf.Clamp(volume, 0f, 1f));
+        }
+
         // SEミュート切り替え
         public void ChangeMuteSEPlayer(bool value) => sePlayer.ChangeMute(value);
         // BGM, ミュート切り替え

@@ -30,7 +30,7 @@ namespace ReelSpinGame_Reels
         public ReelEffect ReelEffectManager { get; private set; }
 
         // リールが停止したかのイベント(個別ごとのリール)
-        public delegate void ReelStoppedEvent();
+        public delegate void ReelStoppedEvent(ReelID reelID);
         public event ReelStoppedEvent HasReelStopped;
 
         // リール回転用のプレゼンター
@@ -134,7 +134,7 @@ namespace ReelSpinGame_Reels
             {
                 ReelEffectManager.FinishJacBrightnessCalculate();
             }
-            HasReelStopped?.Invoke();
+            HasReelStopped?.Invoke(ReelID);
         }
     }
 }

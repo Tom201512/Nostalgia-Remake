@@ -50,7 +50,6 @@ namespace ReelSpinGame_Option
         {
             // ボタン有効化設定を変更
             openButton.ToggleInteractive(true);
-            menuBarUI.gameObject.SetActive(false);
         }
 
         void OnDestroy()
@@ -68,8 +67,14 @@ namespace ReelSpinGame_Option
         {
             if (openButton.CanInteractable)
             {
-                menuBarUI.gameObject.SetActive(!menuBarUI.gameObject.activeSelf);
-                menuBarUI.SetInteractiveAllButton(!lockOptionMode);
+                if(menuBarUI.CanInteract)
+                {
+                    menuBarUI.CloseScreen();
+                }
+                else
+                {
+                    menuBarUI.OpenScreen();
+                }
             }
         }
 

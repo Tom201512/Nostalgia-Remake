@@ -1,5 +1,8 @@
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_Option.OtherSetting;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ReelSpinGame_Option.MenuBar
@@ -29,6 +32,10 @@ namespace ReelSpinGame_Option.MenuBar
         public delegate void OnClosedScreen();
         public event OnClosedScreen OnClosedScreenEvent;
 
+        public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
+
+        private CanvasGroup canvasGroup;        // フェードイン、アウト用
+
         void Awake()
         {
             // ボタン登録
@@ -43,6 +50,8 @@ namespace ReelSpinGame_Option.MenuBar
             forceFlagScreen.OnClosedScreenEvent += ForceFlagClose;
             autoPlaySettingScreen.OnClosedScreenEvent += AutoPlayClose;
             otherSettingScreen.OnClosedScreenEvent += OtherSettingClose;
+            CanInteract = false;
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void Start()
@@ -69,6 +78,8 @@ namespace ReelSpinGame_Option.MenuBar
             forceFlagScreen.OnClosedScreenEvent -= ForceFlagClose;
             autoPlaySettingScreen.OnClosedScreenEvent -= AutoPlayClose;
             otherSettingScreen.OnClosedScreenEvent -= OtherSettingClose;
+
+            StopAllCoroutines();
         }
 
         // 全メニューのロック設定
@@ -79,6 +90,23 @@ namespace ReelSpinGame_Option.MenuBar
             forceFlagButton.ToggleInteractive(value);
             autoSettingButton.ToggleInteractive(value);
             otherSettingButton.ToggleInteractive(value);
+        }
+
+
+        // メニューを開く
+        public void OpenScreen()
+        {
+            StartCoroutine(nameof(FadeInBehavior));
+        }
+
+        // 画面を閉じる
+        public void CloseScreen()
+        {
+            if (CanInteract)
+            {
+                SetInteractiveAllButton(false);
+                StartCoroutine(nameof(FadeOutBehavior));
+            }
         }
 
         // 遊び方ガイドを開いた時の処理
@@ -173,6 +201,37 @@ namespace ReelSpinGame_Option.MenuBar
         {
             SetInteractiveAllButton(true);
             OnClosedScreenEvent?.Invoke();
+        }
+
+        // フェードイン
+        IEnumerator FadeInBehavior()
+        {
+            canvasGroup.alpha = 0;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha + fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            CanInteract = true;
+            SetInteractiveAllButton(true);
+        }
+
+        // フェードアウト
+        IEnumerator FadeOutBehavior()
+        {
+            canvasGroup.alpha = 1;
+            float fadeSpeed = Time.deltaTime / OptionScreenFade.FadeTime;
+
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha = Math.Clamp(canvasGroup.alpha - fadeSpeed, 0f, 1f);
+                yield return new WaitForEndOfFrame();
+            }
+
+            CanInteract = false;
         }
     }
 }

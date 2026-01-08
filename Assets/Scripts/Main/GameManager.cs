@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     public int Setting { get; private set; }                // 台設定値
     public MainGameFlow MainFlow { get; private set; }      // ゲームステート用
 
-    SaveManager saveManager;                        // セーブ機能
+    SaveManager saveManager;                                // セーブ機能
 
     void Awake()
     {
@@ -212,6 +212,7 @@ public class GameManager : MonoBehaviour
         Screen.SetCameraMode(Option.GetOtherOptionData().UseOrthographicCamera);
         Reel.SetMiniReelVisible(Option.GetOtherOptionData().ShowMiniReelSetting);
         Wait.SetWaitCutSetting(Option.GetOtherOptionData().HasWaitCut);
+        Reel.SetReelDelayVisible(Option.GetOtherOptionData().HasDelayDisplay);
     }
 
     // オート設定変更時の挙動

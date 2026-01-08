@@ -33,7 +33,7 @@ public class ReelSpinManager : MonoBehaviour
     ReelSymbolCounter reelSymbolCounter;            // リール図柄のカウント機能
 
     // いずれかのリールが停止したかのイベント
-    public delegate void ReelStoppedEvent();
+    public delegate void ReelStoppedEvent(ReelID reelID);
     public event ReelStoppedEvent HasSomeReelStopped;
 
     // 初期化
@@ -239,7 +239,7 @@ public class ReelSpinManager : MonoBehaviour
     }
 
     // 何かしらのリールが止まった時のイベントを起こす
-    void SendReelStoppedEvent() => HasSomeReelStopped?.Invoke();
+    void SendReelStoppedEvent(ReelID reelID) => HasSomeReelStopped?.Invoke(reelID);
 
     // コルーチン用
     // リール停止可能にする
