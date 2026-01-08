@@ -1,5 +1,5 @@
 using ReelSpinGame_Lots;
-using ReelSpinGame_Option.Button;
+using ReelSpinGame_Option.Components;
 using ReelSpinGame_Reels;
 using System;
 using System.Collections;

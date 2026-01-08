@@ -1,4 +1,4 @@
-using ReelSpinGame_Option.Button;
+using ReelSpinGame_Option.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;

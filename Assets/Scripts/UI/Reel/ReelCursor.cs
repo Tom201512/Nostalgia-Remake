@@ -30,8 +30,6 @@ namespace ReelSpinGame_UI.Reel
             float y = symbolSize.y * (ReelSpinModel.MaxReelArray + showAmounts);
             Vector2 rectSize = new Vector2(rectTransform.sizeDelta.x, y);
             rectTransform.sizeDelta = rectSize;
-
-            SetPosition(-1, 0f);
         }
 
         // à íuÇê›íË
@@ -39,6 +37,7 @@ namespace ReelSpinGame_UI.Reel
         {
             float x = rectTransform.anchoredPosition.x;
             float y;
+
             if(reelIndex < 0)
             {
                 y = 0;
@@ -47,6 +46,7 @@ namespace ReelSpinGame_UI.Reel
             {
                 y = symbolSize.y * (reelIndex + showAmounts) + symbolSize.y * tweenOffset;
             }
+
             Vector2 cursorPos = new Vector2(x, y);
             rectTransform.anchoredPosition = cursorPos;
         }

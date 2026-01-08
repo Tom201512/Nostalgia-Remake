@@ -1,4 +1,4 @@
-using ReelSpinGame_Option.Button;
+using ReelSpinGame_Option.Components;
 using ReelSpinGame_Option.MenuBar;
 using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_Save.Database.Option;

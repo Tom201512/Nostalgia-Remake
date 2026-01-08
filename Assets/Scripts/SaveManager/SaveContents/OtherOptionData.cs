@@ -6,6 +6,17 @@ namespace ReelSpinGame_Save.Database.Option
     // その他設定のデータ
     public class OtherOptionData
     {
+        // 解像度のオプションID
+        public enum ResolutionOptionID
+        {
+            W960H540 = 0,
+            W1024H576 = 1,
+            W1280H720 = 2,
+            W1366H768 = 3,
+            W1600H900 = 4,
+            W1920H1080 = 5,
+        }
+
         const int MaxVolume = 100;      // 最大ボリューム
 
         public int MusicVolumeSetting { get; set; }                 // BGM音量 (0~100)

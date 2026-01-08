@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ReelSpinGame_Option.Button
+namespace ReelSpinGame_Option.Components
 {
     // チェックボックスコンポーネント
     public class CheckBoxComponent : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler

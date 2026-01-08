@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReelSpinGame_Option.Button
+namespace ReelSpinGame_Option.Components
 {
     // チェックボックス管理マネージャー
     public class CheckBoxManager : MonoBehaviour

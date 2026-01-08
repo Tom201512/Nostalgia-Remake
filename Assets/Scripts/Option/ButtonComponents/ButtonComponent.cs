@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ReelSpinGame_Option.Button
+namespace ReelSpinGame_Option.Components
 {
     // ボタンコンポーネント
     public class ButtonComponent : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
@@ -13,6 +13,8 @@ namespace ReelSpinGame_Option.Button
         [SerializeField] int signalID;                  // 送る信号番号
 
         public bool CanInteractable { get; private set; }      // ボタンが押せる状態か
+
+        float holdingTimes;     // 長押し時の時間
 
         // ボタンを押したときのイベント
         /// <summary>
