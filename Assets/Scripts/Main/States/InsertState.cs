@@ -56,7 +56,7 @@ namespace ReelSpinGame_State.InsertState
                     PlayerControl();
 
                     // 設定ロックがかかっていれば解除
-                    if(gM.Option.lockOptionMode)
+                    if (gM.Option.lockOptionMode)
                     {
                         gM.Option.ToggleOptionLock(false);
                     }

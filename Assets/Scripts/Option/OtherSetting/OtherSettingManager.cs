@@ -1,9 +1,7 @@
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_Save.Database.Option;
-using ReelSpinGame_Option.OtherSetting;
 using System;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_Option.OtherSetting
 {

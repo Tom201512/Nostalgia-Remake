@@ -20,8 +20,7 @@ namespace ReelSpinGame_UI.Reel
 
             // カーソルの大きさを変更
             Vector2 cursorSize = new Vector2(symbolSize.x, symbolSize.y * showAmounts);
-            Debug.Log("CursorSize" +  cursorSize);
-            foreach(RectTransform cursor in cursors)
+            foreach (RectTransform cursor in cursors)
             {
                 cursor.sizeDelta = cursorSize;
             }
@@ -29,7 +28,6 @@ namespace ReelSpinGame_UI.Reel
             // 全体の大きさを変更
             float y = symbolSize.y * (ReelSpinModel.MaxReelArray + showAmounts);
             Vector2 rectSize = new Vector2(rectTransform.sizeDelta.x, y);
-            Debug.Log("RectSize" + rectSize);
             rectTransform.sizeDelta = rectSize;
         }
 
@@ -39,7 +37,7 @@ namespace ReelSpinGame_UI.Reel
             float x = rectTransform.anchoredPosition.x;
             float y;
 
-            if(reelIndex < 0)
+            if (reelIndex < 0)
             {
                 y = 0;
             }

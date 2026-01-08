@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +25,7 @@ namespace ReelSpinGame_UI.Reel
 
         void UpdateScreen()
         {
-            if(CurrentDelay == -1)
+            if (CurrentDelay == -1)
             {
                 delayText.text = "-";
             }

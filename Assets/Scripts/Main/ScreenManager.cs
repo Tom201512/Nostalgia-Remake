@@ -19,7 +19,7 @@ public class ScreenManager : MonoBehaviour
     //　設定に合わせた画面サイズにする
     public void SetScreenSize(ResolutionOptionID resolutionID)
     {
-        switch(resolutionID)
+        switch (resolutionID)
         {
             case ResolutionOptionID.W960H540:
                 Screen.SetResolution(960, 540, false);

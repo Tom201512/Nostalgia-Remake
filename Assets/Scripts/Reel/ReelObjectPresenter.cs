@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace ReelSpinGame_Reels
 {
+    // リールオブジェクトプレゼンター
     public class ReelObjectPresenter : MonoBehaviour
     {
-        // リールオブジェクトプレゼンター
-
         [SerializeField] ReelDelayTableData reelDatabaseFile;       // リール情報
         [SerializeField] private ReelID reelID;                     // リール識別ID
 
@@ -106,7 +105,7 @@ namespace ReelSpinGame_Reels
         }
 
         // リール位置が変わったときのコールバック
-        private void OnReelPosChangedCallback()
+        void OnReelPosChangedCallback()
         {
             // JAC中であれば回転時の明るさ計算をリセット
             if (ReelEffectManager.HasJacBrightnessCalculate)
@@ -117,7 +116,7 @@ namespace ReelSpinGame_Reels
         }
 
         // リール角度が変わったときのコールバック
-        private void OnReelDegreeChangedCallback()
+        void OnReelDegreeChangedCallback()
         {
             if (ReelEffectManager.HasJacBrightnessCalculate)
             {
@@ -126,9 +125,8 @@ namespace ReelSpinGame_Reels
         }
 
         // リールが停止したときのコールバック
-        private void OnReelHasStoppedCallback()
+        void OnReelHasStoppedCallback()
         {
-            //Debug.Log("StoppedEvent called");
             // JAC中ならライトも調整
             if (ReelEffectManager.HasJacBrightnessCalculate)
             {

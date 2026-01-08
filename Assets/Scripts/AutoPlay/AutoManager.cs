@@ -189,12 +189,12 @@ namespace ReelSpinGame_AutoPlay
             AutoStopPos = autoAI.GetStopPos(condition);
 
             // ’â~ˆÊ’u‚ªŒÅ’è‚³‚ê‚Ä‚¢‚éê‡A’Êí3–‡Š|‚¯‚Å‚ ‚ê‚Îİ’è‚ğ”½‰f‚·‚é
-            if(condition.BonusStatus == BonusStatus.BonusNone && condition.BetAmount == 3)
+            if (condition.BonusStatus == BonusStatus.BonusNone && condition.BetAmount == 3)
             {
                 int index = 0;
-                foreach(int i in stopLockPositon)
+                foreach (int i in stopLockPositon)
                 {
-                    if(i != -1)
+                    if (i != -1)
                     {
                         AutoStopPos[index] = i;
                         index += 1;

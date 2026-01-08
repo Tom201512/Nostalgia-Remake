@@ -36,8 +36,7 @@ public class ReelSpinManager : MonoBehaviour
     public delegate void ReelStoppedEvent(ReelID reelID);
     public event ReelStoppedEvent HasSomeReelStopped;
 
-    // 初期化
-    private void Awake()
+    void Awake()
     {
         tableManager = new ReelTableManager();
         reelSpinManagerModel = new ReelSpinManagerModel();

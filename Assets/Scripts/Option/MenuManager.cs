@@ -1,6 +1,5 @@
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_Option.MenuContent;
-using ReelSpinGame_Option.OtherSetting;
 using System;
 using System.Collections;
 using UnityEngine;

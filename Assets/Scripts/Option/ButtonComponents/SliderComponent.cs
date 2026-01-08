@@ -61,7 +61,7 @@ namespace ReelSpinGame_Option.Components
         // 増加ボタンの挙動
         void OnUpPressedBehavior(int signalID)
         {
-            if(slider.value < slider.maxValue)
+            if (slider.value < slider.maxValue)
             {
                 slider.value += 1;
                 CurrentSliderValue = (int)slider.value;
@@ -87,12 +87,12 @@ namespace ReelSpinGame_Option.Components
         {
             CurrentSliderValue = (int)slider.value;
             UpdateScreen();
-            if(CanInteractable)
+            if (CanInteractable)
             {
                 OnSliderValueChanged?.Invoke();
             }
         }
-        
+
         // テキストの更新
         void UpdateScreen()
         {

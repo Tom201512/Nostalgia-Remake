@@ -1,5 +1,4 @@
 using ReelSpinGame_Reels;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ namespace ReelSpinGame_UI.Reel
         // スベリコマ数リセット
         public void ResetAllDelay()
         {
-            foreach(DelayDisplayer delay in  delayDisplayers)
+            foreach (DelayDisplayer delay in delayDisplayers)
             {
                 delay.ResetDelay();
             }

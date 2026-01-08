@@ -44,8 +44,6 @@ namespace ReelSpinGame_Reels
         }
 
         // 数値を得る
-
-        // マネージャー
         public bool GetIsReelWorking() => spinManager.IsReelWorking;           // リールが動作中か
         public bool GetIsReelFinished() => spinManager.IsReelFinished;         // リールの動作が終了したか
         public bool GetCanStopReels() => spinManager.CanStopReels;             // 停止できる状態か
@@ -71,7 +69,7 @@ namespace ReelSpinGame_Reels
         public int GetUsedReelTID(ReelID reelID) => spinManager.GetUsedReelTID(reelID);                   // 使用したリールテーブルID
         public int GetUsedReelCID(ReelID reelID) => spinManager.GetUsedReelTID(reelID);                   // 使用した組み合わせID
 
-        // 揃っているBIG図柄の数
+        // 揃っているBIG図柄の数を得る
         public BigType GetBigLinedUpCount(int betAmount, int checkAmount) => symbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
 
         // 強制フラグのランダム数値設定
@@ -94,10 +92,11 @@ namespace ReelSpinGame_Reels
         // スベリコマ表示設定
         public void SetReelDelayVisible(bool value) => delayDisplay.gameObject.SetActive(value);
 
-        // リールの回転
+        // リール回転
         public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto)
         {
             spinManager.StartReels(currentBonusStatus, usingFastAuto);
+            miniReel.ResetDelayCursor();
             delayDisplay.ResetAllDelay();
         }
 
@@ -129,6 +128,7 @@ namespace ReelSpinGame_Reels
         void OnSomeReelStopped(ReelID reelID)
         {
             delayDisplay.SetDelay(reelID, spinManager.GetLastDelay(reelID));
+            miniReel.SetStopCursor(reelID, spinManager.GetLastPushedLowerPos(reelID));
             SomeReelStoppedEvent?.Invoke();
         }
     }

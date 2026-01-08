@@ -43,7 +43,7 @@ namespace ReelSpinGame_Save.Database.Option
             SpinConditionID = SpinTimeConditionName.None;
 
             StopPosLockData.Clear();
-            for(int i = 0; i < ReelLogicManager.ReelAmount; i++)
+            for (int i = 0; i < ReelLogicManager.ReelAmount; i++)
             {
                 StopPosLockData.Add(-1);
             }

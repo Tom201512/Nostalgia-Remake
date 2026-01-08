@@ -8,7 +8,6 @@ using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelLogicManager;
-using static ReelSpinGame_Save.Database.Option.OtherOptionData;
 
 namespace ReelSpinGame_Save.Database
 {
@@ -84,7 +83,7 @@ namespace ReelSpinGame_Save.Database
             Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
 
             data.Add((int)OtherOptionData.ResolutionSetting);
-            Debug.Log("Resolution:" + (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), 
+            Debug.Log("Resolution:" + (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID),
                 OtherOptionData.ResolutionSetting));
 
             data.Add(OtherOptionData.UseOrthographicCamera ? 1 : 0);
@@ -126,7 +125,7 @@ namespace ReelSpinGame_Save.Database
                 AutoOptionData.EndConditionFlag = (byte)br.ReadInt32();
                 AutoOptionData.SpinConditionID = (SpinTimeConditionName)Enum.ToObject(typeof(SpinTimeConditionName), br.ReadInt32());
 
-                for(int i = 0; i < ReelAmount; i++)
+                for (int i = 0; i < ReelAmount; i++)
                 {
                     AutoOptionData.StopPosLockData[i] = br.ReadInt32();
                 }

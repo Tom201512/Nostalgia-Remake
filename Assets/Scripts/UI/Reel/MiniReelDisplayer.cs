@@ -1,7 +1,6 @@
 using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Spin;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,14 +9,20 @@ namespace ReelSpinGame_UI.Reel
     // ミニリール
     public class MiniReelDisplayer : MonoBehaviour
     {
-        [SerializeField] List<ReelObjectPresenter> reelObjects;        // 監査対象のリールオブジェクト
-        [SerializeField] List<ReelCursor> currentCursors;           // 現在位置のカーソル
+        [SerializeField] List<ReelObjectPresenter> reelObjects;         // 監査対象のリールオブジェクト
+        [SerializeField] List<ReelCursor> stoppedCursors;               // 停止位置のカーソル
+        [SerializeField] List<ReelCursor> delayCursors;                 // スベリコマ位置のカーソル
 
         public bool IsActivating { get; set; }              // ミニリールが稼働中か
 
+        void Start()
+        {
+            ResetDelayCursor();
+        }
+
         void Update()
         {
-            if(IsActivating)
+            if (IsActivating)
             {
                 for (int i = 0; i < reelObjects.Count; i++)
                 {
@@ -32,17 +37,38 @@ namespace ReelSpinGame_UI.Reel
                         TweenValue = (360 - reelObjects[i].CurrentDegree) / ReelSpinModel.ChangeAngle;
                     }
 
-                    currentCursors[i].SetPosition(reelObjects[i].GetReelPos((int)ReelPosID.Lower), TweenValue);
+                    if (reelObjects[i].ReelStatus == ReelStatus.Spinning)
+                    {
+                        stoppedCursors[i].SetPosition(reelObjects[i].GetReelPos((int)ReelPosID.Lower), TweenValue);
+                    }
+                    delayCursors[i].SetPosition(reelObjects[i].GetReelPos((int)ReelPosID.Lower), TweenValue);
                 }
             }
         }
 
-        // ミニリール位置設定
+        // ミニリール位置カーソル設定
         public void SetMiniReelPos(List<int> reelPos)
         {
-            for(int i = 0; i < currentCursors.Count; i++)
+            for (int i = 0; i < delayCursors.Count; i++)
             {
-                currentCursors[i].SetPosition(reelPos[i], 0);
+                stoppedCursors[i].SetPosition(reelPos[i], 0);
+            }
+        }
+
+        // 停止カーソル設定
+        public void SetStopCursor(ReelID reelID, int stoppedPos)
+        {
+            stoppedCursors[(int)reelID].SetPosition(stoppedPos, 0);
+            delayCursors[(int)reelID].gameObject.SetActive(true);
+        }
+
+        // スベリコマ位置カーソルリセット
+        public void ResetDelayCursor()
+        {
+            foreach (ReelCursor cursor in delayCursors)
+            {
+                cursor.SetPosition(-1, 0);
+                cursor.gameObject.SetActive(false);
             }
         }
     }

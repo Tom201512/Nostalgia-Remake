@@ -67,7 +67,7 @@ namespace ReelSpinGame_Option
         {
             if (openButton.CanInteractable)
             {
-                if(menuBarUI.CanInteract)
+                if (menuBarUI.CanInteract)
                 {
                     menuBarUI.CloseScreen();
                 }
