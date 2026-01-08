@@ -8,6 +8,7 @@ using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Save.Database.Option.OtherOptionData;
 
 namespace ReelSpinGame_Save.Database
 {
@@ -74,6 +75,10 @@ namespace ReelSpinGame_Save.Database
             data.Add(OtherOptionData.SoundVolumeSetting);
             Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
 
+            data.Add((int)OtherOptionData.ResolutionSetting);
+            Debug.Log("Resolution:" + (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), 
+                OtherOptionData.ResolutionSetting));
+
             data.Add(OtherOptionData.UseOrtographCamera ? 1 : 0);
             Debug.Log("2Dmode:" + OtherOptionData.UseOrtographCamera);
 
@@ -120,6 +125,11 @@ namespace ReelSpinGame_Save.Database
 
                 OtherOptionData.SoundVolumeSetting = br.ReadInt32();
                 Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
+
+                OtherOptionData.ResolutionSetting = (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), br.ReadInt32());
+                Debug.Log("Resolution:" + OtherOptionData.ResolutionSetting);
+
+                Debug.Log("2Dmode:" + OtherOptionData.UseOrtographCamera);
 
                 OtherOptionData.UseOrtographCamera = br.ReadInt32() == 1 ? true : false;
 

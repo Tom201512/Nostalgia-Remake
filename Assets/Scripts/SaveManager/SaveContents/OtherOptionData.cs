@@ -21,6 +21,7 @@ namespace ReelSpinGame_Save.Database.Option
 
         public int MusicVolumeSetting { get; set; }                 // BGM音量 (0~100)
         public int SoundVolumeSetting { get; set; }                 // SE音量 (0~100)
+        public ResolutionOptionID ResolutionSetting { get; set; }   // 解像度設定
         public bool UseOrtographCamera {  get; set; }               // 平面投影カメラの有無
         public bool ShowMiniReelSetting { get; set; }               // ミニリール表示
         public List<int> AssistMarkerPos { get; private set; }      // アシストマーカー位置
@@ -31,6 +32,7 @@ namespace ReelSpinGame_Save.Database.Option
         {
             MusicVolumeSetting = 50;
             SoundVolumeSetting = 50;
+            ResolutionSetting = ResolutionOptionID.W1280H720;
             UseOrtographCamera = false;
             ShowMiniReelSetting = false;
             AssistMarkerPos = new List<int>()
@@ -57,6 +59,7 @@ namespace ReelSpinGame_Save.Database.Option
         {
             MusicVolumeSetting = 50;
             SoundVolumeSetting = 50;
+            ResolutionSetting = ResolutionOptionID.W1280H720;
             UseOrtographCamera = false;
             ShowMiniReelSetting = false;
             AssistMarkerPos.Clear();

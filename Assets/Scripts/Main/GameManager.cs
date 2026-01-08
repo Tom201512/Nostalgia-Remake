@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Screen.SetResolution(1920, 1080, false);         // 画面サイズ初期化
+        Screen.SetResolution(1280, 720, false);         // 画面サイズ初期化
         Application.targetFrameRate = 60;               // FPS固定
 
         InputManager = GetComponent<InputManager>();        // 操作
