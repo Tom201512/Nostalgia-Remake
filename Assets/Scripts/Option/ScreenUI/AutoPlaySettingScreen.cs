@@ -66,10 +66,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             if (CanInteract)
             {
-                autoSettingManager.SetInteractiveButtons(false);
-                closeButton.ToggleInteractive(false);
-                resetButton.ToggleInteractive(false);
-                posLockSettingButton.ToggleInteractive(false);
+                SetInteractiveButtons(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
@@ -80,33 +77,36 @@ namespace ReelSpinGame_Option.MenuContent
         // 設定を読み込む
         public void LoadSettingData(AutoOptionData autoOption) => autoSettingManager.LoadOptionData(autoOption);
 
-        // 閉じるボタンを押したときの挙動
+        // 全てのボタンの操作をコントロールする
+        void SetInteractiveButtons(bool value)
+        {
+            autoSettingManager.SetInteractiveButtons(value);
+            closeButton.ToggleInteractive(value);
+            resetButton.ToggleInteractive(value);
+            posLockSettingButton.ToggleInteractive(value);
+        }
+
+        // 閉じるボタンを押したときの処理
         void OnClosedPressed(int signalID) => CloseScreen();
 
-        // 設定変更時の挙動
+        // 設定変更時の処理
         void OnSettingChanged() => SettingChangedEvent?.Invoke();
 
-        // リセットボタンを押したときの挙動
+        // リセットボタンを押したときの処理
         void OnResetButtonPressed(int signalID) => autoSettingManager.ResetOptionData();
 
-        // オート位置設定移行ボタンを押したときの挙動
+        // オート位置設定移行ボタンを押したときの処理
         void OnPosLockSettingButtonPressed(int signalID)
         {
-            autoSettingManager.SetInteractiveButtons(false);
-            closeButton.ToggleInteractive(false);
-            resetButton.ToggleInteractive(false);
-            posLockSettingButton.ToggleInteractive(false);
+            SetInteractiveButtons(false);
             autoStopPosLockManager.gameObject.SetActive(true);
             autoStopPosLockManager.OpenScreen();
         }
 
-        // オート位置設定が閉じられた時の挙動
+        // オート位置設定が閉じられた時の処理
         void OnPosLockSettingClosed()
         {
-            autoSettingManager.SetInteractiveButtons(true);
-            closeButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
-            posLockSettingButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
             autoStopPosLockManager.gameObject.SetActive(false);
         }
 
@@ -123,10 +123,7 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             CanInteract = true;
-            autoSettingManager.SetInteractiveButtons(true);
-            closeButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
-            posLockSettingButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
         }
 
         // フェードアウト

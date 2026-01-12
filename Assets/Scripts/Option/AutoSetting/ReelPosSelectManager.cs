@@ -115,10 +115,10 @@ namespace ReelSpinGame_Option
             }
         }
 
-        // 決定ボタンを押したときの挙動
+        // 決定ボタンを押したときの処理
         void OnConfirmPressed(int signalID) => CloseScreen();
 
-        // リセットボタンを押したときの挙動
+        // リセットボタンを押したときの処理
         void OnResetPressed(int signalID)
         {
             if (CanInteract)
@@ -131,7 +131,7 @@ namespace ReelSpinGame_Option
             }
         }
 
-        // 設定が変更された時の挙動
+        // 設定が変更された時の処理
         void OnArraySettingChanged()
         {
             UpdateScreen();

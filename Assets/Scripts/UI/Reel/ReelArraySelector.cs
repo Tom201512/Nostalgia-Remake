@@ -53,10 +53,19 @@ namespace ReelSpinGame_UI.Reel
             UpdateCursor();
         }
 
-        // リール図柄が押された時の挙動
+        // リール図柄が押された時の処理
         void OnReelSymbolPressed(int signalID)
         {
-            CurrentSelectPos = signalID;
+            // 同じのが選択されていたら選択解除
+            if(CurrentSelectPos == signalID)
+            {
+                CurrentSelectPos = -1;
+            }
+            else
+            {
+                CurrentSelectPos = signalID;
+            }
+
             UpdateCursor();
             ArraySymbolSelectedEvent?.Invoke();
         }

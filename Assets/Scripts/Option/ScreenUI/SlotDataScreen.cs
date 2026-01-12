@@ -1,9 +1,11 @@
+using ReelSpinGame_Option.AutoSetting;
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_System;
 using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -70,9 +72,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             if (CanInteract)
             {
-                closeButton.ToggleInteractive(false); ;
-                nextButton.ToggleInteractive(false);
-                previousButton.ToggleInteractive(false);
+                SetInteractiveButtons(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
@@ -83,7 +83,15 @@ namespace ReelSpinGame_Option.MenuContent
             PlayerData = player;
         }
 
-        // 次ボタンを押したときの挙動
+        // 全てのボタンの操作をコントロールする
+        void SetInteractiveButtons(bool value)
+        {
+            closeButton.ToggleInteractive(value); ;
+            nextButton.ToggleInteractive(value);
+            previousButton.ToggleInteractive(value);
+        }
+
+        // 次ボタンを押したときの処理
         void OnNextPushed(int signalID)
         {
             if (currentPage + 1 == maxPage)
@@ -98,7 +106,7 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        // 前ボタンを押したときの挙動
+        // 前ボタンを押したときの処理
         void OnPreviousPushed(int signalID)
         {
             if (currentPage - 1 < 0)
@@ -113,7 +121,7 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        // 閉じるボタンを押したときの挙動
+        // 閉じるボタンを押したときの処理
         void OnClosedPressed(int signalID) => CloseScreen();
 
         // 画像の反映処理
@@ -161,7 +169,6 @@ namespace ReelSpinGame_Option.MenuContent
         void DisactivateAllScreen()
         {
             bonusRecordDataUI.CloseBonusResult();
-
             slotMainDataUI.gameObject.SetActive(false);
             probabilityDataUI.gameObject.SetActive(false);
             bonusDataUI.gameObject.SetActive(false);
@@ -182,9 +189,7 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             CanInteract = true;
-            closeButton.ToggleInteractive(true);
-            nextButton.ToggleInteractive(true);
-            previousButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
         }
 
         // フェードアウト

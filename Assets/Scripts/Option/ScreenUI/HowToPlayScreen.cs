@@ -1,4 +1,5 @@
 using ReelSpinGame_Option.Components;
+using ReelSpinGame_Option.OtherSetting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,14 +68,20 @@ namespace ReelSpinGame_Option.MenuContent
         {
             if (CanInteract)
             {
-                closeButton.ToggleInteractive(false); ;
-                nextButton.ToggleInteractive(false);
-                previousButton.ToggleInteractive(false);
+                SetInteractiveButtons(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
 
-        // 次ボタンを押したときの挙動
+        // 全てのボタンの操作をコントロールする
+        void SetInteractiveButtons(bool value)
+        {
+            closeButton.ToggleInteractive(value); ;
+            nextButton.ToggleInteractive(value);
+            previousButton.ToggleInteractive(value);
+        }
+
+        // 次ボタンを押したときの処理
         void OnNextPushed(int signalID)
         {
             if (currentPage + 1 == screenList.Count)
@@ -89,7 +96,7 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        // 前ボタンを押したときの挙動
+        // 前ボタンを押したときの処理
         void OnPreviousPushed(int signalID)
         {
             if (currentPage - 1 < 0)
@@ -104,7 +111,7 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        // 閉じるボタンを押したときの挙動
+        // 閉じるボタンを押したときの処理
         void OnClosedPressed(int signalID) => CloseScreen();
 
         // 画像の反映処理
@@ -128,9 +135,7 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             CanInteract = true;
-            closeButton.ToggleInteractive(true);
-            nextButton.ToggleInteractive(true);
-            previousButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
         }
 
         // フェードアウト

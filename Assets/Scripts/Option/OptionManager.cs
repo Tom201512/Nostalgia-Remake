@@ -11,8 +11,8 @@ namespace ReelSpinGame_Option
     // オプションマネージャー
     public class OptionManager : MonoBehaviour
     {
-        [SerializeField] private ButtonComponent openButton; // メニュー開閉ボタン
-        [SerializeField] private MenuManager menuBarUI; // メニューバーのUI
+        [SerializeField] private ButtonComponent openButton;    // メニュー開閉ボタン
+        [SerializeField] private MenuManager menuBarUI;         // メニューバーのUI
 
         // 各種設定画面のデータ
         [SerializeField] ForceFlagScreen forceFlagScreen;               // 強制フラグ
@@ -23,6 +23,12 @@ namespace ReelSpinGame_Option
         public bool HasOptionMode { get; private set; }         // 設定変更中か(ゲームの操作ができなくなる)
         public bool LockOptionMode { get; private set; }        // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
 
+        public bool DeletePlayerSave { get => otherSettingScreen.DeletePlayerSave; }  // プレイヤーセーブを消すか
+        public bool DeleteOptionSave { get => otherSettingScreen.DeleteOptionSave; }  // 設定セーブを消すか
+
+        public AutoOptionData AutoOptionData { get => autoPlaySettingScreen.GetAutoSettingData(); }
+        public OtherOptionData OtherOptionData { get => otherSettingScreen.GetSettingData(); }
+
         // 設定変更時のイベント
         // オート設定
         public delegate void AutoSettingChanged();
@@ -31,6 +37,10 @@ namespace ReelSpinGame_Option
         // システム設定
         public delegate void OtherSettingChanged();
         public event OtherSettingChanged OtherSettingChangedEvent;
+
+        // 終了が実行された時の処理
+        public delegate void GameExit();
+        public event GameExit GameExitEvent;
 
         void Awake()
         {
@@ -44,6 +54,7 @@ namespace ReelSpinGame_Option
             menuBarUI.ClosedScreenEvent += DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent += OnAutoSettingChanged;
             otherSettingScreen.SettingChangedEvent += OnOtherSettingChanged;
+            otherSettingScreen.GameExitEvent += OnGameExit;
         }
 
         void Start()
@@ -60,6 +71,7 @@ namespace ReelSpinGame_Option
             menuBarUI.ClosedScreenEvent -= DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent -= OnAutoSettingChanged;
             otherSettingScreen.SettingChangedEvent -= OnOtherSettingChanged;
+            otherSettingScreen.GameExitEvent -= OnGameExit;
         }
 
         // オプション画面を開く
@@ -91,10 +103,7 @@ namespace ReelSpinGame_Option
 
         // 各画面の設定情報取得
         public int GetForceFlagSelectID() => forceFlagScreen.CurrentSelectFlagID; // 選択したフラグ値
-        public int GetForceFlagRandomID() => forceFlagScreen.CurrentSelectRandomID; // 選択したランダム値
-
-        public AutoOptionData GetAutoOptionData() => autoPlaySettingScreen.GetAutoSettingData(); // オート設定
-        public OtherOptionData GetOtherOptionData() => otherSettingScreen.GetSettingData();      // その他設定       
+        public int GetForceFlagRandomID() => forceFlagScreen.CurrentSelectRandomID; // 選択したランダム値   
 
         // 各画面の設定情報変更
         // セーブからオート設定を読み込む
@@ -128,5 +137,8 @@ namespace ReelSpinGame_Option
 
         // その他設定が変更された時の処理
         void OnOtherSettingChanged() => OtherSettingChangedEvent?.Invoke();
+
+        // ゲームが終了したときの処理
+        void OnGameExit() => GameExitEvent?.Invoke();
     }
 }

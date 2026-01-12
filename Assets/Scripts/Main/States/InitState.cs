@@ -118,8 +118,13 @@ namespace ReelSpinGame_State.LotsState
         // エラーチェック
         void CheckError()
         {
+            // 初回起動時なら初回起動画面へ移動
+            if(gM.IsFirstLaunch)
+            {
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.FirstLaunchState);
+            }
             // 設定値が-1なら設定変更へ移行する
-            if (gM.PlayerSave.Setting == -1)
+            else if (gM.PlayerSave.Setting == -1)
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
             }

@@ -88,10 +88,7 @@ namespace ReelSpinGame_Option.MenuContent
             {
                 SetBonusFlagButtonInteractive(false);
                 SetBonusFlagButtonInteractive(false);
-                randomNextButton.ToggleInteractive(false);
-                randomPreviousButton.ToggleInteractive(false);
-                resetButton.ToggleInteractive(false);
-                closeButton.ToggleInteractive(false);
+                SetInteractiveButtons(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
@@ -163,7 +160,16 @@ namespace ReelSpinGame_Option.MenuContent
             flagButtons[(int)FlagID.FlagNone].ToggleInteractive(value);
         }
 
-        // 閉じるボタンを押したときの挙動
+        // 全てのボタンの操作をコントロールする
+        void SetInteractiveButtons(bool value)
+        {
+            randomNextButton.ToggleInteractive(value);
+            randomPreviousButton.ToggleInteractive(value);
+            resetButton.ToggleInteractive(value);
+            closeButton.ToggleInteractive(value);
+        }
+
+        // 閉じるボタンを押したときの処理
         void OnClosedPressed(int signalID) => CloseScreen();
 
         // 選択したフラグを割り当てる
@@ -253,10 +259,7 @@ namespace ReelSpinGame_Option.MenuContent
 
             CanInteract = true;
             SetFlagButtonInteractive();
-            randomNextButton.ToggleInteractive(true);
-            randomPreviousButton.ToggleInteractive(true);
-            resetButton.ToggleInteractive(true);
-            closeButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
         }
 
         // フェードアウト

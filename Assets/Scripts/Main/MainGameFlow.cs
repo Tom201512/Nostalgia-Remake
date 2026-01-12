@@ -11,6 +11,8 @@ public class MainGameFlow
 
     // ゲーム状態
     public InitState InitState { get; private set; }                    // 初期化状態
+    public FirstLaunchState FirstLaunchState { get; private set; }      // 初回起動
+    public ErrorState ErrorState { get; private set; }                  // エラー時
     public InsertState InsertState { get; private set; }                // メダル投入
     public LotsState LotsState { get; private set; }                    // 抽選
     public FakeReelSpinState FakeReelSpinState { get; private set; }    // 疑似遊技
@@ -18,12 +20,12 @@ public class MainGameFlow
     public PlayingState PlayingState { get; private set; }              // リール回転(プレイ中)
     public PayoutState PayoutState { get; private set; }                // メダル払い出し
     public EffectState EffectState { get; private set; }                // 演出
-    public ErrorState ErrorState { get; private set; }                  // エラー時
     public ReachedLimitState LimitReachedState {  get; private set; }   // 打ち止め時
 
     public MainGameFlow(GameManager gameManager)
     {
         InitState = new InitState(gameManager);
+        FirstLaunchState = new FirstLaunchState(gameManager);
         InsertState = new InsertState(gameManager);
         LotsState = new LotsState(gameManager);
         FakeReelSpinState = new FakeReelSpinState(gameManager);

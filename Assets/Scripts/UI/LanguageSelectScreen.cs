@@ -11,14 +11,15 @@ using UnityEngine.Localization.Components;
 namespace ReelSpinGame_System
 {
     // 設定変更用
-    public class SettingSelectScreen : MonoBehaviour
+    public class LanguageSelectScreen : MonoBehaviour
     {
-        [SerializeField] ButtonSelector settingSelector;                // 設定値選択のボタン
-        [SerializeField] TextMeshProUGUI settingProbabilityText;        // 設定ごとの確率を表示
+        [SerializeField] ButtonSelector languageSelector;               // 言語選択
+        [SerializeField] TextMeshProUGUI selectLanguageText;            // 選択中のテキスト
         [SerializeField] ButtonComponent confirmButton;                 // 決定ボタン
+
         [SerializeField] List<LocalizedString> textDisplayList;         // テキストのローカライズリスト
 
-        public int CurrentSetting { get => settingSelector.CurrentSelect; }     // 現在の設定値
+        public int CurrentSetting { get => languageSelector.CurrentSelect; }     // 現在の設定値
 
         // 画面を閉じたときのイベント
         public delegate void ClosedScreen();
@@ -34,8 +35,9 @@ namespace ReelSpinGame_System
         {
             CanInteract = false;
             canvasGroup = GetComponent<CanvasGroup>();
-            selectTextLocalize = settingProbabilityText.GetComponent<LocalizeStringEvent>();
-            settingSelector.ContentChangedEvent += SettingChangedBehavior;
+            selectTextLocalize = selectLanguageText.GetComponent<LocalizeStringEvent>();
+
+            languageSelector.ContentChangedEvent += SettingChangedBehavior;
             confirmButton.ButtonPushedEvent += ConfirmPressedBehavior;
         }
 
@@ -47,7 +49,7 @@ namespace ReelSpinGame_System
 
         void OnDestroy()
         {
-            settingSelector.ContentChangedEvent -= SettingChangedBehavior;
+            languageSelector.ContentChangedEvent -= SettingChangedBehavior;
             confirmButton.ButtonPushedEvent -= ConfirmPressedBehavior;
         }
 
@@ -62,7 +64,7 @@ namespace ReelSpinGame_System
         {
             if (CanInteract)
             {
-                settingSelector.SetInteractive(false);
+                languageSelector.SetInteractive(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
@@ -72,14 +74,14 @@ namespace ReelSpinGame_System
         {
             if (CurrentSetting == -1)
             {
-                settingProbabilityText.gameObject.SetActive(false);
+                selectLanguageText.gameObject.SetActive(false);
             }
             else
             {
                 // 対応するテキストがあれば表示する
                 if (CurrentSetting < textDisplayList.Count)
                 {
-                    settingProbabilityText.gameObject.SetActive(true);
+                    selectLanguageText.gameObject.SetActive(true);
                     selectTextLocalize.StringReference = textDisplayList[CurrentSetting];
                 }
             }
@@ -111,7 +113,7 @@ namespace ReelSpinGame_System
             }
 
             CanInteract = true;
-            settingSelector.SetInteractive(true);
+            languageSelector.SetInteractive(true);
         }
 
         // フェードアウト

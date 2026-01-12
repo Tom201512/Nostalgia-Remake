@@ -15,424 +15,440 @@ MonoBehaviour:
   m_TableCollectionName: TextTableData
   m_TableCollectionNameGuidString: dc071bb6f3b6f7b40bdcad4679f814e6
   m_Entries:
-  - m_Id: 9110479272992768
-    m_Key: AutoBigColorRandom
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9110517411799040
-    m_Key: AutoBigColorTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9110525666189312
-    m_Key: AutoEndBigCondition
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9110610537930752
-    m_Key: AutoEndBonus
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9455116319776768
-    m_Key: AutoEndConditionTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9455300491665408
-    m_Key: AutoEndREG
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9455442808594432
-    m_Key: AutoEndTimingSub
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9455591660249088
-    m_Key: AutoEndWinning
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9455663835832320
-    m_Key: AutoOrderLMR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9457268719149056
-    m_Key: AutoOrderLRM
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9457270229098496
-    m_Key: AutoOrderMLR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9457658365796352
-    m_Key: AutoOrderMRL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9457776972324864
-    m_Key: AutoOrderRLM
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9457848942387200
-    m_Key: AutoOrderRML
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9457953816764416
-    m_Key: AutoOrderTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458048742252544
-    m_Key: AutoSettingTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458348785983488
-    m_Key: AutoSpeedFast
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458163351609344
-    m_Key: AutoSpeedSettingTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458290833285120
-    m_Key: AutoSpeedSlow
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458350006525952
-    m_Key: AutoSpeedVeryFast
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458614952321024
-    m_Key: AutoSpinTimes10000G
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458485734203392
-    m_Key: AutoSpinTimes1000G
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458527094235136
-    m_Key: AutoSpinTimes3000G
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458577681735680
-    m_Key: AutoSpinTimes5000G
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9758787163185152
-    m_Key: AutoSpinTimeSelectSub
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458671671894016
-    m_Key: AutoSpinTimesUnlimited
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9458717746323456
-    m_Key: AutoStopPosLockTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 11974288153042944
-    m_Key: AutoStopPosSettingText
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9460232397578240
-    m_Key: AutoTechnicalTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801600946528256
-    m_Key: Bell
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801226424541184
-    m_Key: BIG CHANCE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801293076226048
-    m_Key: BONUS GAME
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15798207301607424
-    m_Key: BonusRecordInfo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15798617114468352
-    m_Key: BonusRecordTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15800554614480896
-    m_Key: BonusSelectTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801382419095552
-    m_Key: Cherry2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801423355502592
-    m_Key: Cherry4
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17560704597680128
-    m_Key: DeleteAllData
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17560242691563520
-    m_Key: ExitGameButton
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15800194340544512
-    m_Key: ForceFlagTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15800197884731392
-    m_Key: ForceSelectingFlag
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17562726323511296
-    m_Key: Generic2D
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17562752638574592
-    m_Key: Generic3D
-    m_Metadata:
-      m_Items: []
-  - m_Id: 11973814658064384
-    m_Key: GenericConfirm
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9744648390893568
-    m_Key: GenericDisable
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9744566589382656
-    m_Key: GenericEnable
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17564389864169472
-    m_Key: GenericEnglish
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9763470141349888
-    m_Key: GenericEnterSetting
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17564333383671808
-    m_Key: GenericJapanese
-    m_Metadata:
-      m_Items: []
-  - m_Id: 11973778301837312
-    m_Key: GenericReset
-    m_Metadata:
-      m_Items: []
-  - m_Id: 358265708544
-    m_Key: HowToPlay01
-    m_Metadata:
-      m_Items: []
-  - m_Id: 474510843904
-    m_Key: HowToPlay02
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1380065271808
-    m_Key: HowToPlay03
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1495719010304
-    m_Key: HowToPlay04
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1603768475648
-    m_Key: HowToPlay05
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1868865265664
-    m_Key: HowToPlay06
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2003435315200
-    m_Key: HowToPlay07
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2149787164672
-    m_Key: HowToPlay08
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2461453312000
-    m_Key: HowToPlay09
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2520983068672
-    m_Key: HowToPlay10
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801461745967104
-    m_Key: Melon
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19316308836147200
-    m_Key: OtherReelMarkerSelect
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801603270172672
-    m_Key: None
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17559462060285952
-    m_Key: OtherCameraSetting
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17559936045998080
-    m_Key: OtherDelayDisplay
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17560076341272576
-    m_Key: OtherLanguageSetting
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17559521548099584
-    m_Key: OtherMarkerSetting
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17559849899188224
-    m_Key: OtherMiniReelSetting
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17559275086602240
-    m_Key: OtherMusicTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19134730864484352
-    m_Key: OtherResolutionSetting
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17559389733707776
-    m_Key: OtherSETitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17558796042559488
-    m_Key: OtherSettingTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17560010037714944
-    m_Key: OtherWaitCut
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801770174111744
-    m_Key: RandomValue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15801602351620096
-    m_Key: Replay/JAC
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17560908717678592
-    m_Key: ResetOption
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19135664038404096
-    m_Key: ResolutionW1024H576
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19135665384775680
-    m_Key: ResolutionW1280H720
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19135666861170688
-    m_Key: ResolutionW1366H768
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19135672179548160
-    m_Key: ResolutionW1600H900
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19135672821276672
-    m_Key: ResolutionW1920H1080
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19135538263810048
-    m_Key: ResolutionW960H540
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17560602315382784
-    m_Key: SettingChange
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15795777503551488
-    m_Key: SlotBonusDataInfo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15795237944090624
-    m_Key: SlotBonusDataTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9461551464243200
-    m_Key: SlotMainDataInfo1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15792320486891520
-    m_Key: SlotMainDataInfo2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9461064698486784
-    m_Key: SlotMainDataTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15795217136148480
-    m_Key: SlotProbabilityBIG
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15793696629645312
-    m_Key: SlotProbabilityDataTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15793916356648960
-    m_Key: SlotProbabilityNormal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15798205900709888
-    m_Key: SlumpGraphTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 15800639226175488
-    m_Key: SymbolsSelectTitle
-    m_Metadata:
-      m_Items: []
-  - m_Id: 19138425517826048
-    m_Key: WarningDeleteAll
+  - m_Id: 15797864761188352
+    m_Key: WinningPatternTitle
     m_Metadata:
       m_Items: []
   - m_Id: 19134939082317824
     m_Key: WarningLotSettingChange
     m_Metadata:
       m_Items: []
-  - m_Id: 15797864761188352
-    m_Key: WinningPatternTitle
+  - m_Id: 19138425517826048
+    m_Key: WarningDeleteAll
     m_Metadata:
       m_Items: []
-  - m_Id: 20342396743901184
-    m_Key: SettingSelectorText
+  - m_Id: 15800639226175488
+    m_Key: SymbolsSelectTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798205900709888
+    m_Key: SlumpGraphTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15793916356648960
+    m_Key: SlotProbabilityNormal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15793696629645312
+    m_Key: SlotProbabilityDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795217136148480
+    m_Key: SlotProbabilityBIG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461064698486784
+    m_Key: SlotMainDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15792320486891520
+    m_Key: SlotMainDataInfo2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9461551464243200
+    m_Key: SlotMainDataInfo1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795237944090624
+    m_Key: SlotBonusDataTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15795777503551488
+    m_Key: SlotBonusDataInfo
     m_Metadata:
       m_Items: []
   - m_Id: 20608179512336384
     m_Key: SettingSelectRandom
     m_Metadata:
       m_Items: []
-  - m_Id: 20608415706177536
-    m_Key: SettingSelect1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 20608417430036480
-    m_Key: SettingSelect2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 20608419812401152
-    m_Key: SettingSelect3
-    m_Metadata:
-      m_Items: []
-  - m_Id: 20608421225881600
-    m_Key: SettingSelect4
-    m_Metadata:
-      m_Items: []
-  - m_Id: 20608422450618368
-    m_Key: SettingSelect5
+  - m_Id: 20342396743901184
+    m_Key: SettingSelectorText
     m_Metadata:
       m_Items: []
   - m_Id: 20608423440474112
     m_Key: SettingSelect6
     m_Metadata:
       m_Items: []
+  - m_Id: 20608422450618368
+    m_Key: SettingSelect5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608421225881600
+    m_Key: SettingSelect4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608419812401152
+    m_Key: SettingSelect3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608417430036480
+    m_Key: SettingSelect2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608415706177536
+    m_Key: SettingSelect1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560602315382784
+    m_Key: SettingChange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135538263810048
+    m_Key: ResolutionW960H540
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135672821276672
+    m_Key: ResolutionW1920H1080
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135672179548160
+    m_Key: ResolutionW1600H900
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135666861170688
+    m_Key: ResolutionW1366H768
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135665384775680
+    m_Key: ResolutionW1280H720
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19135664038404096
+    m_Key: ResolutionW1024H576
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560908717678592
+    m_Key: ResetOption
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801602351620096
+    m_Key: Replay/JAC
+    m_Metadata:
+      m_Items: []
   - m_Id: 20703214236917760
     m_Key: ReachedLimitText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801770174111744
+    m_Key: RandomValue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560010037714944
+    m_Key: OtherWaitCut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17558796042559488
+    m_Key: OtherSettingTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559389733707776
+    m_Key: OtherSETitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19134730864484352
+    m_Key: OtherResolutionSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19316308836147200
+    m_Key: OtherReelMarkerSelect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559275086602240
+    m_Key: OtherMusicTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559849899188224
+    m_Key: OtherMiniReelSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559521548099584
+    m_Key: OtherMarkerSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560076341272576
+    m_Key: OtherLanguageSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559936045998080
+    m_Key: OtherDelayDisplay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17559462060285952
+    m_Key: OtherCameraSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801603270172672
+    m_Key: None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801461745967104
+    m_Key: Melon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2520983068672
+    m_Key: HowToPlay10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2461453312000
+    m_Key: HowToPlay09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2149787164672
+    m_Key: HowToPlay08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2003435315200
+    m_Key: HowToPlay07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1868865265664
+    m_Key: HowToPlay06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1603768475648
+    m_Key: HowToPlay05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1495719010304
+    m_Key: HowToPlay04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1380065271808
+    m_Key: HowToPlay03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474510843904
+    m_Key: HowToPlay02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358265708544
+    m_Key: HowToPlay01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11973778301837312
+    m_Key: GenericReset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17564333383671808
+    m_Key: GenericJapanese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9763470141349888
+    m_Key: GenericEnterSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17564389864169472
+    m_Key: GenericEnglish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9744566589382656
+    m_Key: GenericEnable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9744648390893568
+    m_Key: GenericDisable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11973814658064384
+    m_Key: GenericConfirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20773004536242176
+    m_Key: GenericNo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17562752638574592
+    m_Key: Generic3D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17562726323511296
+    m_Key: Generic2D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800197884731392
+    m_Key: ForceSelectingFlag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800194340544512
+    m_Key: ForceFlagTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560242691563520
+    m_Key: ExitGameButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17560704597680128
+    m_Key: DeleteAllData
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801423355502592
+    m_Key: Cherry4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801382419095552
+    m_Key: Cherry2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15800554614480896
+    m_Key: BonusSelectTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798617114468352
+    m_Key: BonusRecordTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798207301607424
+    m_Key: BonusRecordInfo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801293076226048
+    m_Key: BONUS GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801226424541184
+    m_Key: BIG CHANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15801600946528256
+    m_Key: Bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9460232397578240
+    m_Key: AutoTechnicalTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11974288153042944
+    m_Key: AutoStopPosSettingText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458717746323456
+    m_Key: AutoStopPosLockTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458671671894016
+    m_Key: AutoSpinTimesUnlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9758787163185152
+    m_Key: AutoSpinTimeSelectSub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458577681735680
+    m_Key: AutoSpinTimes5000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458527094235136
+    m_Key: AutoSpinTimes3000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458485734203392
+    m_Key: AutoSpinTimes1000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458614952321024
+    m_Key: AutoSpinTimes10000G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458350006525952
+    m_Key: AutoSpeedVeryFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458290833285120
+    m_Key: AutoSpeedSlow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458163351609344
+    m_Key: AutoSpeedSettingTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458348785983488
+    m_Key: AutoSpeedFast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9458048742252544
+    m_Key: AutoSettingTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457953816764416
+    m_Key: AutoOrderTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457848942387200
+    m_Key: AutoOrderRML
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457776972324864
+    m_Key: AutoOrderRLM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457658365796352
+    m_Key: AutoOrderMRL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457270229098496
+    m_Key: AutoOrderMLR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9457268719149056
+    m_Key: AutoOrderLRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455663835832320
+    m_Key: AutoOrderLMR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455591660249088
+    m_Key: AutoEndWinning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455442808594432
+    m_Key: AutoEndTimingSub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455300491665408
+    m_Key: AutoEndREG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9455116319776768
+    m_Key: AutoEndConditionTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110610537930752
+    m_Key: AutoEndBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110525666189312
+    m_Key: AutoEndBigCondition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110517411799040
+    m_Key: AutoBigColorTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9110479272992768
+    m_Key: AutoBigColorRandom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20773476135395328
+    m_Key: GenericYes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20777834180829184
+    m_Key: WarningPlayerSave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20778129904427008
+    m_Key: WarningAllSave
     m_Metadata:
       m_Items: []
   m_Metadata:

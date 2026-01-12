@@ -26,6 +26,9 @@ namespace ReelSpinGame_Option.MenuContent
 
         public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
+        public bool DeletePlayerSave { get => otherExitGameManager.DeletePlayerSave; }  // プレイヤーセーブを消すか
+        public bool DeleteOptionSave { get => otherExitGameManager.DeleteOptionSave; }  // 設定セーブを消すか
+
         // 設定が変更された時のイベント
         public delegate void SettingChanged();
         public event SettingChanged SettingChangedEvent;
@@ -33,6 +36,10 @@ namespace ReelSpinGame_Option.MenuContent
         // 画面を閉じたときのイベント
         public delegate void ClosedScreen();
         public event ClosedScreen ClosedScreenEvent;
+
+        // 終了が実行された時の処理
+        public delegate void GameExit();
+        public event GameExit GameExitEvent;
 
         private int currentPage = 0;        // 表示中のページ番号
         private CanvasGroup canvasGroup;    // フェードイン、アウト用
@@ -45,6 +52,9 @@ namespace ReelSpinGame_Option.MenuContent
             otherSettingManager.SettingChangeEvent += OnSettingChanged;
             markerSettingButton.ButtonPushedEvent += OnReelMarkerSelectPushed;
             reelMarkerSelectManager.ClosedScreenEvent += OnReelMarkerSelectClosed;
+            otherExitGameManager.WarningScreenOpenEvent += OnWarningScreenOpened;
+            otherExitGameManager.WarningScreenCloseEvent += OnWarningScreenClosed;
+            otherExitGameManager.GameExitEvent += OnExitGame;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -63,12 +73,16 @@ namespace ReelSpinGame_Option.MenuContent
             otherSettingManager.SettingChangeEvent -= OnSettingChanged;
             markerSettingButton.ButtonPushedEvent -= OnReelMarkerSelectPushed;
             reelMarkerSelectManager.ClosedScreenEvent -= OnReelMarkerSelectClosed;
+            otherExitGameManager.WarningScreenOpenEvent -= OnWarningScreenOpened;
+            otherExitGameManager.WarningScreenCloseEvent -= OnWarningScreenClosed;
+            otherExitGameManager.GameExitEvent -= OnExitGame;
         }
 
         // 画面表示&初期化
         public void OpenScreen()
         {
             currentPage = 0;
+            UpdateScreen();
             StartCoroutine(nameof(FadeInBehavior));
         }
 
@@ -77,11 +91,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             if (CanInteract)
             {
-                otherSettingManager.SetInteractiveButtons(false);
-                closeButton.ToggleInteractive(false);
-                nextButton.ToggleInteractive(false);
-                previousButton.ToggleInteractive(false);
-                markerSettingButton.ToggleInteractive(false);
+                SetInteractiveButtons(false);
                 StartCoroutine(nameof(FadeOutBehavior));
             }
         }
@@ -92,7 +102,18 @@ namespace ReelSpinGame_Option.MenuContent
         // 設定を読み込む
         public void LoadSettingData(OtherOptionData otherOption) => otherSettingManager.LoadOptionData(otherOption);
 
-        // 次ボタンを押したときの挙動
+        // 全てのボタンの操作をコントロールする
+        void SetInteractiveButtons(bool value)
+        {
+            otherSettingManager.SetInteractiveButtons(value);
+            otherExitGameManager.SetInteractiveButtons(value);
+            closeButton.ToggleInteractive(value);
+            nextButton.ToggleInteractive(value);
+            previousButton.ToggleInteractive(value);
+            markerSettingButton.ToggleInteractive(value);
+        }
+
+        // 次ボタンを押したときの処理
         void OnNextPushed(int signalID)
         {
             if (currentPage + 1 == maxPage)
@@ -107,7 +128,7 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        // 前ボタンを押したときの挙動
+        // 前ボタンを押したときの処理
         void OnPreviousPushed(int signalID)
         {
             if (currentPage - 1 < 0)
@@ -122,34 +143,32 @@ namespace ReelSpinGame_Option.MenuContent
             UpdateScreen();
         }
 
-        // 閉じるボタンを押したときの挙動
+        // 閉じるボタンを押したときの処理
         void OnClosedPressed(int signalID) => CloseScreen();
 
-        // 設定変更時の挙動
+        // 設定変更時の処理
         void OnSettingChanged() => SettingChangedEvent?.Invoke();
 
-        // マーカー位置設定を押したときの挙動
+        // マーカー位置設定を押したときの処理
         void OnReelMarkerSelectPushed(int signalID)
         {
-            otherSettingManager.SetInteractiveButtons(false);
-            closeButton.ToggleInteractive(false);
-            nextButton.ToggleInteractive(false);
-            previousButton.ToggleInteractive(false);
-            markerSettingButton.ToggleInteractive(false);
+            SetInteractiveButtons(false);
             reelMarkerSelectManager.gameObject.SetActive(true);
             reelMarkerSelectManager.OpenScreen();
         }
 
-        // マーカー位置設定が閉じられた時の挙動
+        // マーカー位置設定が閉じられた時の処理
         void OnReelMarkerSelectClosed()
         {
-            otherSettingManager.SetInteractiveButtons(true);
-            closeButton.ToggleInteractive(true);
-            nextButton.ToggleInteractive(true);
-            previousButton.ToggleInteractive(true);
-            markerSettingButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
             reelMarkerSelectManager.gameObject.SetActive(false);
         }
+
+        // 警告画面が表示された時の処理
+        void OnWarningScreenOpened() => SetInteractiveButtons(false);
+
+        // 警告画面が閉じられた時の処理
+        void OnWarningScreenClosed() => SetInteractiveButtons(true);
 
         // 画像の反映処理
         void UpdateScreen()
@@ -181,6 +200,9 @@ namespace ReelSpinGame_Option.MenuContent
             otherExitGameManager.gameObject.SetActive(false);
         }
 
+        // ゲームが終了された時の処理
+        void OnExitGame() => GameExitEvent?.Invoke();
+
         // フェードイン
         IEnumerator FadeInBehavior()
         {
@@ -194,11 +216,7 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             CanInteract = true;
-            otherSettingManager.SetInteractiveButtons(true);
-            closeButton.ToggleInteractive(true);
-            nextButton.ToggleInteractive(true);
-            previousButton.ToggleInteractive(true);
-            markerSettingButton.ToggleInteractive(true);
+            SetInteractiveButtons(true);
         }
 
         // フェードアウト

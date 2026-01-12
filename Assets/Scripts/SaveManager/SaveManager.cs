@@ -124,7 +124,6 @@ namespace ReelSpinGame_System
             // ファイルがない場合は読み込まない
             if (!File.Exists(path))
             {
-                Debug.LogError("File not found");
                 return false;
             }
             try
@@ -201,7 +200,6 @@ namespace ReelSpinGame_System
             // ファイルがない場合は読み込まない
             if (!File.Exists(path))
             {
-                Debug.LogError("File not found");
                 return false;
             }
             try

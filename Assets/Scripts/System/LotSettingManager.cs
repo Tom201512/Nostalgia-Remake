@@ -13,7 +13,7 @@ namespace ReelSpinGame_System.Setting
 
         // 台設定が変更された時のイベント
         public delegate void SlotSettingChanged(int setting);
-        public event SlotSettingChanged OnSlotSettingChanged;
+        public event SlotSettingChanged SlotSettingChangedEvent;
 
         void Awake()
         {
@@ -40,12 +40,13 @@ namespace ReelSpinGame_System.Setting
             bonusSegments.StartDisplayError();
         }
 
+        // 設定画面が閉じられた時の処理
         void OnScreenClosed()
         {
             IsSettingChanging = false;
             settingSelectScreen.gameObject.SetActive(false);
             bonusSegments.TurnOffAllSegments();
-            OnSlotSettingChanged?.Invoke(settingSelectScreen.CurrentSetting);
+            SlotSettingChangedEvent?.Invoke(settingSelectScreen.CurrentSetting);
         }
     }
 }

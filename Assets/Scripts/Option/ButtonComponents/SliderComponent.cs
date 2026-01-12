@@ -58,7 +58,7 @@ namespace ReelSpinGame_Option.Components
             UpdateScreen();
         }
 
-        // 増加ボタンの挙動
+        // 増加ボタンの処理
         void OnUpPressedBehavior(int signalID)
         {
             if (slider.value < slider.maxValue)
@@ -70,7 +70,7 @@ namespace ReelSpinGame_Option.Components
             }
         }
 
-        // 減少ボタンの挙動
+        // 減少ボタンの処理
         void OnDownPressedBehavior(int signalID)
         {
             if (slider.value > slider.minValue)

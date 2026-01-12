@@ -114,7 +114,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             howToPlayScreen.gameObject.SetActive(true);
             howToPlayScreen.OpenScreen();
-            OnPressedBehaviour();
+            OpenScreenBehavior();
         }
 
         // 遊び方ガイドを閉じた時の処理
@@ -122,7 +122,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             howToPlayScreen.CloseScreen();
             howToPlayScreen.gameObject.SetActive(false);
-            OnClosedBehaviour();
+            CloseScreenBehavior();
         }
 
         // スロット情報を開いた時の処理
@@ -130,7 +130,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             slotDataScreen.gameObject.SetActive(true);
             slotDataScreen.OpenScreen();
-            OnPressedBehaviour();
+            OpenScreenBehavior();
         }
 
         // スロット情報を閉じた時の処理
@@ -138,7 +138,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             slotDataScreen.CloseScreen();
             slotDataScreen.gameObject.SetActive(false);
-            OnClosedBehaviour();
+            CloseScreenBehavior();
         }
 
         // 強制役設定画面を開いた時の処理
@@ -146,7 +146,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             forceFlagScreen.gameObject.SetActive(true);
             forceFlagScreen.OpenScreen();
-            OnPressedBehaviour();
+            OpenScreenBehavior();
         }
 
         // 強制役設定画面を閉じた時の処理
@@ -154,7 +154,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             forceFlagScreen.CloseScreen();
             forceFlagScreen.gameObject.SetActive(false);
-            OnClosedBehaviour();
+            CloseScreenBehavior();
         }
 
         // オートプレイ設定画面を開いた時の処理
@@ -162,7 +162,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             autoPlaySettingScreen.gameObject.SetActive(true);
             autoPlaySettingScreen.OpenScreen();
-            OnPressedBehaviour();
+            OpenScreenBehavior();
         }
 
         // オートプレイ設定画面を閉じた時の処理
@@ -170,7 +170,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             autoPlaySettingScreen.CloseScreen();
             autoPlaySettingScreen.gameObject.SetActive(false);
-            OnClosedBehaviour();
+            CloseScreenBehavior();
         }
 
         // オートプレイ設定画面を開いた時の処理
@@ -178,7 +178,7 @@ namespace ReelSpinGame_Option.MenuBar
         {
             otherSettingScreen.gameObject.SetActive(true);
             otherSettingScreen.OpenScreen();
-            OnPressedBehaviour();
+            OpenScreenBehavior();
         }
 
         // オートプレイ設定画面を閉じた時の処理
@@ -186,18 +186,18 @@ namespace ReelSpinGame_Option.MenuBar
         {
             otherSettingScreen.CloseScreen();
             otherSettingScreen.gameObject.SetActive(false);
-            OnClosedBehaviour();
+            CloseScreenBehavior();
         }
 
         // 画面を開いたときの処理
-        void OnPressedBehaviour()
+        void OpenScreenBehavior()
         {
             SetInteractiveAllButton(false);
             PressedMenuEvent?.Invoke();
         }
 
         // 画面を閉じたときの処理
-        void OnClosedBehaviour()
+        void CloseScreenBehavior()
         {
             SetInteractiveAllButton(true);
             ClosedScreenEvent?.Invoke();

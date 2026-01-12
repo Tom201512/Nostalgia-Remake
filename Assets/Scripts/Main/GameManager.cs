@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
 {
     public const int MaxSlotSetting = 6;    // 最高設定値
 
-    // 各種マネージャー
     [SerializeField] private ReelLogicManager reelManagerObj;       // リール情報
     [SerializeField] private EffectPresenter effectManagerObj;      // 演出
     [SerializeField] private OptionManager optionManagerObj;        // オプション画面
@@ -32,57 +31,56 @@ public class GameManager : MonoBehaviour
     [SerializeField] StatusPanel statusPanel;                       // ステータスパネル
     [SerializeField] LimitReachedScreen limitReachedScreen;         // 打ち止め時画面
 
-    [SerializeField] private bool dontSaveFlag;                 // セーブをしない
-    [SerializeField] private bool deleteSaveFlag;               // 開始時にセーブ消去
+    public ScreenManager Screen { get; private set; }                           // 画面マネージャー
+    public InitialSettingManager InitialSetting { get; private set; }           // 初回起動設定マネージャー
+    public LotSettingManager LotSetting { get; private set; }                   // 設定変更
+    public InputManager InputManager { get; private set; }                      // 入力マネージャー
+    public MedalManager Medal { get; private set; }                             // メダルマネージャー
+    public FlagLots Lots { get; private set; }                                  // フラグ抽選マネージャー
+    public WaitManager Wait { get; private set; }                               // ウェイト管理マネージャー
+    public ReelLogicManager Reel { get { return reelManagerObj; } }             // リールマネージャー
+    public PayoutManager Payout { get; private set; }                           // 払い出しマネージャー
+    public BonusManager Bonus { get; private set; }                             // ボーナス管理マネージャー
+    public EffectPresenter Effect { get { return effectManagerObj; } }          // 演出管理マネージャー
+    public OptionManager Option { get { return optionManagerObj; } }            // オプションマネージャー
+    public AutoManager Auto { get; private set; }                               // オートプレイ機能
 
-    // 各種マネージャー
-    public ScreenManager Screen { get; private set; }                   // 画面マネージャー
-    public LotSettingManager LotSetting { get; private set; }           // 設定変更
-    public InputManager InputManager { get; private set; }              // 入力マネージャー
-    public MedalManager Medal { get; private set; }                     // メダルマネージャー
-    public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
-    public WaitManager Wait { get; private set; }                       // ウェイト管理マネージャー
-    public ReelLogicManager Reel { get { return reelManagerObj; } }     // リールマネージャー
-    public PayoutManager Payout { get; private set; }                   // 払い出しマネージャー
-    public BonusManager Bonus { get; private set; }                     // ボーナス管理マネージャー
-    public EffectPresenter Effect { get { return effectManagerObj; } }  // 演出管理マネージャー
-    public OptionManager Option { get { return optionManagerObj; } }    // オプションマネージャー
-    public AutoManager Auto { get; private set; }                       // オートプレイ機能
-
-    // プレイヤー関連
     public PlayerDatabase Player;                                                   // プレイヤー情報
     public PlayerUI PlayerUI { get { return playerUI; } }                           // プレイヤーUI
     public SaveDatabase PlayerSave { get { return saveManager.PlayerSaveData; } }   // プレイヤーのセーブ
     public OptionSave OptionSave { get { return saveManager.OptionSave; } }         // オプションのセーブ
     public StatusPanel Status { get; private set; }                                 // ステータスパネル
 
-    public int Setting { get; private set; }                // 台設定値
-    public bool LimitReached {  get; private set; }         // 打ち止めに達したか
-    public MainGameFlow MainFlow { get; private set; }      // ゲームステート用
+    public bool IsFirstLaunch { get; set; }                     // セーブをしないか
+    public int Setting { get; private set; }                    // 台設定値
+    public bool HasReachedLimitSpin {  get; private set; }      // 打ち止めに達したか
+    public MainGameFlow MainFlow { get; private set; }          // ゲームステート用
 
-    SaveManager saveManager;                                // セーブ機能
+    private SaveManager saveManager;                                // セーブ機能
 
     void Awake()
     {
-        InputManager = GetComponent<InputManager>();        // 操作
-        Screen = GetComponent<ScreenManager>();             // 画面
-        LotSetting = GetComponent<LotSettingManager>();     // 設定変更
-        Medal = GetComponent<MedalManager>();               // メダル管理
-        Lots = GetComponent<FlagLots>();                    // フラグ管理
-        Wait = GetComponent<WaitManager>();                 // ウェイト
-        Bonus = GetComponent<BonusManager>();               // ボーナス
-        Payout = GetComponent<PayoutManager>();             // 払い出し
-        MainFlow = new MainGameFlow(this);                  // メインフロー作成
-        Status = statusPanel;                               // ステータスパネル
-        Player = new PlayerDatabase();                      // プレイヤー情報
-        Auto = GetComponent<AutoManager>();                 // オート機能
-        saveManager = new SaveManager();                    // セーブ機能
+        InputManager = GetComponent<InputManager>();                // 操作
+        Screen = GetComponent<ScreenManager>();                     // 画面
+        InitialSetting = GetComponent<InitialSettingManager>();     // 初回起動
+        LotSetting = GetComponent<LotSettingManager>();             // 設定変更
+        Medal = GetComponent<MedalManager>();                       // メダル管理
+        Lots = GetComponent<FlagLots>();                            // フラグ管理
+        Wait = GetComponent<WaitManager>();                         // ウェイト
+        Bonus = GetComponent<BonusManager>();                       // ボーナス
+        Payout = GetComponent<PayoutManager>();                     // 払い出し
+        MainFlow = new MainGameFlow(this);                          // メインフロー作成
+        Status = statusPanel;                                       // ステータスパネル
+        Player = new PlayerDatabase();                              // プレイヤー情報
+        Auto = GetComponent<AutoManager>();                         // オート機能
+        saveManager = new SaveManager();                            // セーブ機能
 
-        LimitReached = false;
+        HasReachedLimitSpin = false;
+        IsFirstLaunch = false;
 
-        // イベント登録
         Option.AutoSettingChangedEvent += OnAutoSettingChanged;
         Option.OtherSettingChangedEvent += OnOtherSettingChanged;
+        Option.GameExitEvent += OnGameExit;
     }
 
     void Start()
@@ -92,45 +90,32 @@ public class GameManager : MonoBehaviour
         bool loadFailed = false;            // 読み込みに失敗したか
         bool playerLoadFailed = false;      // プレイヤーファイルのみ読み込みが失敗したか
 
-        if (deleteSaveFlag)
+        // セーブがない場合は新規にデータ作成
+        if (saveManager.GenerateSaveFolder())
         {
-            Debug.LogWarning("セーブを削除しました。");
-            saveManager.DeletePlayerSave();
+            loadFailed = true;
         }
-
-        if (!dontSaveFlag)
+        // 読み込みに失敗したら新規にデータを作成する
+        else if (!saveManager.LoadOptionSave())
         {
-            // セーブ読み込み。セーブがない場合は新規作成
-            // セーブフォルダの作成
-
-            // セーブがない場合は新規にデータ作成
-            if (saveManager.GenerateSaveFolder())
-            {
-                loadFailed = true;
-            }
-            // 読み込みに失敗したら新規にデータを作成する
-            else if (!saveManager.LoadOptionSave())
-            {
-                loadFailed = true;
-            }
-            else if (!saveManager.LoadPlayerSave())
-            {
-                playerLoadFailed = true;
-            }
+            loadFailed = true;
+        }
+        else if (!saveManager.LoadPlayerSave())
+        {
+            playerLoadFailed = true;
         }
 
         // 読み込みに失敗した場合はセーブを初期化
         if (loadFailed)
         {
-            Debug.LogWarning("セーブファイルが破損しています。全てのファイルをリセットしました。");
             OptionSave.InitializeSave();
             PlayerSave.InitializeSave();
             saveManager.DeleteOptionSave();
             saveManager.DeletePlayerSave();
+            IsFirstLaunch = true;
         }
         else if (playerLoadFailed)
         {
-            Debug.LogWarning("プレイヤーセーブの読み込みに失敗しました。新規にプレイします。");
             PlayerSave.InitializeSave();
             saveManager.DeletePlayerSave();
         }
@@ -144,20 +129,26 @@ public class GameManager : MonoBehaviour
         MainFlow.StateManager.StartState();
     }
 
+    void OnDestroy()
+    {
+        Option.GameExitEvent -= OnGameExit;
+    }
+
     void Update()
     {
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
-            if (!Option.HasOptionMode && !LotSetting.IsSettingChanging && !LimitReached)
+            if (!IsFirstLaunch && !Option.HasOptionMode && 
+                LotSetting.IsSettingChanging && !HasReachedLimitSpin)
             {
                 // 設定を反映する
-                Auto.CurrentSpeed = Option.GetAutoOptionData().CurrentSpeed;
-                Auto.CurrentStopOrder = Option.GetAutoOptionData().CurrentStopOrder;
-                Auto.BigLineUpSymbol = Option.GetAutoOptionData().BigLineUpSymbol;
-                Auto.HasTechnicalPlay = Option.GetAutoOptionData().HasTechnicalPlay;
-                Auto.EndConditionFlag = Option.GetAutoOptionData().EndConditionFlag;
-                Auto.SpinTimeCondition = Option.GetAutoOptionData().SpinConditionID;
+                Auto.CurrentSpeed = Option.AutoOptionData.CurrentSpeed;
+                Auto.CurrentStopOrder = Option.AutoOptionData.CurrentStopOrder;
+                Auto.BigLineUpSymbol = Option.AutoOptionData.BigLineUpSymbol;
+                Auto.HasTechnicalPlay = Option.AutoOptionData.HasTechnicalPlay;
+                Auto.EndConditionFlag = Option.AutoOptionData.EndConditionFlag;
+                Auto.SpinTimeCondition = Option.AutoOptionData.SpinConditionID;
 
                 Auto.ChangeAutoMode();
 
@@ -182,13 +173,40 @@ public class GameManager : MonoBehaviour
         // イベント登録解除
         Option.AutoSettingChangedEvent -= OnAutoSettingChanged;
 
-        // セーブ開始
-        if (!dontSaveFlag)
+        // セーブ開始(初回設定が完了している場合のみ)
+        if (!IsFirstLaunch)
         {
+            Debug.Log("PlayerDelete:" + Option.DeletePlayerSave);
+            Debug.Log("OptionDelete:" + Option.DeleteOptionSave);
             saveManager.GenerateSaveFolder();
-            saveManager.GeneratePlayerSave();
-            saveManager.GenerateOptionSave();
+
+            if (Option.DeleteOptionSave)
+            {
+                saveManager.DeleteOptionSave();
+                saveManager.DeletePlayerSave();
+            }
+            else
+            {
+                saveManager.GenerateOptionSave();
+                // プレイヤーセーブを消去する場合
+                if (Option.DeletePlayerSave)
+                {
+                    saveManager.DeletePlayerSave();
+                }
+                else
+                {
+                    saveManager.GeneratePlayerSave();
+                }
+            }
         }
+    }
+
+    // 初回設定の言語を設定する
+    public void SetFirstLaunchLanguage(LanguageOptionID language)
+    {
+        OptionSave.OtherOptionData.CurrentLanguage = language;
+        Option.LoadOtherSettingFromSave(OptionSave.OtherOptionData);
+        _ = ChangeLocale(Option.OtherOptionData.CurrentLanguage);
     }
 
     // 設定値変更
@@ -212,32 +230,35 @@ public class GameManager : MonoBehaviour
     {
         limitReachedScreen.gameObject.SetActive(true);
         limitReachedScreen.OpenScreen();
-        LimitReached = true;
+        HasReachedLimitSpin = true;
     }
 
     // 設定反映
     void ApplySetting()
     {
-        Effect.ChangeMusicVolume(Option.GetOtherOptionData().MusicVolumeSetting);
-        Effect.ChangeSoundVolume(Option.GetOtherOptionData().SoundVolumeSetting);
-        Screen.SetScreenSize(Option.GetOtherOptionData().ResolutionSetting);
-        Screen.SetCameraMode(Option.GetOtherOptionData().UseOrthographicCamera);
-        Reel.SetMiniReelVisible(Option.GetOtherOptionData().ShowMiniReelSetting);
-        Wait.SetWaitCutSetting(Option.GetOtherOptionData().HasWaitCut);
-        Reel.SetReelDelayVisible(Option.GetOtherOptionData().HasDelayDisplay);
-        Reel.SetReelMarkers(Option.GetOtherOptionData().AssistMarkerPos);
-        _ = ChangeLocale(Option.GetOtherOptionData().CurrentLanguage);
+        Effect.ChangeMusicVolume(Option.OtherOptionData.MusicVolumeSetting);
+        Effect.ChangeSoundVolume(Option.OtherOptionData.SoundVolumeSetting);
+        Screen.SetScreenSize(Option.OtherOptionData.ResolutionSetting);
+        Screen.SetCameraMode(Option.OtherOptionData.UseOrthographicCamera);
+        Reel.SetMiniReelVisible(Option.OtherOptionData.ShowMiniReelSetting);
+        Wait.SetWaitCutSetting(Option.OtherOptionData.HasWaitCut);
+        Reel.SetReelDelayVisible(Option.OtherOptionData.HasDelayDisplay);
+        Reel.SetReelMarkers(Option.OtherOptionData.AssistMarkerPos);
+        _ = ChangeLocale(Option.OtherOptionData.CurrentLanguage);
     }
 
-    // オート設定変更時の挙動
-    void OnAutoSettingChanged() => OptionSave.RecordAutoData(Option.GetAutoOptionData());
+    // オート設定変更時の処理
+    void OnAutoSettingChanged() => OptionSave.RecordAutoData(Option.AutoOptionData);
 
-    // その他設定変更時の挙動
+    // その他設定変更時の処理
     void OnOtherSettingChanged()
     {
-        OptionSave.RecordOtherData(Option.GetOtherOptionData());
+        OptionSave.RecordOtherData(Option.OtherOptionData);
         ApplySetting();
     }
+
+    // ゲーム終了時の処理
+    void OnGameExit() => Application.Quit();
 
     // 言語変更
     async Task ChangeLocale(LanguageOptionID languageID)

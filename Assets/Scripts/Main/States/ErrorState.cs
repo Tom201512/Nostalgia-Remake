@@ -16,9 +16,9 @@ namespace ReelSpinGame_State.InsertState
         {
             gM.Option.ToggleOptionLock(true);
             gM.Option.SetOpenButtonInteractive(false);
-            gM.LotSetting.OpenSettingSelect();
             gM.Effect.StartErrorEffect();
-            gM.LotSetting.OnSlotSettingChanged += OnSettingChanged;
+            gM.LotSetting.OpenSettingSelect();
+            gM.LotSetting.SlotSettingChangedEvent += OnSettingChanged;
         }
 
         public void StateUpdate()
@@ -30,7 +30,7 @@ namespace ReelSpinGame_State.InsertState
         {
             gM.Option.ToggleOptionLock(false);
             gM.Option.SetOpenButtonInteractive(true);
-            gM.LotSetting.OnSlotSettingChanged -= OnSettingChanged;
+            gM.LotSetting.SlotSettingChangedEvent -= OnSettingChanged;
             gM.Bonus.TurnOffSegments();
         }
 
