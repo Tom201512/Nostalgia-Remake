@@ -2,6 +2,7 @@ using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Reels;
+using ReelSpinGame_System;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -82,7 +83,8 @@ namespace ReelSpinGame_State.LotsState
                 // 払い出し後演出が終わったらメダル投入へ移行
                 else if (finishPayout && !gM.Effect.GetAfterPayoutEffectActivating())
                 {
-                    gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
+                    // 打ち止め状態を確認
+                    CheckReachedLimitSpins();
                 }
             }
         }
@@ -120,6 +122,21 @@ namespace ReelSpinGame_State.LotsState
             condition.BigType = gM.Bonus.GetBigChanceType();
             condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
             gM.Effect.StartBonusEffect(condition);
+        }
+
+        // 打ち止め回数に達したかチェック
+        void CheckReachedLimitSpins()
+        {
+            // 通常時であり現在トータルゲーム数が規定数に達したら操作不能にする
+            if(gM.Player.TotalGames >= PlayerDatabase.MaximumTotalGames && 
+                gM.Bonus.GetCurrentBonusStatus() == ReelSpinGame_Bonus.BonusSystemData.BonusStatus.BonusNone)
+            {
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.LimitReachedState);
+            }
+            else
+            {
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
+            }
         }
     }
 }

@@ -11,13 +11,14 @@ namespace ReelSpinGame_Sound
 
         [SerializeField] AudioSource[] sources;     // オーディオファイル
 
-        public bool HasSoundStopped { get; private set; }       // 再生が終了したか
-        public bool HasLockPlaying { get; private set; }        // 鳴らさないようにするか
+        public bool HasSoundStopped { get; private set; }           // 再生が終了したか
+        public bool HasLockPlaying { get; private set; }            // 鳴らさないようにするか
 
-        public bool HasLoop { get; private set; }               // ループしている音があるか
-        public int LoopStart { get; private set; }              // ループ開始位置
-        public int LoopLength { get; private set; }             // ループ長さ
-        public double LoopTime { get; private set; }            // ループ時の時間
+        public float CurrentVolume { get => sources[0].volume; }    // 現在のボリューム
+        public bool HasLoop { get; private set; }                   // ループしている音があるか
+        public int LoopStart { get; private set; }                  // ループ開始位置
+        public int LoopLength { get; private set; }                 // ループ長さ
+        public double LoopTime { get; private set; }                // ループ時の時間
 
         private int usingTrackIndex;        // 使用中のトラック
 

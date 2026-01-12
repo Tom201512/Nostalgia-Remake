@@ -449,6 +449,10 @@ MonoBehaviour:
     m_Localized: Setting:6 BIG:1/240.9 REG:1/356.2
     m_Metadata:
       m_Items: []
+  - m_Id: 20703214236917760
+    m_Localized: Reached a limit of spins.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -434,6 +434,10 @@ MonoBehaviour:
     m_Localized: Setting:6 BIG:1/240.9 REG:1/356.2
     m_Metadata:
       m_Items: []
+  - m_Id: 20703214236917760
+    m_Localized: "\u56DE\u8EE2\u6570\u306E\u4E0A\u9650\u306B\u9054\u3057\u307E\u3057\u305F\u3002"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

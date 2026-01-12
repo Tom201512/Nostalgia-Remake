@@ -7,9 +7,6 @@ using ReelSpinGame_State.PlayingState;
 // ゲーム状態の処理
 public class MainGameFlow
 {
-    //ゲーム状態シリアライズ
-    public enum GameStates { Init, Error, Insert, FlagLots, FakeReel, Wait, Playing, Payout, Effect }
-
     public StateManager StateManager { get; private set; }    // 現在のゲーム状態
 
     // ゲーム状態
@@ -22,6 +19,7 @@ public class MainGameFlow
     public PayoutState PayoutState { get; private set; }                // メダル払い出し
     public EffectState EffectState { get; private set; }                // 演出
     public ErrorState ErrorState { get; private set; }                  // エラー時
+    public ReachedLimitState LimitReachedState {  get; private set; }   // 打ち止め時
 
     public MainGameFlow(GameManager gameManager)
     {
@@ -34,6 +32,7 @@ public class MainGameFlow
         PayoutState = new PayoutState(gameManager);
         EffectState = new EffectState(gameManager);
         ErrorState = new ErrorState(gameManager);
+        LimitReachedState = new ReachedLimitState(gameManager);
         StateManager = new StateManager(InitState);
     }
 

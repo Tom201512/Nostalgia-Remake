@@ -1,5 +1,6 @@
 using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Reels;
+using ReelSpinGame_System;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -151,6 +152,15 @@ namespace ReelSpinGame_AutoPlay
             // 通常時に戻った場合はオート終了
             if ((EndConditionFlag & (byte)SpecificConditionFlag.EndBonus) == (byte)SpecificConditionFlag.EndBonus
                 && bonusStatusID == (int)BonusStatus.BonusNone)
+            {
+                FinishAutoForce();
+            }
+        }
+
+        // 規定ゲーム数到達によるオート終了チェック
+        public void CheckAutoEndByLimitReached(int totalGames)
+        {
+            if(totalGames >= PlayerDatabase.MaximumTotalGames)
             {
                 FinishAutoForce();
             }

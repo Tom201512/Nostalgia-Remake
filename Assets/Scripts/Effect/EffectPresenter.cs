@@ -1,10 +1,12 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data;
 using ReelSpinGame_Effect.Data.Condition;
+using ReelSpinGame_Reels;
 using ReelSpinGame_Reels.Effect;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ReelSpinGame_Effect
@@ -12,7 +14,8 @@ namespace ReelSpinGame_Effect
     // リールフラッシュやサウンドなどの演出管理
     public class EffectPresenter : MonoBehaviour
     {
-        const float maxVolume = 100f;
+        const float MaxVolume = 100f;                       // 最大ボリューム値
+        const float StartFadeoutTime = 60f;                 // フェードアウトを始める時間
 
         private ReelEffectManager reelEffectManager;        // リール演出マネージャー
         private FlashManager flashManager;                  // フラッシュ機能
@@ -27,7 +30,7 @@ namespace ReelSpinGame_Effect
         private AfterPayoutEffect afterPayoutEffect;        // 払い出し後
         private BonusEffect bonusEffect;                    // ボーナス中
 
-        private void Awake()
+        void Awake()
         {
             reelEffectManager = GetComponent<ReelEffectManager>();
             flashManager = GetComponent<FlashManager>();
@@ -40,6 +43,11 @@ namespace ReelSpinGame_Effect
             payoutEffect = GetComponent<PayoutEffect>();
             afterPayoutEffect = GetComponent<AfterPayoutEffect>();
             bonusEffect = GetComponent<BonusEffect>();
+        }
+
+        void OnDestroy()
+        {
+            StopAllCoroutines();
         }
 
         public bool GetHasFakeSpin() => reelEffectManager.HasFakeSpin;                  // 疑似遊技中か
@@ -81,9 +89,9 @@ namespace ReelSpinGame_Effect
         // ループしているBGMを止める
         public void StopLoopBGM() => soundManager.StopBGM();
         // SEボリューム変更 (0.0 ~ 1.0)
-        public void ChangeSoundVolume(float volume) => soundManager.ChangeSEVolume(Math.Clamp(volume / maxVolume, 0, 1));
+        public void ChangeSoundVolume(float volume) => soundManager.ChangeSEVolume(Math.Clamp(volume / MaxVolume, 0, 1));
         // BGMボリューム変更(0.0 ~ 1.0)
-        public void ChangeMusicVolume(float volume) => soundManager.ChangeBGMVolume(Math.Clamp(volume / maxVolume, 0, 1));
+        public void ChangeMusicVolume(float volume) => soundManager.ChangeBGMVolume(Math.Clamp(volume / MaxVolume, 0, 1));
 
         // オート機能時の効果音、音楽解除
         public void ChangeSoundSettingByAuto(bool hasAuto, AutoSpeedName autoSpeedID)
@@ -129,6 +137,29 @@ namespace ReelSpinGame_Effect
         public void StartBonusEffect(BonusEffectCondition condition) => bonusEffect.DoEffect(condition);
 
         // エラー時演出開始
-        public void StartErrorEffect() => soundManager.PlayBGM(soundManager.SoundDB.BGM.Error);
+        public void StartErrorEffect()
+        {
+            soundManager.StopBGM();
+            soundManager.PlayBGM(soundManager.SoundDB.BGM.Error);
+        }
+
+        // 打ち止め時演出開始
+        public void StartLimitReachedEffect()
+        {
+            soundManager.StopBGM();
+            soundManager.PlayBGM(soundManager.SoundDB.BGM.GameOver);
+            flashManager.ForceStopFlash();
+            flashManager.TurnOffAllReels();
+            StartCoroutine(nameof(GameOverBGMFadeout));
+        }
+
+        // 打ち止め時のサウンドをフェードアウトさせる
+        IEnumerator GameOverBGMFadeout()
+        {
+            yield return new WaitForSeconds(StartFadeoutTime);
+
+            // フェードアウト開始
+            soundManager.StartBGMFadeout();
+        }
     }
 }

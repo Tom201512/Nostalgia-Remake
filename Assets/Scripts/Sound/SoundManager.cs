@@ -1,14 +1,18 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Sound.BGM;
 using ReelSpinGame_Sound.SE;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReelSpinGame_Sound
 {
-    // サウンドマネージャー管理
+    // サウンド管理
     public class SoundManager : MonoBehaviour
     {
+        const float SoundFadeoutTime = 5.0f;                // フェードアウトさせるスパン
+
         [SerializeField] List<SoundPack> SoundDatabases;    // 使用候補のサウンドパック
         [SerializeField] SoundPlayer sePlayer;              // SE再生
         [SerializeField] SoundPlayer jinglePlayer;          // ジングル再生(短いBGM)
@@ -106,5 +110,22 @@ namespace ReelSpinGame_Sound
         public void ChangeMuteBGMPlayer(bool value) => bgmPlayer.ChangeMute(value);
         // SE再生不可切り替え
         public void ChangeLockSEPlayer(bool value) => sePlayer.ChangeLockPlaying(value);
+        // BGMフェードアウト
+        public void StartBGMFadeout() => StartCoroutine(nameof(UpdateFadeout));
+
+        // BGMフェードアウト開始
+        IEnumerator UpdateFadeout()
+        {
+            // フェードアウト開始
+            float fadeSpeed = Time.deltaTime / SoundFadeoutTime;
+
+            while (bgmPlayer.CurrentVolume > 0)
+            {
+                bgmPlayer.AdjustVolume(Math.Clamp(bgmPlayer.CurrentVolume - fadeSpeed, 0f, 1f));
+                yield return new WaitForEndOfFrame();
+            }
+
+            bgmPlayer.StopAudio();
+        }
     }
 }

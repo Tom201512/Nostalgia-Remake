@@ -2,6 +2,7 @@
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
 using ReelSpinGame_Reels;
+using ReelSpinGame_System;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
 
@@ -57,6 +58,8 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Auto.DecreaseAutoSpin();
                 // 差枚数のカウント(通常時のみ)
                 gM.Player.PlayerMedalData.CountCurrentSlumpGraph();
+                // 回転数が打ち止め規定数に達していたらオート終了
+                gM.Auto.CheckAutoEndByLimitReached(gM.Player.TotalGames);
             }
 
             // 小役成立回数の記録

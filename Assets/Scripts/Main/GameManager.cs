@@ -30,9 +30,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerUI playerUI;                             // プレイヤーUI
     [SerializeField] SlotDataScreen slotDataScreen;                 // スロット情報データ画面UI
     [SerializeField] StatusPanel statusPanel;                       // ステータスパネル
+    [SerializeField] LimitReachedScreen limitReachedScreen;         // 打ち止め時画面
 
-    [SerializeField] private bool dontSaveFlag;                 // <デバッグ用>セーブをしない
-    [SerializeField] private bool deleteSaveFlag;               // <デバッグ用> 開始時にセーブ消去
+    [SerializeField] private bool dontSaveFlag;                 // セーブをしない
+    [SerializeField] private bool deleteSaveFlag;               // 開始時にセーブ消去
 
     // 各種マネージャー
     public ScreenManager Screen { get; private set; }                   // 画面マネージャー
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     public StatusPanel Status { get; private set; }                                 // ステータスパネル
 
     public int Setting { get; private set; }                // 台設定値
+    public bool LimitReached {  get; private set; }         // 打ち止めに達したか
     public MainGameFlow MainFlow { get; private set; }      // ゲームステート用
 
     SaveManager saveManager;                                // セーブ機能
@@ -76,6 +78,8 @@ public class GameManager : MonoBehaviour
         Auto = GetComponent<AutoManager>();                 // オート機能
         saveManager = new SaveManager();                    // セーブ機能
 
+        LimitReached = false;
+
         // イベント登録
         Option.AutoSettingChangedEvent += OnAutoSettingChanged;
         Option.OtherSettingChangedEvent += OnOtherSettingChanged;
@@ -83,6 +87,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        limitReachedScreen.gameObject.SetActive(false);
+        
         bool loadFailed = false;            // 読み込みに失敗したか
         bool playerLoadFailed = false;      // プレイヤーファイルのみ読み込みが失敗したか
 
@@ -143,7 +149,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
-            if (!Option.HasOptionMode && !LotSetting.IsSettingChanging)
+            if (!Option.HasOptionMode && !LotSetting.IsSettingChanging && !LimitReached)
             {
                 // 設定を反映する
                 Auto.CurrentSpeed = Option.GetAutoOptionData().CurrentSpeed;
@@ -199,6 +205,14 @@ public class GameManager : MonoBehaviour
         }
 
         saveManager.PlayerSaveData.Setting = Setting;
+    }
+
+    // 打ち止めにする
+    public void SetLimitReached()
+    {
+        limitReachedScreen.gameObject.SetActive(true);
+        limitReachedScreen.OpenScreen();
+        LimitReached = true;
     }
 
     // 設定反映

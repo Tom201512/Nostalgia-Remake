@@ -1,6 +1,7 @@
 ﻿using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
+using ReelSpinGame_System;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
 
@@ -123,10 +124,10 @@ namespace ReelSpinGame_State.LotsState
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
             }
 
-            // 回転数が99999Gに達していたらエラーにする
-            else if (gM.PlayerSave.Player.TotalGames == MaxRecordPayout)
+            // 回転数が規定数に達していたらエラーにする
+            else if (gM.PlayerSave.Player.TotalGames >= PlayerDatabase.MaximumTotalGames)
             {
-                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.LimitReachedState);
             }
 
             // それ以外問題がなければ投入ステートへ

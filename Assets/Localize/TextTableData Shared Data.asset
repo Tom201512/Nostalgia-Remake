@@ -431,6 +431,10 @@ MonoBehaviour:
     m_Key: SettingSelect6
     m_Metadata:
       m_Items: []
+  - m_Id: 20703214236917760
+    m_Key: ReachedLimitText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

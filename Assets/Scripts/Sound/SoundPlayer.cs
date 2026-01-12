@@ -6,9 +6,9 @@ namespace ReelSpinGame_Sound
     // 効果音再生
     public class SoundPlayer : MonoBehaviour
     {
-        public bool HasSoundStopped { get; private set; }       // 再生が終了したか
-        public bool HasLoop { get; private set; }               // ループしている音があるか
-        public bool HasLockPlaying;                             // 鳴らさないようにするか
+        public bool HasSoundStopped { get; private set; }               // 再生が終了したか
+        public bool HasLoop { get; private set; }                       // ループしている音があるか
+        public bool HasLockPlaying;                                     // 鳴らさないようにするか
 
         private AudioSource audioSource;        // 鳴らさないようにするか
 
