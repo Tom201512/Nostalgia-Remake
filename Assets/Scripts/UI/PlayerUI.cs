@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace ReelSpinGame_UI.Player
 {
-    public class PlayerUI : UIBaseClass
+    // プレイヤーのUI
+    public class PlayerUI : MonoBehaviour
     {
-
         [SerializeField] private GamesInfoUI gamesInfoUI;        // ゲーム数表示用
         [SerializeField] private MedalInfoUI medalInfoUI;        // メダル枚数表示用 
         [SerializeField] private BonusInfoUI bonusInfoUI;        // ボーナス当選回数表示用

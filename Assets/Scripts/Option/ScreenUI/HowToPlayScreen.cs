@@ -26,8 +26,8 @@ namespace ReelSpinGame_Option.MenuContent
         public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
         // 画面を閉じたときのイベント
-        public delegate void OnClosedScreen();
-        public event OnClosedScreen OnClosedScreenEvent;
+        public delegate void ClosedScreen();
+        public event ClosedScreen ClosedScreenEvent;
 
         private int currentPage;            // 表示中のページ番号
         private CanvasGroup canvasGroup;    // フェードイン、アウト用
@@ -35,9 +35,9 @@ namespace ReelSpinGame_Option.MenuContent
         void Awake()
         {
             currentPage = 0;
-            closeButton.OnButtonPushedEvent += OnClosedPressed;
-            nextButton.OnButtonPushedEvent += OnNextPushed;
-            previousButton.OnButtonPushedEvent += OnPreviousPushed;
+            closeButton.ButtonPushedEvent += OnClosedPressed;
+            nextButton.ButtonPushedEvent += OnNextPushed;
+            previousButton.ButtonPushedEvent += OnPreviousPushed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -49,9 +49,9 @@ namespace ReelSpinGame_Option.MenuContent
         void OnDestroy()
         {
             StopAllCoroutines();
-            closeButton.OnButtonPushedEvent -= OnClosedPressed;
-            nextButton.OnButtonPushedEvent -= OnNextPushed;
-            previousButton.OnButtonPushedEvent -= OnPreviousPushed;
+            closeButton.ButtonPushedEvent -= OnClosedPressed;
+            nextButton.ButtonPushedEvent -= OnNextPushed;
+            previousButton.ButtonPushedEvent -= OnPreviousPushed;
         }
 
         // 画面表示&初期化
@@ -145,7 +145,7 @@ namespace ReelSpinGame_Option.MenuContent
                 yield return new WaitForEndOfFrame();
             }
 
-            OnClosedScreenEvent?.Invoke();
+            ClosedScreenEvent?.Invoke();
         }
     }
 }

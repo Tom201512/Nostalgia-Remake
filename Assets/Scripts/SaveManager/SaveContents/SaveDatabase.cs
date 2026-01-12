@@ -19,7 +19,7 @@ namespace ReelSpinGame_Save.Database
 
         public SaveDatabase()
         {
-            Setting = 6;
+            Setting = -1;
             Player = new PlayerSave();
             Medal = new MedalSave();
             FlagCounter = 0;
@@ -37,7 +37,7 @@ namespace ReelSpinGame_Save.Database
             LastReelDelay = null;
             Bonus = null;
 
-            Setting = 6;
+            Setting = -1;
             Player = new PlayerSave();
             Medal = new MedalSave();
             FlagCounter = 0;

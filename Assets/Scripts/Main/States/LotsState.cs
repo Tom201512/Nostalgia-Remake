@@ -10,13 +10,10 @@ namespace ReelSpinGame_State.LotsState
     // 抽選ステート
     public class LotsState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }   // ステート名
-
         private GameManager gM;        // ゲームマネージャ
 
         public LotsState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.FlagLots;
             gM = gameManager;
         }
 

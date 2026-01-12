@@ -5,13 +5,10 @@ namespace ReelSpinGame_State.PlayingState
     // 疑似遊技ステート
     public class FakeReelSpinState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }   // ステート名
-
         private GameManager gM;     // ゲームマネージャ
 
         public FakeReelSpinState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.FakeReel;
             gM = gameManager;
         }
 

@@ -11,7 +11,7 @@ namespace ReelSpinGame_UI.Reel
 
         // リール図柄が選択された時のイベント
         public delegate void ArraySymbolSelected();
-        public event ArraySymbolSelected OnArraySymbolSelected;
+        public event ArraySymbolSelected ArraySymbolSelectedEvent;
 
         private ButtonComponent[] buttons;      // 各種ボタン
 
@@ -24,7 +24,7 @@ namespace ReelSpinGame_UI.Reel
             // ボタン登録
             foreach (ButtonComponent button in buttons)
             {
-                button.OnButtonPushedEvent += OnReelSymbolPressed;
+                button.ButtonPushedEvent += OnReelSymbolPressed;
             }
         }
 
@@ -33,7 +33,7 @@ namespace ReelSpinGame_UI.Reel
             // ボタン登録
             foreach (ButtonComponent button in buttons)
             {
-                button.OnButtonPushedEvent -= OnReelSymbolPressed;
+                button.ButtonPushedEvent -= OnReelSymbolPressed;
             }
         }
 
@@ -58,7 +58,7 @@ namespace ReelSpinGame_UI.Reel
         {
             CurrentSelectPos = signalID;
             UpdateCursor();
-            OnArraySymbolSelected?.Invoke();
+            ArraySymbolSelectedEvent?.Invoke();
         }
 
         // カーソル位置を更新

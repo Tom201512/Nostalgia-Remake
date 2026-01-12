@@ -8,7 +8,7 @@ using ReelSpinGame_State.PlayingState;
 public class MainGameFlow
 {
     //ゲーム状態シリアライズ
-    public enum GameStates { Init, Insert, FlagLots, FakeReel, Wait, Playing, Payout, Effect }
+    public enum GameStates { Init, Error, Insert, FlagLots, FakeReel, Wait, Playing, Payout, Effect }
 
     public StateManager StateManager { get; private set; }    // 現在のゲーム状態
 
@@ -21,6 +21,7 @@ public class MainGameFlow
     public PlayingState PlayingState { get; private set; }              // リール回転(プレイ中)
     public PayoutState PayoutState { get; private set; }                // メダル払い出し
     public EffectState EffectState { get; private set; }                // 演出
+    public ErrorState ErrorState { get; private set; }                  // エラー時
 
     public MainGameFlow(GameManager gameManager)
     {
@@ -32,7 +33,7 @@ public class MainGameFlow
         PlayingState = new PlayingState(gameManager);
         PayoutState = new PayoutState(gameManager);
         EffectState = new EffectState(gameManager);
-
+        ErrorState = new ErrorState(gameManager);
         StateManager = new StateManager(InitState);
     }
 

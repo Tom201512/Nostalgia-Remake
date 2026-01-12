@@ -19,9 +19,9 @@ namespace ReelSpinGame_Option
         [SerializeField] AutoPlaySettingScreen autoPlaySettingScreen;   // オートプレイ
         [SerializeField] OtherSettingScreen otherSettingScreen;         // その他設定
 
-        public bool hasOptionScreen { get; private set; }       // オプション画面を開いているか(UIボタンの表示に使用する)
-        public bool hasOptionMode { get; private set; }         // 設定変更中か(ゲームの操作ができなくなる)
-        public bool lockOptionMode { get; private set; }        // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
+        public bool HasOptionScreen { get; private set; }       // オプション画面を開いているか(UIボタンの表示に使用する)
+        public bool HasOptionMode { get; private set; }         // 設定変更中か(ゲームの操作ができなくなる)
+        public bool LockOptionMode { get; private set; }        // 設定が開けない状態か(リール回転中やオート実行中は設定を開けない)
 
         // 設定変更時のイベント
         // オート設定
@@ -34,14 +34,14 @@ namespace ReelSpinGame_Option
 
         void Awake()
         {
-            hasOptionScreen = false;
-            hasOptionMode = false;
-            lockOptionMode = false;
+            HasOptionScreen = false;
+            HasOptionMode = false;
+            LockOptionMode = false;
 
             // イベント登録
-            openButton.OnButtonPushedEvent += ToggleOptionScreen;
-            menuBarUI.OnPressedMenuEvent += EnterOptionMode;
-            menuBarUI.OnClosedScreenEvent += DisableOptionMode;
+            openButton.ButtonPushedEvent += ToggleOptionScreen;
+            menuBarUI.PressedMenuEvent += EnterOptionMode;
+            menuBarUI.ClosedScreenEvent += DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent += OnAutoSettingChanged;
             otherSettingScreen.SettingChangedEvent += OnOtherSettingChanged;
         }
@@ -55,9 +55,9 @@ namespace ReelSpinGame_Option
         void OnDestroy()
         {
             // イベント登録解除
-            openButton.OnButtonPushedEvent -= ToggleOptionScreen;
-            menuBarUI.OnPressedMenuEvent -= EnterOptionMode;
-            menuBarUI.OnClosedScreenEvent -= DisableOptionMode;
+            openButton.ButtonPushedEvent -= ToggleOptionScreen;
+            menuBarUI.PressedMenuEvent -= EnterOptionMode;
+            menuBarUI.ClosedScreenEvent -= DisableOptionMode;
             autoPlaySettingScreen.SettingChangedEvent -= OnAutoSettingChanged;
             otherSettingScreen.SettingChangedEvent -= OnOtherSettingChanged;
         }
@@ -78,10 +78,14 @@ namespace ReelSpinGame_Option
             }
         }
 
+        // メニュー開閉ボタンのロック
+        public void SetOpenButtonInteractive(bool value) => openButton.ToggleInteractive(value);
+
         // 設定変更のロック
         public void ToggleOptionLock(bool value)
         {
-            lockOptionMode = value;
+            LockOptionMode = value;
+            menuBarUI.HasOptionLock = value;
             menuBarUI.SetInteractiveAllButton(!value);
         }
 
@@ -108,14 +112,14 @@ namespace ReelSpinGame_Option
         // オプションモードに入れる
         void EnterOptionMode()
         {
-            hasOptionMode = true;
+            HasOptionMode = true;
             openButton.ToggleInteractive(false);
         }
 
         // オプションモード解除
         void DisableOptionMode()
         {
-            hasOptionMode = false;
+            HasOptionMode = false;
             openButton.ToggleInteractive(true);
         }
 

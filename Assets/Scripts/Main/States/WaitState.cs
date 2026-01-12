@@ -6,12 +6,10 @@ namespace ReelSpinGame_State.LotsState
     // ウェイト状態ステート
     public class WaitState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }        // ステート名
         private GameManager gM;                              // ゲームマネージャ
 
         public WaitState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.Wait;
             gM = gameManager;
         }
 

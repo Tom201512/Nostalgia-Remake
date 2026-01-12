@@ -26,7 +26,7 @@ namespace ReelSpinGame_Option.Components
         /// </summary>
         /// <param name="signalID">信号番号</param>
         public delegate void ButtonPushed(int signalID);
-        public event ButtonPushed OnButtonPushedEvent;
+        public event ButtonPushed ButtonPushedEvent;
 
         // 長押し時のイベント
         /// <summary>
@@ -34,7 +34,7 @@ namespace ReelSpinGame_Option.Components
         /// </summary>
         /// <param name="signalID">信号番号</param>
         public delegate void ButtonHold(int signalID);
-        public event ButtonHold OnButtonHoldEvent;
+        public event ButtonHold ButtonHoldEvent;
 
         bool isCheckingHolding;      // 長押しを計っているか
 
@@ -72,7 +72,7 @@ namespace ReelSpinGame_Option.Components
             {
                 if (eventData.button == 0)
                 {
-                    OnButtonPushedEvent?.Invoke(signalID);
+                    ButtonPushedEvent?.Invoke(signalID);
                     StartCoroutine(nameof(CheckHoldingTime));
                     ChangeButtonContentColor(new Color(0.5f, 0.5f, 0.5f, 1f));
                 }
@@ -130,7 +130,7 @@ namespace ReelSpinGame_Option.Components
                 holdingTimes += Time.deltaTime;
                 if (holdingTimes >= targetTime)
                 {
-                    OnButtonHoldEvent?.Invoke(signalID);
+                    ButtonHoldEvent?.Invoke(signalID);
                     targetTime += HoldingInvokeSpan;
                 }
                 yield return new WaitForEndOfFrame();

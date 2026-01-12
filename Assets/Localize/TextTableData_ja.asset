@@ -402,6 +402,38 @@ MonoBehaviour:
     m_Localized: "\u30DE\u30FC\u30AB\u30FC\u3092\u8868\u793A\u3059\u308B\u4F4D\u7F6E\u3092\n\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
     m_Metadata:
       m_Items: []
+  - m_Id: 20342396743901184
+    m_Localized: "\u53F0\u8A2D\u5B9A\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608179512336384
+    m_Localized: Setting:? BIG:1/???.? REG:1/???.?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608415706177536
+    m_Localized: Setting:1 BIG:1/282.5 REG:1/455.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608417430036480
+    m_Localized: Setting:2 BIG:1/273.1 REG:1/431.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608419812401152
+    m_Localized: Setting:3 BIG:1/264.3 REG:1/420.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608421225881600
+    m_Localized: Setting:4 BIG:1/256.0 REG:1/409.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608422450618368
+    m_Localized: Setting:5 BIG:1/244.5 REG:1/381.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608423440474112
+    m_Localized: Setting:6 BIG:1/240.9 REG:1/356.2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

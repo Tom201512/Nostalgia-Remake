@@ -399,6 +399,38 @@ MonoBehaviour:
     m_Key: WinningPatternTitle
     m_Metadata:
       m_Items: []
+  - m_Id: 20342396743901184
+    m_Key: SettingSelectorText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608179512336384
+    m_Key: SettingSelectRandom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608415706177536
+    m_Key: SettingSelect1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608417430036480
+    m_Key: SettingSelect2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608419812401152
+    m_Key: SettingSelect3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608421225881600
+    m_Key: SettingSelect4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608422450618368
+    m_Key: SettingSelect5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20608423440474112
+    m_Key: SettingSelect6
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

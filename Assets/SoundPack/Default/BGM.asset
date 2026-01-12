@@ -19,3 +19,5 @@ MonoBehaviour:
   blackBGM: {fileID: 11400000, guid: a7a51ef86eefb5e49a2b8db35a446dd5, type: 2}
   blackJAC: {fileID: 11400000, guid: fd510d7356662184fa6a3cc9ce5266c8, type: 2}
   regJAC: {fileID: 11400000, guid: fd510d7356662184fa6a3cc9ce5266c8, type: 2}
+  error: {fileID: 11400000, guid: ff9739d45f2367d4e937e8fda76c8679, type: 2}
+  gameover: {fileID: 11400000, guid: 65c50519e38bb464590f969a1f06dbda, type: 2}

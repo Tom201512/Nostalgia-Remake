@@ -15,20 +15,11 @@ namespace ReelSpinGame_Lamps
         // セグメント位置のID
         enum DigitID
         {
-            JacDigit,
-            JacHitDigit,
-            BarDigit,
-            GamesSecondDigit,
-            GamesFirstDigit
-        }
-        // 数字位置のID
-        enum DigitNumID
-        {
             First,
             Second,
             Third,
             Fourth,
-            Fifth
+            Fifth,
         }
 
         public int TotalPayoutValue { get; private set; }   // ボーナスの獲得枚数
@@ -86,6 +77,9 @@ namespace ReelSpinGame_Lamps
             StopAllCoroutines();
         }
 
+        // エラー状態を表示
+        public void StartDisplayError() => StartCoroutine(nameof(UpdateError));
+
         // ボーナス状態を表示
         void ShowSegmentByNumber(int leftSegmentsValue, int rightSegmentsValue)
         {
@@ -94,11 +88,11 @@ namespace ReelSpinGame_Lamps
             rightSegmentsValue = Math.Clamp(rightSegmentsValue, 0, 99);
 
             // JAC部分の桁数を表示
-            segments[(int)DigitID.JacDigit].TurnOnJAC();
-            segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(leftSegmentsValue);
+            segments[(int)DigitID.First].TurnOnJAC();
+            segments[(int)DigitID.Second].TurnOnLampByNumber(leftSegmentsValue);
 
             // ハイフン
-            segments[(int)DigitID.BarDigit].TurnOnBar();
+            segments[(int)DigitID.Third].TurnOnBar();
 
             // ゲーム数表示(BIG残りゲーム数/JAC残り当選回数)
             // 桁数を得る
@@ -106,8 +100,8 @@ namespace ReelSpinGame_Lamps
             int FirstDigit = GetDigitValue(rightSegmentsValue, 1);
 
             // セグメントに反映
-            segments[(int)DigitID.GamesFirstDigit].TurnOnLampByNumber(FirstDigit);
-            segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(SecondDigit);
+            segments[(int)DigitID.Fifth].TurnOnLampByNumber(FirstDigit);
+            segments[(int)DigitID.Fourth].TurnOnLampByNumber(SecondDigit);
         }
 
         // 獲得枚数を表示
@@ -130,46 +124,56 @@ namespace ReelSpinGame_Lamps
                 // 5桁目がある場合
                 if (digits.Count == 5)
                 {
-                    segments[(int)DigitID.JacDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Fifth]);
+                    segments[(int)DigitID.First].TurnOnLampByNumber(digits[(int)DigitID.Fifth]);
                 }
                 else
                 {
-                    segments[(int)DigitID.JacDigit].TurnOffAll();
+                    segments[(int)DigitID.First].TurnOffAll();
                 }
 
-                segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Fourth]);
-                segments[(int)DigitID.BarDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Third]);
-                segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Second]);
-                segments[(int)DigitID.GamesFirstDigit].TurnOnLampByNumber(digits[(int)DigitNumID.First]);
+                segments[(int)DigitID.Second].TurnOnLampByNumber(digits[(int)DigitID.Fourth]);
+                segments[(int)DigitID.Third].TurnOnLampByNumber(digits[(int)DigitID.Third]);
+                segments[(int)DigitID.Fourth].TurnOnLampByNumber(digits[(int)DigitID.Second]);
+                segments[(int)DigitID.Fifth].TurnOnLampByNumber(digits[(int)DigitID.First]);
             }
             // 3桁の場合は真ん中3桁に表示(ない場合は0埋めをする)
             else
             {
-                segments[(int)DigitID.JacDigit].TurnOnBar();
+                segments[(int)DigitID.First].TurnOnBar();
 
                 // 3桁ない場合は0を表示
                 if (digits.Count >= 3)
                 {
-                    segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Third]);
+                    segments[(int)DigitID.Second].TurnOnLampByNumber(digits[(int)DigitID.Third]);
                 }
                 else
                 {
-                    segments[(int)DigitID.JacHitDigit].TurnOnLampByNumber(0);
+                    segments[(int)DigitID.Second].TurnOnLampByNumber(0);
                 }
 
                 // 2桁ない場合は0を表示
                 if (digits.Count >= 2)
                 {
-                    segments[(int)DigitID.BarDigit].TurnOnLampByNumber(digits[(int)DigitNumID.Second]);
+                    segments[(int)DigitID.Third].TurnOnLampByNumber(digits[(int)DigitID.Second]);
                 }
                 else
                 {
-                    segments[(int)DigitID.BarDigit].TurnOnLampByNumber(0);
+                    segments[(int)DigitID.Third].TurnOnLampByNumber(0);
                 }
 
-                segments[(int)DigitID.GamesSecondDigit].TurnOnLampByNumber(digits[(int)DigitNumID.First]);
-                segments[(int)DigitID.GamesFirstDigit].TurnOnBar();
+                segments[(int)DigitID.Fourth].TurnOnLampByNumber(digits[(int)DigitID.First]);
+                segments[(int)DigitID.Fifth].TurnOnBar();
             }
+        }
+
+        // エラーを表示
+        void ShowErrorSegment()
+        {
+            segments[(int)DigitID.First].TurnOnBar();
+            segments[(int)DigitID.Second].TurnOnE();
+            segments[(int)DigitID.Third].TurnOnR();
+            segments[(int)DigitID.Fourth].TurnOnR();
+            segments[(int)DigitID.Fifth].TurnOnBar();
         }
 
         // 獲得枚数を点滅させる
@@ -189,6 +193,21 @@ namespace ReelSpinGame_Lamps
                     ShowTotalPayout(TotalPayoutValue);
                 }
 
+                yield return new WaitForSeconds(PayoutSegFlashTime);
+                TurnOffAllSegments();
+                yield return new WaitForSeconds(PayoutSegFlashTime);
+            }
+        }
+
+        // エラー部分を点滅させる
+        IEnumerator UpdateError()
+        {
+            IsDisplaying = true;
+            StartCoroutine(nameof(ChangeShowType));
+
+            while (IsDisplaying)
+            {
+                ShowErrorSegment();
                 yield return new WaitForSeconds(PayoutSegFlashTime);
                 TurnOffAllSegments();
                 yield return new WaitForSeconds(PayoutSegFlashTime);

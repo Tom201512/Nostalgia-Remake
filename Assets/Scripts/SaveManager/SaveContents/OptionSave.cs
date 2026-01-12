@@ -77,37 +77,19 @@ namespace ReelSpinGame_Save.Database
 
             // その他設定
             data.Add(OtherOptionData.MusicVolumeSetting);
-            Debug.Log("MusicVol:" + OtherOptionData.MusicVolumeSetting);
-
             data.Add(OtherOptionData.SoundVolumeSetting);
-            Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
-
             data.Add((int)OtherOptionData.ResolutionSetting);
-            Debug.Log("Resolution:" + (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID),
-                OtherOptionData.ResolutionSetting));
-
             data.Add(OtherOptionData.UseOrthographicCamera ? 1 : 0);
-            Debug.Log("2Dmode:" + OtherOptionData.UseOrthographicCamera);
-
             data.Add(OtherOptionData.ShowMiniReelSetting ? 1 : 0);
-            Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
-            // マーカー位置記録
             foreach (int i in OtherOptionData.AssistMarkerPos)
             {
                 data.Add(i);
-                Debug.Log("Marker:" + i);
             }
 
             data.Add(OtherOptionData.HasWaitCut ? 1 : 0);
-            Debug.Log("WaitCut:" + OtherOptionData.HasWaitCut);
-
             data.Add(OtherOptionData.HasDelayDisplay ? 1 : 0);
-            Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
-
             data.Add((int)OtherOptionData.CurrentLanguage);
-            Debug.Log("Language:" + (LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID),
-                OtherOptionData.CurrentLanguage));
 
             return data;
         }
@@ -132,35 +114,19 @@ namespace ReelSpinGame_Save.Database
 
                 // その他設定
                 OtherOptionData.MusicVolumeSetting = br.ReadInt32();
-                Debug.Log("MusicVol:" + OtherOptionData.MusicVolumeSetting);
-
                 OtherOptionData.SoundVolumeSetting = br.ReadInt32();
-                Debug.Log("SoundVol:" + OtherOptionData.SoundVolumeSetting);
-
                 OtherOptionData.ResolutionSetting = (ResolutionOptionID)Enum.ToObject(typeof(ResolutionOptionID), br.ReadInt32());
-                Debug.Log("Resolution:" + OtherOptionData.ResolutionSetting);
-
-                Debug.Log("2Dmode:" + OtherOptionData.UseOrthographicCamera);
-
                 OtherOptionData.UseOrthographicCamera = br.ReadInt32() == 1 ? true : false;
-
                 OtherOptionData.ShowMiniReelSetting = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("MiniReel:" + OtherOptionData.ShowMiniReelSetting);
 
                 for (int i = 0; i < ReelAmount; i++)
                 {
                     OtherOptionData.AssistMarkerPos[i] = br.ReadInt32();
-                    Debug.Log("Marker [" + i + "]:" + OtherOptionData.AssistMarkerPos[i]);
                 }
 
                 OtherOptionData.HasWaitCut = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("WaitCut:" + OtherOptionData.HasWaitCut);
-
                 OtherOptionData.HasDelayDisplay = br.ReadInt32() == 1 ? true : false;
-                Debug.Log("DelayDisplay:" + OtherOptionData.HasDelayDisplay);
-
                 OtherOptionData.CurrentLanguage = (LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID), br.ReadInt32());
-                Debug.Log("Language:" + OtherOptionData.CurrentLanguage);
             }
             catch (Exception e)
             {

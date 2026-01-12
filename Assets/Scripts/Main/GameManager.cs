@@ -9,10 +9,14 @@ using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_Payout;
 using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database;
+using ReelSpinGame_Save.Database.Option;
 using ReelSpinGame_System;
+using ReelSpinGame_System.Setting;
 using ReelSpinGame_UI.Player;
-using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 // ゲームの管理
 public class GameManager : MonoBehaviour
@@ -30,10 +34,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool dontSaveFlag;                 // <デバッグ用>セーブをしない
     [SerializeField] private bool deleteSaveFlag;               // <デバッグ用> 開始時にセーブ消去
 
-    [Range(0, 6), SerializeField] private int debugSetting;         // デバッグ用設定値
-
     // 各種マネージャー
-    public ScreenManager Screen { get; private set; }            // 画面マネージャー
+    public ScreenManager Screen { get; private set; }                   // 画面マネージャー
+    public LotSettingManager LotSetting { get; private set; }           // 設定変更
     public InputManager InputManager { get; private set; }              // 入力マネージャー
     public MedalManager Medal { get; private set; }                     // メダルマネージャー
     public FlagLots Lots { get; private set; }                          // フラグ抽選マネージャー
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         InputManager = GetComponent<InputManager>();        // 操作
         Screen = GetComponent<ScreenManager>();             // 画面
+        LotSetting = GetComponent<LotSettingManager>();     // 設定変更
         Medal = GetComponent<MedalManager>();               // メダル管理
         Lots = GetComponent<FlagLots>();                    // フラグ管理
         Wait = GetComponent<WaitManager>();                 // ウェイト
@@ -117,21 +121,18 @@ public class GameManager : MonoBehaviour
             PlayerSave.InitializeSave();
             saveManager.DeleteOptionSave();
             saveManager.DeletePlayerSave();
-            PlayerSave.Setting = debugSetting;
         }
         else if (playerLoadFailed)
         {
             Debug.LogWarning("プレイヤーセーブの読み込みに失敗しました。新規にプレイします。");
             PlayerSave.InitializeSave();
             saveManager.DeletePlayerSave();
-            PlayerSave.Setting = debugSetting;
         }
 
         // オプション画面へ情報を送る
         slotDataScreen.SendData(Player);
         Option.LoadAutoSettingFromSave(OptionSave.AutoOptionData);
         Option.LoadOtherSettingFromSave(OptionSave.OtherOptionData);
-        ApplySetting();
 
         // ステート開始
         MainFlow.StateManager.StartState();
@@ -142,7 +143,7 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
-            if (!Option.hasOptionMode)
+            if (!Option.HasOptionMode && !LotSetting.IsSettingChanging)
             {
                 // 設定を反映する
                 Auto.CurrentSpeed = Option.GetAutoOptionData().CurrentSpeed;
@@ -187,20 +188,17 @@ public class GameManager : MonoBehaviour
     // 設定値変更
     public void ChangeSetting(int setting)
     {
-        // 例外処理
-        if (setting < 0 && setting > 6)
-        {
-            throw new Exception("Invalid Setting, must be within 0~6");
-        }
         // 0ならランダムを選ぶ
-        else if (setting == 0)
+        if (setting == 0)
         {
-            Setting = UnityEngine.Random.Range(1, MaxSlotSetting + 1);
+            Setting = Random.Range(1, MaxSlotSetting + 1);
         }
         else
         {
             Setting = setting;
         }
+
+        saveManager.PlayerSaveData.Setting = Setting;
     }
 
     // 設定反映
@@ -214,6 +212,7 @@ public class GameManager : MonoBehaviour
         Wait.SetWaitCutSetting(Option.GetOtherOptionData().HasWaitCut);
         Reel.SetReelDelayVisible(Option.GetOtherOptionData().HasDelayDisplay);
         Reel.SetReelMarkers(Option.GetOtherOptionData().AssistMarkerPos);
+        _ = ChangeLocale(Option.GetOtherOptionData().CurrentLanguage);
     }
 
     // オート設定変更時の挙動
@@ -224,5 +223,28 @@ public class GameManager : MonoBehaviour
     {
         OptionSave.RecordOtherData(Option.GetOtherOptionData());
         ApplySetting();
+    }
+
+    // 言語変更
+    async Task ChangeLocale(LanguageOptionID languageID)
+    {
+        switch (languageID)
+        {
+            case LanguageOptionID.Japanese:
+                if (LocalizationSettings.SelectedLocale.Identifier.Code != "ja")
+                {
+                    LocalizationSettings.SelectedLocale = Locale.CreateLocale("ja");
+                }
+                break;
+
+            case LanguageOptionID.English:
+                if (LocalizationSettings.SelectedLocale.Identifier.Code != "en")
+                {
+                    LocalizationSettings.SelectedLocale = Locale.CreateLocale("en");
+                }
+                break;
+        }
+
+        await LocalizationSettings.InitializationOperation.Task;
     }
 }

@@ -10,7 +10,6 @@ namespace ReelSpinGame_State.PlayingState
     // 遊技中ステート
     public class PlayingState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }       // ステート名
         private GameManager gM;                             // ゲームマネージャ
 
         private bool hasInput;                              // キー入力があったか
@@ -18,7 +17,6 @@ namespace ReelSpinGame_State.PlayingState
         public PlayingState(GameManager gameManager)
         {
             hasInput = false;
-            State = MainGameFlow.GameStates.Playing;
             gM = gameManager;
         }
 

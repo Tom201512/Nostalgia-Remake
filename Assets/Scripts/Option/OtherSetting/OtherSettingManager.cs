@@ -28,39 +28,39 @@ namespace ReelSpinGame_Option.OtherSetting
         public OtherOptionData CurrentOptionData { get; private set; }   // 現在の設定
 
         // 設定が変更された時のイベント
-        public delegate void OnSettingChanged();
-        public event OnSettingChanged OnSettingChangedEvent;
+        public delegate void SettingChanged();
+        public event SettingChanged SettingChangeEvent;
 
         void Awake()
         {
             CurrentOptionData = new OtherOptionData();
 
             // 設定変更時の処理登録
-            musicVolumeChanger.OnSliderValueChanged += UpdateOptionData;
-            soundVolumeChanger.OnSliderValueChanged += UpdateOptionData;
+            musicVolumeChanger.SliderValueChangedEvent += UpdateOptionData;
+            soundVolumeChanger.SliderValueChangedEvent += UpdateOptionData;
             resolutionSelect.ContentChangedEvent += UpdateOptionData;
             cameraSelect.ContentChangedEvent += UpdateOptionData;
             miniReelSelect.ContentChangedEvent += UpdateOptionData;
             waitCutSelect.ContentChangedEvent += UpdateOptionData;
             showDelaySelect.ContentChangedEvent += UpdateOptionData;
             reelMarkerSelect.SettingChangedEvent += UpdateOptionData;
-            //languageJPN.ContentChangedEvent += UpdateOptionData;
-            //languageENG.ContentChangedEvent += UpdateOptionData;
+            languageJPN.ButtonPushedEvent += OnLanguageChanged;
+            languageENG.ButtonPushedEvent += OnLanguageChanged;
         }
 
         void OnDestroy()
         {
             // 設定変更時の処理登録解除
-            musicVolumeChanger.OnSliderValueChanged -= UpdateOptionData;
-            soundVolumeChanger.OnSliderValueChanged -= UpdateOptionData;
+            musicVolumeChanger.SliderValueChangedEvent -= UpdateOptionData;
+            soundVolumeChanger.SliderValueChangedEvent -= UpdateOptionData;
             resolutionSelect.ContentChangedEvent -= UpdateOptionData;
             cameraSelect.ContentChangedEvent -= UpdateOptionData;
             miniReelSelect.ContentChangedEvent -= UpdateOptionData;
             waitCutSelect.ContentChangedEvent -= UpdateOptionData;
             showDelaySelect.ContentChangedEvent -= UpdateOptionData;
             reelMarkerSelect.SettingChangedEvent -= UpdateOptionData;
-            //languageJPN.ContentChangedEvent -= UpdateOptionData;
-            //languageENG.ContentChangedEvent -= UpdateOptionData;
+            languageJPN.ButtonPushedEvent -= OnLanguageChanged;
+            languageENG.ButtonPushedEvent -= OnLanguageChanged;
         }
 
         // 各種選択ボタンの有効化設定
@@ -88,6 +88,8 @@ namespace ReelSpinGame_Option.OtherSetting
             waitCutSelect.LoadOptionData(otherOption.HasWaitCut ? 1 : 0);
             showDelaySelect.LoadOptionData(otherOption.HasDelayDisplay ? 1 : 0);
             reelMarkerSelect.LoadOptionData(otherOption.AssistMarkerPos);
+            CurrentOptionData.CurrentLanguage = (LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID), otherOption.CurrentLanguage);
+
             UpdateOptionData();
         }
 
@@ -104,7 +106,14 @@ namespace ReelSpinGame_Option.OtherSetting
             CurrentOptionData.AssistMarkerPos[(int)ReelID.ReelLeft] = reelMarkerSelect.CurrentLeftSelect;
             CurrentOptionData.AssistMarkerPos[(int)ReelID.ReelMiddle] = reelMarkerSelect.CurrentMiddleSelect;
             CurrentOptionData.AssistMarkerPos[(int)ReelID.ReelRight] = reelMarkerSelect.CurrentRightSelect;
-            OnSettingChangedEvent?.Invoke();
+            SettingChangeEvent?.Invoke();
+        }
+
+        // 言語が変更された時のイベント
+        void OnLanguageChanged(int signalID)
+        {
+            CurrentOptionData.CurrentLanguage = (LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID), signalID);
+            UpdateOptionData();
         }
     }
 }

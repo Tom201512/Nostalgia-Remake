@@ -78,6 +78,26 @@ namespace ReelSpinGame_Sound.BGM
 #endif
         }
 
+        // エラー時
+        [SerializeField] private BgmFile error;
+        public BgmFile Error
+        {
+            get => error;
+#if UNITY_EDITOR
+            set => error = value;
+#endif
+        }
+
+        // 打ち止め時
+        [SerializeField] private BgmFile gameover;
+        public BgmFile GameOver
+        {
+            get => gameover;
+#if UNITY_EDITOR
+            set => gameover = value;
+#endif
+        }
+
         // Nullチェック
         public bool NullCheck()
         {
@@ -89,7 +109,9 @@ namespace ReelSpinGame_Sound.BGM
                 blueJAC,
                 blackBGM,
                 blackJAC,
-                regJAC
+                regJAC,
+                error,
+                gameover,
             };
 
             foreach (BgmFile bgm in soundLists)

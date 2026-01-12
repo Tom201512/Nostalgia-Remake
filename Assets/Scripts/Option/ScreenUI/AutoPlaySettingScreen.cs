@@ -25,16 +25,16 @@ namespace ReelSpinGame_Option.MenuContent
 
         // 画面を閉じたときのイベント
         public delegate void ClosedScreen();
-        public event ClosedScreen OnClosedScreenEvent;
+        public event ClosedScreen ClosedScreenEvent;
 
         private CanvasGroup canvasGroup;    // フェードイン、アウト用
 
         void Awake()
         {
-            closeButton.OnButtonPushedEvent += OnClosedPressed;
-            autoSettingManager.OnSettingChangedEvent += OnSettingChanged;
-            resetButton.OnButtonPushedEvent += OnResetButtonPressed;
-            posLockSettingButton.OnButtonPushedEvent += OnPosLockSettingButtonPressed;
+            closeButton.ButtonPushedEvent += OnClosedPressed;
+            autoSettingManager.SettingChangedEvent += OnSettingChanged;
+            resetButton.ButtonPushedEvent += OnResetButtonPressed;
+            posLockSettingButton.ButtonPushedEvent += OnPosLockSettingButtonPressed;
             autoStopPosLockManager.ClosedScreenEvent += OnPosLockSettingClosed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
@@ -47,10 +47,10 @@ namespace ReelSpinGame_Option.MenuContent
         void OnDestroy()
         {
             StopAllCoroutines();
-            closeButton.OnButtonPushedEvent -= OnClosedPressed;
-            autoSettingManager.OnSettingChangedEvent -= OnSettingChanged;
-            resetButton.OnButtonPushedEvent -= OnResetButtonPressed;
-            posLockSettingButton.OnButtonPushedEvent -= OnPosLockSettingButtonPressed;
+            closeButton.ButtonPushedEvent -= OnClosedPressed;
+            autoSettingManager.SettingChangedEvent -= OnSettingChanged;
+            resetButton.ButtonPushedEvent -= OnResetButtonPressed;
+            posLockSettingButton.ButtonPushedEvent -= OnPosLockSettingButtonPressed;
 
             autoStopPosLockManager.ClosedScreenEvent -= OnPosLockSettingClosed;
         }
@@ -141,7 +141,7 @@ namespace ReelSpinGame_Option.MenuContent
                 yield return new WaitForEndOfFrame();
             }
 
-            OnClosedScreenEvent?.Invoke();
+            ClosedScreenEvent?.Invoke();
         }
     }
 }

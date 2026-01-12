@@ -16,8 +16,8 @@ public class BonusLogDisplayList : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="indexNum">îzóÒî‘çÜ</param>
-    public delegate void OnBonusLogSelected(int indexNum);
-    public event OnBonusLogSelected OnBonusLogSelectedEvent;
+    public delegate void BonusLogSelected(int indexNum);
+    public event BonusLogSelected BonusLogSelectedEvent;
 
     void Awake()
     {
@@ -59,6 +59,6 @@ public class BonusLogDisplayList : MonoBehaviour
     {
         ResetSelection();
         bonusLogDisplays[indexNum].ToggleSelection(true);
-        OnBonusLogSelectedEvent?.Invoke(indexNum);
+        BonusLogSelectedEvent?.Invoke(indexNum);
     }
 }

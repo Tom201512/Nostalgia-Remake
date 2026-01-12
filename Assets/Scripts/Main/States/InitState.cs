@@ -9,13 +9,10 @@ namespace ReelSpinGame_State.LotsState
     // 初期化ステート
     public class InitState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }   // ステート名
-
         private GameManager gM;         // ゲームマネージャ
 
         public InitState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.Init;
             gM = gameManager;
         }
 
@@ -33,7 +30,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             TurnOnBackLight();  // リールライトの点灯(リプレイ、ボーナス中でセーブした場合はつける)
-            gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
+            CheckError();
         }
 
         public void StateEnd()
@@ -115,6 +112,28 @@ namespace ReelSpinGame_State.LotsState
             condition.BigType = gM.Bonus.GetBigChanceType();
             condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
             gM.Effect.StartBonusEffect(condition);
+        }
+
+        // エラーチェック
+        void CheckError()
+        {
+            // 設定値が-1なら設定変更へ移行する
+            if (gM.PlayerSave.Setting == -1)
+            {
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
+            }
+
+            // 回転数が99999Gに達していたらエラーにする
+            else if (gM.PlayerSave.Player.TotalGames == MaxRecordPayout)
+            {
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
+            }
+
+            // それ以外問題がなければ投入ステートへ
+            else
+            {
+                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.InsertState);
+            }
         }
     }
 }

@@ -179,7 +179,6 @@ namespace ReelSpinGame_System
                 using (StreamWriter sw = new StreamWriter(file))
                 {
                     List<int> dataBuffer = new List<int>(optionSaveManager.GenerateDataBuffer());
-                    Debug.Log(dataBuffer.Count);
                     // すべての数値を書き込んだらバイト配列にし、暗号化して保存
                     sw.Write(saveEncryptor.EncryptData(BitConverter.ToString(ByteArrayUtil.GetBytesFromList(dataBuffer)), keyPath));
                 }

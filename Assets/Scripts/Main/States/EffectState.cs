@@ -8,7 +8,6 @@ namespace ReelSpinGame_State.LotsState
     // 演出ステート
     public class EffectState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }   // ステート名
         private GameManager gM;     // ゲームマネージャー
 
         private bool startPayout;       // 払い出しを始めたか

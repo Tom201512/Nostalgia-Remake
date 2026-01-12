@@ -40,21 +40,21 @@ namespace ReelSpinGame_Option
 
         void Awake()
         {
-            reelArrayLeft.OnArraySymbolSelected += OnArraySettingChanged;
-            reelArrayMiddle.OnArraySymbolSelected += OnArraySettingChanged;
-            reelArrayRight.OnArraySymbolSelected += OnArraySettingChanged;
-            confirmButton.OnButtonPushedEvent += OnConfirmPressed;
-            resetButton.OnButtonPushedEvent += OnResetPressed;
+            reelArrayLeft.ArraySymbolSelectedEvent += OnArraySettingChanged;
+            reelArrayMiddle.ArraySymbolSelectedEvent += OnArraySettingChanged;
+            reelArrayRight.ArraySymbolSelectedEvent += OnArraySettingChanged;
+            confirmButton.ButtonPushedEvent += OnConfirmPressed;
+            resetButton.ButtonPushedEvent += OnResetPressed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
         void OnDestroy()
         {
-            reelArrayLeft.OnArraySymbolSelected -= OnArraySettingChanged;
-            reelArrayMiddle.OnArraySymbolSelected -= OnArraySettingChanged;
-            reelArrayRight.OnArraySymbolSelected -= OnArraySettingChanged;
-            confirmButton.OnButtonPushedEvent -= OnConfirmPressed;
-            resetButton.OnButtonPushedEvent -= OnResetPressed;
+            reelArrayLeft.ArraySymbolSelectedEvent -= OnArraySettingChanged;
+            reelArrayMiddle.ArraySymbolSelectedEvent -= OnArraySettingChanged;
+            reelArrayRight.ArraySymbolSelectedEvent -= OnArraySettingChanged;
+            confirmButton.ButtonPushedEvent -= OnConfirmPressed;
+            resetButton.ButtonPushedEvent -= OnResetPressed;
         }
 
         // âÊñ ï\é¶&èâä˙âª
@@ -82,7 +82,6 @@ namespace ReelSpinGame_Option
             reelArrayRight.SetPosition(reelPos[(int)ReelID.ReelRight]);
 
             UpdateScreen();
-            SettingChangedEvent?.Invoke();
         }
 
         // âÊñ ÇÃçXêV

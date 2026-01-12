@@ -14,17 +14,17 @@ namespace ReelSpinGame_Option.Components
 
         // スライダー数値が変わったときのイベント
         public delegate void SliderValueChanged();
-        public event SliderValueChanged OnSliderValueChanged;
+        public event SliderValueChanged SliderValueChangedEvent;
 
         public int CurrentSliderValue { get; private set; }         // スライダーの数値
         public bool CanInteractable { get; private set; }           // 操作可能か
 
         void Awake()
         {
-            upButton.OnButtonPushedEvent += OnUpPressedBehavior;
-            upButton.OnButtonHoldEvent += OnUpPressedBehavior;
-            downButton.OnButtonPushedEvent += OnDownPressedBehavior;
-            downButton.OnButtonHoldEvent += OnDownPressedBehavior;
+            upButton.ButtonPushedEvent += OnUpPressedBehavior;
+            upButton.ButtonHoldEvent += OnUpPressedBehavior;
+            downButton.ButtonPushedEvent += OnDownPressedBehavior;
+            downButton.ButtonHoldEvent += OnDownPressedBehavior;
             slider.onValueChanged.AddListener(delegate { SliderChangeEvent(); });
             CanInteractable = false;
         }
@@ -36,10 +36,10 @@ namespace ReelSpinGame_Option.Components
 
         void OnDestroy()
         {
-            upButton.OnButtonPushedEvent -= OnUpPressedBehavior;
-            upButton.OnButtonHoldEvent -= OnUpPressedBehavior;
-            downButton.OnButtonPushedEvent -= OnDownPressedBehavior;
-            downButton.OnButtonHoldEvent -= OnDownPressedBehavior;
+            upButton.ButtonPushedEvent -= OnUpPressedBehavior;
+            upButton.ButtonHoldEvent -= OnUpPressedBehavior;
+            downButton.ButtonPushedEvent -= OnDownPressedBehavior;
+            downButton.ButtonHoldEvent -= OnDownPressedBehavior;
             slider.onValueChanged.RemoveListener(delegate { SliderChangeEvent(); });
         }
 
@@ -66,7 +66,7 @@ namespace ReelSpinGame_Option.Components
                 slider.value += 1;
                 CurrentSliderValue = (int)slider.value;
                 UpdateScreen();
-                OnSliderValueChanged?.Invoke();
+                SliderValueChangedEvent?.Invoke();
             }
         }
 
@@ -78,7 +78,7 @@ namespace ReelSpinGame_Option.Components
                 slider.value -= 1;
                 CurrentSliderValue = (int)slider.value;
                 UpdateScreen();
-                OnSliderValueChanged?.Invoke();
+                SliderValueChangedEvent?.Invoke();
             }
         }
 
@@ -89,7 +89,7 @@ namespace ReelSpinGame_Option.Components
             UpdateScreen();
             if (CanInteractable)
             {
-                OnSliderValueChanged?.Invoke();
+                SliderValueChangedEvent?.Invoke();
             }
         }
 

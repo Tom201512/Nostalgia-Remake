@@ -49,7 +49,7 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             // ボタンが押されたときに成立時出目を表示
-            bonusLogDisplayList.OnBonusLogSelectedEvent += DisplayHitReelPattern;
+            bonusLogDisplayList.BonusLogSelectedEvent += DisplayHitReelPattern;
         }
 
         // 画面を閉じる
@@ -57,7 +57,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             BonusDisplayDatas.Clear();
             bonusLogDisplayList.InitializeData();
-            bonusLogDisplayList.OnBonusLogSelectedEvent -= DisplayHitReelPattern;
+            bonusLogDisplayList.BonusLogSelectedEvent -= DisplayHitReelPattern;
             reelDisplayUI.gameObject.SetActive(false);
         }
 

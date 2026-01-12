@@ -8,13 +8,12 @@ namespace ReelSpinGame_State.InsertState
     // 投入ステート
     public class InsertState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }        // このゲームの状態
+    // このゲームの状態
 
         private GameManager gM;         // ゲームマネージャ
 
         public InsertState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.Insert;
             gM = gameManager;
         }
 
@@ -44,7 +43,7 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateUpdate()
         {
-            if (!gM.Option.hasOptionMode)
+            if (!gM.Option.HasOptionMode)
             {
                 // オートの有無に合わせて操作受付を変える
                 if (gM.Auto.HasAuto)
@@ -53,13 +52,13 @@ namespace ReelSpinGame_State.InsertState
                 }
                 else
                 {
-                    PlayerControl();
-
                     // 設定ロックがかかっていれば解除
-                    if (gM.Option.lockOptionMode)
+                    if (gM.Option.LockOptionMode)
                     {
                         gM.Option.ToggleOptionLock(false);
                     }
+
+                    PlayerControl();
                 }
             }
         }
@@ -72,7 +71,6 @@ namespace ReelSpinGame_State.InsertState
             gM.Status.TurnOffInsertAndStart();
             // メダル処理を終了させる
             gM.Medal.FinishMedalInsert();
-
             // 設定画面を開けなくする
             gM.Option.ToggleOptionLock(true);
         }

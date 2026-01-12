@@ -9,7 +9,7 @@ namespace ReelSpinGame_Bonus
     // ボーナス処理
     public class BonusManager : MonoBehaviour, IHasSave<BonusSave>
     {
-        [SerializeField] private BonusSevenSegment bonusSegments;        // ボーナス状態のセグメント
+        [SerializeField] private BonusSevenSegment bonusSegments;       // ボーナス状態のセグメント
 
         private BonusSystemData data;        // ボーナス処理のデータ
 

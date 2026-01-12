@@ -30,12 +30,12 @@ namespace ReelSpinGame_Option.MenuContent
         public int CurrentSelectRandomID { get; private set; } // 選択中のランダム数値 (0はランダムとする)
 
         // 設定が変更された時のイベント
-        public delegate void OnSomethingChanged();
-        public event OnSomethingChanged OnSomethingChangedEvent;
+        public delegate void SettingChanged();
+        public event SettingChanged SettingChangedEvent;
 
         // 画面を閉じたときのイベント
-        public delegate void OnClosedScreen();
-        public event OnClosedScreen OnClosedScreenEvent;
+        public delegate void ClosedScreen();
+        public event ClosedScreen ClosedScreenEvent;
 
         private BonusStatus currentBonusStatus;     // 設定時のボーナス状態
         private BonusTypeID holdingBonusID;         // ストック中のボーナス
@@ -45,13 +45,13 @@ namespace ReelSpinGame_Option.MenuContent
         {
             foreach (ButtonComponent flagButton in flagButtons)
             {
-                flagButton.OnButtonPushedEvent += SetSelectedFlag;
+                flagButton.ButtonPushedEvent += SetSelectedFlag;
             }
 
-            randomNextButton.OnButtonPushedEvent += IncreaseRandomValue;
-            randomPreviousButton.OnButtonPushedEvent += DecreaseRandomValue;
-            resetButton.OnButtonPushedEvent += ResetFlagSetting;
-            closeButton.OnButtonPushedEvent += OnClosedPressed;
+            randomNextButton.ButtonPushedEvent += IncreaseRandomValue;
+            randomPreviousButton.ButtonPushedEvent += DecreaseRandomValue;
+            resetButton.ButtonPushedEvent += ResetFlagSetting;
+            closeButton.ButtonPushedEvent += OnClosedPressed;
             CurrentSelectFlagID = -1;
             CurrentSelectRandomID = 0;
 
@@ -64,13 +64,13 @@ namespace ReelSpinGame_Option.MenuContent
             // 登録解除
             foreach (ButtonComponent flagButton in flagButtons)
             {
-                flagButton.OnButtonPushedEvent -= SetSelectedFlag;
+                flagButton.ButtonPushedEvent -= SetSelectedFlag;
             }
 
-            randomNextButton.OnButtonPushedEvent -= IncreaseRandomValue;
-            randomPreviousButton.OnButtonPushedEvent -= DecreaseRandomValue;
-            resetButton.OnButtonPushedEvent -= ResetFlagSetting;
-            closeButton.OnButtonPushedEvent -= OnClosedPressed;
+            randomNextButton.ButtonPushedEvent -= IncreaseRandomValue;
+            randomPreviousButton.ButtonPushedEvent -= DecreaseRandomValue;
+            resetButton.ButtonPushedEvent -= ResetFlagSetting;
+            closeButton.ButtonPushedEvent -= OnClosedPressed;
         }
 
         // 画面表示&初期化
@@ -108,7 +108,7 @@ namespace ReelSpinGame_Option.MenuContent
         {
             CurrentSelectFlagID = -1;
             CurrentSelectRandomID = 0;
-            OnSomethingChangedEvent?.Invoke();
+            SettingChangedEvent?.Invoke();
         }
 
         // フラグ設定ボタンの有効化設定
@@ -271,7 +271,7 @@ namespace ReelSpinGame_Option.MenuContent
                 yield return new WaitForEndOfFrame();
             }
 
-            OnClosedScreenEvent?.Invoke();
+            ClosedScreenEvent?.Invoke();
         }
     }
 }

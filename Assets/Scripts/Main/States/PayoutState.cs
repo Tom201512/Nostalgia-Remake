@@ -10,14 +10,11 @@ namespace ReelSpinGame_State.PayoutState
     // 払い出しステート
     public class PayoutState : IGameStatement
     {
-        public MainGameFlow.GameStates State { get; }   // ステート名
         private GameManager gM;         // ゲームマネージャ
 
         public PayoutState(GameManager gameManager)
         {
-            State = MainGameFlow.GameStates.Payout;
             gM = gameManager;
-
         }
         public void StateStart()
         {

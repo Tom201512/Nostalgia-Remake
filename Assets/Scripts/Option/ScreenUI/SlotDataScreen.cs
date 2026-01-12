@@ -27,8 +27,8 @@ namespace ReelSpinGame_Option.MenuContent
         public PlayerDatabase PlayerData;        // プレイヤーデータのアドレス
 
         // 画面を閉じたときのイベント
-        public delegate void OnClosedScreen();
-        public event OnClosedScreen OnClosedScreenEvent;
+        public delegate void ClosedScreen();
+        public event ClosedScreen ClosedScreenEvent;
 
         public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
 
@@ -38,9 +38,9 @@ namespace ReelSpinGame_Option.MenuContent
         void Awake()
         {
             // ボタン登録
-            closeButton.OnButtonPushedEvent += OnClosedPressed;
-            nextButton.OnButtonPushedEvent += OnNextPushed;
-            previousButton.OnButtonPushedEvent += OnPreviousPushed;
+            closeButton.ButtonPushedEvent += OnClosedPressed;
+            nextButton.ButtonPushedEvent += OnNextPushed;
+            previousButton.ButtonPushedEvent += OnPreviousPushed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -52,9 +52,9 @@ namespace ReelSpinGame_Option.MenuContent
         void OnDestroy()
         {
             StopAllCoroutines();
-            closeButton.OnButtonPushedEvent -= OnClosedPressed;
-            nextButton.OnButtonPushedEvent -= OnNextPushed;
-            previousButton.OnButtonPushedEvent -= OnPreviousPushed;
+            closeButton.ButtonPushedEvent -= OnClosedPressed;
+            nextButton.ButtonPushedEvent -= OnNextPushed;
+            previousButton.ButtonPushedEvent -= OnPreviousPushed;
         }
 
         // 画面表示&初期化
@@ -200,7 +200,7 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             DisactivateAllScreen();
-            OnClosedScreenEvent?.Invoke();
+            ClosedScreenEvent?.Invoke();
         }
     }
 }

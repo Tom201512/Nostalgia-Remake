@@ -32,18 +32,18 @@ namespace ReelSpinGame_Option.MenuContent
 
         // 画面を閉じたときのイベント
         public delegate void ClosedScreen();
-        public event ClosedScreen OnClosedScreenEvent;
+        public event ClosedScreen ClosedScreenEvent;
 
         private int currentPage = 0;        // 表示中のページ番号
         private CanvasGroup canvasGroup;    // フェードイン、アウト用
 
         void Awake()
         {
-            closeButton.OnButtonPushedEvent += OnClosedPressed;
-            nextButton.OnButtonPushedEvent += OnNextPushed;
-            previousButton.OnButtonPushedEvent += OnPreviousPushed;
-            otherSettingManager.OnSettingChangedEvent += OnSettingChanged;
-            markerSettingButton.OnButtonPushedEvent += OnReelMarkerSelectPushed;
+            closeButton.ButtonPushedEvent += OnClosedPressed;
+            nextButton.ButtonPushedEvent += OnNextPushed;
+            previousButton.ButtonPushedEvent += OnPreviousPushed;
+            otherSettingManager.SettingChangeEvent += OnSettingChanged;
+            markerSettingButton.ButtonPushedEvent += OnReelMarkerSelectPushed;
             reelMarkerSelectManager.ClosedScreenEvent += OnReelMarkerSelectClosed;
             canvasGroup = GetComponent<CanvasGroup>();
         }
@@ -57,11 +57,11 @@ namespace ReelSpinGame_Option.MenuContent
         void OnDestroy()
         {
             StopAllCoroutines();
-            closeButton.OnButtonPushedEvent -= OnClosedPressed;
-            nextButton.OnButtonPushedEvent -= OnNextPushed;
-            previousButton.OnButtonPushedEvent -= OnPreviousPushed;
-            otherSettingManager.OnSettingChangedEvent -= OnSettingChanged;
-            markerSettingButton.OnButtonPushedEvent -= OnReelMarkerSelectPushed;
+            closeButton.ButtonPushedEvent -= OnClosedPressed;
+            nextButton.ButtonPushedEvent -= OnNextPushed;
+            previousButton.ButtonPushedEvent -= OnPreviousPushed;
+            otherSettingManager.SettingChangeEvent -= OnSettingChanged;
+            markerSettingButton.ButtonPushedEvent -= OnReelMarkerSelectPushed;
             reelMarkerSelectManager.ClosedScreenEvent -= OnReelMarkerSelectClosed;
         }
 
@@ -213,7 +213,7 @@ namespace ReelSpinGame_Option.MenuContent
                 yield return new WaitForEndOfFrame();
             }
 
-            OnClosedScreenEvent?.Invoke();
+            ClosedScreenEvent?.Invoke();
         }
     }
 }

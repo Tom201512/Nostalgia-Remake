@@ -24,32 +24,34 @@ namespace ReelSpinGame_Option.MenuBar
         [SerializeField] OtherSettingScreen otherSettingScreen;         // その他設定画面
 
         // 何かしらのボタンを押したときのイベント
-        public delegate void OnPressedMenu();
-        public event OnPressedMenu OnPressedMenuEvent;
+        public delegate void PressesMenu();
+        public event PressesMenu PressedMenuEvent;
 
         // 何かしらの画面を閉じたときのイベント
-        public delegate void OnClosedScreen();
-        public event OnClosedScreen OnClosedScreenEvent;
+        public delegate void ClosedScreen();
+        public event ClosedScreen ClosedScreenEvent;
 
-        public bool CanInteract { get; set; }        // 操作ができる状態か(アニメーション中などはつけないこと)
+        public bool CanInteract { get; set; }           // 操作ができる状態か(アニメーション中などはつけないこと)
+        public bool HasOptionLock { get; set; }         // オプションがロックされているか
 
         private CanvasGroup canvasGroup;        // フェードイン、アウト用
 
         void Awake()
         {
             // ボタン登録
-            howToPlayButton.OnButtonPushedEvent += HowToPlayOpen;
-            slotDataButton.OnButtonPushedEvent += SlotDataOpen;
-            forceFlagButton.OnButtonPushedEvent += ForceFlagOpen;
-            autoSettingButton.OnButtonPushedEvent += AutoPlayOpen;
-            otherSettingButton.OnButtonPushedEvent += OtherSettingOpen;
+            howToPlayButton.ButtonPushedEvent += HowToPlayOpen;
+            slotDataButton.ButtonPushedEvent += SlotDataOpen;
+            forceFlagButton.ButtonPushedEvent += ForceFlagOpen;
+            autoSettingButton.ButtonPushedEvent += AutoPlayOpen;
+            otherSettingButton.ButtonPushedEvent += OtherSettingOpen;
 
-            howToPlayScreen.OnClosedScreenEvent += HowToPlayClose;
-            slotDataScreen.OnClosedScreenEvent += SlotDataClose;
-            forceFlagScreen.OnClosedScreenEvent += ForceFlagClose;
-            autoPlaySettingScreen.OnClosedScreenEvent += AutoPlayClose;
-            otherSettingScreen.OnClosedScreenEvent += OtherSettingClose;
+            howToPlayScreen.ClosedScreenEvent += HowToPlayClose;
+            slotDataScreen.ClosedScreenEvent += SlotDataClose;
+            forceFlagScreen.ClosedScreenEvent += ForceFlagClose;
+            autoPlaySettingScreen.ClosedScreenEvent += AutoPlayClose;
+            otherSettingScreen.ClosedScreenEvent += OtherSettingClose;
             CanInteract = false;
+            HasOptionLock = false;
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
@@ -66,17 +68,17 @@ namespace ReelSpinGame_Option.MenuBar
         void OnDestroy()
         {
             // ボタン登録解除
-            howToPlayButton.OnButtonPushedEvent -= HowToPlayOpen;
-            slotDataButton.OnButtonPushedEvent -= SlotDataOpen;
-            forceFlagButton.OnButtonPushedEvent -= ForceFlagOpen;
-            autoSettingButton.OnButtonPushedEvent -= AutoPlayOpen;
-            otherSettingButton.OnButtonPushedEvent -= OtherSettingOpen;
+            howToPlayButton.ButtonPushedEvent -= HowToPlayOpen;
+            slotDataButton.ButtonPushedEvent -= SlotDataOpen;
+            forceFlagButton.ButtonPushedEvent -= ForceFlagOpen;
+            autoSettingButton.ButtonPushedEvent -= AutoPlayOpen;
+            otherSettingButton.ButtonPushedEvent -= OtherSettingOpen;
 
-            howToPlayScreen.OnClosedScreenEvent -= HowToPlayClose;
-            slotDataScreen.OnClosedScreenEvent -= SlotDataClose;
-            forceFlagScreen.OnClosedScreenEvent -= ForceFlagClose;
-            autoPlaySettingScreen.OnClosedScreenEvent -= AutoPlayClose;
-            otherSettingScreen.OnClosedScreenEvent -= OtherSettingClose;
+            howToPlayScreen.ClosedScreenEvent -= HowToPlayClose;
+            slotDataScreen.ClosedScreenEvent -= SlotDataClose;
+            forceFlagScreen.ClosedScreenEvent -= ForceFlagClose;
+            autoPlaySettingScreen.ClosedScreenEvent -= AutoPlayClose;
+            otherSettingScreen.ClosedScreenEvent -= OtherSettingClose;
 
             StopAllCoroutines();
         }
@@ -90,7 +92,6 @@ namespace ReelSpinGame_Option.MenuBar
             autoSettingButton.ToggleInteractive(value);
             otherSettingButton.ToggleInteractive(value);
         }
-
 
         // メニューを開く
         public void OpenScreen()
@@ -192,14 +193,14 @@ namespace ReelSpinGame_Option.MenuBar
         void OnPressedBehaviour()
         {
             SetInteractiveAllButton(false);
-            OnPressedMenuEvent?.Invoke();
+            PressedMenuEvent?.Invoke();
         }
 
         // 画面を閉じたときの処理
         void OnClosedBehaviour()
         {
             SetInteractiveAllButton(true);
-            OnClosedScreenEvent?.Invoke();
+            ClosedScreenEvent?.Invoke();
         }
 
         // フェードイン
@@ -215,7 +216,7 @@ namespace ReelSpinGame_Option.MenuBar
             }
 
             CanInteract = true;
-            SetInteractiveAllButton(true);
+            SetInteractiveAllButton(!HasOptionLock);
         }
 
         // フェードアウト

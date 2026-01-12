@@ -37,8 +37,8 @@ namespace ReelSpinGame_UI.Bonus
         /// 
         /// </summary>
         /// <param name="indexNum">îzóÒî‘çÜ</param>
-        public delegate void OnBonusLogPressed(int indexNum);
-        public event OnBonusLogPressed OnBonusLogPressedEvent;
+        public delegate void BonusLogPressed(int indexNum);
+        public event BonusLogPressed OnBonusLogPressedEvent;
 
         void Awake()
         {

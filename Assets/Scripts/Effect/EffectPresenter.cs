@@ -78,6 +78,8 @@ namespace ReelSpinGame_Effect
 
         // ループしている音を止める
         public void StopLoopSound() => soundManager.StopLoopSE();
+        // ループしているBGMを止める
+        public void StopLoopBGM() => soundManager.StopBGM();
         // SEボリューム変更 (0.0 ~ 1.0)
         public void ChangeSoundVolume(float volume) => soundManager.ChangeSEVolume(Math.Clamp(volume / maxVolume, 0, 1));
         // BGMボリューム変更(0.0 ~ 1.0)
@@ -125,5 +127,8 @@ namespace ReelSpinGame_Effect
         public void StartAfterPayoutEffect(AfterPayoutEffectCondition condition) => afterPayoutEffect.DoEffect(condition);
         // ボーナス中演出開始
         public void StartBonusEffect(BonusEffectCondition condition) => bonusEffect.DoEffect(condition);
+
+        // エラー時演出開始
+        public void StartErrorEffect() => soundManager.PlayBGM(soundManager.SoundDB.BGM.Error);
     }
 }

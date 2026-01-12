@@ -23,8 +23,8 @@ namespace ReelSpinGame_Option.AutoSetting
         public AutoOptionData CurrentAutoOptionData { get; private set; } // 現在のオート設定
 
         // 設定が変更された時のイベント
-        public delegate void OnSettingChanged();
-        public event OnSettingChanged OnSettingChangedEvent;
+        public delegate void SettingChanged();
+        public event SettingChanged SettingChangedEvent;
 
         void Awake()
         {
@@ -102,7 +102,7 @@ namespace ReelSpinGame_Option.AutoSetting
             CurrentAutoOptionData.StopPosLockData[(int)ReelID.ReelLeft] = autoStopPosLockManager.CurrentLeftSelect;
             CurrentAutoOptionData.StopPosLockData[(int)ReelID.ReelMiddle] = autoStopPosLockManager.CurrentMiddleSelect;
             CurrentAutoOptionData.StopPosLockData[(int)ReelID.ReelRight] = autoStopPosLockManager.CurrentRightSelect;
-            OnSettingChangedEvent?.Invoke();
+            SettingChangedEvent?.Invoke();
         }
     }
 }

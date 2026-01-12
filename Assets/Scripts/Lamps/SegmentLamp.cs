@@ -84,7 +84,7 @@ namespace ReelSpinGame_Lamps
                     lamps[(int)LampID.B],
                     lamps[(int)LampID.C],
                     lamps[(int)LampID.D],
-                    lamps[(int)LampID.G]
+                    lamps[(int)LampID.G],
                 };
 
                 TurnOnLamps(turnOnLamps);
@@ -213,6 +213,35 @@ namespace ReelSpinGame_Lamps
                 lamps[(int)LampID.C],
                 lamps[(int)LampID.D],
                 lamps[(int)LampID.E],
+            };
+
+            TurnOnLamps(turnOnLamps);
+        }
+
+        // E‚ð•\Ž¦
+        public void TurnOnE()
+        {
+            TurnOffAll();
+            LampComponent[] turnOnLamps = new LampComponent[]
+            {
+                lamps[(int)LampID.A],
+                lamps[(int)LampID.D],
+                lamps[(int)LampID.E],
+                lamps[(int)LampID.F],
+                lamps[(int)LampID.G],
+            };
+
+            TurnOnLamps(turnOnLamps);
+        }
+
+        // R‚ð•\Ž¦
+        public void TurnOnR()
+        {
+            TurnOffAll();
+            LampComponent[] turnOnLamps = new LampComponent[]
+            {
+                lamps[(int)LampID.E],
+                lamps[(int)LampID.G],
             };
 
             TurnOnLamps(turnOnLamps);
