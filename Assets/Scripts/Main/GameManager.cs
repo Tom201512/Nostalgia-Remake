@@ -176,8 +176,6 @@ public class GameManager : MonoBehaviour
         // セーブ開始(初回設定が完了している場合のみ)
         if (!IsFirstLaunch)
         {
-            Debug.Log("PlayerDelete:" + Option.DeletePlayerSave);
-            Debug.Log("OptionDelete:" + Option.DeleteOptionSave);
             saveManager.GenerateSaveFolder();
 
             if (Option.DeleteOptionSave)

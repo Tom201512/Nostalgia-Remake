@@ -472,6 +472,26 @@ MonoBehaviour:
     m_Localized: Are you sure to delete all save data and setings?
     m_Metadata:
       m_Items: []
+  - m_Id: 20805394222604288
+    m_Localized: How to play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20805443321126912
+    m_Localized: Slot data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20805504969007104
+    m_Localized: Force flag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20805567761932288
+    m_Localized: Auto setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20805607708483584
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
