@@ -43,6 +43,20 @@ namespace ReelSpinGame_State.PayoutState
                 }
             }
 
+            // 小役成立回数の記録
+            gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
+
+            // 小役入賞回数の記録(払い出しがあれば)
+            if (gM.Payout.LastPayoutResult.Payout > 0 || gM.Medal.HasReplay)
+            {
+                gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
+            }
+            // JACハズシの記録
+            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
+            {
+                gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
+            }
+
             // 状態遷移
             CheckGameModeStatusChange();
             // 払い出し開始
@@ -60,20 +74,6 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Player.PlayerMedalData.CountCurrentSlumpGraph();
                 // 回転数が打ち止め規定数に達していたらオート終了
                 gM.Auto.CheckAutoEndByLimitReached(gM.Player.TotalGames);
-            }
-
-            // 小役成立回数の記録
-            gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
-
-            // 小役入賞回数の記録(払い出しがあれば)
-            if (gM.Payout.LastPayoutResult.Payout > 0 || gM.Medal.HasReplay)
-            {
-                gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
-            }
-            // JACハズシの記録
-            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
-            {
-                gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
             }
 
             // セーブ処理
