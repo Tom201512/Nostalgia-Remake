@@ -53,5 +53,9 @@ You can spin reels until it reaches 99999 games.\
 \
 \
 [クレジット / Credit]\
-Graphic / Music & SFX :Sturm7(Tom.u.)\
-Font: Noto-Sans JP Google font
+Copyrights(C) 2026 : Sturm7(Formally : Tom.u.)\
+Graphic / Music & SFX :Sturm7(Formally : Tom.u.)\
+Font: Noto-Sans JP Google font\
+\
+本ソフトウェアはフリーソフトです。本ソフトウェアの配信、改変、再頒布を許可します。\
+This software is a free software. Allows streaming, modify and redistribute this software.\
