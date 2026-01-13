@@ -29,13 +29,13 @@ namespace ReelSpinGame_Reels
         {
             if (Math.Sign(maxSpeed) == -1)
             {
-                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(maxSpeed, false));
-                ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(maxSpeed, true));
+                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(maxSpeed));
+                ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(maxSpeed));
             }
             else
             {
-                ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(maxSpeed, false));
-                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(maxSpeed, true));
+                ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(maxSpeed));
+                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(maxSpeed));
             }
         }
 
@@ -63,16 +63,15 @@ namespace ReelSpinGame_Reels
         }
 
         // JACŽž‚Ì–¾‚é‚³ŒvŽZ(
-        private byte CalculateJACBrightness(float maxSpeed, bool isNegative)
+        private byte CalculateJACBrightness(float maxSpeed)
         {
-            float brightnessTest = 0;
+            float brightnessTest;
             float currentDistance = 0;
 
             // ­‚µ‘‚ß‚ÉŒõ‚ç‚¹‚é‚½‚ß‹——£‚Í’Z‚­‚·‚é
             float distanceRotation = ChangeAngle * JacLightOffset;
 
             // •„†‚É‡‚í‚¹‚Ä‹——£‚ðŒvŽZ
-            //Debug.Log("Current Euler:" + transform.rotation.eulerAngles.x);
             if (transform.rotation.eulerAngles.x > 0f)
             {
                 if (Math.Sign(maxSpeed) == -1)
@@ -88,7 +87,7 @@ namespace ReelSpinGame_Reels
 
             int distance = SymbolLight.TurnOnValue - SymbolLight.TurnOffValue;
 
-            float CenterBright = 0;
+            float CenterBright;
 
             if (Math.Sign(maxSpeed) == -1)
             {

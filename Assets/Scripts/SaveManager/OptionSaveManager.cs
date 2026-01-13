@@ -45,7 +45,6 @@ namespace ReelSpinGame_System
             // ÉtÉ@ÉCÉãÇ™Ç»Ç¢èÍçáÇÕì«Ç›çûÇ‹Ç»Ç¢
             if (!File.Exists(path))
             {
-                Debug.LogError("File not found");
                 return false;
             }
 
@@ -56,7 +55,6 @@ namespace ReelSpinGame_System
                 {
                     if (!SetValueFromData(br))
                     {
-                        Debug.LogError("Failed to Load data");
                         return false;
                     }
                 }
@@ -64,7 +62,6 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.LogError("Load failed");
                 return false;
             }
 
@@ -81,7 +78,6 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.LogError("Loading error happened");
                 return false;
             }
 

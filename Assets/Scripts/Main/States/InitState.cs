@@ -119,7 +119,7 @@ namespace ReelSpinGame_State.LotsState
         void CheckError()
         {
             // 初回起動時なら初回起動画面へ移動
-            if(gM.IsFirstLaunch)
+            if (gM.IsFirstLaunch)
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.FirstLaunchState);
             }

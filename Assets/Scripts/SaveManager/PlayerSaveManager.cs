@@ -36,8 +36,8 @@ namespace ReelSpinGame_System
             // セーブファイルを作成するための整数型List作成
             List<int> dataBuffer = new List<int>();
 
-            // 台設定
             dataBuffer.Add(CurrentSave.Setting);
+            dataBuffer.Add(CurrentSave.IsUsingRandom == true ? 1 : 0);
 
             // プレイヤーデータ
             foreach (int i in CurrentSave.Player.SaveData())
@@ -89,7 +89,6 @@ namespace ReelSpinGame_System
                     }
                     else
                     {
-                        Debug.LogError("Failed to Load data at:" + (AddressID)Enum.ToObject(typeof(AddressID), index));
                         return false;
                     }
                 }
@@ -112,6 +111,7 @@ namespace ReelSpinGame_System
                 {
                     case (int)AddressID.Setting:
                         CurrentSave.Setting = br.ReadInt32();
+                        CurrentSave.IsUsingRandom = (br.ReadInt32() == 1 ? true : false);
                         break;
 
                     case (int)AddressID.Player:
@@ -140,7 +140,6 @@ namespace ReelSpinGame_System
             catch (Exception e)
             {
                 Debug.LogException(e);
-                Debug.LogError("Loading error happened at:" + (AddressID)Enum.ToObject(typeof(ReelSymbols), addressID));
                 return false;
             }
 

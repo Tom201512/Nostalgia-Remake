@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 namespace ReelSpinGame_Bonus
 {
@@ -94,7 +95,8 @@ namespace ReelSpinGame_Bonus
             }
             catch (Exception e)
             {
-                throw new Exception(e.ToString());
+                Debug.LogException(e);
+                return false;
             }
 
             return true;

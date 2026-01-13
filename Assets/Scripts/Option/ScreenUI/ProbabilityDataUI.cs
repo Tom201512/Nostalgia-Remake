@@ -19,7 +19,7 @@ namespace ReelSpinGame_Option.MenuContent
         // 通常時表示
         private void DisplayNormalMode(PlayerDatabase player)
         {
-            float probability = 0.0f;
+            float probability;
             string data = "\n\n";
 
             // 小役確率
@@ -97,7 +97,7 @@ namespace ReelSpinGame_Option.MenuContent
         // ビッグチャンス時表示
         private void DisplayBigChance(PlayerDatabase player)
         {
-            float probability = 0.0f;
+            float probability;
             string data = "\n\n";
 
             // 小役確率

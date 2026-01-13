@@ -201,7 +201,7 @@ namespace ReelSpinGame_AutoPlay.AI
         // ビッグチャンスを狙う
         int[] AimBigChance(FlagID flag, int betAmount)
         {
-            int typeID = 0;
+            int typeID;
 
             // 揃えるBIGの指定がなければランダムで選択
             if (BigLineUpSymbol == BigType.None)

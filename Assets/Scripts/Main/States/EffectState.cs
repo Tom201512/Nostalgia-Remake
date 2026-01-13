@@ -128,7 +128,7 @@ namespace ReelSpinGame_State.LotsState
         void CheckReachedLimitSpins()
         {
             // 通常時であり現在トータルゲーム数が規定数に達したら操作不能にする
-            if(gM.Player.TotalGames >= PlayerDatabase.MaximumTotalGames && 
+            if (gM.Player.TotalGames >= PlayerDatabase.MaximumTotalGames &&
                 gM.Bonus.GetCurrentBonusStatus() == ReelSpinGame_Bonus.BonusSystemData.BonusStatus.BonusNone)
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.LimitReachedState);

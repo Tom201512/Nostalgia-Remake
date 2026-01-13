@@ -2,7 +2,6 @@
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
 using ReelSpinGame_Reels;
-using ReelSpinGame_System;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
 
@@ -51,11 +50,12 @@ namespace ReelSpinGame_State.PayoutState
             // リプレイ処理
             UpdateReplay();
 
+            // オート残りゲーム数が0になったかチェック
+            gM.Auto.DecreaseAutoSpin();
+
             // 通常時のみの処理
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
-                // オート残りゲーム数が0になったかチェック(ボーナス中以外)
-                gM.Auto.DecreaseAutoSpin();
                 // 差枚数のカウント(通常時のみ)
                 gM.Player.PlayerMedalData.CountCurrentSlumpGraph();
                 // 回転数が打ち止め規定数に達していたらオート終了

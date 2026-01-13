@@ -44,15 +44,9 @@ namespace ReelSpinGame_Lots
             {
                 Counter -= betAmount * CounterIncreaseDefault;
             }
-
-            //Debug.Log("Decreased Counter Current:" + Counter);
         }
 
         // 小役カウンタリセット
-        public void ResetCounter()
-        {
-            //Debug.Log("Reset counter");
-            Counter = 0;
-        }
+        public void ResetCounter() => Counter = 0;
     }
 }

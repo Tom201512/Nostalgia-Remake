@@ -99,10 +99,7 @@ namespace ReelSpinGame_Save.Bonus
                 Debug.LogException(e);
                 return false;
             }
-            finally
-            {
 
-            }
             return true;
         }
     }

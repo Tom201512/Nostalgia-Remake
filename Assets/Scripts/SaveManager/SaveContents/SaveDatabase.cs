@@ -8,8 +8,8 @@ namespace ReelSpinGame_Save.Database
     // セーブ用のデータベース
     public class SaveDatabase
     {
-
         public int Setting { get; set; }                        // 台設定
+        public bool IsUsingRandom { get; set; }                  // ランダム設定を使用しているか
         public PlayerSave Player { get; private set; }          // プレイヤー情報
         public MedalSave Medal { get; private set; }            // メダル情報
         public int FlagCounter { get; private set; }            // フラグカウンタ数値
@@ -20,6 +20,7 @@ namespace ReelSpinGame_Save.Database
         public SaveDatabase()
         {
             Setting = -1;
+            IsUsingRandom = false;
             Player = new PlayerSave();
             Medal = new MedalSave();
             FlagCounter = 0;
@@ -38,11 +39,12 @@ namespace ReelSpinGame_Save.Database
             Bonus = null;
 
             Setting = -1;
+            IsUsingRandom = false;
             Player = new PlayerSave();
             Medal = new MedalSave();
             FlagCounter = 0;
             LastReelPos = new List<int> { 19, 19, 19 };
-            LastReelDelay = new List<int> { 0, 0, 0, };
+            LastReelDelay = new List<int> { 0, 0, 0 };
             Bonus = new BonusSave();
         }
 

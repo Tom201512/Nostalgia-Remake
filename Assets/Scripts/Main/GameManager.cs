@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsFirstLaunch { get; set; }                     // セーブをしないか
     public int Setting { get; private set; }                    // 台設定値
-    public bool HasReachedLimitSpin {  get; private set; }      // 打ち止めに達したか
+    public bool HasReachedLimitSpin { get; private set; }      // 打ち止めに達したか
     public MainGameFlow MainFlow { get; private set; }          // ゲームステート用
 
     private SaveManager saveManager;                                // セーブ機能
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         limitReachedScreen.gameObject.SetActive(false);
-        
+
         bool loadFailed = false;            // 読み込みに失敗したか
         bool playerLoadFailed = false;      // プレイヤーファイルのみ読み込みが失敗したか
 
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         }
 
         // オプション画面へ情報を送る
-        slotDataScreen.SendData(Player);
+        slotDataScreen.SendData(Setting, PlayerSave.IsUsingRandom, Player);
         Option.LoadAutoSettingFromSave(OptionSave.AutoOptionData);
         Option.LoadOtherSettingFromSave(OptionSave.OtherOptionData);
 
@@ -139,8 +139,8 @@ public class GameManager : MonoBehaviour
         // オートプレイ機能ボタン
         if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
         {
-            if (!IsFirstLaunch && !Option.HasOptionMode && 
-                LotSetting.IsSettingChanging && !HasReachedLimitSpin)
+            if (!IsFirstLaunch && !Option.HasOptionMode &&
+                !LotSetting.IsSettingChanging && !HasReachedLimitSpin)
             {
                 // 設定を反映する
                 Auto.CurrentSpeed = Option.AutoOptionData.CurrentSpeed;
@@ -214,6 +214,7 @@ public class GameManager : MonoBehaviour
         if (setting == 0)
         {
             Setting = Random.Range(1, MaxSlotSetting + 1);
+            saveManager.PlayerSaveData.IsUsingRandom = true;
         }
         else
         {
@@ -221,6 +222,7 @@ public class GameManager : MonoBehaviour
         }
 
         saveManager.PlayerSaveData.Setting = Setting;
+        slotDataScreen.SendData(Setting, PlayerSave.IsUsingRandom, Player);
     }
 
     // 打ち止めにする

@@ -9,31 +9,6 @@ using static ReelSpinGame_Bonus.BonusSystemData;
 
 namespace ReelSpinGame_AutoPlay
 {
-    public enum StopOrderID { First, Second, Third }                    // 停止順の識別化
-    public enum StopOrderOptionName { LMR, LRM, MLR, MRL, RLM, RML }    // 停止順番のオプション名(左:L, 中:M, 右:R)
-    public enum AutoSpeedName { Normal, Fast, Quick }                   // オート速度
-
-    // 一定条件
-    [Flags]
-    public enum SpecificConditionFlag
-    {
-        None = 0,
-        WinningPattern = 1 << 0,
-        BIG = 1 << 1,
-        REG = 1 << 2,
-        EndBonus = 1 << 3,
-    }
-
-    // 回数条件
-    public enum SpinTimeConditionName
-    {
-        None = 0,
-        Spin1000G,
-        Spin3000G,
-        Spin5000G,
-        Spin10000G,
-    }
-
     // オートプレイ機能
     public class AutoManager : MonoBehaviour
     {
@@ -55,7 +30,6 @@ namespace ReelSpinGame_AutoPlay
 
         public byte EndConditionFlag { get; set; }                      // 終了条件
         public SpinTimeConditionName SpinTimeCondition { get; set; }    // 回転数条件
-
         public bool HasAuto { get; private set; }                       // オートがあるか
         public bool HasWaitingCancel { get; private set; }              // オート終了待機中か
         public bool HasStopPosDecided { get; private set; }             // 停止位置を決めたか
@@ -70,7 +44,6 @@ namespace ReelSpinGame_AutoPlay
             autoAI = new AutoPlayAI();
             AutoStopOrders = new ReelID[] { ReelID.ReelLeft, ReelID.ReelMiddle, ReelID.ReelRight };
             AutoStopPos = new int[] { 0, 0, 0 };
-            // オートプレイ中のUIを非表示に
             autoModeDisplayText.gameObject.SetActive(false);
         }
 
@@ -98,6 +71,7 @@ namespace ReelSpinGame_AutoPlay
             HasStopPosDecided = false;
             SetSpinTimes();
             autoModeDisplayText.gameObject.SetActive(HasAuto);
+            UpdateAutoUIText();
         }
 
         // 高速オート終了チェック
@@ -120,6 +94,8 @@ namespace ReelSpinGame_AutoPlay
                 {
                     FinishAutoForce();
                 }
+
+                UpdateAutoUIText();
             }
         }
 
@@ -160,7 +136,7 @@ namespace ReelSpinGame_AutoPlay
         // 規定ゲーム数到達によるオート終了チェック
         public void CheckAutoEndByLimitReached(int totalGames)
         {
-            if(totalGames >= PlayerDatabase.MaximumTotalGames)
+            if (totalGames >= PlayerDatabase.MaximumTotalGames)
             {
                 FinishAutoForce();
             }
@@ -293,6 +269,19 @@ namespace ReelSpinGame_AutoPlay
                     RemainingAutoGames = 0;
                     break;
             }
+        }
+
+        // オートテキスト更新
+        void UpdateAutoUIText()
+        {
+            string text = "AUTO PLAY\n";
+            // 残りオートが指定されていれば反映する
+            if(SpinTimeCondition != SpinTimeConditionName.None)
+            {
+                text += "RemainingG:" + RemainingAutoGames;
+            }
+
+            autoModeDisplayText.text = text;
         }
     }
 }

@@ -1,11 +1,9 @@
-using ReelSpinGame_Option.AutoSetting;
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_System;
 using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -26,7 +24,9 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] private ButtonComponent closeButton;       // クローズボタン
         [SerializeField] private TextMeshProUGUI pageCount;         // ページ表記
 
-        public PlayerDatabase PlayerData;        // プレイヤーデータのアドレス
+        public int CurrentLotSetting { get; private set; }             // 現在の設定値
+        public bool IsUsingRandom { get; private set; }            // ランダム設定を使用しているか
+        public PlayerDatabase PlayerData { get; private set; }      // プレイヤーデータのアドレス
 
         // 画面を閉じたときのイベント
         public delegate void ClosedScreen();
@@ -78,8 +78,10 @@ namespace ReelSpinGame_Option.MenuContent
         }
 
         // データを受け渡す
-        public void SendData(PlayerDatabase player)
+        public void SendData(int setting, bool isUsingRandom, PlayerDatabase player)
         {
+            CurrentLotSetting = setting;
+            IsUsingRandom = isUsingRandom;
             PlayerData = player;
         }
 
@@ -134,7 +136,7 @@ namespace ReelSpinGame_Option.MenuContent
             {
                 case 0:
                     slotMainDataUI.gameObject.SetActive(true);
-                    slotMainDataUI.UpdateText(PlayerData);
+                    slotMainDataUI.UpdateText(CurrentLotSetting, IsUsingRandom, PlayerData);
                     break;
 
                 case 1:

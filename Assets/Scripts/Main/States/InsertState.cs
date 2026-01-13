@@ -8,7 +8,7 @@ namespace ReelSpinGame_State.InsertState
     // 投入ステート
     public class InsertState : IGameStatement
     {
-    // このゲームの状態
+        // このゲームの状態
 
         private GameManager gM;         // ゲームマネージャ
 

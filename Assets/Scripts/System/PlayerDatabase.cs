@@ -12,12 +12,10 @@ namespace ReelSpinGame_System
     {
         public const int MaximumTotalGames = 99999;        // 記録可能ゲーム数
 
-
         public int TotalGames { get; private set; }         // 総ゲーム数(ボーナス中除く)
         public int CurrentGames { get; private set; }       // ボーナス間ゲーム数
         public int BigTimes { get; private set; }           // ビッグチャンス成立回数
         public int RegTimes { get; private set; }           // ボーナスゲーム成立回数
-
 
         public PlayerMedalData PlayerMedalData { get; private set; }        // メダル情報
         public List<BonusHitData> BonusHitRecord { get; private set; }      // 当選させたボーナス(IDごとに)

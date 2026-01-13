@@ -57,7 +57,7 @@ namespace ReelSpinGame_UI.Reel
         void OnReelSymbolPressed(int signalID)
         {
             // “¯‚¶‚Ì‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚½‚ç‘I‘ğ‰ğœ
-            if(CurrentSelectPos == signalID)
+            if (CurrentSelectPos == signalID)
             {
                 CurrentSelectPos = -1;
             }

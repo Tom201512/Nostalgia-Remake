@@ -69,8 +69,7 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
-                return false;
+                throw new Exception(e.ToString());
             }
 
             return true;
@@ -108,8 +107,7 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
-                return false;
+                throw new Exception(e.ToString());
             }
 
             return true;
@@ -154,8 +152,7 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
-                return false;
+                throw new Exception(e.ToString());
             }
 
             return true;
@@ -184,8 +181,7 @@ namespace ReelSpinGame_System
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
-                return false;
+                throw new Exception(e.ToString());
             }
 
             return true;

@@ -33,7 +33,6 @@ namespace ReelSpinGame_Save.Encryption
                 // ハッシュ値が合わない場合は読み込まない
                 if (previousHash != newHash)
                 {
-                    Debug.LogError("Hash code is wrong");
                     return false;
                 }
 

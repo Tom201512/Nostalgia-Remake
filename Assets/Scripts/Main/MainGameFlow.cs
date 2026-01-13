@@ -20,7 +20,7 @@ public class MainGameFlow
     public PlayingState PlayingState { get; private set; }              // リール回転(プレイ中)
     public PayoutState PayoutState { get; private set; }                // メダル払い出し
     public EffectState EffectState { get; private set; }                // 演出
-    public ReachedLimitState LimitReachedState {  get; private set; }   // 打ち止め時
+    public ReachedLimitState LimitReachedState { get; private set; }   // 打ち止め時
 
     public MainGameFlow(GameManager gameManager)
     {

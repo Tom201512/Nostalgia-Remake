@@ -6,7 +6,6 @@ namespace ReelSpinGame_Lamps
         // Œ…”‚ğŒvZ‚·‚é
         public static int GetDigitCount(int value)
         {
-            int sum = 0;
             int digitsCount = 0;
 
             // 0‚Ìê‡‚Í1Œ…‚ğ•Ô‚·
@@ -17,8 +16,7 @@ namespace ReelSpinGame_Lamps
             // w’èŒ…”‚Ü‚Å”š‚ğo‚·
             while (value != 0)
             {
-                sum = (value % 10);
-                value = (value / 10);
+                value /= 10;
                 digitsCount += 1;
             }
 
@@ -33,7 +31,7 @@ namespace ReelSpinGame_Lamps
             for (int i = 0; i < digit; i++)
             {
                 sum = (value % 10);
-                value = (value / 10);
+                value /= 10;
             }
 
             return sum;

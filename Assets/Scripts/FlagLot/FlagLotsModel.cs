@@ -123,7 +123,7 @@ namespace ReelSpinGame_Lots
         FlagID BonusGameLots(float jacNoneProbability)
         {
             // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選。端数切捨て)
-            int flagCheckNum = 0;
+            int flagCheckNum;
             int flag = GetFlag();
 
             // はずれ抽選

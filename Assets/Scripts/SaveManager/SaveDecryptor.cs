@@ -26,7 +26,7 @@ namespace ReelSpinGame_Save.Encryption
             catch (Exception e)
             {
                 Debug.LogException(e);
-                throw e;
+                throw new Exception(e.ToString());
             }
 
             return data;
@@ -36,7 +36,6 @@ namespace ReelSpinGame_Save.Encryption
         string DecryptData(string cipherText, string keyPath)
         {
             string plainText = null;
-            byte[] decryptedBytes = new byte[] { 0 };
 
             using (Aes aes = Aes.Create())
             {
@@ -86,6 +85,7 @@ namespace ReelSpinGame_Save.Encryption
             }
             catch (Exception e)
             {
+                Debug.LogException(e);
                 throw new Exception(e.ToString());
             }
         }

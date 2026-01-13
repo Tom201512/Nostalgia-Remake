@@ -38,7 +38,7 @@ namespace ReelSpinGame_Sound
         {
             if (databaseID >= SoundDatabases.Count && databaseID < 0)
             {
-                throw new System.Exception("Selected sound data is not found");
+                throw new Exception("Selected sound data is not found");
             }
 
             SoundDB = SoundDatabases[databaseID];

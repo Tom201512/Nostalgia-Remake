@@ -1,6 +1,8 @@
+using ReelSpinGame_Option.Components;
 using ReelSpinGame_System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReelSpinGame_Option.MenuContent
 {
@@ -10,18 +12,33 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] TextMeshProUGUI dataTextUI;        // データテキスト1
         [SerializeField] TextMeshProUGUI dataTextUI2;       // データテキスト2
 
+        [SerializeField] ButtonComponent revealSettingButton;       // 設定表示ボタン
+        [SerializeField] Image revealedSettingImage;                // 表示後の設定画像
+        [SerializeField] TextMeshProUGUI revealedSettingText;       // 表示後の設定テキスト
+
+        void Awake()
+        {
+            revealSettingButton.ButtonPushedEvent += OnRevealSettingPressed;
+        }
+
+        void OnDestroy()
+        {
+            revealSettingButton.ButtonPushedEvent -= OnRevealSettingPressed;
+        }
+
         // 画面更新
-        public void UpdateText(PlayerDatabase player)
+        public void UpdateText(int setting, bool usingRandom, PlayerDatabase player)
         {
             DisplayGamesAndBonus(player);
             DisplayMedal(player);
+            DisplayLotSetting(setting, usingRandom);
         }
 
         // ゲーム数、ボーナス情報表示
-        private void DisplayGamesAndBonus(PlayerDatabase player)
+        void DisplayGamesAndBonus(PlayerDatabase player)
         {
             string data = "\n";
-            float probability = 0.0f;
+            float probability;
 
             //総ゲーム数
             data += player.PlayerAnalyticsData.TotalAllGamesCount.ToString() + "G\n";
@@ -93,7 +110,8 @@ namespace ReelSpinGame_Option.MenuContent
             dataTextUI.text = data;
         }
 
-        private void DisplayMedal(PlayerDatabase player)
+        // メダル情報表示
+        void DisplayMedal(PlayerDatabase player)
         {
             string data = "\n";
 
@@ -118,6 +136,33 @@ namespace ReelSpinGame_Option.MenuContent
             }
 
             dataTextUI2.text = data;
+        }
+
+        // 設定値の表示
+        void DisplayLotSetting(int setting, bool usingRandom)
+        {
+            // 設定値でランダムを使用している場合はボタンを表示
+            if (usingRandom)
+            {
+                revealSettingButton.gameObject.SetActive(true);
+                revealSettingButton.ToggleInteractive(true);
+                revealedSettingImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                revealSettingButton.gameObject.SetActive(false);
+                revealSettingButton.ToggleInteractive(false);
+                revealedSettingImage.gameObject.SetActive(true);
+            }
+
+            revealedSettingText.text = setting.ToString();
+        }
+
+        // 設定表示ボタンが押された時の処理
+        void OnRevealSettingPressed(int signalID)
+        {
+            revealSettingButton.ToggleInteractive(false);
+            revealedSettingImage.gameObject.SetActive(true);
         }
     }
 }

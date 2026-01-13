@@ -14,8 +14,8 @@ namespace ReelSpinGame_Option.MenuContent
 
         public void UpdateText(PlayerDatabase player)
         {
-            float probability = 0.0f;
-            float rate = 0.0f;
+            float probability;
+            float rate;
             string data = "\n";
 
             // 直近ボーナスゲームの表示(ただし入賞していないものは表示しない)

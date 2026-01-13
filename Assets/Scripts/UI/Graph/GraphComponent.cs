@@ -72,8 +72,8 @@ namespace ReelSpinGame_UI.Graph
             // ·–‡”‚²‚Æ‚ÉÀ•W‚ğ‹‚ß‚Ä•`‰æ‚·‚é
             while (true)
             {
-                float posX = 0.0f;
-                float posY = 0.0f;
+                float posX;
+                float posY;
 
                 posX = GraphXPosOffset * (count + 1);
                 posY = GraphMiddlePosY + GraphYPosOffset * ((float)playerData.PlayerMedalData.MedalSlumpGraph[index] / differenceOffset);

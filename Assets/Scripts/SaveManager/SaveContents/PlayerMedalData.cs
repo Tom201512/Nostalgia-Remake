@@ -26,20 +26,12 @@ namespace ReelSpinGame_Datas
         }
 
         // データセット
-        public void SetData(ISavable playerMedalData)
+        public void SetData(PlayerMedalData data)
         {
-            if (playerMedalData.GetType() == typeof(PlayerMedalData))
-            {
-                PlayerMedalData data = playerMedalData as PlayerMedalData;
-                CurrentPlayerMedal = data.CurrentPlayerMedal;
-                CurrentInMedal = data.CurrentInMedal;
-                CurrentOutMedal = data.CurrentOutMedal;
-                MedalSlumpGraph = new List<int>(data.MedalSlumpGraph);
-            }
-            else
-            {
-                throw new Exception("Data is not PlayerMedalData");
-            }
+            CurrentPlayerMedal = data.CurrentPlayerMedal;
+            CurrentInMedal = data.CurrentInMedal;
+            CurrentOutMedal = data.CurrentOutMedal;
+            MedalSlumpGraph = new List<int>(data.MedalSlumpGraph);
         }
 
         // プレイヤーメダル増加
@@ -106,6 +98,7 @@ namespace ReelSpinGame_Datas
                 Debug.LogException(e);
                 return false;
             }
+
             return true;
         }
     }

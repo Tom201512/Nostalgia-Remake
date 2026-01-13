@@ -217,8 +217,6 @@ namespace ReelSpinGame_Datas.Reels
 
             // 最後に読み込んだテキストを読み込む
             dataBuffer.Add(bufferText);
-
-            string finalData = String.Join(",", dataBuffer);
             return dataBuffer.ToArray();
         }
     }

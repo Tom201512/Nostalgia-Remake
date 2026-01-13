@@ -83,7 +83,6 @@ namespace ReelSpinGame_Effect.Data
             // ämó¶Ç™1à»è„Ç»ÇÁíäëI
             else if (OriginalRandomLot.LotRandomByNum(probability))
             {
-                //Debug.Log("SP SOUND PLAYED");
                 sound.PlaySE(sound.SoundDB.SE.SpStart);
             }
             else

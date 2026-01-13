@@ -135,7 +135,6 @@ namespace ReelSpinGame_Reels.Flash
                     {
                         int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + j + i * SeekOffset];
 
-                        //Debug.Log("Symbol:" + j + "Bright:" + symbolBright);
                         if (symbolBright != NoChangeValue)
                         {
                             reelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);

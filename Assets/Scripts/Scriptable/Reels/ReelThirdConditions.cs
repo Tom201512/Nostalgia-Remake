@@ -97,8 +97,8 @@ namespace ReelSpinGame_Datas.Reels
         // CIDチェック(第三停止用)
         private bool ThirdReelCIDCheck(ReelID firstStopReelID, int firstStopCID, ReelID secondStopReelID, int secondStopCID)
         {
-            bool first = false;
-            bool second = false;
+            bool first;
+            bool second;
 
             // 第一停止リールIDの条件が正しいかチェック(0はANY)
             if (this.firstStopReelID == 0 || (int)firstStopReelID + 1 == this.firstStopReelID)
