@@ -1,10 +1,19 @@
 ## Nostalgia Unity Edition
 <img width="1602" height="932" alt="スクリーンショット 2025-08-14 143434" src="https://github.com/user-attachments/assets/170f41fe-f3b6-42c1-8663-265a9becf6a4" />
 
-### アルファ版 v1.61a
+### ベータ版 v1.0b
+### Beta v1.0b
+
+[言語設定 / Language]\
+初回起動時に日本語か英語のいずれかから言語設定ができます。\
+You can set a language setting between Japanese and English when it's a first time launch.\
 \
-[操作方法]\
-スペースキー:  MAX BET\
+\
+[操作方法 / How to play]\
+遊び方、操作説明はゲーム内メニューからも確認できます。\
+You can also check "How to play" and controls in game menu.\
+\
+スペースキー:MAX BET\
 1キー:1BET\
 2キー:2BET\
 上キー:MAX BET&リール始動\
@@ -14,53 +23,35 @@
 右キー:右停止\
 *リールは1分経過で自動停止します。\
 \
+Aキー:オートプレイ切り替え\
+Mキー:メニュー開閉\
 \
-[オートプレイ機能関連]\
-Aキー:オートプレイ開始/停止\
-Sキー:オートプレイ速度変更(低速、中速、高速の3種類)\
+Space:  MAX BET\
+1:1BET\
+2:2BET\
+Up arrow:MAX BET&Start reels\
 \
-低速はウェイトカットの設定の影響を受けます。\
-中速、高速以上では効果音の再生やフラッシュが発生せず、高速ではBGMも再生されなくなります。\
-オート停止を押した場合、低速なら任意のタイミング。中速以上は払い出し開始時にオートが終了します。\
+Left arrow:Stop Left reel\
+Down arrow:Stop Middle reel\
+Right arrow:Stop Right reel\
+*Reels will stop within 1 minute.\
 \
-Oキー:オートプレイ押し順変更(オプション実装で削除予定)\
-デフォルトでは左順押しです。押すたびに(左順押し, 左ハサミ、中左右、中右左、右ハサミ、右順押し)の順で変化します。\
-\
-オートプレイのアルゴリズム(現時点)\
-全小役奪取、ボーナス成立時は即揃え、BIG中のJACハズシは残りJAC-INが1回で残り8ゲームになるまで実施\
-\
-\
-[その他の操作]\(今後削除される可能性があります)\
-\
-Wキー:ウェイトカットON/OFF\
-*回転中に変更した場合は次のゲームで設定反映\
-\
-Dキー:デバッグデータ表示/非表示\
-(メダル、抽選、ウェイト、リール制御、ボーナス状態のデータ)\
-\
-Cキー:表示方法変更(旧Nostalgia風リール)\
-*カメラ表示を透視投影から平行投影にする機能。旧Nostalgiaのリールが見やすいという方向け\
+A:Toggle auto play\
+M:Open/Close Menu\
 \
 \
-[従来のNostalgiaからの変更点について]\
-リール配列変更\
-制御にテーブル方式を完全採用\
-BIGのリプレイハズシは下段受けに変更\
-JAC中は中段のみリールライトが光るように\
-セグメントはオリジナルで作ったものに変更\
-連チャン区間を50Gまでに変更\
-\
-\
-[セーブタイミングについて]\
+[セーブタイミングについて / Save timing]\
 セーブは第三停止ボタンを離したタイミングでセーブされます。払い出しの途中であっても\
 ロード時には払い出しがすでに終わった状態でゲームが開始します。\
+</t></t>Save data will be recorded when you stop third reel.\
+The game will load save data at the timing of when payout is finished.\
 \
 \
-[リール配列]\
-[NostalgiaReelArray.pdf](https://github.com/user-attachments/files/21766753/NostalgiaReelArray.pdf)
+[打ち止めについて / Spin limit]\
+99999G到達で打ち止めになります。\
+You can spin reels until it reaches 99999 games.\
 \
 \
-[BIG中のJACハズシについて]\
-前作DNostalgiaと変わりはないです。リプレイが下段にテンパイしたときに\
-13番の赤7, 19番のBARを上段にビタすることでJACハズシができます。\
-(1/2で枠上に押した場合でもアシストが発動しハズシ成功となります。ビタ押し成功時はVフラッシュが発生します。)
+[クレジット / Credit]\
+Graphic / Music & SFX :Sturm7(Tom.u.)\
+Font: Noto-Sans JP Google font
