@@ -1,4 +1,5 @@
 using ReelSpinGame_Lamps;
+using ReelSpinGame_Medal.Segment;
 using UnityEngine;
 
 namespace ReelSpinGame_System.Setting
@@ -7,7 +8,8 @@ namespace ReelSpinGame_System.Setting
     public class LotSettingManager : MonoBehaviour
     {
         [SerializeField] SettingSelectScreen settingSelectScreen;       // 設定変更画面
-        [SerializeField] private BonusSevenSegment bonusSegments;       // ボーナス状態のセグメント
+        [SerializeField] BonusSevenSegment bonusSegments;       // ボーナス状態のセグメント
+        [SerializeField] MedalSevenSegment payoutSegments;      // 払い出し部分のセグメント
 
         public bool IsSettingChanging { get; private set; }      // 設定変更中か
 
@@ -38,6 +40,7 @@ namespace ReelSpinGame_System.Setting
             settingSelectScreen.gameObject.SetActive(true);
             settingSelectScreen.OpenScreen();
             bonusSegments.StartDisplayError();
+            payoutSegments.StartDisplayError();
         }
 
         // 設定画面が閉じられた時の処理
@@ -46,6 +49,7 @@ namespace ReelSpinGame_System.Setting
             IsSettingChanging = false;
             settingSelectScreen.gameObject.SetActive(false);
             bonusSegments.TurnOffAllSegments();
+            payoutSegments.TurnOffAllSegments();
             SlotSettingChangedEvent?.Invoke(settingSelectScreen.CurrentSetting);
         }
     }

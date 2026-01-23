@@ -55,7 +55,12 @@ namespace ReelSpinGame_State.LotsState
                 // 払い出し開始
                 if (!startPayout && !finishPayout)
                 {
-                    gM.Medal.ChangeSegmentUpdate(true);
+                    // セグメントを更新する
+                    if(gM.Medal.RemainingPayout > 0)
+                    {
+                        gM.Medal.StartPayoutSegmentUpdate();
+                    }
+
                     PayoutEffectCondition condition =
                         new PayoutEffectCondition(gM.Payout.LastPayoutResult, gM.Reel.GetLastStoppedReelData());
 
@@ -68,8 +73,6 @@ namespace ReelSpinGame_State.LotsState
                 // 払い出しが終わるまで待機
                 else if (startPayout && !finishPayout && !gM.Effect.GetPayoutEffectActivating())
                 {
-                    // クレジット、払い出し枚数セグメントの処理終了
-                    gM.Medal.ChangeSegmentUpdate(false);
                     // 払い出し後演出を始める
                     AfterPayoutEffectCondition condition = new AfterPayoutEffectCondition(gM.Payout.LastPayoutResult);
 

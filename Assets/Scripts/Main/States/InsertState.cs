@@ -19,6 +19,8 @@ namespace ReelSpinGame_State.InsertState
 
         public void StateStart()
         {
+            // クレジットを表示
+            gM.Medal.UpdateCreditSegment();
             // イベント登録
             gM.Medal.HasMedalInsertEvent += OnMedalInserted;
 
@@ -76,9 +78,14 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // ベット処理
-        void BetAction(int amount, bool cutCoroutine)
+        void BetAction(int amount, bool isFastAuto)
         {
-            gM.Medal.StartBet(amount, cutCoroutine);
+            gM.Medal.StartBet(amount, isFastAuto);
+            // 通常オートならセグメントを更新する
+            if(!isFastAuto)
+            {
+                gM.Medal.StartInsertSegmentUpdate();
+            }
 
             // 演出開始
             BetEffectCondition condition = new BetEffectCondition();
@@ -100,7 +107,7 @@ namespace ReelSpinGame_State.InsertState
         }
 
         // ベット終了とMAXBETを押したときの制御
-        void BetAndStartFunction(bool cutCoroutine)
+        void BetAndStartFunction(bool isFastAuto)
         {
             // ベットが終了していたら
             if (gM.Medal.IsFinishedBet)
@@ -110,7 +117,7 @@ namespace ReelSpinGame_State.InsertState
             // そうでない場合はMAX BET
             else
             {
-                BetAction(gM.Medal.MaxBetAmount, cutCoroutine);
+                BetAction(gM.Medal.MaxBetAmount, isFastAuto);
             }
         }
 

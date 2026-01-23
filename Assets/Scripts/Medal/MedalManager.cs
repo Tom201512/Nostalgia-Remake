@@ -36,18 +36,18 @@ namespace ReelSpinGame_Medal
         public delegate void MedalHasInsertEvent();
         public event MedalHasInsertEvent HasMedalInsertEvent;
 
-        private MedalBehavior data;        // メダル処理のデータ
+        private MedalBehavior data;         // メダル処理のデータ
+        private int tweenFromCredit;        // 補完処理前のクレジット数値
+        private int tweenToCredit;          // 補完処理後のクレジット数値
 
         private void Awake()
         {
             data = new MedalBehavior();
             HasMedalUpdate = false;
             HasSegmentUpdate = false;
-        }
 
-        private void Start()
-        {
-            creditSegments.ShowSegmentByNumber(data.MedalSystem.Credit);
+            tweenFromCredit = 0;
+            tweenToCredit = 0;
         }
 
         private void OnDestroy()
@@ -75,14 +75,32 @@ namespace ReelSpinGame_Medal
         // MAXベット枚数変更
         public int ChangeMaxBet(int amount) => data.MedalSystem.MaxBetAmount = Math.Clamp(amount, 0, MaxBetLimit);
 
+        // 投入時のセグメント更新を開始する
+        public void StartInsertSegmentUpdate()
+        {
+            if (!HasMedalUpdate)
+            {
+                StartCoroutine(nameof(UpdateInsertSegment));
+            }
+        }
+
         // 払い出しセグメント更新を開始する
-        public void ChangeSegmentUpdate(bool value) => HasSegmentUpdate = value;
+        public void StartPayoutSegmentUpdate()
+        {
+            if(!HasMedalUpdate)
+            {
+                StartCoroutine(nameof(UpdatePayoutSegment));
+            }
+        }
 
         // MAX_BET用の処理
         public void StartMAXBet() => StartBet(data.MedalSystem.MaxBetAmount, false);
 
+        // クレジットを表示
+        public void UpdateCreditSegment() => creditSegments.ShowSegmentByNumber(data.MedalSystem.Credit);
+
         // ベット処理開始
-        public void StartBet(int amount, bool cutCoroutine)
+        public void StartBet(int amount, bool isFastAuto)
         {
             // 処理ををしていないか、またはリプレイでないかチェック
             if (!data.MedalSystem.HasReplay && !HasMedalUpdate)
@@ -95,10 +113,11 @@ namespace ReelSpinGame_Medal
                     data.SetRemainingBet(amount);
 
                     // 払い出す前のクレジット枚数を記録。負数は切り捨て
-                    int previousCredit = Math.Clamp(data.MedalSystem.Credit, 0, MaxCredit);
+                    tweenFromCredit = Math.Clamp(data.MedalSystem.Credit, 0, MaxCredit);
+                    tweenToCredit = tweenFromCredit - data.RemainingBet;
 
-                    // コルーチンを無視する場合
-                    if (cutCoroutine)
+                    // 高速オートならセグメント処理を行う
+                    if (isFastAuto)
                     {
                         data.CurrentBet = amount;
                         data.MedalSystem.Credit = Math.Clamp(data.MedalSystem.Credit -= amount, MinCredit, MaxCredit);
@@ -109,16 +128,12 @@ namespace ReelSpinGame_Medal
                         creditSegments.ShowSegmentByNumber(data.MedalSystem.Credit);
                         payoutSegments.TurnOffAllSegments();
                     }
-                    else
-                    {
-                        StartInsertTween(previousCredit, data.RemainingBet);
-                    }
                 }
             }
         }
 
         // 払い出し開始
-        public void StartPayout(int amount, bool cutCoroutine)
+        public void StartPayout(int amount, bool isFastAuto)
         {
             // 払い出しをしていないかチェック
             if (!HasMedalUpdate)
@@ -129,14 +144,14 @@ namespace ReelSpinGame_Medal
                     // 払い出し枚数の設定
                     data.RemainingPayout = Math.Clamp(amount, 0, MaxPayout);
                     // 払い出す前と払い出し後のクレジット枚数を記録
-                    int previousCredit = Math.Clamp(data.MedalSystem.Credit, 0, MaxCredit);
-                    int toCredit = Math.Clamp(previousCredit + data.RemainingPayout, 0, MaxCredit);
+                    tweenFromCredit = Math.Clamp(data.MedalSystem.Credit, 0, MaxCredit);
+                    tweenToCredit = Math.Clamp(tweenFromCredit + data.RemainingPayout, 0, MaxCredit);
 
                     // クレジットの増加
                     data.ChangeCredit(data.RemainingPayout);
 
-                    // コルーチンを無視する場合
-                    if (cutCoroutine)
+                    // 高速オートならセグメント処理を行う
+                    if (isFastAuto)
                     {
                         data.LastPayoutAmount = data.RemainingPayout;
                         data.RemainingPayout = 0;
@@ -144,10 +159,6 @@ namespace ReelSpinGame_Medal
                         creditSegments.ShowSegmentByNumber(data.MedalSystem.Credit);
                         payoutSegments.ShowSegmentByNumber(data.LastPayoutAmount);
                         HasMedalUpdate = false;
-                    }
-                    else
-                    {
-                        StartPayoutTween(previousCredit, toCredit, data.RemainingPayout);
                     }
                 }
             }
@@ -179,7 +190,7 @@ namespace ReelSpinGame_Medal
             }
             else
             {
-                StartCoroutine(nameof(UpdateInsert));
+                StartCoroutine(nameof(UpdateInsertSegment));
             }
         }
 
@@ -190,27 +201,18 @@ namespace ReelSpinGame_Medal
             data.IsFinishedBet = false;
         }
 
-        // メダル投入のセグメント更新を行う
-        void StartInsertTween(int previousCredit, int betAmount)
-        {
-            // メダルの投入を開始する(残りはフレーム処理)
-            StartCoroutine(nameof(UpdateInsert));
-            creditSegments.DoSegmentTween(previousCredit, previousCredit - betAmount);
-            payoutSegments.TurnOffAllSegments();
-        }
-
-        // メダル払い出し時のセグメント更新を行う
-        void StartPayoutTween(int previousCredit, int toCredit, int payoutAmount)
-        {
-            StartCoroutine(nameof(UpdatePayout));
-            creditSegments.DoSegmentTween(previousCredit, toCredit);
-            payoutSegments.DoSegmentTween(0, payoutAmount);
-        }
-
         // コルーチン用
-        private IEnumerator UpdateInsert()
+        // 投入時のセグメント更新
+        private IEnumerator UpdateInsertSegment()
         {
             HasMedalUpdate = true;
+            payoutSegments.TurnOffAllSegments();
+            // リプレイ以外の時のみクレジットを更新
+            if (!HasReplay)
+            {
+                creditSegments.DoSegmentTween(tweenFromCredit, tweenToCredit);
+            }
+
             // 残りベット枚数がなくなるまで処理
             while (data.RemainingBet > 0)
             {
@@ -224,15 +226,14 @@ namespace ReelSpinGame_Medal
             HasMedalUpdate = false;
         }
 
-        private IEnumerator UpdatePayout()
+        // 払い出しのセグメント更新
+        private IEnumerator UpdatePayoutSegment()
         {
             HasMedalUpdate = true;
 
-            // セグメント更新が入るまで待機
-            while (!HasSegmentUpdate)
-            {
-                yield return new WaitForEndOfFrame();
-            }
+            // セグメント更新処理
+            creditSegments.DoSegmentTween(tweenFromCredit, tweenToCredit);
+            payoutSegments.DoSegmentTween(0, data.RemainingPayout);
 
             // 払い出し処理
             while (data.RemainingPayout > 0)

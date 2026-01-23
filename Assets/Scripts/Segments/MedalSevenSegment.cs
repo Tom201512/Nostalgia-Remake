@@ -53,6 +53,15 @@ namespace ReelSpinGame_Medal.Segment
             }
         }
 
+        // 台設定メモリエラーID(rr)を表示
+        public void StartDisplayError()
+        {
+            foreach (SegmentLamp segment in segments)
+            {
+                segment.TurnOnR();
+            }
+        }
+
         // 指定した数値までセグメントを増減させる
         public void DoSegmentTween(int fromValue, int toValue)
         {

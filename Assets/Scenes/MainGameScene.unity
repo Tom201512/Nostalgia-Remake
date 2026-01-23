@@ -22846,6 +22846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingSelectScreen: {fileID: 2111644226}
   bonusSegments: {fileID: 1944429048}
+  payoutSegments: {fileID: 913883419}
 --- !u!114 &460868904
 MonoBehaviour:
   m_ObjectHideFlags: 0
