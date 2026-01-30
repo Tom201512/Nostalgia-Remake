@@ -233,8 +233,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 15795777503551488
     m_Localized: "Latest bonus info:\n\tBonus hit game:\n\tBonus line up game:\n\tPayout:\n\nJAC-Avoid:\n\tJAC-Avoid
-      Success:\n\tPerfect-Avoid:\n\tAssisted-Avoid:\n\tAccuracy:\n\tPerfect-Accuracy:\n\nBONUS
-      GAME No payout\n\tTimes:\n\tProbability:\n\n"
+      Success:\n\tPerfect-Avoid:\n\tAssisted-Avoid:\n\tAccuracy:\n\nBONUS GAME No
+      payout\n\tTimes:\n\tProbability:\n\n"
     m_Metadata:
       m_Items: []
   - m_Id: 15797864761188352

@@ -70,21 +70,19 @@ namespace ReelSpinGame_Option.MenuContent
             // アシストハズシ回数
             data += player.PlayerAnalyticsData.BigJacAssistedAvoidTimes + "\n";
 
-            // 成功確率
-            if (player.PlayerAnalyticsData.BigJacAvoidTimes > 0)
-            {
-                rate = (float)player.PlayerAnalyticsData.BigJacInTimes / player.PlayerAnalyticsData.BigJacAvoidTimes * 100;
-                data += rate.ToString("F2") + "%\n";
-            }
-            else
-            {
-                data += "1/---.--" + "\n";
-            }
-
             // ビタハズシ成功確率
             if (player.PlayerAnalyticsData.BigJacPerfectAvoidTimes > 0)
             {
-                rate = (float)player.PlayerAnalyticsData.BigJacAvoidTimes / player.PlayerAnalyticsData.BigJacPerfectAvoidTimes * 100;
+                // ハズシ回数とビタハズシ回数が同じなら100とする
+                if (player.PlayerAnalyticsData.BigJacPerfectAvoidTimes == player.PlayerAnalyticsData.BigJacAvoidTimes)
+                {
+                    rate = 100;
+                }
+                else
+                {
+                    rate = (1 - (float)player.PlayerAnalyticsData.BigJacPerfectAvoidTimes / player.PlayerAnalyticsData.BigJacAvoidTimes) * 100;
+                }
+
                 data += rate.ToString("F2") + "%\n";
             }
             else
@@ -101,7 +99,7 @@ namespace ReelSpinGame_Option.MenuContent
             // 確率
             if (player.PlayerAnalyticsData.JacGameNoneTimes > 0)
             {
-                probability = (float)player.PlayerAnalyticsData.JacGamesCount / player.PlayerAnalyticsData.JacGameNoneTimes;
+                probability = (float)player.PlayerAnalyticsData.JacGameNoneTimes / player.PlayerAnalyticsData.JacGameNoneTimes;
                 data += "1/" + probability.ToString("F2");
             }
             else

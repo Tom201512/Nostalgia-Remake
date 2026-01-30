@@ -81,8 +81,9 @@ namespace ReelSpinGame_State.InsertState
         void BetAction(int amount, bool isFastAuto)
         {
             gM.Medal.StartBet(amount, isFastAuto);
+
             // 通常オートならセグメントを更新する
-            if(!isFastAuto)
+            if(!isFastAuto && gM.Medal.RemainingBet != 0)
             {
                 gM.Medal.StartInsertSegmentUpdate();
             }

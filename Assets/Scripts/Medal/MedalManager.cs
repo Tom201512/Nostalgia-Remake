@@ -22,15 +22,15 @@ namespace ReelSpinGame_Medal
         public bool HasSegmentUpdate { get; private set; }          // セグメントを更新中か
 
         // プロパティ部分
-        public int Credit { get => data.MedalSystem.Credit; }                // クレジット
-        public int CurrentBet { get => data.CurrentBet; }               // ベット枚数
-        public int RemainingBet { get => data.RemainingBet; }           // 残りベット
-        public int RemainingPayout { get => data.RemainingPayout; }     // 残り払い出し
-        public int MaxBetAmount { get => data.MedalSystem.MaxBetAmount; }    // 最大ベット枚数
-        public int LastBetAmount { get => data.MedalSystem.LastBetAmount; }  // 直前のベット
-        public int LastPayoutAmount => data.LastPayoutAmount;           // 直前の払い出し
-        public bool IsFinishedBet { get => data.IsFinishedBet; }        // 払出が終了したか
-        public bool HasReplay { get => data.MedalSystem.HasReplay; }         // リプレイ
+        public int Credit { get => data.MedalSystem.Credit; }                   // クレジット
+        public int CurrentBet { get => data.CurrentBet; }                       // ベット枚数
+        public int RemainingBet { get => data.RemainingBet; }                   // 残りベット
+        public int RemainingPayout { get => data.RemainingPayout; }             // 残り払い出し
+        public int MaxBetAmount { get => data.MedalSystem.MaxBetAmount; }       // 最大ベット枚数
+        public int LastBetAmount { get => data.MedalSystem.LastBetAmount; }     // 直前のベット
+        public int LastPayoutAmount => data.LastPayoutAmount;                   // 直前の払い出し
+        public bool IsFinishedBet { get => data.IsFinishedBet; }                // 払出が終了したか
+        public bool HasReplay { get => data.MedalSystem.HasReplay; }            // リプレイ
 
         // メダルが投入された時のイベント
         public delegate void MedalHasInsertEvent();
