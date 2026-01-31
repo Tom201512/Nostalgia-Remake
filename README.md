@@ -1,8 +1,8 @@
 ## Nostalgia Unity Edition
 <img width="1602" height="932" alt="スクリーンショット 2025-08-14 143434" src="https://github.com/user-attachments/assets/170f41fe-f3b6-42c1-8663-265a9becf6a4" />
 
-### ベータ版 v1.0b
-### Beta v1.0b
+### ベータ版 v1.2b
+### Beta v1.2b
 
 [言語設定 / Language]\
 初回起動時に日本語か英語のいずれかから言語設定ができます。\
