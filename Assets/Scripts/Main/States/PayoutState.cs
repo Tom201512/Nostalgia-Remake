@@ -51,14 +51,16 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
             }
+
+            // 状態遷移
+            CheckGameModeStatusChange();
+
             // JACハズシの記録
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames && gM.Lots.GetCurrentFlag() == FlagID.FlagReplayJacIn)
             {
                 gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.Reel.GetRandomValue());
             }
 
-            // 状態遷移
-            CheckGameModeStatusChange();
             // 払い出し開始
             gM.Medal.StartPayout(gM.Payout.LastPayoutResult.Payout, gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal);
             // リプレイ処理
