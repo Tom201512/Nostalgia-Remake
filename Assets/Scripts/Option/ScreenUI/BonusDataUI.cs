@@ -80,7 +80,7 @@ namespace ReelSpinGame_Option.MenuContent
                 }
                 else
                 {
-                    rate = (1 - (float)player.PlayerAnalyticsData.BigJacPerfectAvoidTimes / player.PlayerAnalyticsData.BigJacAvoidTimes) * 100;
+                    rate = (float)player.PlayerAnalyticsData.BigJacPerfectAvoidTimes / player.PlayerAnalyticsData.BigJacAvoidTimes * 100;
                 }
 
                 data += rate.ToString("F2") + "%\n";
