@@ -15,7 +15,11 @@ namespace ReelSpinGame_UI.Reel
             CurrentDelay = -1;
         }
 
-        public void ResetDelay() => CurrentDelay = -1;
+        public void ResetDelay()
+        {
+            CurrentDelay = -1;
+            UpdateScreen();
+        }
         public void SetDelay(int delay)
         {
             CurrentDelay = delay;
