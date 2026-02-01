@@ -1,5 +1,6 @@
 ## Nostalgia Unity Edition
-<img width="1602" height="932" alt="スクリーンショット 2025-08-14 143434" src="https://github.com/user-attachments/assets/170f41fe-f3b6-42c1-8663-265a9becf6a4" />
+<img width="1602" height="932" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9" />
+
 
 ### ベータ版 v1.4b
 ### Beta v1.4b
