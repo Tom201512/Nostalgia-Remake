@@ -10,10 +10,7 @@ namespace ReelSpinGame_Option.MenuContent
         [SerializeField] private GraphComponent graphComponent;
         public void UpdateData(PlayerDatabase player)
         {
-            if (player.PlayerMedalData.MedalSlumpGraph.Count > 0)
-            {
-                graphComponent.StartDrawGraph(player);
-            }
+            graphComponent.StartDrawGraph(player);
         }
     }
 }
