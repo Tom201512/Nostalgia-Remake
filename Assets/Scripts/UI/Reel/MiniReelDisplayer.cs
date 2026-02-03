@@ -16,11 +16,6 @@ namespace ReelSpinGame_UI.Reel
 
         public bool IsActivating { get; set; }              // ƒ~ƒjƒŠ[ƒ‹‚ª‰Ò“­’†‚©
 
-        void Start()
-        {
-            ResetDelayCursor();
-        }
-
         void Update()
         {
             if (IsActivating)
@@ -83,3 +78,4 @@ namespace ReelSpinGame_UI.Reel
         }
     }
 }
+
