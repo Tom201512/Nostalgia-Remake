@@ -2,8 +2,8 @@
 <img width="1602" height="932" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9" />
 
 
-### ベータ版 v1.5
-### Beta v1.5
+### ベータ版 v1.6
+### Beta v1.6
 
 [言語設定 / Language]\
 初回起動時に日本語か英語のいずれかから言語設定ができます。\
