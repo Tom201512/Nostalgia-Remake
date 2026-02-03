@@ -99,7 +99,7 @@ namespace ReelSpinGame_Option.MenuContent
             // Šm—¦
             if (player.PlayerAnalyticsData.JacGameNoneTimes > 0)
             {
-                probability = (float)player.PlayerAnalyticsData.JacGameNoneTimes / player.PlayerAnalyticsData.JacGameNoneTimes;
+                probability = (float)player.PlayerAnalyticsData.JacGamesCount / player.PlayerAnalyticsData.JacGameNoneTimes;
                 data += "1/" + probability.ToString("F2");
             }
             else
