@@ -203,7 +203,11 @@ namespace ReelSpinGame_Lamps
         IEnumerator UpdateError()
         {
             IsDisplaying = true;
-            StartCoroutine(nameof(ChangeShowType));
+
+            if(HasZone)
+            {
+                StartCoroutine(nameof(ChangeShowType));
+            }
 
             while (IsDisplaying)
             {
