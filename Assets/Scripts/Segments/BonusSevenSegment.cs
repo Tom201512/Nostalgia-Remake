@@ -180,7 +180,11 @@ namespace ReelSpinGame_Lamps
         IEnumerator UpdateShowPayout()
         {
             IsDisplaying = true;
-            StartCoroutine(nameof(ChangeShowType));
+
+            if(HasZone)
+            {
+                StartCoroutine(nameof(ChangeShowType));
+            }
 
             while (IsDisplaying)
             {
@@ -203,11 +207,6 @@ namespace ReelSpinGame_Lamps
         IEnumerator UpdateError()
         {
             IsDisplaying = true;
-
-            if(HasZone)
-            {
-                StartCoroutine(nameof(ChangeShowType));
-            }
 
             while (IsDisplaying)
             {
