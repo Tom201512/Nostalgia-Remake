@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
+// RSE (ReelSpinEngine) Copyright Strum7(Tom.u.) 2026
 // ÉQÅ[ÉÄÇÃä«óù
 public class GameManager : MonoBehaviour
 {
