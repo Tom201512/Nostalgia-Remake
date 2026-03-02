@@ -201,7 +201,7 @@ namespace ReelSpinGame_Datas
         private void MakePayoutData()
         {
             // ディレクトリの作成
-            string path = "Assets/PayoutData";
+            string path = "Assets/Payout";
             // ファイル名指定
             string fileName = "PayoutDatabase";
 
@@ -215,20 +215,20 @@ namespace ReelSpinGame_Datas
             PayoutDatabase payoutDatabase = CreateInstance<PayoutDatabase>();
 
             // 払い出しライン作成
-            using StreamReader payoutLine = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - PayoutLineData.csv"));
+            using StreamReader payoutLine = new StreamReader(Path.Combine(DataPath, "Payout", "Nostalgia_Payout - PayoutLineData.csv"));
             payoutDatabase.PayoutLines = PayoutDatabaseGen.MakePayoutLineDatas(payoutLine);
 
             // 払い出し組み合わせ表作成
             // 通常時
-            using StreamReader normalPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - NormalPayout.csv"));
+            using StreamReader normalPayout = new StreamReader(Path.Combine(DataPath, "Payout", "Nostalgia_Payout - NormalPayout.csv"));
             payoutDatabase.NormalPayoutDatas = PayoutDatabaseGen.MakeResultDatas(normalPayout);
 
             // 小役ゲーム中
-            using StreamReader bigPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - BigPayout.csv"));
+            using StreamReader bigPayout = new StreamReader(Path.Combine(DataPath, "Payout", "Nostalgia_Payout - BigPayout.csv"));
             payoutDatabase.BigPayoutDatas = PayoutDatabaseGen.MakeResultDatas(bigPayout);
 
             // JACゲーム中
-            using StreamReader jacPayout = new StreamReader(Path.Combine(DataPath, "PayoutTable", "Nostalgia_Payout - JacPayout.csv"));
+            using StreamReader jacPayout = new StreamReader(Path.Combine(DataPath, "Payout", "Nostalgia_Payout - JacPayout.csv"));
             payoutDatabase.JacPayoutDatas = PayoutDatabaseGen.MakeResultDatas(jacPayout);
 
             // 保存処理

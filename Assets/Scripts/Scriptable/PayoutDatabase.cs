@@ -73,9 +73,15 @@ namespace ReelSpinGame_Datas
     public class PayoutResultData
     {
         // バッファからデータを読み込む位置
-        public enum ReadPos { FlagID = 0, CombinationStart = 1, Payout = 4, Bonus, IsReplay }
+        public enum ReadPos 
+        { 
+            CombinationStart = 0, 
+            Payout = 3, 
+            Bonus, 
+            IsReplay, 
+        }
 
-        public const int AnySymbol = 7;     // ANYの判定用ID
+        public const int AnySymbol = 10;     // ANYの判定用ID
 
         [SerializeField] byte flagID;               // フラグID
         [SerializeField] List<byte> combination;    // 組み合わせ
@@ -84,7 +90,6 @@ namespace ReelSpinGame_Datas
         [SerializeField] bool hasReplayOrJac;       // リプレイか(またはJAC-IN)
 
         // プロパティ
-        public byte FlagID { get => flagID; }
         public List<byte> Combination { get => combination; }
         public byte Payout { get => payout; }
         public byte BonusType { get => bonusType; }
@@ -98,8 +103,6 @@ namespace ReelSpinGame_Datas
             combination = new List<byte>();
 
             // データ作成
-            flagID = byteBuffer[(int)ReadPos.FlagID];
-
             for (int i = 0; i < ReelAmount; i++)
             {
                 combination.Add(byteBuffer[i + (int)ReadPos.CombinationStart]);
