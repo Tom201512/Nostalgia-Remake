@@ -1,9 +1,11 @@
-## Nostalgia Unity Edition
+# ReelSpinEngine(RSE) For Unity (NostalgiaRemake)
 <img width="1602" height="932" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9" />
 
+[説明 / About]\
+Unity上で動作するパチスロのシミュレーターです。サンプルゲームとして過去作で作成した"Nostalgia"を同梱してます。\
+A Pachislot(Slot Machine) simulator for Unity. Including "Nostalgia", a sample game that I previously made. 
 
-### ベータ版 v1.7
-### Beta v1.7
+### SampleGame Instructions (Nostalgia)
 
 [言語設定 / Language]\
 初回起動時に日本語か英語のいずれかから言語設定ができます。\
@@ -54,9 +56,11 @@ You can spin reels until it reaches 99999 games.\
 \
 \
 [クレジット / Credit]\
-Copyrights(C) 2026 : Sturm7(Formally : Tom.u.)\
-Graphic / Music & SFX :Sturm7\
-Font: Noto-Sans JP Google font
+Copyrights(C) 2026 : Sturm7(Tom.u.)\
+Graphic and Sound :Sturm7\
+Font: Noto-Sans JP Google font\
 
+
+[ReelSpinEngine(RSE)について / About ReelSpinEngine(RSE)]\
 本コードの改変、再頒布を許可します。詳しくは"LICENSE"ファイルをご覧ください。
 Any modification and redistribution of this code is permitted. Check "LICENSE" file for more infomation.
