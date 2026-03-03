@@ -148,10 +148,3 @@ MonoBehaviour:
     flagDataList:
     - flagID: 8
       flagCountBySetting: c03f0000c03f0000c03f0000c03f0000c03f0000c03f0000
-  normalATable:
-    flagDataBySettings: []
-  normalBTable:
-    flagDataBySettings: []
-  bigTable:
-    flagDataBySettings: []
-  jacNoneProbability: 0
