@@ -26,51 +26,61 @@ namespace ReelSpinGame_Datas
         public NewFlagDatabaseSet NormalATableBet1
         {
             get => normalABet1Table;
+            set => normalABet1Table = value;
         }
 
         public NewFlagDatabaseSet NormalATableBet2
         {
-            get => normalABet3Table;
+            get => normalABet2Table;
+            set => normalABet2Table = value;
         }
 
         public NewFlagDatabaseSet NormalATableBet3
         {
             get => normalABet3Table;
+            set => normalABet3Table = value;
         }
 
         public NewFlagDatabaseSet NormalBTableBet1
         {
             get => normalBBet1Table;
+            set => normalBBet1Table = value;
         }
 
         public NewFlagDatabaseSet NormalBTableBet2
         {
             get => normalBBet2Table;
+            set => normalBBet2Table = value;
         }
 
         public NewFlagDatabaseSet NormalBTableBet3
         {
             get => normalBBet3Table;
+            set => normalBBet3Table = value;
         }
 
         public NewFlagDatabaseSet BigTableBet1
         {
             get => bigBet1Table;
+            set => bigBet1Table = value;
         }
 
         public NewFlagDatabaseSet BigTableBet2
         {
             get => bigBet2Table;
+            set => bigBet2Table = value;
         }
 
         public NewFlagDatabaseSet BigTableBet3
         {
             get => bigBet3Table;
+            set => bigBet3Table = value;
         }
 
         public NewFlagDatabaseSet JacTable
         {
             get => jacTable;
+            set => jacTable = value;
         }
 
         //Deleted
@@ -127,6 +137,13 @@ namespace ReelSpinGame_Datas
     [Serializable]
     public class NewFlagData
     {
+        // 配列要素の識別用
+        public enum FlagIndexSerialize
+        {
+            FlagID = 0,
+            FlagProbabilityStart = 1 << 0,
+        }
+
         [SerializeField] private FlagID flagID;       //フラグID
         [SerializeField] private List<int> flagCountBySetting;  // 設定ごとのフラグ数
 
@@ -137,22 +154,21 @@ namespace ReelSpinGame_Datas
         {
             flagCountBySetting = new List<int>();
             string[] values = loadedData.ReadLine().Split(',');
-
+            Debug.Log("C:" + values.Length);
             int index = 0;
             foreach (string s in values)
             {
                 // 最初の数値はフラグIDを登録する
-                if(index == 0)
+                if(index == (int)FlagIndexSerialize.FlagID)
                 {
-                    Debug.Log("FlagID:" + s);
                     flagID = (FlagID)Enum.Parse(typeof(FlagID), s);
                 }
                 else
                 {
-                    Debug.Log(Convert.ToInt32(s));
                     flagCountBySetting.Add(Convert.ToInt32(s));
                 }
 
+                Debug.Log(s);
                 index += 1;
             }
         }

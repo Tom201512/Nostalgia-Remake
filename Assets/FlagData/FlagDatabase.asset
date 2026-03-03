@@ -12,406 +12,146 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5e3f7d7727ee441813300b066de706, type: 3}
   m_Name: FlagDatabase
   m_EditorClassIdentifier: 
+  normalABet1Table:
+    flagDataList:
+    - flagID: 1
+      flagCountBySetting: 0c0000000c0000000c0000000c0000000c0000000c000000
+    - flagID: 2
+      flagCountBySetting: 080000000800000008000000080000000800000008000000
+    - flagID: 3
+      flagCountBySetting: 6a0900006a0900006a0900006a0900006a0900006a090000
+    - flagID: 4
+      flagCountBySetting: 400000004000000040000000400000004000000040000000
+    - flagID: 5
+      flagCountBySetting: d1000000d1000000d1000000d1000000d1000000d1000000
+    - flagID: 6
+      flagCountBySetting: f0000000f0000000f0000000f0000000f0000000f0000000
+    - flagID: 7
+      flagCountBySetting: c5080000c5080000c5080000c5080000c5080000c5080000
+  normalABet2Table:
+    flagDataList:
+    - flagID: 1
+      flagCountBySetting: 0c0000000c0000000c0000000c0000000c0000000c000000
+    - flagID: 2
+      flagCountBySetting: 080000000800000008000000080000000800000008000000
+    - flagID: 3
+      flagCountBySetting: 6a0900006a0900006a0900006a0900006a0900006a090000
+    - flagID: 4
+      flagCountBySetting: 400000004000000040000000400000004000000040000000
+    - flagID: 5
+      flagCountBySetting: d1000000d1000000d1000000d1000000d1000000d1000000
+    - flagID: 6
+      flagCountBySetting: f0000000f0000000f0000000f0000000f0000000f0000000
+    - flagID: 7
+      flagCountBySetting: c5080000c5080000c5080000c5080000c5080000c5080000
+  normalABet3Table:
+    flagDataList:
+    - flagID: 1
+      flagCountBySetting: 0c0000000c0000000c0000000c0000000c0000000c000000
+    - flagID: 2
+      flagCountBySetting: 080000000800000008000000080000000800000008000000
+    - flagID: 3
+      flagCountBySetting: 6a0900006a0900006a0900006a0900006a0900006a090000
+    - flagID: 4
+      flagCountBySetting: 400000004000000040000000400000004000000040000000
+    - flagID: 5
+      flagCountBySetting: d1000000d1000000d1000000d1000000d1000000d1000000
+    - flagID: 6
+      flagCountBySetting: f0000000f0000000f0000000f0000000f0000000f0000000
+    - flagID: 7
+      flagCountBySetting: c5080000c5080000c5080000c5080000c5080000c5080000
+  normalBBet1Table:
+    flagDataList:
+    - flagID: 1
+      flagCountBySetting: 0c0000000c0000000c0000000c0000000c0000000c000000
+    - flagID: 2
+      flagCountBySetting: 080000000800000008000000080000000800000008000000
+    - flagID: 3
+      flagCountBySetting: 560d0000560d0000560d0000560d0000560d0000560d0000
+    - flagID: 4
+      flagCountBySetting: d0030000d0030000d0030000d0030000d0030000d0030000
+    - flagID: 5
+      flagCountBySetting: 830200008302000083020000830200008302000083020000
+    - flagID: 6
+      flagCountBySetting: 000a0000000a0000000a0000000a0000000a0000000a0000
+    - flagID: 7
+      flagCountBySetting: c5080000c5080000c5080000c5080000c5080000c5080000
+  normalBBet2Table:
+    flagDataList:
+    - flagID: 1
+      flagCountBySetting: 180000001800000018000000180000001800000018000000
+    - flagID: 2
+      flagCountBySetting: 100000001000000010000000100000001000000010000000
+    - flagID: 3
+      flagCountBySetting: 560d0000560d0000560d0000560d0000560d0000560d0000
+    - flagID: 4
+      flagCountBySetting: d0030000d0030000d0030000d0030000d0030000d0030000
+    - flagID: 5
+      flagCountBySetting: 830200008302000083020000830200008302000083020000
+    - flagID: 6
+      flagCountBySetting: 000a0000000a0000000a0000000a0000000a0000000a0000
+    - flagID: 7
+      flagCountBySetting: c5080000c5080000c5080000c5080000c5080000c5080000
+  normalBBet3Table:
+    flagDataList:
+    - flagID: 1
+      flagCountBySetting: 3a0000003c0000003e000000400000004300000044000000
+    - flagID: 2
+      flagCountBySetting: 240000002600000027000000280000002b0000002e000000
+    - flagID: 3
+      flagCountBySetting: 560d0000560d0000560d0000560d0000560d0000560d0000
+    - flagID: 4
+      flagCountBySetting: d0030000d0030000d0030000d0030000d0030000d0030000
+    - flagID: 5
+      flagCountBySetting: 830200008302000083020000830200008302000083020000
+    - flagID: 6
+      flagCountBySetting: 000a0000000a0000000a0000000a0000000a0000000a0000
+    - flagID: 7
+      flagCountBySetting: c5080000c5080000c5080000c5080000c5080000c5080000
+  bigBet1Table:
+    flagDataList:
+    - flagID: 3
+      flagCountBySetting: 200000002000000020000000200000002000000020000000
+    - flagID: 4
+      flagCountBySetting: 200000002000000020000000200000002000000020000000
+    - flagID: 5
+      flagCountBySetting: 560300005603000056030000560300005603000056030000
+    - flagID: 6
+      flagCountBySetting: c1050000c9050000d1050000d9050000e1050000e9050000
+    - flagID: 7
+      flagCountBySetting: 001400000014000000140000001400000014000000140000
+  bigBet2Table:
+    flagDataList:
+    - flagID: 3
+      flagCountBySetting: 200000002000000020000000200000002000000020000000
+    - flagID: 4
+      flagCountBySetting: 200000002000000020000000200000002000000020000000
+    - flagID: 5
+      flagCountBySetting: 560300005603000056030000560300005603000056030000
+    - flagID: 6
+      flagCountBySetting: c1050000c9050000d1050000d9050000e1050000e9050000
+    - flagID: 7
+      flagCountBySetting: 001400000014000000140000001400000014000000140000
+  bigBet3Table:
+    flagDataList:
+    - flagID: 3
+      flagCountBySetting: 200000002000000020000000200000002000000020000000
+    - flagID: 4
+      flagCountBySetting: 200000002000000020000000200000002000000020000000
+    - flagID: 5
+      flagCountBySetting: 560d0000560d0000560d0000560d0000560d0000560d0000
+    - flagID: 6
+      flagCountBySetting: 41110000591100007111000089110000a2110000bb110000
+    - flagID: 7
+      flagCountBySetting: 001400000014000000140000001400000014000000140000
+  jacTable:
+    flagDataList:
+    - flagID: 8
+      flagCountBySetting: c03f0000c03f0000c03f0000c03f0000c03f0000c03f0000
   normalATable:
-    flagDataBySettings:
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 496.5
-      - 780.2
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 468.1
-      - 712.3
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 442.8
-      - 655.4
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 420.1
-      - 630.2
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 409.6
-      - 585.1
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 399.6
-      - 606.8
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 282.5
-      - 455.1
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 273.1
-      - 431.2
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 264.3
-      - 420.1
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 256
-      - 409.6
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 244.5
-      - 381
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
-    - flagTable:
-      - 240.9
-      - 356.2
-      - 6.8
-      - 256.6
-      - 78.5
-      - 68.5
-      - 7.3
+    flagDataBySettings: []
   normalBTable:
-    flagDataBySettings:
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 1365.3
-      - 2048
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 496.5
-      - 780.2
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 468.1
-      - 712.3
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 442.8
-      - 655.4
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 420.1
-      - 630.2
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 409.6
-      - 585.1
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 399.6
-      - 606.8
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 282.5
-      - 455.1
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 273.1
-      - 431.2
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 264.3
-      - 420.1
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 256
-      - 409.6
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 244.5
-      - 381
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
-    - flagTable:
-      - 240.9
-      - 356.2
-      - 4.8
-      - 16.8
-      - 25.5
-      - 6.4
-      - 7.3
+    flagDataBySettings: []
   bigTable:
-    flagDataBySettings:
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 11.1
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 11.1
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 11
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 11
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 10.9
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 10.8
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 7.4
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 7.4
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 7.3
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 7.3
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 7.3
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 7.2
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 3.71
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 3.69
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 3.67
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 3.65
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 3.63
-    - flagTable:
-      - 512
-      - 512
-      - 4.8
-      - 3.2
-      - 3.61
-  jacNonePoss: 256
+    flagDataBySettings: []
+  jacNoneProbability: 0

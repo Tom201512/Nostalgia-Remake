@@ -1,5 +1,4 @@
 ﻿using ReelSpinGame_Datas;
-using UnityEngine;
 
 namespace ReelSpinGame_Lots
 {
@@ -29,61 +28,37 @@ namespace ReelSpinGame_Lots
     public class FlagLotsModel
     {
         const int MaxFlagLots = 16384;      // 最大フラグ数
-        const int SeekNum = 6;              // テーブルシーク位置
 
         public FlagID CurrentFlag { get; set; }                             // 現在のフラグ
         public FlagLotTable CurrentTable { get; set; }                      // 抽選テーブル
 
         // フラグ抽選の開始
-        public void GetFlagLots(int counter, int setting, int betAmount, FlagDatabase flagDatabase)
+        public void NewGetFlagLots(int counter, int setting, int betAmount, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
             {
                 case FlagLotTable.Normal:
 
-                    // 抽選順の作成
-                    FlagID[] lotOrder = new FlagID[]
-                    {
-                        FlagID.FlagBig,
-                        FlagID.FlagReg,
-                        FlagID.FlagCherry2,
-                        FlagID.FlagCherry4,
-                        FlagID.FlagMelon,
-                        FlagID.FlagBell,
-                        FlagID.FlagReplayJacIn,
-                    };
-
-                    // カウンタが0より少ないなら高確率
+                    // カウンタが0より少ないなら高確率テーブルを使用
                     if (counter < 0)
                     {
-                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalBTable, lotOrder);
+                        CurrentFlag = LotsNormalBTable(setting, betAmount, flagDatabase);
                     }
                     // カウンタが0以上の場合は低確率
                     else
                     {
-                        CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.NormalATable, lotOrder);
+                        CurrentFlag = LotsNormalATable(setting, betAmount, flagDatabase);
                     }
 
                     break;
 
                 case FlagLotTable.BigBonus:
-
-                    // 抽選順の作成
-                    FlagID[] lotOrderBig = new FlagID[]
-                    {
-                         FlagID.FlagCherry2,
-                         FlagID.FlagCherry4,
-                         FlagID.FlagMelon,
-                         FlagID.FlagReplayJacIn,
-                         FlagID.FlagBell,
-                    };
-
-                    CurrentFlag = CheckResultByTable(setting, betAmount, flagDatabase.BigTable, lotOrderBig);
+                    CurrentFlag = LotsBIGTable(setting, betAmount, flagDatabase);
                     break;
 
                 case FlagLotTable.JacGame:
-                    CurrentFlag = BonusGameLots(flagDatabase.JacNonePoss);
+                    CurrentFlag = LotsJACTable(setting, flagDatabase);
                     break;
 
                 default:
@@ -92,56 +67,89 @@ namespace ReelSpinGame_Lots
             }
         }
 
-        // テーブル、設定値とベット枚数からフラグ判定
-        FlagID CheckResultByTable(int setting, int betAmount, FlagDataSets flagTable, FlagID[] lotOrder)
+        // 通常時Aテーブルでの抽選
+        private FlagID LotsNormalATable(int setting, int betAmount, FlagDatabase flagDatabase)
         {
-            int flagCheckNum = 0;
-            int flag = GetFlag();
-
-            // ベット枚数に合わせたテーブルを参照するようにする
-            int offset = SeekNum * (betAmount - 1);
-
-            // 各フラグごとに抽選
-            int index = 0;
-            foreach (float f in flagTable.FlagDataBySettings[setting + offset - 1].FlagTable)
+            switch(betAmount)
             {
-                // 確率に0が指定されていなければ抽選
-                if(f > 0)
-                {
-                    flagCheckNum += Mathf.RoundToInt(MaxFlagLots / f);
+                case 1:
+                    return NewCheckResultByTable(setting, flagDatabase.NormalATableBet1);
 
-                    // 16384/小役確率で求め、これより少ないフラグを引いたら当選とする
-                    if (flag < flagCheckNum)
-                    {
-                        return lotOrder[index];
-                    }
-                }
-                index += 1;
+                case 2:
+                    return NewCheckResultByTable(setting, flagDatabase.NormalATableBet2);
+
+                case 3:
+                    return NewCheckResultByTable(setting, flagDatabase.NormalATableBet3);
             }
 
-            // 何も当たらなければ"はずれ"を返す
             return FlagID.FlagNone;
         }
 
-        // BONUS GAME中の抽選
-        FlagID BonusGameLots(float jacNoneProbability)
+        // 通常時Bテーブルでの抽選
+        private FlagID LotsNormalBTable(int setting, int betAmount, FlagDatabase flagDatabase)
         {
-            // 判定用の数値(16384/小役確率で求め、これより少ないフラグを引いたら当選。端数切捨て)
-            int flagCheckNum;
-            int flag = GetFlag();
-
-            // はずれ抽選
-            flagCheckNum = Mathf.FloorToInt(MaxFlagLots / jacNoneProbability);
-            if (flag < flagCheckNum)
+            switch (betAmount)
             {
-                return FlagID.FlagNone;
+                case 1:
+                    return NewCheckResultByTable(setting, flagDatabase.NormalBTableBet1);
+
+                case 2:
+                    return NewCheckResultByTable(setting, flagDatabase.NormalBTableBet2);
+
+                case 3:
+                    return NewCheckResultByTable(setting, flagDatabase.NormalBTableBet3);
             }
 
-            // はずれでなければJAC当選
-            return FlagID.FlagJac;
+            return FlagID.FlagNone;
         }
 
-        // フラグ抽選
-        int GetFlag() => Random.Range(0, MaxFlagLots);
+        // BIG中テーブルでの抽選
+        private FlagID LotsBIGTable(int setting, int betAmount, FlagDatabase flagDatabase)
+        {
+            switch (betAmount)
+            {
+                case 1:
+                    return NewCheckResultByTable(setting, flagDatabase.BigTableBet1);
+
+                case 2:
+                    return NewCheckResultByTable(setting, flagDatabase.BigTableBet2);
+
+                case 3:
+                    return NewCheckResultByTable(setting, flagDatabase.BigTableBet3);
+            }
+
+            return FlagID.FlagNone;
+        }
+
+        // JAC中テーブルでの抽選
+        private FlagID LotsJACTable(int setting, FlagDatabase flagDatabase)
+        {
+            return NewCheckResultByTable(setting, flagDatabase.JacTable);
+        }
+
+        // テーブル、設定値とベット枚数からフラグ判定
+        private FlagID NewCheckResultByTable(int setting, NewFlagDatabaseSet flagTable)
+        {
+            // 16384フラグ取得(0-16383)
+            int flag = UnityEngine.Random.Range(0, MaxFlagLots);
+            int flagCheckNum = 0;
+
+            // 各フラグごとに抽選
+            foreach(NewFlagData flagData in flagTable.FlagDataList)
+            {
+                // 当選フラグ数が0でなければ抽選
+                if (flagData.FlagCountBySetting[setting - 1] > 0)
+                {
+                    flagCheckNum += flagData.FlagCountBySetting[setting - 1];
+                    // フラグ数より少ない数値を引いたら当選とする
+                    if (flag < flagCheckNum)
+                    {
+                        return flagData.FlagID;
+                    }
+                }
+            }
+            // 何も当たらなければ"はずれ"を返す
+            return FlagID.FlagNone;
+        }
     }
 }
