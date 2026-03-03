@@ -10,7 +10,6 @@ namespace ReelSpinGame_Datas
 #if UNITY_EDITOR
     public class ScriptableGen : EditorWindow
     {
-
         const string DataPath = "Assets/DataFile";                              // 読み込み時のパス
         private const string ReelFileStartPath = "Nostalgia ReelSheet - ";      // リールファイル先頭のファイル名
         private const float JacNoneDefault = 256f;                              // JACはずれデフォルト値
@@ -178,15 +177,12 @@ namespace ReelSpinGame_Datas
             FlagDatabase flagDatabase = CreateInstance<FlagDatabase>();
 
             // フラグテーブル作成
-            // 通常時Aフラグテーブル作成
             using StreamReader normalA = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableNormalA.csv"));
             flagDatabase.NormalATable = FlagDatabaseGen.MakeFlagTableSets(normalA);
 
-            // 通常時Bフラグテーブル作成
             using StreamReader normalB = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableNormalB.csv"));
             flagDatabase.NormalBTable = FlagDatabaseGen.MakeFlagTableSets(normalB);
 
-            // 小役ゲーム中フラグテーブル作成
             using StreamReader bigTable = new StreamReader(Path.Combine(DataPath, "LotsTable", "Nostalgia_Flag - FlagTableBig.csv"));
             flagDatabase.BigTable = FlagDatabaseGen.MakeFlagTableSets(bigTable);
 

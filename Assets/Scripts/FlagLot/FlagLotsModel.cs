@@ -105,12 +105,16 @@ namespace ReelSpinGame_Lots
             int index = 0;
             foreach (float f in flagTable.FlagDataBySettings[setting + offset - 1].FlagTable)
             {
-                flagCheckNum += Mathf.RoundToInt(MaxFlagLots / f);
-
-                // 16384/小役確率で求め、これより少ないフラグを引いたら当選とする
-                if (flag < flagCheckNum)
+                // 確率に0が指定されていなければ抽選
+                if(f > 0)
                 {
-                    return lotOrder[index];
+                    flagCheckNum += Mathf.RoundToInt(MaxFlagLots / f);
+
+                    // 16384/小役確率で求め、これより少ないフラグを引いたら当選とする
+                    if (flag < flagCheckNum)
+                    {
+                        return lotOrder[index];
+                    }
                 }
                 index += 1;
             }
