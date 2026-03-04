@@ -13,8 +13,11 @@ namespace ReelSpinGame_Effect
     // リールフラッシュやサウンドなどの演出管理
     public class EffectPresenter : MonoBehaviour
     {
-        const float MaxVolume = 100f;                       // 最大ボリューム値
-        const float StartFadeoutTime = 60f;                 // フェードアウトを始める時間
+        private const float MaxVolume = 100f;           // 最大ボリューム値
+        private const float StartFadeoutTime = 60f;     // フェードアウトを始める時間
+        private const float AutoTurnOffTimer = 30f;     // 自動で消灯する時間
+
+        public bool HasNoControl = false;               // 操作が無効になっているか
 
         private ReelEffectManager reelEffectManager;        // リール演出マネージャー
         private FlashManager flashManager;                  // フラッシュ機能
@@ -115,6 +118,15 @@ namespace ReelSpinGame_Effect
             }
         }
 
+        // 自動消灯を有効にする
+        public void StartAutoTurnOff() => StartCoroutine(nameof(AutoTurnOff));
+        // 自動消灯の無効
+        public void StopAutoTurnOff()
+        {
+            StopCoroutine(nameof(AutoTurnOff));
+            HasNoControl = false;
+        }
+
         // 演出開始
         // ベット時の演出
         public void StartBetEffect(BetEffectCondition condition) => betButtonEffect.DoEffect(condition);
@@ -159,6 +171,13 @@ namespace ReelSpinGame_Effect
 
             // フェードアウト開始
             soundManager.StartBGMFadeout();
+        }
+
+        // 操作無効時の自動消灯
+        private IEnumerator AutoTurnOff()
+        {
+            yield return new WaitForSeconds(AutoTurnOffTimer);
+            HasNoControl = true;
         }
     }
 }

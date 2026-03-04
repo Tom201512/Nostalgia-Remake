@@ -17,6 +17,11 @@ namespace ReelSpinGame_Reels.Effect
             HasFakeSpin = false;
         }
 
+        void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
         // 指定したリールのバックライト変更
         public void ChangeReelBackLight(int reelID, int r, int g, int b) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(r,g,b);
         public void ChangeReelBackLight(int reelID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(brightness);

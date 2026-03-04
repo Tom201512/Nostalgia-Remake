@@ -8,17 +8,19 @@ namespace ReelSpinGame_State.InsertState
     // 投入ステート
     public class InsertState : IGameStatement
     {
-        // このゲームの状態
-
         private GameManager gM;         // ゲームマネージャ
+        private bool hasAutoTurnOff;    // 自動消灯したか
+
 
         public InsertState(GameManager gameManager)
         {
             gM = gameManager;
+            hasAutoTurnOff = false;
         }
 
         public void StateStart()
         {
+            hasAutoTurnOff = false;
             // クレジットを表示
             gM.Medal.UpdateCreditSegment();
             // イベント登録
@@ -40,11 +42,26 @@ namespace ReelSpinGame_State.InsertState
             {
                 gM.Status.TurnOnInsertLamp();
                 gM.Status.TurnOffReplayLamp();
+
+                // 通常時であればリールとベットランプ、払い出し表示を自動消灯させる
+                if(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+                {
+                    gM.Effect.StartAutoTurnOff();
+                }
             }
         }
 
         public void StateUpdate()
         {
+            // 自動消灯が有効になったらベットランプとリールを消灯
+            if(!hasAutoTurnOff && gM.Effect.HasNoControl)
+            {
+                gM.Effect.StopReelFlash();
+                gM.Effect.TurnOffAllReels();
+                gM.Medal.DisableMedalBetLamp();
+                hasAutoTurnOff = true;
+            }
+
             if (!gM.Option.HasOptionMode)
             {
                 // オートの有無に合わせて操作受付を変える
@@ -80,6 +97,8 @@ namespace ReelSpinGame_State.InsertState
         // ベット処理
         void BetAction(int amount, bool isFastAuto)
         {
+            // 自動消灯を無効にする
+            gM.Effect.StopAutoTurnOff();
             gM.Medal.StartBet(amount, isFastAuto);
 
             // 通常オートならセグメントを更新する

@@ -97,13 +97,10 @@ namespace ReelSpinGame_Reels.Flash
 
         // リールライトをすべて明るくする
         public void TurnOnAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOnValue);
-
         // リールライトをすべて暗くする
         public void TurnOffAllReels() => reelEffectManager.ChangeAllReelBrightness(ReelBase.TurnOffValue);
-
         // JAC GAME時のライト点灯
         public void EnableJacGameLight() => reelEffectManager.EnableJacGameLight();
-
 
         // フラッシュデータの処理を反映する
         void ReadFlashData()

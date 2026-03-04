@@ -99,6 +99,9 @@ namespace ReelSpinGame_Medal
         // クレジットを表示
         public void UpdateCreditSegment() => creditSegments.ShowSegmentByNumber(data.MedalSystem.Credit);
 
+        // メダルベット枚数ランプを非表示にする
+        public void DisableMedalBetLamp() => medalPanel.UpdateLampByBet(0, 0);
+
         // ベット処理開始
         public void StartBet(int amount, bool isFastAuto)
         {
