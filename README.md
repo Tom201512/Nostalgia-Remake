@@ -42,6 +42,6 @@ https://drive.google.com/drive/folders/1Ea28mKtEinN5_U4SauYqHPnSEJKf_OM8?usp=dri
 \
 \
 [クレジット / Credit]\
-Copyrights(C) 2026 : Sturm7(Tom.u.)\
+Copyright(C) 2026 : Sturm7(Tom.u.)\
 Graphic and Sound :Sturm7\
 Font: Noto-Sans JP Google font
