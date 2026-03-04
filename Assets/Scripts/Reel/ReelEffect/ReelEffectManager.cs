@@ -18,9 +18,12 @@ namespace ReelSpinGame_Reels.Effect
         }
 
         // 指定したリールのバックライト変更
+        public void ChangeReelBackLight(int reelID, int r, int g, int b) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(r,g,b);
         public void ChangeReelBackLight(int reelID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(brightness);
 
         // 指定したリールと図柄位置のライト変更
+        public void ChangeReelSymbolLight(int reelID, int posID, int r, int g, int b) => reelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, r,g,b);
+
         public void ChangeReelSymbolLight(int reelID, int posID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
 
         // 全リールの明るさ一括変更

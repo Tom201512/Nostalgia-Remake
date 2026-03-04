@@ -49,7 +49,7 @@ namespace ReelSpinGame_Lots.Flag
             }
             else
             {
-                flagLotsModel.NewGetFlagLots(flagCounter.Counter, setting, betAmount, flagDatabase);
+                flagLotsModel.GetFlagLots(flagCounter.Counter, setting, betAmount, flagDatabase);
             }
         }
 

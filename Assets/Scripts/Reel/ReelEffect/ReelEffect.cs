@@ -16,10 +16,12 @@ namespace ReelSpinGame_Reels
         public bool HasJacBrightnessCalculate { get; private set; }        // JAC’†‚Ì–¾‚é‚³ŒvŽZ‚ð‚·‚é‚©
 
         // ƒŠ[ƒ‹–{‘Ì‚Ì–¾‚é‚³•ÏX
-        public void ChangeReelBrightness(byte brightness) => reelBase.ChangeBrightness(brightness);
+        public void ChangeReelBrightness(int r, int g, int b) => reelBase.ChangeBrightness(r,g,b);
+        public void ChangeReelBrightness(byte brightness) => reelBase.ChangeBrightness(brightness, brightness, brightness);
 
         // Žw’è‚µ‚½ˆÊ’u‚Ì}•¿‚Ì–¾‚é‚³•ÏX
-        public void ChangeSymbolBrightness(int posID, byte brightness) => symbolLight.ChangeSymbolBrightness(posID, brightness);
+        public void ChangeSymbolBrightness(int posID, int r, int g, int b) => symbolLight.ChangeSymbolBrightness(posID, r,g,b);
+        public void ChangeSymbolBrightness(int posID, byte brightness) => symbolLight.ChangeSymbolBrightness(posID, brightness, brightness,brightness);
 
         // JACŽž‚Ì–¾‚é‚³ŒvŽZ‚ÌÝ’è
         public void SetJacBrightnessCalculate(bool value) => HasJacBrightnessCalculate = value;
@@ -29,13 +31,13 @@ namespace ReelSpinGame_Reels
         {
             if (Math.Sign(maxSpeed) == -1)
             {
-                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(maxSpeed));
-                ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(maxSpeed));
+                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(false));
+                ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(true));
             }
             else
             {
-                ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(maxSpeed));
-                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(maxSpeed));
+                ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(false));
+                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(true));
             }
         }
 
@@ -63,7 +65,7 @@ namespace ReelSpinGame_Reels
         }
 
         // JACŽž‚Ì–¾‚é‚³ŒvŽZ(
-        private byte CalculateJACBrightness(float maxSpeed)
+        private byte CalculateJACBrightness(bool isNegative)
         {
             float brightnessTest;
             float currentDistance = 0;
@@ -74,7 +76,7 @@ namespace ReelSpinGame_Reels
             // •„†‚É‡‚í‚¹‚Ä‹——£‚ðŒvŽZ
             if (transform.rotation.eulerAngles.x > 0f)
             {
-                if (Math.Sign(maxSpeed) == -1)
+                if (isNegative)
                 {
                     currentDistance = transform.rotation.eulerAngles.x;
                 }
@@ -89,7 +91,7 @@ namespace ReelSpinGame_Reels
 
             float CenterBright;
 
-            if (Math.Sign(maxSpeed) == -1)
+            if (isNegative)
             {
                 CenterBright = Math.Clamp(SymbolLight.TurnOnValue - (distance * brightnessTest), 0, 255);
             }

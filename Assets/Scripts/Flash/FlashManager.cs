@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Flash.FlashData;
 
 namespace ReelSpinGame_Reels.Flash
 {
@@ -19,7 +20,6 @@ namespace ReelSpinGame_Reels.Flash
         public const float ReelFlashTime = 0.01f;       // リールフラッシュの間隔(秒間隔)
         public const int PayoutFlashFrames = 15;        // 払い出し時のフラッシュに要するフレーム数(0.01秒間隔)
 
-        const int SeekOffset = 4;                       // シーク位置オフセット用
         const int NoChangeValue = -1;                   // 変更しないときの数値
 
         public enum FlashID { V_Flash };                // デフォルトのフラッシュID
@@ -110,35 +110,25 @@ namespace ReelSpinGame_Reels.Flash
         {
             if (CurrentFlashID >= FlashDatabase.Count)
             {
-                throw new Exception("FlashID is Overflow the flashDatabase");
+                throw new Exception("FlashID is Overflow");
             }
 
             int[] flashData = FlashDatabase[CurrentFlashID].GetCurrentFlashData();
 
+
             // 現在のフレームと一致しなければ読み込まない
-            if (currentFrame == flashData[(int)FlashData.PropertyID.FrameID])
+            if (currentFrame == flashData[(int)PropertyID.FrameID])
             {
                 // リール全て変更
                 for (int i = 0; i < ReelAmount; i++)
                 {
-                    // 本体と枠下枠上の図柄変更
-                    int bodyBright = flashData[(int)FlashData.PropertyID.Body + i * SeekOffset];
-                    if (bodyBright != NoChangeValue)
-                    {
-                        reelEffectManager.ChangeReelBackLight(i, (byte)bodyBright);
-                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Lower2nd, (byte)bodyBright);
-                        reelEffectManager.ChangeReelSymbolLight(i, (int)ReelPosID.Upper2nd, (byte)bodyBright);
-                    }
+                    // 本体色変更
+                    ChangeReelBodyColorByFlash(i);
 
-                    // 図柄の明るさ変更
-                    for (int j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd; j++)
+                    // 図柄の明るさ変更(枠下-枠上)
+                    for(int j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd + 1; j++)
                     {
-                        int symbolBright = flashData[(int)FlashData.PropertyID.SymbolLower + j + i * SeekOffset];
-
-                        if (symbolBright != NoChangeValue)
-                        {
-                            reelEffectManager.ChangeReelSymbolLight(i, j, (byte)symbolBright);
-                        }
+                        ChangeReelSymbolColorByFlash(i, j);
                     }
                 }
 
@@ -148,12 +138,13 @@ namespace ReelSpinGame_Reels.Flash
                     currentFrame += 1;
                     FlashDatabase[CurrentFlashID].MoveNextSeek();
                 }
+
                 // ループさせるか(ループの場合は特定フレームまで移動させる)
                 // しない場合は停止する。
-                if (flashData[(int)FlashData.PropertyID.LoopPosition] != NoChangeValue)
+                if (flashData[(int)PropertyID.LoopPosition] != NoChangeValue)
                 {
-                    currentFrame = flashData[(int)FlashData.PropertyID.LoopPosition];
-                    FlashDatabase[CurrentFlashID].SetSeek(flashData[(int)FlashData.PropertyID.LoopPosition]);
+                    currentFrame = flashData[(int)PropertyID.LoopPosition];
+                    FlashDatabase[CurrentFlashID].SetSeek(flashData[(int)PropertyID.LoopPosition]);
                 }
                 // 最終行までよんでループがない場合は終了
                 else if (FlashDatabase[CurrentFlashID].HasSeekReachedEnd())
@@ -207,6 +198,28 @@ namespace ReelSpinGame_Reels.Flash
             // 数値を超えないように調整して結果を返す
             result = Math.Clamp(result, SymbolLight.TurnOffValue, SymbolLight.TurnOnValue);
             return (byte)Math.Round(result);
+        }
+
+        // 指定リールIDの本体色を現在のフラッシュ位置に合わせて変更
+        private void ChangeReelBodyColorByFlash(int reelID)
+        {
+            int[] colors = FlashDatabase[CurrentFlashID].GetReelBodyBrightness(reelID);
+            int r = colors[(int)ColorID.R];
+            int g = colors[(int)ColorID.G];
+            int b = colors[(int)ColorID.B];
+
+            reelEffectManager.ChangeReelBackLight(reelID, r,g,b);
+        }
+
+        // 指定リールIDの図柄位置を現在のフラッシュ位置に合わせて変更
+        private void ChangeReelSymbolColorByFlash(int reelID, int posID)
+        {
+            int[] colors = FlashDatabase[CurrentFlashID].GetReelSymbolBrightness(reelID, posID);
+            int r = colors[(int)ColorID.R];
+            int g = colors[(int)ColorID.G];
+            int b = colors[(int)ColorID.B];
+
+            reelEffectManager.ChangeReelSymbolLight(reelID, posID, r, g, b);
         }
 
         // リールフラッシュのイベント

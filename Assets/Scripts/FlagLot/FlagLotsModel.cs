@@ -33,7 +33,7 @@ namespace ReelSpinGame_Lots
         public FlagLotTable CurrentTable { get; set; }                      // 抽選テーブル
 
         // フラグ抽選の開始
-        public void NewGetFlagLots(int counter, int setting, int betAmount, FlagDatabase flagDatabase)
+        public void GetFlagLots(int counter, int setting, int betAmount, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
             switch (CurrentTable)
@@ -73,13 +73,13 @@ namespace ReelSpinGame_Lots
             switch(betAmount)
             {
                 case 1:
-                    return NewCheckResultByTable(setting, flagDatabase.NormalATableBet1);
+                    return CheckResultByTable(setting, flagDatabase.NormalATableBet1);
 
                 case 2:
-                    return NewCheckResultByTable(setting, flagDatabase.NormalATableBet2);
+                    return CheckResultByTable(setting, flagDatabase.NormalATableBet2);
 
                 case 3:
-                    return NewCheckResultByTable(setting, flagDatabase.NormalATableBet3);
+                    return CheckResultByTable(setting, flagDatabase.NormalATableBet3);
             }
 
             return FlagID.FlagNone;
@@ -91,13 +91,13 @@ namespace ReelSpinGame_Lots
             switch (betAmount)
             {
                 case 1:
-                    return NewCheckResultByTable(setting, flagDatabase.NormalBTableBet1);
+                    return CheckResultByTable(setting, flagDatabase.NormalBTableBet1);
 
                 case 2:
-                    return NewCheckResultByTable(setting, flagDatabase.NormalBTableBet2);
+                    return CheckResultByTable(setting, flagDatabase.NormalBTableBet2);
 
                 case 3:
-                    return NewCheckResultByTable(setting, flagDatabase.NormalBTableBet3);
+                    return CheckResultByTable(setting, flagDatabase.NormalBTableBet3);
             }
 
             return FlagID.FlagNone;
@@ -109,13 +109,13 @@ namespace ReelSpinGame_Lots
             switch (betAmount)
             {
                 case 1:
-                    return NewCheckResultByTable(setting, flagDatabase.BigTableBet1);
+                    return CheckResultByTable(setting, flagDatabase.BigTableBet1);
 
                 case 2:
-                    return NewCheckResultByTable(setting, flagDatabase.BigTableBet2);
+                    return CheckResultByTable(setting, flagDatabase.BigTableBet2);
 
                 case 3:
-                    return NewCheckResultByTable(setting, flagDatabase.BigTableBet3);
+                    return CheckResultByTable(setting, flagDatabase.BigTableBet3);
             }
 
             return FlagID.FlagNone;
@@ -124,18 +124,18 @@ namespace ReelSpinGame_Lots
         // JAC中テーブルでの抽選
         private FlagID LotsJACTable(int setting, FlagDatabase flagDatabase)
         {
-            return NewCheckResultByTable(setting, flagDatabase.JacTable);
+            return CheckResultByTable(setting, flagDatabase.JacTable);
         }
 
         // テーブル、設定値とベット枚数からフラグ判定
-        private FlagID NewCheckResultByTable(int setting, NewFlagDatabaseSet flagTable)
+        private FlagID CheckResultByTable(int setting, FlagDatabaseSet flagTable)
         {
             // 16384フラグ取得(0-16383)
             int flag = UnityEngine.Random.Range(0, MaxFlagLots);
             int flagCheckNum = 0;
 
             // 各フラグごとに抽選
-            foreach(NewFlagData flagData in flagTable.FlagDataList)
+            foreach(FlagData flagData in flagTable.FlagDataList)
             {
                 // 当選フラグ数が0でなければ抽選
                 if (flagData.FlagCountBySetting[setting - 1] > 0)

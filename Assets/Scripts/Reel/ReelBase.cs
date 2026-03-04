@@ -1,4 +1,5 @@
 using UnityEngine;
+using static ReelSpinGame_Flash.FlashData;
 
 namespace ReelSpinGame_Reels
 {
@@ -6,30 +7,53 @@ namespace ReelSpinGame_Reels
     public class ReelBase : MonoBehaviour
     {
         public const byte TurnOnValue = 255;        // デフォルトの明るさ(点灯時)
-        public const byte TurnOffValue = 180;       // デフォルトの暗さ(消灯時)
+        public const byte TurnOffValue = 80;        // デフォルトの暗さ(消灯時)
 
-        private Renderer render;        // 表示部分
-        private byte lastBrightness;    // 明るさ
-
+        private Renderer render;                    // 表示部分
+        private byte[] previousBrightness;           // 前フレームの明るさ
+        
         void Awake()
         {
             render = GetComponent<Renderer>();
-            lastBrightness = 0;
+            previousBrightness = new byte[]
+            {
+                TurnOffValue,
+                TurnOffValue,
+                TurnOffValue,
+            };
         }
 
         void Start()
         {
-            ChangeBrightness(TurnOffValue);
+            ChangeBrightness(TurnOffValue, TurnOffValue, TurnOffValue);
         }
 
         // 色変更
-        public void ChangeBrightness(byte brightness)
+        public void ChangeBrightness(int red, int green, int blue)
         {
-            if (lastBrightness != brightness)
+            byte r = previousBrightness[(int)ColorID.R];
+            byte g = previousBrightness[(int)ColorID.G];
+            byte b = previousBrightness[(int)ColorID.B];
+
+            if (red != -1 && red != r)
             {
-                render.material.SetColor("_Color", new Color32(brightness, brightness, brightness, 255));
-                lastBrightness = brightness;
+                r = (byte)red;
+                previousBrightness[(int)ColorID.R] = (byte)red;
             }
+
+            if (green != -1 && green != g)
+            {
+                g = (byte)green;
+                previousBrightness[(int)ColorID.G] = (byte)green;
+            }
+
+            if (blue != -1 && blue != b)
+            {
+                b = (byte)blue;
+                previousBrightness[(int)ColorID.B] = (byte)blue;
+            }
+
+            render.material.SetColor("_Color", new Color32(r, g, b, 255));
         }
     }
 }

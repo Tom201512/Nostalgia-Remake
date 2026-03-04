@@ -62,9 +62,9 @@ namespace ReelSpinGame_Datas
             // •Û‘¶ˆ—
             ScriptableGen.GenerateFile(path, fileName, flagDatabase);
         }
-        static NewFlagDatabaseSet MakeFlagDataSets(StreamReader flagTableFile)
+        static FlagDatabaseSet MakeFlagDataSets(StreamReader flagTableFile)
         {
-            return new NewFlagDatabaseSet(flagTableFile);
+            return new FlagDatabaseSet(flagTableFile);
         }
     }
 #endif

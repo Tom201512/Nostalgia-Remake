@@ -42,7 +42,7 @@ namespace ReelSpinGame_Effect.Data
                 case FlagID.FlagReg:
                 case FlagID.FlagNone:
                     if (beforePayoutEffectCondition.HoldingBonus != BonusTypeID.BonusNone &&
-                        OriginalRandomLot.LotRandomByNum(6))
+                        OriginalRandomLot.LotRandomByNum(1))
                     {
                         flash.StartReelFlash(VFlashWaitTime, FlashID.V_Flash);
                         StartCoroutine(nameof(UpdateBeforePayoutEffect));

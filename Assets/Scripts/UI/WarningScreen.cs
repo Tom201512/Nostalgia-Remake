@@ -9,7 +9,7 @@ namespace ReelSpinGame_Option.OtherSetting
     // 終了時の警告画面
     public class WarningScreen : MonoBehaviour
     {
-        const float yesButtonEnableTime = 5f;           // 決定ボタンが有効になるまでの時間
+        const float yesButtonEnableTime = 3f;           // 決定ボタンが有効になるまでの時間
 
         [SerializeField] ButtonComponent noButton;      // キャンセルボタン
         [SerializeField] ButtonComponent yesButton;     // 決定ボタン
