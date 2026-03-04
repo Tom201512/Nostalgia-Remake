@@ -16,11 +16,13 @@ namespace ReelSpinGame_State.LotsState
         {
             gM.SetLimitReached();
             gM.Effect.StartLimitReachedEffect();
+            gM.Medal.DisableMedalBetLamp();
+            gM.Status.TurnOffInsertAndStart();
+            gM.Status.TurnOffReplayLamp();
         }
 
         public void StateUpdate()
         {
-
         }
 
         public void StateEnd()

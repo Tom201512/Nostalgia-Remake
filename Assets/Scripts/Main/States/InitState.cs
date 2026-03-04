@@ -129,8 +129,9 @@ namespace ReelSpinGame_State.LotsState
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
             }
 
-            // 回転数が規定数に達していたらエラーにする
-            else if (gM.PlayerSave.Player.TotalGames >= PlayerDatabase.MaximumTotalGames)
+            // 通常時で回転数が規定数に達していたらエラーにする
+            else if (gM.PlayerSave.Bonus.CurrentBonusStatus == BonusStatus.BonusNone &&
+                gM.PlayerSave.Player.TotalGames >= PlayerDatabase.MaximumTotalGames)
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.LimitReachedState);
             }
