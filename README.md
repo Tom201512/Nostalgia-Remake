@@ -2,19 +2,15 @@
 <img width="1602" height="932" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9" />
 
 [説明 / About]\
-Unity上で動作するパチスロのシミュレーターです。サンプルゲームとして過去作で作成した"Nostalgia"を同梱してます。\
-A Pachislot(Slot Machine) simulator for Unity. Including "Nostalgia", a sample game that I previously made. 
+Unity上で動作するパチスロのシミュレーターです。サンプルゲームとして過去作で作成した"Nostalgia"のリメイク版を同梱しています。
 
 ### SampleGame Instructions (Nostalgia)
 
 [言語設定 / Language]\
 初回起動時に日本語か英語のいずれかから言語設定ができます。\
-You can set a language setting between Japanese and English when it's a first time launch.\
-\
 \
 [操作方法 / How to play]\
 遊び方、操作説明はゲーム内メニューからも確認できます。\
-You can also check "How to play" and controls in game menu.\
 \
 スペースキー:MAX BET\
 1キー:1BET\
@@ -29,38 +25,22 @@ You can also check "How to play" and controls in game menu.\
 Aキー:オートプレイ切り替え\
 Mキー:メニュー開閉\
 \
-Space:  MAX BET\
-1:1BET\
-2:2BET\
-Up arrow:MAX BET&Start reels\
-\
-Left arrow:Stop Left reel\
-Down arrow:Stop Middle reel\
-Right arrow:Stop Right reel\
-*Reels will stop within 1 minute.\
-\
-A:Toggle auto play\
-M:Open/Close Menu\
-\
-\
 [セーブタイミングについて / Save timing]\
 セーブは第三停止ボタンを離したタイミングでセーブされます。払い出しの途中であっても\
 ロード時には払い出しがすでに終わった状態でゲームが開始します。\
-</t></t>Save data will be recorded when you stop third reel.\
-The game will load save data at the timing of when payout is finished.\
-\
 \
 [打ち止めについて / Spin limit]\
 99999G到達で打ち止めになります。\
-You can spin reels until it reaches 99999 games.\
 \
+\
+[ReelSpinEngine(RSE)について / About ReelSpinEngine(RSE)]\
+本コードの改変、再頒布を許可します。詳しくは"LICENSE"ファイルをご覧ください。\
+\
+以下のリンクからソースコードで使用しているスプレッドシートをコピーすることができます。\
+Google スプレッドシートにてコピーし開いてください。その他の表計算ソフトでの動作は保証していません。\
+https://drive.google.com/drive/folders/1Ea28mKtEinN5_U4SauYqHPnSEJKf_OM8?usp=drive_link\
 \
 [クレジット / Credit]\
 Copyrights(C) 2026 : Sturm7(Tom.u.)\
 Graphic and Sound :Sturm7\
 Font: Noto-Sans JP Google font\
-
-
-[ReelSpinEngine(RSE)について / About ReelSpinEngine(RSE)]\
-本コードの改変、再頒布を許可します。詳しくは"LICENSE"ファイルをご覧ください。
-Any modification and redistribution of this code is permitted. Check "LICENSE" file for more infomation.
