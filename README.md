@@ -38,9 +38,10 @@ Mキー:メニュー開閉\
 \
 以下のリンクからソースコードで使用しているスプレッドシートをコピーすることができます。\
 Google スプレッドシートにてコピーし開いてください。その他の表計算ソフトでの動作は保証していません。\
-https://drive.google.com/drive/folders/1Ea28mKtEinN5_U4SauYqHPnSEJKf_OM8?usp=drive_link\
+https://drive.google.com/drive/folders/1Ea28mKtEinN5_U4SauYqHPnSEJKf_OM8?usp=drive_link
+\
 \
 [クレジット / Credit]\
 Copyrights(C) 2026 : Sturm7(Tom.u.)\
 Graphic and Sound :Sturm7\
-Font: Noto-Sans JP Google font\
+Font: Noto-Sans JP Google font
