@@ -8,18 +8,23 @@ namespace ReelSpinGame_State.InsertState
     // 投入ステート
     public class InsertState : IGameStatement
     {
-        private GameManager gM;         // ゲームマネージャ
-        private bool hasAutoTurnOff;    // 自動消灯したか
+        private GameManager gM;                 // ゲームマネージャ
+        private InputManager inputManager;      // 入力
+        private bool hasAutoTurnOff;            // 自動消灯したか
 
 
-        public InsertState(GameManager gameManager)
+        public InsertState(GameManager gameManager, InputManager inputManager)
         {
             gM = gameManager;
+            this.inputManager = inputManager;
             hasAutoTurnOff = false;
         }
 
         public void StateStart()
         {
+            // 入力処理を登録
+            inputManager.ActionTriggeredEvent += OnActionTriggered;
+
             hasAutoTurnOff = false;
             // クレジットを表示
             gM.Medal.UpdateCreditSegment();
@@ -76,8 +81,6 @@ namespace ReelSpinGame_State.InsertState
                     {
                         gM.Option.ToggleOptionLock(false);
                     }
-
-                    PlayerControl();
                 }
             }
         }
@@ -86,6 +89,8 @@ namespace ReelSpinGame_State.InsertState
         {
             // イベント解除
             gM.Medal.HasMedalInsertEvent -= OnMedalInserted;
+            // 入力処理を解除
+            inputManager.ActionTriggeredEvent -= OnActionTriggered;
             // INSERT, STARTランプの消灯
             gM.Status.TurnOffInsertAndStart();
             // メダル処理を終了させる
@@ -159,31 +164,6 @@ namespace ReelSpinGame_State.InsertState
             }
         }
 
-        // プレイヤー操作の管理
-        void PlayerControl()
-        {
-            // MAX BET
-            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.MaxBet))
-            {
-                BetAction(gM.Medal.MaxBetAmount, false);
-            }
-            // BET1
-            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetOne))
-            {
-                BetAction(1, false);
-            }
-            // BET2
-            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.BetTwo))
-            {
-                BetAction(2, false);
-            }
-            // ベット終了 または MAXBET
-            if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StartAndMax))
-            {
-                BetAndStartFunction(false);
-            }
-        }
-
         // ベット終了処理
         void EndInsertState()
         {
@@ -219,5 +199,25 @@ namespace ReelSpinGame_State.InsertState
         }
 
         void OnMedalInserted() => gM.Effect.StartPlayBetSound();
+
+        // 入力に応じた処理をする
+        void OnActionTriggered(InputManager.ControlKeys controlKey)
+        {
+            switch(controlKey)
+            {
+                case InputManager.ControlKeys.MaxBet:
+                    BetAction(gM.Medal.MaxBetAmount, false);
+                    break;
+                case InputManager.ControlKeys.BetOne:
+                    BetAction(1, false);
+                    break;
+                case InputManager.ControlKeys.BetTwo:
+                    BetAction(2, false);
+                    break;
+                case InputManager.ControlKeys.StartAndMax:
+                    BetAndStartFunction(false);
+                    break;
+            }
+        }
     }
 }

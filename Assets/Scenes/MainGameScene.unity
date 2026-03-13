@@ -23229,6 +23229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7186d082776b5e544ad495d9fe50947d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 985983678}
   reelManagerObj: {fileID: 286284044}
   effectManagerObj: {fileID: 1787737427}
   optionManagerObj: {fileID: 2003992387}
@@ -23251,6 +23252,7 @@ Transform:
   m_Children:
   - {fileID: 1787737425}
   - {fileID: 286284037}
+  - {fileID: 985983677}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &460868895
@@ -23318,15 +23320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5252ba3569e21348bddc3c8ad62649f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBetKey: 32
-  betOneKey: 49
-  betTwoKey: 50
-  startAndMaxBetKey: 273
-  stopLeftKey: 276
-  stopMiddleKey: 274
-  stopRightKey: 275
-  toggleAutoKey: 97
-  toggleOptionKey: 109
+  playerInputManager: {fileID: 809531154}
+  isKeyHeld: 0
 --- !u!114 &460868900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29467,6 +29462,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &809531152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809531153}
+  - component: {fileID: 809531154}
+  m_Layer: 0
+  m_Name: PlayerInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809531153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809531152}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 985983677}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809531154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809531152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b64152b478c5c4999725c70bde7518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxBetKey: 32
+  betOneKey: 49
+  betTwoKey: 50
+  startAndMaxBetKey: 273
+  stopLeftKey: 276
+  stopMiddleKey: 274
+  stopRightKey: 275
+  toggleAutoKey: 97
+  toggleMenuKey: 109
 --- !u!1 &812652903
 GameObject:
   m_ObjectHideFlags: 0
@@ -32151,6 +32199,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977759372}
   m_CullTransparentMesh: 1
+--- !u!1 &985983676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 985983677}
+  - component: {fileID: 985983678}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &985983677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985983676}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 809531153}
+  m_Father: {fileID: 460868893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &985983678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985983676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5252ba3569e21348bddc3c8ad62649f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputManager: {fileID: 809531154}
+  isKeyHeld: 0
 --- !u!1 &997782533
 GameObject:
   m_ObjectHideFlags: 0

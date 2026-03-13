@@ -1,6 +1,7 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
+using ReelSpinGame_Input;
 using ReelSpinGame_Lamps;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
@@ -24,18 +25,19 @@ public class GameManager : MonoBehaviour
 {
     public const int MaxSlotSetting = 6;    // 最高設定値
 
+    [SerializeField] private InputManager inputManager;             // 入力処理
     [SerializeField] private ReelLogicManager reelManagerObj;       // リール情報
     [SerializeField] private EffectPresenter effectManagerObj;      // 演出
     [SerializeField] private OptionManager optionManagerObj;        // オプション画面
-    [SerializeField] PlayerUI playerUI;                             // プレイヤーUI
-    [SerializeField] SlotDataScreen slotDataScreen;                 // スロット情報データ画面UI
-    [SerializeField] StatusPanel statusPanel;                       // ステータスパネル
-    [SerializeField] LimitReachedScreen limitReachedScreen;         // 打ち止め時画面
+    [SerializeField] private PlayerUI playerUI;                             // プレイヤーUI
+    [SerializeField] private SlotDataScreen slotDataScreen;                 // スロット情報データ画面UI
+    [SerializeField] private StatusPanel statusPanel;                       // ステータスパネル
+    [SerializeField] private LimitReachedScreen limitReachedScreen;         // 打ち止め時画面
 
     public ScreenManager Screen { get; private set; }                           // 画面マネージャー
     public InitialSettingManager InitialSetting { get; private set; }           // 初回起動設定マネージャー
     public LotSettingManager LotSetting { get; private set; }                   // 設定変更
-    public InputManager InputManager { get; private set; }                      // 入力マネージャー
+    public InputManager InputManager { get { return inputManager; } }           // 入力マネージャー
     public MedalManager Medal { get; private set; }                             // メダルマネージャー
     public FlagLots Lots { get; private set; }                                  // フラグ抽選マネージャー
     public WaitManager Wait { get; private set; }                               // ウェイト管理マネージャー
@@ -61,7 +63,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        InputManager = GetComponent<InputManager>();                // 操作
         Screen = GetComponent<ScreenManager>();                     // 画面
         InitialSetting = GetComponent<InitialSettingManager>();     // 初回起動
         LotSetting = GetComponent<LotSettingManager>();             // 設定変更
@@ -126,52 +127,22 @@ public class GameManager : MonoBehaviour
         Option.LoadAutoSettingFromSave(OptionSave.AutoOptionData);
         Option.LoadOtherSettingFromSave(OptionSave.OtherOptionData);
 
+        // イベント登録
+        InputManager.ActionTriggeredEvent += OnActionTriggered;
+
         // ステート開始
         MainFlow.StateManager.StartState();
     }
 
-    void OnDestroy()
-    {
-        Option.GameExitEvent -= OnGameExit;
-    }
-
     void Update()
     {
-        // オートプレイ機能ボタン
-        if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleAuto))
-        {
-            if (!IsFirstLaunch && !Option.HasOptionMode &&
-                !LotSetting.IsSettingChanging && !HasReachedLimitSpin)
-            {
-                // 設定を反映する
-                Auto.CurrentSpeed = Option.AutoOptionData.CurrentSpeed;
-                Auto.CurrentStopOrder = Option.AutoOptionData.CurrentStopOrder;
-                Auto.BigLineUpSymbol = Option.AutoOptionData.BigLineUpSymbol;
-                Auto.HasTechnicalPlay = Option.AutoOptionData.HasTechnicalPlay;
-                Auto.EndConditionFlag = Option.AutoOptionData.EndConditionFlag;
-                Auto.SpinTimeCondition = Option.AutoOptionData.SpinConditionID;
-
-                Auto.ChangeAutoMode();
-
-                if (Auto.HasAuto)
-                {
-                    Option.ToggleOptionLock(true);
-                }
-            }
-        }
-
-        // オプション画面起動(メニューボタンを押しても作動)
-        if (InputManager.CheckOneKeyInput(InputManager.ControlKeys.ToggleOption))
-        {
-            Option.ToggleOptionScreen(-1);
-        }
-
         MainFlow.UpdateState();
     }
 
     void OnApplicationQuit()
     {
         // イベント登録解除
+        Option.GameExitEvent -= OnGameExit;
         Option.AutoSettingChangedEvent -= OnAutoSettingChanged;
 
         // セーブ開始(初回設定が完了している場合のみ)
@@ -246,6 +217,44 @@ public class GameManager : MonoBehaviour
         Reel.SetReelDelayVisible(Option.OtherOptionData.HasDelayDisplay);
         Reel.SetReelMarkers(Option.OtherOptionData.AssistMarkerPos);
         _ = ChangeLocale(Option.OtherOptionData.CurrentLanguage);
+    }
+
+    // オート処理が実行された時の処理
+    void ToggleAuto()
+    {
+        if (!IsFirstLaunch && !Option.HasOptionMode && !LotSetting.IsSettingChanging && !HasReachedLimitSpin)
+        {
+            // 設定を反映する
+            Auto.CurrentSpeed = Option.AutoOptionData.CurrentSpeed;
+            Auto.CurrentStopOrder = Option.AutoOptionData.CurrentStopOrder;
+            Auto.BigLineUpSymbol = Option.AutoOptionData.BigLineUpSymbol;
+            Auto.HasTechnicalPlay = Option.AutoOptionData.HasTechnicalPlay;
+            Auto.EndConditionFlag = Option.AutoOptionData.EndConditionFlag;
+            Auto.SpinTimeCondition = Option.AutoOptionData.SpinConditionID;
+
+            Auto.ChangeAutoMode();
+
+            if (Auto.HasAuto)
+            {
+                Option.ToggleOptionLock(true);
+            }
+        }
+    }
+
+    // メニュー画面が開かれた時の処理
+
+    // プレイヤーが押したキーごとに処理を変更する
+    void OnActionTriggered(InputManager.ControlKeys controlKey)
+    {
+        switch (controlKey)
+        {
+            case InputManager.ControlKeys.ToggleAuto:
+                ToggleAuto();
+                break;
+            case InputManager.ControlKeys.ToggleMenu:
+                Option.ToggleOptionScreen(-1);
+                break;
+        }
     }
 
     // オート設定変更時の処理

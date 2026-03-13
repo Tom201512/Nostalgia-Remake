@@ -26,11 +26,11 @@ public class MainGameFlow
     {
         InitState = new InitState(gameManager);
         FirstLaunchState = new FirstLaunchState(gameManager);
-        InsertState = new InsertState(gameManager);
+        InsertState = new InsertState(gameManager, gameManager.InputManager);
         LotsState = new LotsState(gameManager);
         FakeReelSpinState = new FakeReelSpinState(gameManager);
         WaitState = new WaitState(gameManager);
-        PlayingState = new PlayingState(gameManager);
+        PlayingState = new PlayingState(gameManager, gameManager.InputManager);
         PayoutState = new PayoutState(gameManager);
         EffectState = new EffectState(gameManager);
         ErrorState = new ErrorState(gameManager);

@@ -3,7 +3,6 @@ using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Reels;
-using UnityEngine;
 
 namespace ReelSpinGame_State.PlayingState
 {
@@ -11,17 +10,19 @@ namespace ReelSpinGame_State.PlayingState
     public class PlayingState : IGameStatement
     {
         private GameManager gM;                             // ゲームマネージャ
+        private InputManager inputManager;                  // 入力マネージャー
 
-        private bool hasInput;                              // キー入力があったか
-
-        public PlayingState(GameManager gameManager)
+        public PlayingState(GameManager gameManager, InputManager inputManager)
         {
-            hasInput = false;
             gM = gameManager;
+            this.inputManager = inputManager;
         }
 
         public void StateStart()
         {
+            // 入力処理の登録
+            inputManager.ActionTriggeredEvent += OnActionTriggered;
+
             // 強制役でランダム数値が使われていれば使う
             if (gM.Option.GetForceFlagSelectID() != -1 && gM.Option.GetForceFlagRandomID() != 0)
             {
@@ -50,25 +51,38 @@ namespace ReelSpinGame_State.PlayingState
 
         public void StateUpdate()
         {
-            // オートがある場合
+            // オート処理
             if (gM.Auto.HasAuto)
             {
                 AutoControl();
+            }
+
+            // リールがすべて停止したら払い出し処理に移行できるかチェック
+            if(gM.Reel.GetIsReelFinished())
+            {
+                // オート時は自動移行
+                if(gM.Auto.HasAuto)
+                {
+                    gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
+                }
+                // 手動時は入力がなくなったときに移行する(または強制終了発動)
+                else if (!inputManager.isKeyHeld || gM.Reel.HasForceStop())
+                {
+                    gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
+                }
             }
             // 強制停止が発動した場合
             else if (gM.Reel.HasForceStop())
             {
                 ReelForcedStop();
             }
-            // それ以外はプレイヤー操作を受け付ける
-            else
-            {
-                PlayerControl();
-            }
         }
 
         public void StateEnd()
         {
+            // 入力処理の解除
+            inputManager.ActionTriggeredEvent -= OnActionTriggered;
+
             // リール停止時の音を外すようにする
             gM.Reel.SomeReelStoppedEvent -= StopReelSound;
         }
@@ -113,61 +127,26 @@ namespace ReelSpinGame_State.PlayingState
                 gM.Auto.SetAutoStopPos(autoAICondition, gM.OptionSave.AutoOptionData.StopPosLockData);
             }
 
-            // すべてのリールが止まっていたら払い出し処理をする
-            if (gM.Reel.GetIsReelFinished())
-            {
-                gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
-            }
-            // オート中は指定した押し順で押すようにする
-            else
-            {
-                AutoStopBehavior();
-            }
+            AutoStopBehavior();
         }
 
         // プレイヤー操作時の挙動
-        void PlayerControl()
+        void PlayerControl(InputManager.ControlKeys controlKey)
         {
-            // 何も入力が入っていなければ実行
-            if (!hasInput)
+            // ボタンごとのリールを停止させる
+            if (gM.Reel.GetIsReelWorking())
             {
-                // ボタンごとのリールを停止させる
-                if (gM.Reel.GetIsReelWorking())
+                switch (controlKey)
                 {
-                    // 左停止
-                    if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StopLeft))
-                    {
+                    case InputManager.ControlKeys.StopLeft:
                         StopReel(ReelID.ReelLeft);
-                    }
-                    // 中停止
-                    if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StopMiddle))
-                    {
+                        break;
+                    case InputManager.ControlKeys.StopMiddle:
                         StopReel(ReelID.ReelMiddle);
-                    }
-                    // 右停止
-                    if (gM.InputManager.CheckOneKeyInput(InputManager.ControlKeys.StopRight))
-                    {
+                        break;
+                    case InputManager.ControlKeys.StopRight:
                         StopReel(ReelID.ReelRight);
-                    }
-                }
-
-                // 入力がないかチェック
-                if (Input.anyKey)
-                {
-                    hasInput = true;
-                }
-                // 入力がなくすべてのリールが止まっていたら払い出し処理をする
-                else if (gM.Reel.GetIsReelFinished())
-                {
-                    gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
-                }
-            }
-            // 前回のフレームで入力があった場合は入力がなくなるまで待機
-            else if (hasInput)
-            {
-                if (!Input.anyKey)
-                {
-                    hasInput = false;
+                        break;
                 }
             }
         }
@@ -240,6 +219,21 @@ namespace ReelSpinGame_State.PlayingState
             else if (gM.Reel.GetReelStatus(ReelID.ReelRight) != ReelStatus.Stopped)
             {
                 StopReel(ReelID.ReelRight);
+            }
+        }
+
+        // 入力に応じた処理を行う
+        void OnActionTriggered(InputManager.ControlKeys controlKey)
+        {
+            // オートがある場合
+            if (gM.Auto.HasAuto)
+            {
+                AutoControl();
+            }
+            // それ以外はプレイヤー操作を受け付ける
+            else if (!gM.Reel.HasForceStop())
+            {
+                PlayerControl(controlKey);
             }
         }
     }
