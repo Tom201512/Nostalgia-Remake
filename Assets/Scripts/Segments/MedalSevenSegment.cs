@@ -1,6 +1,5 @@
 using ReelSpinGame_Lamps;
 using System;
-using System.Collections;
 using UnityEngine;
 using static ReelSpinGame_Lamps.SegmentLampUtil;
 
@@ -15,15 +14,11 @@ namespace ReelSpinGame_Medal.Segment
         public bool HasSegmentUpdate { get; private set; } // セグメントを更新中か
 
         SegmentLamp[] segments;    // 7セグ
-        int tweenFromValue;  // 補完の起点
-        int tweenToValue;    // 補完の終点
 
         void Awake()
         {
             HasSegmentUpdate = false;
             segments = GetComponentsInChildren<SegmentLamp>();
-            tweenFromValue = 0;
-            tweenToValue = 0;
         }
 
         void OnDestroy()
@@ -62,14 +57,6 @@ namespace ReelSpinGame_Medal.Segment
             }
         }
 
-        // 指定した数値までセグメントを増減させる
-        public void DoSegmentTween(int fromValue, int toValue)
-        {
-            tweenFromValue = fromValue;
-            tweenToValue = toValue;
-            StartCoroutine(nameof(SegmentTweenUpdate));
-        }
-
         // セグメントをすべて消す
         public void TurnOffAllSegments()
         {
@@ -77,30 +64,6 @@ namespace ReelSpinGame_Medal.Segment
             {
                 segment.TurnOffAll();
             }
-        }
-
-        // 数値増加、減少の補完
-        IEnumerator SegmentTweenUpdate()
-        {
-            HasSegmentUpdate = true;
-
-            int tweenValue = tweenFromValue;
-            // 補完処理
-            while (tweenValue != tweenToValue)
-            {
-                if (tweenValue > tweenToValue)
-                {
-                    tweenValue -= 1;
-                }
-                else
-                {
-                    tweenValue += 1;
-                }
-                ShowSegmentByNumber(tweenValue);
-                yield return new WaitForSeconds(SegmentUpdateFrame);
-            }
-
-            HasSegmentUpdate = false;
         }
     }
 }

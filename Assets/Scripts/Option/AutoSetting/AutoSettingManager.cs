@@ -4,7 +4,7 @@ using ReelSpinGame_Reels;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Option.AutoSetting
 {

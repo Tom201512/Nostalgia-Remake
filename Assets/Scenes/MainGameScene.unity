@@ -23202,8 +23202,6 @@ GameObject:
   - component: {fileID: 460868892}
   - component: {fileID: 460868904}
   - component: {fileID: 460868895}
-  - component: {fileID: 460868896}
-  - component: {fileID: 460868897}
   - component: {fileID: 460868898}
   - component: {fileID: 460868901}
   - component: {fileID: 460868899}
@@ -23230,7 +23228,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 985983678}
+  medalManager: {fileID: 540586633}
   reelManagerObj: {fileID: 286284044}
+  bonusManager: {fileID: 516109706}
   effectManagerObj: {fileID: 1787737427}
   optionManagerObj: {fileID: 2003992387}
   playerUI: {fileID: 535727126}
@@ -23251,8 +23251,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1787737425}
+  - {fileID: 540586632}
   - {fileID: 286284037}
   - {fileID: 985983677}
+  - {fileID: 516109705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &460868895
@@ -23268,34 +23270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagDatabase: {fileID: 11400000, guid: 4559b34e25f0f334f83312c2bffe20e4, type: 2}
---- !u!114 &460868896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460868891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f436a1c9c8b64d4bbb197f68468fe92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  medalPanel: {fileID: 1321184546}
-  creditSegments: {fileID: 1846098975}
-  payoutSegments: {fileID: 913883419}
---- !u!114 &460868897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460868891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1e9e5b9355e9cb468f31423212313ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bonusSegments: {fileID: 1944429048}
 --- !u!114 &460868898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24463,6 +24437,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3594895b3ed389f42afcfb91fd8ec613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &516109704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 516109705}
+  - component: {fileID: 516109706}
+  m_Layer: 0
+  m_Name: BonusManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &516109705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516109704}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 460868893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &516109706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516109704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e9e5b9355e9cb468f31423212313ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bonusSegments: {fileID: 1944429048}
 --- !u!1 &516998236
 GameObject:
   m_ObjectHideFlags: 0
@@ -24929,6 +24948,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33383305792c2445bc0593252bfa7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &540586631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540586632}
+  - component: {fileID: 540586633}
+  m_Layer: 0
+  m_Name: MedalManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &540586632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540586631}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 460868893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &540586633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540586631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f436a1c9c8b64d4bbb197f68468fe92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  medalLamp: {fileID: 1321184546}
+  creditSegments: {fileID: 1846098975}
+  payoutSegments: {fileID: 913883419}
 --- !u!1 &549466162
 GameObject:
   m_ObjectHideFlags: 0
@@ -29477,7 +29543,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &809531153
 Transform:
@@ -32214,7 +32280,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &985983677
 Transform:
@@ -37115,7 +37181,7 @@ GameObject:
   - component: {fileID: 1321184545}
   - component: {fileID: 1321184546}
   m_Layer: 5
-  m_Name: MedalPanel
+  m_Name: MedalLampPanel
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -37154,7 +37220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1321184544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 958b83a6faf40a54eac8d391be8c925d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d3443fa05fb4cb42833a478dd394072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   medal1: {fileID: 1229648396}
@@ -41270,7 +41336,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2070315494}
   m_HandleRect: {fileID: 2070315493}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -58967,7 +59033,7 @@ GameObject:
   - component: {fileID: 1944429047}
   - component: {fileID: 1944429048}
   m_Layer: 5
-  m_Name: BonusCount
+  m_Name: BonusSegments
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62683,7 +62749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00032999838}
+  m_AnchoredPosition: {x: 0, y: -0.0000019073486}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2094860145

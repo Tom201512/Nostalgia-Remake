@@ -1,7 +1,7 @@
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Sound;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Effect.Data
 {

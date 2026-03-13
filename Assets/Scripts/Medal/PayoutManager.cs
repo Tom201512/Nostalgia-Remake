@@ -110,9 +110,9 @@ namespace ReelSpinGame_Payout
             }
 
             // 最大払い出しを超える枚数だった場合は切り捨てる
-            if (finalPayout > MedalBehavior.MaxPayout)
+            if (finalPayout > MedalModel.MaxPayout)
             {
-                finalPayout = MedalBehavior.MaxPayout;
+                finalPayout = MedalModel.MaxPayout;
             }
 
             LastPayoutResult.Payout = finalPayout;
@@ -122,7 +122,7 @@ namespace ReelSpinGame_Payout
         }
 
         // 図柄の判定(配列を返す)
-        int CheckHasPayout(List<ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
+        private int CheckHasPayout(List<ReelSymbols> lineResult, List<PayoutResultData> payoutResult)
         {
             // 全て同じ図柄が揃っていたらHITを返す
             // ANY(10番)は無視
@@ -161,7 +161,7 @@ namespace ReelSpinGame_Payout
         }
 
         // 払い出し結果をテーブルごとに得る
-        List<PayoutResultData> GetPayoutResultData(PayoutCheckMode payoutCheckMode)
+        private List<PayoutResultData> GetPayoutResultData(PayoutCheckMode payoutCheckMode)
         {
             switch (payoutCheckMode)
             {

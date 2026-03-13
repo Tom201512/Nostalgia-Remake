@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ReelSpinGame_Lamps
 {
     // メダルパネル部分
-    public class MedalPanel : MonoBehaviour
+    public class MedalLampPanel : MonoBehaviour
     {
         [SerializeField] private LampComponent medal1;          // 1枚掛けランプ
         [SerializeField] private LampComponent medal2Up;        // 2枚掛けランプ上

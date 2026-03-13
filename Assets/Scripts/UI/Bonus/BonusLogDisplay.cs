@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_UI.Bonus
 {

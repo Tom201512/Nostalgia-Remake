@@ -1,7 +1,7 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Reels;
 using System.Collections.Generic;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Save.Database.Option
 {

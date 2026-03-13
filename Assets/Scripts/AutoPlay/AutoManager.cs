@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_AutoPlay
 {
@@ -123,11 +123,11 @@ namespace ReelSpinGame_AutoPlay
         }
 
         // ボーナス終了によるオート終了チェック
-        public void CheckAutoEndByBonusFinish(int bonusStatusID)
+        public void CheckAutoEndByBonusFinish(BonusStatus bonusStatus)
         {
             // 通常時に戻った場合はオート終了
             if ((EndConditionFlag & (byte)SpecificConditionFlag.EndBonus) == (byte)SpecificConditionFlag.EndBonus
-                && bonusStatusID == (int)BonusStatus.BonusNone)
+                && bonusStatus == BonusStatus.BonusNone)
             {
                 FinishAutoForce();
             }

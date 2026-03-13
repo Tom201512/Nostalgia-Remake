@@ -1,7 +1,6 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect;
-using ReelSpinGame_Input;
 using ReelSpinGame_Lamps;
 using ReelSpinGame_Lots.Flag;
 using ReelSpinGame_Medal;
@@ -26,7 +25,9 @@ public class GameManager : MonoBehaviour
     public const int MaxSlotSetting = 6;    // 最高設定値
 
     [SerializeField] private InputManager inputManager;             // 入力処理
+    [SerializeField] private MedalManager medalManager;             // メダル管理
     [SerializeField] private ReelLogicManager reelManagerObj;       // リール情報
+    [SerializeField] private BonusManager bonusManager;             // ボーナス情報
     [SerializeField] private EffectPresenter effectManagerObj;      // 演出
     [SerializeField] private OptionManager optionManagerObj;        // オプション画面
     [SerializeField] private PlayerUI playerUI;                             // プレイヤーUI
@@ -34,24 +35,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StatusPanel statusPanel;                       // ステータスパネル
     [SerializeField] private LimitReachedScreen limitReachedScreen;         // 打ち止め時画面
 
-    public ScreenManager Screen { get; private set; }                           // 画面マネージャー
-    public InitialSettingManager InitialSetting { get; private set; }           // 初回起動設定マネージャー
-    public LotSettingManager LotSetting { get; private set; }                   // 設定変更
-    public InputManager InputManager { get { return inputManager; } }           // 入力マネージャー
-    public MedalManager Medal { get; private set; }                             // メダルマネージャー
-    public FlagLots Lots { get; private set; }                                  // フラグ抽選マネージャー
-    public WaitManager Wait { get; private set; }                               // ウェイト管理マネージャー
-    public ReelLogicManager Reel { get { return reelManagerObj; } }             // リールマネージャー
-    public PayoutManager Payout { get; private set; }                           // 払い出しマネージャー
-    public BonusManager Bonus { get; private set; }                             // ボーナス管理マネージャー
-    public EffectPresenter Effect { get { return effectManagerObj; } }          // 演出管理マネージャー
-    public OptionManager Option { get { return optionManagerObj; } }            // オプションマネージャー
-    public AutoManager Auto { get; private set; }                               // オートプレイ機能
+    public ScreenManager Screen { get; private set; } 
+    public InitialSettingManager InitialSetting { get; private set; }
+    public LotSettingManager LotSetting { get; private set; }
+    public InputManager InputManager { get => inputManager; }
+    public MedalManager MedalManager { get => medalManager; }
+    public FlagLots Lots { get; private set; }
+    public WaitManager Wait { get; private set; }
+    public ReelLogicManager Reel { get => reelManagerObj; }
+    public PayoutManager Payout { get; private set; }
+    public BonusManager BonusManager { get => bonusManager; }
+    public EffectPresenter Effect { get => effectManagerObj; }  
+    public OptionManager Option { get => optionManagerObj; }
+    public AutoManager Auto { get; private set; }
 
     public PlayerDatabase Player;                                                   // プレイヤー情報
-    public PlayerUI PlayerUI { get { return playerUI; } }                           // プレイヤーUI
-    public SaveDatabase PlayerSave { get { return saveManager.PlayerSaveData; } }   // プレイヤーのセーブ
-    public OptionSave OptionSave { get { return saveManager.OptionSave; } }         // オプションのセーブ
+    public PlayerUI PlayerUI { get => playerUI; }                           // プレイヤーUI
+    public SaveDatabase PlayerSave { get => saveManager.PlayerSaveData; }   // プレイヤーのセーブ
+    public OptionSave OptionSave { get => saveManager.OptionSave; }         // オプションのセーブ
     public StatusPanel Status { get; private set; }                                 // ステータスパネル
 
     public bool IsFirstLaunch { get; set; }                     // セーブをしないか
@@ -66,10 +67,8 @@ public class GameManager : MonoBehaviour
         Screen = GetComponent<ScreenManager>();                     // 画面
         InitialSetting = GetComponent<InitialSettingManager>();     // 初回起動
         LotSetting = GetComponent<LotSettingManager>();             // 設定変更
-        Medal = GetComponent<MedalManager>();                       // メダル管理
         Lots = GetComponent<FlagLots>();                            // フラグ管理
         Wait = GetComponent<WaitManager>();                         // ウェイト
-        Bonus = GetComponent<BonusManager>();                       // ボーナス
         Payout = GetComponent<PayoutManager>();                     // 払い出し
         MainFlow = new MainGameFlow(this);                          // メインフロー作成
         Status = statusPanel;                                       // ステータスパネル

@@ -31,10 +31,10 @@ namespace ReelSpinGame_State.InsertState
             gM.Option.ToggleOptionLock(false);
             gM.Option.SetOpenButtonInteractive(true);
             gM.LotSetting.SlotSettingChangedEvent -= OnSettingChanged;
-            gM.Bonus.TurnOffSegments();
+            gM.BonusManager.TurnOffSegments();
         }
 
-        void OnSettingChanged(int setting)
+        private void OnSettingChanged(int setting)
         {
             gM.Option.ToggleOptionLock(true);
             gM.ChangeSetting(setting);

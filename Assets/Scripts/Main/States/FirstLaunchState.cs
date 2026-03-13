@@ -35,13 +35,13 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // Œ¾Œêİ’è‚ª”½‰f‚³‚ê‚½‚Ìˆ—
-        void OnLanguageSettingChanged(int optionID)
+        private void OnLanguageSettingChanged(int optionID)
         {
             gM.SetFirstLaunchLanguage((LanguageOptionID)Enum.ToObject(typeof(LanguageOptionID), optionID));
         }
 
         // —V‚Ñ•ûƒKƒCƒh‚ª•Â‚¶‚ç‚ê‚½Œã‚Ìˆ—
-        void OnHowToPlayClosed()
+        private void OnHowToPlayClosed()
         {
             gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
         }

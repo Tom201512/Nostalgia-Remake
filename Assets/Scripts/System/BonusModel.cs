@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ReelSpinGame_Bonus
 {
     // ボーナス情報
-    public class BonusSystemData
+    public class BonusModel
     {
         public enum BonusTypeID { BonusNone, BonusBIG, BonusREG }               // ボーナスの種類
         public enum BonusStatus { BonusNone, BonusBIGGames, BonusJACGames };    // ボーナスの状態
@@ -21,7 +21,8 @@ namespace ReelSpinGame_Bonus
         public const int MaxZoneGames = 50;             // 連チャン区間であるゲーム数
 
         public BonusTypeID HoldingBonusID { get; set; }         // 現在ストックしているボーナス
-        public BonusStatus CurrentBonusStatus { get; set; }     // ボーナス状態
+        public BonusStatus CurrentBonusStatus { get; set; }     // ボーナス状態       
+        public BonusStatus PreviousBonusStatus { get; set; }    // 変更前のボーナス状態
         public BigType BigChanceType { get; set; }              // BIGボーナス当選時の種類
 
         public int RemainingBigGames { get; set; }          // 残り小役ゲーム数
@@ -37,10 +38,11 @@ namespace ReelSpinGame_Bonus
         public bool HasBonusStarted { get; set; }           // ボーナスが開始したか
         public bool HasBonusFinished { get; set; }          // ボーナスが終了したか
 
-        public BonusSystemData()
+        public BonusModel()
         {
             HoldingBonusID = BonusTypeID.BonusNone;
             CurrentBonusStatus = BonusStatus.BonusNone;
+            PreviousBonusStatus = BonusStatus.BonusNone;
             BigChanceType = BigType.None;
             RemainingBigGames = 0;
             RemainingJacIn = 0;

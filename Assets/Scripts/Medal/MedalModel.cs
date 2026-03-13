@@ -3,10 +3,9 @@
 namespace ReelSpinGame_Medal
 {
     // メダルの処理
-    public class MedalBehavior
+    public class MedalModel
     {
         public const int MaxCredit = 50;        // 最大クレジット枚数
-        public const int MinCredit = -3;        // 最小クレジット枚数
         public const int MaxBetLimit = 3;       // 最大ベット枚数
         public const int MaxPayout = 15;        // 最大払い出し
 
@@ -14,34 +13,17 @@ namespace ReelSpinGame_Medal
         public int CurrentBet { get; set; }         // ベット枚数
         public int RemainingPayout { get; set; }    // 払い出し枚数
         public int LastPayoutAmount { get; set; }   // 最後に払い出したメダル枚数
-        public bool IsFinishedBet { get; set; }      // ベット完了しているか
+        public bool IsFinishedBet { get; set; }     // ベット完了しているか
 
-        // セーブ用のデータ
-        public class MedalSystemData
-        {
-            public int Credit { get; set; }             // クレジット枚数
-            public int MaxBetAmount { get; set; }       // 最高ベット枚数
-            public int LastBetAmount { get; set; }      // 最後にかけたメダル枚数
-            public bool HasReplay { get; set; }         // リプレイ状態か
+        public MedalSystemData Data { get; set; }     // メダル情報データ
 
-            public MedalSystemData()
-            {
-                Credit = 0;
-                MaxBetAmount = MaxBetLimit;
-                LastBetAmount = 0;
-                HasReplay = false;
-            }
-        }
-
-        public MedalSystemData MedalSystem { get; set; }     // メダル情報データ
-
-        public MedalBehavior()
+        public MedalModel()
         {
             CurrentBet = 0;
             RemainingPayout = 0;
             LastPayoutAmount = 0;
             IsFinishedBet = false;
-            MedalSystem = new MedalSystemData();
+            Data = new MedalSystemData();
         }
 
         // 残りベット枚数を設定
@@ -51,9 +33,7 @@ namespace ReelSpinGame_Medal
             // 最後に払い出したメダルリセット
             LastPayoutAmount = 0;
 
-            // 現在のベット枚数よりも多く賭けると差分だけ掛ける
-            // (2BETから1BETはリセットして調整)
-
+            // 現在のベット枚数と比べてベット枚数を調整する
             // 多い場合(1枚以上ベットされていること)
             if (amount > CurrentBet && CurrentBet > 0)
             {
@@ -71,10 +51,21 @@ namespace ReelSpinGame_Medal
             if (amount < CurrentBet)
             {
                 // ベットで使ったクレジット分を返す
-                MedalSystem.Credit = Math.Clamp(MedalSystem.Credit += CurrentBet, MinCredit, MaxCredit);
+                Data.Credit = Math.Clamp(Data.Credit += CurrentBet, 0, MaxCredit);
                 CurrentBet = 0;
             }
-            MedalSystem.LastBetAmount = amount;
+            Data.LastBetAmount = amount;
+        }
+
+        // クレジットの増減
+        public void ChangeCredit(int value)
+        {
+            // クレジット枚数を0枚にする(負数の場合)
+            if (Data.Credit < 0)
+            {
+                Data.Credit = 0;
+            }
+            Data.Credit = Math.Clamp(Data.Credit += value, 0, MaxCredit);
         }
 
         // 投入処理
@@ -84,9 +75,9 @@ namespace ReelSpinGame_Medal
             CurrentBet += 1;
 
             // リプレイでなければクレジットを減らす
-            if (!MedalSystem.HasReplay)
+            if (!Data.HasReplay)
             {
-                MedalSystem.Credit = Math.Clamp(MedalSystem.Credit -= 1, MinCredit, MaxCredit);
+                Data.Credit = Math.Clamp(Data.Credit -= 1, 0, MaxCredit);
             }
 
             // 残り枚数が0になったら終了
@@ -101,17 +92,6 @@ namespace ReelSpinGame_Medal
         {
             RemainingPayout -= 1;
             LastPayoutAmount += 1;
-        }
-
-        // クレジットの増減
-        public void ChangeCredit(int value)
-        {
-            // クレジット枚数を0枚にする(負数の場合)
-            if (MedalSystem.Credit < 0)
-            {
-                MedalSystem.Credit = 0;
-            }
-            MedalSystem.Credit = Math.Clamp(MedalSystem.Credit += value, MinCredit, MaxCredit);
         }
     }
 }

@@ -24,17 +24,17 @@ public class MainGameFlow
 
     public MainGameFlow(GameManager gameManager)
     {
-        InitState = new InitState(gameManager);
+        InitState = new InitState(gameManager, gameManager.MedalManager);
         FirstLaunchState = new FirstLaunchState(gameManager);
-        InsertState = new InsertState(gameManager, gameManager.InputManager);
-        LotsState = new LotsState(gameManager);
+        InsertState = new InsertState(gameManager, gameManager.InputManager, gameManager.MedalManager);
+        LotsState = new LotsState(gameManager, gameManager.MedalManager);
         FakeReelSpinState = new FakeReelSpinState(gameManager);
         WaitState = new WaitState(gameManager);
-        PlayingState = new PlayingState(gameManager, gameManager.InputManager);
-        PayoutState = new PayoutState(gameManager);
-        EffectState = new EffectState(gameManager);
+        PlayingState = new PlayingState(gameManager, gameManager.InputManager, gameManager.MedalManager);
+        PayoutState = new PayoutState(gameManager, gameManager.MedalManager);
+        EffectState = new EffectState(gameManager, gameManager.MedalManager);
         ErrorState = new ErrorState(gameManager);
-        LimitReachedState = new ReachedLimitState(gameManager);
+        LimitReachedState = new ReachedLimitState(gameManager, gameManager.MedalManager);
         StateManager = new StateManager(InitState);
     }
 

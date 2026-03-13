@@ -1,8 +1,9 @@
 ﻿using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
+using ReelSpinGame_Medal;
 using ReelSpinGame_System;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 using static ReelSpinGame_Payout.PayoutManager;
 
 namespace ReelSpinGame_State.LotsState
@@ -11,10 +12,12 @@ namespace ReelSpinGame_State.LotsState
     public class InitState : IGameStatement
     {
         private GameManager gM;         // ゲームマネージャ
+        private MedalManager medalManager;      // メダル管理
 
-        public InitState(GameManager gameManager)
+        public InitState(GameManager gameManager, MedalManager medalManager)
         {
             gM = gameManager;
+            this.medalManager = medalManager;
         }
 
         public void StateStart()
@@ -24,8 +27,8 @@ namespace ReelSpinGame_State.LotsState
             ApplyBonusStatus();  // ボーナス状態割り当て
             BonusEffectUpdate(); // ボーナス演出の反映
 
-            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.Medal); // UI反映
-            gM.Option.SetForceFlagSetting(gM.Bonus.GetCurrentBonusStatus(), gM.Bonus.GetHoldingBonusID());  // オプション設定反映
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, medalManager); // UI反映
+            gM.Option.SetForceFlagSetting(gM.BonusManager.CurrentBonusStatus, gM.BonusManager.HoldingBonusID);  // オプション設定反映
         }
 
         public void StateUpdate()
@@ -40,22 +43,22 @@ namespace ReelSpinGame_State.LotsState
         }
 
         // スロットの初期化
-        void InitializeSlot()
+        private void InitializeSlot()
         {
             gM.ChangeSetting(gM.PlayerSave.Setting);                // 設定反映
             gM.Player.LoadSaveData(gM.PlayerSave.Player);           // プレイヤー情報反映
-            gM.Medal.LoadSaveData(gM.PlayerSave.Medal);             // メダル情報反映
+            medalManager.LoadSaveData(gM.PlayerSave.Medal);             // メダル情報反映
             gM.Lots.SetCounterValue(gM.PlayerSave.FlagCounter);     // フラグ数値反映
             gM.Reel.SetReelPos(gM.PlayerSave.LastReelPos);          // リール位置反映
-            gM.Bonus.LoadSaveData(gM.PlayerSave.Bonus);             // ボーナス状態反映
+            gM.BonusManager.LoadSaveData(gM.PlayerSave.Bonus);             // ボーナス状態反映
         }
 
         // リプレイ状態の反映
-        void ApplyReplay()
+        private void ApplyReplay()
         {
-            if (gM.Medal.HasReplay)
+            if (medalManager.HasReplay)
             {
-                gM.Medal.EnableReplay();
+                medalManager.EnableReplay();
             }
         }
 
@@ -63,9 +66,9 @@ namespace ReelSpinGame_State.LotsState
         void TurnOnBackLight()
         {
             // リプレイ、またはボーナス中ならライトを点灯させる
-            if (gM.Medal.HasReplay || gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
+            if (medalManager.HasReplay || gM.BonusManager.CurrentBonusStatus != BonusStatus.BonusNone)
             {
-                gM.Effect.TurnOnAllReels(gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames);
+                gM.Effect.TurnOnAllReels(gM.BonusManager.CurrentBonusStatus == BonusStatus.BonusJACGames);
             }
             // リプレイでなければINSERTランプ表示
             else
@@ -78,28 +81,26 @@ namespace ReelSpinGame_State.LotsState
         void ApplyBonusStatus()
         {
             // ビッグチャンスの場合
-            if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
+            if (gM.BonusManager.CurrentBonusStatus == BonusStatus.BonusBIGGames)
             {
                 gM.Lots.ChangeTable(FlagLotTable.BigBonus);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutBIG);
-                gM.Medal.ChangeMaxBet(3);
+                medalManager.ChangeMaxBet(3);
                 gM.Lots.ResetCounter();
             }
-
             // ボーナスゲームの場合
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
+            else if (gM.BonusManager.CurrentBonusStatus == BonusStatus.BonusJACGames)
             {
-                gM.Medal.ChangeMaxBet(1);
+                medalManager.ChangeMaxBet(1);
                 gM.Lots.ChangeTable(FlagLotTable.JacGame);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutJAC);
             }
-
             // 通常時の場合
-            else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
+            else if (gM.BonusManager.CurrentBonusStatus == BonusStatus.BonusNone)
             {
                 gM.Lots.ChangeTable(FlagLotTable.Normal);
                 gM.Payout.ChangePayoutCheckMode(PayoutCheckMode.PayoutNormal);
-                gM.Medal.ChangeMaxBet(3);
+                medalManager.ChangeMaxBet(3);
             }
         }
 
@@ -107,11 +108,11 @@ namespace ReelSpinGame_State.LotsState
         void BonusEffectUpdate()
         {
             // ボーナス中のランプ処理
-            gM.Bonus.UpdateSegments();
-
+            gM.BonusManager.UpdateSegments();
+            // ボーナス中演出の開始
             BonusEffectCondition condition = new BonusEffectCondition();
-            condition.BigType = gM.Bonus.GetBigChanceType();
-            condition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
+            condition.BigType = gM.BonusManager.BigChanceType;
+            condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
             gM.Effect.StartBonusEffect(condition);
         }
 
@@ -128,14 +129,12 @@ namespace ReelSpinGame_State.LotsState
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.ErrorState);
             }
-
-            // 通常時で回転数が規定数に達していたらエラーにする
+            // 通常時で回転数が規定数に達していたら打ち止め画面に移行
             else if (gM.PlayerSave.Bonus.CurrentBonusStatus == BonusStatus.BonusNone &&
                 gM.PlayerSave.Player.TotalGames >= PlayerDatabase.MaximumTotalGames)
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.LimitReachedState);
             }
-
             // それ以外問題がなければ投入ステートへ
             else
             {

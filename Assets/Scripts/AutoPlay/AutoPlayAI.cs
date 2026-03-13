@@ -1,7 +1,7 @@
 ﻿using ReelSpinGame_Lots;
 using ReelSpinGame_Reels;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_AutoPlay.AI
 {

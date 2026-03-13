@@ -3,7 +3,7 @@ using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Effect.Data
 {

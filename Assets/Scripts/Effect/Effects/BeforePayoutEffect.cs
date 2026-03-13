@@ -5,7 +5,7 @@ using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using System.Collections;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 using static ReelSpinGame_Reels.Flash.FlashManager;
 
 namespace ReelSpinGame_Effect.Data

@@ -4,7 +4,7 @@ using ReelSpinGame_Option.MenuContent;
 using ReelSpinGame_Save.Database.Option;
 using UnityEngine;
 
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Option
 {

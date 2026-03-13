@@ -1,7 +1,7 @@
 using ReelSpinGame_Datas;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Reels.Symbol
 {

@@ -1,9 +1,9 @@
 using ReelSpinGame_Interface;
+using ReelSpinGame_Medal;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Medal.MedalBehavior;
 
 namespace ReelSpinGame_Save.Medal
 {
@@ -18,7 +18,7 @@ namespace ReelSpinGame_Save.Medal
         public MedalSave()
         {
             Credit = 0;
-            MaxBetAmount = MaxBetLimit;
+            MaxBetAmount = MedalModel.MaxBetLimit;
             LastBetAmount = 0;
             HasReplay = false;
         }

@@ -2,8 +2,9 @@
 using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
+using ReelSpinGame_Medal;
 using System;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -11,10 +12,12 @@ namespace ReelSpinGame_State.LotsState
     public class LotsState : IGameStatement
     {
         private GameManager gM;        // ゲームマネージャ
+        private MedalManager medalManager;  // メダル管理
 
-        public LotsState(GameManager gameManager)
+        public LotsState(GameManager gameManager, MedalManager medalManager)
         {
             gM = gameManager;
+            this.medalManager = medalManager;
         }
 
         public void StateStart()
@@ -25,12 +28,12 @@ namespace ReelSpinGame_State.LotsState
                 FlagID selectedFlagID = (FlagID)Enum.ToObject(typeof(FlagID), gM.Option.GetForceFlagSelectID());
                 gM.Lots.SetForceFlag(selectedFlagID);
             }
-            gM.Lots.StartFlagLots(gM.Setting, gM.Medal.LastBetAmount, gM.Bonus.GetHoldingBonusID());
+            gM.Lots.StartFlagLots(gM.Setting, medalManager.LastBetAmount, gM.BonusManager.HoldingBonusID);
 
             // ボーナス中ならここでゲーム数を減らす
-            if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
+            if (gM.BonusManager.CurrentBonusStatus != BonusStatus.BonusNone)
             {
-                gM.Bonus.DecreaseGames();
+                gM.BonusManager.DecreaseGames();
             }
             // そうでない場合は通常時のゲーム数を加算
             else
@@ -39,7 +42,7 @@ namespace ReelSpinGame_State.LotsState
             }
 
             // 総ゲーム数の加算
-            gM.Player.PlayerAnalyticsData.IncreaseTotalAllGameCounts(gM.Bonus.GetCurrentBonusStatus());
+            gM.Player.PlayerAnalyticsData.IncreaseTotalAllGameCounts(gM.BonusManager.CurrentBonusStatus);
 
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
@@ -62,11 +65,11 @@ namespace ReelSpinGame_State.LotsState
                 AutoAIConditionClass autoAICondition = new AutoAIConditionClass();
                 autoAICondition.Flag = gM.Lots.GetCurrentFlag();
                 autoAICondition.FirstPush = gM.Auto.AutoStopOrders[(int)StopOrderID.First];
-                autoAICondition.BonusStatus = gM.Bonus.GetCurrentBonusStatus();
-                autoAICondition.HoldingBonus = gM.Bonus.GetHoldingBonusID();
-                autoAICondition.BigChanceGames = gM.Bonus.GetRemainingBigGames();
-                autoAICondition.RemainingJacIn = gM.Bonus.GetRemainingJacIn();
-                autoAICondition.BetAmount = gM.Medal.LastBetAmount;
+                autoAICondition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
+                autoAICondition.HoldingBonus = gM.BonusManager.HoldingBonusID;
+                autoAICondition.BigChanceGames = gM.BonusManager.RemainingBigGames;
+                autoAICondition.RemainingJacIn = gM.BonusManager.RemainingJacIn;
+                autoAICondition.BetAmount = medalManager.LastBetAmount;
 
                 gM.Auto.SetAutoStopPos(autoAICondition, gM.OptionSave.AutoOptionData.StopPosLockData);
             }

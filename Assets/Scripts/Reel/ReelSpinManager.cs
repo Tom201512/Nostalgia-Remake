@@ -4,7 +4,7 @@ using ReelSpinGame_Reels.Table;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 using static ReelSpinGame_Reels.ReelSpinManagerModel;
 
 // リール回転マネージャー

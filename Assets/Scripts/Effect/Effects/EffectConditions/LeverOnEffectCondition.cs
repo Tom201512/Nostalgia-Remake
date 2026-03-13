@@ -1,5 +1,5 @@
 using ReelSpinGame_Lots;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Effect.Data.Condition
 {

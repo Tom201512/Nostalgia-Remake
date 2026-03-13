@@ -1,6 +1,6 @@
 using ReelSpinGame_Datas;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Lots.Flag
 {

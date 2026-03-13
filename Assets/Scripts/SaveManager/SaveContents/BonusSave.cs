@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Save.Bonus
 {
@@ -41,7 +41,7 @@ namespace ReelSpinGame_Save.Bonus
         }
 
         // データ記録
-        public void RecordData(BonusSystemData bonus)
+        public void RecordData(BonusModel bonus)
         {
             HoldingBonusID = bonus.HoldingBonusID;
             CurrentBonusStatus = bonus.CurrentBonusStatus;

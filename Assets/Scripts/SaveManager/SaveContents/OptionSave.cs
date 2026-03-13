@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Save.Database

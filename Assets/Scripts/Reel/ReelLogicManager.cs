@@ -3,7 +3,7 @@ using ReelSpinGame_Reels.Symbol;
 using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusSystemData;
+using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_Reels
 {
