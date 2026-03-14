@@ -22,7 +22,7 @@ public class ReelSpinManager : MonoBehaviour
     public bool HasForceStop { get => reelSpinManagerModel.HasForceStop; }              // オートストップ状態
     public bool IsFirstReelPushed { get => reelSpinManagerModel.IsFirstReelPushed; }    // 第一停止をしたか
     public ReelID FirstPushReel { get => reelSpinManagerModel.FirstPushReel; }          // 第一停止したリールのID
-    public int StoppedReelCount { get => reelSpinManagerModel.PushedCount; }       // 停止したリール数
+    public int StoppedReelCount { get => reelSpinManagerModel.PushedCount; }            // 停止したリール数
     public int RandomValue { get => reelSpinManagerModel.RandomValue; }                 // 得たランダム数値
 
     public bool HasAllReelStopped { get => reelSpinManagerModel.PushedCount == ReelManager.ReelAmount; }

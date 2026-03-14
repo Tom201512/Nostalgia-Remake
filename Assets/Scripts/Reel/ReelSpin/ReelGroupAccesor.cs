@@ -3,7 +3,6 @@ using ReelSpinGame_Reel.Symbol;
 using ReelSpinGame_Reel.Table;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.Common;
 using UnityEngine;
 
 namespace ReelSpinGame_Reel
@@ -24,15 +23,15 @@ namespace ReelSpinGame_Reel
         }
 
         // Šeî•ñ‚ð“¾‚é
-        public int[] GetArrayContents(ReelID reelID) => reelObjects[(int)reelID].ReelArray;                            // }•¿”z—ñ
-        public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);            // Œ»ÝˆÊ’u
-        public int GetReelPushedPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);            // ‰Ÿ‚µ‚½ˆÊ’u
-        public int GetLastPushedLowerPos(ReelID reelID) => reelObjects[(int)reelID].LastPushedPos;                      // Ž~‚ß‚½ˆÊ’u
-        public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].WillStopLowerPos;                      // ’âŽ~—\’èˆÊ’u
-        public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].LastDelay;                                   // ƒXƒxƒŠƒRƒ}”
-        public ReelStatus GetReelStatus(ReelID reelID) => reelObjects[(int)reelID].ReelStatus;                          // ƒŠ[ƒ‹ó‘Ô
-        public float GetReelSpeed(ReelID reelID) => reelObjects[(int)reelID].RotateSpeed;                               // ƒŠ[ƒ‹‘¬“x
-        public float GetReelDegree(ReelID reelID) => reelObjects[(int)reelID].CurrentDegree;                            // ‰ñ“]Šp
+        public int[] GetArrayContents(ReelID reelID) => reelObjects[(int)reelID].ReelArray;                         // }•¿”z—ñ
+        public int GetCurrentReelPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Lower);        // Œ»ÝˆÊ’u
+        public int GetReelPushedPos(ReelID reelID) => reelObjects[(int)reelID].GetReelPos(ReelPosID.Center);        // ‰Ÿ‚µ‚½ˆÊ’u
+        public int GetLastPushedLowerPos(ReelID reelID) => reelObjects[(int)reelID].LastPushedPos;                  // Ž~‚ß‚½ˆÊ’u
+        public int GetWillStopReelPos(ReelID reelID) => reelObjects[(int)reelID].WillStopLowerPos;                  // ’âŽ~—\’èˆÊ’u
+        public int GetLastDelay(ReelID reelID) => reelObjects[(int)reelID].LastDelay;                               // ƒXƒxƒŠƒRƒ}”
+        public ReelStatus GetReelStatus(ReelID reelID) => reelObjects[(int)reelID].ReelStatus;                      // ƒŠ[ƒ‹ó‘Ô
+        public float GetReelSpeed(ReelID reelID) => reelObjects[(int)reelID].RotateSpeed;                           // ƒŠ[ƒ‹‘¬“x
+        public float GetReelDegree(ReelID reelID) => reelObjects[(int)reelID].CurrentDegree;                        // ‰ñ“]Šp
 
         // ’âŽ~—\’èˆÊ’u‚©‚çŽw’èˆÊ’u‚Ì}•¿‚ð“¾‚é
         public ReelSymbols GetSymbolFromWillStop(ReelID reelID, ReelPosID reelPosID) => reelObjects[(int)reelID].GetSymbolFromWillStop(reelPosID);

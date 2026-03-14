@@ -1,15 +1,15 @@
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Flag;
 
-namespace ReelSpinGame_Reel
+namespace ReelSpinGame_Reel.Table
 {
     // リールテーブルのメイン条件
     public class ReelMainCondition
     {
-        public FlagModel.FlagID Flag { get; private set; }            // フラグ
-        public BonusModel.BonusTypeID Bonus { get; private set; }      // 成立ボーナス
-        public int Bet { get; private set; }                // ベット枚数
-        public int Random { get; private set; }             // ランダム数値
+        public FlagModel.FlagID Flag { get; private set; }          // フラグ
+        public BonusModel.BonusTypeID Bonus { get; private set; }   // 成立ボーナス
+        public int Bet { get; private set; }                        // ベット枚数
+        public int Random { get; private set; }                     // ランダム数値
 
         public ReelMainCondition()
         {

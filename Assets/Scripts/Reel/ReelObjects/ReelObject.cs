@@ -17,7 +17,7 @@ namespace ReelSpinGame_Reel
         public ReelID ReelID { get => reelID; }                                         // リールのID
         public ReelStatus ReelStatus { get => reelSpinPresenter.ReelStatus; }           // 現在のリール状態
 
-        public int[] ReelArray { get => reelSpinPresenter.ReelArray; }                 // リール配列を渡す
+        public int[] ReelArray { get => reelSpinPresenter.ReelArray; }                  // リール配列を渡す
         public float RotateSpeed { get => reelSpinPresenter.RotateSpeed; }              // 現在速度を返す
         public float CurrentDegree { get => reelSpinPresenter.CurrentDegree; }          // 現在の角度を返す
         public int CurrentLower { get => reelSpinPresenter.CurrentLower; }              // 現在の下段位置
@@ -35,7 +35,7 @@ namespace ReelSpinGame_Reel
 
         public ReelDelayTableFile ReelDelayTableFile { get => reelDelayTableFile; }     // スベリコマ制御ファイル
         public ReelEffect ReelEffectManager { get => reelEffect; }                      // リール演出部
-        public bool HasJacModeLight { get; set; }        // JAC中の点灯をするか
+        public bool HasJacModeLight { get; set; }                                       // JAC中の点灯をするか
 
         public event Action<ReelID> ReelStopped;        // リールが停止したときのイベント
         public event Action<ReelID> ReelPosChanged;     // リール位置が変更された時のイベント

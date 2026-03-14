@@ -1,4 +1,5 @@
 using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Table;
 using System;
 using System.IO;
 using UnityEngine;

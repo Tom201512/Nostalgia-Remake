@@ -6,6 +6,7 @@ using ReelSpinGame_Flag;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Main;
 using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Table;
 
 namespace ReelSpinGame_State.PlayingState
 {

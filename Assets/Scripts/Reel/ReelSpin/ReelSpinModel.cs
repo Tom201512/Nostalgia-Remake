@@ -10,18 +10,18 @@ namespace ReelSpinGame_Reel.Spin
         public const float ChangeAngle = 360.0f / 21.0f;        // 図柄変更時の角度 (360度を21分割)
         public const float StopAngle = ChangeAngle - 0.5f;      // 図柄停止時の角度 (変更時角度から0.5度引いた角度)
 
-        const float MaxRotationAngle = 360;                  // 最大角度
-        const float ReelRadius = 12.75f;                // リール半径(cm)
-        const float MaxSpeedReelTime = 0.3f;            // 最高速度までの経過時間(秒)
-        const float SlowDownSpeed = 0.1f;               // 減速時のスピード
+        const float MaxRotationAngle = 360;                 // 最大角度
+        const float ReelRadius = 12.75f;                    // リール半径(cm)
+        const float MaxSpeedReelTime = 0.3f;                // 最高速度までの経過時間(秒)
+        const float SlowDownSpeed = 0.1f;                   // 減速時のスピード
 
-        public int[] ReelArray { get; set; }               // リール配列
+        public int[] ReelArray { get; set; }                // リール配列
         public float RotateSpeed { get; set; }              // 現在の回転速度
         public float MaxSpeed { get; set; }                 // 最高速度
         public float RotateRPS { get; private set; }        // 1秒間のRPS
-        public bool HasJacModeLight { get; set; }           // 1秒間のRPS
+        public bool HasJacModeLight { get; set; }           // JAC中のライト計算を行うか
 
-        public ReelStatus CurrentReelStatus { get; set; }       // 現在のリール状態
+        public ReelStatus CurrentReelStatus { get; set; }   // 現在のリール状態
 
         public int CurrentLower { get; set; }           // 現在の位置(下段基準)
         public int LastPushedPos { get; set; }          // 押した位置(中段基準)

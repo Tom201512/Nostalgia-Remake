@@ -1,8 +1,7 @@
+using ReelSpinGame_Reel.Spin;
 using ReelSpinGame_Reel.Symbol;
 using System;
 using UnityEngine;
-using ReelSpinGame_Reel;
-using ReelSpinGame_Reel.Spin;
 
 namespace ReelSpinGame_Reel
 {

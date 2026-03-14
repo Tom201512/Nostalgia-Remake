@@ -1,6 +1,6 @@
-using ReelSpinGame_Scriptable;
 using ReelSpinGame_Reel.Symbol;
 using ReelSpinGame_Reel.Util;
+using ReelSpinGame_Scriptable;
 using System;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -15,7 +15,7 @@ namespace ReelSpinGame_Reel.Spin
         [SerializeField] ReelArrayData reelArrayDataFile;                  // リール配列データ
 
         // プロパティ
-        public int[] ReelArray { get => reelSpinModel.ReelArray; }                 // リール配列            
+        public int[] ReelArray { get => reelSpinModel.ReelArray; }                  // リール配列            
         public ReelStatus ReelStatus { get => reelSpinModel.CurrentReelStatus; }    // 現在のリール情報
         public float RotateSpeed { get => reelSpinModel.RotateSpeed; }              // 回転速度
         public float MaxSpeed { get => reelSpinModel.MaxSpeed; }                    // 現在の最高速度
