@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 124730695963021864}
   - component: {fileID: 1933351381960056272}
-  - component: {fileID: -8310782498088753725}
-  - component: {fileID: 4287227727636106190}
-  - component: {fileID: 4427254641869140786}
   m_Layer: 3
   m_Name: ReelBase
   m_TagString: Untagged
@@ -33,8 +30,8 @@ Transform:
   m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2848023357844898931}
-  - {fileID: 8337703540314114183}
+  - {fileID: 2500236968824962701}
+  - {fileID: 2059247001820901683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1933351381960056272
@@ -49,53 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65b727d3c76b8c4499f3f4ef1063cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reelDatabaseFile: {fileID: 11400000, guid: 3e4745ce543247f41831242aae0ad29a, type: 2}
+  InitialReelPos: 19
+  reelSpinPresenter: {fileID: 0}
+  reelEffect: {fileID: 0}
+  reelDelayTableFile: {fileID: 0}
   reelID: 0
---- !u!114 &-8310782498088753725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582631020889352479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 78dbc20b47b7a0843a5d4f1fb7d16f28, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 1
---- !u!114 &4287227727636106190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582631020889352479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reelBase: {fileID: 8171721267369878532}
-  symbolLight: {fileID: 6762777919229751399}
---- !u!114 &4427254641869140786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582631020889352479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc642bcd6fc2ff44b6ee223d706860e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultReelSpinRPM: 79.8
-  reelArrayDataFile: {fileID: 0}
 --- !u!1 &2169237100488002603
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,10 +497,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 25.885902, y: 3.5, z: 25.885899}
+  m_LocalScale: {x: 25.885902, y: 3.5000002, z: 25.885899}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 124730695963021864}
+  m_Father: {fileID: 2500236968824962701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &4079132915823054965
 MeshFilter:
@@ -720,6 +675,119 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec8688240a1c064f8f64929b73a1122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6378934444662642460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2500236968824962701}
+  - component: {fileID: 6171046931888507364}
+  - component: {fileID: 809214790524079094}
+  m_Layer: 3
+  m_Name: ReelSpinManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2500236968824962701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6378934444662642460}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8337703540314114183}
+  - {fileID: 2848023357844898931}
+  m_Father: {fileID: 124730695963021864}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6171046931888507364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6378934444662642460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc642bcd6fc2ff44b6ee223d706860e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultReelSpinRPM: 79.8
+  symbolManager: {fileID: 8324961688018038041}
+  reelArrayDataFile: {fileID: 0}
+--- !u!114 &809214790524079094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6378934444662642460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 78dbc20b47b7a0843a5d4f1fb7d16f28, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 1
+--- !u!1 &6984909478168635445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2059247001820901683}
+  - component: {fileID: 616557338499542396}
+  m_Layer: 3
+  m_Name: ReelEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2059247001820901683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984909478168635445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 124730695963021864}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &616557338499542396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984909478168635445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reelBase: {fileID: 8171721267369878532}
+  symbolLight: {fileID: 6762777919229751399}
 --- !u!1 &7005318526188102969
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +826,7 @@ Transform:
   - {fileID: 5941227982006664348}
   - {fileID: 8355004096717543325}
   - {fileID: 2098474467924733096}
-  m_Father: {fileID: 124730695963021864}
+  m_Father: {fileID: 2500236968824962701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8324961688018038041
 MonoBehaviour:

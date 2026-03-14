@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace ReelSpinGame_Reels
+namespace ReelSpinGame_Reel
 {
     // リール回転マネージャーのデータ
     public class ReelSpinManagerModel
@@ -14,10 +12,10 @@ namespace ReelSpinGame_Reels
         public bool IsFirstReelPushed { get; set; }     // 第一停止をしたか
         public ReelID FirstPushReel { get; set; }       // 最初に止めたリール番号
         public int FirstPushPos { get; set; }           // 第一停止リールの停止位置
-        public int StoppedReelCount { get; set; }       // 停止したリール数
+        public int PushedCount { get; set; }        // 停止を押した数
         public int RandomValue { get; set; }            // リールテーブルのランダム数値
 
-        public LastStoppedReelData LastStoppedReelData { get; private set; }    // 最後に止めたリールのデータ
+        public LastStoppedReelData LastStoppedReelData { get; set; }    // 最後に止めたリールのデータ
 
         public ReelSpinManagerModel()
         {
@@ -30,12 +28,9 @@ namespace ReelSpinGame_Reels
             FirstPushReel = ReelID.ReelLeft;
             FirstPushPos = 0;
             RandomValue = 0;
-            StoppedReelCount = 0;
+            PushedCount = 0;
 
             LastStoppedReelData = new LastStoppedReelData();
         }
-
-        // 最後に止めたリールデータを作る
-        public void GenerateLastStopped(List<ReelObjectPresenter> reelObjects) => LastStoppedReelData.GenerateLastStopped(reelObjects);
     }
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Reel.ReelManager;
 
 namespace ReelSpinGame_Save.Database.Option
 {

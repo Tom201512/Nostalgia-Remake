@@ -1,13 +1,13 @@
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using System;
 using System.IO;
 using UnityEngine;
 
-namespace ReelSpinGame_Datas.Reels
+namespace ReelSpinGame_Scriptable.Reels
 {
     // 第二停止時の条件クラス
     [Serializable]
-    public class ReelSecondConditions : ReelBaseData
+    public class ReelSecondConditions : ReelBaseConditionData
     {
         // 読み込み位置
         const int FirstPushedReelIDPos = ConditionMaxRead + 1;      // 第一停止したリールID
@@ -17,8 +17,8 @@ namespace ReelSpinGame_Datas.Reels
         const int SecondPushCIDPos = SecondPushTIDPos + 1;          // 第二停止のCID
 
         // 第二停止の停止条件
-        [SerializeField] private byte firstStopReelID;      // 第一停止したリールのID
-        [SerializeField] private byte firstStopCID;         // 第一停止したリールのCID
+        [SerializeField] private int firstStopReelID;      // 第一停止したリールのID
+        [SerializeField] private int firstStopCID;         // 第一停止したリールのCID
         [SerializeField] private int secondStopPos;         // 第二停止の停止位置
 
         public ReelSecondConditions(StreamReader sReader)
@@ -31,20 +31,19 @@ namespace ReelSpinGame_Datas.Reels
                 // メイン条件(16進数で読み込みint型で圧縮)
                 if (indexNum < ConditionMaxRead)
                 {
-                    int offset = (int)Math.Pow(16, indexNum);
-                    MainConditions += Convert.ToInt32(value) * offset;
+                    MainConditions += int.Parse(value) << (4 * indexNum);
                 }
 
                 // 第一したリールのID読み込み
                 else if (indexNum < FirstPushedReelIDPos)
                 {
-                    firstStopReelID = Convert.ToByte(value);
+                    firstStopReelID = int.Parse(value);
                 }
 
                 // 第一したリールのTID読み込み
                 else if (indexNum < FirstPushedCIDPos)
                 {
-                    firstStopCID = Convert.ToByte(value);
+                    firstStopCID = int.Parse(value);
                 }
 
                 // 第二リール停止位置(末端まで読み込む)
@@ -55,7 +54,7 @@ namespace ReelSpinGame_Datas.Reels
                         string[] stopPosData = value.Trim('"').Split(",");
                         foreach (string stop in stopPosData)
                         {
-                            secondStopPos += ConvertToArrayBit(Convert.ToInt32(stop));
+                            secondStopPos += ConvertToArrayBit(int.Parse(stop));
                         }
                     }
                     else
@@ -67,13 +66,13 @@ namespace ReelSpinGame_Datas.Reels
                 // TID読み込み
                 else if (indexNum < SecondPushTIDPos)
                 {
-                    TID = Convert.ToByte(value);
+                    TableID = int.Parse(value);
                 }
 
                 // CID読み込み
                 else if (indexNum < SecondPushCIDPos)
                 {
-                    CID = Convert.ToByte(value);
+                    CombinationID = int.Parse(value);
                 }
 
                 // 最後の部分は読まない(テーブル名)

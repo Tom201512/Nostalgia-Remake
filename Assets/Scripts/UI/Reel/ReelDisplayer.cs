@@ -1,5 +1,5 @@
-using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.Util;
+using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Util;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace ReelSpinGame_UI.Reel
     // リール結果を表示する
     public class ReelDisplayer : MonoBehaviour
     {
-        [SerializeField] ReelObjectPresenter reelObject;            // リールオブジェクト
+        [SerializeField] ReelObject reelObject;            // リールオブジェクト
         [SerializeField] List<TextMeshProUGUI> reelPosTexts;        // コマ表示用フォント
         [SerializeField] TextMeshProUGUI reelPushOrderText;         // 押し順表示用フォント
         [SerializeField] TextMeshProUGUI reelDelayText;             // スベリコマ表示用フォント

@@ -1,4 +1,5 @@
 ﻿using ReelSpinGame_Flag;
+using ReelSpinGame_Reel.Spin;
 using ReelSpinGame_Save.Bonus;
 using ReelSpinGame_Save.Medal;
 using ReelSpinGame_Save.Player;
@@ -25,7 +26,12 @@ namespace ReelSpinGame_Save.Database
             Player = new PlayerSave();
             Medal = new MedalSave();
             FlagCounter = 0;
-            LastReelPos = new List<int> { 19, 19, 19 };
+            LastReelPos = new List<int> 
+            { 
+                ReelSpinModel.InitialPos,
+                ReelSpinModel.InitialPos,
+                ReelSpinModel.InitialPos,
+            };
             LastReelDelay = new List<int> { 0, 0, 0, };
             Bonus = new BonusSave();
         }
@@ -44,26 +50,26 @@ namespace ReelSpinGame_Save.Database
             Player = new PlayerSave();
             Medal = new MedalSave();
             FlagCounter = 0;
-            LastReelPos = new List<int> { 19, 19, 19 };
+            LastReelPos = new List<int>
+            {
+                ReelSpinModel.InitialPos,
+                ReelSpinModel.InitialPos,
+                ReelSpinModel.InitialPos,
+            };
             LastReelDelay = new List<int> { 0, 0, 0 };
             Bonus = new BonusSave();
         }
 
         // プレイヤー情報
         public void RecordPlayerSave(PlayerSave player) => Player = player;
-
         // メダル情報
         public void RecordMedalSave(MedalSave medal) => Medal = medal;
-
         // フラグカウンタ
         public void RecordFlagCounter(int flagCounter) => FlagCounter = flagCounter;
-
         // リール位置
-        public void RecordReelPos(List<int> lastStopped) => LastReelPos = lastStopped;
-
+        public void RecordReelPos(List<int> lastStopped) => LastReelPos = new List<int>(lastStopped);
         // スベリコマ数
-        public void RecordLastReelDelay(List<int> lastReelDelay) => LastReelDelay = lastReelDelay;
-
+        public void RecordLastReelDelay(List<int> lastReelDelay) => LastReelDelay = new List<int>(lastReelDelay);
         // ボーナス情報
         public void RecordBonusData(BonusSave bonus) => Bonus = bonus;
     }

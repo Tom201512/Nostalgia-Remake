@@ -1,13 +1,13 @@
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using System;
 using System.IO;
 using UnityEngine;
 
-namespace ReelSpinGame_Datas.Reels
+namespace ReelSpinGame_Scriptable.Reels
 {
     // 第三停止時の条件クラス
     [Serializable]
-    public class ReelThirdConditions : ReelBaseData
+    public class ReelThirdConditions : ReelBaseConditionData
     {
         // 読み込み位置
         const int FirstPushedReelIDPos = ConditionMaxRead + 1;          // 第一停止したリールID
@@ -17,11 +17,10 @@ namespace ReelSpinGame_Datas.Reels
         const int ThirdPushTIDPos = SecondPushedTIDPos + 1;             // 第三停止のTID
         const int ThirdPushCIDPos = ThirdPushTIDPos + 1;                // 第三停止のCID
 
-
-        [SerializeField] private byte firstStopReelID;      // 第一停止したリールのID
-        [SerializeField] private byte firstStopCID;         // 第一停止したリールのCID
-        [SerializeField] private byte secondStopReelID;     // 第二停止したリールのID
-        [SerializeField] private byte secondStopCID;        // 第二停止したリールのCID
+        [SerializeField] private int firstStopReelID;      // 第一停止したリールのID
+        [SerializeField] private int firstStopCID;         // 第一停止したリールのCID
+        [SerializeField] private int secondStopReelID;     // 第二停止したリールのID
+        [SerializeField] private int secondStopCID;        // 第二停止したリールのCID
 
         public ReelThirdConditions(StreamReader sReader)
         {
@@ -33,44 +32,43 @@ namespace ReelSpinGame_Datas.Reels
                 // メイン条件(16進数で読み込みint型で圧縮)
                 if (indexNum < ConditionMaxRead)
                 {
-                    int offset = (int)Math.Pow(16, indexNum);
-                    MainConditions += Convert.ToInt32(value) * offset;
+                    MainConditions += int.Parse(value) << (4 * indexNum);
                 }
 
                 // 第一したリールのID読み込み
                 else if (indexNum < FirstPushedReelIDPos)
                 {
-                    firstStopReelID = Convert.ToByte(value);
+                    firstStopReelID = int.Parse(value);
                 }
 
                 // 第一したリールのTID読み込み
                 else if (indexNum < FirstPushedCIDPos)
                 {
-                    firstStopCID = Convert.ToByte(value);
+                    firstStopCID = int.Parse(value);
                 }
 
                 // 第二したリールのID読み込み
                 else if (indexNum < SecondPushedReedPos)
                 {
-                    secondStopReelID = Convert.ToByte(value);
+                    secondStopReelID = int.Parse(value);
                 }
 
                 // 第二したリールのTID読み込み
                 else if (indexNum < SecondPushedTIDPos)
                 {
-                    secondStopCID = Convert.ToByte(value);
+                    secondStopCID = int.Parse(value);
                 }
 
                 // 第三停止のTID
                 else if (indexNum < ThirdPushTIDPos)
                 {
-                    TID = Convert.ToByte(value);
+                    TableID = int.Parse(value);
                 }
 
                 // 第三停止のCID
                 else if (indexNum < ThirdPushCIDPos)
                 {
-                    CID = Convert.ToByte(value);
+                    CombinationID = int.Parse(value);
                 }
 
                 // 最後の部分は読まない(テーブル名)

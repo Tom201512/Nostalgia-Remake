@@ -1,14 +1,14 @@
-using ReelSpinGame_Datas.Reels;
+using ReelSpinGame_Reel.Spin;
+using ReelSpinGame_Scriptable.Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Reel.Table
 {
     // リールのスベリコマデータ
-    public class ReelDelayTableData : ScriptableObject
+    public class ReelDelayTableFile : ScriptableObject
     {
         [SerializeField] private List<ReelFirstConditions> first;       // 第一停止
         [SerializeField] private List<ReelSecondConditions> second;     // 第二停止
@@ -46,11 +46,25 @@ namespace ReelSpinGame_Datas
 
         [SerializeField] private int mainConditions;        // メイン条件数値
         [SerializeField] private int firstReelPosition;     // 第一停止したリールの位置
-        [SerializeField] byte reelTableNumber;              // 使用するテーブル番号
+        [SerializeField] private int reelTableNumber;              // 使用するテーブル番号
 
-        public int MainConditions { get { return mainConditions; } set { mainConditions = value; } }
-        public int FirstReelPosition { get { return firstReelPosition; } set { firstReelPosition = value; } }
-        public byte ReelTableNumber { get { return reelTableNumber; } set { reelTableNumber = value; } }
+        public int MainConditions 
+        {
+            get => mainConditions;
+            set => mainConditions = value;
+        }
+
+        public int FirstReelPosition 
+        {
+            get => firstReelPosition;
+            set => firstReelPosition = value;
+        }
+
+        public int ReelTableNumber 
+        { 
+            get => reelTableNumber; 
+            set => reelTableNumber = value;
+        }
 
         public ReelConditionsData(StringReader buffer)
         {
@@ -63,19 +77,19 @@ namespace ReelSpinGame_Datas
                 if (indexNum < ConditionMaxRead)
                 {
                     int offset = (int)Math.Pow(16, indexNum);
-                    mainConditions += Convert.ToInt32(value) * offset;
+                    mainConditions += int.Parse(value) * offset;
                 }
 
                 // 第一リール停止
                 else if (indexNum < FirstReelPosMaxRead)
                 {
-                    firstReelPosition += ConvertToArrayBit(Convert.ToInt32(value));
+                    firstReelPosition += ConvertToArrayBit(int.Parse(value));
                 }
 
                 // テーブルID読み込み
                 else if (indexNum < ReelTableIDMaxRead)
                 {
-                    reelTableNumber = Convert.ToByte(value);
+                    reelTableNumber = int.Parse(value);
                 }
 
                 // 最後の部分は読まない(テーブル名)
@@ -98,19 +112,19 @@ namespace ReelSpinGame_Datas
                 if (indexNum < ConditionMaxRead)
                 {
                     int offset = (int)Math.Pow(16, indexNum);
-                    mainConditions += Convert.ToInt32(value) * offset;
+                    mainConditions += int.Parse(value) * offset;
                 }
 
                 // 第一リール停止
                 else if (indexNum < FirstReelPosMaxRead)
                 {
-                    firstReelPosition += ConvertToArrayBit(Convert.ToInt32(value));
+                    firstReelPosition += ConvertToArrayBit(int.Parse(value));
                 }
 
                 // テーブルID読み込み
                 else if (indexNum < ReelTableIDMaxRead)
                 {
-                    reelTableNumber = Convert.ToByte(value);
+                    reelTableNumber = int.Parse(value);
                 }
                 indexNum += 1;
             }
@@ -135,25 +149,20 @@ namespace ReelSpinGame_Datas
         }
 
         // データをビットにする
-        public static int ConvertToArrayBit(int data)
-        {
-            // 0の時は変換しない
-            if (data == 0) { return 0; }
-            return (int)Math.Pow(2, data);
-        }
-    }
+        public static int ConvertToArrayBit(int data) => 1 << data;
+	}
 
     // リール制御テーブル
     [Serializable]
     public class ReelTableData
     {
         // リール制御テーブル(ディレイを格納する)
-        [SerializeField] private List<byte> tableData;
-        public List<byte> TableData { get { return tableData; } }
+        [SerializeField] private List<int> tableData;
+        public List<int> TableData { get { return tableData; } }
 
         public ReelTableData(StringReader LoadedData)
         {
-            tableData = new List<byte>();
+            tableData = new List<int>();
 
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;
@@ -162,9 +171,9 @@ namespace ReelSpinGame_Datas
             foreach (string value in values)
             {
                 // リールデータを読み込む
-                if (indexNum < MaxReelArray)
+                if (indexNum < ReelSpinModel.MaxReelArray)
                 {
-                    tableData.Add(Convert.ToByte(value));
+                    tableData.Add(int.Parse(value));
                 }
                 indexNum++;
             }
@@ -172,7 +181,7 @@ namespace ReelSpinGame_Datas
 
         public ReelTableData(StreamReader LoadedData)
         {
-            tableData = new List<byte>();
+            tableData = new List<int>();
 
             string[] values = LoadedData.ReadLine().Split(',');
             int indexNum = 0;
@@ -181,9 +190,9 @@ namespace ReelSpinGame_Datas
             foreach (string value in values)
             {
                 // リールデータを読み込む
-                if (indexNum < MaxReelArray)
+                if (indexNum < ReelSpinModel.MaxReelArray)
                 {
-                    tableData.Add(Convert.ToByte(value));
+                    tableData.Add(int.Parse(value));
                 }
 
                 // 最後の一行は読まない(テーブル名)

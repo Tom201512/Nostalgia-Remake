@@ -1,7 +1,7 @@
-using ReelSpinGame_Reels.Util;
+using ReelSpinGame_Reel.Util;
 using UnityEngine;
 
-namespace ReelSpinGame_Reels.Symbol
+namespace ReelSpinGame_Reel.Symbol
 {
     // リールシンボルライトのマネージャー
     public class SymbolLightManager : MonoBehaviour
@@ -14,7 +14,7 @@ namespace ReelSpinGame_Reels.Symbol
         }
 
         // 指定した位置の明るさ変更
-        public void ChangeSymbolBrightness(int posID, int r, int g, int b)
+        public void ChangeSymbolBrightness(ReelPosID posID, int r, int g, int b)
         {
             SymbolLightObj[ReelSymbolPosCalc.GetReelArrayIndex(posID)].ChangeBrightness(r,g,b);
         }

@@ -1,4 +1,4 @@
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_Save;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_Save.Util;

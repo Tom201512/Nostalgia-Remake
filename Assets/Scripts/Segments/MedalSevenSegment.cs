@@ -15,13 +15,13 @@ namespace ReelSpinGame_Medal.Segment
 
         SegmentLamp[] segments;    // 7ÉZÉO
 
-        void Awake()
+        private void Awake()
         {
             HasSegmentUpdate = false;
             segments = GetComponentsInChildren<SegmentLamp>();
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             StopAllCoroutines();
         }

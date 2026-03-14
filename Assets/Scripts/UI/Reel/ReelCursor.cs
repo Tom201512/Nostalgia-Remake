@@ -1,4 +1,4 @@
-using ReelSpinGame_Reels.Spin;
+using ReelSpinGame_Reel.Spin;
 using UnityEngine;
 
 namespace ReelSpinGame_UI.Reel

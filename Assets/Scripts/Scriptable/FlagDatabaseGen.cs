@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEngine.ScriptableObject;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
 #if UNITY_EDITOR
     public class FlagDatabaseGen

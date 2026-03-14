@@ -1,5 +1,5 @@
 using ReelSpinGame_AutoPlay.AI;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_System;
 using System;
 using System.Collections.Generic;

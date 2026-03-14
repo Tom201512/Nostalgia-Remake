@@ -1,4 +1,4 @@
-using ReelSpinGame_Datas;
+using ReelSpinGame_Scriptable;
 using ReelSpinGame_Sound.BGM;
 using ReelSpinGame_Sound.SE;
 using System;

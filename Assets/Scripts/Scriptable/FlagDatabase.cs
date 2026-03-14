@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
     // フラグデータベース
     public class FlagDatabase : ScriptableObject
@@ -135,7 +135,7 @@ namespace ReelSpinGame_Datas
                 }
                 else
                 {
-                    flagCountBySetting.Add(Convert.ToInt32(s));
+                    flagCountBySetting.Add(int.Parse(s));
                 }
                 index += 1;
             }

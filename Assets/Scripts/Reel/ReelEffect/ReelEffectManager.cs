@@ -1,14 +1,15 @@
-using ReelSpinGame_Reels.Symbol;
+using ReelSpinGame_Reel.Symbol;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReelSpinGame_Reels.Effect
+namespace ReelSpinGame_Reel.Effect
 {
     // リールエフェクトマネージャー
     public class ReelEffectManager : MonoBehaviour
     {
-        [SerializeField] List<ReelObjectPresenter> reelObjects;        // リールオブジェクトプレゼンター
+        [SerializeField] List<ReelObject> reelObjects;        // リールオブジェクトプレゼンター
 
         public bool HasFakeSpin { get; private set; }        // 疑似遊技中か
 
@@ -23,23 +24,23 @@ namespace ReelSpinGame_Reels.Effect
         }
 
         // 指定したリールのバックライト変更
-        public void ChangeReelBackLight(int reelID, int r, int g, int b) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(r,g,b);
-        public void ChangeReelBackLight(int reelID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeReelBrightness(brightness);
+        public void ChangeReelBackLight(ReelID reelID, int r, int g, int b) => reelObjects[(int)reelID].ReelEffectManager.ChangeReelBrightness(r,g,b);
+        public void ChangeReelBackLight(ReelID reelID, byte brightness) => reelObjects[(int)reelID].ReelEffectManager.ChangeReelBrightness(brightness);
 
         // 指定したリールと図柄位置のライト変更
-        public void ChangeReelSymbolLight(int reelID, int posID, int r, int g, int b) => reelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, r,g,b);
+        public void ChangeReelSymbolLight(ReelID reelID, ReelPosID posID, int r, int g, int b) => reelObjects[(int)reelID].ReelEffectManager.ChangeSymbolBrightness(posID, r,g,b);
 
-        public void ChangeReelSymbolLight(int reelID, int posID, byte brightness) => reelObjects[reelID].ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
+        public void ChangeReelSymbolLight(ReelID reelID, ReelPosID posID, byte brightness) => reelObjects[(int)reelID].ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
 
         // 全リールの明るさ一括変更
         public void ChangeAllReelBrightness(byte brightness)
         {
-            foreach (ReelObjectPresenter reel in reelObjects)
+            foreach (ReelObject reel in reelObjects)
             {
                 reel.ReelEffectManager.ChangeReelBrightness(brightness);
-                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
+                foreach (ReelPosID posID in Enum.GetValues(typeof(ReelPosID)))
                 {
-                    reel.ReelEffectManager.ChangeSymbolBrightness(i, brightness);
+                    reel.ReelEffectManager.ChangeSymbolBrightness(posID, brightness);
                 }
             }
         }
@@ -47,20 +48,20 @@ namespace ReelSpinGame_Reels.Effect
         // JAC GAME時のライト点灯
         public void EnableJacGameLight()
         {
-            foreach (ReelObjectPresenter reel in reelObjects)
+            foreach (ReelObject reel in reelObjects)
             {
                 reel.ReelEffectManager.ChangeReelBrightness(ReelBase.TurnOffValue);
 
                 // 真ん中以外点灯
-                for (int i = (int)ReelPosID.Lower2nd; i <= (int)ReelPosID.Upper2nd; i++)
+                foreach(ReelPosID posID in Enum.GetValues(typeof(ReelPosID)))
                 {
-                    if (i == (int)ReelPosID.Center)
+                    if (posID == ReelPosID.Center)
                     {
-                        reel.ReelEffectManager.ChangeSymbolBrightness(i, SymbolLight.TurnOnValue);
+                        reel.ReelEffectManager.ChangeSymbolBrightness(posID, SymbolLight.TurnOnValue);
                     }
                     else
                     {
-                        reel.ReelEffectManager.ChangeSymbolBrightness(i, SymbolLight.TurnOffValue);
+                        reel.ReelEffectManager.ChangeSymbolBrightness(posID, SymbolLight.TurnOffValue);
                     }
                 }
             }
@@ -69,7 +70,7 @@ namespace ReelSpinGame_Reels.Effect
         // JAC中の明るさ計算の設定
         public void SetJacBrightnessCalculation(bool value)
         {
-            foreach (ReelObjectPresenter reel in reelObjects)
+            foreach (ReelObject reel in reelObjects)
             {
                 reel.SetJacBrightnessCalculate(value);
             }

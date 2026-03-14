@@ -1,7 +1,7 @@
 using UnityEngine;
-using static ReelSpinGame_Flash.FlashData;
+using ReelSpinGame_Flash;
 
-namespace ReelSpinGame_Reels
+namespace ReelSpinGame_Reel
 {
     // リール本体
     public class ReelBase : MonoBehaviour
@@ -31,26 +31,26 @@ namespace ReelSpinGame_Reels
         // 色変更
         public void ChangeBrightness(int red, int green, int blue)
         {
-            byte r = previousBrightness[(int)ColorID.R];
-            byte g = previousBrightness[(int)ColorID.G];
-            byte b = previousBrightness[(int)ColorID.B];
+            byte r = previousBrightness[(int)FlashData.ColorID.R];
+            byte g = previousBrightness[(int)FlashData.ColorID.G];
+            byte b = previousBrightness[(int)FlashData.ColorID.B];
 
             if (red != -1 && red != r)
             {
                 r = (byte)red;
-                previousBrightness[(int)ColorID.R] = (byte)red;
+                previousBrightness[(int)FlashData.ColorID.R] = (byte)red;
             }
 
             if (green != -1 && green != g)
             {
                 g = (byte)green;
-                previousBrightness[(int)ColorID.G] = (byte)green;
+                previousBrightness[(int)FlashData.ColorID.G] = (byte)green;
             }
 
             if (blue != -1 && blue != b)
             {
                 b = (byte)blue;
-                previousBrightness[(int)ColorID.B] = (byte)blue;
+                previousBrightness[(int)FlashData.ColorID.B] = (byte)blue;
             }
 
             render.material.SetColor("_Color", new Color32(r, g, b, 255));

@@ -3663,6 +3663,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8442814636953702964, guid: c3c960a07db24f240a4ef2e49def76df, type: 3}
   m_PrefabInstance: {fileID: 187739780}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &192292700 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 616557338499542396, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 7971434692843571151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &199189449 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 424692679499895601, guid: c3c960a07db24f240a4ef2e49def76df, type: 3}
@@ -3946,6 +3957,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220547686}
   m_CullTransparentMesh: 1
+--- !u!1 &228235696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 228235697}
+  - component: {fileID: 228235698}
+  m_Layer: 0
+  m_Name: ReelTableManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &228235697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228235696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 286284037}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &228235698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228235696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb06a29e77f40ca458a1ddab07579c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reelGroup: {fileID: 1543145550}
 --- !u!1001 &229211359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4762,8 +4818,6 @@ GameObject:
   m_Component:
   - component: {fileID: 286284037}
   - component: {fileID: 286284044}
-  - component: {fileID: 286284038}
-  - component: {fileID: 286284043}
   m_Layer: 0
   m_Name: ReelManager
   m_TagString: Untagged
@@ -4784,44 +4838,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 124730696227741188}
-  - {fileID: 858262254036343961}
-  - {fileID: 124730695145356381}
+  - {fileID: 1648004980}
+  - {fileID: 537915564}
+  - {fileID: 228235697}
+  - {fileID: 1543145549}
   m_Father: {fileID: 460868893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &286284038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286284036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf035872e93d1bb469bbd56ad2817348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reelObjects:
-  - {fileID: 1933351382769078780}
-  - {fileID: 1190830224200012641}
-  - {fileID: 1933351381669917605}
---- !u!114 &286284043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286284036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cd30c931acac8d43a3fe282a0ad0fcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reelObjects:
-  - {fileID: 1933351382769078780}
-  - {fileID: 1190830224200012641}
-  - {fileID: 1933351381669917605}
-  payoutDatabase: {fileID: 11400000, guid: f9bc871f0967fff4b8e6ea5584dec4b3, type: 2}
 --- !u!114 &286284044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4831,9 +4853,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 286284036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 410e8050328e96b4c875c6c5625b29ec, type: 3}
+  m_Script: {fileID: 11500000, guid: bf7a71e7f8fd98a40923e1e0a0007ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reelGroup: {fileID: 1543145550}
+  reelSpinManager: {fileID: 1648004981}
+  reelTableManager: {fileID: 228235698}
+  reelSymbolCounter: {fileID: 537915565}
   miniReel: {fileID: 5770042973634621093}
   delayDisplay: {fileID: 13022246}
 --- !u!1 &295609827
@@ -24772,6 +24798,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527321900}
   m_CullTransparentMesh: 1
+--- !u!114 &527821046 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 616557338499542396, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 6297900694069576971}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &529176384
 GameObject:
   m_ObjectHideFlags: 0
@@ -24917,6 +24954,52 @@ MonoBehaviour:
   gamesInfoUI: {fileID: 1377614635}
   medalInfoUI: {fileID: 21422581}
   bonusInfoUI: {fileID: 94106121}
+--- !u!1 &537915563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 537915564}
+  - component: {fileID: 537915565}
+  m_Layer: 0
+  m_Name: ReelSymbolCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &537915564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537915563}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 286284037}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &537915565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537915563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa0ef0a693dbbc4fb83b75d8f654a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reelGroup: {fileID: 1543145550}
+  payoutDatabase: {fileID: 11400000, guid: f9bc871f0967fff4b8e6ea5584dec4b3, type: 2}
 --- !u!114 &540040689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6762777919229751399, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
@@ -31601,6 +31684,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33383305792c2445bc0593252bfa7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &943475978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8324961688018038041, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 6297900694069576971}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c8d9eadf3ab119459b4edb5bac7d517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &943521944
 GameObject:
   m_ObjectHideFlags: 0
@@ -35432,6 +35526,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bdcae2b3448cce4b909394015853f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1198622916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 616557338499542396, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 2026191043128771322}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9122e4634b2b5a4bbcb1c78647aaf8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1202587194
 GameObject:
   m_ObjectHideFlags: 0
@@ -36806,6 +36911,17 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &1275790237 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 2026191043128771322}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc642bcd6fc2ff44b6ee223d706860e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1278085480
 GameObject:
   m_ObjectHideFlags: 0
@@ -46258,6 +46374,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dcf8451490b6774f9ee683555ca6775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1543145548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1543145549}
+  - component: {fileID: 1543145550}
+  m_Layer: 0
+  m_Name: ReelGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1543145549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543145548}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 124730696227741188}
+  - {fileID: 858262254036343961}
+  - {fileID: 124730695145356381}
+  m_Father: {fileID: 286284037}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1543145550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543145548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ada0983e7b0a0742baf1cea1e8f4a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reelObjects:
+  - {fileID: 1933351382769078780}
+  - {fileID: 1190830224200012641}
+  - {fileID: 1933351381669917605}
 --- !u!1 &1559221461
 GameObject:
   m_ObjectHideFlags: 0
@@ -47543,6 +47710,51 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1648004979
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1648004980}
+  - component: {fileID: 1648004981}
+  m_Layer: 0
+  m_Name: ReelSpinManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1648004980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648004979}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 286284037}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1648004981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648004979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906c65f9ffc0b70498d0a82845420785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reelGroup: {fileID: 1543145550}
 --- !u!1 &1653914036
 GameObject:
   m_ObjectHideFlags: 0
@@ -60070,6 +60282,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1984297477}
   m_CullTransparentMesh: 1
+--- !u!114 &1986062035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 6297900694069576971}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc642bcd6fc2ff44b6ee223d706860e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1989253124
 GameObject:
   m_ObjectHideFlags: 0
@@ -61802,6 +62025,17 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &2060525197 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+  m_PrefabInstance: {fileID: 7971434692843571151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc642bcd6fc2ff44b6ee223d706860e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2063797984
 GameObject:
   m_ObjectHideFlags: 0
@@ -65065,7 +65299,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 286284037}
+    m_TransformParent: {fileID: 1543145549}
     m_Modifications:
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65120,7 +65354,19 @@ PrefabInstance:
       value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelEffect
+      value: 
+      objectReference: {fileID: 1198622916}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c65266efef15dc4a80392e7e9fcc469, type: 2}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelSpinPresenter
+      value: 
+      objectReference: {fileID: 1275790237}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelDelayTableFile
       value: 
       objectReference: {fileID: 11400000, guid: 8c65266efef15dc4a80392e7e9fcc469, type: 2}
     - target: {fileID: 2169237100488002603, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
@@ -65155,6 +65401,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecondLowerSymbolM
       objectReference: {fileID: 0}
+    - target: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelArrayDataFile
+      value: 
+      objectReference: {fileID: 11400000, guid: fd44fd8b799349f42a39e9d2190cd351, type: 2}
     - target: {fileID: 7607913021338899547, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: SecondUpperSymbolM
@@ -72206,7 +72456,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 286284037}
+    m_TransformParent: {fileID: 1543145549}
     m_Modifications:
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalPosition.x
@@ -72226,15 +72476,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -72257,7 +72507,19 @@ PrefabInstance:
       value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelEffect
+      value: 
+      objectReference: {fileID: 527821046}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
+      value: 
+      objectReference: {fileID: 11400000, guid: d72c8853982602947a098eb7433fce01, type: 2}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelSpinPresenter
+      value: 
+      objectReference: {fileID: 1986062035}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelDelayTableFile
       value: 
       objectReference: {fileID: 11400000, guid: d72c8853982602947a098eb7433fce01, type: 2}
     - target: {fileID: 2169237100488002603, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
@@ -72292,6 +72554,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecondLowerSymbolL
       objectReference: {fileID: 0}
+    - target: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: symbolManager
+      value: 
+      objectReference: {fileID: 943475978}
+    - target: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelArrayDataFile
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e556d94d407d4d46b75984531a04080, type: 2}
     - target: {fileID: 7607913021338899547, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: SecondUpperSymbolL
@@ -73394,7 +73664,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 286284037}
+    m_TransformParent: {fileID: 1543145549}
     m_Modifications:
     - target: {fileID: 124730695963021864, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_LocalPosition.x
@@ -73449,7 +73719,19 @@ PrefabInstance:
       value: 79.8
       objectReference: {fileID: 0}
     - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelEffect
+      value: 
+      objectReference: {fileID: 192292700}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: reelDatabaseFile
+      value: 
+      objectReference: {fileID: 11400000, guid: 211ee5fe31d2595489f2f93476d61204, type: 2}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelSpinPresenter
+      value: 
+      objectReference: {fileID: 2060525197}
+    - target: {fileID: 1933351381960056272, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelDelayTableFile
       value: 
       objectReference: {fileID: 11400000, guid: 211ee5fe31d2595489f2f93476d61204, type: 2}
     - target: {fileID: 2169237100488002603, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
@@ -73480,6 +73762,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecondLowerSymbolR
       objectReference: {fileID: 0}
+    - target: {fileID: 6171046931888507364, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
+      propertyPath: reelArrayDataFile
+      value: 
+      objectReference: {fileID: 11400000, guid: e9825a517408f484b8d0b47686614e96, type: 2}
     - target: {fileID: 7607913021338899547, guid: b6ef3c5e4108c1248b302f89f4f00916, type: 3}
       propertyPath: m_Name
       value: SecondUpperSymbolR

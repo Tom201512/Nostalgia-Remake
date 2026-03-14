@@ -1,5 +1,5 @@
-using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.Util;
+using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +8,7 @@ namespace ReelSpinGame_UI.Reel
     // リール配列の表示
     public class ReelArrayDisplayer : MonoBehaviour
     {
-        [SerializeField] ReelObjectPresenter reelObject;    // リールオブジェクト
+        [SerializeField] ReelObject reelObject;    // リールオブジェクト
 
         private Image[] symbolImages;                       // 図柄部分
 

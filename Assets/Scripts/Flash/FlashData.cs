@@ -1,4 +1,5 @@
-﻿using ReelSpinGame_Reels.Util;
+﻿using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Util;
 using System.Collections.Generic;
 using System.IO;
 
@@ -58,9 +59,9 @@ namespace ReelSpinGame_Flash
         public int GetLoopValue() => FlashArray[CurrentSeekPos][(int)PropertyID.LoopPosition];
 
         // 指定リールIDの本体明るさを得る
-        public int[] GetReelBodyBrightness(int reelID)
+        public int[] GetReelBodyBrightness(ReelID reelID)
         {
-            int indexOffset = (int)PropertyID.Body + reelID * EachReelDataLength;
+            int indexOffset = (int)PropertyID.Body + (int)reelID * EachReelDataLength;
             int[] colorBrightness = new int[]
             {
                  FlashArray[CurrentSeekPos][indexOffset + (int)ColorID.R],
@@ -72,10 +73,10 @@ namespace ReelSpinGame_Flash
         }
 
         // 指定リールID図柄位置の明るさを得る
-        public int[] GetReelSymbolBrightness(int reelID, int reelPosID)
+        public int[] GetReelSymbolBrightness(ReelID reelID, ReelPosID posID)
         {
-            int reelPosOffset = ReelSymbolPosCalc.GetReelArrayIndex(reelPosID);
-            int indexOffset = (int)PropertyID.Lower2ndPos + reelID * EachReelDataLength + reelPosOffset * ColorLength;
+            int reelPosOffset = ReelSymbolPosCalc.GetReelArrayIndex(posID);
+            int indexOffset = (int)PropertyID.Lower2ndPos + (int)reelID * EachReelDataLength + reelPosOffset * ColorLength;
 
             int[] colorBrightness = new int[]
             {

@@ -1,8 +1,7 @@
-using ReelSpinGame_Datas;
+using ReelSpinGame_Scriptable;
 using ReelSpinGame_Medal;
-using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.Spin;
-using ReelSpinGame_Reels.Util;
+using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Util;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +10,10 @@ namespace ReelSpinGame_Payout
     // 払い出しマネージャー
     public class PayoutManager : MonoBehaviour
     {
-        // 払い出しデータベース
-        [SerializeField] private PayoutDatabase payoutDatabase;
+        [SerializeField] private PayoutDatabase payoutDatabase;             // 払い出しデータベース
 
         public PayoutResultBuffer LastPayoutResult { get; private set; }    // 最後に当たった結果
-        public PayoutModel.PayoutCheckMode CheckMode { get; set; }                      // 選択中のテーブル
+        public PayoutModel.PayoutCheckMode CheckMode { get; set; }          // 選択中のテーブル
 
         void Awake()
         {
@@ -51,7 +49,6 @@ namespace ReelSpinGame_Payout
                     int reelIndex = 0;
                     foreach (List<ReelSymbols> reelResult in lastStoppedData.LastSymbols)
                     {
-                        // マイナス数値を配列番号に変換
                         int lineIndex = ReelSymbolPosCalc.GetReelArrayIndex(lineData.PayoutLines[reelIndex]);
                         lineResult.Add(reelResult[lineIndex]);
                         reelIndex += 1;
@@ -138,14 +135,14 @@ namespace ReelSpinGame_Payout
                 {
                     // 図柄が合っているかチェック(ANYなら次の図柄へ)
                     if (data.Combination[i] == PayoutResultData.AnySymbol ||
-                        (byte)lineResult[i] == data.Combination[i])
+                        (int)lineResult[i] == data.Combination[i])
                     {
                         sameSymbolCount += 1;
                     }
                 }
 
                 // 同じ図柄(ANY含め)がリールの数と合えば当選とみなす
-                if (sameSymbolCount == ReelLogicManager.ReelAmount)
+                if (sameSymbolCount == ReelManager.ReelAmount)
                 {
                     // 配列番号を送る
                     return indexNum;

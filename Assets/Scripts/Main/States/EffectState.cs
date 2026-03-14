@@ -2,7 +2,7 @@ using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Main;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_System;
 
 namespace ReelSpinGame_State.LotsState
@@ -63,7 +63,7 @@ namespace ReelSpinGame_State.LotsState
                     }
 
                     PayoutEffectCondition condition =
-                        new PayoutEffectCondition(gM.PayoutManager.LastPayoutResult, gM.ReelManager.GetLastStoppedReelData());
+                        new PayoutEffectCondition(gM.PayoutManager.LastPayoutResult, gM.ReelManager.LastStoppedReelData);
 
                     condition.Flag = gM.FlagManager.CurrentFlag;
                     condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;

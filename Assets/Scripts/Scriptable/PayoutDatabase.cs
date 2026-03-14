@@ -1,10 +1,11 @@
+using ReelSpinGame_Reel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Reel.ReelManager;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
     // 払い出しデータベース
     public class PayoutDatabase : ScriptableObject
@@ -47,23 +48,24 @@ namespace ReelSpinGame_Datas
         // バッファからデータを読み込む位置
         public enum ReadPos { BetCondition = 0, PayoutLineStart }
 
-        [SerializeField] private byte betCondition;             // 有効に必要なベット枚数
-        [SerializeField] private List<sbyte> payoutLines;       // 払い出しライン(符号付きbyte)
+        [SerializeField] private int betCondition;                  // 有効に必要なベット枚数
+        [SerializeField] private List<ReelPosID> payoutLines;       // 払い出しライン
 
-        public byte BetCondition { get => betCondition; }
-        public List<sbyte> PayoutLines { get => payoutLines; }
+        public int BetCondition { get => betCondition; }
+        public List<ReelPosID> PayoutLines { get => payoutLines; }
 
         public PayoutLineData(StreamReader loadedData)
         {
             // ストリームからデータを得る
-            sbyte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), sbyte.Parse);
-            payoutLines = new List<sbyte>();
+            int[] dataBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), int.Parse);
+            payoutLines = new List<ReelPosID>();
 
-            betCondition = (byte)byteBuffer[(int)ReadPos.BetCondition];
+            betCondition = dataBuffer[(int)ReadPos.BetCondition];
             // 読み込み
             for (int i = 0; i < ReelAmount; i++)
             {
-                payoutLines.Add(byteBuffer[i + (int)ReadPos.PayoutLineStart]);
+                ReelPosID posID = (ReelPosID)Enum.ToObject(typeof(ReelPosID), dataBuffer[i + (int)ReadPos.PayoutLineStart]);
+                payoutLines.Add(posID);
             }
         }
     }
@@ -83,34 +85,34 @@ namespace ReelSpinGame_Datas
 
         public const int AnySymbol = 10;     // ANYの判定用ID
 
-        [SerializeField] byte flagID;               // フラグID
-        [SerializeField] List<byte> combination;    // 組み合わせ
-        [SerializeField] byte payout;               // 払い出し枚数
-        [SerializeField] byte bonusType;            // 当選するボーナス
+        [SerializeField] int flagID;               // フラグID
+        [SerializeField] List<int> combination;    // 組み合わせ
+        [SerializeField] int payout;               // 払い出し枚数
+        [SerializeField] int bonusType;            // 当選するボーナス
         [SerializeField] bool hasReplayOrJac;       // リプレイか(またはJAC-IN)
 
         // プロパティ
-        public List<byte> Combination { get => combination; }
-        public byte Payout { get => payout; }
-        public byte BonusType { get => bonusType; }
+        public List<int> Combination { get => combination; }
+        public int Payout { get => payout; }
+        public int BonusType { get => bonusType; }
         public bool HasReplayOrJac { get => hasReplayOrJac; }
 
         public PayoutResultData(StreamReader loadedData)
         {
             // ストリームからデータを得る
-            byte[] byteBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), byte.Parse);
+            int[] dataBuffer = Array.ConvertAll(loadedData.ReadLine().Split(','), int.Parse);
             // 図柄組み合わせのデータ読み込み(Payoutの位置まで読み込む)
-            combination = new List<byte>();
+            combination = new List<int>();
 
             // データ作成
             for (int i = 0; i < ReelAmount; i++)
             {
-                combination.Add(byteBuffer[i + (int)ReadPos.CombinationStart]);
+                combination.Add(dataBuffer[i + (int)ReadPos.CombinationStart]);
             }
 
-            payout = byteBuffer[(int)ReadPos.Payout];
-            bonusType = byteBuffer[(int)ReadPos.Bonus];
-            hasReplayOrJac = byteBuffer[(int)ReadPos.IsReplay] == 1;
+            payout = dataBuffer[(int)ReadPos.Payout];
+            bonusType = dataBuffer[(int)ReadPos.Bonus];
+            hasReplayOrJac = dataBuffer[(int)ReadPos.IsReplay] == 1;
         }
     }
 }

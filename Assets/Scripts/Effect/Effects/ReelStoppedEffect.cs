@@ -33,7 +33,7 @@ namespace ReelSpinGame_Effect.Data
                     case BigType.Blue:
                         sound.PlaySE(sound.SoundDB.SE.BlueRiichiSound);
                         break;
-                    case BigType.Black:
+                    case BigType.BB7:
                         sound.PlaySE(sound.SoundDB.SE.BB7RiichiSound);
                         break;
                 }

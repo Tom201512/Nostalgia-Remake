@@ -2,16 +2,18 @@
 using ReelSpinGame_AutoPlay.AI;
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Interface;
 using ReelSpinGame_Flag;
+using ReelSpinGame_Interface;
 using ReelSpinGame_Main;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 
 namespace ReelSpinGame_State.PlayingState
 {
     // 遊技中ステート
     public class PlayingState : IGameStatement
     {
+        const int RiichiCount = 2;      // リーチのみなす数
+
         private GameManager gM;                             // ゲームマネージャ
 
         public PlayingState(GameManager gameManager)
@@ -45,7 +47,7 @@ namespace ReelSpinGame_State.PlayingState
             gM.Effect.StartLeverOnEffect(condition);
 
             // リール停止時に音を鳴らすよう変更
-            gM.ReelManager.SomeReelStoppedEvent += StopReelSound;
+            gM.ReelManager.ReelStoppedEvent += OnReelStopped;
             // UI更新
             gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.MedalManager);
         }
@@ -59,21 +61,21 @@ namespace ReelSpinGame_State.PlayingState
             }
 
             // リールがすべて停止したら払い出し処理に移行できるかチェック
-            if(gM.ReelManager.GetIsReelFinished())
-            {
+            if(gM.ReelManager.IsReelFinished)
+			{
                 // オート時は自動移行
                 if(gM.Auto.HasAuto)
                 {
                     gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
                 }
                 // 手動時は入力がなくなったときに移行する(または強制終了発動)
-                else if (!gM.InputManager.isKeyHeld || gM.ReelManager.HasForceStop())
+                else if (!gM.InputManager.isKeyHeld || gM.ReelManager.HasForceStop)
                 {
                     gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PayoutState);
                 }
             }
             // 強制停止が発動した場合
-            else if (gM.ReelManager.HasForceStop())
+            else if (gM.ReelManager.HasForceStop)
             {
                 ReelForcedStop();
             }
@@ -84,31 +86,45 @@ namespace ReelSpinGame_State.PlayingState
             // 入力処理の解除
             gM.InputManager.ActionTriggeredEvent -= OnActionTriggered;
             // リール停止時の音を外すようにする
-            gM.ReelManager.SomeReelStoppedEvent -= StopReelSound;
+            gM.ReelManager.ReelStoppedEvent -= OnReelStopped;
             // 成立時の出目を記録する(ただし表示するのは入賞した後)
             RecordBonusReelStopped();
-
             // 高速オートが解除されたかチェック
             gM.Auto.CheckFastAutoCancelled();
             // オート残りゲーム数が0になったかチェック
             gM.Auto.DecreaseAutoSpin();
         }
 
+        // リール停止条件データ作成
+        private ReelMainCondition MakeReelMainCondition()
+        {
+            return ReelMainCondition.MakeReelMainCondition(gM.FlagManager.CurrentFlag, gM.BonusManager.HoldingBonusID, 
+                gM.MedalManager.LastBetAmount, gM.ReelManager.RandomValue);
+        }
+
+        // リール停止時演出データ作成
+        private ReelStoppedEffectCondition MakeReelStoppedEffectCondition()
+        {
+            return ReelStoppedEffectCondition.MakeReelStoppedEffectCondition(gM.ReelManager.StoppedReelCount, 
+                gM.ReelManager.GetBigLinedUpCount(gM.MedalManager.LastBetAmount, RiichiCount), gM.BonusManager.CurrentBonusStatus);
+        }
+
+
         // リール停止
         private void StopReel(ReelID reelID)
         {
-            if (gM.ReelManager.GetCanStopReels() && gM.ReelManager.GetReelStatus(reelID) == ReelStatus.Spinning)
+            if (gM.ReelManager.CanStopReels && gM.ReelManager.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.ReelManager.StopSelectedReel(reelID, gM.FlagManager.CurrentFlag, gM.BonusManager.HoldingBonusID, gM.MedalManager.LastBetAmount);
-            }
+                gM.ReelManager.StopSelectedReel(reelID, MakeReelMainCondition());
+			}
         }
 
         // 超高速オート時の停止
         private void StopReelQuick(ReelID reelID, int autoStopPos)
         {
-            if (gM.ReelManager.GetCanStopReels() && gM.ReelManager.GetReelStatus(reelID) == ReelStatus.Spinning)
+            if (gM.ReelManager.CanStopReels && gM.ReelManager.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.ReelManager.StopSelectedReelFast(reelID, gM.FlagManager.CurrentFlag, gM.BonusManager.HoldingBonusID, gM.MedalManager.LastBetAmount, autoStopPos);
+                gM.ReelManager.StopSelectedReelFast(reelID, MakeReelMainCondition(), autoStopPos);
             }
         }
 
@@ -121,7 +137,7 @@ namespace ReelSpinGame_State.PlayingState
                 AutoControl();
             }
             // それ以外はプレイヤー操作を受け付ける
-            else if (!gM.ReelManager.HasForceStop())
+            else if (!gM.ReelManager.HasForceStop)
             {
                 PlayerControl(controlKey);
             }
@@ -156,7 +172,7 @@ namespace ReelSpinGame_State.PlayingState
         private void PlayerControl(InputManager.ControlKeys controlKey)
         {
             // ボタンごとのリールを停止させる
-            if (gM.ReelManager.GetIsReelWorking())
+            if (gM.ReelManager.IsReelWorking)
             {
                 switch (controlKey)
                 {
@@ -173,15 +189,8 @@ namespace ReelSpinGame_State.PlayingState
             }
         }
 
-        // リール停止の演出
-        private void StopReelSound()
-        {
-            ReelStoppedEffectCondition condition = new ReelStoppedEffectCondition();
-            condition.StoppedReelCount = gM.ReelManager.GetStoppedCount();
-            condition.RiichiBigType = gM.ReelManager.GetBigLinedUpCount(gM.MedalManager.LastBetAmount, 2);
-            condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
-            gM.Effect.StartReelStopEffect(condition);
-        }
+        // リール停止時の処理
+        private void OnReelStopped(ReelID reelID) => gM.Effect.StartReelStopEffect(MakeReelStoppedEffectCondition());
 
         // オート制御
         private void AutoStopBehavior()
@@ -189,12 +198,9 @@ namespace ReelSpinGame_State.PlayingState
             // 超高速オートなら即座に止めて払い出し状態へ
             if (gM.Auto.CurrentSpeed == AutoSpeedName.Quick)
             {
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.First],
-                    gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.First]]);
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.Second],
-                    gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.Second]]);
-                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.Third],
-                    gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.Third]]);
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.First], gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.First]]);
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.Second], gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.Second]]);
+                StopReelQuick(gM.Auto.AutoStopOrders[(int)StopOrderID.Third], gM.Auto.AutoStopPos[(int)gM.Auto.AutoStopOrders[(int)StopOrderID.Third]]);
             }
             else
             {
@@ -250,9 +256,9 @@ namespace ReelSpinGame_State.PlayingState
             if (gM.BonusManager.CurrentBonusStatus == BonusModel.BonusStatus.BonusNone &&
                 (gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagBig || gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagReg))
             {
-                gM.Player.SetBonusHitPos(gM.ReelManager.GetLastStoppedReelData().LastPos);
-                gM.Player.SetBonusPushOrder(gM.ReelManager.GetLastStoppedReelData().LastPushOrder);
-                gM.Player.SetBonusHitDelay(gM.ReelManager.GetLastStoppedReelData().LastReelDelay);
+                gM.Player.SetBonusHitPos(gM.ReelManager.LastStoppedReelData.LastPos);
+                gM.Player.SetBonusPushOrder(gM.ReelManager.LastStoppedReelData.LastStoppedOrder);
+                gM.Player.SetBonusHitDelay(gM.ReelManager.LastStoppedReelData.LastReelDelay);
             }
         }
     }

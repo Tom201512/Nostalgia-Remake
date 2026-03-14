@@ -1,9 +1,10 @@
-using ReelSpinGame_Reels.Symbol;
+using ReelSpinGame_Reel.Symbol;
 using System;
 using UnityEngine;
-using static ReelSpinGame_Reels.Spin.ReelSpinModel;
+using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Spin;
 
-namespace ReelSpinGame_Reels
+namespace ReelSpinGame_Reel
 {
     // リールエフェクト(バックライトの点滅、シンボル点灯など)
     public class ReelEffect : MonoBehaviour
@@ -20,8 +21,8 @@ namespace ReelSpinGame_Reels
         public void ChangeReelBrightness(byte brightness) => reelBase.ChangeBrightness(brightness, brightness, brightness);
 
         // 指定した位置の図柄の明るさ変更
-        public void ChangeSymbolBrightness(int posID, int r, int g, int b) => symbolLight.ChangeSymbolBrightness(posID, r,g,b);
-        public void ChangeSymbolBrightness(int posID, byte brightness) => symbolLight.ChangeSymbolBrightness(posID, brightness, brightness,brightness);
+        public void ChangeSymbolBrightness(ReelPosID posID, int r, int g, int b) => symbolLight.ChangeSymbolBrightness(posID, r,g,b);
+        public void ChangeSymbolBrightness(ReelPosID posID, byte brightness) => symbolLight.ChangeSymbolBrightness(posID, brightness, brightness,brightness);
 
         // JAC時の明るさ計算の設定
         public void SetJacBrightnessCalculate(bool value) => HasJacBrightnessCalculate = value;
@@ -31,13 +32,13 @@ namespace ReelSpinGame_Reels
         {
             if (Math.Sign(maxSpeed) == -1)
             {
-                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(false));
-                ChangeSymbolBrightness((int)ReelPosID.Lower, CalculateJACBrightness(true));
+                ChangeSymbolBrightness(ReelPosID.Center, CalculateJACBrightness(false));
+                ChangeSymbolBrightness(ReelPosID.Lower, CalculateJACBrightness(true));
             }
             else
             {
-                ChangeSymbolBrightness((int)ReelPosID.Upper, CalculateJACBrightness(false));
-                ChangeSymbolBrightness((int)ReelPosID.Center, CalculateJACBrightness(true));
+                ChangeSymbolBrightness(ReelPosID.Upper, CalculateJACBrightness(false));
+                ChangeSymbolBrightness(ReelPosID.Center, CalculateJACBrightness(true));
             }
         }
 
@@ -46,22 +47,22 @@ namespace ReelSpinGame_Reels
         {
             if (Math.Sign(maxSpeed) == -1)
             {
-                ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOffValue);
-                ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOnValue);
+                ChangeSymbolBrightness(ReelPosID.Center, SymbolLight.TurnOffValue);
+                ChangeSymbolBrightness(ReelPosID.Lower, SymbolLight.TurnOnValue);
             }
             else
             {
-                ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
-                ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
+                ChangeSymbolBrightness(ReelPosID.Upper, SymbolLight.TurnOffValue);
+                ChangeSymbolBrightness(ReelPosID.Center, SymbolLight.TurnOnValue);
             }
         }
 
         // JAC中の明るさ計算を終了する
         public void FinishJacBrightnessCalculate()
         {
-            ChangeSymbolBrightness((int)ReelPosID.Center, SymbolLight.TurnOnValue);
-            ChangeSymbolBrightness((int)ReelPosID.Lower, SymbolLight.TurnOffValue);
-            ChangeSymbolBrightness((int)ReelPosID.Upper, SymbolLight.TurnOffValue);
+            ChangeSymbolBrightness(ReelPosID.Center, SymbolLight.TurnOnValue);
+            ChangeSymbolBrightness(ReelPosID.Lower, SymbolLight.TurnOffValue);
+            ChangeSymbolBrightness(ReelPosID.Upper, SymbolLight.TurnOffValue);
         }
 
         // JAC時の明るさ計算(
@@ -71,7 +72,7 @@ namespace ReelSpinGame_Reels
             float currentDistance = 0;
 
             // 少し早めに光らせるため距離は短くする
-            float distanceRotation = ChangeAngle * JacLightOffset;
+            float distanceRotation = ReelSpinModel.ChangeAngle * JacLightOffset;
 
             // 符号に合わせて距離を計算
             if (transform.rotation.eulerAngles.x > 0f)

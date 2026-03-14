@@ -2,7 +2,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
     // スクリプタブルを作成する
 #if UNITY_EDITOR

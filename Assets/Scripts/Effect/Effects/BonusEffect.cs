@@ -62,7 +62,7 @@ namespace ReelSpinGame_Effect.Data
                 case BigType.Blue:
                     sound.PlayBGM(sound.SoundDB.BGM.BlueBGM);
                     break;
-                case BigType.Black:
+                case BigType.BB7:
                     sound.PlayBGM(sound.SoundDB.BGM.BlackBGM);
                     break;
                 default:
@@ -82,7 +82,7 @@ namespace ReelSpinGame_Effect.Data
                 case BigType.Blue:
                     sound.PlayBGM(sound.SoundDB.BGM.BlueJAC);
                     break;
-                case BigType.Black:
+                case BigType.BB7:
                     sound.PlayBGM(sound.SoundDB.BGM.BlackJAC);
                     break;
                 default:

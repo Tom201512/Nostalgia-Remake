@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReelSpinGame_Reels.Symbol
+namespace ReelSpinGame_Reel.Symbol
 {
     // 図柄変更のコンポーネント
     public class SymbolChange : MonoBehaviour

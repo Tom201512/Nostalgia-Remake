@@ -1,6 +1,6 @@
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Reels.Effect;
-using ReelSpinGame_Reels.Flash;
+using ReelSpinGame_Reel.Effect;
+using ReelSpinGame_Reel.Flash;
 using UnityEngine;
 
 using static ReelSpinGame_Bonus.BonusModel;

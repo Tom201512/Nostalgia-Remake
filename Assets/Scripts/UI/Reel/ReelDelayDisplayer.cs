@@ -1,4 +1,4 @@
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using System.Collections.Generic;
 using UnityEngine;
 

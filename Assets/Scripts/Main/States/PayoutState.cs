@@ -4,7 +4,7 @@ using ReelSpinGame_Flag;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Main;
 using ReelSpinGame_Payout;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 
 namespace ReelSpinGame_State.PayoutState
 {
@@ -20,7 +20,7 @@ namespace ReelSpinGame_State.PayoutState
         public void StateStart()
         {
             // 払い出し確認
-            gM.PayoutManager.CheckPayouts(gM.MedalManager.LastBetAmount, gM.ReelManager.GetLastStoppedReelData());
+            gM.PayoutManager.CheckPayouts(gM.MedalManager.LastBetAmount, gM.ReelManager.LastStoppedReelData);
             // 変更前のボーナス状態を記録
             gM.BonusManager.SetPreviousBonusStatus();
             // ボーナス開始をチェック
@@ -70,7 +70,7 @@ namespace ReelSpinGame_State.PayoutState
             gM.PlayerSaveDatabase.RecordPlayerSave(gM.Player.MakeSaveData());
             gM.PlayerSaveDatabase.RecordMedalSave(gM.MedalManager.MakeSaveData());
             gM.PlayerSaveDatabase.RecordFlagCounter(gM.FlagManager.FlagCounter);
-            gM.PlayerSaveDatabase.RecordReelPos(gM.ReelManager.GetLastStoppedReelData().LastPos);
+            gM.PlayerSaveDatabase.RecordReelPos(gM.ReelManager.LastStoppedReelData.LastPos);
             gM.PlayerSaveDatabase.RecordBonusData(gM.BonusManager.MakeSaveData());
         }
 
@@ -194,7 +194,7 @@ namespace ReelSpinGame_State.PayoutState
             // JACハズシの記録
             if (gM.BonusManager.CurrentBonusStatus == BonusModel.BonusStatus.BonusBIGGames && gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagReplayJacIn)
             {
-                gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.ReelManager.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.ReelManager.GetRandomValue());
+                gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.ReelManager.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.ReelManager.RandomValue);
             }
         }
 
@@ -203,7 +203,7 @@ namespace ReelSpinGame_State.PayoutState
         {
             // リールから揃ったボーナス図柄を得る
             gM.BonusManager.ResetBigType();
-            BonusModel.BigType color = gM.ReelManager.GetBigLinedUpCount(gM.MedalManager.LastBetAmount, 3);
+            BonusModel.BigType color = gM.ReelManager.GetBigLinedUpCount(gM.MedalManager.LastBetAmount, ReelManager.ReelAmount);
 
             // ビッグチャンスの場合
             if (gM.PayoutManager.LastPayoutResult.BonusID == (int)BonusModel.BonusTypeID.BonusBIG)

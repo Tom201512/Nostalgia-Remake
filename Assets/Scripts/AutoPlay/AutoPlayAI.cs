@@ -1,6 +1,6 @@
 ﻿using ReelSpinGame_Bonus;
 using ReelSpinGame_Flag;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using UnityEngine;
 
 namespace ReelSpinGame_AutoPlay.AI
@@ -206,7 +206,7 @@ namespace ReelSpinGame_AutoPlay.AI
             // 揃えるBIGの指定がなければランダムで選択
             if (BigLineUpSymbol == BonusModel.BigType.None)
             {
-                typeID = Random.Range((int)BonusModel.BigType.Red, (int)BonusModel.BigType.Black + 1);
+                typeID = Random.Range((int)BonusModel.BigType.Red, (int)BonusModel.BigType.BB7 + 1);
             }
             else
             {
@@ -221,7 +221,7 @@ namespace ReelSpinGame_AutoPlay.AI
                 case (int)BonusModel.BigType.Blue:
                     return autoNormalBlueBigAI.SendStopPosData();
 
-                case (int)BonusModel.BigType.Black:
+                case (int)BonusModel.BigType.BB7:
                     // 4枚チェリーまたは1枚掛け
                     if (flag == FlagModel.FlagID.FlagCherry4 || betAmount == 1)
                     {

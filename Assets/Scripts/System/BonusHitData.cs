@@ -1,12 +1,12 @@
 ﻿using ReelSpinGame_Interface;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusModel;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
     // 当選ボーナス情報
     public class BonusHitData : ISavable

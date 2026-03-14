@@ -11,7 +11,7 @@ namespace ReelSpinGame_Lamps
         [SerializeField] private LampComponent medal3Up;        // 3–‡Š|‚¯ƒ‰ƒ“ƒvã
         [SerializeField] private LampComponent medal3Down;      // 3–‡Š|‚¯ƒ‰ƒ“ƒv‰º
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             StopAllCoroutines();
         }

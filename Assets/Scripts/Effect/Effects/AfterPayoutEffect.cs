@@ -1,5 +1,5 @@
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Reels.Flash;
+using ReelSpinGame_Reel.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
 using UnityEngine;
@@ -63,7 +63,7 @@ namespace ReelSpinGame_Effect.Data
                 case BigType.Blue:
                     sound.PlaySE(sound.SoundDB.SE.BlueStart);
                     break;
-                case BigType.Black:
+                case BigType.BB7:
                     sound.PlaySE(sound.SoundDB.SE.BlackStart);
                     break;
                 default:
@@ -83,7 +83,7 @@ namespace ReelSpinGame_Effect.Data
                 case BigType.Blue:
                     sound.PlaySE(sound.SoundDB.SE.BlueEnd);
                     break;
-                case BigType.Black:
+                case BigType.BB7:
                     sound.PlaySE(sound.SoundDB.SE.BlackEnd);
                     break;
             }

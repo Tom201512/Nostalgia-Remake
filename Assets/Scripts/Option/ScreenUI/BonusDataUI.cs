@@ -1,4 +1,4 @@
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_System;
 using ReelSpinGame_UI.Reel;
 using TMPro;

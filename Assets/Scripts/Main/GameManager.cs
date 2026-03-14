@@ -6,7 +6,7 @@ using ReelSpinGame_Lamps;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Option;
 using ReelSpinGame_Payout;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_Save.Database;
 using ReelSpinGame_Save.Database.Option;
 using ReelSpinGame_System;
@@ -28,7 +28,7 @@ namespace ReelSpinGame_Main
         [SerializeField] private MedalManager medalManager;                     // メダル管理
         [SerializeField] private FlagManager flagManager;                       // フラグ抽選
         [SerializeField] private WaitManager waitManager;                       // ウェイト管理
-        [SerializeField] private ReelLogicManager reelManagerObj;               // リール情報
+        [SerializeField] private ReelManager reelManagerObj;               // リール情報
         [SerializeField] private PayoutManager payoutManager;                   // 払い出し情報
         [SerializeField] private BonusManager bonusManager;                     // ボーナス情報
         [SerializeField] private EffectPresenter effectManagerObj;              // 演出
@@ -44,7 +44,7 @@ namespace ReelSpinGame_Main
         public MedalManager MedalManager { get => medalManager; }
         public FlagManager FlagManager { get => flagManager; }
         public WaitManager WaitManager { get => waitManager; }
-        public ReelLogicManager ReelManager { get => reelManagerObj; }
+        public ReelManager ReelManager { get => reelManagerObj; }
         public PayoutManager PayoutManager { get => payoutManager; }
         public BonusManager BonusManager { get => bonusManager; }
         public EffectPresenter Effect { get => effectManagerObj; }

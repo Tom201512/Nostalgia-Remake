@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using ReelSpinGame_Bonus;
 
-namespace ReelSpinGame_Datas.Analytics
+namespace ReelSpinGame_Scriptable.Analytics
 {
     // ‰ğÍî•ñ
     public class AnalyticsData : ISavable

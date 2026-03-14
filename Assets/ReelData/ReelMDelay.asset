@@ -9,4037 +9,4037 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1712bc42e7e2a4f449b8a597a1d5bea3, type: 3}
+  m_Script: {fileID: 11500000, guid: 443e94e0a25fb944885ab19501489ac8, type: 3}
   m_Name: ReelMDelay
   m_EditorClassIdentifier: 
   first:
-  - mainConditon: 0
-    tid: 1
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16
-    tid: 11
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 12304
-    tid: 15
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 16400
-    tid: 15
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20496
-    tid: 13
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 24592
-    tid: 13
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 272
-    tid: 12
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16656
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20752
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24848
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 13072
-    tid: 12
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 17168
-    tid: 16
-    cid: 5
-    firstStopPos: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20512
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24608
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 288
-    tid: 16
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 13088
-    tid: 16
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 17184
-    tid: 16
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 1
-    tid: 11
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 12289
-    tid: 15
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 16385
-    tid: 15
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20481
-    tid: 13
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 24577
-    tid: 13
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 257
-    tid: 12
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16641
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20737
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24833
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 13057
-    tid: 12
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 17153
-    tid: 16
-    cid: 5
-    firstStopPos: 0
-  - mainConditon: 2
-    tid: 15
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16386
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20482
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24578
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 258
-    tid: 16
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 13058
-    tid: 16
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 17154
-    tid: 16
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 3
-    tid: 1
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 19
-    tid: 15
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16403
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20499
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24595
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 13075
-    tid: 16
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 25363
-    tid: 16
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 35
-    tid: 15
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16419
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20515
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24611
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 13091
-    tid: 16
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 25379
-    tid: 16
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 307
-    tid: 1
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 4
-    tid: 1
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 772
-    tid: 28
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 20
-    tid: 12
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16404
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20500
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 24596
-    tid: 16
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 532
-    tid: 15
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16916
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 21012
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 25108
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 36
-    tid: 16
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 548
-    tid: 15
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 16932
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 21028
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 25124
-    tid: 17
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 308
-    tid: 1
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 5
-    tid: 26
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 16389
-    tid: 28
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 20485
-    tid: 28
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 24581
-    tid: 28
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 261
-    tid: 27
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 4869
-    tid: 29
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 8965
-    tid: 29
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 17157
-    tid: 29
-    cid: 5
-    firstStopPos: 0
-  - mainConditon: 21253
-    tid: 29
-    cid: 5
-    firstStopPos: 0
-  - mainConditon: 6
-    tid: 31
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 12294
-    tid: 30
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 16390
-    tid: 30
-    cid: 2
-    firstStopPos: 0
-  - mainConditon: 20486
-    tid: 32
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 24582
-    tid: 32
-    cid: 3
-    firstStopPos: 0
-  - mainConditon: 262
-    tid: 31
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 17158
-    tid: 31
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 21254
-    tid: 31
-    cid: 4
-    firstStopPos: 0
-  - mainConditon: 25350
-    tid: 31
-    cid: 5
-    firstStopPos: 0
-  - mainConditon: 7
-    tid: 35
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 263
-    tid: 34
-    cid: 1
-    firstStopPos: 0
-  - mainConditon: 8
-    tid: 34
-    cid: 1
+  - mainCondition: 0
+    tableID: 1
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16
+    tableID: 11
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 12304
+    tableID: 15
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 16400
+    tableID: 15
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20496
+    tableID: 13
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 24592
+    tableID: 13
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 272
+    tableID: 12
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16656
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20752
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24848
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 13072
+    tableID: 12
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 17168
+    tableID: 16
+    combinationID: 5
+    firstStopPos: 0
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20512
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24608
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 288
+    tableID: 16
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 13088
+    tableID: 16
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 17184
+    tableID: 16
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 1
+    tableID: 11
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 12289
+    tableID: 15
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 16385
+    tableID: 15
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20481
+    tableID: 13
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 24577
+    tableID: 13
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 257
+    tableID: 12
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16641
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20737
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24833
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 13057
+    tableID: 12
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 17153
+    tableID: 16
+    combinationID: 5
+    firstStopPos: 0
+  - mainCondition: 2
+    tableID: 15
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16386
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20482
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24578
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 258
+    tableID: 16
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 13058
+    tableID: 16
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 17154
+    tableID: 16
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 3
+    tableID: 1
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 19
+    tableID: 15
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16403
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20499
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24595
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 13075
+    tableID: 16
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 25363
+    tableID: 16
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 35
+    tableID: 15
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16419
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20515
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24611
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 13091
+    tableID: 16
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 25379
+    tableID: 16
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 307
+    tableID: 1
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 4
+    tableID: 1
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 772
+    tableID: 28
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 20
+    tableID: 12
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16404
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20500
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 24596
+    tableID: 16
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 532
+    tableID: 15
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16916
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 21012
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 25108
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 36
+    tableID: 16
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 548
+    tableID: 15
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 16932
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 21028
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 25124
+    tableID: 17
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 308
+    tableID: 1
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 5
+    tableID: 26
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 16389
+    tableID: 28
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 20485
+    tableID: 28
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 24581
+    tableID: 28
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 261
+    tableID: 27
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 4869
+    tableID: 29
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 8965
+    tableID: 29
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 17157
+    tableID: 29
+    combinationID: 5
+    firstStopPos: 0
+  - mainCondition: 21253
+    tableID: 29
+    combinationID: 5
+    firstStopPos: 0
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 12294
+    tableID: 30
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 16390
+    tableID: 30
+    combinationID: 2
+    firstStopPos: 0
+  - mainCondition: 20486
+    tableID: 32
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 24582
+    tableID: 32
+    combinationID: 3
+    firstStopPos: 0
+  - mainCondition: 262
+    tableID: 31
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 17158
+    tableID: 31
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 21254
+    tableID: 31
+    combinationID: 4
+    firstStopPos: 0
+  - mainCondition: 25350
+    tableID: 31
+    combinationID: 5
+    firstStopPos: 0
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 263
+    tableID: 34
+    combinationID: 1
+    firstStopPos: 0
+  - mainCondition: 8
+    tableID: 34
+    combinationID: 1
     firstStopPos: 0
   second:
-  - mainConditon: 0
-    tid: 1
-    cid: 1
+  - mainCondition: 0
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 2
-    cid: 1
+  - mainCondition: 0
+    tableID: 2
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 3
-    cid: 2
+  - mainCondition: 0
+    tableID: 3
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 4
-    cid: 3
+  - mainCondition: 0
+    tableID: 4
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 5
-    cid: 4
+  - mainCondition: 0
+    tableID: 5
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 6
-    cid: 5
+  - mainCondition: 0
+    tableID: 6
+    combinationID: 5
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 7
-    cid: 6
+  - mainCondition: 0
+    tableID: 7
+    combinationID: 6
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 8
-    cid: 7
+  - mainCondition: 0
+    tableID: 8
+    combinationID: 7
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 9
-    cid: 8
+  - mainCondition: 0
+    tableID: 9
+    combinationID: 8
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 0
-    tid: 4
-    cid: 9
+  - mainCondition: 0
+    tableID: 4
+    combinationID: 9
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 256
-    tid: 10
-    cid: 1
+  - mainCondition: 256
+    tableID: 10
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 11
-    cid: 1
+  - mainCondition: 16
+    tableID: 11
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 15
-    cid: 2
+  - mainCondition: 16
+    tableID: 15
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 13
-    cid: 3
+  - mainCondition: 16
+    tableID: 13
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 12
-    cid: 4
+  - mainCondition: 16
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 16
-    cid: 5
+  - mainCondition: 16
+    tableID: 16
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 18
-    cid: 1
+  - mainCondition: 16
+    tableID: 18
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 20
-    cid: 1
+  - mainCondition: 16
+    tableID: 20
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 23
-    cid: 1
+  - mainCondition: 16
+    tableID: 23
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 22
-    cid: 1
+  - mainCondition: 16
+    tableID: 22
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 17
-    cid: 1
+  - mainCondition: 16
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 12
-    cid: 1
+  - mainCondition: 16
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 31
-    cid: 1
+  - mainCondition: 16
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 31
-    cid: 1
+  - mainCondition: 16
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 16
-    tid: 31
-    cid: 1
+  - mainCondition: 16
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 12304
-    tid: 26
-    cid: 2
+  - mainCondition: 12304
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 12304
-    tid: 26
-    cid: 2
+  - mainCondition: 12304
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 12304
-    tid: 26
-    cid: 2
+  - mainCondition: 12304
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 13
-    cid: 2
+  - mainCondition: 16400
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 11
-    cid: 2
+  - mainCondition: 16400
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 13
-    cid: 2
+  - mainCondition: 16400
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 11
-    cid: 2
+  - mainCondition: 16400
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 26
-    cid: 2
+  - mainCondition: 16400
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 26
-    cid: 2
+  - mainCondition: 16400
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 16400
-    tid: 26
-    cid: 2
+  - mainCondition: 16400
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 13
-    cid: 2
+  - mainCondition: 20496
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 11
-    cid: 2
+  - mainCondition: 20496
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 13
-    cid: 2
+  - mainCondition: 20496
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 11
-    cid: 2
+  - mainCondition: 20496
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 32
-    cid: 3
+  - mainCondition: 20496
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 32
-    cid: 3
+  - mainCondition: 20496
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 20496
-    tid: 32
-    cid: 3
+  - mainCondition: 20496
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 13
-    cid: 2
+  - mainCondition: 24592
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 11
-    cid: 2
+  - mainCondition: 24592
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 13
-    cid: 2
+  - mainCondition: 24592
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 11
-    cid: 2
+  - mainCondition: 24592
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 28
-    cid: 4
+  - mainCondition: 24592
+    tableID: 28
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 28
-    cid: 4
+  - mainCondition: 24592
+    tableID: 28
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 24592
-    tid: 28
-    cid: 4
+  - mainCondition: 24592
+    tableID: 28
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 272
-    tid: 12
-    cid: 1
+  - mainCondition: 272
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 272
-    tid: 16
-    cid: 2
+  - mainCondition: 272
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 272
-    tid: 12
-    cid: 1
+  - mainCondition: 272
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 16656
-    tid: 16
-    cid: 2
+  - mainCondition: 16656
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 20752
-    tid: 16
-    cid: 2
+  - mainCondition: 20752
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 24848
-    tid: 16
-    cid: 2
+  - mainCondition: 24848
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 13072
-    tid: 19
-    cid: 3
+  - mainCondition: 13072
+    tableID: 19
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 13072
-    tid: 21
-    cid: 3
+  - mainCondition: 13072
+    tableID: 21
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 13072
-    tid: 24
-    cid: 3
+  - mainCondition: 13072
+    tableID: 24
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 13072
-    tid: 25
-    cid: 3
+  - mainCondition: 13072
+    tableID: 25
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 13072
-    tid: 19
-    cid: 3
+  - mainCondition: 13072
+    tableID: 19
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 25360
-    tid: 12
-    cid: 4
+  - mainCondition: 25360
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 25360
-    tid: 12
-    cid: 4
+  - mainCondition: 25360
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 25360
-    tid: 16
-    cid: 4
+  - mainCondition: 25360
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 25360
-    tid: 16
-    cid: 4
+  - mainCondition: 25360
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 25360
-    tid: 12
-    cid: 4
+  - mainCondition: 25360
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 17
-    cid: 2
+  - mainCondition: 32
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 16
-    cid: 3
+  - mainCondition: 32
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 17
-    cid: 1
+  - mainCondition: 32
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 17
-    cid: 2
+  - mainCondition: 12320
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 17
-    cid: 2
+  - mainCondition: 12320
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 17
-    cid: 2
+  - mainCondition: 12320
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 3
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 3
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 3
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 16
-    cid: 4
+  - mainCondition: 20512
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 16
-    cid: 4
+  - mainCondition: 20512
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 16
-    cid: 4
+  - mainCondition: 20512
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 16
-    cid: 4
+  - mainCondition: 24608
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 16
-    cid: 4
+  - mainCondition: 24608
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 16
-    cid: 4
+  - mainCondition: 24608
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 288
-    tid: 16
-    cid: 1
+  - mainCondition: 288
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 288
-    tid: 16
-    cid: 1
+  - mainCondition: 288
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 13088
-    tid: 16
-    cid: 2
+  - mainCondition: 13088
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 13088
-    tid: 16
-    cid: 2
+  - mainCondition: 13088
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 25376
-    tid: 16
-    cid: 2
+  - mainCondition: 25376
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 25376
-    tid: 16
-    cid: 2
+  - mainCondition: 25376
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 11
-    cid: 1
+  - mainCondition: 1
+    tableID: 11
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 15
-    cid: 2
+  - mainCondition: 1
+    tableID: 15
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 13
-    cid: 3
+  - mainCondition: 1
+    tableID: 13
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 12
-    cid: 4
+  - mainCondition: 1
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 16
-    cid: 5
+  - mainCondition: 1
+    tableID: 16
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 18
-    cid: 1
+  - mainCondition: 1
+    tableID: 18
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 20
-    cid: 1
+  - mainCondition: 1
+    tableID: 20
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 23
-    cid: 1
+  - mainCondition: 1
+    tableID: 23
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 22
-    cid: 1
+  - mainCondition: 1
+    tableID: 22
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 17
-    cid: 1
+  - mainCondition: 1
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 19
-    cid: 2
+  - mainCondition: 12289
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 21
-    cid: 2
+  - mainCondition: 12289
+    tableID: 21
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 24
-    cid: 2
+  - mainCondition: 12289
+    tableID: 24
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 25
-    cid: 2
+  - mainCondition: 12289
+    tableID: 25
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 19
-    cid: 2
+  - mainCondition: 12289
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 19
-    cid: 2
+  - mainCondition: 16385
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 21
-    cid: 2
+  - mainCondition: 16385
+    tableID: 21
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 24
-    cid: 2
+  - mainCondition: 16385
+    tableID: 24
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 25
-    cid: 2
+  - mainCondition: 16385
+    tableID: 25
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 19
-    cid: 2
+  - mainCondition: 16385
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 31
-    cid: 3
+  - mainCondition: 20481
+    tableID: 31
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 31
-    cid: 3
+  - mainCondition: 20481
+    tableID: 31
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 31
-    cid: 4
+  - mainCondition: 24577
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 31
-    cid: 4
+  - mainCondition: 24577
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 257
-    tid: 12
-    cid: 1
+  - mainCondition: 257
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 257
-    tid: 16
-    cid: 2
+  - mainCondition: 257
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 257
-    tid: 12
-    cid: 1
+  - mainCondition: 257
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 257
-    tid: 16
-    cid: 2
+  - mainCondition: 257
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 15
-    cid: 1
+  - mainCondition: 2
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 17
-    cid: 2
+  - mainCondition: 2
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 16
-    cid: 3
+  - mainCondition: 2
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 15
-    cid: 1
+  - mainCondition: 2
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 17
-    cid: 1
+  - mainCondition: 2
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 16
-    cid: 2
+  - mainCondition: 12290
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 16
-    cid: 2
+  - mainCondition: 12290
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 16
-    cid: 2
+  - mainCondition: 16386
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 16
-    cid: 2
+  - mainCondition: 16386
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 29
-    cid: 3
+  - mainCondition: 20482
+    tableID: 29
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 31
-    cid: 4
+  - mainCondition: 24578
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 31
-    cid: 4
+  - mainCondition: 24578
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 10
     secondStopPos: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 11
     secondStopPos: 0
-  - mainConditon: 258
-    tid: 16
-    cid: 1
+  - mainCondition: 258
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 258
-    tid: 16
-    cid: 1
+  - mainCondition: 258
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 3
-    tid: 1
-    cid: 1
+  - mainCondition: 3
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 19
-    tid: 15
-    cid: 1
+  - mainCondition: 19
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 19
-    tid: 17
-    cid: 2
+  - mainCondition: 19
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 19
-    tid: 16
-    cid: 3
+  - mainCondition: 19
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 19
-    tid: 16
-    cid: 4
+  - mainCondition: 19
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 35
-    tid: 15
-    cid: 1
+  - mainCondition: 35
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 35
-    tid: 17
-    cid: 2
+  - mainCondition: 35
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 35
-    tid: 16
-    cid: 3
+  - mainCondition: 35
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 35
-    tid: 16
-    cid: 4
+  - mainCondition: 35
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 307
-    tid: 1
-    cid: 1
+  - mainCondition: 307
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 4
-    tid: 1
-    cid: 1
+  - mainCondition: 4
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 772
-    tid: 28
-    cid: 1
+  - mainCondition: 772
+    tableID: 28
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 20
-    tid: 12
-    cid: 1
+  - mainCondition: 20
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 20
-    tid: 16
-    cid: 2
+  - mainCondition: 20
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 532
-    tid: 15
-    cid: 1
+  - mainCondition: 532
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 532
-    tid: 17
-    cid: 2
+  - mainCondition: 532
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 36
-    tid: 16
-    cid: 1
+  - mainCondition: 36
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 548
-    tid: 15
-    cid: 1
+  - mainCondition: 548
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 548
-    tid: 17
-    cid: 2
+  - mainCondition: 548
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 308
-    tid: 1
-    cid: 1
+  - mainCondition: 308
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 5
-    tid: 27
-    cid: 1
+  - mainCondition: 5
+    tableID: 27
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 5
-    tid: 26
-    cid: 2
+  - mainCondition: 5
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 5
-    tid: 28
-    cid: 3
+  - mainCondition: 5
+    tableID: 28
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 5
-    tid: 29
-    cid: 4
+  - mainCondition: 5
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 5
-    tid: 29
-    cid: 5
+  - mainCondition: 5
+    tableID: 29
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 5
-    tid: 29
-    cid: 6
+  - mainCondition: 5
+    tableID: 29
+    combinationID: 6
     firstStopReelID: 0
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 6
-    tid: 31
-    cid: 1
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 6
-    tid: 30
-    cid: 2
+  - mainCondition: 6
+    tableID: 30
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 6
-    tid: 32
-    cid: 3
+  - mainCondition: 6
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 6
-    tid: 31
-    cid: 4
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 6
-    tid: 31
-    cid: 5
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 35
-    cid: 1
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 34
-    cid: 1
+  - mainCondition: 7
+    tableID: 34
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 33
-    cid: 2
+  - mainCondition: 7
+    tableID: 33
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 35
-    cid: 3
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 35
-    cid: 4
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 34
-    cid: 5
+  - mainCondition: 7
+    tableID: 34
+    combinationID: 5
     firstStopReelID: 1
     firstStopCID: 5
     secondStopPos: 0
-  - mainConditon: 7
-    tid: 34
-    cid: 6
+  - mainCondition: 7
+    tableID: 34
+    combinationID: 6
     firstStopReelID: 1
     firstStopCID: 6
     secondStopPos: 0
-  - mainConditon: 263
-    tid: 34
-    cid: 1
+  - mainCondition: 263
+    tableID: 34
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
-  - mainConditon: 8
-    tid: 34
-    cid: 1
+  - mainCondition: 8
+    tableID: 34
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopPos: 0
   third:
-  - mainConditon: 0
-    tid: 1
-    cid: 1
+  - mainCondition: 0
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 2
-    cid: 1
+  - mainCondition: 0
+    tableID: 2
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 3
-    cid: 2
+  - mainCondition: 0
+    tableID: 3
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 4
-    cid: 3
+  - mainCondition: 0
+    tableID: 4
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 5
-    cid: 4
+  - mainCondition: 0
+    tableID: 5
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 6
-    cid: 5
+  - mainCondition: 0
+    tableID: 6
+    combinationID: 5
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 7
-    cid: 6
+  - mainCondition: 0
+    tableID: 7
+    combinationID: 6
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 8
-    cid: 7
+  - mainCondition: 0
+    tableID: 8
+    combinationID: 7
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 9
-    cid: 8
+  - mainCondition: 0
+    tableID: 9
+    combinationID: 8
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 0
-    tid: 4
-    cid: 9
+  - mainCondition: 0
+    tableID: 4
+    combinationID: 9
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 256
-    tid: 10
-    cid: 1
+  - mainCondition: 256
+    tableID: 10
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 11
-    cid: 1
+  - mainCondition: 16
+    tableID: 11
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 16
-    tid: 15
-    cid: 2
+  - mainCondition: 16
+    tableID: 15
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 16
-    tid: 13
-    cid: 3
+  - mainCondition: 16
+    tableID: 13
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 16
-    tid: 12
-    cid: 4
+  - mainCondition: 16
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 4
-  - mainConditon: 16
-    tid: 16
-    cid: 5
+  - mainCondition: 16
+    tableID: 16
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 5
-  - mainConditon: 16
-    tid: 18
-    cid: 1
+  - mainCondition: 16
+    tableID: 18
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 20
-    cid: 1
+  - mainCondition: 16
+    tableID: 20
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 23
-    cid: 1
+  - mainCondition: 16
+    tableID: 23
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 22
-    cid: 1
+  - mainCondition: 16
+    tableID: 22
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 17
-    cid: 1
+  - mainCondition: 16
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 12
-    cid: 1
+  - mainCondition: 16
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 31
-    cid: 1
+  - mainCondition: 16
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 31
-    cid: 1
+  - mainCondition: 16
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16
-    tid: 31
-    cid: 1
+  - mainCondition: 16
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12304
-    tid: 26
-    cid: 2
+  - mainCondition: 12304
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12304
-    tid: 26
-    cid: 2
+  - mainCondition: 12304
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12304
-    tid: 26
-    cid: 2
+  - mainCondition: 12304
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 13
-    cid: 2
+  - mainCondition: 16400
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 11
-    cid: 2
+  - mainCondition: 16400
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 13
-    cid: 2
+  - mainCondition: 16400
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 11
-    cid: 2
+  - mainCondition: 16400
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 26
-    cid: 2
+  - mainCondition: 16400
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 26
-    cid: 2
+  - mainCondition: 16400
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16400
-    tid: 26
-    cid: 2
+  - mainCondition: 16400
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 13
-    cid: 2
+  - mainCondition: 20496
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 11
-    cid: 2
+  - mainCondition: 20496
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 13
-    cid: 2
+  - mainCondition: 20496
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 11
-    cid: 2
+  - mainCondition: 20496
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 32
-    cid: 3
+  - mainCondition: 20496
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 32
-    cid: 3
+  - mainCondition: 20496
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20496
-    tid: 32
-    cid: 3
+  - mainCondition: 20496
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 13
-    cid: 2
+  - mainCondition: 24592
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 11
-    cid: 2
+  - mainCondition: 24592
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 13
-    cid: 2
+  - mainCondition: 24592
+    tableID: 13
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 11
-    cid: 2
+  - mainCondition: 24592
+    tableID: 11
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 28
-    cid: 4
+  - mainCondition: 24592
+    tableID: 28
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 28
-    cid: 4
+  - mainCondition: 24592
+    tableID: 28
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24592
-    tid: 28
-    cid: 4
+  - mainCondition: 24592
+    tableID: 28
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 272
-    tid: 12
-    cid: 1
+  - mainCondition: 272
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 272
-    tid: 16
-    cid: 2
+  - mainCondition: 272
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 272
-    tid: 12
-    cid: 1
+  - mainCondition: 272
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16656
-    tid: 16
-    cid: 2
+  - mainCondition: 16656
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20752
-    tid: 16
-    cid: 2
+  - mainCondition: 20752
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24848
-    tid: 16
-    cid: 2
+  - mainCondition: 24848
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13072
-    tid: 19
-    cid: 3
+  - mainCondition: 13072
+    tableID: 19
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13072
-    tid: 21
-    cid: 3
+  - mainCondition: 13072
+    tableID: 21
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13072
-    tid: 24
-    cid: 3
+  - mainCondition: 13072
+    tableID: 24
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13072
-    tid: 25
-    cid: 3
+  - mainCondition: 13072
+    tableID: 25
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13072
-    tid: 19
-    cid: 3
+  - mainCondition: 13072
+    tableID: 19
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25360
-    tid: 12
-    cid: 4
+  - mainCondition: 25360
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25360
-    tid: 12
-    cid: 4
+  - mainCondition: 25360
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25360
-    tid: 16
-    cid: 4
+  - mainCondition: 25360
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25360
-    tid: 16
-    cid: 4
+  - mainCondition: 25360
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25360
-    tid: 12
-    cid: 4
+  - mainCondition: 25360
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 32
-    tid: 17
-    cid: 2
+  - mainCondition: 32
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 32
-    tid: 16
-    cid: 3
+  - mainCondition: 32
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 17
-    cid: 1
+  - mainCondition: 32
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 15
-    cid: 1
+  - mainCondition: 32
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 32
-    tid: 31
-    cid: 1
+  - mainCondition: 32
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 17
-    cid: 2
+  - mainCondition: 12320
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 17
-    cid: 2
+  - mainCondition: 12320
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 17
-    cid: 2
+  - mainCondition: 12320
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12320
-    tid: 35
-    cid: 2
+  - mainCondition: 12320
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 3
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 3
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 17
-    cid: 3
+  - mainCondition: 16416
+    tableID: 17
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16416
-    tid: 35
-    cid: 2
+  - mainCondition: 16416
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 16
-    cid: 4
+  - mainCondition: 20512
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 16
-    cid: 4
+  - mainCondition: 20512
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 16
-    cid: 4
+  - mainCondition: 20512
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20512
-    tid: 34
-    cid: 3
+  - mainCondition: 20512
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 16
-    cid: 4
+  - mainCondition: 24608
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 16
-    cid: 4
+  - mainCondition: 24608
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 16
-    cid: 4
+  - mainCondition: 24608
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24608
-    tid: 30
-    cid: 4
+  - mainCondition: 24608
+    tableID: 30
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 288
-    tid: 16
-    cid: 1
+  - mainCondition: 288
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 288
-    tid: 16
-    cid: 1
+  - mainCondition: 288
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13088
-    tid: 16
-    cid: 2
+  - mainCondition: 13088
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 13088
-    tid: 16
-    cid: 2
+  - mainCondition: 13088
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25376
-    tid: 16
-    cid: 2
+  - mainCondition: 25376
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 25376
-    tid: 16
-    cid: 2
+  - mainCondition: 25376
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 11
-    cid: 1
+  - mainCondition: 1
+    tableID: 11
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 1
-    tid: 15
-    cid: 2
+  - mainCondition: 1
+    tableID: 15
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 1
-    tid: 13
-    cid: 3
+  - mainCondition: 1
+    tableID: 13
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 1
-    tid: 12
-    cid: 4
+  - mainCondition: 1
+    tableID: 12
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 4
-  - mainConditon: 1
-    tid: 16
-    cid: 5
+  - mainCondition: 1
+    tableID: 16
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 5
-  - mainConditon: 1
-    tid: 18
-    cid: 1
+  - mainCondition: 1
+    tableID: 18
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 20
-    cid: 1
+  - mainCondition: 1
+    tableID: 20
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 23
-    cid: 1
+  - mainCondition: 1
+    tableID: 23
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 22
-    cid: 1
+  - mainCondition: 1
+    tableID: 22
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 17
-    cid: 1
+  - mainCondition: 1
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 1
-    tid: 31
-    cid: 1
+  - mainCondition: 1
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 19
-    cid: 2
+  - mainCondition: 12289
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 21
-    cid: 2
+  - mainCondition: 12289
+    tableID: 21
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 24
-    cid: 2
+  - mainCondition: 12289
+    tableID: 24
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 25
-    cid: 2
+  - mainCondition: 12289
+    tableID: 25
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 19
-    cid: 2
+  - mainCondition: 12289
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12289
-    tid: 26
-    cid: 2
+  - mainCondition: 12289
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 19
-    cid: 2
+  - mainCondition: 16385
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 21
-    cid: 2
+  - mainCondition: 16385
+    tableID: 21
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 24
-    cid: 2
+  - mainCondition: 16385
+    tableID: 24
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 25
-    cid: 2
+  - mainCondition: 16385
+    tableID: 25
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 19
-    cid: 2
+  - mainCondition: 16385
+    tableID: 19
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16385
-    tid: 26
-    cid: 2
+  - mainCondition: 16385
+    tableID: 26
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 31
-    cid: 3
+  - mainCondition: 20481
+    tableID: 31
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 31
-    cid: 3
+  - mainCondition: 20481
+    tableID: 31
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20481
-    tid: 32
-    cid: 3
+  - mainCondition: 20481
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 31
-    cid: 4
+  - mainCondition: 24577
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 31
-    cid: 4
+  - mainCondition: 24577
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24577
-    tid: 29
-    cid: 4
+  - mainCondition: 24577
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 257
-    tid: 12
-    cid: 1
+  - mainCondition: 257
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 257
-    tid: 16
-    cid: 2
+  - mainCondition: 257
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 257
-    tid: 12
-    cid: 1
+  - mainCondition: 257
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 257
-    tid: 16
-    cid: 2
+  - mainCondition: 257
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 2
-    tid: 15
-    cid: 1
+  - mainCondition: 2
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 2
-    tid: 17
-    cid: 2
+  - mainCondition: 2
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 2
-    tid: 16
-    cid: 3
+  - mainCondition: 2
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 2
-    tid: 15
-    cid: 1
+  - mainCondition: 2
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 17
-    cid: 1
+  - mainCondition: 2
+    tableID: 17
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 2
-    tid: 31
-    cid: 1
+  - mainCondition: 2
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 16
-    cid: 2
+  - mainCondition: 12290
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 16
-    cid: 2
+  - mainCondition: 12290
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 12290
-    tid: 35
-    cid: 2
+  - mainCondition: 12290
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 16
-    cid: 2
+  - mainCondition: 16386
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 16
-    cid: 2
+  - mainCondition: 16386
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 16386
-    tid: 35
-    cid: 2
+  - mainCondition: 16386
+    tableID: 35
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 29
-    cid: 3
+  - mainCondition: 20482
+    tableID: 29
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20482
-    tid: 34
-    cid: 3
+  - mainCondition: 20482
+    tableID: 34
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 31
-    cid: 4
+  - mainCondition: 24578
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 31
-    cid: 4
+  - mainCondition: 24578
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 7
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 8
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 9
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 10
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 24578
-    tid: 29
-    cid: 4
+  - mainCondition: 24578
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 11
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 258
-    tid: 16
-    cid: 1
+  - mainCondition: 258
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 258
-    tid: 16
-    cid: 1
+  - mainCondition: 258
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 3
-    tid: 1
-    cid: 1
+  - mainCondition: 3
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 19
-    tid: 15
-    cid: 1
+  - mainCondition: 19
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 19
-    tid: 17
-    cid: 2
+  - mainCondition: 19
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 19
-    tid: 16
-    cid: 3
+  - mainCondition: 19
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 19
-    tid: 16
-    cid: 4
+  - mainCondition: 19
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 4
-  - mainConditon: 35
-    tid: 15
-    cid: 1
+  - mainCondition: 35
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 35
-    tid: 17
-    cid: 2
+  - mainCondition: 35
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 35
-    tid: 16
-    cid: 3
+  - mainCondition: 35
+    tableID: 16
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 35
-    tid: 16
-    cid: 4
+  - mainCondition: 35
+    tableID: 16
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 4
-  - mainConditon: 307
-    tid: 1
-    cid: 1
+  - mainCondition: 307
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 4
-    tid: 1
-    cid: 1
+  - mainCondition: 4
+    tableID: 1
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 772
-    tid: 28
-    cid: 1
+  - mainCondition: 772
+    tableID: 28
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20
-    tid: 12
-    cid: 1
+  - mainCondition: 20
+    tableID: 12
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 20
-    tid: 16
-    cid: 2
+  - mainCondition: 20
+    tableID: 16
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 532
-    tid: 15
-    cid: 1
+  - mainCondition: 532
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 532
-    tid: 17
-    cid: 2
+  - mainCondition: 532
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 36
-    tid: 16
-    cid: 1
+  - mainCondition: 36
+    tableID: 16
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 548
-    tid: 15
-    cid: 1
-    firstStopReelID: 0
-    firstStopCID: 1
-    secondStopReelID: 0
-    secondStopCID: 1
-  - mainConditon: 548
-    tid: 17
-    cid: 2
-    firstStopReelID: 0
-    firstStopCID: 2
-    secondStopReelID: 0
-    secondStopCID: 2
-  - mainConditon: 308
-    tid: 1
-    cid: 1
-    firstStopReelID: 0
-    firstStopCID: 0
-    secondStopReelID: 0
-    secondStopCID: 0
-  - mainConditon: 5
-    tid: 27
-    cid: 1
+  - mainCondition: 548
+    tableID: 15
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 5
-    tid: 26
-    cid: 2
+  - mainCondition: 548
+    tableID: 17
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 5
-    tid: 28
-    cid: 3
+  - mainCondition: 308
+    tableID: 1
+    combinationID: 1
+    firstStopReelID: 0
+    firstStopCID: 0
+    secondStopReelID: 0
+    secondStopCID: 0
+  - mainCondition: 5
+    tableID: 27
+    combinationID: 1
+    firstStopReelID: 0
+    firstStopCID: 1
+    secondStopReelID: 0
+    secondStopCID: 1
+  - mainCondition: 5
+    tableID: 26
+    combinationID: 2
+    firstStopReelID: 0
+    firstStopCID: 2
+    secondStopReelID: 0
+    secondStopCID: 2
+  - mainCondition: 5
+    tableID: 28
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 5
-    tid: 29
-    cid: 4
+  - mainCondition: 5
+    tableID: 29
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 4
-  - mainConditon: 5
-    tid: 29
-    cid: 5
+  - mainCondition: 5
+    tableID: 29
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 5
-  - mainConditon: 5
-    tid: 29
-    cid: 6
+  - mainCondition: 5
+    tableID: 29
+    combinationID: 6
     firstStopReelID: 0
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 6
-  - mainConditon: 6
-    tid: 31
-    cid: 1
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 1
-  - mainConditon: 6
-    tid: 30
-    cid: 2
+  - mainCondition: 6
+    tableID: 30
+    combinationID: 2
     firstStopReelID: 0
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 2
-  - mainConditon: 6
-    tid: 32
-    cid: 3
+  - mainCondition: 6
+    tableID: 32
+    combinationID: 3
     firstStopReelID: 0
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 3
-  - mainConditon: 6
-    tid: 31
-    cid: 4
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 4
     firstStopReelID: 0
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 4
-  - mainConditon: 6
-    tid: 31
-    cid: 5
+  - mainCondition: 6
+    tableID: 31
+    combinationID: 5
     firstStopReelID: 0
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 5
-  - mainConditon: 7
-    tid: 35
-    cid: 1
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 7
-    tid: 34
-    cid: 1
+  - mainCondition: 7
+    tableID: 34
+    combinationID: 1
     firstStopReelID: 1
     firstStopCID: 1
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 7
-    tid: 33
-    cid: 2
+  - mainCondition: 7
+    tableID: 33
+    combinationID: 2
     firstStopReelID: 1
     firstStopCID: 2
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 7
-    tid: 35
-    cid: 3
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 3
     firstStopReelID: 1
     firstStopCID: 3
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 7
-    tid: 35
-    cid: 4
+  - mainCondition: 7
+    tableID: 35
+    combinationID: 4
     firstStopReelID: 1
     firstStopCID: 4
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 7
-    tid: 34
-    cid: 5
+  - mainCondition: 7
+    tableID: 34
+    combinationID: 5
     firstStopReelID: 1
     firstStopCID: 5
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 7
-    tid: 34
-    cid: 6
+  - mainCondition: 7
+    tableID: 34
+    combinationID: 6
     firstStopReelID: 1
     firstStopCID: 6
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 263
-    tid: 34
-    cid: 1
+  - mainCondition: 263
+    tableID: 34
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
-  - mainConditon: 8
-    tid: 34
-    cid: 1
+  - mainCondition: 8
+    tableID: 34
+    combinationID: 1
     firstStopReelID: 0
     firstStopCID: 0
     secondStopReelID: 0
     secondStopCID: 0
   tables:
-  - tableData: 020100010002010002020000020302010002020000
-  - tableData: 000100010100020100020200000302020000020200
-  - tableData: 000302020000020100020000000302020000020200
-  - tableData: 020100010003020100020000040302010003020100
-  - tableData: 000002020000020100000100000201000000000100
-  - tableData: 020000030301010002010002020000040302010002
-  - tableData: 000302020000020100020200000302020000020200
-  - tableData: 020100040302010002010003020100040302010003
-  - tableData: 010002010001000201000100010002010001000100
-  - tableData: 010000010001000001000000010000010001000000
-  - tableData: 010004030201000201040302010004030201000302
-  - tableData: 020100040302010002010403020100040302010003
-  - tableData: 040302010403020403020100040302010403020100
-  - tableData: 020200040302040302010003020100040302010004
-  - tableData: 010004030204030201000302010004030201000302
-  - tableData: 020100040302040302010003020100040302010003
-  - tableData: 030301000003020403020100030301000403020100
-  - tableData: 000301000000020100020200000301000403020100
-  - tableData: 020000030202000002000002020000040302010002
-  - tableData: 010204030201000103040302010001010201000302
-  - tableData: 030101040302010000010403020100000302010003
-  - tableData: 020000030304030201000302020000030201000302
-  - tableData: 000203000103020403020100000201000100020100
-  - tableData: 020000030202040302010002020000030202000002
-  - tableData: 020200000302040302010003020200000302010003
-  - tableData: 020100040302010002010403020100040302010403
-  - tableData: 030201000100020100030204030201000100030204
-  - tableData: 040302010003020100020100040302010003020100
-  - tableData: 030201000403020100020104030201000403020104
-  - tableData: 040302010003020403020100040302010003020100
-  - tableData: 000403020100020104030201000403020100030201
-  - tableData: 010004030201000201040302010004030201000302
-  - tableData: 000403020100020100030201000403020100030201
-  - tableData: 010004030201000201000302010004030201000302
-  - tableData: 020100040302010002010003020100040302010003
+  - tableData: 020000000100000000000000010000000000000002000000010000000000000002000000020000000000000000000000020000000300000002000000010000000000000002000000020000000000000000000000
+  - tableData: 000000000100000000000000010000000100000000000000020000000100000000000000020000000200000000000000000000000300000002000000020000000000000000000000020000000200000000000000
+  - tableData: 000000000300000002000000020000000000000000000000020000000100000000000000020000000000000000000000000000000300000002000000020000000000000000000000020000000200000000000000
+  - tableData: 020000000100000000000000010000000000000003000000020000000100000000000000020000000000000000000000040000000300000002000000010000000000000003000000020000000100000000000000
+  - tableData: 000000000000000002000000020000000000000000000000020000000100000000000000000000000100000000000000000000000200000001000000000000000000000000000000000000000100000000000000
+  - tableData: 020000000000000000000000030000000300000001000000010000000000000002000000010000000000000002000000020000000000000000000000040000000300000002000000010000000000000002000000
+  - tableData: 000000000300000002000000020000000000000000000000020000000100000000000000020000000200000000000000000000000300000002000000020000000000000000000000020000000200000000000000
+  - tableData: 020000000100000000000000040000000300000002000000010000000000000002000000010000000000000003000000020000000100000000000000040000000300000002000000010000000000000003000000
+  - tableData: 010000000000000002000000010000000000000001000000000000000200000001000000000000000100000000000000010000000000000002000000010000000000000001000000000000000100000000000000
+  - tableData: 010000000000000000000000010000000000000001000000000000000000000001000000000000000000000000000000010000000000000000000000010000000000000001000000000000000000000000000000
+  - tableData: 010000000000000004000000030000000200000001000000000000000200000001000000040000000300000002000000010000000000000004000000030000000200000001000000000000000300000002000000
+  - tableData: 020000000100000000000000040000000300000002000000010000000000000002000000010000000400000003000000020000000100000000000000040000000300000002000000010000000000000003000000
+  - tableData: 040000000300000002000000010000000400000003000000020000000400000003000000020000000100000000000000040000000300000002000000010000000400000003000000020000000100000000000000
+  - tableData: 020000000200000000000000040000000300000002000000040000000300000002000000010000000000000003000000020000000100000000000000040000000300000002000000010000000000000004000000
+  - tableData: 010000000000000004000000030000000200000004000000030000000200000001000000000000000300000002000000010000000000000004000000030000000200000001000000000000000300000002000000
+  - tableData: 020000000100000000000000040000000300000002000000040000000300000002000000010000000000000003000000020000000100000000000000040000000300000002000000010000000000000003000000
+  - tableData: 030000000300000001000000000000000000000003000000020000000400000003000000020000000100000000000000030000000300000001000000000000000400000003000000020000000100000000000000
+  - tableData: 000000000300000001000000000000000000000000000000020000000100000000000000020000000200000000000000000000000300000001000000000000000400000003000000020000000100000000000000
+  - tableData: 020000000000000000000000030000000200000002000000000000000000000002000000000000000000000002000000020000000000000000000000040000000300000002000000010000000000000002000000
+  - tableData: 010000000200000004000000030000000200000001000000000000000100000003000000040000000300000002000000010000000000000001000000010000000200000001000000000000000300000002000000
+  - tableData: 030000000100000001000000040000000300000002000000010000000000000000000000010000000400000003000000020000000100000000000000000000000300000002000000010000000000000003000000
+  - tableData: 020000000000000000000000030000000300000004000000030000000200000001000000000000000300000002000000020000000000000000000000030000000200000001000000000000000300000002000000
+  - tableData: 000000000200000003000000000000000100000003000000020000000400000003000000020000000100000000000000000000000200000001000000000000000100000000000000020000000100000000000000
+  - tableData: 020000000000000000000000030000000200000002000000040000000300000002000000010000000000000002000000020000000000000000000000030000000200000002000000000000000000000002000000
+  - tableData: 020000000200000000000000000000000300000002000000040000000300000002000000010000000000000003000000020000000200000000000000000000000300000002000000010000000000000003000000
+  - tableData: 020000000100000000000000040000000300000002000000010000000000000002000000010000000400000003000000020000000100000000000000040000000300000002000000010000000400000003000000
+  - tableData: 030000000200000001000000000000000100000000000000020000000100000000000000030000000200000004000000030000000200000001000000000000000100000000000000030000000200000004000000
+  - tableData: 040000000300000002000000010000000000000003000000020000000100000000000000020000000100000000000000040000000300000002000000010000000000000003000000020000000100000000000000
+  - tableData: 030000000200000001000000000000000400000003000000020000000100000000000000020000000100000004000000030000000200000001000000000000000400000003000000020000000100000004000000
+  - tableData: 040000000300000002000000010000000000000003000000020000000400000003000000020000000100000000000000040000000300000002000000010000000000000003000000020000000100000000000000
+  - tableData: 000000000400000003000000020000000100000000000000020000000100000004000000030000000200000001000000000000000400000003000000020000000100000000000000030000000200000001000000
+  - tableData: 010000000000000004000000030000000200000001000000000000000200000001000000040000000300000002000000010000000000000004000000030000000200000001000000000000000300000002000000
+  - tableData: 000000000400000003000000020000000100000000000000020000000100000000000000030000000200000001000000000000000400000003000000020000000100000000000000030000000200000001000000
+  - tableData: 010000000000000004000000030000000200000001000000000000000200000001000000000000000300000002000000010000000000000004000000030000000200000001000000000000000300000002000000
+  - tableData: 020000000100000000000000040000000300000002000000010000000000000002000000010000000000000003000000020000000100000000000000040000000300000002000000010000000000000003000000

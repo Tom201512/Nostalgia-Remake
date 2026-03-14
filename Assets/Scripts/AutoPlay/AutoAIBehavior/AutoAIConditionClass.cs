@@ -1,5 +1,5 @@
 using ReelSpinGame_Flag;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_AutoPlay.AI

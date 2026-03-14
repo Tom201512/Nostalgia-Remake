@@ -1,4 +1,4 @@
-using ReelSpinGame_Datas;
+using ReelSpinGame_Scriptable;
 using System.Collections.Generic;
 
 namespace ReelSpinGame_Payout

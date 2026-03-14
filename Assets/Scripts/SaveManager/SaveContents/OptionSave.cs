@@ -1,13 +1,13 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Interface;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using static ReelSpinGame_Bonus.BonusModel;
-using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Reel.ReelManager;
 
 namespace ReelSpinGame_Save.Database
 {

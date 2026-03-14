@@ -1,5 +1,5 @@
-using ReelSpinGame_Datas;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Scriptable;
+using ReelSpinGame_Reel;
 using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
 using TMPro;

@@ -1,6 +1,6 @@
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Flag;
-using ReelSpinGame_Reels.Flash;
+using ReelSpinGame_Reel.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
 using UnityEngine;

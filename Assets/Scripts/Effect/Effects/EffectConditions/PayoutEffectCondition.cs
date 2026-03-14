@@ -1,7 +1,7 @@
 using ReelSpinGame_Bonus;
 using ReelSpinGame_Flag;
 using ReelSpinGame_Payout;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 
 namespace ReelSpinGame_Effect.Data.Condition
 {

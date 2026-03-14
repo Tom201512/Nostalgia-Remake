@@ -2,7 +2,7 @@
 using ReelSpinGame_Sound.SE;
 using UnityEngine;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
     // サウンドデータベース
     [CreateAssetMenu(fileName = "SoundPack", menuName = "Nostalgia/GenerateSoundPack", order = 5)]

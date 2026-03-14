@@ -1,4 +1,4 @@
-namespace ReelSpinGame_Reels
+namespace ReelSpinGame_Reel
 {
     // ÉäÅ[Éãä÷òAÇÃenum
 
@@ -14,7 +14,7 @@ namespace ReelSpinGame_Reels
     public enum ReelPosID
     {
         Lower2nd = -1,
-        Lower,
+        Lower = 0,
         Center,
         Upper,
         Upper2nd,
@@ -25,7 +25,7 @@ namespace ReelSpinGame_Reels
     {
         Stopped,
         Spinning,
-        RecieveStop,
+        ReceiveStop,
         Stopping,
     }
 

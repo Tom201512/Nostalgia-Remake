@@ -1,5 +1,5 @@
-using ReelSpinGame_Reels;
-using ReelSpinGame_Reels.Spin;
+using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Spin;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace ReelSpinGame_UI.Reel
     // ミニリール
     public class MiniReelDisplayer : MonoBehaviour
     {
-        [SerializeField] List<ReelObjectPresenter> reelObjects;         // 監査対象のリールオブジェクト
+        [SerializeField] List<ReelObject> reelObjects;         // 監査対象のリールオブジェクト
         [SerializeField] List<ReelCursor> stoppedCursors;               // 停止位置のカーソル
         [SerializeField] List<ReelCursor> delayCursors;                 // スベリコマ位置のカーソル
         [SerializeField] List<ReelCursor> markerCursors;                // マーカー用のカーソル

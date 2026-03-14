@@ -1,5 +1,5 @@
 using ReelSpinGame_AutoPlay;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using System.Collections.Generic;
 using static ReelSpinGame_Bonus.BonusModel;
 
@@ -43,7 +43,7 @@ namespace ReelSpinGame_Save.Database.Option
             SpinConditionID = SpinTimeConditionName.None;
 
             StopPosLockData.Clear();
-            for (int i = 0; i < ReelLogicManager.ReelAmount; i++)
+            for (int i = 0; i < ReelManager.ReelAmount; i++)
             {
                 StopPosLockData.Add(-1);
             }

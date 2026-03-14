@@ -1,6 +1,6 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Option.Components;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using ReelSpinGame_Save.Database.Option;
 using System;
 using UnityEngine;

@@ -2,48 +2,51 @@ using System.Collections;
 using UnityEngine;
 
 // ウェイト管理
-public class WaitManager : MonoBehaviour
+namespace ReelSpinGame_System
 {
-    public const float WaitTime = 4.1f;     // ウェイトに必要な秒数
-
-    public bool HasWait { get; private set; }       // ウェイトが有効か
-    public bool HasWaitCut { get; private set; }    // ウェイトを無効にしているか
-
-    void Awake()
+    public class WaitManager : MonoBehaviour
     {
-        HasWait = false;
-        HasWaitCut = false;
-    }
+        public const float WaitTime = 4.1f;     // ウェイトに必要な秒数
 
-    void OnDestroy()
-    {
-        StopAllCoroutines();
-    }
+        public bool HasWait { get; private set; }       // ウェイトが有効か
+        public bool HasWaitCut { get; private set; }    // ウェイトを無効にしているか
 
-    // ウェイトカットの設定
-    public void SetWaitCutSetting(bool hasWaitCut) => HasWaitCut = hasWaitCut;
-
-    // ウェイトをかける
-    public void SetWaitTimer()
-    {
-        // ウェイトカット、または実行中のウェイトがなければ実行
-        if (!HasWaitCut && !HasWait)
+        private void Awake()
         {
-            HasWait = true;
-            StartCoroutine(nameof(WaitBehaivior));
+            HasWait = false;
+            HasWaitCut = false;
         }
-    }
 
-    // ウェイトタイマーを解除
-    public void DisableWaitTimer()
-    {
-        StopAllCoroutines();
-        HasWait = false;
-    }
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
 
-    IEnumerator WaitBehaivior()
-    {
-        yield return new WaitForSeconds(WaitTime);
-        HasWait = false;
+        // ウェイトカットの設定
+        public void SetWaitCutSetting(bool hasWaitCut) => HasWaitCut = hasWaitCut;
+
+        // ウェイトをかける
+        public void SetWaitTimer()
+        {
+            // ウェイトカット、または実行中のウェイトがなければ実行
+            if (!HasWaitCut && !HasWait)
+            {
+                HasWait = true;
+                StartCoroutine(nameof(WaitBehaviour));
+            }
+        }
+
+        // ウェイトタイマーを解除
+        public void DisableWaitTimer()
+        {
+            StopAllCoroutines();
+            HasWait = false;
+        }
+
+        private IEnumerator WaitBehaviour()
+        {
+            yield return new WaitForSeconds(WaitTime);
+            HasWait = false;
+        }
     }
 }

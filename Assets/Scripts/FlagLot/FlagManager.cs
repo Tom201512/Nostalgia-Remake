@@ -1,5 +1,5 @@
 using ReelSpinGame_Bonus;
-using ReelSpinGame_Datas;
+using ReelSpinGame_Scriptable;
 using UnityEngine;
 
 namespace ReelSpinGame_Flag.Flag

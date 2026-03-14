@@ -1,7 +1,7 @@
 using UnityEngine;
 using static ReelSpinGame_Flash.FlashData;
 
-namespace ReelSpinGame_Reels.Symbol
+namespace ReelSpinGame_Reel.Symbol
 {
     // シンボルのライト部分
     public class SymbolLight : MonoBehaviour

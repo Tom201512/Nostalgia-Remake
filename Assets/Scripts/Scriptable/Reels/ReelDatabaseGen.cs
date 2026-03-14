@@ -1,14 +1,14 @@
-using ReelSpinGame_Datas.Reels;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
+using ReelSpinGame_Reel.Table;
+using ReelSpinGame_Scriptable.Reels;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using static UnityEngine.ScriptableObject;
-using static ReelSpinGame_Datas.ReelConditionsData;
 
-namespace ReelSpinGame_Datas
+namespace ReelSpinGame_Scriptable
 {
 #if UNITY_EDITOR
     // リールデータベース作成
@@ -23,7 +23,7 @@ namespace ReelSpinGame_Datas
             string[] pathOrder = { "ReelL", "ReelM", "ReelR" };
 
             // あらかじめ設定したディレクトリから全リールのデータを読み込む
-            for (int i = 0; i < ReelLogicManager.ReelAmount; i++)
+            for (int i = 0; i < ReelManager.ReelAmount; i++)
             {
                 MakeReelArrayData(pathOrder[i]);
                 MakeReelDelayData(pathOrder[i]);
@@ -72,7 +72,7 @@ namespace ReelSpinGame_Datas
             }
 
             // スクリプタブルオブジェクト作成
-            ReelDelayTableData reelDatabase = CreateInstance<ReelDelayTableData>();
+            ReelDelayTableFile reelDatabase = CreateInstance<ReelDelayTableFile>();
 
             // ファイル読み込み
 
@@ -91,12 +91,12 @@ namespace ReelSpinGame_Datas
             ScriptableGen.GenerateFile(path, fileName, reelDatabase);
         }
 
-        public static byte[] MakeReelArray(StreamReader arrayFile)
+        public static int[] MakeReelArray(StreamReader arrayFile)
         {
             // 配列読み込み
             string[] values = arrayFile.ReadLine().Split(',');
             // 配列に変換
-            return Array.ConvertAll(values, byte.Parse);
+            return Array.ConvertAll(values, int.Parse);
         }
 
         // リール条件読み込み
@@ -108,17 +108,6 @@ namespace ReelSpinGame_Datas
             while (conditionsFile.Peek() != -1)
             {
                 finalResult.Add(new ReelConditionsData(conditionsFile));
-            }
-
-            foreach (ReelConditionsData condition in finalResult)
-            {
-                // デバッグ用
-                string ConditionDebug = "";
-
-                for (int i = 0; i < 5; i++)
-                {
-                    ConditionDebug += GetConditionData(condition.MainConditions, i).ToString() + ",";
-                }
             }
 
             return finalResult;

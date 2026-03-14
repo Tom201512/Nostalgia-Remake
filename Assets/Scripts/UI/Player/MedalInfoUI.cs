@@ -1,4 +1,4 @@
-using ReelSpinGame_Datas;
+using ReelSpinGame_Scriptable;
 using ReelSpinGame_Medal;
 using System;
 using TMPro;

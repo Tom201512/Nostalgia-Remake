@@ -1,18 +1,18 @@
-using ReelSpinGame_Datas;
+using ReelSpinGame_Scriptable;
 using ReelSpinGame_Flash;
 using ReelSpinGame_Payout;
-using ReelSpinGame_Reels.Effect;
-using ReelSpinGame_Reels.Symbol;
-using ReelSpinGame_Reels.Util;
+using ReelSpinGame_Reel.Effect;
+using ReelSpinGame_Reel.Symbol;
+using ReelSpinGame_Reel.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelLogicManager;
+using static ReelSpinGame_Reel.ReelManager;
 using static ReelSpinGame_Flash.FlashData;
 
-namespace ReelSpinGame_Reels.Flash
+namespace ReelSpinGame_Reel.Flash
 {
     // リールフラッシュ機能
     public class FlashManager : MonoBehaviour
@@ -117,15 +117,15 @@ namespace ReelSpinGame_Reels.Flash
             if (currentFrame == flashData[(int)PropertyID.FrameID])
             {
                 // リール全て変更
-                for (int i = 0; i < ReelAmount; i++)
+                foreach(ReelID reelID in Enum.GetValues(typeof(ReelID)))
                 {
                     // 本体色変更
-                    ChangeReelBodyColorByFlash(i);
+                    ChangeReelBodyColorByFlash(reelID);
 
                     // 図柄の明るさ変更(枠下-枠上)
-                    for(int j = (int)ReelPosID.Lower2nd; j < (int)ReelPosID.Upper2nd + 1; j++)
+                    foreach (ReelPosID reelPos in SymbolManager.ReelPosOrder)
                     {
-                        ChangeReelSymbolColorByFlash(i, j);
+                        ChangeReelSymbolColorByFlash(reelID, reelPos);
                     }
                 }
 
@@ -163,10 +163,10 @@ namespace ReelSpinGame_Reels.Flash
             //全ての払い出しのあったラインをフラッシュさせる
             foreach (PayoutLineData payoutLine in lastPayoutResult.PayoutLines)
             {
-                for (int i = 0; i < payoutLine.PayoutLines.Count; i++)
+                foreach(ReelID reelID in Enum.GetValues(typeof(ReelID)))
                 {
                     // 図柄点灯
-                    reelEffectManager.ChangeReelSymbolLight(i, payoutLine.PayoutLines[i], brightness);
+                    reelEffectManager.ChangeReelSymbolLight(reelID, payoutLine.PayoutLines[(int)reelID], brightness);
 
                     // 左リールにチェリーがある場合はチェリーのみ点灯
                     if (lastStoppedReelData.LastSymbols[(int)ReelID.ReelLeft]
@@ -198,7 +198,7 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // 指定リールIDの本体色を現在のフラッシュ位置に合わせて変更
-        private void ChangeReelBodyColorByFlash(int reelID)
+        private void ChangeReelBodyColorByFlash(ReelID reelID)
         {
             int[] colors = FlashDatabase[CurrentFlashID].GetReelBodyBrightness(reelID);
             int r = colors[(int)ColorID.R];
@@ -209,7 +209,7 @@ namespace ReelSpinGame_Reels.Flash
         }
 
         // 指定リールIDの図柄位置を現在のフラッシュ位置に合わせて変更
-        private void ChangeReelSymbolColorByFlash(int reelID, int posID)
+        private void ChangeReelSymbolColorByFlash(ReelID reelID, ReelPosID posID)
         {
             int[] colors = FlashDatabase[CurrentFlashID].GetReelSymbolBrightness(reelID, posID);
             int r = colors[(int)ColorID.R];

@@ -10,7 +10,7 @@ namespace ReelSpinGame_Bonus
     {
         public enum BonusTypeID { BonusNone, BonusBIG, BonusREG }               // ボーナスの種類
         public enum BonusStatus { BonusNone, BonusBIGGames, BonusJACGames };    // ボーナスの状態
-        public enum BigType { None, Red, Blue, Black };                         // BIGの種類
+        public enum BigType { None, Red, Blue, BB7 };                         // BIGの種類
 
         public const int BigGames = 30;         // 残り小役ゲーム数
         public const int JacInTimes = 3;        // 残りJACIN

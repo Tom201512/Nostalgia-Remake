@@ -1,5 +1,5 @@
-using ReelSpinGame_Datas;
-using ReelSpinGame_Datas.Analytics;
+using ReelSpinGame_Scriptable;
+using ReelSpinGame_Scriptable.Analytics;
 using ReelSpinGame_Interface;
 using ReelSpinGame_Save.Player;
 using System.Collections.Generic;

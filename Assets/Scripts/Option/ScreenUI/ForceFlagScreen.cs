@@ -1,6 +1,6 @@
 using ReelSpinGame_Flag;
 using ReelSpinGame_Option.Components;
-using ReelSpinGame_Reels;
+using ReelSpinGame_Reel;
 using System;
 using System.Collections;
 using System.Collections.Generic;

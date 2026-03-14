@@ -1,18 +1,21 @@
 using System;
 using UnityEngine;
 
-namespace ReelSpinGame_Reels.Spin
+namespace ReelSpinGame_Reel.Spin
 {
     public class ReelSpinModel
     {
-        public const int MaxReelArray = 21;        // リール配列数
+        public const int MaxReelArray = 21;                     // リール配列
+        public const int InitialPos = 19;                       // 初期リール位置(全リール共通)
         public const float ChangeAngle = 360.0f / 21.0f;        // 図柄変更時の角度 (360度を21分割)
-        public const float StopAngle = ChangeAngle - 0.5f;      // 図柄停止時の角度 (変更時角度から1度引いた角度)
+        public const float StopAngle = ChangeAngle - 0.5f;      // 図柄停止時の角度 (変更時角度から0.5度引いた角度)
 
+        const float MaxRotationAngle = 360;                  // 最大角度
         const float ReelRadius = 12.75f;                // リール半径(cm)
         const float MaxSpeedReelTime = 0.3f;            // 最高速度までの経過時間(秒)
+        const float SlowDownSpeed = 0.1f;               // 減速時のスピード
 
-        public byte[] ReelArray { get; set; }               // リール配列
+        public int[] ReelArray { get; set; }               // リール配列
         public float RotateSpeed { get; set; }              // 現在の回転速度
         public float MaxSpeed { get; set; }                 // 最高速度
         public float RotateRPS { get; private set; }        // 1秒間のRPS
@@ -37,18 +40,8 @@ namespace ReelSpinGame_Reels.Spin
             CurrentReelStatus = ReelStatus.Stopped;
         }
 
-        // RPSの変更
-        public void ChangeRotateRPS(float rotateRPM) => RotateRPS = rotateRPM / 60.0f;
-
-        // 1秒に何度回転させるか計算する
-        public float ReturnDegreePerSecond()
-        {
-            // ラジアンを求める
-            float radian = RotateRPS * 2.0f * MathF.PI;
-
-            // ラジアンから毎秒動かす角度を計算
-            return 180.0f / MathF.PI * radian;
-        }
+        // 現在のスピード、速度から回転させる角度を算出する
+        public float GetDegreePerFrame() => Math.Clamp(ReturnDegreePerSecond()* Time.deltaTime * Math.Abs(RotateSpeed), 0, MaxRotationAngle);
 
         // 速度加速
         public void AccelerateReelSpeed()
@@ -59,11 +52,11 @@ namespace ReelSpinGame_Reels.Spin
             {
                 if (RotateSpeed > MaxSpeed)
                 {
-                    RotateSpeed = Mathf.Clamp(RotateSpeed += ReturnReelAccerateSpeed() * Time.deltaTime * -1, MaxSpeed, 0);
+                    RotateSpeed = Mathf.Clamp(RotateSpeed += ReturnReelAccelerateSpeed() * Time.deltaTime * -1, MaxSpeed, 0);
                 }
                 else if (RotateSpeed < MaxSpeed)
                 {
-                    RotateSpeed = Mathf.Clamp(RotateSpeed -= ReturnReelAccerateSpeed() * Time.deltaTime * -1, MaxSpeed, 0);
+                    RotateSpeed = Mathf.Clamp(RotateSpeed -= ReturnReelAccelerateSpeed() * Time.deltaTime * -1, MaxSpeed, 0);
                 }
             }
             // 前回転の場合
@@ -71,12 +64,31 @@ namespace ReelSpinGame_Reels.Spin
             {
                 if (RotateSpeed < MaxSpeed)
                 {
-                    RotateSpeed = Mathf.Clamp(RotateSpeed += ReturnReelAccerateSpeed() * Time.deltaTime * 1, 0, MaxSpeed);
+                    RotateSpeed = Mathf.Clamp(RotateSpeed += ReturnReelAccelerateSpeed() * Time.deltaTime * 1, 0, MaxSpeed);
                 }
                 else if (RotateSpeed > MaxSpeed)
                 {
-                    RotateSpeed = Mathf.Clamp(RotateSpeed -= ReturnReelAccerateSpeed() * Time.deltaTime * 1, 0, MaxSpeed);
+                    RotateSpeed = Mathf.Clamp(RotateSpeed -= ReturnReelAccelerateSpeed() * Time.deltaTime * 1, 0, MaxSpeed);
                 }
+            }
+        }
+
+        // 1秒に何度回転させるか計算する
+        private float ReturnDegreePerSecond()
+        {
+            // ラジアンから毎秒動かす角度を計算
+            float radian = RotateRPS * 2.0f * MathF.PI;
+            return 180.0f / MathF.PI * radian;
+        }
+
+        // 停止状態へ移行
+        public void StartSlowDown()
+        {
+            // 停止状態にする
+            CurrentReelStatus = ReelStatus.Stopping;
+            if (MaxSpeed > SlowDownSpeed)
+            {
+                MaxSpeed = SlowDownSpeed;
             }
         }
 
@@ -89,7 +101,7 @@ namespace ReelSpinGame_Reels.Spin
         }
 
         // 加速度を返す
-        float ReturnReelAccerateSpeed()
+        float ReturnReelAccelerateSpeed()
         {
             // ラジアンを求める
             float radian = RotateRPS * 2.0f * MathF.PI;
