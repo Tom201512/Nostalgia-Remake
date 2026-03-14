@@ -1,9 +1,9 @@
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Reels.Symbol;
 using ReelSpinGame_UI.Reel;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusModel;
+using ReelSpinGame_Bonus;
 
 namespace ReelSpinGame_Reels
 {
@@ -70,7 +70,7 @@ namespace ReelSpinGame_Reels
         public int GetUsedReelCID(ReelID reelID) => spinManager.GetUsedReelTID(reelID);                   // 使用した組み合わせID
 
         // 揃っているBIG図柄の数を得る
-        public BigType GetBigLinedUpCount(int betAmount, int checkAmount) => symbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
+        public BonusModel.BigType GetBigLinedUpCount(int betAmount, int checkAmount) => symbolCounter.GetBigLinedUpCount(betAmount, checkAmount);
 
         // 強制フラグのランダム数値設定
         public void SetForceRandomValue(int value) => spinManager.SetForceRandomValue(value);
@@ -100,7 +100,7 @@ namespace ReelSpinGame_Reels
         }
 
         // リール回転
-        public void StartReels(BonusStatus currentBonusStatus, bool usingFastAuto)
+        public void StartReels(BonusModel.BonusStatus currentBonusStatus, bool usingFastAuto)
         {
             spinManager.StartReels(currentBonusStatus, usingFastAuto);
             miniReel.ResetDelayCursor();
@@ -108,7 +108,7 @@ namespace ReelSpinGame_Reels
         }
 
         // リールの停止(通常)
-        public void StopSelectedReel(ReelID reelID, FlagID flag, BonusTypeID holdingBonus, int betAmount)
+        public void StopSelectedReel(ReelID reelID, FlagModel.FlagID flag, BonusModel.BonusTypeID holdingBonus, int betAmount)
         {
             ReelMainCondition condition = new ReelMainCondition();
             condition.Flag = flag;
@@ -120,7 +120,7 @@ namespace ReelSpinGame_Reels
         }
 
         // リール停止(高速)
-        public void StopSelectedReelFast(ReelID reelID, FlagID flag, BonusTypeID holdingBonus, int betAmount, int pushedPos)
+        public void StopSelectedReelFast(ReelID reelID, FlagModel.FlagID flag, BonusModel.BonusTypeID holdingBonus, int betAmount, int pushedPos)
         {
             ReelMainCondition condition = new ReelMainCondition();
             condition.Flag = flag;

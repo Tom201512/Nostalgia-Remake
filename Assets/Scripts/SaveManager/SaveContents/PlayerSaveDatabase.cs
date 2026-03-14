@@ -1,4 +1,5 @@
-﻿using ReelSpinGame_Save.Bonus;
+﻿using ReelSpinGame_Flag;
+using ReelSpinGame_Save.Bonus;
 using ReelSpinGame_Save.Medal;
 using ReelSpinGame_Save.Player;
 using System.Collections.Generic;
@@ -6,9 +7,9 @@ using System.Collections.Generic;
 namespace ReelSpinGame_Save.Database
 {
     // セーブ用のデータベース
-    public class SaveDatabase
+    public class PlayerSaveDatabase
     {
-        public int Setting { get; set; }                        // 台設定
+        public int SlotSetting { get; set; }                        // 台設定
         public bool IsUsingRandom { get; set; }                  // ランダム設定を使用しているか
         public PlayerSave Player { get; private set; }          // プレイヤー情報
         public MedalSave Medal { get; private set; }            // メダル情報
@@ -17,9 +18,9 @@ namespace ReelSpinGame_Save.Database
         public List<int> LastReelDelay { get; private set; }    // 最後に止めたリールのスベリコマ
         public BonusSave Bonus { get; private set; }            // ボーナス情報
 
-        public SaveDatabase()
+        public PlayerSaveDatabase()
         {
-            Setting = -1;
+            SlotSetting = FlagModel.SlotSettingErrorValue;
             IsUsingRandom = false;
             Player = new PlayerSave();
             Medal = new MedalSave();
@@ -38,7 +39,7 @@ namespace ReelSpinGame_Save.Database
             LastReelDelay = null;
             Bonus = null;
 
-            Setting = -1;
+            SlotSetting = -1;
             IsUsingRandom = false;
             Player = new PlayerSave();
             Medal = new MedalSave();

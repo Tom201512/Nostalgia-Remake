@@ -1,3 +1,4 @@
+using ReelSpinGame_Main;
 using ReelSpinGame_State;
 using ReelSpinGame_State.InsertState;
 using ReelSpinGame_State.LotsState;
@@ -24,17 +25,17 @@ public class MainGameFlow
 
     public MainGameFlow(GameManager gameManager)
     {
-        InitState = new InitState(gameManager, gameManager.MedalManager);
+        InitState = new InitState(gameManager);
         FirstLaunchState = new FirstLaunchState(gameManager);
-        InsertState = new InsertState(gameManager, gameManager.InputManager, gameManager.MedalManager);
-        LotsState = new LotsState(gameManager, gameManager.MedalManager);
+        InsertState = new InsertState(gameManager);
+        LotsState = new LotsState(gameManager);
         FakeReelSpinState = new FakeReelSpinState(gameManager);
         WaitState = new WaitState(gameManager);
-        PlayingState = new PlayingState(gameManager, gameManager.InputManager, gameManager.MedalManager);
-        PayoutState = new PayoutState(gameManager, gameManager.MedalManager);
-        EffectState = new EffectState(gameManager, gameManager.MedalManager);
+        PlayingState = new PlayingState(gameManager);
+        PayoutState = new PayoutState(gameManager);
+        EffectState = new EffectState(gameManager);
         ErrorState = new ErrorState(gameManager);
-        LimitReachedState = new ReachedLimitState(gameManager, gameManager.MedalManager);
+        LimitReachedState = new ReachedLimitState(gameManager);
         StateManager = new StateManager(InitState);
     }
 

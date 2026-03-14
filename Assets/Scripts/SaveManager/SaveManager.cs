@@ -28,7 +28,7 @@ namespace ReelSpinGame_System
         }
 
         // プレイヤーのセーブデータ
-        public SaveDatabase PlayerSaveData
+        public PlayerSaveDatabase PlayerSaveData
         {
             get { return playerSaveManager.CurrentSave; }
         }

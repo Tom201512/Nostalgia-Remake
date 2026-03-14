@@ -1,25 +1,23 @@
 using ReelSpinGame_Interface;
-using ReelSpinGame_Medal;
+using ReelSpinGame_Main;
 
 namespace ReelSpinGame_State.LotsState
 {
     // 打ち止めステート
     public class ReachedLimitState : IGameStatement
     {
-        private GameManager gM;                              // ゲームマネージャ
-        private MedalManager medalManager;      // メダル管理
+        private GameManager gM; // ゲームマネージャ
 
-        public ReachedLimitState(GameManager gameManager, MedalManager medalManager)
+        public ReachedLimitState(GameManager gameManager)
         {
             gM = gameManager;
-            this.medalManager = medalManager;
         }
 
         public void StateStart()
         {
             gM.SetLimitReached();
             gM.Effect.StartLimitReachedEffect();
-            medalManager.DisableMedalBetLamp();
+            gM.MedalManager.DisableMedalBetLamp();
             gM.Status.TurnOffInsertAndStart();
             gM.Status.TurnOffReplayLamp();
         }

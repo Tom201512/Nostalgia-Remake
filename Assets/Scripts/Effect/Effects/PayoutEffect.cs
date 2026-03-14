@@ -1,5 +1,5 @@
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using System.Collections;
@@ -45,7 +45,7 @@ namespace ReelSpinGame_Effect.Data
                 remainingPayout = payoutEffectCondition.PayoutResult.Payout;
 
                 // JACñÇ»ÇÁJACéûÇÃï•Ç¢èoÇµÇçƒê∂
-                if (payoutEffectCondition.Flag == FlagID.FlagJac)
+                if (payoutEffectCondition.Flag == FlagModel.FlagID.FlagJac)
                 {
                     flash.EnableJacGameLight();
                     sound.PlaySE(sound.SoundDB.SE.JacPayout);

@@ -1,10 +1,10 @@
 using ReelSpinGame_Interface;
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static ReelSpinGame_Bonus.BonusModel;
+using ReelSpinGame_Bonus;
 
 namespace ReelSpinGame_Datas.Analytics
 {
@@ -82,48 +82,48 @@ namespace ReelSpinGame_Datas.Analytics
         }
 
         // トータルゲーム数加算
-        public void IncreaseTotalAllGameCounts(BonusStatus bonusStatus)
+        public void IncreaseTotalAllGameCounts(BonusModel.BonusStatus bonusStatus)
         {
             TotalAllGamesCount += 1;
-            if (bonusStatus == BonusStatus.BonusBIGGames)
+            if (bonusStatus == BonusModel.BonusStatus.BonusBIGGames)
             {
                 BigGamesCount += 1;
             }
-            else if (bonusStatus == BonusStatus.BonusJACGames)
+            else if (bonusStatus == BonusModel.BonusStatus.BonusJACGames)
             {
                 JacGamesCount += 1;
             }
         }
 
         // 小役成立カウント増加
-        public void IncreaseHitCountByFlag(FlagID flagID, BonusStatus bonusStatus)
+        public void IncreaseHitCountByFlag(FlagModel.FlagID flagID, BonusModel.BonusStatus bonusStatus)
         {
-            if (bonusStatus == BonusStatus.BonusBIGGames)
+            if (bonusStatus == BonusModel.BonusStatus.BonusBIGGames)
             {
                 switch (flagID)
                 {
-                    case FlagID.FlagCherry2:
+                    case FlagModel.FlagID.FlagCherry2:
                         BigCherry2HitCount += 1;
                         break;
-                    case FlagID.FlagCherry4:
+                    case FlagModel.FlagID.FlagCherry4:
                         BigCherry4HitCount += 1;
                         break;
-                    case FlagID.FlagMelon:
+                    case FlagModel.FlagID.FlagMelon:
                         BigMelonHitCount += 1;
                         break;
-                    case FlagID.FlagBell:
+                    case FlagModel.FlagID.FlagBell:
                         BigBellHitCount += 1;
                         break;
 
                     // BIG中はJAC-IN成立も含める(入賞はカウントしない)
-                    case FlagID.FlagReplayJacIn:
+                    case FlagModel.FlagID.FlagReplayJacIn:
                         BigJacInTimes += 1;
                         break;
                 }
             }
-            else if (bonusStatus == BonusStatus.BonusJACGames)
+            else if (bonusStatus == BonusModel.BonusStatus.BonusJACGames)
             {
-                if (flagID == FlagID.FlagNone)
+                if (flagID == FlagModel.FlagID.FlagNone)
                 {
                     JacGameNoneTimes += 1;
                 }
@@ -132,16 +132,16 @@ namespace ReelSpinGame_Datas.Analytics
             {
                 switch (flagID)
                 {
-                    case FlagID.FlagCherry2:
+                    case FlagModel.FlagID.FlagCherry2:
                         NormalCherry2HitCount += 1;
                         break;
-                    case FlagID.FlagCherry4:
+                    case FlagModel.FlagID.FlagCherry4:
                         NormalCherry4HitCount += 1;
                         break;
-                    case FlagID.FlagMelon:
+                    case FlagModel.FlagID.FlagMelon:
                         NormalMelonHitCount += 1;
                         break;
-                    case FlagID.FlagBell:
+                    case FlagModel.FlagID.FlagBell:
                         NormalBellHitCount += 1;
                         break;
                 }
@@ -149,22 +149,22 @@ namespace ReelSpinGame_Datas.Analytics
         }
 
         // 小役入賞カウント増加
-        public void IncreaseLineUpCountByFlag(FlagID flagID, BonusStatus bonusStatus)
+        public void IncreaseLineUpCountByFlag(FlagModel.FlagID flagID, BonusModel.BonusStatus bonusStatus)
         {
-            if (bonusStatus == BonusStatus.BonusBIGGames)
+            if (bonusStatus == BonusModel.BonusStatus.BonusBIGGames)
             {
                 switch (flagID)
                 {
-                    case FlagID.FlagCherry2:
+                    case FlagModel.FlagID.FlagCherry2:
                         BigCherry2LineUpCount += 1;
                         break;
-                    case FlagID.FlagCherry4:
+                    case FlagModel.FlagID.FlagCherry4:
                         BigCherry4LineUpCount += 1;
                         break;
-                    case FlagID.FlagMelon:
+                    case FlagModel.FlagID.FlagMelon:
                         BigMelonLineUpCount += 1;
                         break;
-                    case FlagID.FlagBell:
+                    case FlagModel.FlagID.FlagBell:
                         BigBellLineUpCount += 1;
                         break;
                 }
@@ -174,16 +174,16 @@ namespace ReelSpinGame_Datas.Analytics
             {
                 switch (flagID)
                 {
-                    case FlagID.FlagCherry2:
+                    case FlagModel.FlagID.FlagCherry2:
                         NormalCherry2LineUpCount += 1;
                         break;
-                    case FlagID.FlagCherry4:
+                    case FlagModel.FlagID.FlagCherry4:
                         NormalCherry4LineUpCount += 1;
                         break;
-                    case FlagID.FlagMelon:
+                    case FlagModel.FlagID.FlagMelon:
                         NormalMelonLineUpCount += 1;
                         break;
-                    case FlagID.FlagBell:
+                    case FlagModel.FlagID.FlagBell:
                         NormalBellLineUpCount += 1;
                         break;
                 }

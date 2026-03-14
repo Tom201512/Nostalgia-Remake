@@ -1,10 +1,10 @@
 ﻿using ReelSpinGame_AutoPlay;
 using ReelSpinGame_AutoPlay.AI;
+using ReelSpinGame_Bonus;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Interface;
-using ReelSpinGame_Lots;
-using ReelSpinGame_Medal;
+using ReelSpinGame_Main;
 using System;
-using static ReelSpinGame_Bonus.BonusModel;
 
 namespace ReelSpinGame_State.LotsState
 {
@@ -12,12 +12,10 @@ namespace ReelSpinGame_State.LotsState
     public class LotsState : IGameStatement
     {
         private GameManager gM;        // ゲームマネージャ
-        private MedalManager medalManager;  // メダル管理
 
-        public LotsState(GameManager gameManager, MedalManager medalManager)
+        public LotsState(GameManager gameManager)
         {
             gM = gameManager;
-            this.medalManager = medalManager;
         }
 
         public void StateStart()
@@ -25,13 +23,13 @@ namespace ReelSpinGame_State.LotsState
             // 強制役フラグの指定があれば強制役を設定する
             if (gM.Option.GetForceFlagSelectID() != -1)
             {
-                FlagID selectedFlagID = (FlagID)Enum.ToObject(typeof(FlagID), gM.Option.GetForceFlagSelectID());
-                gM.Lots.SetForceFlag(selectedFlagID);
+                FlagModel.FlagID selectedFlagID = (FlagModel.FlagID)Enum.ToObject(typeof(FlagModel.FlagID), gM.Option.GetForceFlagSelectID());
+                gM.FlagManager.SetForceFlag(selectedFlagID);
             }
-            gM.Lots.StartFlagLots(gM.Setting, medalManager.LastBetAmount, gM.BonusManager.HoldingBonusID);
+            gM.FlagManager.StartFlagLots(gM.MedalManager.LastBetAmount, gM.BonusManager.HoldingBonusID);
 
             // ボーナス中ならここでゲーム数を減らす
-            if (gM.BonusManager.CurrentBonusStatus != BonusStatus.BonusNone)
+            if (gM.BonusManager.CurrentBonusStatus != BonusModel.BonusStatus.BonusNone)
             {
                 gM.BonusManager.DecreaseGames();
             }
@@ -46,13 +44,13 @@ namespace ReelSpinGame_State.LotsState
 
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if (gM.Lots.GetCurrentFlag() == FlagID.FlagBig)
+            if (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagBig)
             {
-                gM.Player.AddBonusResult(BonusTypeID.BonusBIG);
+                gM.Player.AddBonusResult(BonusModel.BonusTypeID.BonusBIG);
             }
-            else if (gM.Lots.GetCurrentFlag() == FlagID.FlagReg)
+            else if (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagReg)
             {
-                gM.Player.AddBonusResult(BonusTypeID.BonusREG);
+                gM.Player.AddBonusResult(BonusModel.BonusTypeID.BonusREG);
             }
 
             // オートモードがある場合、ここでオート停止位置の設定
@@ -63,13 +61,13 @@ namespace ReelSpinGame_State.LotsState
 
                 // 条件を作成
                 AutoAIConditionClass autoAICondition = new AutoAIConditionClass();
-                autoAICondition.Flag = gM.Lots.GetCurrentFlag();
+                autoAICondition.Flag = gM.FlagManager.GetCurrentFlag();
                 autoAICondition.FirstPush = gM.Auto.AutoStopOrders[(int)StopOrderID.First];
                 autoAICondition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
                 autoAICondition.HoldingBonus = gM.BonusManager.HoldingBonusID;
                 autoAICondition.BigChanceGames = gM.BonusManager.RemainingBigGames;
                 autoAICondition.RemainingJacIn = gM.BonusManager.RemainingJacIn;
-                autoAICondition.BetAmount = medalManager.LastBetAmount;
+                autoAICondition.BetAmount = gM.MedalManager.LastBetAmount;
 
                 gM.Auto.SetAutoStopPos(autoAICondition, gM.OptionSave.AutoOptionData.StopPosLockData);
             }

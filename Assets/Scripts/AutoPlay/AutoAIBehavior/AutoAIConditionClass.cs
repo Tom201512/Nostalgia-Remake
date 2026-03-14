@@ -1,4 +1,4 @@
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Reels;
 using static ReelSpinGame_Bonus.BonusModel;
 
@@ -7,7 +7,7 @@ namespace ReelSpinGame_AutoPlay.AI
     // オートAI条件のパラメータークラス
     public class AutoAIConditionClass
     {
-        public FlagID Flag { get; set; }                // フラグ
+        public FlagModel.FlagID Flag { get; set; }                // フラグ
         public ReelID FirstPush { get; set; }           // 第一停止
         public BonusStatus BonusStatus { get; set; }    // ボーナス状態
         public BonusTypeID HoldingBonus { get; set; }   // ストック中のボーナス
@@ -17,7 +17,7 @@ namespace ReelSpinGame_AutoPlay.AI
 
         public AutoAIConditionClass()
         {
-            Flag = FlagID.FlagNone;
+            Flag = FlagModel.FlagID.FlagNone;
             FirstPush = ReelID.ReelLeft;
             BonusStatus = BonusStatus.BonusNone;
             HoldingBonus = BonusTypeID.BonusNone;

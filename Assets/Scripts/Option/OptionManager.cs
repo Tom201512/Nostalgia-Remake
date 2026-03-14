@@ -1,7 +1,9 @@
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_Option.MenuBar;
 using ReelSpinGame_Option.MenuContent;
+using ReelSpinGame_Save.Database;
 using ReelSpinGame_Save.Database.Option;
+using ReelSpinGame_System;
 using UnityEngine;
 
 using static ReelSpinGame_Bonus.BonusModel;
@@ -15,9 +17,10 @@ namespace ReelSpinGame_Option
         [SerializeField] private MenuManager menuBarUI;         // メニューバーのUI
 
         // 各種設定画面のデータ
-        [SerializeField] ForceFlagScreen forceFlagScreen;               // 強制フラグ
-        [SerializeField] AutoPlaySettingScreen autoPlaySettingScreen;   // オートプレイ
-        [SerializeField] OtherSettingScreen otherSettingScreen;         // その他設定
+        [SerializeField] private SlotDataScreen slotDataScreen;                 // スロット情報データ画面UI
+        [SerializeField] private ForceFlagScreen forceFlagScreen;               // 強制フラグ
+        [SerializeField] private AutoPlaySettingScreen autoPlaySettingScreen;   // オートプレイ
+        [SerializeField] private OtherSettingScreen otherSettingScreen;         // その他設定
 
         public bool HasOptionScreen { get; private set; }       // オプション画面を開いているか(UIボタンの表示に使用する)
         public bool HasOptionMode { get; private set; }         // 設定変更中か(ゲームの操作ができなくなる)
@@ -111,6 +114,12 @@ namespace ReelSpinGame_Option
 
         // その他設定を読み込む
         public void LoadOtherSettingFromSave(OtherOptionData otherOptionData) => otherSettingScreen.LoadSettingData(otherOptionData);
+
+        // スロット情報データの更新
+        public void UpdateSlotData(PlayerSaveDatabase playerSaveDatabase, PlayerDatabase playerDatabase)
+        {
+            slotDataScreen.SendData(playerSaveDatabase.SlotSetting, playerSaveDatabase.IsUsingRandom, playerDatabase);
+        }
 
         // 強制フラグのボタン有効化設定を変更
         public void SetForceFlagSetting(BonusStatus currentBonusStatus, BonusTypeID holdingBonusID) => forceFlagScreen.SetBonusStatus(currentBonusStatus, holdingBonusID);

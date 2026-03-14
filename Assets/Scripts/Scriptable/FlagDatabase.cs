@@ -1,4 +1,4 @@
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -114,10 +114,10 @@ namespace ReelSpinGame_Datas
             FlagProbabilityStart = 1 << 0,
         }
 
-        [SerializeField] private FlagID flagID;       //フラグID
+        [SerializeField] private FlagModel.FlagID flagID;       //フラグID
         [SerializeField] private List<int> flagCountBySetting;  // 設定ごとのフラグ数
 
-        public FlagID FlagID {  get { return flagID; } }
+        public FlagModel.FlagID FlagID {  get { return flagID; } }
         public List<int> FlagCountBySetting {  get { return flagCountBySetting; } }
 
         public FlagData(StreamReader loadedData)
@@ -131,7 +131,7 @@ namespace ReelSpinGame_Datas
                 // 最初の数値はフラグIDを登録する
                 if(index == (int)FlagIndexSerialize.FlagID)
                 {
-                    flagID = (FlagID)Enum.Parse(typeof(FlagID), s);
+                    flagID = (FlagModel.FlagID)Enum.Parse(typeof(FlagModel.FlagID), s);
                 }
                 else
                 {

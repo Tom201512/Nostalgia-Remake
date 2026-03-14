@@ -1,4 +1,4 @@
-namespace ReelSpinGame_Lots
+namespace ReelSpinGame_Flag
 {
     // ¬–ğƒJƒEƒ“ƒ^
     public class FlagCounter

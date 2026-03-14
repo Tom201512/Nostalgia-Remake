@@ -1,4 +1,4 @@
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Option.Components;
 using ReelSpinGame_Reels;
 using System;
@@ -145,19 +145,19 @@ namespace ReelSpinGame_Option.MenuContent
         // ボーナスフラグ設定ボタンの有効化設定
         void SetBonusFlagButtonInteractive(bool value)
         {
-            flagButtons[(int)FlagID.FlagBig].ToggleInteractive(value);
-            flagButtons[(int)FlagID.FlagReg].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagBig].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagReg].ToggleInteractive(value);
         }
 
         // 小役フラグ設定ボタンの有効化設定
         void SetSymbolFlagButtonInteractive(bool value)
         {
-            flagButtons[(int)FlagID.FlagCherry2].ToggleInteractive(value);
-            flagButtons[(int)FlagID.FlagCherry4].ToggleInteractive(value);
-            flagButtons[(int)FlagID.FlagMelon].ToggleInteractive(value);
-            flagButtons[(int)FlagID.FlagBell].ToggleInteractive(value);
-            flagButtons[(int)FlagID.FlagReplayJacIn].ToggleInteractive(value);
-            flagButtons[(int)FlagID.FlagNone].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagCherry2].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagCherry4].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagMelon].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagBell].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagReplayJacIn].ToggleInteractive(value);
+            flagButtons[(int)FlagModel.FlagID.FlagNone].ToggleInteractive(value);
         }
 
         // 全てのボタンの操作をコントロールする

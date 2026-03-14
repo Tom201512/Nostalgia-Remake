@@ -1,5 +1,5 @@
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Reels.Flash;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
@@ -38,9 +38,9 @@ namespace ReelSpinGame_Effect.Data
             switch (beforePayoutEffectCondition.Flag)
             {
                 // BIG時、REG時, またはボーナス当選後のはずれのとき1/6でVフラッシュ発生
-                case FlagID.FlagBig:
-                case FlagID.FlagReg:
-                case FlagID.FlagNone:
+                case FlagModel.FlagID.FlagBig:
+                case FlagModel.FlagID.FlagReg:
+                case FlagModel.FlagID.FlagNone:
                     if (beforePayoutEffectCondition.HoldingBonus != BonusTypeID.BonusNone &&
                         OriginalRandomLot.LotRandomByNum(6))
                     {
@@ -50,17 +50,17 @@ namespace ReelSpinGame_Effect.Data
                     break;
 
                 // チェリー2枚の場合
-                case FlagID.FlagCherry2:
+                case FlagModel.FlagID.FlagCherry2:
                 // チェリー4枚の場合
-                case FlagID.FlagCherry4:
+                case FlagModel.FlagID.FlagCherry4:
                 // ベルの場合:
-                case FlagID.FlagBell:
+                case FlagModel.FlagID.FlagBell:
                 // スイカの場合
-                case FlagID.FlagMelon:
+                case FlagModel.FlagID.FlagMelon:
                     break;
 
                 // リプレイの場合
-                case FlagID.FlagReplayJacIn:
+                case FlagModel.FlagID.FlagReplayJacIn:
                     // 小役ゲーム中にJACINが成立しビタハズシをした場合
                     if (beforePayoutEffectCondition.BonusStatus == BonusStatus.BonusBIGGames &&
                         (beforePayoutEffectCondition.LastLeftStoppedPos == 10 ||

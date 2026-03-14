@@ -23,11 +23,11 @@ namespace ReelSpinGame_System
             Bonus,
         }
 
-        public SaveDatabase CurrentSave { get; private set; }        // 現在のセーブデータ
+        public PlayerSaveDatabase CurrentSave { get; private set; }        // 現在のセーブデータ
 
         public PlayerSaveManager()
         {
-            CurrentSave = new SaveDatabase();
+            CurrentSave = new PlayerSaveDatabase();
         }
 
         // バッファ作成
@@ -36,7 +36,7 @@ namespace ReelSpinGame_System
             // セーブファイルを作成するための整数型List作成
             List<int> dataBuffer = new List<int>();
 
-            dataBuffer.Add(CurrentSave.Setting);
+            dataBuffer.Add(CurrentSave.SlotSetting);
             dataBuffer.Add(CurrentSave.IsUsingRandom == true ? 1 : 0);
 
             // プレイヤーデータ
@@ -110,7 +110,7 @@ namespace ReelSpinGame_System
                 switch (addressID)
                 {
                     case (int)AddressID.Setting:
-                        CurrentSave.Setting = br.ReadInt32();
+                        CurrentSave.SlotSetting = br.ReadInt32();
                         CurrentSave.IsUsingRandom = (br.ReadInt32() == 1 ? true : false);
                         break;
 

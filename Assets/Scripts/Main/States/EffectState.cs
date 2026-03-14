@@ -1,7 +1,7 @@
 using ReelSpinGame_AutoPlay;
 using ReelSpinGame_Effect.Data.Condition;
 using ReelSpinGame_Interface;
-using ReelSpinGame_Medal;
+using ReelSpinGame_Main;
 using ReelSpinGame_Reels;
 using ReelSpinGame_System;
 
@@ -11,15 +11,13 @@ namespace ReelSpinGame_State.LotsState
     public class EffectState : IGameStatement
     {
         private GameManager gM;     // ゲームマネージャー
-        private MedalManager medalManager;      // メダル管理
 
         private bool startPayout;       // 払い出しを始めたか
         private bool finishPayout;      // 払い出しが終わったか
 
-        public EffectState(GameManager gameManager, MedalManager medalManager)
+        public EffectState(GameManager gameManager)
         {
             gM = gameManager;
-            this.medalManager = medalManager;
             startPayout = false;
             finishPayout = false;
         }
@@ -36,10 +34,10 @@ namespace ReelSpinGame_State.LotsState
 
                 // 演出開始
                 BeforePayoutEffectCondition condition = new BeforePayoutEffectCondition();
-                condition.Flag = gM.Lots.GetCurrentFlag();
+                condition.Flag = gM.FlagManager.GetCurrentFlag();
                 condition.HoldingBonus = gM.BonusManager.HoldingBonusID;
                 condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
-                condition.LastLeftStoppedPos = gM.Reel.GetLastPushedLowerPos((int)ReelID.ReelLeft);
+                condition.LastLeftStoppedPos = gM.ReelManager.GetLastPushedLowerPos((int)ReelID.ReelLeft);
                 gM.Effect.StartBeforePayoutEffect(condition);
             }
             else
@@ -51,7 +49,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             // UI更新
-            gM.PlayerUI.UpdatePlayerUI(gM.Player, medalManager);
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.MedalManager);
             // 払い出し前の演出を待つ
             if (!gM.Effect.GetHasBeforeEffectActivating())
             {
@@ -59,15 +57,15 @@ namespace ReelSpinGame_State.LotsState
                 if (!startPayout && !finishPayout)
                 {
                     // セグメントを更新する
-                    if(medalManager.RemainingPayout > 0)
+                    if(gM.MedalManager.RemainingPayout > 0)
                     {
-                        medalManager.StartPayoutSegmentUpdate();
+                        gM.MedalManager.StartPayoutSegmentUpdate();
                     }
 
                     PayoutEffectCondition condition =
-                        new PayoutEffectCondition(gM.Payout.LastPayoutResult, gM.Reel.GetLastStoppedReelData());
+                        new PayoutEffectCondition(gM.PayoutManager.LastPayoutResult, gM.ReelManager.GetLastStoppedReelData());
 
-                    condition.Flag = gM.Lots.GetCurrentFlag();
+                    condition.Flag = gM.FlagManager.GetCurrentFlag();
                     condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
                     gM.Effect.StartPayoutEffect(condition);
                     startPayout = true;
@@ -77,7 +75,7 @@ namespace ReelSpinGame_State.LotsState
                 else if (startPayout && !finishPayout && !gM.Effect.GetPayoutEffectActivating())
                 {
                     // 払い出し後演出を始める
-                    AfterPayoutEffectCondition condition = new AfterPayoutEffectCondition(gM.Payout.LastPayoutResult);
+                    AfterPayoutEffectCondition condition = new AfterPayoutEffectCondition(gM.PayoutManager.LastPayoutResult);
 
                     condition.HasBonusStarted = gM.BonusManager.HasBonusStarted;
                     condition.HasBonusFinished = gM.BonusManager.HasBonusFinished;
@@ -104,7 +102,7 @@ namespace ReelSpinGame_State.LotsState
             }
 
             // UI更新
-            gM.PlayerUI.UpdatePlayerUI(gM.Player, medalManager);
+            gM.PlayerUI.UpdatePlayerUI(gM.Player, gM.MedalManager);
             // ボーナス演出更新
             BonusEffectUpdate();
 

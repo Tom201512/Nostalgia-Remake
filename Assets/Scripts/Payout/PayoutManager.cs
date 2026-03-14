@@ -11,18 +11,15 @@ namespace ReelSpinGame_Payout
     // 払い出しマネージャー
     public class PayoutManager : MonoBehaviour
     {
-        // 払い出しモード
-        public enum PayoutCheckMode { PayoutNormal, PayoutBIG, PayoutJAC };
-
         // 払い出しデータベース
         [SerializeField] private PayoutDatabase payoutDatabase;
 
         public PayoutResultBuffer LastPayoutResult { get; private set; }    // 最後に当たった結果
-        public PayoutCheckMode CheckMode { get; set; }                      // 選択中のテーブル
+        public PayoutModel.PayoutCheckMode CheckMode { get; set; }                      // 選択中のテーブル
 
         void Awake()
         {
-            CheckMode = PayoutCheckMode.PayoutNormal;
+            CheckMode = PayoutModel.PayoutCheckMode.PayoutNormal;
             LastPayoutResult = new PayoutResultBuffer(0, 0, false);
         }
 
@@ -30,7 +27,7 @@ namespace ReelSpinGame_Payout
         public List<PayoutLineData> GetPayoutLines() => payoutDatabase.PayoutLines;
 
         // 払い出しテーブルの変更
-        public void ChangePayoutCheckMode(PayoutCheckMode checkMode) => CheckMode = checkMode;
+        public void ChangePayoutCheckMode(PayoutModel.PayoutCheckMode checkMode) => CheckMode = checkMode;
 
         // 払い出しがあるかチェックする
         public void CheckPayouts(int betAmount, LastStoppedReelData lastStoppedData)
@@ -161,17 +158,17 @@ namespace ReelSpinGame_Payout
         }
 
         // 払い出し結果をテーブルごとに得る
-        private List<PayoutResultData> GetPayoutResultData(PayoutCheckMode payoutCheckMode)
+        private List<PayoutResultData> GetPayoutResultData(PayoutModel.PayoutCheckMode payoutCheckMode)
         {
             switch (payoutCheckMode)
             {
-                case PayoutCheckMode.PayoutNormal:
+                case PayoutModel.PayoutCheckMode.PayoutNormal:
                     return payoutDatabase.NormalPayoutDatas;
 
-                case PayoutCheckMode.PayoutBIG:
+                case PayoutModel.PayoutCheckMode.PayoutBIG:
                     return payoutDatabase.BigPayoutDatas;
 
-                case PayoutCheckMode.PayoutJAC:
+                case PayoutModel.PayoutCheckMode.PayoutJAC:
                     return payoutDatabase.JacPayoutDatas;
             }
             return null;

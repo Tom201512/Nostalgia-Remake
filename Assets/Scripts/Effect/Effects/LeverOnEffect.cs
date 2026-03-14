@@ -1,5 +1,5 @@
 using ReelSpinGame_Effect.Data.Condition;
-using ReelSpinGame_Lots;
+using ReelSpinGame_Flag;
 using ReelSpinGame_Sound;
 using ReelSpinGame_Util.OriginalInputs;
 using UnityEngine;
@@ -36,20 +36,20 @@ namespace ReelSpinGame_Effect.Data
                     // BIG, REG
                     switch (leverOnEffectCondition.Flag)
                     {
-                        case FlagID.FlagBig:
-                        case FlagID.FlagReg:
+                        case FlagModel.FlagID.FlagBig:
+                        case FlagModel.FlagID.FlagReg:
                             LotStartSound(4);
                             break;
 
-                        case FlagID.FlagMelon:
+                        case FlagModel.FlagID.FlagMelon:
                             LotStartSound(8);
                             break;
 
-                        case FlagID.FlagBell:
+                        case FlagModel.FlagID.FlagBell:
                             LotStartSound(32);
                             break;
 
-                        case FlagID.FlagNone:
+                        case FlagModel.FlagID.FlagNone:
                             LotStartSound(128);
                             break;
 
