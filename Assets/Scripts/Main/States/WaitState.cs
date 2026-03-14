@@ -20,15 +20,15 @@ namespace ReelSpinGame_State.LotsState
             // ウェイトカットがある場合も即無効にする
             if (gM.Auto.HasAuto && gM.Auto.CurrentSpeed > AutoSpeedName.Normal)
             {
-                gM.Wait.DisableWaitTimer();
+                gM.WaitManager.DisableWaitTimer();
             }
-            else if (gM.Wait.HasWaitCut)
+            else if (gM.WaitManager.HasWaitCut)
             {
-                gM.Wait.DisableWaitTimer();
+                gM.WaitManager.DisableWaitTimer();
             }
 
             // ウェイトランプ点灯
-            if (gM.Wait.HasWait)
+            if (gM.WaitManager.HasWait)
             {
                 gM.Status.TurnOnWaitLamp();
                 gM.Effect.StartWaitEffect();
@@ -38,7 +38,7 @@ namespace ReelSpinGame_State.LotsState
         public void StateUpdate()
         {
             // ウェイトが切れるまで待つ
-            if (!gM.Wait.HasWait)
+            if (!gM.WaitManager.HasWait)
             {
                 gM.MainFlow.StateManager.ChangeState(gM.MainFlow.PlayingState);
             }
@@ -52,12 +52,12 @@ namespace ReelSpinGame_State.LotsState
                 // オート速度が通常ならウェイトタイマーを起動(ウェイトカットあり時は無効)
                 if (gM.Auto.CurrentSpeed == AutoSpeedName.Normal)
                 {
-                    gM.Wait.SetWaitTimer();
+                    gM.WaitManager.SetWaitTimer();
                 }
             }
             else
             {
-                gM.Wait.SetWaitTimer();
+                gM.WaitManager.SetWaitTimer();
             }
 
             // ウェイトランプを切る

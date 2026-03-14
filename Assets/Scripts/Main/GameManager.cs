@@ -27,6 +27,7 @@ namespace ReelSpinGame_Main
         [SerializeField] private LotSettingManager lotSettingManager;           // 設定変更
         [SerializeField] private MedalManager medalManager;                     // メダル管理
         [SerializeField] private FlagManager flagManager;                       // フラグ抽選
+        [SerializeField] private WaitManager waitManager;                       // ウェイト管理
         [SerializeField] private ReelLogicManager reelManagerObj;               // リール情報
         [SerializeField] private PayoutManager payoutManager;                   // 払い出し情報
         [SerializeField] private BonusManager bonusManager;                     // ボーナス情報
@@ -42,7 +43,7 @@ namespace ReelSpinGame_Main
         public InputManager InputManager { get => inputManager; }
         public MedalManager MedalManager { get => medalManager; }
         public FlagManager FlagManager { get => flagManager; }
-        public WaitManager Wait { get; private set; }
+        public WaitManager WaitManager { get => waitManager; }
         public ReelLogicManager ReelManager { get => reelManagerObj; }
         public PayoutManager PayoutManager { get => payoutManager; }
         public BonusManager BonusManager { get => bonusManager; }
@@ -66,7 +67,6 @@ namespace ReelSpinGame_Main
         {
             Screen = GetComponent<ScreenManager>();                     // 画面
             InitialSetting = GetComponent<InitialSettingManager>();     // 初回起動
-            Wait = GetComponent<WaitManager>();                         // ウェイト
             MainFlow = new MainGameFlow(this);                          // メインフロー作成
             Status = statusPanel;                                       // ステータスパネル
             Player = new PlayerDatabase();                              // プレイヤー情報
@@ -191,7 +191,7 @@ namespace ReelSpinGame_Main
             Screen.SetScreenSize(Option.OtherOptionData.ResolutionSetting);
             Screen.SetCameraMode(Option.OtherOptionData.UseOrthographicCamera);
             ReelManager.SetMiniReelVisible(Option.OtherOptionData.ShowMiniReelSetting);
-            Wait.SetWaitCutSetting(Option.OtherOptionData.HasWaitCut);
+            WaitManager.SetWaitCutSetting(Option.OtherOptionData.HasWaitCut);
             ReelManager.SetReelDelayVisible(Option.OtherOptionData.HasDelayDisplay);
             ReelManager.SetReelMarkers(Option.OtherOptionData.AssistMarkerPos);
             _ = ChangeLocale(Option.OtherOptionData.CurrentLanguage);

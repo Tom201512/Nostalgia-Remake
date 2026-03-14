@@ -82,7 +82,7 @@ namespace ReelSpinGame_State.LotsState
 
         public void StateEnd()
         {
-            if (gM.Wait.HasWait)
+            if (gM.WaitManager.HasWait)
             {
                 gM.Status.TurnOnWaitLamp();
             }
