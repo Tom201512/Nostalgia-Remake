@@ -69,7 +69,7 @@ namespace ReelSpinGame_State.PayoutState
         {
             gM.PlayerSaveDatabase.RecordPlayerSave(gM.Player.MakeSaveData());
             gM.PlayerSaveDatabase.RecordMedalSave(gM.MedalManager.MakeSaveData());
-            gM.PlayerSaveDatabase.RecordFlagCounter(gM.FlagManager.GetCounter());
+            gM.PlayerSaveDatabase.RecordFlagCounter(gM.FlagManager.FlagCounter);
             gM.PlayerSaveDatabase.RecordReelPos(gM.ReelManager.GetLastStoppedReelData().LastPos);
             gM.PlayerSaveDatabase.RecordBonusData(gM.BonusManager.MakeSaveData());
         }
@@ -185,14 +185,14 @@ namespace ReelSpinGame_State.PayoutState
             }
 
             // 小役成立回数の記録
-            gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.FlagManager.GetCurrentFlag(), gM.BonusManager.CurrentBonusStatus);
+            gM.Player.PlayerAnalyticsData.IncreaseHitCountByFlag(gM.FlagManager.CurrentFlag, gM.BonusManager.CurrentBonusStatus);
             // 小役入賞回数の記録(払い出しがあれば)
             if (gM.PayoutManager.LastPayoutResult.Payout > 0 || gM.MedalManager.HasReplay)
             {
-                gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.FlagManager.GetCurrentFlag(), gM.BonusManager.CurrentBonusStatus);
+                gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.FlagManager.CurrentFlag, gM.BonusManager.CurrentBonusStatus);
             }
             // JACハズシの記録
-            if (gM.BonusManager.CurrentBonusStatus == BonusModel.BonusStatus.BonusBIGGames && gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagReplayJacIn)
+            if (gM.BonusManager.CurrentBonusStatus == BonusModel.BonusStatus.BonusBIGGames && gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagReplayJacIn)
             {
                 gM.Player.PlayerAnalyticsData.CountJacAvoidCounts(gM.ReelManager.GetLastPushedLowerPos((int)ReelID.ReelLeft), gM.ReelManager.GetRandomValue());
             }
@@ -229,11 +229,11 @@ namespace ReelSpinGame_State.PayoutState
             // ボーナス未成立でいずれかのボーナスが成立した場合はストック
             if (gM.BonusManager.HoldingBonusID == BonusModel.BonusTypeID.BonusNone)
             {
-                if (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagBig)
+                if (gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagBig)
                 {
                     gM.BonusManager.HoldingBonusID = BonusModel.BonusTypeID.BonusBIG;
                 }
-                if (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagReg)
+                if (gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagReg)
                 {
                     gM.BonusManager.HoldingBonusID = BonusModel.BonusTypeID.BonusREG;
                 }

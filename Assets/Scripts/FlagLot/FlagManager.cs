@@ -20,7 +20,10 @@ namespace ReelSpinGame_Flag.Flag
         { 
             get => model.IsRandomSlotSetting; 
             set => model.IsRandomSlotSetting = value;
-        } 
+        }
+        
+        public FlagModel.FlagID CurrentFlag { get => model.CurrentFlag; }                   // 現在のフラグ
+        public int FlagCounter { get => flagCounter.Counter; }                              // 小役カウンタ
 
         private FlagModel model;                            // フラグ抽選中のデータ
         private FlagCounter flagCounter;                    // フラグカウンタ
@@ -30,11 +33,6 @@ namespace ReelSpinGame_Flag.Flag
             model = new FlagModel();
             flagCounter = new FlagCounter();
         }
-
-        // 各数値を得る
-        public FlagModel.FlagID GetCurrentFlag() => model.CurrentFlag;             // 現在のフラグ
-        public FlagModel.FlagLotTable GetCurrentTable() => model.CurrentTable;     // 現在のテーブル
-        public int GetCounter() => flagCounter.Counter;
 
         // フラグ設定を割り当てる
         public void SetSlotSetting(int setting)
@@ -53,7 +51,7 @@ namespace ReelSpinGame_Flag.Flag
         // 小役カウンタ数値セット
         public void SetCounterValue(int value) => flagCounter.SetCounter(value);
         // テーブル変更
-        public void ChangeTable(FlagModel.FlagLotTable mode) => model.CurrentTable = mode;
+        public void ChangeTable(FlagModel.FlagLotTable mode) => model.CurrentFlagTable = mode;
 
         // 強制フラグの設定
         public void SetForceFlag(FlagModel.FlagID forceFlagID)

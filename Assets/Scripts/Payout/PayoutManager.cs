@@ -1,10 +1,10 @@
 using ReelSpinGame_Datas;
 using ReelSpinGame_Medal;
 using ReelSpinGame_Reels;
+using ReelSpinGame_Reels.Spin;
 using ReelSpinGame_Reels.Util;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReelSpinGame_Reels.ReelLogicManager;
 
 namespace ReelSpinGame_Payout
 {
@@ -145,7 +145,7 @@ namespace ReelSpinGame_Payout
                 }
 
                 // “¯‚¶}•¿(ANYŠÜ‚ß)‚ªƒŠ[ƒ‹‚Ì”‚Æ‡‚¦‚Î“–‘I‚Æ‚İ‚È‚·
-                if (sameSymbolCount == ReelAmount)
+                if (sameSymbolCount == ReelLogicManager.ReelAmount)
                 {
                     // ”z—ñ”Ô†‚ğ‘—‚é
                     return indexNum;

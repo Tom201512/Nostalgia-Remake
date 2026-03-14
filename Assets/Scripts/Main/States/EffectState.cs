@@ -34,7 +34,7 @@ namespace ReelSpinGame_State.LotsState
 
                 // ââèoäJén
                 BeforePayoutEffectCondition condition = new BeforePayoutEffectCondition();
-                condition.Flag = gM.FlagManager.GetCurrentFlag();
+                condition.Flag = gM.FlagManager.CurrentFlag;
                 condition.HoldingBonus = gM.BonusManager.HoldingBonusID;
                 condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
                 condition.LastLeftStoppedPos = gM.ReelManager.GetLastPushedLowerPos((int)ReelID.ReelLeft);
@@ -65,7 +65,7 @@ namespace ReelSpinGame_State.LotsState
                     PayoutEffectCondition condition =
                         new PayoutEffectCondition(gM.PayoutManager.LastPayoutResult, gM.ReelManager.GetLastStoppedReelData());
 
-                    condition.Flag = gM.FlagManager.GetCurrentFlag();
+                    condition.Flag = gM.FlagManager.CurrentFlag;
                     condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
                     gM.Effect.StartPayoutEffect(condition);
                     startPayout = true;

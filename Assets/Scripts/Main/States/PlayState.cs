@@ -39,7 +39,7 @@ namespace ReelSpinGame_State.PlayingState
 
             // レバーオン演出開始
             LeverOnEffectCondition condition = new LeverOnEffectCondition();
-            condition.Flag = gM.FlagManager.GetCurrentFlag();
+            condition.Flag = gM.FlagManager.CurrentFlag;
             condition.HoldingBonus = gM.BonusManager.HoldingBonusID;
             condition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
             gM.Effect.StartLeverOnEffect(condition);
@@ -99,7 +99,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.ReelManager.GetCanStopReels() && gM.ReelManager.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.ReelManager.StopSelectedReel(reelID, gM.FlagManager.GetCurrentFlag(), gM.BonusManager.HoldingBonusID, gM.MedalManager.LastBetAmount);
+                gM.ReelManager.StopSelectedReel(reelID, gM.FlagManager.CurrentFlag, gM.BonusManager.HoldingBonusID, gM.MedalManager.LastBetAmount);
             }
         }
 
@@ -108,7 +108,7 @@ namespace ReelSpinGame_State.PlayingState
         {
             if (gM.ReelManager.GetCanStopReels() && gM.ReelManager.GetReelStatus(reelID) == ReelStatus.Spinning)
             {
-                gM.ReelManager.StopSelectedReelFast(reelID, gM.FlagManager.GetCurrentFlag(), gM.BonusManager.HoldingBonusID, gM.MedalManager.LastBetAmount, autoStopPos);
+                gM.ReelManager.StopSelectedReelFast(reelID, gM.FlagManager.CurrentFlag, gM.BonusManager.HoldingBonusID, gM.MedalManager.LastBetAmount, autoStopPos);
             }
         }
 
@@ -138,7 +138,7 @@ namespace ReelSpinGame_State.PlayingState
 
                 // 条件を作成
                 AutoAIConditionClass autoAICondition = new AutoAIConditionClass();
-                autoAICondition.Flag = gM.FlagManager.GetCurrentFlag();
+                autoAICondition.Flag = gM.FlagManager.CurrentFlag;
                 autoAICondition.FirstPush = gM.Auto.AutoStopOrders[(int)StopOrderID.First];
                 autoAICondition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
                 autoAICondition.HoldingBonus = gM.BonusManager.HoldingBonusID;
@@ -248,7 +248,7 @@ namespace ReelSpinGame_State.PlayingState
         private void RecordBonusReelStopped()
         {
             if (gM.BonusManager.CurrentBonusStatus == BonusModel.BonusStatus.BonusNone &&
-                (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagBig || gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagReg))
+                (gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagBig || gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagReg))
             {
                 gM.Player.SetBonusHitPos(gM.ReelManager.GetLastStoppedReelData().LastPos);
                 gM.Player.SetBonusPushOrder(gM.ReelManager.GetLastStoppedReelData().LastPushOrder);

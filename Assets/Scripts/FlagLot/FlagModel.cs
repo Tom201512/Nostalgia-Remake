@@ -37,7 +37,7 @@ namespace ReelSpinGame_Flag
 
 
         public FlagID CurrentFlag { get; set; }                             // 現在のフラグ
-        public FlagLotTable CurrentTable { get; set; }                      // 抽選テーブル
+        public FlagLotTable CurrentFlagTable { get; set; }                      // 抽選テーブル
 
         // スロット台設定
         public int CurrentSlotSetting { get; set; }
@@ -47,7 +47,7 @@ namespace ReelSpinGame_Flag
         public FlagModel()
         {
             CurrentFlag = FlagID.FlagNone;
-            CurrentTable = FlagLotTable.Normal;
+            CurrentFlagTable = FlagLotTable.Normal;
             CurrentSlotSetting = SlotSettingErrorValue;
             IsRandomSlotSetting = false;
         }
@@ -55,7 +55,7 @@ namespace ReelSpinGame_Flag
         // ランダムに台設定を決める
         public void SetRandomSlotSetting()
         {
-            CurrentSlotSetting = UnityEngine.Random.Range(MinSlotSetting, MaxSlotSetting + 1);
+            CurrentSlotSetting = Random.Range(MinSlotSetting, MaxSlotSetting + 1);
             IsRandomSlotSetting = true;
         }
 
@@ -63,7 +63,7 @@ namespace ReelSpinGame_Flag
         public void GetFlagLots(int counter, int betAmount, FlagDatabase flagDatabase)
         {
             // 現在の参照テーブルをもとに抽選
-            switch (CurrentTable)
+            switch (CurrentFlagTable)
             {
                 case FlagLotTable.Normal:
 

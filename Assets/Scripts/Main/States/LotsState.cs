@@ -44,11 +44,11 @@ namespace ReelSpinGame_State.LotsState
 
 
             // ボーナス当選ならプレイヤー側にデータを作成(後で入賞時のゲーム数をカウントする)
-            if (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagBig)
+            if (gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagBig)
             {
                 gM.Player.AddBonusResult(BonusModel.BonusTypeID.BonusBIG);
             }
-            else if (gM.FlagManager.GetCurrentFlag() == FlagModel.FlagID.FlagReg)
+            else if (gM.FlagManager.CurrentFlag == FlagModel.FlagID.FlagReg)
             {
                 gM.Player.AddBonusResult(BonusModel.BonusTypeID.BonusREG);
             }
@@ -61,7 +61,7 @@ namespace ReelSpinGame_State.LotsState
 
                 // 条件を作成
                 AutoAIConditionClass autoAICondition = new AutoAIConditionClass();
-                autoAICondition.Flag = gM.FlagManager.GetCurrentFlag();
+                autoAICondition.Flag = gM.FlagManager.CurrentFlag;
                 autoAICondition.FirstPush = gM.Auto.AutoStopOrders[(int)StopOrderID.First];
                 autoAICondition.BonusStatus = gM.BonusManager.CurrentBonusStatus;
                 autoAICondition.HoldingBonus = gM.BonusManager.HoldingBonusID;
