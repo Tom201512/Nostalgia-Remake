@@ -2,6 +2,7 @@
 using ReelSpinGame_Interface;
 using ReelSpinGame_Lots;
 using ReelSpinGame_Reels;
+using System.Diagnostics;
 using static ReelSpinGame_Bonus.BonusSystemData;
 using static ReelSpinGame_Payout.PayoutManager;
 
@@ -51,14 +52,11 @@ namespace ReelSpinGame_State.PayoutState
                 gM.Player.PlayerAnalyticsData.IncreaseLineUpCountByFlag(gM.Lots.GetCurrentFlag(), gM.Bonus.GetCurrentBonusStatus());
             }
 
-            // ボーナス開始をチェック
-            CheckStartBonus();
-
             // 払い出し開始
+            CheckBonusStart();
             PayoutUpdate();
-
-            // ボーナス終了をチェック
             CheckBonusEnd();
+
 
             // ボーナス状態の更新
             BonusStatusUpdate();
@@ -144,11 +142,14 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gM.Bonus.ChangeBonusPayout(gM.Payout.LastPayoutResult.Payout);
                 gM.Player.ChangeLastBonusPayout(gM.Bonus.GetCurrentBonusPayout());
+
+                UnityEngine.Debug.Log("BONUS PAYOUT:" + gM.Bonus.GetCurrentBonusPayout());
             }
             // ゾーン区間(50G)にいる間はその払い出しを計算
             if (gM.Bonus.GetHasZone())
             {
                 gM.Bonus.ChangeZonePayout(gM.Payout.LastPayoutResult.Payout);
+                UnityEngine.Debug.Log("ZONE PAYOUT:" + gM.Bonus.GetCurrentZonePayout());
             }
         }
 
@@ -169,21 +170,22 @@ namespace ReelSpinGame_State.PayoutState
             }
         }
 
-        // ボーナス開始をチェック
-        void CheckStartBonus()
+        // ボーナス開始の確認
+        void CheckBonusStart()
         {
-            // 通常時
             if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusNone)
             {
                 // ボーナスがあればボーナス開始
                 if (gM.Payout.LastPayoutResult.BonusID != (int)BonusTypeID.BonusNone)
                 {
                     StartBonus();
+                    UnityEngine.Debug.Log("BONUS START:" + gM.Payout.LastPayoutResult.BonusID);
                 }
                 // 取りこぼした場合はストックさせる
                 else
                 {
                     StockBonus();
+                    UnityEngine.Debug.Log("BONUS STOCKED:" + gM.Payout.LastPayoutResult.BonusID);
                 }
 
                 // オートがあり、条件がボーナス成立なら終了判定
@@ -191,14 +193,37 @@ namespace ReelSpinGame_State.PayoutState
                 {
                     gM.Auto.CheckAutoEndByBonus(gM.Payout.LastPayoutResult.BonusID);
                 }
-            }
 
-            // 連チャン区間の処理
-            // 50Gを迎えた場合は連チャン区間を終了させる(但しボーナス非成立時のみ)
-            if (gM.Player.CurrentGames == MaxZoneGames &&
-                gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
+                // 連チャン区間の処理
+                // 50Gを迎えた場合は連チャン区間を終了させる(但しボーナス非成立時のみ)
+                if (gM.Player.CurrentGames == MaxZoneGames &&
+                    gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
+                {
+                    gM.Bonus.ResetZonePayout();
+                    UnityEngine.Debug.Log("ZONE COUNT RESET");
+                }
+            }
+        }
+
+        // ボーナス終了の確認
+        void CheckBonusEnd()
+        {
+            if(gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone && !gM.Bonus.GetHasBonusStarted())
             {
-                gM.Bonus.ResetZonePayout();
+                if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
+                {
+                    gM.Bonus.CheckBigGameStatus(gM.Payout.LastPayoutResult.IsReplayOrJacIn);
+                }
+                else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
+                {
+                    gM.Bonus.CheckBonusGameStatus(gM.Payout.LastPayoutResult.Payout > 0);
+                }
+
+                // オートがあり終了条件がボーナス終了時の場合はここで判定する
+                if (gM.Auto.HasAuto)
+                {
+                    gM.Auto.CheckAutoEndByBonusFinish((int)gM.Bonus.GetCurrentBonusStatus());
+                }
             }
         }
 
@@ -225,28 +250,6 @@ namespace ReelSpinGame_State.PayoutState
             gM.Lots.ResetCounter();
             // 入賞時ゲーム数を記録
             gM.Player.SetLastBonusStart();
-        }
-
-        // ボーナス終了をチェック
-        void CheckBonusEnd()
-        {
-            if (gM.Bonus.GetCurrentBonusStatus() != BonusStatus.BonusNone)
-            {
-                if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusBIGGames)
-                {
-                    gM.Bonus.CheckBigGameStatus(gM.Payout.LastPayoutResult.IsReplayOrJacIn);
-                }
-                else if (gM.Bonus.GetCurrentBonusStatus() == BonusStatus.BonusJACGames)
-                {
-                    gM.Bonus.CheckBonusGameStatus(gM.Payout.LastPayoutResult.Payout > 0);
-                }
-
-                // オートがあり終了条件がボーナス終了時の場合はここで判定する
-                if (gM.Auto.HasAuto)
-                {
-                    gM.Auto.CheckAutoEndByBonusFinish((int)gM.Bonus.GetCurrentBonusStatus());
-                }
-            }
         }
 
         // ボーナス状態によるデータ変更

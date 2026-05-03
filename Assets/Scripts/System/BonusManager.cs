@@ -58,6 +58,7 @@ namespace ReelSpinGame_Bonus
             data.LastZonePayout = data.CurrentZonePayout;
             data.HasZone = false;
             data.CurrentZonePayout = 0;
+            Debug.Log("PAYOUT RESET");
         }
 
         // セーブデータにする
@@ -101,6 +102,7 @@ namespace ReelSpinGame_Bonus
             // 連チャン区間の記録開始
             data.HasZone = true;
             data.HasBonusStarted = true;
+            Debug.Log("BIG START");
         }
 
         // ボーナスゲームの開始
@@ -123,6 +125,7 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacHits = JacHits;
             data.CurrentBonusStatus = BonusStatus.BonusJACGames;
             data.HoldingBonusID = BonusTypeID.BonusNone;
+            Debug.Log("JAC START");
         }
 
         // ボーナス状態のセグメント更新
@@ -161,6 +164,7 @@ namespace ReelSpinGame_Bonus
             if (data.CurrentBonusStatus == BonusStatus.BonusBIGGames)
             {
                 data.RemainingBigGames -= 1;
+                Debug.Log("BIG GAMES:" + data.RemainingBigGames);
             }
             else if (data.CurrentBonusStatus == BonusStatus.BonusJACGames)
             {
@@ -190,6 +194,8 @@ namespace ReelSpinGame_Bonus
             if (hasPayout)
             {
                 data.RemainingJacHits -= 1;
+                Debug.Log("JAC GAMES:" + data.RemainingJacGames);
+                Debug.Log("JAC HITS:" + data.RemainingJacHits);
             }
             // JACゲーム数が0, または入賞回数が0の場合は終了(BIG中なら残りゲーム数0で終了)
             if (data.RemainingJacGames == 0 || data.RemainingJacHits == 0)
@@ -218,6 +224,7 @@ namespace ReelSpinGame_Bonus
             data.RemainingJacHits = 0;
             data.CurrentBonusStatus = BonusStatus.BonusNone;
             data.HasBonusFinished = true;
+            Debug.Log("BONUS FINISHED");
         }
     }
 }
