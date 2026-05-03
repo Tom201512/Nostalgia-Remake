@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8ac83e556586b5e428a03ef0da0b2031
+  m_SerializeEntries:
+  - m_GUID: 05bf3c71a89739144b701b6556687133
+    m_Address: Assets/Artworks/OptionScreen/BonusHitDisplay/BlueBigDisplay.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b0583d5bd7404b41ad6cfe53aa77196
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution5EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a388dddec589c54fb46d1669731fc39
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instruction8EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e54592a8c0e9cd4ca5a2d0e93658197
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instruction10EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 354e12ff6ef4bb546851ed9688796e4a
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution4JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 439c55727dbc06243930d1d6e90723eb
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution5JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45a65dfbcef6fe9479853c50c0cca6d0
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution2JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 464563a916b84424ca451fe32f42afa2
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution7EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 497f5590b5274d643aad95a5fa609e98
+    m_Address: Instruction1JP
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49bc2f2b9b5401c41b62ccb979470a3f
+    m_Address: Assets/Artworks/OptionScreen/BonusHitDisplay/RedBigDisplay.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bfcdeac78323ce46b43010015faf790
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instruction8JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e81b2beda20b7c4cb49aab8ea2d4d4b
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instruction1EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fa7b925bea399a4babc813a2860b4e5
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution9EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fb432051f1c8474fad523b58994eb25
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution6JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c94c7c3bb895d64d95b716ab2440599
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution3JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 672b5007345d4c046b2b179c1e31a56e
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution3EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73995b96aeaf4894592c624be374ffb9
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution9JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f107c27f9dfae541baaf8152b60e0d8
+    m_Address: Assets/Artworks/OptionScreen/BonusHitDisplay/REGDisplay.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9424b331b24f5f419afb5429d29cc57
+    m_Address: Assets/Artworks/OptionScreen/BonusHitDisplay/BB7BIGDisplay.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba720e30396bc1c4d93e732d86475a72
+    m_Address: Instrcution10JP
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb31cab9d77a97c42a85f8b5c3613322
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution4EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4cb4c771f523b2458655f7615d03db1
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution6EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d504615c89ad50e4881ca9407f1c3e1f
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/EN/Instrcution2EN.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f37ca744f2fa9574483e6e72c9d4021f
+    m_Address: Assets/Artworks/OptionScreen/HowToPlay/JP/Instrcution7JP.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 04a5572adc62c334f80c27f8aa952f84, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d15805ab56c545448b58c88299b37c8d, type: 2}
+    - {fileID: 11400000, guid: 687e0d835f341404b80768d774d422af, type: 2}
