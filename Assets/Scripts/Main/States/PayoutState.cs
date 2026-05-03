@@ -142,14 +142,11 @@ namespace ReelSpinGame_State.PayoutState
             {
                 gM.Bonus.ChangeBonusPayout(gM.Payout.LastPayoutResult.Payout);
                 gM.Player.ChangeLastBonusPayout(gM.Bonus.GetCurrentBonusPayout());
-
-                UnityEngine.Debug.Log("BONUS PAYOUT:" + gM.Bonus.GetCurrentBonusPayout());
             }
             // ゾーン区間(50G)にいる間はその払い出しを計算
             if (gM.Bonus.GetHasZone())
             {
                 gM.Bonus.ChangeZonePayout(gM.Payout.LastPayoutResult.Payout);
-                UnityEngine.Debug.Log("ZONE PAYOUT:" + gM.Bonus.GetCurrentZonePayout());
             }
         }
 
@@ -179,13 +176,11 @@ namespace ReelSpinGame_State.PayoutState
                 if (gM.Payout.LastPayoutResult.BonusID != (int)BonusTypeID.BonusNone)
                 {
                     StartBonus();
-                    UnityEngine.Debug.Log("BONUS START:" + gM.Payout.LastPayoutResult.BonusID);
                 }
                 // 取りこぼした場合はストックさせる
                 else
                 {
                     StockBonus();
-                    UnityEngine.Debug.Log("BONUS STOCKED:" + gM.Payout.LastPayoutResult.BonusID);
                 }
 
                 // オートがあり、条件がボーナス成立なら終了判定
@@ -200,7 +195,6 @@ namespace ReelSpinGame_State.PayoutState
                     gM.Bonus.GetHoldingBonusID() == BonusTypeID.BonusNone)
                 {
                     gM.Bonus.ResetZonePayout();
-                    UnityEngine.Debug.Log("ZONE COUNT RESET");
                 }
             }
         }
