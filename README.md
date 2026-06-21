@@ -1,5 +1,5 @@
 # ReelSpinEngine(RSE) For Unity (NostalgiaRemake)
-<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9" />
+<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9">
 
 [説明 / About]\
 Unity上で動作するパチスロシミュレーターです。過去作で作成した"Nostalgia"のリメイク版を同梱しています。
