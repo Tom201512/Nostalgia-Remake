@@ -1129,7 +1129,7 @@ MonoBehaviour:
     firstStopCID: 10
     secondStopPos: 0
   - mainConditon: 1
-    tid: 35
+    tid: 32
     cid: 1
     firstStopReelID: 1
     firstStopCID: 11
@@ -2927,7 +2927,7 @@ MonoBehaviour:
     secondStopReelID: 0
     secondStopCID: 0
   - mainConditon: 1
-    tid: 35
+    tid: 32
     cid: 1
     firstStopReelID: 1
     firstStopCID: 11
