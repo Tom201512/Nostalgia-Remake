@@ -2,7 +2,8 @@
 <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/5f7b2659-0245-46db-9f2b-d33313f1eec9">
 
 [説明 / About]\
-Unity上で動作するパチスロシミュレーターです。過去作で作成した"Nostalgia"のリメイク版を同梱しています。
+Unity上で動作するパチスロシミュレーターです。過去作で作成した"Nostalgia"のリメイク版を同梱しています。\
+すでに制作活動を引退しておりますが、せっかく作ったものなので公開しております。
 
 ### [Download](https://github.com/Tom201512/ReelSpinEngineForUnity-NostalgiaRemake/releases)
 
@@ -40,11 +41,6 @@ Mキー:メニュー開閉\
 データファイルは下記のリンクよりコピーが可能です。Googleスプレッドシートにて閲覧、編集するようにしてください。\
 他の表計算ソフトでの動作は保証しておりません。\
 https://drive.google.com/drive/folders/1Ea28mKtEinN5_U4SauYqHPnSEJKf_OM8?usp=sharing\
-
-[3/28]更新 \
-3/28をもって制作活動を引退することにいたしました。\
-今後、更新や修正に関する内容の問い合わせについては対応いたしかねますのでご了承ください。\
-わずかながらも支援してくださった皆様、今までありがとうございました。
 \
 \
 [クレジット / Credit]\
