@@ -27142,6 +27142,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8246817304617718255, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
+      propertyPath: m_Name
+      value: ConfirmText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8246817304617718255, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
@@ -27154,19 +27158,11 @@ PrefabInstance:
     - {fileID: 6778159023943040820, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8246817304617718255, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 690178670}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
 --- !u!224 &690178667 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2280711762198714882, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
-  m_PrefabInstance: {fileID: 690178666}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &690178668 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8246817304617718255, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
   m_PrefabInstance: {fileID: 690178666}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &690178669 stripped
@@ -27174,52 +27170,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4862934938884604602, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
   m_PrefabInstance: {fileID: 690178666}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690178668}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &690178670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690178668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StringReference:
-    m_TableReference:
-      m_TableCollectionName: GUID:dc071bb6f3b6f7b40bdcad4679f814e6
-    m_TableEntryReference:
-      m_KeyId: 11973814658064384
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  m_FormatArguments: []
-  m_UpdateString:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 690178669}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &690178671 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 631205165080843859, guid: 80912a196fc2d144694140dc00bbbd6c, type: 3}
@@ -33076,26 +33032,13 @@ MonoBehaviour:
   languageSelector: {fileID: 1059823858}
   selectLanguageText: {fileID: 1408192599}
   confirmButton: {fileID: 690178671}
-  textDisplayList:
-  - m_TableReference:
-      m_TableCollectionName: GUID:dc071bb6f3b6f7b40bdcad4679f814e6
-    m_TableEntryReference:
-      m_KeyId: 17564333383671808
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:dc071bb6f3b6f7b40bdcad4679f814e6
-    m_TableEntryReference:
-      m_KeyId: 17564389864169472
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  references:
-    version: 2
-    RefIds: []
+  confirmButtonText: {fileID: 690178669}
+  selectDisplayList:
+  - "\u65E5\u672C\u8A9E"
+  - English
+  confirmDisplayList:
+  - "\u6C7A\u5B9A"
+  - Confirm
 --- !u!1 &1059823856
 GameObject:
   m_ObjectHideFlags: 0

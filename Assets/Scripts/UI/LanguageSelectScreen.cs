@@ -5,8 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Components;
 
 namespace ReelSpinGame_System
 {
@@ -16,8 +14,10 @@ namespace ReelSpinGame_System
         [SerializeField] ButtonSelector languageSelector;               // 言語選択
         [SerializeField] TextMeshProUGUI selectLanguageText;            // 選択中のテキスト
         [SerializeField] ButtonComponent confirmButton;                 // 決定ボタン
+        [SerializeField] TextMeshProUGUI confirmButtonText;             // 決定ボタンのテキスト
 
-        [SerializeField] List<LocalizedString> textDisplayList;         // テキストのローカライズリスト
+        [SerializeField] List<String> selectDisplayList;                // 言語選択テキストの内容
+        [SerializeField] List<String> confirmDisplayList;               // 決定ボタンテキストの内容
 
         public int CurrentSetting { get => languageSelector.CurrentSelect; }     // 現在の設定値
 
@@ -28,15 +28,10 @@ namespace ReelSpinGame_System
         private bool CanInteract;                   // 操作ができる状態か(アニメーション中などはつけないこと)
         private CanvasGroup canvasGroup;            // フェードイン、アウト用
 
-        // ローカライズ
-        LocalizeStringEvent selectTextLocalize;    // 選択項目のテキスト
-
         void Awake()
         {
             CanInteract = false;
             canvasGroup = GetComponent<CanvasGroup>();
-            selectTextLocalize = selectLanguageText.GetComponent<LocalizeStringEvent>();
-
             languageSelector.ContentChangedEvent += SettingChangedBehavior;
             confirmButton.ButtonPushedEvent += ConfirmPressedBehavior;
         }
@@ -75,14 +70,17 @@ namespace ReelSpinGame_System
             if (CurrentSetting == -1)
             {
                 selectLanguageText.gameObject.SetActive(false);
+                confirmButton.gameObject.SetActive(false);
             }
             else
             {
                 // 対応するテキストがあれば表示する
-                if (CurrentSetting < textDisplayList.Count)
+                if (CurrentSetting < selectDisplayList.Count)
                 {
                     selectLanguageText.gameObject.SetActive(true);
-                    selectTextLocalize.StringReference = textDisplayList[CurrentSetting];
+                    selectLanguageText.text = selectDisplayList[CurrentSetting];
+                    confirmButton.gameObject.SetActive(true);
+                    confirmButtonText.text = confirmDisplayList[CurrentSetting];
                 }
             }
         }
