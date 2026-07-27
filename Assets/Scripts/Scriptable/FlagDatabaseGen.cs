@@ -30,10 +30,10 @@ namespace ReelSpinGame_Datas
             using StreamReader normalABet1 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableNormalABet1.csv"));
             flagDatabase.NormalATableBet1 = MakeFlagDataSets(normalABet1);
 
-            using StreamReader normalABet2 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableNormalABet1.csv"));
+            using StreamReader normalABet2 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableNormalABet2.csv"));
             flagDatabase.NormalATableBet2 = MakeFlagDataSets(normalABet2);
 
-            using StreamReader normalABet3 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableNormalABet1.csv"));
+            using StreamReader normalABet3 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableNormalABet3.csv"));
             flagDatabase.NormalATableBet3 = MakeFlagDataSets(normalABet3);
 
 
@@ -50,7 +50,7 @@ namespace ReelSpinGame_Datas
             using StreamReader bigBet1 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableBIGBet1.csv"));
             flagDatabase.BigTableBet1 = MakeFlagDataSets(bigBet1);
 
-            using StreamReader bigBet2 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableBIGBet1.csv"));
+            using StreamReader bigBet2 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableBIGBet2.csv"));
             flagDatabase.BigTableBet2 = MakeFlagDataSets(bigBet2);
 
             using StreamReader bigBet3 = new StreamReader(Path.Combine(ScriptableGen.DataPath, LotsTablePath, "Nostalgia_Flag - FlagTableBIGBet3.csv"));
