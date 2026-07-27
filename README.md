@@ -3,7 +3,7 @@
 
 [説明 / About]\
 Unity上で動作するパチスロシミュレーターです。過去作で作成した"Nostalgia"のリメイク版を同梱しています。\
-すでに制作活動を引退しておりますが、せっかく作ったものなので公開しております。\
+すでに制作活動を引退しておりますが、せっかく作ったものなので公開しております。
 
 ### [Download](https://github.com/Tom201512/ReelSpinEngineForUnity-NostalgiaRemake/releases)
 
