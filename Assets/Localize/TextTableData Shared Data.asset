@@ -67,10 +67,6 @@ MonoBehaviour:
     m_Key: SlotMainDataInfo1
     m_Metadata:
       m_Items: []
-  - m_Id: 20939635396763648
-    m_Key: SlotDataLotSetting
-    m_Metadata:
-      m_Items: []
   - m_Id: 15795237944090624
     m_Key: SlotBonusDataTitle
     m_Metadata:

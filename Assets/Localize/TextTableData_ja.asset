@@ -395,7 +395,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 19138425517826048
-    m_Localized: "*\u6CE8\u610F: \u73FE\u5728\u306E\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u3068\u30AA\u30D7\u30B7\u30E7\u30F3\u5185\u5BB9\u304C\u3059\u3079\u3066\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
+    m_Localized: "*\u6CE8\u610F: \u73FE\u5728\u306E\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u3068\u30AA\u30D7\u30B7\u30E7\u30F3\u8A2D\u5B9A\u304C\u3059\u3079\u3066\u524A\u9664\u3055\u308C\u307E\u3059\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 19316308836147200
@@ -407,31 +407,43 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20608179512336384
-    m_Localized: Setting:? BIG:1/???.? REG:1/???.?
+    m_Localized: 'Setting:?
+
+      BIG:1/???.? REG:1/???.? TOTAL: 1/???.?'
     m_Metadata:
       m_Items: []
   - m_Id: 20608415706177536
-    m_Localized: Setting:1 BIG:1/282.5 REG:1/455.1
+    m_Localized: 'Setting:1
+
+      BIG:1/282.5 REG:1/455.1 TOTAL:1/174.3'
     m_Metadata:
       m_Items: []
   - m_Id: 20608417430036480
-    m_Localized: Setting:2 BIG:1/273.1 REG:1/431.2
+    m_Localized: 'Setting:2
+
+      BIG:1/273.1 REG:1/431.2 TOTAL:1/167.2'
     m_Metadata:
       m_Items: []
   - m_Id: 20608419812401152
-    m_Localized: Setting:3 BIG:1/264.3 REG:1/420.1
+    m_Localized: 'Setting:3
+
+      BIG:1/264.3 REG:1/420.1 TOTAL:1/162.2'
     m_Metadata:
       m_Items: []
   - m_Id: 20608421225881600
-    m_Localized: Setting:4 BIG:1/256.0 REG:1/409.6
+    m_Localized: 'Setting:4
+
+      BIG:1/256.0 REG:1/409.6 TOTAL:1/157.5'
     m_Metadata:
       m_Items: []
   - m_Id: 20608422450618368
-    m_Localized: Setting:5 BIG:1/244.5 REG:1/381.0
+    m_Localized: "Setting:5 \nBIG:1/244.5 REG:1/381.0 TOTAL:1/148.9"
     m_Metadata:
       m_Items: []
   - m_Id: 20608423440474112
-    m_Localized: Setting:6 BIG:1/240.9 REG:1/356.2
+    m_Localized: 'Setting:6
+
+      BIG:1/240.9 REG:1/356.2 TOTAL:1/143.7'
     m_Metadata:
       m_Items: []
   - m_Id: 20703214236917760
@@ -476,10 +488,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 20939449807200256
     m_Localized: "\u8A2D\u5B9A\u5024\u3092\u8868\u793A\u3059\u308B"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 20939635396763648
-    m_Localized: "\u73FE\u5728\u306E\u8A2D\u5B9A\u5024:"
     m_Metadata:
       m_Items: []
   references:
